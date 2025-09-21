@@ -10,9 +10,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DB_PROD_URL}
-    username: ${DB_PROD_USERNAME}
-    password: ${DB_PROD_PASSWORD}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       idle-timeout: 30000 # min is 30 sec
       max-lifetime: 60000 # min is 60 sec
