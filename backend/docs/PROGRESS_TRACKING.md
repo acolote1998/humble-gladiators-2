@@ -47,7 +47,7 @@
     - [ ] Tradeable interface
     - [ ] Equipable interface
     - [X] Attacker interface
-    - [ ] Castable interface
+    - [X] Castable interface
     - [ ] Usable interface
     - [ ] Discoverable interface
 
