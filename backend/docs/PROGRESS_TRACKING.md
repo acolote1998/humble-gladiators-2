@@ -49,7 +49,7 @@
     - [X] Attacker interface
     - [X] Castable interface
     - [ ] Usable interface
-    - [ ] Discoverable interface
+    - [X] Discoverable interface
 
 ## 📋 Phase 3: Character System
 
