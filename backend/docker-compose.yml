@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: aki
       POSTGRES_PASSWORD: akipassword
-      POSTGRES_DB: humble-gladiators-db
+      POSTGRES_DB: humble-gladiators-2-db
     ports:
       - "5432:5432"
     volumes:
