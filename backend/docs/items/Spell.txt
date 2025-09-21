@@ -1,0 +1,4 @@
+﻿Spell extends AbstractItem, implements Tradeable, Castable, Discoverable
+
+Long campaignId
+Requirements requirements // Flexible key-value requirement system

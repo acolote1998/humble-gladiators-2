@@ -1,0 +1,9 @@
+﻿Campaign
+        id
+        userId
+        String name
+        List <Themes>
+        @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+        @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+        // Note: Items, spells, enemies, etc. are now separate entities with campaignId foreign key
+        // This prevents the "god object" problem while maintaining campaign uniqueness

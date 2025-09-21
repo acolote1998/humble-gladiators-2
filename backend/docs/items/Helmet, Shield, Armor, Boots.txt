@@ -1,0 +1,4 @@
+﻿THISCLASS extends AbstractItem, implements Tradeable, Equipable, Discoverable
+
+Long campaignId
+Requirements requirements // Flexible key-value requirement system

@@ -1,0 +1,14 @@
+﻿Requirements Model
+
+Long id
+List<RequirementEntry> entries
+
+
+// Flexible key-value requirement system
+// Examples:
+// - {type: "level", operator: ">=", value: "10"}
+// - {type: "class", operator: "IN", value: "WARRIOR,MAGE"}
+// - {type: "quest", operator: "==", value: "DragonSlayer"}
+// - {type: "hp", operator: ">=", value: "50"}
+
+hasRequirement(characterId) // Checks if character meets all requirements

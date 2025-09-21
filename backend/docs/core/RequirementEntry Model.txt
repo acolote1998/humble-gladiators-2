@@ -1,0 +1,11 @@
+RequirementEntry Model
+
+Long id
+String requirementType // "level", "hp", "mana", "class", "quest", "faction", etc.
+String operator // ">=", "<=", "==", "!=", "IN", "NOT_IN", "EXISTS", "NOT_EXISTS"
+String value // The value to compare against (e.g., "10", "WARRIOR,MAGE", "DragonSlayer")
+
+// Examples:
+// {type: "level", operator: ">=", value: "10"} -> character.level >= 10
+// {type: "class", operator: "IN", value: "WARRIOR,MAGE"} -> character.class IN (WARRIOR, MAGE)
+// {type: "quest", operator: "==", value: "DragonSlayer"} -> character.completedQuests.contains("DragonSlayer")

@@ -1,0 +1,33 @@
+﻿Class Character implements Discoverable
+id 
+userId
+campaignId
+name
+Level levelId 
+somatotype
+height
+weight
+classId
+raceId
+constitution 
+intelligence
+dexterity 
+strength
+speed
+luck 
+maxHp
+currentHp
+localVictories
+onlineVictories
+totalVictories
+defeatedEnemies
+diedAgainst
+Inventory inventoryId
+List<spells> availableSpells
+Int gold
+CharacterType characterType // PLAYER or NPC (enemies are NPCs)
+Int goldReward // For NPCs - gold given when defeated
+Int experienceReward // For NPCs - experience given when defeated
+discovered // Note: NPCs implement Discoverable interface (enemies can be discovered)
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA

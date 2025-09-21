@@ -1,0 +1,8 @@
+﻿Consumable extends AbstractItem, implements Usable, Tradeable, Discoverable
+
+Long campaignId
+Requirements requirements // Flexible key-value requirement system
+id
+use()
+buy()
+sell()

@@ -1,0 +1,4 @@
+﻿Weapon extends AbstractItem, implements Tradeable, Equipable, Attackable, Discoverable
+
+Long campaignId
+Requirements requirements // Flexible key-value requirement system

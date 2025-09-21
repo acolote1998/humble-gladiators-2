@@ -1,0 +1,8 @@
+﻿Turn
+id
+battleId
+characterIdPerforming
+characterIdReceiving
+actionId
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA

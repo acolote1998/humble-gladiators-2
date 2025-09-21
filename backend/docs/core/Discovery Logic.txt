@@ -1,0 +1,15 @@
+﻿The idea is to have a section in the campaign menu or pause menu called discoveries , here we can see all items , enemies , spells etc that are existing in our campaign and also the ones we have already discovered . The ones that are stil to be found will show only its shadow/silhouette 
+
+
+Tech :
+
+
+We can probably have all items /enemies etc implement an interface Discoverable or something like that, or maybe an abstract class with fields like Boolean discovered to see if the user has seen those objects or not throughout the campaign 
+
+
+
+
+We could have sections for this menu and break them down in weapons , helmets , spells , etc 
+
+
+We could have some sort of achievement or just a “star” if they discover all a section

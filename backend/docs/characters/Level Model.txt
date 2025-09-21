@@ -1,0 +1,7 @@
+﻿Level entity
+
+
+CharacterId
+Level
+Current exp 
+next level exp

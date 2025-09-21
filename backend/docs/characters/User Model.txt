@@ -1,0 +1,8 @@
+User Model
+
+Long id
+String email
+String preferredLanguage
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+// Note: Users can have multiple campaigns and characters

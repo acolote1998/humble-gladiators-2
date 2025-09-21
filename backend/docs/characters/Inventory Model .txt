@@ -1,0 +1,4 @@
+﻿Inventory entity 
+
+Long id
+List<AbstractItem> items // All items extend AbstractItem - much cleaner design!

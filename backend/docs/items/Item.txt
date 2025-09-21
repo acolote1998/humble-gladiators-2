@@ -1,0 +1,10 @@
+﻿(this generic Item is probably for loot, or quest items, that the player cannot really interact much with)
+
+
+
+
+Item extends AbstractItem implements Tradeable, Discoverable
+
+Long campaignId
+buy()
+sell()

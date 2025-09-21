@@ -1,0 +1,10 @@
+﻿Start a new campaign
+        -> Create a new character
+        -> Auto generate through AI all possible fields (cosumables, items, spells, helmet, weapons, shields, armors, boots, quests, enemies). Generate a lot of them, enough for the game to be entertaining. These will also be generated based on the List<Themes> we pass, for example we could create/generate a campaign that is with the themes “Pirate, Ocean” and probably a weapon could be a Sword, and an Item could be a “Golden Coin”, but we could also have a theme being “Star Wars”, and a weapon being a “Light Saber” for example…
+                -> Al generated items/content will probably have a Rarity from 1 to 5 and a Tier, also form 1 to 5, so we can have different items/content of different tiers and rarity. 
+                        -> We could have Boots of tier 1 but rarity 5, which would still be worse than Boots of tier 2, but better than any other boots of tier 1, and so on.
+        -> Process the received response from the API and push those generated items to the DB. Each one of these generated items/spells/etc will have a campaignId, this has to be the id to the campaign they are assigned to. This way, all campaigns will hopefully feel unique
+        -> Verify that all items are existing before letting the user create a character
+                -> Example: we ask the AI to generate 50 of each, then after processing and saving them to our DB, we do a SELECT * from X, for all entities, and we make sure we have all of them created in the DB
+        -> Then if all okay, we allow the user to create a character. this character will also have a campaignId, so it lives in the same “universe” or “campaign”
+        -> We could do checks now and then that for example the inventory and all the spells/items, and also the hero, they all belong to the same campaignId, then we realise that everything okay and nothing has been altered/tampered? We can maybe put this functionality to a feature toggle like verifyCampaignIntegrity : boolean  , so we can turn it on and off depending on what we want to test.

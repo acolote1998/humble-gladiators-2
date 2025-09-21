@@ -1,0 +1,5 @@
+﻿id
+type (attack, spell, consumable item, focus, etc)
+damageCaused int
+healingCaused int
+isCriticalAction (probably for being able to execute future animations, or just text rendering and making a difference between normal action and critica action, but realistically, the damageCaused or healingCaused will already have calculated the final number result if the action was critical so this is more for aesthetic/information/cosmetic purproses maybe?)

@@ -1,0 +1,22 @@
+﻿Battle entity 
+id 
+List<Turns (or actions ?)> (we could use this to “reconstruct’ the battle to its current state
+List<CharacterWhenStarted> or maybe just List<Character> startingTeamOne
+List<CharacterWhenStarted> or maybe just List<Character> startingTeamTwo
+List<Characters> activeTeamOne
+List<Characters or enemies?> activeTeamTwo
+Character currentCharToPlay
+Boolean stillActive
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+
+
+
+
+Idea:
+
+
+When the battle starts, the system makes a copy of all the heroes and enemies (both teams) and saves them in the startingTeamOne and startingTeamTwo. Then for each turn, then it applies damage and so on, and for each turn it creates a new entry in the Turns entity (which is linked to the battle ID), then it is easy to reconstruct the battle by executing the turns in order (good for when a battle is started but does not get finished, also good for watching “replays” (for when that feature is available)
+
+
+example

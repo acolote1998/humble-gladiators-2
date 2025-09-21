@@ -1,0 +1,12 @@
+Abstract Class AbstractItem
+
+String name
+String description
+Int rarity
+Int tier
+Int value
+Int physicalDamage
+Int magicalDamage
+Boolean discovered
+Int quantity // For stackable items (potions, arrows, etc.)
+Boolean equipped // Whether item is currently equipped
