@@ -4,57 +4,57 @@
 
 1. **User Model & Authentication**
 
-   - User entity with email, preferredLanguage
-   - Basic authentication setup
-   - User registration/login endpoints
+    - User entity with email, preferredLanguage
+    - Basic authentication setup
+    - User registration/login endpoints
 
 2. **Campaign System**
 
-   - Campaign entity (id, userId, name, themes)
-   - Campaign creation endpoint
-   - Campaign management (CRUD operations)
+    - Campaign entity (id, userId, name, themes)
+    - Campaign creation endpoint
+    - Campaign management (CRUD operations)
 
 3. **Requirements System**
-   - Requirements entity (flexible key-value)
-   - RequirementEntry entity
-   - Requirement validation logic
+    - Requirements entity (flexible key-value)
+    - RequirementEntry entity
+    - Requirement validation logic
 
 ## Phase 2: Item System
 
 4. **AbstractItem Base**
 
-   - AbstractItem entity (name, description, rarity, tier, etc.)
-   - Quantity and equipped fields
-   - Discovery system integration
+    - AbstractItem entity (name, description, rarity, tier, etc.)
+    - Quantity and equipped fields
+    - Discovery system integration
 
 5. **Item Types**
 
-   - Weapon entity (extends AbstractItem)
-   - Spell entity (extends AbstractItem)
-   - Consumable entity (extends AbstractItem)
-   - Equipment entities (Helmet, Shield, Armor, Boots)
+    - Weapon entity (extends AbstractItem)
+    - Spell entity (extends AbstractItem)
+    - Consumable entity (extends AbstractItem)
+    - Equipment entities (Helmet, Shield, Armor, Boots)
 
 6. **Interfaces Implementation**
-   - Tradeable, Equipable, Attackable, Castable, Usable, Discoverable
-   - Interface method implementations
+    - Tradeable, Equipable, Attacker, Castable, Usable, Discoverable
+    - Interface method implementations
 
 ## Phase 3: Character System
 
 7. **Character Model**
 
-   - Character entity (stats, level, inventory, etc.)
-   - CharacterType enum (PLAYER/NPC)
-   - Character-Campaign relationships
+    - Character entity (stats, level, inventory, etc.)
+    - CharacterType enum (PLAYER/NPC)
+    - Character-Campaign relationships
 
 8. **Level System**
 
-   - Level entity (experience, level progression)
-   - Level-up logic and stat increases
+    - Level entity (experience, level progression)
+    - Level-up logic and stat increases
 
 9. **Inventory System**
-   - Inventory entity (List<AbstractItem>)
-   - Inventory management (add/remove items)
-   - Equipment system (equip/unequip items)
+    - Inventory entity (List<AbstractItem>)
+    - Inventory management (add/remove items)
+    - Equipment system (equip/unequip items)
 
 ## Phase 4: Game Mechanics
 
