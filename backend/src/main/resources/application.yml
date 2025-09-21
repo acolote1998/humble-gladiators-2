@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: Humble Gladiators 2
+
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${CLERK_ISSUER_URL}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_PROD_URL}
+    username: ${DB_PROD_USERNAME}
+    password: ${DB_PROD_PASSWORD}
+    hikari:
+      idle-timeout: 30000 # min is 30 sec
+      max-lifetime: 60000 # min is 60 sec
+      keepalive-time: 0 # don't keep them alive if they're idle
+      maximum-pool-size: 1 #
+      minimum-idle: 0 # this one's kind of important
+      leak-detection-threshold: 60001 # just for debugging, you don't really need it
+      data-source-properties:
+        prepareThreshold: 0 # disable prepared statement caching
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+
+#clerk:
+#  api:
+#    secret: ${CLERK_SECRET}
+
+GEMINI_API_KEY: ${GEMINI_API_KEY}
