@@ -43,9 +43,9 @@
     - [X] Spell entity implementation
     - [X] Consumable entity implementation
     - [X] Helmet entities implementation
-    - [ ] Shield entities implementation
-    - [ ] Armor entities implementation
-    - [ ] Boots entities implementation
+    - [X] Shield entities implementation
+    - [X] Armor entities implementation
+    - [X] Boots entities implementation
 - [ ] Interfaces Implementation
     - [X] Tradeable interface
     - [X] Equipable interface
