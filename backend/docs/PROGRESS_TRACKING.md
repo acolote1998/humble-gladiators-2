@@ -44,7 +44,7 @@
     - [ ] Consumable entity implementation
     - [ ] Equipment entities implementation
 - [ ] Interfaces Implementation
-    - [ ] Tradeable interface
+    - [X] Tradeable interface
     - [ ] Equipable interface
     - [X] Attacker interface
     - [X] Castable interface
