@@ -46,7 +46,7 @@
     - [X] Shield entities implementation
     - [X] Armor entities implementation
     - [X] Boots entities implementation
-- [ ] Interfaces Implementation
+- [X] Interfaces Implementation
     - [X] Tradeable interface
     - [X] Equipable interface
     - [X] Attacker interface
@@ -64,7 +64,7 @@
     - [ ] Level entity implementation
     - [ ] Level-up logic
 - [ ] Inventory System
-    - [ ] Inventory entity implementation
+    - [X] Inventory entity implementation
     - [ ] Inventory management
     - [ ] Equipment system
 
