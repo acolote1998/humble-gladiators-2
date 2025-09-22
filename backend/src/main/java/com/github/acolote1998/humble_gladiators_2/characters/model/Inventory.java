@@ -1,6 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
-import com.github.acolote1998.humble_gladiators_2.item.model.*;
+import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,29 +19,29 @@ public class Inventory {
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
-    List<Armor> armors;
+    List<ArmorInstance> armors;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
-    List<Boots> boots;
+    List<BootsInstance> boots;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
-    List<Consumable> consumables;
+    List<ConsumableInstance> consumables;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
-    List<Helmet> helmets;
+    List<HelmetInstance> helmets;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
-    List<Shield> shields;
+    List<ShieldInstance> shields;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
-    List<Spell> spells;
+    List<SpellInstance> spells;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
-    List<Weapon> weapons;
+    List<WeaponInstance> weapons;
 }
