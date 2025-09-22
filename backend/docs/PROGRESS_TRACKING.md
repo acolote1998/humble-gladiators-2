@@ -42,7 +42,10 @@
     - [X] Weapon entity implementation
     - [X] Spell entity implementation
     - [X] Consumable entity implementation
-    - [ ] Equipment entities implementation
+    - [X] Helmet entities implementation
+    - [ ] Shield entities implementation
+    - [ ] Armor entities implementation
+    - [ ] Boots entities implementation
 - [ ] Interfaces Implementation
     - [X] Tradeable interface
     - [X] Equipable interface
