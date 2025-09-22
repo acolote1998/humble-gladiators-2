@@ -1,10 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Tradeable;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Usable;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,24 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Entity
+@Table(name = "consumable_template")
 @Slf4j
-public class ConsumableTemplate extends AbstractItem implements Usable, Tradeable, Discoverable {
-    @Override
-    public void use() {
-
-    }
-
-    @Override
-    public void discover() {
-    }
-
-    @Override
-    public void buy() {
-
-    }
-
-    @Override
-    public void sell() {
-
-    }
+public class ConsumableTemplate extends AbstractItem {
 }
