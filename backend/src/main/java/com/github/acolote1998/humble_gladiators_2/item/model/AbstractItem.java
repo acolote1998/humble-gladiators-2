@@ -1,9 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,4 +20,8 @@ public abstract class AbstractItem {
     private Boolean discovered;
     private Integer quantity;
     private Boolean equipped;
+    
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "requirement_id")
+    private Requirement requirement;
 }
