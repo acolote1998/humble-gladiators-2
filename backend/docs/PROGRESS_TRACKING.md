@@ -29,8 +29,8 @@
     - [ ] Campaign creation endpoint
     - [ ] Campaign CRUD operations
 - [ ] Requirements System
-    - [ ] Requirements entity implementation
-    - [ ] RequirementEntry entity implementation
+    - [X] Requirements entity implementation
+    - [X] RequirementEntry entity implementation
     - [ ] Requirement validation logic
 
 ## 📋 Phase 2: Item System
