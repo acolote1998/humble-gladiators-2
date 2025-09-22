@@ -1,0 +1,35 @@
+package com.github.acolote1998.humble_gladiators_2.item.model;
+
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Equippable;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Tradeable;
+
+public class Shield extends AbstractItem implements Discoverable, Equippable, Tradeable {
+    private Integer physicalDefense;
+    private Integer magicalDefense;
+
+    @Override
+    public void discover() {
+
+    }
+
+    @Override
+    public void equip() {
+
+    }
+
+    @Override
+    public void unequip() {
+
+    }
+
+    @Override
+    public void buy() {
+
+    }
+
+    @Override
+    public void sell() {
+
+    }
+}
