@@ -1,8 +1,9 @@
 package com.github.acolote1998.humble_gladiators_2.item.model;
 
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Attacker;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Equippable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Tradeable;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Usable;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,14 +13,28 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Entity
 @Slf4j
-public class Consumable extends AbstractItem implements Usable, Tradeable, Discoverable {
+public class Weapon extends AbstractItem implements Attacker, Discoverable, Equippable, Tradeable {
+    private Integer physicalDamage;
+    private Integer magicalDamage;
+
     @Override
-    public void use() {
+    public void attack() {
 
     }
 
     @Override
     public void discover() {
+
+    }
+
+    @Override
+    public void equip() {
+
+    }
+
+    @Override
+    public void unequip() {
+
     }
 
     @Override

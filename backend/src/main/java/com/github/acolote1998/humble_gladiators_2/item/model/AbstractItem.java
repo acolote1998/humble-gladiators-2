@@ -19,8 +19,6 @@ public abstract class AbstractItem {
     private Integer rarity;
     private Integer tier;
     private Integer value;
-    private Integer physicalDamage;
-    private Integer magicalDamage;
     private Boolean discovered;
     private Integer quantity;
     private Boolean equipped;
