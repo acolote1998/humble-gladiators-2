@@ -48,7 +48,7 @@
     - [X] Equipable interface
     - [X] Attacker interface
     - [X] Castable interface
-    - [ ] Usable interface
+    - [X] Usable interface
     - [X] Discoverable interface
 
 ## 📋 Phase 3: Character System
