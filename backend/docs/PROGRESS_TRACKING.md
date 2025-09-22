@@ -41,7 +41,7 @@
 - [ ] Item Types
     - [ ] Weapon entity implementation
     - [ ] Spell entity implementation
-    - [ ] Consumable entity implementation
+    - [X] Consumable entity implementation
     - [ ] Equipment entities implementation
 - [ ] Interfaces Implementation
     - [X] Tradeable interface
