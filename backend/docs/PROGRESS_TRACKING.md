@@ -45,7 +45,7 @@
     - [ ] Equipment entities implementation
 - [ ] Interfaces Implementation
     - [X] Tradeable interface
-    - [ ] Equipable interface
+    - [X] Equipable interface
     - [X] Attacker interface
     - [X] Castable interface
     - [ ] Usable interface
