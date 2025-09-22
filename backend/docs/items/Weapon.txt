@@ -1,4 +1,20 @@
-﻿Weapon extends AbstractItem, implements Tradeable, Equipable, Attackable, Discoverable
+﻿TEMPLATE vs INSTANCE SYSTEM
 
-Long campaignId
-Requirements requirements // Flexible key-value requirement system
+TEMPLATE:
+WeaponTemplate extends AbstractItem
+- Simple data storage for AI generation
+- No interfaces, no behavior
+- Stored in weapon_template table
+
+INSTANCE:
+WeaponInstance extends AbstractItem, implements Tradeable, Equipable, Attacker, Discoverable
+- Player-owned items with behavior
+- References WeaponTemplate via template_id
+- References Inventory via inventory_id
+- Stored in weapon_instance table
+
+Properties:
+- Integer physicalDamage
+- Integer magicalDamage
+- Long templateId (references WeaponTemplate)
+- Long inventoryId (references Inventory)

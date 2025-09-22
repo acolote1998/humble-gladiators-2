@@ -4,113 +4,122 @@
 
 1. **User Model & Authentication**
 
-    - User entity with email, preferredLanguage
-    - Basic authentication setup
-    - User registration/login endpoints
+   - User entity with email, preferredLanguage
+   - Basic authentication setup
+   - User registration/login endpoints
 
 2. **Campaign System**
 
-    - Campaign entity (id, userId, name, themes)
-    - Campaign creation endpoint
-    - Campaign management (CRUD operations)
+   - Campaign entity (id, userId, name, themes)
+   - Campaign creation endpoint
+   - Campaign management (CRUD operations)
 
 3. **Requirements System**
-    - Requirements entity (flexible key-value)
-    - RequirementEntry entity
-    - Requirement validation logic
+   - Requirements entity (flexible key-value)
+   - RequirementEntry entity
+   - Requirement validation logic
 
 ## Phase 2: Item System
 
 4. **AbstractItem Base**
 
-    - AbstractItem entity (name, description, rarity, tier, etc.)
-    - Quantity and equipped fields
-    - Discovery system integration
+   - AbstractItem entity (name, description, rarity, tier, etc.)
+   - Quantity and equipped fields
+   - Discovery system integration
 
-5. **Item Types**
+5. **Item Templates** ✅ COMPLETED
 
-    - Weapon entity (extends AbstractItem)
-    - Spell entity (extends AbstractItem)
-    - Consumable entity (extends AbstractItem)
-    - Equipment entities (Helmet, Shield, Armor, Boots)
+   - Template classes for AI-generated items
+   - WeaponTemplate, SpellTemplate, ConsumableTemplate
+   - Equipment templates (HelmetTemplate, ShieldTemplate, ArmorTemplate, BootsTemplate)
+   - Simple data storage extending AbstractItem (no interfaces)
 
-6. **Interfaces Implementation**
-    - Tradeable, Equipable, Attacker, Castable, Usable, Discoverable
-    - Interface method implementations
+6. **Item Instances** ✅ COMPLETED
+
+   - Instance classes for player-owned items
+   - WeaponInstance, SpellInstance, ConsumableInstance
+   - Equipment instances (HelmetInstance, ShieldInstance, ArmorInstance, BootsInstance)
+   - Extend AbstractItem with interfaces (Tradeable, Equipable, etc.)
+   - Reference templates via ManyToOne relationship
+
+7. **Template vs Instance Architecture** ✅ COMPLETED
+   - Separate packages for templates and instances
+   - Fixed JPA inheritance conflicts using composition
+   - Both template and instance tables in database
 
 ## Phase 3: Character System
 
-7. **Character Model**
+8. **Character Model**
 
-    - Character entity (stats, level, inventory, etc.)
-    - CharacterType enum (PLAYER/NPC)
-    - Character-Campaign relationships
+   - Character entity (stats, level, inventory, etc.)
+   - CharacterType enum (PLAYER/NPC)
+   - Character-Campaign relationships
 
-8. **Level System**
+9. **Level System**
 
-    - Level entity (experience, level progression)
-    - Level-up logic and stat increases
+   - Level entity (experience, level progression)
+   - Level-up logic and stat increases
 
-9. **Inventory System**
-    - Inventory entity (List<AbstractItem>)
+10. **Inventory System**
+    - Inventory entity (List<ItemInstance>)
     - Inventory management (add/remove items)
     - Equipment system (equip/unequip items)
 
 ## Phase 4: Game Mechanics
 
-10. **Battle System**
+11. **Battle System**
 
     - Battle entity (teams, turns, state)
     - Turn entity (actions, character tracking)
     - Action entity (damage, healing, effects)
 
-11. **Combat Logic**
+12. **Combat Logic**
     - Turn-based combat flow
     - Damage calculation
     - Status effects and buffs/debuffs
 
 ## Phase 5: AI Integration
 
-12. **AI Content Generation**
+13. **AI Content Generation**
     - Campaign theme-based content generation
-    - Item/Spell/Enemy generation
+    - Template generation (Item/Spell/Enemy templates)
     - Content validation and storage
 
 ## Phase 6: Discovery System
 
-13. **Discovery Logic**
+14. **Discovery Logic**
     - Item discovery tracking
     - Discovery UI/API endpoints
     - Achievement system integration
 
 ## Phase 7: Advanced Features
 
-14. **Battle Replay System**
+15. **Battle Replay System**
 
     - Turn reconstruction
     - Battle history storage
     - Replay viewing functionality
 
-15. **Trading System**
-    - Buy/sell functionality
+16. **Trading System**
+    - Buy/sell functionality (using templates)
     - Market/auction system
     - Gold management
 
 ## Phase 8: Polish & Optimization
 
-16. **Performance Optimization**
+17. **Performance Optimization**
 
     - Database indexing
     - Query optimization
     - Caching strategies
 
-17. **Testing & Documentation**
+18. **Testing & Documentation**
 
     - Unit tests
     - Integration tests
     - API documentation
 
-18. **Deployment & Monitoring**
+19. **Deployment & Monitoring**
     - Production deployment
     - Monitoring setup
     - Error tracking

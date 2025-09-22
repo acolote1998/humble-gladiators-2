@@ -1,4 +1,13 @@
 ﻿Inventory entity 
 
 Long id
-List<AbstractItem> items // All items extend AbstractItem - much cleaner design!
+List<WeaponInstance> weapons
+List<HelmetInstance> helmets
+List<ArmorInstance> armors
+List<BootsInstance> boots
+List<ShieldInstance> shields
+List<SpellInstance> spells
+List<ConsumableInstance> consumables
+
+// Each list uses @OneToMany with @JoinColumn(name = "inventory_id")
+// Items are instances, not templates - templates are AI-generated, instances are player-owned
