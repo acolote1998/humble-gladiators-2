@@ -39,8 +39,8 @@
     - [X] AbstractItem entity implementation
     - [ ] Discovery system integration
 - [ ] Item Types
-    - [ ] Weapon entity implementation
-    - [ ] Spell entity implementation
+    - [X] Weapon entity implementation
+    - [X] Spell entity implementation
     - [X] Consumable entity implementation
     - [ ] Equipment entities implementation
 - [ ] Interfaces Implementation
