@@ -1,4 +1,26 @@
-﻿Spell extends AbstractItem, implements Tradeable, Castable, Discoverable
+﻿TEMPLATE vs INSTANCE SYSTEM
 
-Long campaignId
-Requirements requirements // Flexible key-value requirement system
+TEMPLATE:
+SpellTemplate extends AbstractItem
+- Simple data storage for AI generation
+- No interfaces, no behavior
+- Stored in spell_template table
+
+INSTANCE:
+SpellInstance extends AbstractItem, implements Tradeable, Equipable, Castable, Discoverable
+- Player-owned items with behavior
+- References SpellTemplate via template_id
+- References Inventory via inventory_id
+- Stored in spell_instance table
+
+Properties:
+- Integer physicalDamage
+- Integer magicalDamage
+
+Methods:
+- cast()
+- buy()
+- sell()
+- discover()
+- equip()
+- unequip()

@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:16
-    container_name: postgres-db
+    container_name: humble-gladiators-2-postgres-db
     restart: always
     environment:
       POSTGRES_USER: aki
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - humble-gladiators-2-db-data:/var/lib/postgresql/data
 
 volumes:
-  db_data:
+  humble-gladiators-2-db-data:

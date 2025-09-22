@@ -1,4 +1,25 @@
-﻿THISCLASS extends AbstractItem, implements Tradeable, Equipable, Discoverable
+﻿TEMPLATE vs INSTANCE SYSTEM
 
-Long campaignId
-Requirements requirements // Flexible key-value requirement system
+TEMPLATE:
+HelmetTemplate/ShieldTemplate/ArmorTemplate/BootsTemplate extends AbstractItem
+- Simple data storage for AI generation
+- No interfaces, no behavior
+- Stored in helmet_template/shield_template/armor_template/boots_template tables
+
+INSTANCE:
+HelmetInstance/ShieldInstance/ArmorInstance/BootsInstance extends AbstractItem, implements Tradeable, Equipable, Discoverable
+- Player-owned items with behavior
+- References corresponding Template via template_id
+- References Inventory via inventory_id
+- Stored in helmet_instance/shield_instance/armor_instance/boots_instance tables
+
+Properties:
+- Integer physicalDefense
+- Integer magicalDefense
+
+Methods:
+- discover()
+- equip()
+- unequip()
+- buy()
+- sell()

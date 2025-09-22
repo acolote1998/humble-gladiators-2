@@ -1,8 +1,20 @@
-﻿Consumable extends AbstractItem, implements Usable, Tradeable, Discoverable
+﻿TEMPLATE vs INSTANCE SYSTEM
 
-Long campaignId
-Requirements requirements // Flexible key-value requirement system
-id
-use()
-buy()
-sell()
+TEMPLATE:
+ConsumableTemplate extends AbstractItem
+- Simple data storage for AI generation
+- No interfaces, no behavior
+- Stored in consumable_template table
+
+INSTANCE:
+ConsumableInstance extends AbstractItem, implements Usable, Tradeable, Discoverable
+- Player-owned items with behavior
+- References ConsumableTemplate via template_id
+- References Inventory via inventory_id
+- Stored in consumable_instance table
+
+Methods:
+- use()
+- buy()
+- sell()
+- discover()
