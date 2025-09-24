@@ -104,11 +104,11 @@
     - [ ] Item/Spell/Enemy generation
     - [ ] Content validation
 
-- [ ] Gemini AI Integration
+- [X] Gemini AI Integration
     - [X] Gemini Service Integration
     - [X] Gemini Response Dto Integration
-    - [ ] Gemini Controller Integration
-    - [ ] Gemini Controller Status Endpoint Integration
+    - [X] Gemini Controller Integration
+    - [X] Gemini Controller Status Endpoint Integration
 
 ## 📋 Phase 6: Discovery System
 

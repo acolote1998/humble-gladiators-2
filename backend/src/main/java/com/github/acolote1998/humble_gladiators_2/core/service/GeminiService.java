@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
+@Service
 public class GeminiService {
     @Value("${GEMINI_API_KEY}")
     private String apiKey;
@@ -21,8 +23,6 @@ public class GeminiService {
     // Gemini API endpoint for content generation
     private static final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
-    // Construct the full URL with API key
-    String fullUrl = URL + "?key=" + apiKey;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -41,13 +41,17 @@ public class GeminiService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
+        // Construct the full URL with API key
+        String fullUrl = URL + "?key=" + apiKey;
+
         try {
             ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(fullUrl, HttpMethod.POST, entity, GeminiResponseDto.class);
-
-            return Objects.requireNonNull(response.getBody())
+            String resultText = Objects.requireNonNull(response.getBody())
                     .candidates().get(0)
                     .content().parts().get(0)
                     .text();
+            log.info(resultText);
+            return resultText;
         } catch (Exception e) {
             log.error(e.getMessage());
             return "Error: Failed to communicate with Gemini API - " + e.getMessage();
