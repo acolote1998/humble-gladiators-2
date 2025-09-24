@@ -56,26 +56,32 @@ public class ImageGeneratorService {
         List<Pixel> resultPixels = new ArrayList<>();
         actions.forEach(drawingAction -> {
             switch (drawingAction.getDrawingMethod()) {
+                //SQUARE
                 case 0: {
                     resultPixels.addAll(DrawingAction.drawSquare(drawingAction));
                     break;
                 }
+                //RECTANGLE
                 case 1: {
                     resultPixels.addAll(DrawingAction.drawRectangle(drawingAction));
                     break;
                 }
+                //HORIZONTAL LINE
                 case 2: {
                     resultPixels.addAll(DrawingAction.drawHorizontalLine(drawingAction));
                     break;
                 }
+                //VERTICAL LINE
                 case 3: {
                     resultPixels.addAll(DrawingAction.drawVerticalLine(drawingAction));
                     break;
                 }
+                //CIRCLE
                 case 4: {
                     resultPixels.addAll(DrawingAction.drawCircle(drawingAction));
                     break;
                 }
+                //HOLLOW SQUARE
                 case 5: {
                     resultPixels.addAll(DrawingAction.drawHollowSquare(drawingAction));
                     break;

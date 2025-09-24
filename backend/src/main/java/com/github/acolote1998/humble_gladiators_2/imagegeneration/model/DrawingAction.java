@@ -16,8 +16,6 @@ public class DrawingAction {
     private int green;
     private int blue;
     private int alpha;
-
-    // Optional parameters for shapes
     private int size;       // For square or hollow square
     private int width;      // For rectangle
     private int height;     // For rectangle
@@ -38,7 +36,7 @@ public class DrawingAction {
     }
 
 
-    //DRAWING METHOD 0
+    //DRAWING METHOD "0" - SQUARE
     public static List<Pixel> drawSquare(DrawingAction action) {
         List<Pixel> pixelsToDraw = new ArrayList<>();
         for (int dx = 0; dx < action.size; dx++) {
@@ -49,7 +47,7 @@ public class DrawingAction {
         return pixelsToDraw;
     }
 
-    //DRAWING METHOD 1
+    //DRAWING METHOD "1" - RECTANGLE
     public static List<Pixel> drawRectangle(DrawingAction action) {
         List<Pixel> pixelsToDraw = new ArrayList<>();
         int width = action.getWidth();
@@ -69,7 +67,7 @@ public class DrawingAction {
         return pixelsToDraw;
     }
 
-    //DRAWING METHOD 2
+    //DRAWING METHOD "2" - HORIZONTAL LINE
     public static List<Pixel> drawHorizontalLine(DrawingAction action) {
         List<Pixel> pixelsToDraw = new ArrayList<>();
         int length = action.getWidth(); // width field used as line length
@@ -86,7 +84,7 @@ public class DrawingAction {
         return pixelsToDraw;
     }
 
-    //DRAWING METHOD 3
+    //DRAWING METHOD "3" - VERTICAL LINE
     public static List<Pixel> drawVerticalLine(DrawingAction action) {
         List<Pixel> pixelsToDraw = new ArrayList<>();
         int length = action.getHeight(); // use height as line length
@@ -105,7 +103,7 @@ public class DrawingAction {
         return pixelsToDraw;
     }
 
-    //DRAWING METHOD 4
+    //DRAWING METHOD "4" - CIRCLE
     public static List<Pixel> drawCircle(DrawingAction action) {
         List<Pixel> pixelsToDraw = new ArrayList<>();
         int radius = action.getRadius();
@@ -129,7 +127,7 @@ public class DrawingAction {
         return pixelsToDraw;
     }
 
-    //DRAWING METHOD 5
+    //DRAWING METHOD "5" - CIRCLE
     public static List<Pixel> drawHollowSquare(DrawingAction action) {
         List<Pixel> pixelsToDraw = new ArrayList<>();
         int size = action.getSize();
