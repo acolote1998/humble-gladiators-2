@@ -1,7 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
-import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -33,13 +31,7 @@ public abstract class AbstractCharacter implements Discoverable {
 
 //  private  Campaign campaign
 
-// private   Level level
-
     private String name;
-
-// private   CharClass charClass;
-
-// private    CharRace charRace;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Inventory inventory;

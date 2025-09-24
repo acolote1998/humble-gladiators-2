@@ -8,8 +8,6 @@ name
 Level levelId
 height
 weight
-classId
-raceId
 constitution 
 intelligence
 dexterity 
