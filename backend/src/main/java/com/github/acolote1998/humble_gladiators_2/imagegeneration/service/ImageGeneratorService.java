@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.imagegeneration.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.Pixel;
@@ -33,8 +34,8 @@ public class ImageGeneratorService {
     }
 
     //    public List<DrawingAction> getActionsForDrawing() {
-    public String getActionsForDrawing() {
-        return geminiservice.generateDrawingActionsTest();
+    public List<DrawingAction> getActionsForDrawing(String imageToGenerate) throws JsonProcessingException {
+        return geminiservice.generateDrawingActionsTest(imageToGenerate);
     }
 
     public static void GenerateImage(List<Pixel> pixels, String outputPath, Integer width, Integer height) {

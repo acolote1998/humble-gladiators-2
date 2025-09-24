@@ -1,9 +1,13 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -21,11 +25,18 @@ public class GeminiService {
     @Value("${GEMINI_API_KEY}")
     private String apiKey;
 
+    ObjectMapper mapper;
+
     // Gemini API endpoint for content generation
     private static final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
 
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Autowired
+    public GeminiService(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public String sendTestPrompt() {
 
@@ -60,12 +71,20 @@ public class GeminiService {
 
     }
 
-    //    public List<DrawingAction> generateDrawingActionsTest() {
-    public String generateDrawingActionsTest() {
+    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate) throws JsonProcessingException {
 
-        String prompt = """
+        String prompt = String.format("""
                 Context: You need to generate a List<DrawingAction> that will be used to generate a buffered image in a Java program.
-                The List<DrawingAction> generated should after execution generate dragon in RPG style.
+                The List<DrawingAction> generated should after execution generate a detailed RPG-style object.
+                
+                The object to generate is: " %s "
+                
+                QUALITY REQUIREMENTS:
+                - Generate 30 to 80 DrawingAction objects for a clear, recognizable image
+                - Use color variations and shading (different tones of the same color family)
+                - Overlap shapes intentionally to create depth and detail
+                - Layer shapes on top of each other for enhanced visual effects
+                - Keep designs simple and clear for 100x100 pixel canvas
                 
                 IMPORTANT: You must ONLY return the List<DrawingAction> creation code. Do NOT create your own DrawingAction class or any other classes.
                 
@@ -87,7 +106,15 @@ public class GeminiService {
                 - 11: DIAMOND (uses size parameter)
                 
                 Color Values: All color values (red, green, blue, alpha) must be between 0-255
-                Canvas Size: Assume a 100x100 pixel canvas
+                Canvas Size: 100x100 pixels - KEEP DESIGNS SIMPLE AND CLEAR
+                IMPORTANT: This is a small canvas, so focus on creating recognizable, simple shapes rather than complex details
+                
+                COLOR AND SHADING GUIDELINES:
+                - Use multiple shades of the same color family for depth and realism
+                - Create depth with darker colors for shadows and lighter colors for highlights
+                - Use complementary colors for details and accents
+                - Vary alpha values (200-255) for subtle transparency effects
+                - Choose appropriate color schemes for the RPG object (metallic for weapons, earthy for creatures, etc.)
                 
                 Methods that you can use:
                 //DRAWING METHOD "0" - SQUARE
@@ -216,7 +243,7 @@ public class GeminiService {
                         int size = action.getSize();
                         int centerX = action.getInitialX();
                         int centerY = action.getInitialY();
-                        
+                
                         for (int dy = 0; dy < size; dy++) {
                             int width = dy + 1;
                             int startX = centerX - dy / 2;
@@ -240,7 +267,7 @@ public class GeminiService {
                         int size = action.getSize();
                         int centerX = action.getInitialX();
                         int centerY = action.getInitialY();
-                        
+                
                         for (int dy = 0; dy < size; dy++) {
                             int width = size - dy;
                             int startX = centerX - (size - dy - 1) / 2;
@@ -264,7 +291,7 @@ public class GeminiService {
                         int size = action.getSize();
                         int centerX = action.getInitialX();
                         int centerY = action.getInitialY();
-                        
+                
                         for (int dx = 0; dx < size; dx++) {
                             int height = dx + 1;
                             int startY = centerY - dx / 2;
@@ -288,7 +315,7 @@ public class GeminiService {
                         int size = action.getSize();
                         int centerX = action.getInitialX();
                         int centerY = action.getInitialY();
-                        
+                
                         for (int dx = 0; dx < size; dx++) {
                             int height = size - dx;
                             int startY = centerY - (size - dx - 1) / 2;
@@ -312,7 +339,7 @@ public class GeminiService {
                         int size = action.getSize();
                         int centerX = action.getInitialX();
                         int centerY = action.getInitialY();
-                        
+                
                         // Draw diamond using two triangles (up and down)
                         for (int dy = 0; dy < size; dy++) {
                             int width = dy + 1;
@@ -328,7 +355,7 @@ public class GeminiService {
                                 ));
                             }
                         }
-                        
+                
                         for (int dy = 1; dy < size; dy++) {
                             int width = size - dy;
                             int startX = centerX - (size - dy - 1) / 2;
@@ -453,21 +480,24 @@ public class GeminiService {
                     }
                 
                 REQUIRED OUTPUT FORMAT:
-                Return ONLY this format - no explanations, no additional code:
+                Return ONLY a JSON array in this exact format:
+                ```json
+                [
+                    {"drawingMethod": 0, "initialX": 50, "initialY": 50, "red": 255, "green": 255, "blue": 0, "alpha": 255, "size": 10, "width": 0, "height": 0, "radius": 0},
+                    {"drawingMethod": 4, "initialX": 50, "initialY": 50, "red": 0, "green": 0, "blue": 255, "alpha": 255, "size": 0, "width": 0, "height": 0, "radius": 15}
+                ]
+                ```
                 
-                ```
-                List<DrawingAction> actions = new ArrayList<>();
-                actions.add(new DrawingAction(4, 50, 50, 139, 69, 19, 255, 0, 0, 0, 25)); // Dragon body (brown circle)
-                actions.add(new DrawingAction(7, 50, 25, 139, 69, 19, 255, 8, 0, 0, 0)); // Dragon head (triangle up)
-                actions.add(new DrawingAction(6, 45, 30, 255, 0, 0, 255, 0, 0, 0, 0)); // Left eye (red dot)
-                actions.add(new DrawingAction(6, 55, 30, 255, 0, 0, 255, 0, 0, 0, 0)); // Right eye (red dot)
-                actions.add(new DrawingAction(11, 30, 40, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon scale (diamond)
-                actions.add(new DrawingAction(11, 70, 40, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon scale (diamond)
-                actions.add(new DrawingAction(8, 50, 75, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon tail (triangle down)
-                ```
+                CREATIVE GUIDELINES:
+                - Create SIMPLE, RECOGNIZABLE objects that fit well in 100x100 pixels
+                - Focus on the ESSENTIAL features that make the object recognizable
+                - Use color variations to create depth and character
+                - Overlap shapes strategically to build recognizable forms
+                - Think about what makes this object instantly recognizable at small size
+                - Avoid over-complicating - simple is better for small canvas
                 
                 Instructions:
-                1. Create a List<DrawingAction> for a dragon in RPG style
+                1. Create a List<DrawingAction> for a clear "%s" with 30 to 80 actions
                 2. Use the exact constructor format shown above
                 3. Use appropriate drawing methods (0-11)
                 4. Set unused parameters to 0
@@ -475,7 +505,10 @@ public class GeminiService {
                 6. Do NOT include any class definitions, imports, or explanations
                 7. Do NOT use setters - use the constructor only
                 8. Make sure coordinates fit within 100x100 canvas
-                """;
+                9. Be creative and artistic - create something that looks like the requested object
+                10. Use color variations naturally to create depth and character
+                11. Overlap shapes organically to build detailed, recognizable forms
+                """, imageToGenerate, imageToGenerate);
 
         // Prepare the request body according to Gemini API specification
         Map<String, Object> body = Map.of(
@@ -497,8 +530,10 @@ public class GeminiService {
                     .candidates().get(0)
                     .content().parts().get(0)
                     .text();
-            log.info(resultText);
-            return resultText;
+            resultText = resultText.replaceAll("`", "").replaceAll("json", "");
+            List<DrawingAction> resultList = mapper.readValue(resultText, new TypeReference<List<DrawingAction>>() {
+            });
+            return resultList;
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
