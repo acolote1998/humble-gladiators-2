@@ -3,8 +3,8 @@ id
 List<Turns (or actions ?)> (we could use this to “reconstruct’ the battle to its current state
 List<CharacterWhenStarted> or maybe just List<Character> startingTeamOne
 List<CharacterWhenStarted> or maybe just List<Character> startingTeamTwo
-List<Characters> activeTeamOne
-List<Characters or enemies?> activeTeamTwo
+List<Characters> winningCharacters
+List<Characters or enemies?> losingCharacters
 Character currentCharToPlay
 Boolean stillActive
 @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA

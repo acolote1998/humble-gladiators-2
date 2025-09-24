@@ -48,6 +48,8 @@ public class Inventory {
     @JoinColumn(name = "inventory_id")
     List<WeaponInstance> weapons;
 
+    Long gold;
+
     @CreationTimestamp
     LocalDateTime createdAt; // Auto-managed by JPA
     @UpdateTimestamp

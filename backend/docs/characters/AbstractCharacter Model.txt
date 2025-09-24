@@ -18,14 +18,10 @@ speed
 luck 
 maxHp
 currentHp
-localVictories
-onlineVictories
-totalVictories
-List<Character> defeatedEnemies
-List<Character> diedAgainst
+List<Battle> winningBattles
+List<Battle> losingBattles
 Inventory inventoryId
 List<spells> availableSpells
-Int gold
 CharacterType characterType // PLAYER or NPC (enemies are NPCs)
 Int goldReward // For NPCs - gold given when defeated
 Int experienceReward // For NPCs - experience given when defeated
