@@ -17,12 +17,12 @@
 ## ✅ Completed (Implementation Phase)
 
 - [x] **Template vs Instance Architecture**
-  - [x] Created separate packages for templates and instances
-  - [x] Template classes: Simple data storage extending AbstractItem
-  - [x] Instance classes: Player-owned items with interfaces
-  - [x] Fixed JPA inheritance conflicts using composition
-  - [x] Both template and instance tables created in database
-  - [x] Resolved @OneToMany mapped superclass error
+    - [x] Created separate packages for templates and instances
+    - [x] Template classes: Simple data storage extending AbstractItem
+    - [x] Instance classes: Player-owned items with interfaces
+    - [x] Fixed JPA inheritance conflicts using composition
+    - [x] Both template and instance tables created in database
+    - [x] Resolved @OneToMany mapped superclass error
 
 ## 🔄 In Progress
 
@@ -31,85 +31,90 @@
 ## 📋 Phase 1: Core Foundation
 
 - [ ] User Model & Authentication
-  - [ ] User entity implementation
-  - [ ] Authentication setup
-  - [ ] User registration/login endpoints
+    - [ ] User entity implementation
+    - [ ] Authentication setup
+    - [ ] User registration/login endpoints
 - [ ] Campaign System
-  - [ ] Campaign entity implementation
-  - [ ] Campaign creation endpoint
-  - [ ] Campaign CRUD operations
+    - [ ] Campaign entity implementation
+    - [ ] Campaign creation endpoint
+    - [ ] Campaign CRUD operations
 - [ ] Requirements System
-  - [x] Requirements entity implementation
-  - [x] RequirementEntry entity implementation
-  - [ ] Requirement validation logic
+    - [x] Requirements entity implementation
+    - [x] RequirementEntry entity implementation
+    - [ ] Requirement validation logic
 
 ## 📋 Phase 2: Item System
 
 - [x] AbstractItem Base
-  - [x] AbstractItem entity implementation
-  - [ ] Discovery system integration
+    - [x] AbstractItem entity implementation
+    - [ ] Discovery system integration
 - [x] Item Templates
-  - [x] WeaponTemplate entity implementation
-  - [x] SpellTemplate entity implementation
-  - [x] ConsumableTemplate entity implementation
-  - [x] HelmetTemplate entity implementation
-  - [x] ShieldTemplate entity implementation
-  - [x] ArmorTemplate entity implementation
-  - [x] BootsTemplate entity implementation
+    - [x] WeaponTemplate entity implementation
+    - [x] SpellTemplate entity implementation
+    - [x] ConsumableTemplate entity implementation
+    - [x] HelmetTemplate entity implementation
+    - [x] ShieldTemplate entity implementation
+    - [x] ArmorTemplate entity implementation
+    - [x] BootsTemplate entity implementation
 - [x] Item Instances
-  - [x] WeaponInstance entity implementation
-  - [x] SpellInstance entity implementation
-  - [x] ConsumableInstance entity implementation
-  - [x] HelmetInstance entity implementation
-  - [x] ShieldInstance entity implementation
-  - [x] ArmorInstance entity implementation
-  - [x] BootsInstance entity implementation
+    - [x] WeaponInstance entity implementation
+    - [x] SpellInstance entity implementation
+    - [x] ConsumableInstance entity implementation
+    - [x] HelmetInstance entity implementation
+    - [x] ShieldInstance entity implementation
+    - [x] ArmorInstance entity implementation
+    - [x] BootsInstance entity implementation
 - [x] Interfaces Implementation
-  - [x] Tradeable interface
-  - [x] Equipable interface
-  - [x] Attacker interface
-  - [x] Castable interface
-  - [x] Usable interface
-  - [x] Discoverable interface
+    - [x] Tradeable interface
+    - [x] Equipable interface
+    - [x] Attacker interface
+    - [x] Castable interface
+    - [x] Usable interface
+    - [x] Discoverable interface
 
 ## 📋 Phase 3: Character System
 
 - [ ] Character Model
-  - [ ] Character entity implementation
-  - [ ] CharacterType enum
-  - [ ] Character-Campaign relationships
+    - [ ] Character entity implementation
+    - [ ] CharacterType enum
+    - [ ] Character-Campaign relationships
 - [ ] Level System
-  - [ ] Level entity implementation
-  - [ ] Level-up logic
+    - [ ] Level entity implementation
+    - [ ] Level-up logic
 - [ ] Inventory System
-  - [x] Inventory entity implementation
-  - [ ] Inventory management
-  - [ ] Equipment system
+    - [x] Inventory entity implementation
+    - [ ] Inventory management
+    - [ ] Equipment system
 
 ## 📋 Phase 4: Game Mechanics
 
 - [ ] Battle System
-  - [ ] Battle entity implementation
-  - [ ] Turn entity implementation
-  - [ ] Action entity implementation
+    - [ ] Battle entity implementation
+    - [ ] Turn entity implementation
+    - [ ] Action entity implementation
 - [ ] Combat Logic
-  - [ ] Turn-based combat flow
-  - [ ] Damage calculation
-  - [ ] Status effects
+    - [ ] Turn-based combat flow
+    - [ ] Damage calculation
+    - [ ] Status effects
 
 ## 📋 Phase 5: AI Integration
 
 - [ ] AI Content Generation
-  - [ ] Campaign theme-based generation
-  - [ ] Item/Spell/Enemy generation
-  - [ ] Content validation
+    - [ ] Campaign theme-based generation
+    - [ ] Item/Spell/Enemy generation
+    - [ ] Content validation
+
+- [ ] Gemini AI Integration
+    - [ ] Gemini Service Integration
+    - [ ] Gemini Controller Integration
+    - [ ] Gemini Controller Status Endpoint Integration
 
 ## 📋 Phase 6: Discovery System
 
 - [ ] Discovery Logic
-  - [ ] Item discovery tracking
-  - [ ] Discovery API endpoints
-  - [ ] Achievement system
+    - [ ] Item discovery tracking
+    - [ ] Discovery API endpoints
+    - [ ] Achievement system
 
 ## 📋 Phase 7: Advanced Features
 
