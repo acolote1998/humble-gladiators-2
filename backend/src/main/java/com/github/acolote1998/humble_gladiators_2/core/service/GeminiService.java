@@ -71,13 +71,13 @@ public class GeminiService {
 
     }
 
-    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate) throws JsonProcessingException {
+    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException {
         log.info("Starting List<DrawingAction> generation attempt");
         String prompt = String.format("""
                 Generate a JSON array of drawing actions to create a %s image.
                 
                 HOW THE SYSTEM WORKS:
-                - Each DrawingAction creates pixels that get added to a 800x800 canvas
+                - Each DrawingAction creates pixels that get added to a %sx%s canvas
                 - Shapes are drawn in order: first action = background layer, last action = foreground layer
                 - Later shapes can overlap and cover earlier ones (this creates depth and detail)
                 - Each pixel has exact coordinates (x,y) and RGBA color values
@@ -89,7 +89,8 @@ public class GeminiService {
                 - Use color variations and shading (different tones of the same color family)
                 - Overlap shapes intentionally to create depth and detail
                 - Layer shapes on top of each other for enhanced visual effects
-                - Create detailed designs suitable for 800x800 pixel canvas
+                - Create detailed designs suitable for %sx%s pixel canvas
+                - You must NEVER fill the background with colours. It must remain unfilled so the final background is transparent.
                 
                 REQUIRED JSON FORMAT:
                 Return ONLY a valid JSON array in this exact format (no explanations, no markdown, no code blocks):
@@ -132,7 +133,7 @@ public class GeminiService {
                 
                 PARAMETER DETAILS:
                 - Color values (red, green, blue, alpha): 0-255
-                - Coordinates (initialX, initialY): 0-599 (800x800 canvas)
+                - Coordinates (initialX, initialY): 0-%s (%sx%s canvas)
                 
                 METHOD-SPECIFIC PARAMETERS:
                 - SQUARE (0): size = square side length (e.g., 20 for 20x20 square)
@@ -187,7 +188,7 @@ public class GeminiService {
                 5. FINAL TOUCHES: Add any decorative elements, sparkles, or accent details
                 
                 VISUAL COMPOSITION RULES:
-                - Center important elements around coordinates 400,400 (canvas center)
+                - Center important elements around coordinates (%s/2),(%s/2) (canvas center)
                 - Use larger shapes (30-50 pixels) for main body parts
                 - Use medium shapes (15-25 pixels) for features and limbs
                 - Use small shapes (5-15 pixels) for details and textures
@@ -197,12 +198,12 @@ public class GeminiService {
                 - Keep background transparent - only draw the object itself
                 
                 CREATIVE GUIDELINES:
-                - Create detailed, complex objects that take advantage of the 800x800 pixel canvas
+                - Create detailed, complex objects that take advantage of the %sx%s pixel canvas
                 - Focus on creating rich textures, intricate patterns, and layered details
                 - Use color variations to create realistic depth, shadows, highlights, and material effects
                 - Think about the object's anatomy, materials, textures, and character in detail
                 - Create intricate designs with many layers and fine details
-                """, imageToGenerate, imageToGenerate, imageToGenerate);
+                """, imageToGenerate, width, height, width, height, width, width, height, width, height, width, height);
 
         // Prepare the request body according to Gemini API specification
         Map<String, Object> body = Map.of(

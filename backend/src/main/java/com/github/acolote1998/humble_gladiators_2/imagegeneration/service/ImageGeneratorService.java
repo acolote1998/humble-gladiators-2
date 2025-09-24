@@ -35,11 +35,14 @@ public class ImageGeneratorService {
     }
 
     //    public List<DrawingAction> getActionsForDrawing() {
-    public List<DrawingAction> getActionsForDrawing(String imageToGenerate) throws JsonProcessingException {
-        return geminiservice.generateDrawingActionsTest(imageToGenerate);
+    public List<DrawingAction> getActionsForDrawing(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException {
+        return geminiservice.generateDrawingActionsTest(imageToGenerate, width, height);
     }
 
-    public static void GenerateImage(List<Pixel> pixels, String outputPath, Integer width, Integer height) {
+    public void generateImage(String promptToGenerate, Integer width, Integer height) throws JsonProcessingException {
+        List<DrawingAction> actions = getActionsForDrawing(promptToGenerate, width, height);
+        List<Pixel> pixels = generatePixelsForImage(actions);
+        String outputPath = "fullGenerated.png";
         try {
 
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
