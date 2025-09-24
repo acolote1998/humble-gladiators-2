@@ -1,9 +1,16 @@
-﻿Campaign
-        id
-        userId
-        String name
-        List <Themes>
-        @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
-        @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
-        // Note: Items, spells, enemies, etc. are now separate entities with campaignId foreign key
-        // This prevents the "god object" problem while maintaining campaign uniqueness
+﻿Campaign (@Entity)
+
+Long id
+String userId // User identifier from Clerk
+String name // Campaign name
+@Embedded Theme theme // Campaign theme settings
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+
+JPA Configuration:
+- Uses Lombok @Getter and @Setter annotations
+- Uses @Slf4j for logging
+- Theme is embedded rather than a separate entity
+
+Note: Items, spells, enemies, etc. are now separate entities with campaignId foreign key
+This prevents the "god object" problem while maintaining campaign uniqueness

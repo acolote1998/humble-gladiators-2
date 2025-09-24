@@ -1,16 +1,21 @@
 ﻿Inventory entity (@Entity)
 
-Long id
-@OneToMany List<WeaponInstance> weapons
-@OneToMany List<HelmetInstance> helmets
-@OneToMany List<ArmorInstance> armors
-@OneToMany List<BootsInstance> boots
-@OneToMany List<ShieldInstance> shields
-@OneToMany List<SpellInstance> spells
-@OneToMany List<ConsumableInstance> consumables
-Long gold
+Long id // Primary key
+@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) List<WeaponInstance> weapons
+@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) List<HelmetInstance> helmets
+@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) List<ArmorInstance> armors
+@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) List<BootsInstance> boots
+@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) List<ShieldInstance> shields
+@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) List<SpellInstance> spells
+@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY) List<ConsumableInstance> consumables
+Long gold // Amount of gold in inventory
 @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
 @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
 
-// Each list uses @OneToMany with @JoinColumn(name = "inventory_id") and CascadeType.PERSIST
-// Items are instances, not templates - templates are AI-generated, instances are player-owned
+JPA Configuration:
+- Uses Lombok @Getter and @Setter annotations
+- Uses @Slf4j for logging
+- Each list uses @OneToMany with @JoinColumn(name = "inventory_id") and CascadeType.PERSIST
+- All relationships use lazy fetching for performance
+
+Note: Items are instances, not templates - templates are AI-generated, instances are player-owned

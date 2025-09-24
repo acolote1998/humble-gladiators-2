@@ -1,12 +1,22 @@
-Abstract Class AbstractItem
+AbstractItem (@MappedSuperclass)
 
-String name
-String description
-Int rarity
-Int tier
-Int value
-Int quantity // For stackable items (potions, arrows, etc.)
-Int physicalDamage
-Int magicalDamage
-Boolean discovered
+Long id // Primary key
+String name // Item name
+String description // Item description
+Integer rarity // Item rarity level
+Integer tier // Item tier level
+Integer value // Item monetary value
+Boolean discovered // Whether item has been discovered
+Integer quantity // For stackable items (potions, arrows, etc.)
 Boolean equipped // Whether item is currently equipped
+@ManyToOne(fetch = FetchType.LAZY) Campaign campaign // Campaign this item belongs to
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) Requirement requirement // Item requirements
+
+JPA Configuration:
+- Uses Lombok @Getter and @Setter annotations
+- Campaign relationship uses lazy fetching for performance
+- Requirement relationship uses lazy fetching and cascade all for data integrity
+
+Note: Physical and magical damage are now specific to item instances (WeaponInstance, SpellInstance) rather than the abstract class

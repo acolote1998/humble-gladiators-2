@@ -1,19 +1,23 @@
 ﻿Battle entity (@Entity)
 
 Long id
-@OneToMany List<Turn> turns // All turns in this battle for reconstruction
-@OneToMany List<CharacterSnapshot> startingTeamOne // Snapshot of team 1 at battle start
-@OneToMany List<CharacterSnapshot> startingTeamTwo // Snapshot of team 2 at battle start
-@OneToMany List<CharacterInstance> winningTeam // Populated after battle completion
-@OneToMany List<CharacterInstance> losingTeam // Populated after battle completion
+@ManyToOne(fetch = FetchType.LAZY) Campaign campaign // Campaign this battle belongs to
+@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) List<Turn> turns // All turns in this battle for reconstruction
+@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) List<CharacterSnapshot> startingTeamOne // Snapshot of team 1 at battle start
+@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) List<CharacterSnapshot> startingTeamTwo // Snapshot of team 2 at battle start
+@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) List<CharacterInstance> winningTeam // Populated after battle completion
+@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) List<CharacterInstance> losingTeam // Populated after battle completion
 @ManyToOne CharacterInstance currentCharacterToPlay // Current character whose turn it is
 boolean ongoing // Whether battle is still active
 @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
 @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
 
 JPA Configuration:
+- Uses Lombok @Getter and @Setter annotations
+- Uses @Slf4j for logging
 - All @OneToMany relationships use FetchType.LAZY and CascadeType.ALL
 - Proper @JoinColumn mappings for database relationships
+- Campaign relationship uses lazy fetching for performance
 
 Battle Flow:
 1. Battle starts - system creates CharacterSnapshots of all participants

@@ -1,15 +1,22 @@
-﻿AbstractCharacter (MappedSuperclass)
+﻿AbstractCharacter (@MappedSuperclass)
 
-id (Long)
-userId (Long) // from Clerk
+Long id // Primary key
+Long userId // User identifier from Clerk
 @Embedded Stats stats // Contains all character attributes and level info
-name (String)
-@OneToOne Inventory inventory
-CharacterType characterType // PLAYER or NPC (enemies are NPCs)
+@ManyToOne(fetch = FetchType.LAZY) Campaign campaign // Campaign this character belongs to
+String name // Character name
+@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) Inventory inventory // Character's inventory
+CharacterType characterType // PLAYER, NPC, or SNAPSHOT
 Integer goldReward // For NPCs - gold given when defeated
 Integer expReward // For NPCs - experience given when defeated
 @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
 @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+
+JPA Configuration:
+- Uses Lombok @Getter and @Setter annotations
+- Uses @Slf4j for logging
+- Campaign relationship uses lazy fetching for performance
+- Inventory relationship uses lazy fetching and cascade all for data integrity
 
 Stats (@Embeddable):
 - constitution (int)
