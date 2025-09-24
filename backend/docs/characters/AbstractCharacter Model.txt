@@ -27,9 +27,9 @@ Stats (@Embeddable):
 - expForNextLevel (int)
 
 CharacterInstance extends AbstractCharacter implements Discoverable:
-- List<Battle> victories
-- List<Battle> defeats
 - Boolean discovered
+
+Note: Victory/defeat tracking is handled through Battle.winningTeam and Battle.losingTeam collections
 
 CharacterSnapshot extends AbstractCharacter:
 - Used to capture character state at battle start
