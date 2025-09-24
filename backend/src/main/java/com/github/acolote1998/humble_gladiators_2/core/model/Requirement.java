@@ -22,6 +22,10 @@ public class Requirement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "campaign_id")
+    private Campaign campaign;
+
     @OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL)
     private List<RequirementEntry> requirements = new ArrayList<>();
 

@@ -27,6 +27,10 @@ public class RequirementEntry {
 
     private String value;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "campaign_id")
+    private Campaign campaign;
+
     @ManyToOne
     @JoinColumn(name = "requirements_id")
     Requirement requirement;

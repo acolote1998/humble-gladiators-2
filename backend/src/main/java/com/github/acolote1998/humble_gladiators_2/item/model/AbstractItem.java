@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.model;
 
+import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,6 +25,11 @@ public abstract class AbstractItem {
     private Boolean discovered;
     private Integer quantity;
     private Boolean equipped;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "campaign_id")
+    private Campaign campaign;
+    
     @CreationTimestamp
     LocalDateTime createdAt; // Auto-managed by JPA
     @UpdateTimestamp

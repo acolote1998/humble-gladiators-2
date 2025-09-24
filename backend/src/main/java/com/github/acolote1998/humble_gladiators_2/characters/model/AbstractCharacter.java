@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
+import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +26,9 @@ public abstract class AbstractCharacter {
     @Embedded
     private Stats stats;
 
-//  private  Campaign campaign
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "campaign_id")
+    private Campaign campaign;
 
     private String name;
 
