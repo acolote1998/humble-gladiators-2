@@ -72,7 +72,7 @@ public class GeminiService {
     }
 
     public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate) throws JsonProcessingException {
-
+        log.info("Starting List<DrawingAction> generation attempt");
         String prompt = String.format("""
                 Context: You need to generate a List<DrawingAction> that will be used to generate a buffered image in a Java program.
                 The List<DrawingAction> generated should after execution generate a detailed RPG-style object.
@@ -533,6 +533,7 @@ public class GeminiService {
             resultText = resultText.replaceAll("`", "").replaceAll("json", "");
             List<DrawingAction> resultList = mapper.readValue(resultText, new TypeReference<List<DrawingAction>>() {
             });
+            log.info("Success. List<DrawingAction> generated" + resultList.size() + " actions");
             return resultList;
         } catch (Exception e) {
             log.error(e.getMessage());
