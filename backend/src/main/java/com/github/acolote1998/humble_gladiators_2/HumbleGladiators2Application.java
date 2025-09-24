@@ -16,15 +16,13 @@ public class HumbleGladiators2Application {
     public static void main(String[] args) {
 
         List<DrawingAction> actions = new ArrayList<>();
-        actions.add(new DrawingAction(1, 30, 20, 0, 100, 0, 255, 0, 40, 50, 0)); // Body
-        actions.add(new DrawingAction(0, 20, 20, 0, 100, 0, 255, 10, 0, 0, 0)); // Head
-        actions.add(new DrawingAction(3, 20, 10, 0, 50, 0, 255, 0, 0, 10, 0)); // Horn 1
-        actions.add(new DrawingAction(3, 30, 10, 0, 50, 0, 255, 0, 0, 10, 0)); // Horn 2
-        actions.add(new DrawingAction(2, 70, 40, 100, 0, 0, 255, 0, 15, 0, 0)); // Tail
-        actions.add(new DrawingAction(0, 65, 35, 100, 0, 0, 255, 5, 0, 0, 0)); // Tail tip
-        actions.add(new DrawingAction(1, 40, 70, 100, 0, 0, 255, 0, 10, 5, 0)); // Feet 1
-        actions.add(new DrawingAction(1, 60, 70, 100, 0, 0, 255, 0, 10, 5, 0)); // Feet 2
-        actions.add(new DrawingAction(3, 70, 25, 255, 0, 0, 255, 0, 0, 15, 0)); // Wing
+        actions.add(new DrawingAction(4, 50, 50, 139, 69, 19, 255, 0, 0, 0, 25)); // Dragon body (brown circle)
+        actions.add(new DrawingAction(7, 50, 25, 139, 69, 19, 255, 8, 0, 0, 0)); // Dragon head (triangle up)
+        actions.add(new DrawingAction(6, 45, 30, 255, 0, 0, 255, 0, 0, 0, 0)); // Left eye (red dot)
+        actions.add(new DrawingAction(6, 55, 30, 255, 0, 0, 255, 0, 0, 0, 0)); // Right eye (red dot)
+        actions.add(new DrawingAction(11, 30, 40, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon scale (diamond)
+        actions.add(new DrawingAction(11, 70, 40, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon scale (diamond)
+        actions.add(new DrawingAction(8, 50, 75, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon tail (triangle down)
 
         ImageGeneratorService.GenerateImage(ImageGeneratorService.generatePixelsForImage(actions), "stest.png", 100, 100);
 

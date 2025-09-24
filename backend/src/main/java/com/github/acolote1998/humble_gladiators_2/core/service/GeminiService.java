@@ -79,6 +79,12 @@ public class GeminiService {
                 - 3: VERTICAL_LINE (uses height parameter for length)
                 - 4: CIRCLE (uses radius parameter)
                 - 5: HOLLOW_SQUARE (uses size parameter)
+                - 6: DOT (single pixel, uses initialX and initialY only)
+                - 7: TRIANGLE_UP (uses size parameter)
+                - 8: TRIANGLE_DOWN (uses size parameter)
+                - 9: TRIANGLE_LEFT (uses size parameter)
+                - 10: TRIANGLE_RIGHT (uses size parameter)
+                - 11: DIAMOND (uses size parameter)
                 
                 Color Values: All color values (red, green, blue, alpha) must be between 0-255
                 Canvas Size: Assume a 100x100 pixel canvas
@@ -175,7 +181,7 @@ public class GeminiService {
                         return pixelsToDraw;
                     }
                 
-                    //DRAWING METHOD "5" - CIRCLE
+                    //DRAWING METHOD "5" - HOLLOW SQUARE
                     public static List<Pixel> drawHollowSquare(DrawingAction action) {
                         List<Pixel> pixelsToDraw = new ArrayList<>();
                         int size = action.getSize();
@@ -186,6 +192,156 @@ public class GeminiService {
                             // Left and right edges
                             pixelsToDraw.add(new Pixel(action.getInitialX(), action.getInitialY() + i, action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
                             pixelsToDraw.add(new Pixel(action.getInitialX() + size - 1, action.getInitialY() + i, action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
+                        }
+                        return pixelsToDraw;
+                    }
+                
+                    //DRAWING METHOD "6" - DOT (single pixel)
+                    public static List<Pixel> drawDot(DrawingAction action) {
+                        List<Pixel> pixelsToDraw = new ArrayList<>();
+                        pixelsToDraw.add(new Pixel(
+                                action.getInitialX(),
+                                action.getInitialY(),
+                                action.getRed(),
+                                action.getGreen(),
+                                action.getBlue(),
+                                action.getAlpha()
+                        ));
+                        return pixelsToDraw;
+                    }
+                
+                    //DRAWING METHOD "7" - TRIANGLE UP
+                    public static List<Pixel> drawTriangleUp(DrawingAction action) {
+                        List<Pixel> pixelsToDraw = new ArrayList<>();
+                        int size = action.getSize();
+                        int centerX = action.getInitialX();
+                        int centerY = action.getInitialY();
+                        
+                        for (int dy = 0; dy < size; dy++) {
+                            int width = dy + 1;
+                            int startX = centerX - dy / 2;
+                            for (int dx = 0; dx < width; dx++) {
+                                pixelsToDraw.add(new Pixel(
+                                        startX + dx,
+                                        centerY + dy,
+                                        action.getRed(),
+                                        action.getGreen(),
+                                        action.getBlue(),
+                                        action.getAlpha()
+                                ));
+                            }
+                        }
+                        return pixelsToDraw;
+                    }
+                
+                    //DRAWING METHOD "8" - TRIANGLE DOWN
+                    public static List<Pixel> drawTriangleDown(DrawingAction action) {
+                        List<Pixel> pixelsToDraw = new ArrayList<>();
+                        int size = action.getSize();
+                        int centerX = action.getInitialX();
+                        int centerY = action.getInitialY();
+                        
+                        for (int dy = 0; dy < size; dy++) {
+                            int width = size - dy;
+                            int startX = centerX - (size - dy - 1) / 2;
+                            for (int dx = 0; dx < width; dx++) {
+                                pixelsToDraw.add(new Pixel(
+                                        startX + dx,
+                                        centerY + dy,
+                                        action.getRed(),
+                                        action.getGreen(),
+                                        action.getBlue(),
+                                        action.getAlpha()
+                                ));
+                            }
+                        }
+                        return pixelsToDraw;
+                    }
+                
+                    //DRAWING METHOD "9" - TRIANGLE LEFT
+                    public static List<Pixel> drawTriangleLeft(DrawingAction action) {
+                        List<Pixel> pixelsToDraw = new ArrayList<>();
+                        int size = action.getSize();
+                        int centerX = action.getInitialX();
+                        int centerY = action.getInitialY();
+                        
+                        for (int dx = 0; dx < size; dx++) {
+                            int height = dx + 1;
+                            int startY = centerY - dx / 2;
+                            for (int dy = 0; dy < height; dy++) {
+                                pixelsToDraw.add(new Pixel(
+                                        centerX + dx,
+                                        startY + dy,
+                                        action.getRed(),
+                                        action.getGreen(),
+                                        action.getBlue(),
+                                        action.getAlpha()
+                                ));
+                            }
+                        }
+                        return pixelsToDraw;
+                    }
+                
+                    //DRAWING METHOD "10" - TRIANGLE RIGHT
+                    public static List<Pixel> drawTriangleRight(DrawingAction action) {
+                        List<Pixel> pixelsToDraw = new ArrayList<>();
+                        int size = action.getSize();
+                        int centerX = action.getInitialX();
+                        int centerY = action.getInitialY();
+                        
+                        for (int dx = 0; dx < size; dx++) {
+                            int height = size - dx;
+                            int startY = centerY - (size - dx - 1) / 2;
+                            for (int dy = 0; dy < height; dy++) {
+                                pixelsToDraw.add(new Pixel(
+                                        centerX + dx,
+                                        startY + dy,
+                                        action.getRed(),
+                                        action.getGreen(),
+                                        action.getBlue(),
+                                        action.getAlpha()
+                                ));
+                            }
+                        }
+                        return pixelsToDraw;
+                    }
+                
+                    //DRAWING METHOD "11" - DIAMOND
+                    public static List<Pixel> drawDiamond(DrawingAction action) {
+                        List<Pixel> pixelsToDraw = new ArrayList<>();
+                        int size = action.getSize();
+                        int centerX = action.getInitialX();
+                        int centerY = action.getInitialY();
+                        
+                        // Draw diamond using two triangles (up and down)
+                        for (int dy = 0; dy < size; dy++) {
+                            int width = dy + 1;
+                            int startX = centerX - dy / 2;
+                            for (int dx = 0; dx < width; dx++) {
+                                pixelsToDraw.add(new Pixel(
+                                        startX + dx,
+                                        centerY - dy,
+                                        action.getRed(),
+                                        action.getGreen(),
+                                        action.getBlue(),
+                                        action.getAlpha()
+                                ));
+                            }
+                        }
+                        
+                        for (int dy = 1; dy < size; dy++) {
+                            int width = size - dy;
+                            int startX = centerX - (size - dy - 1) / 2;
+                            for (int dx = 0; dx < width; dx++) {
+                                pixelsToDraw.add(new Pixel(
+                                        startX + dx,
+                                        centerY + dy,
+                                        action.getRed(),
+                                        action.getGreen(),
+                                        action.getBlue(),
+                                        action.getAlpha()
+                                ));
+                            }
                         }
                         return pixelsToDraw;
                     }
@@ -257,6 +413,36 @@ public class GeminiService {
                                     resultPixels.addAll(DrawingAction.drawHollowSquare(drawingAction));
                                     break;
                                 }
+                                //DOT
+                                case 6: {
+                                    resultPixels.addAll(DrawingAction.drawDot(drawingAction));
+                                    break;
+                                }
+                                //TRIANGLE UP
+                                case 7: {
+                                    resultPixels.addAll(DrawingAction.drawTriangleUp(drawingAction));
+                                    break;
+                                }
+                                //TRIANGLE DOWN
+                                case 8: {
+                                    resultPixels.addAll(DrawingAction.drawTriangleDown(drawingAction));
+                                    break;
+                                }
+                                //TRIANGLE LEFT
+                                case 9: {
+                                    resultPixels.addAll(DrawingAction.drawTriangleLeft(drawingAction));
+                                    break;
+                                }
+                                //TRIANGLE RIGHT
+                                case 10: {
+                                    resultPixels.addAll(DrawingAction.drawTriangleRight(drawingAction));
+                                    break;
+                                }
+                                //DIAMOND
+                                case 11: {
+                                    resultPixels.addAll(DrawingAction.drawDiamond(drawingAction));
+                                    break;
+                                }
                                 default: {
                                     log.error("Invalid Drawing Method: " + drawingAction.getDrawingMethod());
                                     break;
@@ -271,16 +457,19 @@ public class GeminiService {
                 
                 ```
                 List<DrawingAction> actions = new ArrayList<>();
-                actions.add(new DrawingAction(4, 50, 50, 255, 255, 0, 255, 0, 0, 0, 40)); // Yellow face circle
-                actions.add(new DrawingAction(4, 35, 35, 0, 0, 0, 255, 0, 0, 0, 5)); // Left eye
-                actions.add(new DrawingAction(4, 65, 35, 0, 0, 0, 255, 0, 0, 0, 5)); // Right eye
-                actions.add(new DrawingAction(2, 40, 70, 0, 0, 0, 255, 0, 30, 0, 0)); // Smile line
+                actions.add(new DrawingAction(4, 50, 50, 139, 69, 19, 255, 0, 0, 0, 25)); // Dragon body (brown circle)
+                actions.add(new DrawingAction(7, 50, 25, 139, 69, 19, 255, 8, 0, 0, 0)); // Dragon head (triangle up)
+                actions.add(new DrawingAction(6, 45, 30, 255, 0, 0, 255, 0, 0, 0, 0)); // Left eye (red dot)
+                actions.add(new DrawingAction(6, 55, 30, 255, 0, 0, 255, 0, 0, 0, 0)); // Right eye (red dot)
+                actions.add(new DrawingAction(11, 30, 40, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon scale (diamond)
+                actions.add(new DrawingAction(11, 70, 40, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon scale (diamond)
+                actions.add(new DrawingAction(8, 50, 75, 139, 69, 19, 255, 6, 0, 0, 0)); // Dragon tail (triangle down)
                 ```
                 
                 Instructions:
                 1. Create a List<DrawingAction> for a dragon in RPG style
                 2. Use the exact constructor format shown above
-                3. Use appropriate drawing methods (0-5)
+                3. Use appropriate drawing methods (0-11)
                 4. Set unused parameters to 0
                 5. Return ONLY the List creation code, nothing else
                 6. Do NOT include any class definitions, imports, or explanations

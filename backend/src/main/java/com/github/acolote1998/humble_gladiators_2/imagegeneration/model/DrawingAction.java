@@ -127,7 +127,7 @@ public class DrawingAction {
         return pixelsToDraw;
     }
 
-    //DRAWING METHOD "5" - CIRCLE
+    //DRAWING METHOD "5" - HOLLOW SQUARE
     public static List<Pixel> drawHollowSquare(DrawingAction action) {
         List<Pixel> pixelsToDraw = new ArrayList<>();
         int size = action.getSize();
@@ -138,6 +138,156 @@ public class DrawingAction {
             // Left and right edges
             pixelsToDraw.add(new Pixel(action.getInitialX(), action.getInitialY() + i, action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
             pixelsToDraw.add(new Pixel(action.getInitialX() + size - 1, action.getInitialY() + i, action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "6" - DOT (single pixel)
+    public static List<Pixel> drawDot(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        pixelsToDraw.add(new Pixel(
+                action.getInitialX(),
+                action.getInitialY(),
+                action.getRed(),
+                action.getGreen(),
+                action.getBlue(),
+                action.getAlpha()
+        ));
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "7" - TRIANGLE UP
+    public static List<Pixel> drawTriangleUp(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int size = action.getSize();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        
+        for (int dy = 0; dy < size; dy++) {
+            int width = dy + 1;
+            int startX = centerX - dy / 2;
+            for (int dx = 0; dx < width; dx++) {
+                pixelsToDraw.add(new Pixel(
+                        startX + dx,
+                        centerY + dy,
+                        action.getRed(),
+                        action.getGreen(),
+                        action.getBlue(),
+                        action.getAlpha()
+                ));
+            }
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "8" - TRIANGLE DOWN
+    public static List<Pixel> drawTriangleDown(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int size = action.getSize();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        
+        for (int dy = 0; dy < size; dy++) {
+            int width = size - dy;
+            int startX = centerX - (size - dy - 1) / 2;
+            for (int dx = 0; dx < width; dx++) {
+                pixelsToDraw.add(new Pixel(
+                        startX + dx,
+                        centerY + dy,
+                        action.getRed(),
+                        action.getGreen(),
+                        action.getBlue(),
+                        action.getAlpha()
+                ));
+            }
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "9" - TRIANGLE LEFT
+    public static List<Pixel> drawTriangleLeft(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int size = action.getSize();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        
+        for (int dx = 0; dx < size; dx++) {
+            int height = dx + 1;
+            int startY = centerY - dx / 2;
+            for (int dy = 0; dy < height; dy++) {
+                pixelsToDraw.add(new Pixel(
+                        centerX + dx,
+                        startY + dy,
+                        action.getRed(),
+                        action.getGreen(),
+                        action.getBlue(),
+                        action.getAlpha()
+                ));
+            }
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "10" - TRIANGLE RIGHT
+    public static List<Pixel> drawTriangleRight(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int size = action.getSize();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        
+        for (int dx = 0; dx < size; dx++) {
+            int height = size - dx;
+            int startY = centerY - (size - dx - 1) / 2;
+            for (int dy = 0; dy < height; dy++) {
+                pixelsToDraw.add(new Pixel(
+                        centerX + dx,
+                        startY + dy,
+                        action.getRed(),
+                        action.getGreen(),
+                        action.getBlue(),
+                        action.getAlpha()
+                ));
+            }
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "11" - DIAMOND
+    public static List<Pixel> drawDiamond(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int size = action.getSize();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        
+        // Draw diamond using two triangles (up and down)
+        for (int dy = 0; dy < size; dy++) {
+            int width = dy + 1;
+            int startX = centerX - dy / 2;
+            for (int dx = 0; dx < width; dx++) {
+                pixelsToDraw.add(new Pixel(
+                        startX + dx,
+                        centerY - dy,
+                        action.getRed(),
+                        action.getGreen(),
+                        action.getBlue(),
+                        action.getAlpha()
+                ));
+            }
+        }
+        
+        for (int dy = 1; dy < size; dy++) {
+            int width = size - dy;
+            int startX = centerX - (size - dy - 1) / 2;
+            for (int dx = 0; dx < width; dx++) {
+                pixelsToDraw.add(new Pixel(
+                        startX + dx,
+                        centerY + dy,
+                        action.getRed(),
+                        action.getGreen(),
+                        action.getBlue(),
+                        action.getAlpha()
+                ));
+            }
         }
         return pixelsToDraw;
     }

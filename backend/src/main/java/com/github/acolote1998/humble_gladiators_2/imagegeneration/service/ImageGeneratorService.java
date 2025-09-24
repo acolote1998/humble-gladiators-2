@@ -102,6 +102,36 @@ public class ImageGeneratorService {
                     resultPixels.addAll(DrawingAction.drawHollowSquare(drawingAction));
                     break;
                 }
+                //DOT
+                case 6: {
+                    resultPixels.addAll(DrawingAction.drawDot(drawingAction));
+                    break;
+                }
+                //TRIANGLE UP
+                case 7: {
+                    resultPixels.addAll(DrawingAction.drawTriangleUp(drawingAction));
+                    break;
+                }
+                //TRIANGLE DOWN
+                case 8: {
+                    resultPixels.addAll(DrawingAction.drawTriangleDown(drawingAction));
+                    break;
+                }
+                //TRIANGLE LEFT
+                case 9: {
+                    resultPixels.addAll(DrawingAction.drawTriangleLeft(drawingAction));
+                    break;
+                }
+                //TRIANGLE RIGHT
+                case 10: {
+                    resultPixels.addAll(DrawingAction.drawTriangleRight(drawingAction));
+                    break;
+                }
+                //DIAMOND
+                case 11: {
+                    resultPixels.addAll(DrawingAction.drawDiamond(drawingAction));
+                    break;
+                }
                 default: {
                     log.error("Invalid Drawing Method: " + drawingAction.getDrawingMethod());
                     break;
