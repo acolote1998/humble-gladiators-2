@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,4 +24,9 @@ public class Requirement {
 
     @OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL)
     private List<RequirementEntry> requirements = new ArrayList<>();
+
+    @CreationTimestamp
+    LocalDateTime createdAt; // Auto-managed by JPA
+    @UpdateTimestamp
+    LocalDateTime updatedAt; // Auto-managed by JPA
 }

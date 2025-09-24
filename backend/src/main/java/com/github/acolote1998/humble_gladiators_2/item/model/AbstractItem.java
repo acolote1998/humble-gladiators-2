@@ -4,6 +4,10 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter
@@ -20,7 +24,11 @@ public abstract class AbstractItem {
     private Boolean discovered;
     private Integer quantity;
     private Boolean equipped;
-    
+    @CreationTimestamp
+    LocalDateTime createdAt; // Auto-managed by JPA
+    @UpdateTimestamp
+    LocalDateTime updatedAt; // Auto-managed by JPA
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "requirement_id")
     private Requirement requirement;

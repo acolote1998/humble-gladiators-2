@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,4 +30,9 @@ public class RequirementEntry {
     @ManyToOne
     @JoinColumn(name = "requirements_id")
     Requirement requirement;
+
+    @CreationTimestamp
+    LocalDateTime createdAt; // Auto-managed by JPA
+    @UpdateTimestamp
+    LocalDateTime updatedAt; // Auto-managed by JPA
 }
