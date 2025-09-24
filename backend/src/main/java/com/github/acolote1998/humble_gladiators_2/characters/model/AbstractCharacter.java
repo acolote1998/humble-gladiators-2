@@ -1,7 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,9 +24,6 @@ public abstract class AbstractCharacter {
 
     @Embedded
     private Stats stats;
-
-    @Embedded
-    private Level level;
 
 //  private  Campaign campaign
 

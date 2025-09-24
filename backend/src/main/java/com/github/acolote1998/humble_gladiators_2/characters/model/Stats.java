@@ -18,4 +18,7 @@ public class Stats {
     private int currentHp;
     private int height;
     private int weight;
+    private int level;
+    private int currentExp;
+    private int expForNextLevel;
 }
