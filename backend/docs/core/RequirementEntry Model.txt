@@ -1,11 +1,21 @@
-RequirementEntry Model
+RequirementEntry Model (@Entity)
 
-Long id
-String requirementType // "level", "hp", "mana", "class", "quest", "faction", etc.
-String operator // ">=", "<=", "==", "!=", "IN", "NOT_IN", "EXISTS", "NOT_EXISTS"
+Long id // Primary key
+RequirementEntryType requirementType // Enum: LEVEL, HP, MANA, CLASSID, QUEST, RACEID, etc.
+RequirementEntryOperator operator // Enum: MORETHAN, LESSTHAN, MOREOREQUALTHAN, etc.
 String value // The value to compare against (e.g., "10", "WARRIOR,MAGE", "DragonSlayer")
+@ManyToOne(fetch = FetchType.LAZY) Campaign campaign // Campaign this requirement entry belongs to
+@ManyToOne Requirement requirement // Parent requirement this entry belongs to
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+
+JPA Configuration:
+- Uses Lombok @Getter and @Setter annotations
+- Uses @Slf4j for logging
+- Campaign relationship uses lazy fetching for performance
+- Requirement relationship uses @JoinColumn for foreign key mapping
 
 // Examples:
-// {type: "level", operator: ">=", value: "10"} -> character.level >= 10
-// {type: "class", operator: "IN", value: "WARRIOR,MAGE"} -> character.class IN (WARRIOR, MAGE)
-// {type: "quest", operator: "==", value: "DragonSlayer"} -> character.completedQuests.contains("DragonSlayer")
+// {type: LEVEL, operator: MOREOREQUALTHAN, value: "10"} -> character.level >= 10
+// {type: CLASSID, operator: IN, value: "WARRIOR,MAGE"} -> character.class IN (WARRIOR, MAGE)
+// {type: QUEST, operator: EQUALTHAN, value: "DragonSlayer"} -> character.completedQuests.contains("DragonSlayer")

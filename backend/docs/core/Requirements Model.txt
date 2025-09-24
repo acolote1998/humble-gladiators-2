@@ -1,8 +1,16 @@
-﻿Requirements Model
+﻿Requirements Model (@Entity)
 
-Long id
-List<RequirementEntry> entries
+Long id // Primary key
+@ManyToOne(fetch = FetchType.LAZY) Campaign campaign // Campaign this requirement belongs to
+@OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL) List<RequirementEntry> requirements // List of requirement entries
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
 
+JPA Configuration:
+- Uses Lombok @Getter and @Setter annotations
+- Uses @Slf4j for logging
+- Campaign relationship uses lazy fetching for performance
+- Requirements list uses mappedBy for bidirectional relationship
 
 // Flexible key-value requirement system
 // Examples:
