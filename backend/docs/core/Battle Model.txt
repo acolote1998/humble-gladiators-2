@@ -1,22 +1,23 @@
-﻿Battle entity 
-id 
-List<Turns (or actions ?)> (we could use this to “reconstruct’ the battle to its current state
-List<CharacterWhenStarted> or maybe just List<Character> startingTeamOne
-List<CharacterWhenStarted> or maybe just List<Character> startingTeamTwo
-List<Characters> activeTeamOne
-List<Characters or enemies?> activeTeamTwo
-Character currentCharToPlay
-Boolean stillActive
+﻿Battle entity (@Entity)
+
+Long id
+@OneToMany List<Turn> turns // All turns in this battle for reconstruction
+@OneToMany List<CharacterSnapshot> startingTeamOne // Snapshot of team 1 at battle start
+@OneToMany List<CharacterSnapshot> startingTeamTwo // Snapshot of team 2 at battle start
+@OneToMany List<CharacterInstance> winningTeam // Populated after battle completion
+@OneToMany List<CharacterInstance> losingTeam // Populated after battle completion
+@ManyToOne CharacterInstance currentCharacterToPlay // Current character whose turn it is
+boolean ongoing // Whether battle is still active
 @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
 @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
 
+JPA Configuration:
+- All @OneToMany relationships use FetchType.LAZY and CascadeType.ALL
+- Proper @JoinColumn mappings for database relationships
 
-
-
-Idea:
-
-
-When the battle starts, the system makes a copy of all the heroes and enemies (both teams) and saves them in the startingTeamOne and startingTeamTwo. Then for each turn, then it applies damage and so on, and for each turn it creates a new entry in the Turns entity (which is linked to the battle ID), then it is easy to reconstruct the battle by executing the turns in order (good for when a battle is started but does not get finished, also good for watching “replays” (for when that feature is available)
-
-
-example
+Battle Flow:
+1. Battle starts - system creates CharacterSnapshots of all participants
+2. For each turn - system creates Turn entity with Action details
+3. Battle continues until one team is defeated
+4. Upon completion - system populates winningTeam and losingTeam lists
+5. Battle can be reconstructed by replaying turns in order

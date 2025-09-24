@@ -1,8 +1,14 @@
-﻿Turn
-id
-battleId
-characterIdPerforming
-characterIdReceiving
-actionId
+﻿Turn (@Entity)
+
+Long id
+@ManyToOne Battle battle // Battle this turn belongs to
+@ManyToOne CharacterInstance performingCharacter // Character performing the action
+@ManyToOne CharacterInstance targetCharacter // Character receiving the action
+@Embedded Action action // Action details (damage, healing, type, state effects)
 @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
 @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+
+Note:
+- Action is embedded rather than referenced for better performance
+- Turn represents a single action within a battle
+- Can reconstruct battle by executing turns in chronological order

@@ -1,5 +1,12 @@
-﻿id
-type (attack, spell, consumable item, focus, etc)
-damageCaused int
-healingCaused int
-isCriticalAction (probably for being able to execute future animations, or just text rendering and making a difference between normal action and critica action, but realistically, the damageCaused or healingCaused will already have calculated the final number result if the action was critical so this is more for aesthetic/information/cosmetic purproses maybe?)
+﻿Action (@Embeddable)
+
+Integer damageCaused - Damage dealt by this action (null if no damage)
+Integer healingCaused - Healing provided by this action (null if no healing)
+ActionType actionType - Type of action (HEAL, SPELL, PHYSICATTACK, RANGEDATTACK, ITEM)
+StateType stateCaused - State effect applied (NONE, NORMAL, PARALIZED, CONFUSED, FOCUSED, POISONED)
+
+Note: 
+- Uses Integer instead of int for nullability
+- Embedded in Turn entity
+- Lombok @Getter and @Setter annotations
+- Fields are private for better encapsulation

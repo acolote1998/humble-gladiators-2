@@ -1,5 +1,13 @@
 # Implementation Order for Humble Gladiators 2
 
+## Recent Architectural Improvements ✅ COMPLETED
+
+- **Level-Stats Consolidation**: Moved level functionality into Stats class for better cohesion
+- **JPA Optimization**: Added proper annotations and configurations throughout
+- **Action Model Enhancement**: Improved with Lombok and nullability handling
+- **Battle System Refinement**: Enhanced with proper relationships and team management
+- **Documentation Updates**: All model documentation reflects current implementation
+
 ## Phase 1: Core Foundation
 
 1. **User Model & Authentication**
@@ -47,36 +55,45 @@
    - Fixed JPA inheritance conflicts using composition
    - Both template and instance tables in database
 
-## Phase 3: Character System
+## Phase 3: Character System ✅ COMPLETED
 
-8. **Character Model**
+8. **Character Model** ✅ COMPLETED
 
-   - Character entity (stats, level, inventory, etc.)
+   - AbstractCharacter base class with Stats and Inventory
+   - CharacterInstance extends AbstractCharacter implements Discoverable
+   - CharacterSnapshot extends AbstractCharacter for battle state
    - CharacterType enum (PLAYER/NPC)
-   - Character-Campaign relationships
+   - Proper JPA annotations and relationships
 
-9. **Level System**
+9. **Level System** ✅ COMPLETED
 
-   - Level entity (experience, level progression)
-   - Level-up logic and stat increases
+   - Level functionality consolidated into Stats class
+   - Level, currentExp, expForNextLevel fields in Stats
+   - Better cohesion between level and stat calculations
+   - Single source of truth for character attributes
 
-10. **Inventory System**
-    - Inventory entity (List<ItemInstance>)
-    - Inventory management (add/remove items)
-    - Equipment system (equip/unequip items)
+10. **Inventory System** ✅ COMPLETED
+    - Inventory entity with separate lists for each item type
+    - Proper @OneToMany relationships with @JoinColumn
+    - CascadeType.PERSIST for item management
+    - Gold field for currency tracking
 
 ## Phase 4: Game Mechanics
 
-11. **Battle System**
+11. **Battle System** ✅ COMPLETED
 
-    - Battle entity (teams, turns, state)
-    - Turn entity (actions, character tracking)
-    - Action entity (damage, healing, effects)
+    - Battle entity with proper JPA configuration
+    - Turn entity with embedded Action relationship
+    - Action entity with Lombok annotations and nullability
+    - CharacterSnapshot for battle state preservation
+    - Proper team management (starting teams, winning/losing teams)
+    - Battle reconstruction capability through turn replay
 
-12. **Combat Logic**
-    - Turn-based combat flow
-    - Damage calculation
-    - Status effects and buffs/debuffs
+12. **Combat Logic** 🔄 IN PROGRESS
+    - Turn-based combat flow (structure ready)
+    - Damage calculation (Action model ready)
+    - Status effects and buffs/debuffs (StateType enum ready)
+    - Service layer implementation needed
 
 ## Phase 5: AI Integration
 
