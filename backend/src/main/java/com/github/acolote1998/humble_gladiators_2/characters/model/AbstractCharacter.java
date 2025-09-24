@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Slf4j
 @MappedSuperclass
-public abstract class AbstractCharacter implements Discoverable {
+public abstract class AbstractCharacter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +41,6 @@ public abstract class AbstractCharacter implements Discoverable {
     private Integer goldReward; //for NPC characters
 
     private Integer expReward; //for NPC characters
-
-    private Boolean discovered;
 
     @CreationTimestamp
     private LocalDateTime createdAt; // Auto-managed by JPA
