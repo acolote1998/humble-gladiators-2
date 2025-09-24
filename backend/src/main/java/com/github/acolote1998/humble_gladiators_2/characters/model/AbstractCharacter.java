@@ -25,45 +25,24 @@ public abstract class AbstractCharacter implements Discoverable {
 
     private Long userId; //from Clerk
 
+    @Embedded
+    private Stats stats;
+
+    @Embedded
+    private Level level;
+
 //  private  Campaign campaign
 
 // private   Level level
 
     private String name;
 
-    private Integer height;
-
-    private Integer weight;
-
 // private   CharClass charClass;
 
 // private    CharRace charRace;
 
-    private Integer constitution;
-
-    private Integer intelligence;
-
-    private Integer dexterity;
-
-    private Integer strength;
-
-    private Integer speed;
-
-    private Integer luck;
-
-    private Integer maxHp;
-
-    private Integer currentHp;
-
-//  private  List<Battle> victories;
-
-//  private  List<Battle> defeats;
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Inventory inventory;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<SpellInstance> spells;
 
     private CharacterType characterType;
 
