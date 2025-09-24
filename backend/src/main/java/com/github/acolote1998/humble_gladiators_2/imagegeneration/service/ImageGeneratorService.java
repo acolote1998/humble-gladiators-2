@@ -57,15 +57,31 @@ public class ImageGeneratorService {
         actions.forEach(drawingAction -> {
             switch (drawingAction.getDrawingMethod()) {
                 case 0: {
-                    resultPixels.addAll(DrawingAction.drawSquare(5, drawingAction));
+                    resultPixels.addAll(DrawingAction.drawSquare(drawingAction));
                     break;
                 }
                 case 1: {
-                    resultPixels.add(new Pixel(12, 10, 0, 255, 0, 255));
+                    resultPixels.addAll(DrawingAction.drawRectangle(drawingAction));
+                    break;
+                }
+                case 2: {
+                    resultPixels.addAll(DrawingAction.drawHorizontalLine(drawingAction));
+                    break;
+                }
+                case 3: {
+                    resultPixels.addAll(DrawingAction.drawVerticalLine(drawingAction));
+                    break;
+                }
+                case 4: {
+                    resultPixels.addAll(DrawingAction.drawCircle(drawingAction));
+                    break;
+                }
+                case 5: {
+                    resultPixels.addAll(DrawingAction.drawHollowSquare(drawingAction));
                     break;
                 }
                 default: {
-                    System.out.println("default");
+                    log.error("Invalid Drawing Method: " + drawingAction.getDrawingMethod());
                     break;
                 }
             }

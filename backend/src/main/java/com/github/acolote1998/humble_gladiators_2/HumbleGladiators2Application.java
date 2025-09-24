@@ -13,8 +13,7 @@ public class HumbleGladiators2Application {
 
     public static void main(String[] args) {
         List<DrawingAction> actions = new ArrayList<>();
-        actions.add(new DrawingAction(0, 0, 0, 255, 0, 0, 255));
-        actions.add(new DrawingAction(0, 15, 15, 0, 0, 255, 255));
+        actions.add(new DrawingAction(5, 12, 12, 255, 0, 0, 255, 4, 4, 6, 4));
 
         ImageGeneratorService.GenerateImage(ImageGeneratorService.generatePixelsForImage(actions), "stest.png", 32, 32);
         SpringApplication.run(HumbleGladiators2Application.class, args);
