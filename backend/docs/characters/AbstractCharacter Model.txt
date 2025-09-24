@@ -1,28 +1,35 @@
-﻿Class Character implements Discoverable
+﻿AbstractCharacter (MappedSuperclass)
 
-id
-
-userId
-campaignId
-name
-Level levelId
-height
-weight
-constitution 
-intelligence
-dexterity 
-strength
-speed
-luck 
-maxHp
-currentHp
-List<Battle> winningBattles
-List<Battle> losingBattles
-Inventory inventoryId
-List<spells> availableSpells
+id (Long)
+userId (Long) // from Clerk
+@Embedded Stats stats // Contains all character attributes and level info
+name (String)
+@OneToOne Inventory inventory
 CharacterType characterType // PLAYER or NPC (enemies are NPCs)
-Int goldReward // For NPCs - gold given when defeated
-Int experienceReward // For NPCs - experience given when defeated
-discovered // Note: implement Discoverable interface (enemies can be discovered)
+Integer goldReward // For NPCs - gold given when defeated
+Integer expReward // For NPCs - experience given when defeated
 @CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
 @UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
+
+Stats (@Embeddable):
+- constitution (int)
+- intelligence (int)
+- dexterity (int)
+- strength (int)
+- speed (int)
+- luck (int)
+- maxHp (int)
+- currentHp (int)
+- height (int)
+- weight (int)
+- level (int)
+- currentExp (int)
+- expForNextLevel (int)
+
+CharacterInstance extends AbstractCharacter implements Discoverable:
+- List<Battle> victories
+- List<Battle> defeats
+- Boolean discovered
+
+CharacterSnapshot extends AbstractCharacter:
+- Used to capture character state at battle start

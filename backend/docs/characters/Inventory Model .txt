@@ -1,13 +1,16 @@
-﻿Inventory entity 
+﻿Inventory entity (@Entity)
 
 Long id
-List<WeaponInstance> weapons
-List<HelmetInstance> helmets
-List<ArmorInstance> armors
-List<BootsInstance> boots
-List<ShieldInstance> shields
-List<SpellInstance> spells
-List<ConsumableInstance> consumables
+@OneToMany List<WeaponInstance> weapons
+@OneToMany List<HelmetInstance> helmets
+@OneToMany List<ArmorInstance> armors
+@OneToMany List<BootsInstance> boots
+@OneToMany List<ShieldInstance> shields
+@OneToMany List<SpellInstance> spells
+@OneToMany List<ConsumableInstance> consumables
+Long gold
+@CreationTimestamp LocalDateTime createdAt // Auto-managed by JPA
+@UpdateTimestamp LocalDateTime updatedAt // Auto-managed by JPA
 
-// Each list uses @OneToMany with @JoinColumn(name = "inventory_id")
+// Each list uses @OneToMany with @JoinColumn(name = "inventory_id") and CascadeType.PERSIST
 // Items are instances, not templates - templates are AI-generated, instances are player-owned

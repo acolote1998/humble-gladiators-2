@@ -1,7 +1,13 @@
-﻿Level entity
+﻿Level fields (now part of Stats @Embeddable)
 
+Note: Level functionality has been consolidated into the Stats class for better cohesion.
 
-CharacterId
-Level
-Current exp 
-next level exp
+Fields now in Stats:
+- level (int) - Current character level
+- currentExp (int) - Current experience points
+- expForNextLevel (int) - Experience required for next level
+
+This consolidation provides:
+- Single source of truth for character attributes
+- Better cohesion between level and stat calculations
+- Simpler queries and data management
