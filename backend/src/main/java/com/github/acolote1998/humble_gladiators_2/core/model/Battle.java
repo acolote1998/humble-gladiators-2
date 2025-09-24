@@ -22,19 +22,24 @@ public class Battle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "battle_id")
     private List<Turn> turns;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "battle_starting_team_one_id")
     private List<CharacterSnapshot> startingTeamOne;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "battle_starting_team_two_id")
     private List<CharacterSnapshot> startingTeamTwo;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "battle_winning_team_id")
     private List<CharacterInstance> winningTeam;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "battle_losing_team_id")
     private List<CharacterInstance> losingTeam;
 
     @ManyToOne
