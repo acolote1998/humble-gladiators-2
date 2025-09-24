@@ -1,8 +1,11 @@
 package com.github.acolote1998.humble_gladiators_2.imagegeneration.service;
 
+import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.Pixel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,7 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@Service
 public class ImageGeneratorService {
+
+    GeminiService geminiservice;
+
+    @Autowired
+    public ImageGeneratorService(GeminiService service) {
+        this.geminiservice = service;
+    }
 
     public static boolean isValidColorValue(int value) {
         return (value >= 0 && value <= 255);
@@ -19,6 +30,11 @@ public class ImageGeneratorService {
 
     public static boolean isValidCoordinate(int valueX, int valueY, int maxX, int maxY) {
         return (valueX >= 0 && valueX < maxX && valueY >= 0 && valueY < maxY);
+    }
+
+    //    public List<DrawingAction> getActionsForDrawing() {
+    public String getActionsForDrawing() {
+        return geminiservice.generateDrawingActionsTest();
     }
 
     public static void GenerateImage(List<Pixel> pixels, String outputPath, Integer width, Integer height) {
