@@ -5,7 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -44,4 +47,9 @@ public class Inventory {
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
     List<WeaponInstance> weapons;
+
+    @CreationTimestamp
+    LocalDateTime createdAt; // Auto-managed by JPA
+    @UpdateTimestamp
+    LocalDateTime updatedAt; // Auto-managed by JPA
 }
