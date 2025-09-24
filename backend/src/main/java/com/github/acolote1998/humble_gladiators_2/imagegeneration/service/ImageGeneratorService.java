@@ -57,14 +57,16 @@ public class ImageGeneratorService {
         actions.forEach(drawingAction -> {
             switch (drawingAction.getDrawingMethod()) {
                 case 0: {
-                    resultPixels.add(new Pixel(10, 10, 255, 0, 0, 255));
+                    resultPixels.addAll(DrawingAction.drawSquare(5, drawingAction));
+                    break;
                 }
                 case 1: {
                     resultPixels.add(new Pixel(12, 10, 0, 255, 0, 255));
-
+                    break;
                 }
                 default: {
                     System.out.println("default");
+                    break;
                 }
             }
         });
