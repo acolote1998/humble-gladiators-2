@@ -21,7 +21,7 @@ public class HumbleGladiators2Application {
 
         List<DrawingAction> actions = service.getActionsForDrawing("a dog");
 
-        ImageGeneratorService.GenerateImage(ImageGeneratorService.generatePixelsForImage(actions), "stest.png", 100, 100);
+        ImageGeneratorService.GenerateImage(ImageGeneratorService.generatePixelsForImage(actions), "fullSize.png", 800, 800);
 
     }
 }

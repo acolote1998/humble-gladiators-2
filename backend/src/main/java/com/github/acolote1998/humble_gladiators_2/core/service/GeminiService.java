@@ -84,7 +84,7 @@ public class GeminiService {
                 - Use color variations and shading (different tones of the same color family)
                 - Overlap shapes intentionally to create depth and detail
                 - Layer shapes on top of each other for enhanced visual effects
-                - Keep designs simple and clear for 100x100 pixel canvas
+                - Keep designs simple and clear for 800x800 pixel canvas
                 
                 IMPORTANT: You must ONLY return the List<DrawingAction> creation code. Do NOT create your own DrawingAction class or any other classes.
                 
@@ -106,7 +106,7 @@ public class GeminiService {
                 - 11: DIAMOND (uses size parameter)
                 
                 Color Values: All color values (red, green, blue, alpha) must be between 0-255
-                Canvas Size: 100x100 pixels - KEEP DESIGNS SIMPLE AND CLEAR
+                Canvas Size: 800x800 pixels - KEEP DESIGNS SIMPLE AND CLEAR
                 IMPORTANT: This is a small canvas, so focus on creating recognizable, simple shapes rather than complex details
                 
                 COLOR AND SHADING GUIDELINES:
@@ -489,7 +489,7 @@ public class GeminiService {
                 ```
                 
                 CREATIVE GUIDELINES:
-                - Create SIMPLE, RECOGNIZABLE objects that fit well in 100x100 pixels
+                - Create SIMPLE, RECOGNIZABLE objects that fit well in 800x800 pixels
                 - Focus on the ESSENTIAL features that make the object recognizable
                 - Use color variations to create depth and character
                 - Overlap shapes strategically to build recognizable forms
@@ -504,7 +504,7 @@ public class GeminiService {
                 5. Return ONLY the List creation code, nothing else
                 6. Do NOT include any class definitions, imports, or explanations
                 7. Do NOT use setters - use the constructor only
-                8. Make sure coordinates fit within 100x100 canvas
+                8. Make sure coordinates fit within 800x800 canvas
                 9. Be creative and artistic - create something that looks like the requested object
                 10. Use color variations naturally to create depth and character
                 11. Overlap shapes organically to build detailed, recognizable forms
