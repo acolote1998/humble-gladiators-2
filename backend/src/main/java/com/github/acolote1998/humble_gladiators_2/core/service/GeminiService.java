@@ -533,7 +533,7 @@ public class GeminiService {
             resultText = resultText.replaceAll("`", "").replaceAll("json", "");
             List<DrawingAction> resultList = mapper.readValue(resultText, new TypeReference<List<DrawingAction>>() {
             });
-            log.info("Success. List<DrawingAction> generated" + resultList.size() + " actions");
+            log.info("Success. List<DrawingAction> generated " + resultList.size() + " actions");
             return resultList;
         } catch (Exception e) {
             log.error(e.getMessage());
