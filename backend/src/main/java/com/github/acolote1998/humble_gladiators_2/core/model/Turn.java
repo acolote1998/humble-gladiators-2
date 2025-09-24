@@ -26,6 +26,7 @@ public class Turn {
     @ManyToOne
     private CharacterInstance targetCharacter;
 
+    @Embedded
     private Action action;
 
     @CreationTimestamp
