@@ -20,6 +20,10 @@ public class Turn {
     @ManyToOne
     private Battle battle;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "campaign_id")
+    private Campaign campaign;
+
     @ManyToOne
     private CharacterInstance performingCharacter;
 

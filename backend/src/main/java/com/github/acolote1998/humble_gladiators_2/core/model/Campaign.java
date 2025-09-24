@@ -8,29 +8,27 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "requirements")
 @Getter
 @Setter
 @Slf4j
-public class Requirement {
+public class Campaign {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "campaign_id")
-    private Campaign campaign;
+    private String userId;
 
-    @OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL)
-    private List<RequirementEntry> requirements = new ArrayList<>();
+    private String name;
+
+    @Embedded
+    private Theme theme;
 
     @CreationTimestamp
-    LocalDateTime createdAt; // Auto-managed by JPA
+    private LocalDateTime createdAt;
+
     @UpdateTimestamp
-    LocalDateTime updatedAt; // Auto-managed by JPA
+    private LocalDateTime updatedAt;
 }
