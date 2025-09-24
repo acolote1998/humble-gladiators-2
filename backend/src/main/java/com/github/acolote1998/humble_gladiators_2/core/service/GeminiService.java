@@ -65,22 +65,23 @@ public class GeminiService {
 
         String prompt = """
                 Context: You need to generate a List<DrawingAction> that will be used to generate a buffered image in a Java program.
-                The List<DrawingAction> generated should after execution generate a smiley face emoji.
+                The List<DrawingAction> generated should after execution generate dragon in RPG style.
                 
-                Model:
-                public class DrawingAction {
-                    private int drawingMethod;
-                    private int initialX;
-                    private int initialY;
-                    private int red;
-                    private int green;
-                    private int blue;
-                    private int alpha;
-                    private int size;       // For square or hollow square
-                    private int width;      // For rectangle
-                    private int height;     // For rectangle
-                    private int radius;     // For circle
-                }
+                IMPORTANT: You must ONLY return the List<DrawingAction> creation code. Do NOT create your own DrawingAction class or any other classes.
+                
+                DrawingAction Constructor:
+                new DrawingAction(int drawingMethod, int initialX, int initialY, int red, int green, int blue, int alpha, int size, int width, int height, int radius)
+                
+                Drawing Methods:
+                - 0: SQUARE (uses size parameter)
+                - 1: RECTANGLE (uses width and height parameters)
+                - 2: HORIZONTAL_LINE (uses width parameter for length)
+                - 3: VERTICAL_LINE (uses height parameter for length)
+                - 4: CIRCLE (uses radius parameter)
+                - 5: HOLLOW_SQUARE (uses size parameter)
+                
+                Color Values: All color values (red, green, blue, alpha) must be between 0-255
+                Canvas Size: Assume a 100x100 pixel canvas
                 
                 Methods that you can use:
                 //DRAWING METHOD "0" - SQUARE
@@ -265,12 +266,26 @@ public class GeminiService {
                         return resultPixels;
                     }
                 
-                Example of desired output:
-                    '
-                            List<DrawingAction> actions = new ArrayList<>();
-                            actions.add(new DrawingAction(5, 12, 12, 255, 0, 0, 255, 4, 4, 6, 4));
-                            actions.add(new DrawingAction(3, 12, 12, 0, 255, 0, 255, 4, 4, 6, 4));
-                '
+                REQUIRED OUTPUT FORMAT:
+                Return ONLY this format - no explanations, no additional code:
+                
+                ```
+                List<DrawingAction> actions = new ArrayList<>();
+                actions.add(new DrawingAction(4, 50, 50, 255, 255, 0, 255, 0, 0, 0, 40)); // Yellow face circle
+                actions.add(new DrawingAction(4, 35, 35, 0, 0, 0, 255, 0, 0, 0, 5)); // Left eye
+                actions.add(new DrawingAction(4, 65, 35, 0, 0, 0, 255, 0, 0, 0, 5)); // Right eye
+                actions.add(new DrawingAction(2, 40, 70, 0, 0, 0, 255, 0, 30, 0, 0)); // Smile line
+                ```
+                
+                Instructions:
+                1. Create a List<DrawingAction> for a dragon in RPG style
+                2. Use the exact constructor format shown above
+                3. Use appropriate drawing methods (0-5)
+                4. Set unused parameters to 0
+                5. Return ONLY the List creation code, nothing else
+                6. Do NOT include any class definitions, imports, or explanations
+                7. Do NOT use setters - use the constructor only
+                8. Make sure coordinates fit within 100x100 canvas
                 """;
 
         // Prepare the request body according to Gemini API specification
