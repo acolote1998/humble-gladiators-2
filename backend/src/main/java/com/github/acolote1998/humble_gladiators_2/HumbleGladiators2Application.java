@@ -19,7 +19,7 @@ public class HumbleGladiators2Application {
 
         ImageGeneratorService service = context.getBean(ImageGeneratorService.class);
 
-        List<DrawingAction> actions = service.getActionsForDrawing("a dog");
+        List<DrawingAction> actions = service.getActionsForDrawing("A monster with only one big eye");
 
         ImageGeneratorService.GenerateImage(ImageGeneratorService.generatePixelsForImage(actions), "fullSize.png", 800, 800);
 

@@ -147,6 +147,31 @@ public class ImageGeneratorService {
                     resultPixels.addAll(DrawingAction.drawDiamond(drawingAction));
                     break;
                 }
+                //ELLIPSE
+                case 12: {
+                    resultPixels.addAll(DrawingAction.drawEllipse(drawingAction));
+                    break;
+                }
+                //ARC
+                case 13: {
+                    resultPixels.addAll(DrawingAction.drawArc(drawingAction));
+                    break;
+                }
+                //CURVED LINE
+                case 14: {
+                    resultPixels.addAll(DrawingAction.drawCurvedLine(drawingAction));
+                    break;
+                }
+                //STAR
+                case 15: {
+                    resultPixels.addAll(DrawingAction.drawStar(drawingAction));
+                    break;
+                }
+                //GRADIENT SQUARE
+                case 16: {
+                    resultPixels.addAll(DrawingAction.drawGradientSquare(drawingAction));
+                    break;
+                }
                 default: {
                     log.error("Invalid Drawing Method: " + drawingAction.getDrawingMethod());
                     break;

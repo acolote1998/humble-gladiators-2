@@ -74,441 +74,135 @@ public class GeminiService {
     public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate) throws JsonProcessingException {
         log.info("Starting List<DrawingAction> generation attempt");
         String prompt = String.format("""
-                Context: You need to generate a List<DrawingAction> that will be used to generate a buffered image in a Java program.
-                The List<DrawingAction> generated should after execution generate a detailed RPG-style object.
+                Generate a JSON array of drawing actions to create a %s image.
                 
-                The object to generate is: " %s "
+                HOW THE SYSTEM WORKS:
+                - Each DrawingAction creates pixels that get added to a 800x800 canvas
+                - Shapes are drawn in order: first action = background layer, last action = foreground layer
+                - Later shapes can overlap and cover earlier ones (this creates depth and detail)
+                - Each pixel has exact coordinates (x,y) and RGBA color values
+                - The final image is built pixel-by-pixel from all the drawing actions
                 
                 QUALITY REQUIREMENTS:
-                - Generate 30 to 80 DrawingAction objects for a clear, recognizable image
+                - Generate 60 to 100 drawing actions for a detailed, recognizable image
+                - Generating less than 60 actions will be consider a total failure
                 - Use color variations and shading (different tones of the same color family)
                 - Overlap shapes intentionally to create depth and detail
                 - Layer shapes on top of each other for enhanced visual effects
-                - Keep designs simple and clear for 800x800 pixel canvas
+                - Create detailed designs suitable for 800x800 pixel canvas
                 
-                IMPORTANT: You must ONLY return the List<DrawingAction> creation code. Do NOT create your own DrawingAction class or any other classes.
+                REQUIRED JSON FORMAT:
+                Return ONLY a valid JSON array in this exact format (no explanations, no markdown, no code blocks):
                 
-                DrawingAction Constructor:
-                new DrawingAction(int drawingMethod, int initialX, int initialY, int red, int green, int blue, int alpha, int size, int width, int height, int radius)
-                
-                Drawing Methods:
-                - 0: SQUARE (uses size parameter)
-                - 1: RECTANGLE (uses width and height parameters)
-                - 2: HORIZONTAL_LINE (uses width parameter for length)
-                - 3: VERTICAL_LINE (uses height parameter for length)
-                - 4: CIRCLE (uses radius parameter)
-                - 5: HOLLOW_SQUARE (uses size parameter)
-                - 6: DOT (single pixel, uses initialX and initialY only)
-                - 7: TRIANGLE_UP (uses size parameter)
-                - 8: TRIANGLE_DOWN (uses size parameter)
-                - 9: TRIANGLE_LEFT (uses size parameter)
-                - 10: TRIANGLE_RIGHT (uses size parameter)
-                - 11: DIAMOND (uses size parameter)
-                
-                Color Values: All color values (red, green, blue, alpha) must be between 0-255
-                Canvas Size: 800x800 pixels - KEEP DESIGNS SIMPLE AND CLEAR
-                IMPORTANT: This is a small canvas, so focus on creating recognizable, simple shapes rather than complex details
-                
-                COLOR AND SHADING GUIDELINES:
-                - Use multiple shades of the same color family for depth and realism
-                - Create depth with darker colors for shadows and lighter colors for highlights
-                - Use complementary colors for details and accents
-                - Vary alpha values (200-255) for subtle transparency effects
-                - Choose appropriate color schemes for the RPG object (metallic for weapons, earthy for creatures, etc.)
-                
-                Methods that you can use:
-                //DRAWING METHOD "0" - SQUARE
-                    public static List<Pixel> drawSquare(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        for (int dx = 0; dx < action.size; dx++) {
-                            for (int dy = 0; dy < action.size; dy++) {
-                                pixelsToDraw.add(new Pixel(action.initialX + dx, action.initialY + dy, action.red, action.green, action.blue, action.alpha));
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "1" - RECTANGLE
-                    public static List<Pixel> drawRectangle(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int width = action.getWidth();
-                        int height = action.getHeight();
-                        for (int dx = 0; dx < width; dx++) {
-                            for (int dy = 0; dy < height; dy++) {
-                                pixelsToDraw.add(new Pixel(
-                                        action.getInitialX() + dx,
-                                        action.getInitialY() + dy,
-                                        action.getRed(),
-                                        action.getGreen(),
-                                        action.getBlue(),
-                                        action.getAlpha()
-                                ));
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "2" - HORIZONTAL LINE
-                    public static List<Pixel> drawHorizontalLine(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int length = action.getWidth(); // width field used as line length
-                        for (int dx = 0; dx < length; dx++) {
-                            pixelsToDraw.add(new Pixel(
-                                    action.getInitialX() + dx,
-                                    action.getInitialY(),
-                                    action.getRed(),
-                                    action.getGreen(),
-                                    action.getBlue(),
-                                    action.getAlpha()
-                            ));
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "3" - VERTICAL LINE
-                    public static List<Pixel> drawVerticalLine(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int length = action.getHeight(); // use height as line length
-                
-                        for (int dy = 0; dy < length; dy++) {
-                            pixelsToDraw.add(new Pixel(
-                                    action.getInitialX(),
-                                    action.getInitialY() + dy,
-                                    action.getRed(),
-                                    action.getGreen(),
-                                    action.getBlue(),
-                                    action.getAlpha()
-                            ));
-                        }
-                
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "4" - CIRCLE
-                    public static List<Pixel> drawCircle(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int radius = action.getRadius();
-                        int cx = action.getInitialX();
-                        int cy = action.getInitialY();
-                
-                        for (int dx = -radius; dx <= radius; dx++) {
-                            for (int dy = -radius; dy <= radius; dy++) {
-                                if (dx * dx + dy * dy <= radius * radius) {
-                                    pixelsToDraw.add(new Pixel(
-                                            cx + dx,
-                                            cy + dy,
-                                            action.getRed(),
-                                            action.getGreen(),
-                                            action.getBlue(),
-                                            action.getAlpha()
-                                    ));
-                                }
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "5" - HOLLOW SQUARE
-                    public static List<Pixel> drawHollowSquare(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int size = action.getSize();
-                        for (int i = 0; i < size; i++) {
-                            // Top and bottom edges
-                            pixelsToDraw.add(new Pixel(action.getInitialX() + i, action.getInitialY(), action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
-                            pixelsToDraw.add(new Pixel(action.getInitialX() + i, action.getInitialY() + size - 1, action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
-                            // Left and right edges
-                            pixelsToDraw.add(new Pixel(action.getInitialX(), action.getInitialY() + i, action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
-                            pixelsToDraw.add(new Pixel(action.getInitialX() + size - 1, action.getInitialY() + i, action.getRed(), action.getGreen(), action.getBlue(), action.getAlpha()));
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "6" - DOT (single pixel)
-                    public static List<Pixel> drawDot(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        pixelsToDraw.add(new Pixel(
-                                action.getInitialX(),
-                                action.getInitialY(),
-                                action.getRed(),
-                                action.getGreen(),
-                                action.getBlue(),
-                                action.getAlpha()
-                        ));
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "7" - TRIANGLE UP
-                    public static List<Pixel> drawTriangleUp(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int size = action.getSize();
-                        int centerX = action.getInitialX();
-                        int centerY = action.getInitialY();
-                
-                        for (int dy = 0; dy < size; dy++) {
-                            int width = dy + 1;
-                            int startX = centerX - dy / 2;
-                            for (int dx = 0; dx < width; dx++) {
-                                pixelsToDraw.add(new Pixel(
-                                        startX + dx,
-                                        centerY + dy,
-                                        action.getRed(),
-                                        action.getGreen(),
-                                        action.getBlue(),
-                                        action.getAlpha()
-                                ));
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "8" - TRIANGLE DOWN
-                    public static List<Pixel> drawTriangleDown(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int size = action.getSize();
-                        int centerX = action.getInitialX();
-                        int centerY = action.getInitialY();
-                
-                        for (int dy = 0; dy < size; dy++) {
-                            int width = size - dy;
-                            int startX = centerX - (size - dy - 1) / 2;
-                            for (int dx = 0; dx < width; dx++) {
-                                pixelsToDraw.add(new Pixel(
-                                        startX + dx,
-                                        centerY + dy,
-                                        action.getRed(),
-                                        action.getGreen(),
-                                        action.getBlue(),
-                                        action.getAlpha()
-                                ));
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "9" - TRIANGLE LEFT
-                    public static List<Pixel> drawTriangleLeft(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int size = action.getSize();
-                        int centerX = action.getInitialX();
-                        int centerY = action.getInitialY();
-                
-                        for (int dx = 0; dx < size; dx++) {
-                            int height = dx + 1;
-                            int startY = centerY - dx / 2;
-                            for (int dy = 0; dy < height; dy++) {
-                                pixelsToDraw.add(new Pixel(
-                                        centerX + dx,
-                                        startY + dy,
-                                        action.getRed(),
-                                        action.getGreen(),
-                                        action.getBlue(),
-                                        action.getAlpha()
-                                ));
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "10" - TRIANGLE RIGHT
-                    public static List<Pixel> drawTriangleRight(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int size = action.getSize();
-                        int centerX = action.getInitialX();
-                        int centerY = action.getInitialY();
-                
-                        for (int dx = 0; dx < size; dx++) {
-                            int height = size - dx;
-                            int startY = centerY - (size - dx - 1) / 2;
-                            for (int dy = 0; dy < height; dy++) {
-                                pixelsToDraw.add(new Pixel(
-                                        centerX + dx,
-                                        startY + dy,
-                                        action.getRed(),
-                                        action.getGreen(),
-                                        action.getBlue(),
-                                        action.getAlpha()
-                                ));
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                    //DRAWING METHOD "11" - DIAMOND
-                    public static List<Pixel> drawDiamond(DrawingAction action) {
-                        List<Pixel> pixelsToDraw = new ArrayList<>();
-                        int size = action.getSize();
-                        int centerX = action.getInitialX();
-                        int centerY = action.getInitialY();
-                
-                        // Draw diamond using two triangles (up and down)
-                        for (int dy = 0; dy < size; dy++) {
-                            int width = dy + 1;
-                            int startX = centerX - dy / 2;
-                            for (int dx = 0; dx < width; dx++) {
-                                pixelsToDraw.add(new Pixel(
-                                        startX + dx,
-                                        centerY - dy,
-                                        action.getRed(),
-                                        action.getGreen(),
-                                        action.getBlue(),
-                                        action.getAlpha()
-                                ));
-                            }
-                        }
-                
-                        for (int dy = 1; dy < size; dy++) {
-                            int width = size - dy;
-                            int startX = centerX - (size - dy - 1) / 2;
-                            for (int dx = 0; dx < width; dx++) {
-                                pixelsToDraw.add(new Pixel(
-                                        startX + dx,
-                                        centerY + dy,
-                                        action.getRed(),
-                                        action.getGreen(),
-                                        action.getBlue(),
-                                        action.getAlpha()
-                                ));
-                            }
-                        }
-                        return pixelsToDraw;
-                    }
-                
-                Example of how the methods will be executed:
-                
-                    public static void GenerateImage(List<Pixel> pixels, String outputPath, Integer width, Integer height) {
-                        try {
-                
-                            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-                
-                            // Set pixels from the list
-                            for (Pixel p : pixels) {
-                                if (isValidCoordinate(p.getX(), p.getY(), width, height)) {
-                                    if (isValidColorValue(p.getAlpha()) &&
-                                            isValidColorValue(p.getRed()) &&
-                                            isValidColorValue(p.getGreen()) &&
-                                            isValidColorValue(p.getBlue())) {
-                                        int pixelValue = (p.getAlpha() << 24) | (p.getRed() << 16) | (p.getGreen() << 8) | p.getBlue();
-                                        image.setRGB(p.getX(), p.getY(), pixelValue);
-                                    } else {
-                                        log.warn("Ignoring pixel " + p.toString() + ", corrupted color code.");
-                                    }
-                                } else {
-                                    log.warn("Ignoring pixel " + p.toString() + ", coordinate out of canvas");
-                                }
-                            }
-                
-                            // Save image
-                            ImageIO.write(image, "png", new File(outputPath));
-                            log.info("Image successfully created");
-                
-                        } catch (Exception e) {
-                            log.error("Error creating image: " + e.getMessage());
-                        }
-                    }
-                
-                    public static List<Pixel> generatePixelsForImage(List<DrawingAction> actions) {
-                        List<Pixel> resultPixels = new ArrayList<>();
-                        actions.forEach(drawingAction -> {
-                            switch (drawingAction.getDrawingMethod()) {
-                                //SQUARE
-                                case 0: {
-                                    resultPixels.addAll(DrawingAction.drawSquare(drawingAction));
-                                    break;
-                                }
-                                //RECTANGLE
-                                case 1: {
-                                    resultPixels.addAll(DrawingAction.drawRectangle(drawingAction));
-                                    break;
-                                }
-                                //HORIZONTAL LINE
-                                case 2: {
-                                    resultPixels.addAll(DrawingAction.drawHorizontalLine(drawingAction));
-                                    break;
-                                }
-                                //VERTICAL LINE
-                                case 3: {
-                                    resultPixels.addAll(DrawingAction.drawVerticalLine(drawingAction));
-                                    break;
-                                }
-                                //CIRCLE
-                                case 4: {
-                                    resultPixels.addAll(DrawingAction.drawCircle(drawingAction));
-                                    break;
-                                }
-                                //HOLLOW SQUARE
-                                case 5: {
-                                    resultPixels.addAll(DrawingAction.drawHollowSquare(drawingAction));
-                                    break;
-                                }
-                                //DOT
-                                case 6: {
-                                    resultPixels.addAll(DrawingAction.drawDot(drawingAction));
-                                    break;
-                                }
-                                //TRIANGLE UP
-                                case 7: {
-                                    resultPixels.addAll(DrawingAction.drawTriangleUp(drawingAction));
-                                    break;
-                                }
-                                //TRIANGLE DOWN
-                                case 8: {
-                                    resultPixels.addAll(DrawingAction.drawTriangleDown(drawingAction));
-                                    break;
-                                }
-                                //TRIANGLE LEFT
-                                case 9: {
-                                    resultPixels.addAll(DrawingAction.drawTriangleLeft(drawingAction));
-                                    break;
-                                }
-                                //TRIANGLE RIGHT
-                                case 10: {
-                                    resultPixels.addAll(DrawingAction.drawTriangleRight(drawingAction));
-                                    break;
-                                }
-                                //DIAMOND
-                                case 11: {
-                                    resultPixels.addAll(DrawingAction.drawDiamond(drawingAction));
-                                    break;
-                                }
-                                default: {
-                                    log.error("Invalid Drawing Method: " + drawingAction.getDrawingMethod());
-                                    break;
-                                }
-                            }
-                        });
-                        return resultPixels;
-                    }
-                
-                REQUIRED OUTPUT FORMAT:
-                Return ONLY a JSON array in this exact format:
-                ```json
+                EXAMPLE JSON STRUCTURES:
                 [
-                    {"drawingMethod": 0, "initialX": 50, "initialY": 50, "red": 255, "green": 255, "blue": 0, "alpha": 255, "size": 10, "width": 0, "height": 0, "radius": 0},
-                    {"drawingMethod": 4, "initialX": 50, "initialY": 50, "red": 0, "green": 0, "blue": 255, "alpha": 255, "size": 0, "width": 0, "height": 0, "radius": 15}
+                    {"drawingMethod": 0, "initialX": 50, "initialY": 50, "red": 255, "green": 255, "blue": 0, "alpha": 255, "size": 20, "width": 0, "height": 0, "radius": 0},
+                    {"drawingMethod": 1, "initialX": 100, "initialY": 100, "red": 0, "green": 0, "blue": 255, "alpha": 255, "size": 0, "width": 30, "height": 15, "radius": 0},
+                    {"drawingMethod": 4, "initialX": 200, "initialY": 200, "red": 255, "green": 0, "blue": 0, "alpha": 255, "size": 0, "width": 0, "height": 0, "radius": 25},
+                    {"drawingMethod": 12, "initialX": 300, "initialY": 300, "red": 0, "green": 255, "blue": 0, "alpha": 255, "size": 0, "width": 40, "height": 25, "radius": 0},
+                    {"drawingMethod": 14, "initialX": 400, "initialY": 400, "red": 255, "green": 255, "blue": 255, "alpha": 255, "size": 10, "width": 30, "height": 20, "radius": 0},
+                    {"drawingMethod": 15, "initialX": 500, "initialY": 500, "red": 255, "green": 255, "blue": 0, "alpha": 255, "size": 5, "width": 0, "height": 0, "radius": 20},
+                    {"drawingMethod": 16, "initialX": 100, "initialY": 400, "red": 200, "green": 100, "blue": 50, "alpha": 150, "size": 25, "width": 0, "height": 0, "radius": 0}
                 ]
-                ```
+                
+                CRITICAL: 
+                - Must be valid JSON (proper brackets, commas, quotes)
+                - Must include ALL required fields for each object
+                - Must be complete (not cut off mid-generation)
+                - No markdown formatting, no code blocks, no explanations
+                
+                Drawing Methods (what each creates):
+                - 0: SQUARE - Filled square (size x size pixels)
+                - 1: RECTANGLE - Filled rectangle (width x height pixels)
+                - 2: HORIZONTAL_LINE - Horizontal line (width pixels long, 1 pixel tall)
+                - 3: VERTICAL_LINE - Vertical line (height pixels long, 1 pixel wide)
+                - 4: CIRCLE - Filled circle (radius determines size)
+                - 5: HOLLOW_SQUARE - Square outline only (size x size pixels, empty inside)
+                - 6: DOT - Single pixel point
+                - 7: TRIANGLE_UP - Triangle pointing upward (size determines height)
+                - 8: TRIANGLE_DOWN - Triangle pointing downward (size determines height)
+                - 9: TRIANGLE_LEFT - Triangle pointing left (size determines width)
+                - 10: TRIANGLE_RIGHT - Triangle pointing right (size determines width)
+                - 11: DIAMOND - Diamond/rhombus shape (size determines overall size)
+                - 12: ELLIPSE - Filled ellipse/oval (width x height pixels)
+                - 13: ARC - Curved arc segment (radius, start angle, end angle)
+                - 14: CURVED_LINE - Smooth curved line (start/end points + curve control)
+                - 15: STAR - Multi-pointed star (radius, number of points)
+                - 16: GRADIENT_SQUARE - Square with color gradient (size, start/end colors)
+                
+                PARAMETER DETAILS:
+                - Color values (red, green, blue, alpha): 0-255
+                - Coordinates (initialX, initialY): 0-599 (800x800 canvas)
+                
+                METHOD-SPECIFIC PARAMETERS:
+                - SQUARE (0): size = square side length (e.g., 20 for 20x20 square)
+                - RECTANGLE (1): width = width, height = height (e.g., width=30, height=15)
+                - HORIZONTAL_LINE (2): width = line length, height = 0 (e.g., width=50)
+                - VERTICAL_LINE (3): height = line length, width = 0 (e.g., height=40)
+                - CIRCLE (4): radius = circle radius, size/width/height = 0 (e.g., radius=25)
+                - HOLLOW_SQUARE (5): size = square side length (e.g., size=20)
+                - DOT (6): only initialX, initialY matter, all others = 0
+                - TRIANGLES (7-10): size = triangle size/height (e.g., size=15)
+                - DIAMOND (11): size = diamond size (e.g., size=20)
+                - ELLIPSE (12): width = ellipse width, height = ellipse height (e.g., width=30, height=20)
+                - ARC (13): radius = arc radius, size = start angle (0-360), width = end angle (0-360)
+                - CURVED_LINE (14): width = end X offset, height = end Y offset, size = curve height
+                - STAR (15): radius = star size, size = number of points (5-8), width/height = 0
+                - GRADIENT_SQUARE (16): size = square size, red/green = start color, blue/alpha = end color
+                
+                DETAILED USAGE GUIDE:
+                
+                BASIC SHAPES:
+                - SQUARES (0): Body parts, armor plates, building blocks (size: 15-40)
+                - RECTANGLES (1): Limbs, weapons, architectural elements (width: 20-50, height: 10-30)
+                - CIRCLES (4): Simple heads, eyes, wheels (radius: 8-25)
+                - ELLIPSES (12): Better for faces, bodies, organic shapes (width: 25-45, height: 15-35)
+                
+                LINES AND CURVES:
+                - HORIZONTAL_LINES (2): Hair, borders, ground lines (width: 20-60)
+                - VERTICAL_LINES (3): Hair, borders, structural elements (height: 20-60)
+                - CURVED_LINES (14): Smiles, eyebrows, organic curves (width/height: 15-40, size: 5-15)
+                - ARCS (13): Decorative curves, smiles, crescent shapes (radius: 10-30, angles: 0-360)
+                
+                DETAILS AND EFFECTS:
+                - TRIANGLES (7-10): Spikes, wings, arrowheads, mountain peaks (size: 10-25)
+                - DIAMONDS (11): Gems, decorative elements, geometric patterns (size: 8-20)
+                - STARS (15): Magical effects, decorative elements, sparkles (radius: 10-25, points: 5-8)
+                - HOLLOW_SQUARES (5): Frames, windows, decorative borders (size: 15-35)
+                - GRADIENT_SQUARES (16): Depth, shading, realistic surfaces (size: 15-40, use different colors)
+                - DOTS (6): Small details, stars, texture points, pupils (coordinates only)
+                
+                COLOR GUIDANCE:
+                - Use similar colors for related parts (e.g., different shades of blue for armor)
+                - Use contrasting colors for details (e.g., gold on blue armor)
+                - Use alpha values 200-255 for solid colors, 100-200 for semi-transparent effects
+                
+                COMPOSITION STRATEGY:
+                Think like a digital artist building an image layer by layer:
+                
+                1. MAIN STRUCTURE: Start with large shapes for main body parts (torso, head, main components)
+                2. SECONDARY PARTS: Add medium shapes for limbs, features, accessories
+                3. DETAILS: Add small shapes for facial features, textures, decorative elements
+                4. HIGHLIGHTS: Add final touches with dots, small shapes, and contrasting colors
+                5. FINAL TOUCHES: Add any decorative elements, sparkles, or accent details
+                
+                VISUAL COMPOSITION RULES:
+                - Center important elements around coordinates 400,400 (canvas center)
+                - Use larger shapes (30-50 pixels) for main body parts
+                - Use medium shapes (15-25 pixels) for features and limbs
+                - Use small shapes (5-15 pixels) for details and textures
+                - Create depth by layering: body → features → details → highlights
+                - Use color gradients: darker colors for shadows, lighter for highlights
+                - Overlap shapes intentionally: armor over body, details over surfaces
+                - Keep background transparent - only draw the object itself
                 
                 CREATIVE GUIDELINES:
-                - Create SIMPLE, RECOGNIZABLE objects that fit well in 800x800 pixels
-                - Focus on the ESSENTIAL features that make the object recognizable
-                - Use color variations to create depth and character
-                - Overlap shapes strategically to build recognizable forms
-                - Think about what makes this object instantly recognizable at small size
-                - Avoid over-complicating - simple is better for small canvas
-                
-                Instructions:
-                1. Create a List<DrawingAction> for a clear "%s" with 30 to 80 actions
-                2. Use the exact constructor format shown above
-                3. Use appropriate drawing methods (0-11)
-                4. Set unused parameters to 0
-                5. Return ONLY the List creation code, nothing else
-                6. Do NOT include any class definitions, imports, or explanations
-                7. Do NOT use setters - use the constructor only
-                8. Make sure coordinates fit within 800x800 canvas
-                9. Be creative and artistic - create something that looks like the requested object
-                10. Use color variations naturally to create depth and character
-                11. Overlap shapes organically to build detailed, recognizable forms
-                """, imageToGenerate, imageToGenerate);
+                - Create detailed, complex objects that take advantage of the 800x800 pixel canvas
+                - Focus on creating rich textures, intricate patterns, and layered details
+                - Use color variations to create realistic depth, shadows, highlights, and material effects
+                - Think about the object's anatomy, materials, textures, and character in detail
+                - Create intricate designs with many layers and fine details
+                """, imageToGenerate, imageToGenerate, imageToGenerate);
 
         // Prepare the request body according to Gemini API specification
         Map<String, Object> body = Map.of(

@@ -291,4 +291,189 @@ public class DrawingAction {
         }
         return pixelsToDraw;
     }
+
+    //DRAWING METHOD "12" - ELLIPSE
+    public static List<Pixel> drawEllipse(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int width = action.getWidth();
+        int height = action.getHeight();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        
+        for (int dx = -width/2; dx <= width/2; dx++) {
+            for (int dy = -height/2; dy <= height/2; dy++) {
+                // Ellipse equation: (dx/a)^2 + (dy/b)^2 <= 1
+                double a = width / 2.0;
+                double b = height / 2.0;
+                if ((dx * dx) / (a * a) + (dy * dy) / (b * b) <= 1.0) {
+                    pixelsToDraw.add(new Pixel(
+                            centerX + dx,
+                            centerY + dy,
+                            action.getRed(),
+                            action.getGreen(),
+                            action.getBlue(),
+                            action.getAlpha()
+                    ));
+                }
+            }
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "13" - ARC
+    public static List<Pixel> drawArc(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int radius = action.getRadius();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        int startAngle = action.getSize(); // Use size as start angle (0-360)
+        int endAngle = action.getWidth(); // Use width as end angle (0-360)
+        
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                if (dx * dx + dy * dy <= radius * radius) {
+                    // Calculate angle of this point
+                    double angle = Math.toDegrees(Math.atan2(dy, dx));
+                    if (angle < 0) angle += 360;
+                    
+                    // Check if angle is within arc range
+                    if (startAngle <= endAngle) {
+                        if (angle >= startAngle && angle <= endAngle) {
+                            pixelsToDraw.add(new Pixel(
+                                    centerX + dx,
+                                    centerY + dy,
+                                    action.getRed(),
+                                    action.getGreen(),
+                                    action.getBlue(),
+                                    action.getAlpha()
+                            ));
+                        }
+                    } else {
+                        // Handle wrap-around case (e.g., 300 to 60 degrees)
+                        if (angle >= startAngle || angle <= endAngle) {
+                            pixelsToDraw.add(new Pixel(
+                                    centerX + dx,
+                                    centerY + dy,
+                                    action.getRed(),
+                                    action.getGreen(),
+                                    action.getBlue(),
+                                    action.getAlpha()
+                            ));
+                        }
+                    }
+                }
+            }
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "14" - CURVED LINE
+    public static List<Pixel> drawCurvedLine(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int startX = action.getInitialX();
+        int startY = action.getInitialY();
+        int endX = action.getInitialX() + action.getWidth();
+        int endY = action.getInitialY() + action.getHeight();
+        int controlX = startX + (endX - startX) / 2;
+        int controlY = startY - action.getSize(); // Use size as curve height
+        
+        // Simple quadratic Bezier curve approximation
+        int steps = Math.max(Math.abs(endX - startX), Math.abs(endY - startY));
+        for (int i = 0; i <= steps; i++) {
+            double t = (double) i / steps;
+            int x = (int) ((1-t)*(1-t)*startX + 2*(1-t)*t*controlX + t*t*endX);
+            int y = (int) ((1-t)*(1-t)*startY + 2*(1-t)*t*controlY + t*t*endY);
+            
+            pixelsToDraw.add(new Pixel(
+                    x,
+                    y,
+                    action.getRed(),
+                    action.getGreen(),
+                    action.getBlue(),
+                    action.getAlpha()
+            ));
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "15" - STAR
+    public static List<Pixel> drawStar(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int radius = action.getRadius();
+        int centerX = action.getInitialX();
+        int centerY = action.getInitialY();
+        int points = action.getSize(); // Use size as number of points (5-8)
+        if (points < 3) points = 5; // Default to 5-point star
+        
+        // Calculate star points
+        double outerRadius = radius;
+        double innerRadius = radius * 0.4; // Inner radius for star shape
+        
+        for (int i = 0; i < points * 2; i++) {
+            double angle = (i * Math.PI) / points;
+            double r = (i % 2 == 0) ? outerRadius : innerRadius;
+            int x = (int) (centerX + r * Math.cos(angle));
+            int y = (int) (centerY + r * Math.sin(angle));
+            
+            // Draw lines between points to create star shape
+            if (i > 0) {
+                double prevAngle = ((i-1) * Math.PI) / points;
+                double prevR = ((i-1) % 2 == 0) ? outerRadius : innerRadius;
+                int prevX = (int) (centerX + prevR * Math.cos(prevAngle));
+                int prevY = (int) (centerY + prevR * Math.sin(prevAngle));
+                
+                // Draw line between previous and current point
+                int steps = Math.max(Math.abs(x - prevX), Math.abs(y - prevY));
+                for (int j = 0; j <= steps; j++) {
+                    double t = (double) j / steps;
+                    int lineX = (int) (prevX + t * (x - prevX));
+                    int lineY = (int) (prevY + t * (y - prevY));
+                    
+                    pixelsToDraw.add(new Pixel(
+                            lineX,
+                            lineY,
+                            action.getRed(),
+                            action.getGreen(),
+                            action.getBlue(),
+                            action.getAlpha()
+                    ));
+                }
+            }
+        }
+        return pixelsToDraw;
+    }
+
+    //DRAWING METHOD "16" - GRADIENT SQUARE
+    public static List<Pixel> drawGradientSquare(DrawingAction action) {
+        List<Pixel> pixelsToDraw = new ArrayList<>();
+        int size = action.getSize();
+        int startX = action.getInitialX();
+        int startY = action.getInitialY();
+        
+        // Use red/green as start color, blue/alpha as end color
+        int startR = action.getRed();
+        int startG = action.getGreen();
+        int endR = action.getBlue();
+        int endG = action.getAlpha();
+        
+        for (int dx = 0; dx < size; dx++) {
+            for (int dy = 0; dy < size; dy++) {
+                // Calculate gradient based on position
+                double t = (double) (dx + dy) / (2 * size);
+                int r = (int) (startR + t * (endR - startR));
+                int g = (int) (startG + t * (endG - startG));
+                int b = 128; // Fixed blue component
+                
+                pixelsToDraw.add(new Pixel(
+                        startX + dx,
+                        startY + dy,
+                        Math.max(0, Math.min(255, r)),
+                        Math.max(0, Math.min(255, g)),
+                        Math.max(0, Math.min(255, b)),
+                        255
+                ));
+            }
+        }
+        return pixelsToDraw;
+    }
 }
