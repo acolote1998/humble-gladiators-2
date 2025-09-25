@@ -47,8 +47,7 @@ public class GeminiService {
         );
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-        return entity;
+        return new HttpEntity<>(body, headers);
     }
 
     String getFullUrl() {
