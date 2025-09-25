@@ -12,4 +12,12 @@ import java.util.List;
 public class Theme {
     private List<String> wantedThemes;
     private List<String> unwantedThemes;
+
+    @Override
+    public String toString() {
+        return "Theme{" +
+                "wantedThemes=" + wantedThemes +
+                ", unwantedThemes=" + unwantedThemes +
+                '}';
+    }
 }
