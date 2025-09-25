@@ -74,77 +74,52 @@ public class GeminiService {
     public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException {
         log.info("Starting List<DrawingAction> generation attempt");
         String prompt = String.format("""
+                Return ONLY a valid JSON array (no explanations, no markdown).
+                Each object in the array must include ALL fields exactly as defined, even if unused:\s
+                { "drawingMethod": int, "initialX": int, "initialY": int, "red": int, "green": int, "blue": int, "alpha": int, "size": int, "width": int, "height": int, "radius": int }
+                
+                TASK:
                 Generate a JSON array of drawing actions to create a MINIMALISTIC %s image.
                 
                 SYSTEM OVERVIEW:
                 - Canvas: %dx%d pixels with transparent background
-                - Each action creates pixels that are layered (first = background, last = foreground)
-                - Later shapes overlap earlier ones to create depth and detail
-                - Final image is built pixel-by-pixel from all actions
+                - Actions are layered in order: first = background, last = foreground
+                - Shapes are pixel-filled based on the rules below
+                - Generate between 40 and 80 drawing actions
+                - Use color variations for depth and recognizability
+                - Center the main figure around coordinates %d,%d
+                - All color values must be integers in range 0–255
+                - All unused parameters must be 0
                 
-                REQUIREMENTS:
-                - Create a CLEAR, RECOGNIZABLE version of the %s
-                - Use enough shapes to make the object easily identifiable
-                - Generate 40-80 drawing actions for good detail
-                - Use color variations to create depth and character
-                - Center main elements around coordinates %d,%d
+                DRAWING METHODS (exact behavior from rendering engine):
                 
-                JSON FORMAT:
-                Return ONLY a valid JSON array (no explanations, no markdown):
-                Example:
-                ```json
-                [
-                    {"drawingMethod": 0, "initialX": 50, "initialY": 50, "red": 255, "green": 255, "blue": 0, "alpha": 255, "size": 20, "width": 0, "height": 0, "radius": 0},
-                    {"drawingMethod": 12, "initialX": 300, "initialY": 300, "red": 0, "green": 255, "blue": 0, "alpha": 255, "size": 0, "width": 40, "height": 25, "radius": 0}
-                ]
-                ```
-                
-                DRAWING METHODS:
-                0: SQUARE (size) - Solid filled square
-                1: RECTANGLE (width, height) - Solid filled rectangle
-                2: HORIZONTAL_LINE (width) - Single pixel thick horizontal line
-                3: VERTICAL_LINE (height) - Single pixel thick vertical line
-                4: CIRCLE (radius) - Solid filled circle
-                5: HOLLOW_SQUARE (size) - Square outline only (empty inside)
-                6: DOT (coordinates only) - Single pixel point
-                7: TRIANGLE_UP (size) - Solid triangle pointing upward
-                8: TRIANGLE_DOWN (size) - Solid triangle pointing downward
-                9: TRIANGLE_LEFT (size) - Solid triangle pointing left
-                10: TRIANGLE_RIGHT (size) - Solid triangle pointing right
-                11: DIAMOND (size) - Solid diamond/rhombus shape
-                12: ELLIPSE (width, height) - Solid filled oval/ellipse
-                13: ARC (radius, start angle, end angle) - Curved arc segment
-                14: CURVED_LINE (width, height, curve height) - Smooth curved line
-                15: STAR (radius, points) - Multi-pointed star shape
-                16: GRADIENT_SQUARE (size, start color, end color) - Square with color gradient
-                
-                PARAMETERS:
-                - Colors: 0-255 (red, green, blue, alpha)
-                - Coordinates: 0-%d (initialX, initialY)
-                - Set unused parameters to 0
-                
-                METHOD-SPECIFIC PARAMETERS:
-                - SQUARE (0): size = side length (e.g., size=20 creates 20x20 square)
-                - RECTANGLE (1): width = width, height = height (e.g., width=30, height=15)
-                - HORIZONTAL_LINE (2): width = line length, height = 0 (e.g., width=50)
-                - VERTICAL_LINE (3): height = line length, width = 0 (e.g., height=40)
-                - CIRCLE (4): radius = circle radius, size/width/height = 0 (e.g., radius=25)
-                - HOLLOW_SQUARE (5): size = side length (e.g., size=20)
-                - DOT (6): only initialX, initialY matter, all others = 0
-                - TRIANGLES (7-10): size = triangle size/height (e.g., size=15)
-                - DIAMOND (11): size = diamond size (e.g., size=20)
-                - ELLIPSE (12): width = ellipse width, height = ellipse height (e.g., width=30, height=20)
-                - ARC (13): radius = arc radius, size = start angle (0-360), width = end angle (0-360)
-                - CURVED_LINE (14): width = end X offset, height = end Y offset, size = curve height
-                - STAR (15): radius = star size, size = number of points (5-8), width/height = 0
-                - GRADIENT_SQUARE (16): size = square size, red/green = start color, blue/alpha = end color
+                0: SQUARE — solid square, top-left at (initialX, initialY), size = side length \s
+                1: RECTANGLE — solid rectangle, top-left at (initialX, initialY), width × height \s
+                2: HORIZONTAL_LINE — line starting at (initialX, initialY), length = width \s
+                3: VERTICAL_LINE — line starting at (initialX, initialY), length = height \s
+                4: CIRCLE — solid circle, center at (initialX, initialY), radius \s
+                5: HOLLOW_SQUARE — outline only, top-left at (initialX, initialY), size = side length \s
+                6: DOT — single pixel at (initialX, initialY) \s
+                7: TRIANGLE_UP — apex at (initialX, initialY), height = size \s
+                8: TRIANGLE_DOWN — apex at (initialX, initialY), height = size \s
+                9: TRIANGLE_LEFT — tip at (initialX, initialY), width = size \s
+                10: TRIANGLE_RIGHT — tip at (initialX, initialY), width = size \s
+                11: DIAMOND — centered at (initialX, initialY), size = diagonal length \s
+                12: ELLIPSE — centered at (initialX, initialY), width × height \s
+                13: ARC — centered at (initialX, initialY), radius, size = start angle (degrees), width = end angle (degrees) \s
+                14: CURVED_LINE — start at (initialX, initialY), width = end X offset, height = end Y offset, size = curve height \s
+                15: STAR — centered at (initialX, initialY), radius = outer radius, size = number of points (5–8) \s
+                16: GRADIENT_SQUARE — solid gradient square, top-left at (initialX, initialY), size = side length \s
+                    - red = start R, green = start G \s
+                    - blue = end R, alpha = end G \s
+                    - blue channel is fixed at 128, alpha is fixed at 255 during rendering
                 
                 DESIGN APPROACH:
-                - Create a clear, recognizable version of the %s
-                - Use shapes creatively to build a coherent object
-                - Add enough detail to make it identifiable (not just basic shapes)
-                - Use layering and overlapping for depth
-                - Center main elements around coordinates %d,%d
+                - Build the %s using overlapping shapes
+                - Ensure it is minimalistic but clearly recognizable
+                - Use depth layering for clarity
+                - Keep the drawing centered around %d,%d
+                
                 """, imageToGenerate, width, height, width / 2, height / 2, width - 1, width, height, width / 2, height / 2);
 
         // Prepare the request body according to Gemini API specification
