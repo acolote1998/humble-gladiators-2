@@ -38,7 +38,7 @@ public class GeminiService {
         this.mapper = mapper;
     }
 
-    HttpEntity<Map<String, Object>> produceEntity(String prompt) {
+    private HttpEntity<Map<String, Object>> produceEntity(String prompt) {
         // Prepare the request body according to Gemini API specification
         Map<String, Object> body = Map.of(
                 "contents", List.of(
@@ -50,12 +50,12 @@ public class GeminiService {
         return new HttpEntity<>(body, headers);
     }
 
-    String getFullUrl() {
+    private String getFullUrl() {
         // Construct the full URL with API key
         return URL + "?key=" + apiKey;
     }
 
-    String callGemini(String prompt) {
+    private String callGemini(String prompt) {
         try {
             ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(getFullUrl(), HttpMethod.POST, produceEntity(prompt), GeminiResponseDto.class);
             String resultText = Objects.requireNonNull(response.getBody())
