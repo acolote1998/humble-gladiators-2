@@ -126,26 +126,8 @@ public class GeminiService {
                 
                 """, imageToGenerate, width, height, width / 2, height / 2, width - 1, width, height, width / 2, height / 2);
 
-        // Prepare the request body according to Gemini API specification
-        Map<String, Object> body = Map.of(
-                "contents", List.of(
-                        Map.of("parts", List.of(Map.of("text", prompt)))
-                )
-        );
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-
-        // Construct the full URL with API key
-        String fullUrl = URL + "?key=" + apiKey;
-
         try {
-            ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(fullUrl, HttpMethod.POST, entity, GeminiResponseDto.class);
-            String resultText = Objects.requireNonNull(response.getBody())
-                    .candidates().get(0)
-                    .content().parts().get(0)
-                    .text();
+            String resultText = callGemini(prompt);
             resultText = resultText.replaceAll("`", "").replaceAll("json", "");
             List<DrawingAction> resultList = mapper.readValue(resultText, new TypeReference<List<DrawingAction>>() {
             });
