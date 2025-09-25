@@ -38,26 +38,27 @@ public class GeminiService {
         this.mapper = mapper;
     }
 
-    public String sendTestPrompt() {
-
-        String prompt = "This is just a status check. If you are receiving this, answer with a flat string being 'Online: Gemini Controller is up'.";
-
+    HttpEntity<Map<String, Object>> produceEntity(String prompt) {
         // Prepare the request body according to Gemini API specification
         Map<String, Object> body = Map.of(
                 "contents", List.of(
                         Map.of("parts", List.of(Map.of("text", prompt)))
                 )
         );
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+        return entity;
+    }
 
+    String getFullUrl() {
         // Construct the full URL with API key
-        String fullUrl = URL + "?key=" + apiKey;
+        return URL + "?key=" + apiKey;
+    }
 
+    String callGemini(String prompt) {
         try {
-            ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(fullUrl, HttpMethod.POST, entity, GeminiResponseDto.class);
+            ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(getFullUrl(), HttpMethod.POST, produceEntity(prompt), GeminiResponseDto.class);
             String resultText = Objects.requireNonNull(response.getBody())
                     .candidates().get(0)
                     .content().parts().get(0)
@@ -68,7 +69,11 @@ public class GeminiService {
             log.error(e.getMessage());
             return "Error: Failed to communicate with Gemini API - " + e.getMessage();
         }
+    }
 
+    public String sendTestPrompt() {
+        String prompt = "This is just a status check. If you are receiving this, answer with a flat string being 'Online: Gemini Controller is up'.";
+        return callGemini(prompt);
     }
 
     public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException {
