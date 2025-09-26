@@ -16,7 +16,7 @@ public class ArmorTemplate extends AbstractItem {
     private Integer physicalDefense;
     private Integer magicalDefense;
 
-    public static String objectStructure(Long campaignId) {
+    public static String ObjectStructure(Long campaignId) {
         return String.format("""
                 ArmorTemplate{
                 String name

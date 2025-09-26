@@ -42,7 +42,7 @@ public class Requirement {
                 '}';
     }
 
-    public static String requirementStructure(Long campaignId) {
+    public static String RequirementStructure(Long campaignId) {
         return String.format("""
                 Requirement{
                 Long campaign_id (%s)
