@@ -19,7 +19,9 @@ public record ItemFromGeminiDto(
         Long campaignId,
         RequirementDto requirement,
         Integer physicalDefense,
-        Integer magicalDefense
+        Integer magicalDefense,
+        Integer restoreHp,
+        Integer restoreMp
 
 
 ) {
