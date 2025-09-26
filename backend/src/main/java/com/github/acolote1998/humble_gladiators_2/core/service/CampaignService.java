@@ -19,7 +19,7 @@ public class CampaignService {
         return repository.save(campaign);
     }
 
-    public Campaign createCampaign(Theme campaignTheme) {
+    public Campaign createCampaign(Theme campaignTheme) throws InterruptedException {
         Campaign newCampaign = new Campaign();
         newCampaign.setTheme(campaignTheme);
         newCampaign = save(newCampaign);

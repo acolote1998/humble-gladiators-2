@@ -23,7 +23,7 @@ public class GeminiController {
      * @return ResponseEntity containing the Gemini API response
      */
     @GetMapping("/status")
-    public ResponseEntity<String> status() {
+    public ResponseEntity<String> status() throws InterruptedException {
         String response = geminiService.sendTestPrompt();
 
         // Return the response from Gemini

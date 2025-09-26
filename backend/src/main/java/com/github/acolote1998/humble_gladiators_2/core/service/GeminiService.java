@@ -60,7 +60,11 @@ public class GeminiService {
         return URL + "?key=" + apiKey;
     }
 
-    private String callGemini(String prompt) {
+    private String cleanResponseToJson(String response) {
+        return response.replaceAll("`", "").replaceAll("json", "");
+    }
+
+    private String callGemini(String prompt) throws InterruptedException {
         try {
             ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(getFullUrl(), HttpMethod.POST, produceEntity(prompt), GeminiResponseDto.class);
             String resultText = Objects.requireNonNull(response.getBody())
@@ -70,17 +74,19 @@ public class GeminiService {
             log.info(resultText);
             return resultText;
         } catch (Exception e) {
-            log.error(e.getMessage());
-            return "Error: Failed to communicate with Gemini API - " + e.getMessage();
+            log.error("RETRYING. Error: " + e.getMessage());
+            Thread.sleep(1000); //Waiting 1 sec before retrying
+            return callGemini(prompt);
+//            return "Error: Failed to communicate with Gemini API - " + e.getMessage();
         }
     }
 
-    public String sendTestPrompt() {
+    public String sendTestPrompt() throws InterruptedException {
         String prompt = "This is just a status check. If you are receiving this, answer with a flat string being 'Online: Gemini Controller is up'.";
         return callGemini(prompt);
     }
 
-    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException {
+    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException, InterruptedException {
         log.info("Starting List<DrawingAction> generation attempt");
         String prompt = String.format("""
                 Return ONLY a valid JSON array (no explanations, no markdown).
@@ -144,7 +150,7 @@ public class GeminiService {
         }
     }
 
-    public String generateListOfArmors(Campaign campaign) {
+    public String generateListOfArmors(Campaign campaign) throws InterruptedException {
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -162,15 +168,20 @@ public class GeminiService {
                 
                  The "RequirementEntry" structure is: %s
                 
-                Answer with ONLY json format, not extra text or explanations.
+                - Answer with ONLY json format, not extra text or explanations.
+                - Do not include "id", "createdAt", or "updatedAt" in the JSON.
                 """;
+
         String formattedPrompt = String.format(
                 rawPrompt,
                 campaignTheme,
                 ArmorTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId));
-        System.out.println(formattedPrompt);
-        return "hello";
+
+        String rawAnswer = callGemini(formattedPrompt);
+        String processedAnswer = cleanResponseToJson(rawAnswer);
+
+        return processedAnswer;
     }
 }

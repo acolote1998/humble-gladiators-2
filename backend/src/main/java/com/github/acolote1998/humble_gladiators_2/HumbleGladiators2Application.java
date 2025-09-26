@@ -14,15 +14,15 @@ import java.util.List;
 @SpringBootApplication
 public class HumbleGladiators2Application {
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) throws JsonProcessingException, InterruptedException {
 
 
         ConfigurableApplicationContext context = SpringApplication.run(HumbleGladiators2Application.class, args);
         Theme theme = new Theme();
         List<String> wantedThemes = new ArrayList<>();
-        wantedThemes.add("Pirates");
+        wantedThemes.add("Pirates, Star Wars");
         List<String> unwantedThemes = new ArrayList<>();
-        unwantedThemes.add("Unicorns");
+        unwantedThemes.add("Unicorns, Swords");
         theme.setWantedThemes(wantedThemes);
         theme.setUnwantedThemes(unwantedThemes);
         context.getBean(CampaignService.class).createCampaign(theme);
