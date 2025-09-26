@@ -23,13 +23,13 @@ public class ConsumableTemplate extends AbstractItem {
                 String description
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer value ( (tier*10)+(rarity*10) )
+                Integer value ( (tier*13)+(rarity*13) )
                 Boolean discovered (always false)
                 Integer quantity (always 0)
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer restoreHp (Math.round((super.getTier() * 1 * super.getRarity() * 1));)
+                Integer restoreHp (Math.round((super.getTier() * 1.5 * super.getRarity() * 1.5));)
                 Integer restoreMp (Math.round((super.getTier() * 2 * super.getRarity() * 4));)
                 }""", campaignId.toString());
     }
