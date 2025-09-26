@@ -31,8 +31,7 @@ public class RequirementEntry {
 
     // Examples:
     // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: "10"} -> character.level >= 10
-    // {requirementType: CLASSID, operator: IN, value: "WARRIOR,MAGE"} -> character.class IN (WARRIOR, MAGE)
-    // {requirementType: QUEST, operator: EQUALTHAN, value: "DragonSlayer"} -> character.completedQuests.contains("DragonSlayer")
+    // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: "50"} -> character.gold => 50
 
 
     @ManyToOne(fetch = FetchType.LAZY)
