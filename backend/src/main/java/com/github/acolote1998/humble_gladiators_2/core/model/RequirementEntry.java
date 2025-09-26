@@ -51,10 +51,10 @@ public class RequirementEntry {
     @Override
     public String toString() {
         return "RequirementEntry{" +
-                "requirementType=" + requirementType +
-                ", operator=" + operator +
+                "requirementType=" + requirementType.AllRequirementEntryTypeToString() +
+                ", operator=" + operator.AllRequirementEntryOperatorToString() +
                 ", value='" + value + '\'' +
-                '}' + "\n Examples: " +
+                '}' + "\n Examples of a RequirementEntry: " +
                 "\n // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: \"10\"} -> character.level >= 10 " +
                 "\n // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: \"50\"} -> character.gold => 50";
     }
