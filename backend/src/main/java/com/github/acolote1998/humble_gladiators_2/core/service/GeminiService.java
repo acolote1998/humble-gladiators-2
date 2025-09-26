@@ -5,8 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
+import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,10 +155,22 @@ public class GeminiService {
                  - Try to follow the wantedThemes
                  - Avoid unwantedThemes
                  Theme context is: " %s " 
-                 
-                 The object structure context is: 
                 
+                 The object structure context is: %s
+                
+                 The "Requirement" structure is: %s
+                
+                 The "RequirementEntry" structure is: %s
+                
+                Answer with ONLY json format, not extra text or explanations.
                 """;
-        String formattedPrompt = String.format(rawPrompt, campaignTheme,);
+        String formattedPrompt = String.format(
+                rawPrompt,
+                campaignTheme,
+                ArmorTemplate.ObjectStructure(campaignId),
+                Requirement.RequirementStructure(campaignId),
+                RequirementEntry.RequirementEntryStructure(campaignId));
+        System.out.println(formattedPrompt);
+        return "hello";
     }
 }

@@ -34,19 +34,10 @@ public class Requirement {
     @UpdateTimestamp
     LocalDateTime updatedAt; // Auto-managed by JPA
 
-    @Override
-    public String toString() {
-        return "Requirement{" +
-                "requirements=" + requirements +
-                ", campaign_id=" + "the provided campaign id" +
-                '}';
-    }
-
     public static String RequirementStructure(Long campaignId) {
         return String.format("""
                 Requirement{
                 Long campaign_id (%s)
-                RequirementEntry requirements : RequirementEntry[]
                 }""", campaignId.toString());
     }
 }
