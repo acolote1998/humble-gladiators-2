@@ -51,6 +51,7 @@ public class RequirementEntry {
     @Override
     public String toString() {
         return "RequirementEntry{" +
+                ", campaign_id=" + "the provided campaign id" +
                 "requirementType=" + requirementType.AllRequirementEntryTypeToString() +
                 ", operator=" + operator.AllRequirementEntryOperatorToString() +
                 ", value='" + value + '\'' +

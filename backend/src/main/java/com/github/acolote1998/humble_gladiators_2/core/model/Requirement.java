@@ -38,6 +38,7 @@ public class Requirement {
     public String toString() {
         return "Requirement{" +
                 "requirements=" + requirements +
+                ", campaign_id=" + "the provided campaign id" +
                 '}';
     }
 }
