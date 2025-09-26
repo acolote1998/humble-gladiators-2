@@ -46,7 +46,7 @@ public class ArmorService {
 
         armorTemplateRepository.saveAll(savedArmorTemplates);
 
-        log.info(savedArmorTemplates.size() + " successfully created an persisted");
+        log.info(savedArmorTemplates.size() + " armors successfully created an persisted");
 
         return savedArmorTemplates;
     }
