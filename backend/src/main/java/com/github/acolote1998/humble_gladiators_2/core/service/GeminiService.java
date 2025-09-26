@@ -87,6 +87,7 @@ public class GeminiService {
                  - Do not include "id", "createdAt", or "updatedAt" in the JSON.
                  - If a field represents an enum (like "requirementType"), it MUST be exactly one of the allowed provided values.
                  - Do NOT invent any new enum values. Only use the ones listed above.
+                 - Do NOT generate item names or descriptions that imply in-game effects or powers. For example, avoid names like "Teleportation Boots" or descriptions like "This item gives the user the power of X".
                 """;
     }
 
