@@ -60,11 +60,10 @@ public class ArmorService {
 
             requirement.setRequirements(requirementEntries);
             armorTemplate.setRequirement(requirement);
-
-            armorTemplateRepository.save(armorTemplate);
             savedArmorTemplates.add(armorTemplate);
         });
-
+        
+        armorTemplateRepository.saveAll(savedArmorTemplates);
         return savedArmorTemplates;
     }
 
