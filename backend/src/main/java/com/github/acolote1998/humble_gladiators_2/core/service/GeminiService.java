@@ -148,7 +148,8 @@ public class GeminiService {
         }
     }
 
-    public String generateTwentyFiveArmors(Campaign campaign, Integer amountToGenerate) throws InterruptedException {
+    public String generateTwentyFiveArmors(Campaign campaign) {
+        log.info("Trying to generate 25 armors through Gemini");
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -181,7 +182,12 @@ public class GeminiService {
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId));
 
-        String rawAnswer = callGemini(formattedPrompt);
+        String rawAnswer = "";
+        try {
+            rawAnswer = callGemini(formattedPrompt);
+        } catch (InterruptedException e) {
+            log.error("Error generating armors: " + e.getMessage());
+        }
         String processedAnswer = cleanResponseToJson(rawAnswer);
         return processedAnswer;
     }

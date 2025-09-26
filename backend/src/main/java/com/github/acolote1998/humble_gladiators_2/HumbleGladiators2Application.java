@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
@@ -14,7 +13,7 @@ import java.util.List;
 @SpringBootApplication
 public class HumbleGladiators2Application {
 
-    public static void main(String[] args) throws JsonProcessingException, InterruptedException {
+    public static void main(String[] args) {
 
 
         ConfigurableApplicationContext context = SpringApplication.run(HumbleGladiators2Application.class, args);

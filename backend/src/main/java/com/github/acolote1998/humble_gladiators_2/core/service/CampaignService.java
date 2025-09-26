@@ -24,6 +24,7 @@ public class CampaignService {
         newCampaign.setTheme(campaignTheme);
         newCampaign = save(newCampaign);
         save(newCampaign);
+        geminiService.generateTwentyFiveArmors(newCampaign);
         return newCampaign;
     }
 
