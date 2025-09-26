@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseItemFormat;
+import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
@@ -17,6 +19,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -148,37 +151,57 @@ public class GeminiService {
         }
     }
 
-    public String generateArmor(Campaign campaign) throws InterruptedException {
+    public List<ItemFromGeminiDto> generateTwentyFiveArmors(Campaign campaign) {
+        log.info("Trying to generate 25 armors through Gemini");
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
-                 You are generating data to create an item in an RPG game. 
-                 Generate in json format an object of type ArmorTemplate.
+                  You are generating data to create content for an RPG game.
                 
-                 The name, description have to be tailored to this theme context
-                 - Try to follow the wantedThemes
-                 - Avoid unwantedThemes
-                 Theme context is: " %s " 
+                  Generate in json format an Array of 25 "%s".
                 
-                 The object structure context is: %s
+                  The name, description have to be tailored to this theme context
+                  - Create content following the wantedThemes
+                  - Avoid following unwantedThemes
                 
-                 The "Requirement" structure is: %s
+                  Theme context is: " %s "
                 
-                 The "RequirementEntry" structure is: %s
+                  The object structure context is: %s
                 
-                - Answer with ONLY json format, not extra text or explanations.
-                - Do not include "id", "createdAt", or "updatedAt" in the JSON.
+                  The "Requirement" structure is: %s
+                
+                  The "RequirementEntry" structure is: %s
+                
+                 - Generate 1 item of each tier and each rarity. Example: {Armor tier 1, rarity 1}, {Armor tier 1 rarity 2}, etc.
+                 - Not all items need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
+                 - If the item will not have a requirement, then make it null
+                 - Answer with ONLY json format, not extra text or explanations.
+                 - Do not include "id", "createdAt", or "updatedAt" in the JSON.
                 """;
 
         String formattedPrompt = String.format(
                 rawPrompt,
+                "ArmorTemplate",
                 campaignTheme,
                 ArmorTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId));
 
-        String rawAnswer = callGemini(formattedPrompt);
+        String rawAnswer = "";
+        try {
+            rawAnswer = callGemini(formattedPrompt);
+        } catch (InterruptedException e) {
+            log.error("Error generating armors: " + e.getMessage());
+        }
         String processedAnswer = cleanResponseToJson(rawAnswer);
-        return processedAnswer;
+
+        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        try {
+            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.error("Could not map generated items to ItemFromGeminiDto");
+        }
+        return generatedItems;
     }
 }
