@@ -171,9 +171,9 @@ public class GeminiService {
                 
                   The "RequirementEntry" structure is: %s
                 
-                 - Generate 1 item of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                 - Not all items need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                 - If the item will not have a requirement, then make it null
+                 - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                 - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
+                 - If the generated object will not have a requirement, then make it null
                  - Answer with ONLY json format, not extra text or explanations.
                  - Do not include "id", "createdAt", or "updatedAt" in the JSON.
                 """;
@@ -227,9 +227,9 @@ public class GeminiService {
                 
                   The "RequirementEntry" structure is: %s
                 
-                 - Generate 1 item of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                 - Not all items need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                 - If the item will not have a requirement, then make it null
+                 - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                 - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
+                 - If the generated object will not have a requirement, then make it null
                  - Answer with ONLY json format, not extra text or explanations.
                  - Do not include "id", "createdAt", or "updatedAt" in the JSON.
                 """;
