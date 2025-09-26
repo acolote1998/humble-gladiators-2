@@ -5,6 +5,7 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.item.service.ArmorService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,6 +13,12 @@ import org.springframework.stereotype.Service;
 public class GameService {
     CampaignService campaignService;
     ArmorService armorService;
+
+    @Autowired
+    public GameService(CampaignService campaignService, ArmorService armorService) {
+        this.campaignService = campaignService;
+        this.armorService = armorService;
+    }
 
     public void startGame(Theme gameTheme) throws InterruptedException {
         Campaign campaign = campaignService.createCampaign(gameTheme);
