@@ -54,6 +54,8 @@ public class RequirementEntry {
                 "requirementType=" + requirementType +
                 ", operator=" + operator +
                 ", value='" + value + '\'' +
-                '}';
+                '}' + "\n Examples: " +
+                "\n // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: \"10\"} -> character.level >= 10 " +
+                "\n // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: \"50\"} -> character.gold => 50";
     }
 }
