@@ -25,7 +25,7 @@ public class BootsTemplate extends AbstractItem {
                 Integer tier (1 - 5)
                 Integer value ( (tier*100)+(rarity*300) )
                 Boolean discovered (always false)
-                Integer quantity (always 1)
+                Integer quantity (always 0)
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)

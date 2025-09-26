@@ -17,15 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name = "consumable_instance")
 @Slf4j
 public class ConsumableInstance extends AbstractItem implements Usable, Tradeable, Discoverable {
-    
+    private Integer restoreHp;
+    private Integer restoreMp;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
     private ConsumableTemplate template;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-    
+
     @Override
     public void use() {
 

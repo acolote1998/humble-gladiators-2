@@ -16,6 +16,8 @@ public class Stats {
     private int luck;
     private int maxHp;
     private int currentHp;
+    private int maxMp;
+    private int currentMp;
     private int height;
     private int weight;
     private int level;
