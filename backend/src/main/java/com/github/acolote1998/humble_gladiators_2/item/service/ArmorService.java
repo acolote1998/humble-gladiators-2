@@ -6,12 +6,14 @@ import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ArmorTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ArmorService {
     GeminiService geminiService;
     ArmorTemplateRepository armorTemplateRepository;
@@ -43,6 +45,9 @@ public class ArmorService {
         });
 
         armorTemplateRepository.saveAll(savedArmorTemplates);
+
+        log.info(savedArmorTemplates.size() + " successfully created an persisted");
+
         return savedArmorTemplates;
     }
 

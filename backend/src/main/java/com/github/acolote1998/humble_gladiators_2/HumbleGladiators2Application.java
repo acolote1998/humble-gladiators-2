@@ -1,8 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2;
 
-import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
-import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
+import com.github.acolote1998.humble_gladiators_2.core.service.GameService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,6 +16,7 @@ public class HumbleGladiators2Application {
 
 
         ConfigurableApplicationContext context = SpringApplication.run(HumbleGladiators2Application.class, args);
+
         Theme theme = new Theme();
         List<String> wantedThemes = new ArrayList<>();
         wantedThemes.add("Harry Potter");
@@ -24,7 +24,9 @@ public class HumbleGladiators2Application {
         unwantedThemes.add("Unicorns");
         theme.setWantedThemes(wantedThemes);
         theme.setUnwantedThemes(unwantedThemes);
-        Campaign newCampaign = context.getBean(CampaignService.class).createCampaign(theme);
+
+        //Try game logic
+        context.getBean(GameService.class).startGame(theme);
 
     }
 }
