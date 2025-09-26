@@ -38,6 +38,7 @@ public class Requirement {
         return String.format("""
                 Requirement{
                 Long campaign_id (%s)
+                RequirementEntry[] requirements
                 }""", campaignId.toString());
     }
 }
