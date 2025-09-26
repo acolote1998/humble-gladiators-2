@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Defendable;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Entity
 @Table(name = "armor_template")
 @Slf4j
-public class ArmorTemplate extends AbstractItem implements Defendable {
+public class ArmorTemplate extends AbstractItem {
     private Integer physicalDefense;
     private Integer magicalDefense;
 
@@ -24,19 +23,14 @@ public class ArmorTemplate extends AbstractItem implements Defendable {
                 String description
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer value
+                Integer value ( (tier*100)+(rarity*300) )
                 Boolean discovered (always false)
                 Integer quantity (always 1)
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer physicalDefense (always 0)
-                Integer magicalDefense (always 0)
+                Integer physicalDefense (Math.round((super.getTier() * 1.5 * super.getRarity() * 2));)
+                Integer magicalDefense (Math.round((super.getTier() * 1.5 * super.getRarity() * 2));)
                 }""", campaignId.toString());
-    }
-
-    @Override
-    public Long calculateDefense() {
-        return Math.round((super.getTier() * 1.5 * super.getRarity() * 2));
     }
 }

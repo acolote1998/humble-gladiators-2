@@ -152,29 +152,25 @@ public class GeminiService {
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
-                 You are generating data to create content for an RPG game.
+                  You are generating data to create content for an RPG game.
                 
-                 Generate in json format an Array of 25 "%s".
+                  Generate in json format an Array of 25 "%s".
                 
-                 The name, description have to be tailored to this theme context
-                 - Create content following the wantedThemes
-                 - Avoid following unwantedThemes
+                  The name, description have to be tailored to this theme context
+                  - Create content following the wantedThemes
+                  - Avoid following unwantedThemes
                 
-                 Theme context is: " %s "
+                  Theme context is: " %s "
                 
-                 The object structure context is: %s
+                  The object structure context is: %s
                 
-                 The "Requirement" structure is: %s
+                  The "Requirement" structure is: %s
                 
-                 The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: %s
                 
-                 - How to balance the values for the created content:
-                    - Generate 1 item of each tier and each rarity.
-                        Example: Armor tier 1, rarity 1, Armor tier 1 rarity 2, etc.
-                 - 
-                
-                - Answer with ONLY json format, not extra text or explanations.
-                - Do not include "id", "createdAt", or "updatedAt" in the JSON.
+                 - Generate 1 item of each tier and each rarity. Example: {Armor tier 1, rarity 1}, {Armor tier 1 rarity 2}, etc.
+                 - Answer with ONLY json format, not extra text or explanations.
+                 - Do not include "id", "createdAt", or "updatedAt" in the JSON.
                 """;
 
         String formattedPrompt = String.format(
