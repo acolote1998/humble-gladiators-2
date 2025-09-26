@@ -17,9 +17,10 @@ public class GameService {
     BootsService bootsService;
 
     @Autowired
-    public GameService(CampaignService campaignService, ArmorService armorService) {
+    public GameService(CampaignService campaignService, ArmorService armorService, BootsService bootsService) {
         this.campaignService = campaignService;
         this.armorService = armorService;
+        this.bootsService = bootsService;
     }
 
     public void startGame(Theme gameTheme) throws InterruptedException {
