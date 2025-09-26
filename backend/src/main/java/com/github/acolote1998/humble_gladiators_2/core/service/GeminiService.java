@@ -71,7 +71,6 @@ public class GeminiService {
                     .candidates().get(0)
                     .content().parts().get(0)
                     .text();
-            log.info(resultText);
             return resultText;
         } catch (Exception e) {
             log.error("RETRYING. Error: " + e.getMessage());
