@@ -12,7 +12,7 @@ public enum RequirementEntryOperator {
     NOT_EXISTS;
 
     // Method to get all constants as a comma-separated string
-    public String AllRequirementEntryOperatorToString() {
+    public static String AllRequirementEntryOperatorToString() {
         StringBuilder sb = new StringBuilder();
         for (RequirementEntryOperator operator : RequirementEntryOperator.values()) {
             sb.append(operator.name()).append(", ");

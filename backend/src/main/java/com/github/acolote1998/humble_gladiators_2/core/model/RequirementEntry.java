@@ -29,11 +29,6 @@ public class RequirementEntry {
 
     private String value;
 
-    // Examples:
-    // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: "10"} -> character.level >= 10
-    // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: "50"} -> character.gold => 50
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
@@ -47,16 +42,23 @@ public class RequirementEntry {
     @UpdateTimestamp
     LocalDateTime updatedAt; // Auto-managed by JPA
 
-
-    @Override
-    public String toString() {
-        return "RequirementEntry{" +
-                ", campaign_id=" + "the provided campaign id" +
-                "requirementType=" + requirementType.AllRequirementEntryTypeToString() +
-                ", operator=" + operator.AllRequirementEntryOperatorToString() +
-                ", value='" + value + '\'' +
-                '}' + "\n Examples of a RequirementEntry: " +
-                "\n // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: \"10\"} -> character.level >= 10 " +
-                "\n // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: \"50\"} -> character.gold => 50";
+    public static String RequirementEntryStructure(Long campaignId) {
+        return String.format("""
+                        RequirementEntry{
+                        RequirementEntryType requirementType (%s)
+                        RequirementEntryOperator operator (%s)
+                        String value
+                        Long campaign_id (%s)
+                        Requirement requirement;
+                        
+                        //Examples:
+                        // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: "10"} -> character.level >= 10
+                        // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: "50"} -> character.gold => 50
+                        }
+                        """,
+                RequirementEntryType.AllRequirementEntryTypeToString(),
+                RequirementEntryOperator.AllRequirementEntryOperatorToString(),
+                campaignId.toString()
+        );
     }
 }

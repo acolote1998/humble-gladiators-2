@@ -23,7 +23,7 @@ public enum RequirementEntryType {
     GOLD;
 
     // Method to get all constants as a comma-separated string
-    public String AllRequirementEntryTypeToString() {
+    public static String AllRequirementEntryTypeToString() {
         StringBuilder sb = new StringBuilder();
         for (RequirementEntryType type : RequirementEntryType.values()) {
             sb.append(type.name()).append(", ");
