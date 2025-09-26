@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.core.model;
 
+import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +24,11 @@ public class Campaign {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Theme theme;
+
+    @Enumerated(EnumType.STRING)
+    private CampaignCreationStateType campaignCreationState = CampaignCreationStateType.STARTING_NEW_CAMPAIGN;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
