@@ -150,7 +150,7 @@
 - [ ] AI Content Generation
 
     - [ ] Campaign theme-based generation
-        - [ ] AI Generation Logic - List<Armor Template>
+        - [X] AI Generation Logic - List<Armor Template>
         - [ ] AI Generation Logic - List<Boots Template>
         - [ ] AI Generation Logic - List<Consumable Template>
         - [ ] AI Generation Logic - List<Helmet Template>
