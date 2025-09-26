@@ -15,8 +15,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class ArmorService {
-    GeminiService geminiService;
-    ArmorTemplateRepository armorTemplateRepository;
+    private GeminiService geminiService;
+    private ArmorTemplateRepository armorTemplateRepository;
 
     public ArmorService(GeminiService geminiService, ArmorTemplateRepository armorTemplateRepository) {
         this.geminiService = geminiService;

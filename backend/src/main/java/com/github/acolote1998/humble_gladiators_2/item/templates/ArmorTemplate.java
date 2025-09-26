@@ -18,19 +18,19 @@ public class ArmorTemplate extends AbstractItem {
 
     public static String ObjectStructure(Long campaignId) {
         return String.format("""
-                ArmorTemplate{
+                BootsTemplate{
                 String name
                 String description
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer value ( (tier*100)+(rarity*300) )
+                Integer value ( (tier*90)+(rarity*290) )
                 Boolean discovered (always false)
                 Integer quantity (always 1)
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer physicalDefense (Math.round((super.getTier() * 1.5 * super.getRarity() * 2));)
-                Integer magicalDefense (Math.round((super.getTier() * 1.5 * super.getRarity() * 2));)
+                Integer physicalDefense (Math.round((super.getTier() * 1 * super.getRarity() * 1.5));)
+                Integer magicalDefense (Math.round((super.getTier() * 0.2 * super.getRarity() * 0.5));)
                 }""", campaignId.toString());
     }
 }
