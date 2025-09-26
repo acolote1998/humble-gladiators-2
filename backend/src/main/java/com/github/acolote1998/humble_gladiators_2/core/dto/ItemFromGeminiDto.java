@@ -17,14 +17,14 @@ public record ItemFromGeminiDto(
         Boolean equipped,
         @JsonProperty("campaign_id")
         Long campaignId,
-        GeminiResponseItemFormat.ItemFromGemini.RequirementDto requirement,
+        RequirementDto requirement,
         Integer physicalDefense,
         Integer magicalDefense
 
 
 ) {
     public record RequirementDto(Long campaignId,
-                                 List<GeminiResponseItemFormat.ItemFromGemini.RequirementDto.RequirementEntry> requirements) {
+                                 List<RequirementEntry> requirements) {
         @JsonIgnoreProperties
         public record RequirementEntry(
                 String requirementType,

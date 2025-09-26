@@ -30,13 +30,12 @@ public abstract class AbstractItem {
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "requirement_id")
+    private Requirement requirement;
+
     @CreationTimestamp
     LocalDateTime createdAt; // Auto-managed by JPA
     @UpdateTimestamp
     LocalDateTime updatedAt; // Auto-managed by JPA
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "requirement_id")
-    private Requirement requirement;
-    
 }
