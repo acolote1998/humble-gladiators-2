@@ -33,4 +33,11 @@ public class Requirement {
     LocalDateTime createdAt; // Auto-managed by JPA
     @UpdateTimestamp
     LocalDateTime updatedAt; // Auto-managed by JPA
+
+    @Override
+    public String toString() {
+        return "Requirement{" +
+                "requirements=" + requirements +
+                '}';
+    }
 }

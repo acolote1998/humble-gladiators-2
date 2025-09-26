@@ -23,7 +23,7 @@ public class Campaign {
 
     private String name;
 
-    @Embedded
+    @OneToOne
     private Theme theme;
 
     @CreationTimestamp

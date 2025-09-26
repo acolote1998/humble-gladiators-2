@@ -20,5 +20,17 @@ public enum RequirementEntryType {
     ONLINEVICTORIES,
     TOTALVICTORIES,
     ITEMID,
-    GOLD,
+    GOLD;
+
+    // Method to get all constants as a comma-separated string
+    public static String AllRequirementEntryTypeToString() {
+        StringBuilder sb = new StringBuilder();
+        for (RequirementEntryType type : RequirementEntryType.values()) {
+            sb.append(type.name()).append(", ");
+        }
+        // Remove last comma and space
+        if (sb.length() > 0) sb.setLength(sb.length() - 2);
+        return sb.toString();
+    }
+
 }

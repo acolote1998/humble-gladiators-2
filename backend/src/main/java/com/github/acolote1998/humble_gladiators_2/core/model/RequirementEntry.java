@@ -21,11 +21,18 @@ public class RequirementEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private RequirementEntryType requirementType;
 
+    @Enumerated(EnumType.STRING)
     private RequirementEntryOperator operator;
 
     private String value;
+
+    // Examples:
+    // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: "10"} -> character.level >= 10
+    // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: "50"} -> character.gold => 50
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id")
@@ -39,4 +46,16 @@ public class RequirementEntry {
     LocalDateTime createdAt; // Auto-managed by JPA
     @UpdateTimestamp
     LocalDateTime updatedAt; // Auto-managed by JPA
+
+
+    @Override
+    public String toString() {
+        return "RequirementEntry{" +
+                "requirementType=" + requirementType +
+                ", operator=" + operator +
+                ", value='" + value + '\'' +
+                '}' + "\n Examples: " +
+                "\n // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: \"10\"} -> character.level >= 10 " +
+                "\n // {requirementType: GOLD, operator: LESSOREQUALTHAN, value: \"50\"} -> character.gold => 50";
+    }
 }

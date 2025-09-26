@@ -25,11 +25,11 @@ public abstract class AbstractItem {
     private Boolean discovered;
     private Integer quantity;
     private Boolean equipped;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
-    
+
     @CreationTimestamp
     LocalDateTime createdAt; // Auto-managed by JPA
     @UpdateTimestamp
@@ -38,4 +38,16 @@ public abstract class AbstractItem {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "requirement_id")
     private Requirement requirement;
+
+    @Override
+    public String toString() {
+        return "AbstractItem{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", rarity=" + rarity +
+                ", tier=" + tier +
+                ", value=" + value +
+                ", requirement=" + requirement +
+                '}';
+    }
 }

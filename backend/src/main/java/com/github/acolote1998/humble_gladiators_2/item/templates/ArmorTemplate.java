@@ -15,4 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ArmorTemplate extends AbstractItem {
     private Integer physicalDefense;
     private Integer magicalDefense;
+
+    @Override
+    public String toString() {
+        return "ArmorTemplate{" +
+                "super=" + super.toString() +
+                "physicalDefense=" + physicalDefense +
+                ", magicalDefense=" + magicalDefense +
+                '}';
+    }
 }
