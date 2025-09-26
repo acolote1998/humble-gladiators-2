@@ -1,12 +1,9 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
-import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryOperator;
-import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
-import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
+import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ArmorTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import org.springframework.stereotype.Service;
@@ -41,28 +38,10 @@ public class ArmorService {
             armorTemplate.setCampaign(campaign);
             armorTemplate.setMagicalDefense(dto.magicalDefense());
             armorTemplate.setPhysicalDefense(dto.physicalDefense());
-
-            Requirement requirement = new Requirement();
-            requirement.setCampaign(campaign);
-
-            List<RequirementEntry> requirementEntries = new ArrayList<>();
-            if (dto.requirement() != null && !dto.requirement().requirements().isEmpty()) {
-                dto.requirement().requirements().forEach(entryDto -> {
-                    RequirementEntry requirementEntry = new RequirementEntry();
-                    requirementEntry.setCampaign(campaign);
-                    requirementEntry.setRequirement(requirement);
-                    requirementEntry.setValue(entryDto.value());
-                    requirementEntry.setOperator(RequirementEntryOperator.valueOf(entryDto.operator()));
-                    requirementEntry.setRequirementType(RequirementEntryType.valueOf(entryDto.requirementType()));
-                    requirementEntries.add(requirementEntry);
-                });
-            }
-
-            requirement.setRequirements(requirementEntries);
-            armorTemplate.setRequirement(requirement);
+            armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedArmorTemplates.add(armorTemplate);
         });
-        
+
         armorTemplateRepository.saveAll(savedArmorTemplates);
         return savedArmorTemplates;
     }
