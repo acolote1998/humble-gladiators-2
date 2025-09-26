@@ -31,6 +31,6 @@ public class ArmorTemplate extends AbstractItem {
                 Requirement requirement (create a requirement object)
                 Integer physicalDefense (0 - 50)
                 Integer magicalDefense (0 - 50)
-                """, campaignId);
+                }""", campaignId.toString());
     }
 }

@@ -41,4 +41,12 @@ public class Requirement {
                 ", campaign_id=" + "the provided campaign id" +
                 '}';
     }
+
+    public static String requirementStructure(Long campaignId) {
+        return String.format("""
+                Requirement{
+                Long campaign_id (%s)
+                RequirementEntry requirements : RequirementEntry[]
+                }""", campaignId.toString());
+    }
 }
