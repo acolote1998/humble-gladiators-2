@@ -49,7 +49,7 @@ public class RequirementEntry {
                         RequirementEntryOperator operator (%s)
                         String value
                         Long campaign_id (%s)
-                        Long requirements_id (use null, it will be asigned later on in the persistence layer);
+                        Long requirements_id (use null, it will be assigned later on in the persistence layer);
                         
                         //Examples:
                         // {requirementType: LEVEL, operator: MOREOREQUALTHAN, value: "10"} -> character.level >= 10

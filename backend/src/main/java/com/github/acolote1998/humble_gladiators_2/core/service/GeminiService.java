@@ -7,7 +7,6 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
-import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.util.List;
 import java.util.Map;
@@ -150,7 +148,7 @@ public class GeminiService {
         }
     }
 
-    public String generateListOfArmors(Campaign campaign) throws InterruptedException {
+    public String generateArmor(Campaign campaign) throws InterruptedException {
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -181,7 +179,6 @@ public class GeminiService {
 
         String rawAnswer = callGemini(formattedPrompt);
         String processedAnswer = cleanResponseToJson(rawAnswer);
-
         return processedAnswer;
     }
 }
