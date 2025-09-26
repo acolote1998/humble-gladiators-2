@@ -85,6 +85,8 @@ public class GeminiService {
         return """
                  - Answer with ONLY json format, not extra text or explanations.
                  - Do not include "id", "createdAt", or "updatedAt" in the JSON.
+                 - If a field represents an enum (like "requirementType"), it MUST be exactly one of the allowed provided values.
+                 - Do NOT invent any new enum values. Only use the ones listed above.
                 """;
     }
 
