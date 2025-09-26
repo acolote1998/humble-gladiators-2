@@ -23,7 +23,7 @@ public class Campaign {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Theme theme;
 
     @CreationTimestamp

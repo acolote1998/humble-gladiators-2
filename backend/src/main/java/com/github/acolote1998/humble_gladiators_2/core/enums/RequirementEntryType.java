@@ -4,10 +4,10 @@ public enum RequirementEntryType {
     LEVEL,
     HP,
     MANA,
-    CLASSID,
-    QUEST,
-    RACEID,
-    QUESTID,
+    //    CLASSID,
+//    QUEST,
+//    RACEID,
+//    QUESTID,
     HEIGHT,
     WEIGHT,
     CONSTITUTION,
@@ -23,7 +23,7 @@ public enum RequirementEntryType {
     GOLD;
 
     // Method to get all constants as a comma-separated string
-    public String AllRequirementEntryTypeToString() {
+    public static String AllRequirementEntryTypeToString() {
         StringBuilder sb = new StringBuilder();
         for (RequirementEntryType type : RequirementEntryType.values()) {
             sb.append(type.name()).append(", ");

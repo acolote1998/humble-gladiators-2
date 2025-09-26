@@ -16,12 +16,21 @@ public class ArmorTemplate extends AbstractItem {
     private Integer physicalDefense;
     private Integer magicalDefense;
 
-    @Override
-    public String toString() {
-        return "ArmorTemplate{" +
-                "super=" + super.toString() +
-                "physicalDefense=" + physicalDefense +
-                ", magicalDefense=" + magicalDefense +
-                '}';
+    public static String ObjectStructure(Long campaignId) {
+        return String.format("""
+                ArmorTemplate{
+                String name
+                String description
+                Integer rarity (1 - 5)
+                Integer tier (1 - 5)
+                Integer value
+                Boolean discovered (always false)
+                Integer quantity (always 1)
+                Boolean equipped (always false)
+                Long campaign_id (%s)
+                Requirement requirement (create a requirement object)
+                Integer physicalDefense (0 - 50)
+                Integer magicalDefense (0 - 50)
+                }""", campaignId.toString());
     }
 }

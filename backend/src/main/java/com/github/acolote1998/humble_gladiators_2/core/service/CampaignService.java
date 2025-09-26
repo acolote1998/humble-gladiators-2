@@ -19,12 +19,10 @@ public class CampaignService {
         return repository.save(campaign);
     }
 
-    Campaign createCampaign(Theme campaignTheme) {
+    public Campaign createCampaign(Theme campaignTheme) {
         Campaign newCampaign = new Campaign();
         newCampaign.setTheme(campaignTheme);
         newCampaign = save(newCampaign);
-
-
         save(newCampaign);
         return newCampaign;
     }

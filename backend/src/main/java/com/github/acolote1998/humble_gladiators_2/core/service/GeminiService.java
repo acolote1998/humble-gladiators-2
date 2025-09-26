@@ -4,7 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
+import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +58,11 @@ public class GeminiService {
         return URL + "?key=" + apiKey;
     }
 
-    private String callGemini(String prompt) {
+    private String cleanResponseToJson(String response) {
+        return response.replaceAll("`", "").replaceAll("json", "");
+    }
+
+    private String callGemini(String prompt) throws InterruptedException {
         try {
             ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(getFullUrl(), HttpMethod.POST, produceEntity(prompt), GeminiResponseDto.class);
             String resultText = Objects.requireNonNull(response.getBody())
@@ -65,17 +72,19 @@ public class GeminiService {
             log.info(resultText);
             return resultText;
         } catch (Exception e) {
-            log.error(e.getMessage());
-            return "Error: Failed to communicate with Gemini API - " + e.getMessage();
+            log.error("RETRYING. Error: " + e.getMessage());
+            Thread.sleep(1000); //Waiting 1 sec before retrying
+            return callGemini(prompt);
+//            return "Error: Failed to communicate with Gemini API - " + e.getMessage();
         }
     }
 
-    public String sendTestPrompt() {
+    public String sendTestPrompt() throws InterruptedException {
         String prompt = "This is just a status check. If you are receiving this, answer with a flat string being 'Online: Gemini Controller is up'.";
         return callGemini(prompt);
     }
 
-    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException {
+    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException, InterruptedException {
         log.info("Starting List<DrawingAction> generation attempt");
         String prompt = String.format("""
                 Return ONLY a valid JSON array (no explanations, no markdown).
@@ -139,4 +148,37 @@ public class GeminiService {
         }
     }
 
+    public String generateArmor(Campaign campaign) throws InterruptedException {
+        Long campaignId = campaign.getId();
+        String campaignTheme = campaign.getTheme().toString();
+        String rawPrompt = """
+                 You are generating data to create an item in an RPG game. 
+                 Generate in json format an object of type ArmorTemplate.
+                
+                 The name, description have to be tailored to this theme context
+                 - Try to follow the wantedThemes
+                 - Avoid unwantedThemes
+                 Theme context is: " %s " 
+                
+                 The object structure context is: %s
+                
+                 The "Requirement" structure is: %s
+                
+                 The "RequirementEntry" structure is: %s
+                
+                - Answer with ONLY json format, not extra text or explanations.
+                - Do not include "id", "createdAt", or "updatedAt" in the JSON.
+                """;
+
+        String formattedPrompt = String.format(
+                rawPrompt,
+                campaignTheme,
+                ArmorTemplate.ObjectStructure(campaignId),
+                Requirement.RequirementStructure(campaignId),
+                RequirementEntry.RequirementEntryStructure(campaignId));
+
+        String rawAnswer = callGemini(formattedPrompt);
+        String processedAnswer = cleanResponseToJson(rawAnswer);
+        return processedAnswer;
+    }
 }
