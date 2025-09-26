@@ -10,6 +10,7 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
+import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,7 +171,7 @@ public class GeminiService {
                 
                   The "RequirementEntry" structure is: %s
                 
-                 - Generate 1 item of each tier and each rarity. Example: {Armor tier 1, rarity 1}, {Armor tier 1 rarity 2}, etc.
+                 - Generate 1 item of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all items need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the item will not have a requirement, then make it null
                  - Answer with ONLY json format, not extra text or explanations.
@@ -183,7 +184,65 @@ public class GeminiService {
                 campaignTheme,
                 ArmorTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId));
+                RequirementEntry.RequirementEntryStructure(campaignId),
+                "Armor",
+                "Armor");
+
+        String rawAnswer = "";
+        try {
+            rawAnswer = callGemini(formattedPrompt);
+        } catch (InterruptedException e) {
+            log.error("Error generating armors: " + e.getMessage());
+        }
+        String processedAnswer = cleanResponseToJson(rawAnswer);
+
+        List<ItemFromGeminiDto> generatedArmors = new ArrayList<>();
+        try {
+            generatedArmors = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.error("Could not map generated items to ItemFromGeminiDto");
+        }
+        return generatedArmors;
+    }
+
+    public List<ItemFromGeminiDto> generateTwentyFiveBoots(Campaign campaign) {
+        log.info("Trying to generate 25 boots through Gemini");
+        Long campaignId = campaign.getId();
+        String campaignTheme = campaign.getTheme().toString();
+        String rawPrompt = """
+                  You are generating data to create content for an RPG game.
+                
+                  Generate in json format an Array of 25 "%s".
+                
+                  The name, description have to be tailored to this theme context
+                  - Create content following the wantedThemes
+                  - Avoid following unwantedThemes
+                
+                  Theme context is: " %s "
+                
+                  The object structure context is: %s
+                
+                  The "Requirement" structure is: %s
+                
+                  The "RequirementEntry" structure is: %s
+                
+                 - Generate 1 item of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                 - Not all items need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
+                 - If the item will not have a requirement, then make it null
+                 - Answer with ONLY json format, not extra text or explanations.
+                 - Do not include "id", "createdAt", or "updatedAt" in the JSON.
+                """;
+
+        String formattedPrompt = String.format(
+                rawPrompt,
+                "BootsTemplate",
+                campaignTheme,
+                BootsTemplate.ObjectStructure(campaignId),
+                Requirement.RequirementStructure(campaignId),
+                RequirementEntry.RequirementEntryStructure(campaignId),
+                "Boot",
+                "Boot");
 
         String rawAnswer = "";
         try {
