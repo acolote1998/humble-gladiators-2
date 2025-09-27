@@ -18,7 +18,7 @@ public class WeaponTemplate extends AbstractItem {
 
     public static String ObjectStructure(Long campaignId) {
         return String.format("""
-                HelmetTemplate{
+                WeaponTemplate{
                 String name
                 String description
                 Integer rarity (1 - 5)

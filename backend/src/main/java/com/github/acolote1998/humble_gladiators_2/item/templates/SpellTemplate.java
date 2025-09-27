@@ -15,10 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SpellTemplate extends AbstractItem {
     private Integer physicalDamage;
     private Integer magicalDamage;
+    private Integer restoreHp;
 
     public static String ObjectStructure(Long campaignId) {
         return String.format("""
-                HelmetTemplate{
+                SpellTemplate{
                 String name
                 String description
                 Integer rarity (1 - 5)
@@ -31,6 +32,11 @@ public class SpellTemplate extends AbstractItem {
                 Requirement requirement (create a requirement object)
                 Integer physicalDamage (0)
                 Integer magicalDamage (Math.round((super.getTier() * 2.5 * super.getRarity() * 3));)
+                Integer restoreHp (Math.round((super.getTier() * 2.5 * super.getRarity() * 3));)
+                
+                Important:
+                -If the spell will have restoreHp (healing spell), then magicalDamage value must be zero
+                -If the spell will have magicalDamage (damage spell), then the restoreHp value must be zero
                 }""", campaignId.toString());
     }
 }
