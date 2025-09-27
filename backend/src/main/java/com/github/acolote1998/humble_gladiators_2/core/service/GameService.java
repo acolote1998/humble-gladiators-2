@@ -57,40 +57,40 @@ public class GameService {
         updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_CREATED, campaign);
         Thread.sleep(500);
 
-        //ARMORS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_ARMORS, campaign);
-        armorService.createTwentyFiveNewArmorTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.ARMORS_CREATED, campaign);
-
-        //BOOTS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_BOOTS, campaign);
-        bootsService.createTwentyFiveNewBootsTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.BOOTS_CREATED, campaign);
-
-        //CONSUMABLES
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
-        consumableService.createTwentyFiveNewConsumableTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
-
-        //HELMETS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
-        helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
-
-        //SHIELDS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_SHIELDS, campaign);
-        shieldService.createTwentyFiveNewShieldTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.SHIELDS_CREATED, campaign);
-
-        //SPELLS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_SPELLS, campaign);
-        spellService.createTwentyFiveNewSpellTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.SPELLS_CREATED, campaign);
-
-        //WEAPONS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
-        weaponService.createTwentyFiveNewWeaponTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
+//        //ARMORS
+//        updateCampaignCreationState(CampaignCreationStateType.CREATING_ARMORS, campaign);
+//        armorService.createTwentyFiveNewArmorTemplates(campaign);
+//        updateCampaignCreationState(CampaignCreationStateType.ARMORS_CREATED, campaign);
+//
+//        //BOOTS
+//        updateCampaignCreationState(CampaignCreationStateType.CREATING_BOOTS, campaign);
+//        bootsService.createTwentyFiveNewBootsTemplates(campaign);
+//        updateCampaignCreationState(CampaignCreationStateType.BOOTS_CREATED, campaign);
+//
+//        //CONSUMABLES
+//        updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
+//        consumableService.createTwentyFiveNewConsumableTemplates(campaign);
+//        updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
+//
+//        //HELMETS
+//        updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
+//        helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
+//        updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
+//
+//        //SHIELDS
+//        updateCampaignCreationState(CampaignCreationStateType.CREATING_SHIELDS, campaign);
+//        shieldService.createTwentyFiveNewShieldTemplates(campaign);
+//        updateCampaignCreationState(CampaignCreationStateType.SHIELDS_CREATED, campaign);
+//
+//        //SPELLS
+//        updateCampaignCreationState(CampaignCreationStateType.CREATING_SPELLS, campaign);
+//        spellService.createTwentyFiveNewSpellTemplates(campaign);
+//        updateCampaignCreationState(CampaignCreationStateType.SPELLS_CREATED, campaign);
+//
+//        //WEAPONS
+//        updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
+//        weaponService.createTwentyFiveNewWeaponTemplates(campaign);
+//        updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
 
         //NPCs (Characters)
         updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS, campaign);

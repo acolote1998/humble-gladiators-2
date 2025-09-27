@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
+import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -564,7 +565,7 @@ public class GeminiService {
         return generatedItems;
     }
 
-    public List<ItemFromGeminiDto> generateTenNpcsTierOne(Campaign campaign) {
+    public List<CharacterFromGeminiDto> generateTenNpcsTierOne(Campaign campaign) {
         log.info("Trying to generate 10 NPCs Tier 1 through Gemini");
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
@@ -603,14 +604,14 @@ public class GeminiService {
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
-        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        List<CharacterFromGeminiDto> generatedCharacters = new ArrayList<>();
         try {
-            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            generatedCharacters = mapper.readValue(processedAnswer, new TypeReference<List<CharacterFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated characters to CharacterFromGeminiDto");
         }
-        return generatedItems;
+        return generatedCharacters;
     }
 
 }
