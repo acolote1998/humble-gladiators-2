@@ -186,6 +186,8 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
+                 - The only allowed object categories things like are: armors, robes, cloaks, chestplates, chestwear.
+                 - Do not invent or include any other equipment types (for example helmets, gloves, shields).
                  %s
                 """;
 
