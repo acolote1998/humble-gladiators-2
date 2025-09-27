@@ -1,0 +1,55 @@
+AI Integration System
+
+## Current Status: IN PROGRESS
+- ✅ Item generation fully implemented
+- ❌ Character generation not yet implemented
+
+## GeminiService
+- Full Gemini API integration for content generation
+- Supports all item types: Armor, Boots, Consumable, Helmet, Shield, Spell, Weapon
+- Generates 25 items per type per campaign
+- Theme-based content generation using campaign themes
+- JSON response parsing with error handling and retry logic
+- Integration with Requirement system for item prerequisites
+
+Key Methods (Implemented):
+- sendTestPrompt() - API connectivity test
+- generateTwentyFiveArmors(Campaign campaign)
+- generateTwentyFiveBoots(Campaign campaign)
+- generateTwentyFiveConsumables(Campaign campaign)
+- generateTwentyFiveHelmets(Campaign campaign)
+- generateTwentyFiveShields(Campaign campaign)
+- generateTwentyFiveSpells(Campaign campaign)
+- generateTwentyFiveWeapons(Campaign campaign)
+- generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height)
+
+Key Methods (Not Yet Implemented):
+- generateHeroCharacter(Campaign campaign) - Generate player character
+- generateNPCCharacters(Campaign campaign, Integer count) - Generate NPC characters
+
+## ImageGeneratorService
+- AI-powered image generation using DrawingAction model
+- Supports 17 different drawing methods:
+  0: SQUARE, 1: RECTANGLE, 2: HORIZONTAL_LINE, 3: VERTICAL_LINE
+  4: CIRCLE, 5: HOLLOW_SQUARE, 6: DOT, 7: TRIANGLE_UP
+  8: TRIANGLE_DOWN, 9: TRIANGLE_LEFT, 10: TRIANGLE_RIGHT
+  11: DIAMOND, 12: ELLIPSE, 13: ARC, 14: CURVED_LINE
+  15: STAR, 16: GRADIENT_SQUARE
+- Pixel-based rendering with color validation
+- Image scaling and optimization (full size + 128x128 scaled)
+- Coordinate bounds checking and error handling
+
+Key Methods:
+- generateImage(String promptToGenerate, Integer width, Integer height)
+- generatePixelsForImage(List<DrawingAction> actions)
+- getActionsForDrawing(String imageToGenerate, Integer width, Integer height)
+
+## DTOs
+- GeminiResponseDto - Maps Gemini API response structure
+- ItemFromGeminiDto - Maps AI-generated item data with requirements
+- RequirementDto - Nested requirement structure for items
+
+## Configuration
+- API key management via GEMINI_API_KEY environment variable
+- CORS configuration for frontend integration
+- Error handling with automatic retry logic

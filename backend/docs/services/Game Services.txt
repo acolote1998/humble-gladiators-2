@@ -1,0 +1,71 @@
+Game Services Architecture
+
+## GameService
+- Orchestrates complete campaign creation workflow
+- Manages campaign creation state transitions
+- Coordinates AI content generation across all item types
+- Handles sequential processing with status updates
+- Integrates all item services and AI generation
+
+Key Methods:
+- startGame(Theme gameTheme) - Complete campaign creation process
+- updateCampaignCreationState(CampaignCreationStateType status, Campaign campaign)
+
+Campaign Creation Flow:
+1. Create campaign with theme
+2. Generate armors (25 items)
+3. Generate boots (25 items)
+4. Generate consumables (25 items)
+5. Generate helmets (25 items)
+6. Generate shields (25 items)
+7. Generate spells (25 items)
+8. Generate weapons (25 items)
+
+## Item Services
+All services follow the same pattern for AI-powered template generation:
+
+### ArmorService
+- createTwentyFiveNewArmorTemplates(Campaign campaign)
+- Generates armor templates with AI
+- Saves to ArmorTemplateRepository
+
+### BootsService
+- createTwentyFiveNewBootsTemplates(Campaign campaign)
+- Generates boot templates with AI
+- Saves to BootsTemplateRepository
+
+### ConsumableService
+- createTwentyFiveNewConsumableTemplates(Campaign campaign)
+- Generates consumable templates with AI
+- Saves to ConsumableTemplateRepository
+
+### HelmetService
+- createTwentyFiveNewHelmetsTemplates(Campaign campaign)
+- Generates helmet templates with AI
+- Saves to HelmetTemplateRepository
+
+### ShieldService
+- createTwentyFiveNewShieldTemplates(Campaign campaign)
+- Generates shield templates with AI
+- Saves to ShieldTemplateRepository
+
+### SpellService
+- createTwentyFiveNewSpellTemplates(Campaign campaign)
+- Generates spell templates with AI
+- Saves to SpellTemplateRepository
+
+### WeaponService
+- createTwentyFiveNewWeaponTemplates(Campaign campaign)
+- Generates weapon templates with AI
+- Saves to WeaponTemplateRepository
+
+## Service Dependencies
+- All item services depend on GeminiService for AI generation
+- All item services depend on RequirementService for validation
+- GameService coordinates all item services
+- CampaignService manages campaign state
+
+## Repository Layer
+- Complete repository layer for all template types
+- JPA-based persistence with proper relationships
+- Database integration for all generated content
