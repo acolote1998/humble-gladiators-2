@@ -35,26 +35,39 @@ public class GameService {
 
     public void startGame(Theme gameTheme) throws InterruptedException {
         Campaign campaign = campaignService.createCampaign(gameTheme);
+        //THEMES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_THEMES, campaign);
         Thread.sleep(500);
         updateCampaignCreationState(CampaignCreationStateType.THEMES_CREATED, campaign);
         Thread.sleep(500);
+
+        //CAMPAIGN
         updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN, campaign);
         Thread.sleep(500);
         updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_CREATED, campaign);
         Thread.sleep(500);
+
+        //ARMORS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_ARMORS, campaign);
         armorService.createTwentyFiveNewArmorTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.ARMORS_CREATED, campaign);
+
+        //BOOTS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_BOOTS, campaign);
         bootsService.createTwentyFiveNewBootsTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.BOOTS_CREATED, campaign);
+
+        //CONSUMABLES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
         consumableService.createTwentyFiveNewConsumableTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
+
+        //HELMETS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
         helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
+
+        //SHIELDS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_SHIELDS, campaign);
         shieldService.createTwentyFiveNewShieldTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.SHIELDS_CREATED, campaign);
