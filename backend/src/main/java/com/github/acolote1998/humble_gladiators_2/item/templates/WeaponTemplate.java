@@ -29,8 +29,12 @@ public class WeaponTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer physicalDamage (Math.round((super.getTier() * 2.5 * super.getRarity() * 3));)
-                Integer magicalDamage (0)
+                Integer physicalDamage (could be Math.round((super.getTier() * 2.5 * super.getRarity() * 3)))
+                Integer magicalDamage (could be Math.round((super.getTier() * 2.5 * super.getRarity() * 3)))
+                
+                Important:
+                -If the weapon will have physicalDamage, then magicalDamage value must be zero
+                -If the spell will have magicalDamage, then the physicalDamage value must be zero
                 }""", campaignId.toString());
     }
 }
