@@ -15,4 +15,22 @@ import lombok.extern.slf4j.Slf4j;
 public class SpellTemplate extends AbstractItem {
     private Integer physicalDamage;
     private Integer magicalDamage;
+
+    public static String ObjectStructure(Long campaignId) {
+        return String.format("""
+                HelmetTemplate{
+                String name
+                String description
+                Integer rarity (1 - 5)
+                Integer tier (1 - 5)
+                Integer value ( (tier*80)+(rarity*280) )
+                Boolean discovered (always false)
+                Integer quantity (always 0)
+                Boolean equipped (always false)
+                Long campaign_id (%s)
+                Requirement requirement (create a requirement object)
+                Integer physicalDamage (0)
+                Integer magicalDamage (Math.round((super.getTier() * 2.5 * super.getRarity() * 3));)
+                }""", campaignId.toString());
+    }
 }
