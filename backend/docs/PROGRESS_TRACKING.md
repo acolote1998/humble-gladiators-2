@@ -151,12 +151,12 @@
 
     - [ ] Campaign theme-based generation
         - [X] AI Generation Logic - List<Armor Template>
-        - [ ] AI Generation Logic - List<Boots Template>
-        - [ ] AI Generation Logic - List<Consumable Template>
-        - [ ] AI Generation Logic - List<Helmet Template>
-        - [ ] AI Generation Logic - List<Shield Template>
-        - [ ] AI Generation Logic - List<Spell Template>
-        - [ ] AI Generation Logic - List<Weapon Template>
+        - [X] AI Generation Logic - List<Boots Template>
+        - [X] AI Generation Logic - List<Consumable Template>
+        - [X] AI Generation Logic - List<Helmet Template>
+        - [X] AI Generation Logic - List<Shield Template>
+        - [X] AI Generation Logic - List<Spell Template>
+        - [X] AI Generation Logic - List<Weapon Template>
         - [ ] AI Generation Logic - Character Instance (for the Hero)
         - [ ] AI Generation Logic - List<Character Instance> (for NPCs)
     - [ ] Content validation
