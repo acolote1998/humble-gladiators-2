@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 public class CharacterInstance extends AbstractCharacter implements Discoverable {
 
     private Boolean discovered;
+    private Integer tier;
+    private Integer rarity;
 
     @Override
     public void discover() {
@@ -20,8 +22,10 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 String name (character name generated based on the wanted themes)
                 Boolean discovered (always false)
                 Long campaign_id (%s)
-                Integer goldReward (level * 10)
-                Integer expReward (level * 20)
+                Integer rarity (1 - 5)
+                Integer tier (1 - 5)
+                Integer goldReward (level * 10 * rarity * tier)
+                Integer expReward (level * 20 * rarity * tier)
                 }""", campaignId.toString());
     }
 

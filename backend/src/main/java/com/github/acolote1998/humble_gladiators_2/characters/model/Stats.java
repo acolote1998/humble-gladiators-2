@@ -26,15 +26,15 @@ public class Stats {
 
     public static String ObjectStructure() {
         return """
-                int constitution (from 14 to 20)
-                int intelligence (from 14 to 20)
-                int dexterity (from 14 to 20)
-                int strength (from 14 to 20)
-                int speed (from 14 to 20)
-                int luck (from 14 to 20)
-                int maxHp (constitution * level)
+                int constitution ((from 14 to 20 ) + rarity + tier)
+                int intelligence ((from 14 to 20 ) + rarity + tier)
+                int dexterity ((from 14 to 20 ) + rarity + tier)
+                int strength ((from 14 to 20 ) + rarity + tier)
+                int speed ((from 14 to 20 ) + rarity + tier)
+                int luck ((from 14 to 20 ) + rarity + tier)
+                int maxHp (constitution * level) * ((rarity/2) + (tier/2))
                 int currentHp (same as maxHp)
-                int maxMp (intelligence * level * 10)
+                int maxMp (intelligence * level * 10) * ((rarity/2) + (tier/2))
                 int currentMp (same as maxMp)
                 int height (50 to 500) (for context: it is centimeters)
                 int weight (20 to 2000) (for context: it is kilograms)

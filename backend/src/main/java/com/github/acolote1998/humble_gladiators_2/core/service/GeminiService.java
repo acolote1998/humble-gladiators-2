@@ -3,6 +3,8 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -542,6 +544,54 @@ public class GeminiService {
                 RequirementEntry.RequirementEntryStructure(campaignId),
                 "Weapon",
                 "Weapon",
+                getGeneralGenerationRules());
+
+        String rawAnswer = "";
+        try {
+            rawAnswer = callGemini(formattedPrompt);
+        } catch (InterruptedException e) {
+            log.error("Error generating Weapon: " + e.getMessage());
+        }
+        String processedAnswer = cleanResponseToJson(rawAnswer);
+
+        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        try {
+            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.error("Could not map generated items to ItemFromGeminiDto");
+        }
+        return generatedItems;
+    }
+
+    public List<ItemFromGeminiDto> generateFiftyNPCs(Campaign campaign) {
+        log.info("Trying to generate 50 NPCs through Gemini");
+        Long campaignId = campaign.getId();
+        String campaignTheme = campaign.getTheme().toString();
+        String rawPrompt = """
+                  You are generating data to create content for an RPG game.
+                
+                  Generate in json format an Array of 50 "%s".
+                
+                  The name, description have to be tailored to this theme context
+                  - Create content following the wantedThemes
+                  - Avoid following unwantedThemes
+                
+                  Theme context is: " %s "
+                
+                  The object structure context is: %s
+                
+                  The "Stats" structure is: %s
+                
+                 %s
+                """;
+
+        String formattedPrompt = String.format(
+                rawPrompt,
+                "'CharacterInstance' (NPCs)",
+                campaignTheme,
+                CharacterInstance.ObjectStructure(campaignId),
+                Stats.ObjectStructure(),
                 getGeneralGenerationRules());
 
         String rawAnswer = "";
