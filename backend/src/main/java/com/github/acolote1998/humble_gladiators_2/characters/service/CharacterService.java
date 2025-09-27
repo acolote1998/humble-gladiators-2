@@ -22,8 +22,8 @@ public class CharacterService {
         this.characterInstanceRepository = characterInstanceRepository;
     }
 
-    public List<CharacterInstance> createFiftyNPCs(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiftyNPCs(campaign);
+    public List<CharacterInstance> createTenNPCsTierOne(Campaign campaign) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTenNpcsTierOne(campaign);
 
         List<CharacterInstance> test = new ArrayList<>();
         return test;

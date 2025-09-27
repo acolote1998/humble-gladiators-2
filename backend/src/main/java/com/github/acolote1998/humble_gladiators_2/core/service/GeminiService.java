@@ -564,14 +564,14 @@ public class GeminiService {
         return generatedItems;
     }
 
-    public List<ItemFromGeminiDto> generateFiftyNPCs(Campaign campaign) {
-        log.info("Trying to generate 50 NPCs through Gemini");
+    public List<ItemFromGeminiDto> generateTenNpcsTierOne(Campaign campaign) {
+        log.info("Trying to generate 10 NPCs Tier 1 through Gemini");
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                   You are generating data to create content for an RPG game.
                 
-                  Generate in json format an Array of 50 "%s".
+                  Generate in json format an Array of 10 "%s".
                 
                   The name, description have to be tailored to this theme context
                   - Create content following the wantedThemes
@@ -583,12 +583,13 @@ public class GeminiService {
                 
                   The "Stats" structure is: %s
                 
-                 %s
+                  - Generate 2 NPCs of tier 1 for each rarity level. Example: {NPC1 tier 1, rarity 1}, {NPC2 tier 1, rarity 1}, {NPC3 tier 1 rarity 2}, etc.
+                  %s
                 """;
 
         String formattedPrompt = String.format(
                 rawPrompt,
-                "'CharacterInstance' (NPCs)",
+                "'CharacterInstance' (NPCs - Tier 1)",
                 campaignTheme,
                 CharacterInstance.ObjectStructure(campaignId),
                 Stats.ObjectStructure(),

@@ -94,7 +94,7 @@ public class GameService {
 
         //NPCs (Characters)
         updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS, campaign);
-        characterService.createFiftyNPCs(campaign);
+        characterService.createTenNPCsTierOne(campaign);
         updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
     }
 
