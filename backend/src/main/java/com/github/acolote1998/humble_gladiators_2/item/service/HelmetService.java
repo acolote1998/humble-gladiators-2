@@ -25,7 +25,7 @@ public class HelmetService {
 
     public List<HelmetTemplate> createTwentyFiveNewHelmetsTemplates(Campaign campaign) {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveHelmets(campaign);
-        List<HelmetTemplate> savedHelmesTemplates = new ArrayList<>();
+        List<HelmetTemplate> savedHelmetsTemplates = new ArrayList<>();
 
         generatedDtos.forEach(dto -> {
             HelmetTemplate helmetTemplate = new HelmetTemplate();
@@ -41,13 +41,13 @@ public class HelmetService {
             helmetTemplate.setMagicalDefense(dto.magicalDefense());
             helmetTemplate.setPhysicalDefense(dto.physicalDefense());
             helmetTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedHelmesTemplates.add(helmetTemplate);
+            savedHelmetsTemplates.add(helmetTemplate);
         });
 
-        helmetTemplateRepository.saveAll(savedHelmesTemplates);
+        helmetTemplateRepository.saveAll(savedHelmetsTemplates);
 
-        log.info(savedHelmesTemplates.size() + " helmets successfully created an persisted");
+        log.info(savedHelmetsTemplates.size() + " helmets successfully created an persisted");
 
-        return savedHelmesTemplates;
+        return savedHelmetsTemplates;
     }
 }
