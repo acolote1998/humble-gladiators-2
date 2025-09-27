@@ -2,7 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.repository.CharacterInstanceRepository;
-import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class CharacterService {
     }
 
     public List<CharacterInstance> createTenNPCsTierOne(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTenNpcsTierOne(campaign);
+        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsTierOne(campaign);
 
         List<CharacterInstance> test = new ArrayList<>();
         return test;
