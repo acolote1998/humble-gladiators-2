@@ -414,6 +414,7 @@ public class GeminiService {
                  - Instead, treat it as a right-hand defensive or thematic equipment item.
                  - For example: in a wizard theme it could be a spellbook, in a cleric theme a holy scripture, in a necromancer theme a bone totem.
                  - Every generated object must clearly fit both the theme and the concept of a "Shield" as a defensive or secondary item.
+                 - Do NOT create objects within these equipment types: helmets, armors, boots, weapons.
                  %s
                 """;
 
