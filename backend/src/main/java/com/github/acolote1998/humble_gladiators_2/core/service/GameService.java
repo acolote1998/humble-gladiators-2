@@ -6,6 +6,7 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.item.service.ArmorService;
 import com.github.acolote1998.humble_gladiators_2.item.service.BootsService;
 import com.github.acolote1998.humble_gladiators_2.item.service.ConsumableService;
+import com.github.acolote1998.humble_gladiators_2.item.service.HelmetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,16 +18,19 @@ public class GameService {
     ArmorService armorService;
     BootsService bootsService;
     ConsumableService consumableService;
+    HelmetService helmetService;
 
     @Autowired
     public GameService(CampaignService campaignService,
                        ArmorService armorService,
                        BootsService bootsService,
-                       ConsumableService consumableService) {
+                       ConsumableService consumableService,
+                       HelmetService helmetService) {
         this.campaignService = campaignService;
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
+        this.helmetService = helmetService;
     }
 
     public void startGame(Theme gameTheme) throws InterruptedException {
@@ -48,6 +52,9 @@ public class GameService {
         updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
         consumableService.createTwentyFiveNewConsumableTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
+        helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
+        updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
     }
 
     public void updateCampaignCreationState(CampaignCreationStateType status, Campaign campaign) {
