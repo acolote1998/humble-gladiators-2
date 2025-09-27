@@ -35,6 +35,7 @@ public abstract class AbstractCharacter {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Inventory inventory;
 
+    @Enumerated(EnumType.STRING)
     private CharacterType characterType;
 
     private Integer goldReward; //for NPC characters
