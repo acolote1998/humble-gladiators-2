@@ -9,10 +9,7 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
-import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
-import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
-import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
-import com.github.acolote1998.humble_gladiators_2.item.templates.HelmetTemplate;
+import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -387,5 +384,68 @@ public class GeminiService {
         }
         return generatedItems;
     }
+
+    public List<ItemFromGeminiDto> generateTwentyFiveShields(Campaign campaign) {
+        log.info("Trying to generate 25 shields through Gemini");
+        Long campaignId = campaign.getId();
+        String campaignTheme = campaign.getTheme().toString();
+        String rawPrompt = """
+                  You are generating data to create content for an RPG game.
+                
+                  Generate in json format an Array of 25 "%s".
+                
+                  The name, description have to be tailored to this theme context
+                  - Create content following the wantedThemes
+                  - Avoid following unwantedThemes
+                
+                  Theme context is: " %s "
+                
+                  The object structure context is: %s
+                
+                  The "Requirement" structure is: %s
+                
+                  The "RequirementEntry" structure is: %s
+                
+                 - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                 - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
+                 - If the generated object will not have a requirement, then make it null
+                 - You must always reinterpret "Shield" in the context of the campaign theme.
+                 - A "Shield" does not always mean a physical shield.
+                 - Instead, treat it as a right-hand defensive or thematic equipment item.
+                 - For example: in a wizard theme it could be a spellbook, in a cleric theme a holy scripture, in a necromancer theme a bone totem.
+                 - Every generated object must clearly fit both the theme and the concept of a "Shield" as a defensive or secondary item.
+                 - Do NOT create objects within these equipment types: helmets, armors, boots, weapons.
+                 %s
+                """;
+
+        String formattedPrompt = String.format(
+                rawPrompt,
+                "ShieldTemplate",
+                campaignTheme,
+                ShieldTemplate.ObjectStructure(campaignId),
+                Requirement.RequirementStructure(campaignId),
+                RequirementEntry.RequirementEntryStructure(campaignId),
+                "Shield",
+                "Shield",
+                getGeneralGenerationRules());
+
+        String rawAnswer = "";
+        try {
+            rawAnswer = callGemini(formattedPrompt);
+        } catch (InterruptedException e) {
+            log.error("Error generating shields: " + e.getMessage());
+        }
+        String processedAnswer = cleanResponseToJson(rawAnswer);
+
+        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        try {
+            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.error("Could not map generated items to ItemFromGeminiDto");
+        }
+        return generatedItems;
+    }
+
 
 }

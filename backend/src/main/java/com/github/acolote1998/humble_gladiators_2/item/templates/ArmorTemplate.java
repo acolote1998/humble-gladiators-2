@@ -23,7 +23,7 @@ public class ArmorTemplate extends AbstractItem {
                 String description
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer value ( (tier*90)+(rarity*290) )
+                Integer value ( (tier*110)+(rarity*310) )
                 Boolean discovered (always false)
                 Integer quantity (always 0)
                 Boolean equipped (always false)
