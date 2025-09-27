@@ -447,5 +447,119 @@ public class GeminiService {
         return generatedItems;
     }
 
+    public List<ItemFromGeminiDto> generateTwentyFiveSpells(Campaign campaign) {
+        log.info("Trying to generate 25 spells through Gemini");
+        Long campaignId = campaign.getId();
+        String campaignTheme = campaign.getTheme().toString();
+        String rawPrompt = """
+                  You are generating data to create content for an RPG game.
+                
+                  Generate in json format an Array of 25 "%s".
+                
+                  The name, description have to be tailored to this theme context
+                  - Create content following the wantedThemes
+                  - Avoid following unwantedThemes
+                
+                  Theme context is: " %s "
+                
+                  The object structure context is: %s
+                
+                  The "Requirement" structure is: %s
+                
+                  The "RequirementEntry" structure is: %s
+                
+                 - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                 - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
+                 - If the generated object will not have a requirement, then make it null
+                 - All spells must have a RequirementEntry that forces the user to have certain minimum MP (magic points)
+                    -Example: {requirementType: MP, operator: MOREOREQUALTHAN, value: "10"}
+                    -The MP requirement needs to make sense and scale together with the spell tier and rarity
+                 %s
+                """;
+
+        String formattedPrompt = String.format(
+                rawPrompt,
+                "SpellTemplate",
+                campaignTheme,
+                SpellTemplate.ObjectStructure(campaignId),
+                Requirement.RequirementStructure(campaignId),
+                RequirementEntry.RequirementEntryStructure(campaignId),
+                "Spell",
+                "Spell",
+                getGeneralGenerationRules());
+
+        String rawAnswer = "";
+        try {
+            rawAnswer = callGemini(formattedPrompt);
+        } catch (InterruptedException e) {
+            log.error("Error generating Spell: " + e.getMessage());
+        }
+        String processedAnswer = cleanResponseToJson(rawAnswer);
+
+        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        try {
+            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.error("Could not map generated items to ItemFromGeminiDto");
+        }
+        return generatedItems;
+    }
+
+    public List<ItemFromGeminiDto> generateTwentyFiveWeapons(Campaign campaign) {
+        log.info("Trying to generate 25 weapons through Gemini");
+        Long campaignId = campaign.getId();
+        String campaignTheme = campaign.getTheme().toString();
+        String rawPrompt = """
+                  You are generating data to create content for an RPG game.
+                
+                  Generate in json format an Array of 25 "%s".
+                
+                  The name, description have to be tailored to this theme context
+                  - Create content following the wantedThemes
+                  - Avoid following unwantedThemes
+                
+                  Theme context is: " %s "
+                
+                  The object structure context is: %s
+                
+                  The "Requirement" structure is: %s
+                
+                  The "RequirementEntry" structure is: %s
+                
+                 - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                 - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
+                 - If the generated object will not have a requirement, then make it null
+                 %s
+                """;
+
+        String formattedPrompt = String.format(
+                rawPrompt,
+                "WeaponTemplate",
+                campaignTheme,
+                WeaponTemplate.ObjectStructure(campaignId),
+                Requirement.RequirementStructure(campaignId),
+                RequirementEntry.RequirementEntryStructure(campaignId),
+                "Weapon",
+                "Weapon",
+                getGeneralGenerationRules());
+
+        String rawAnswer = "";
+        try {
+            rawAnswer = callGemini(formattedPrompt);
+        } catch (InterruptedException e) {
+            log.error("Error generating Weapon: " + e.getMessage());
+        }
+        String processedAnswer = cleanResponseToJson(rawAnswer);
+
+        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        try {
+            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.error("Could not map generated items to ItemFromGeminiDto");
+        }
+        return generatedItems;
+    }
 
 }

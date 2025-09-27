@@ -21,7 +21,9 @@ public record ItemFromGeminiDto(
         Integer physicalDefense,
         Integer magicalDefense,
         Integer restoreHp,
-        Integer restoreMp
+        Integer restoreMp,
+        Integer physicalDamage,
+        Integer magicalDamage
 
 
 ) {
