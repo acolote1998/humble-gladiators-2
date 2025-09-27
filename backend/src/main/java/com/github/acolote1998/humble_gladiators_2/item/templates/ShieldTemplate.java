@@ -15,4 +15,22 @@ import lombok.extern.slf4j.Slf4j;
 public class ShieldTemplate extends AbstractItem {
     private Integer physicalDefense;
     private Integer magicalDefense;
+
+    public static String ObjectStructure(Long campaignId) {
+        return String.format("""
+                ShieldTemplate{
+                String name
+                String description
+                Integer rarity (1 - 5)
+                Integer tier (1 - 5)
+                Integer value ( (tier*100)+(rarity*300) )
+                Boolean discovered (always false)
+                Integer quantity (always 0)
+                Boolean equipped (always false)
+                Long campaign_id (%s)
+                Requirement requirement (create a requirement object)
+                Integer physicalDefense (Math.round((super.getTier() * 4 * super.getRarity() * 4.5));)
+                Integer magicalDefense (Math.round((super.getTier() * 4 * super.getRarity() * 4.5));)
+                }""", campaignId.toString());
+    }
 }
