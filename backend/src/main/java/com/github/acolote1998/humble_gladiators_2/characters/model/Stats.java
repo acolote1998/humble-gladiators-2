@@ -23,4 +23,24 @@ public class Stats {
     private int level;
     private int currentExp;
     private int expForNextLevel;
+
+    public static String ObjectStructure() {
+        return """
+                int constitution (from 14 to 20)
+                int intelligence (from 14 to 20)
+                int dexterity (from 14 to 20)
+                int strength (from 14 to 20)
+                int speed (from 14 to 20)
+                int luck (from 14 to 20)
+                int maxHp (constitution * level)
+                int currentHp (same as maxHp)
+                int maxMp (intelligence * level * 10)
+                int currentMp (same as maxMp)
+                int height (50 to 500) (for context: it is centimeters)
+                int weight (20 to 2000) (for context: it is kilograms)
+                int level (1 - 99)
+                int currentExp (0)
+                int expForNextLevel (0)
+                """;
+    }
 }
