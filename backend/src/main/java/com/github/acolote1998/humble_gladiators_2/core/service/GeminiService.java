@@ -471,7 +471,7 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - All spells must have a RequirementEntry that forces the user to use MP
+                 - All spells must have a RequirementEntry that forces the user to have certain minimum MP (magic points)
                     -Example: {requirementType: MP, operator: MOREOREQUALTHAN, value: "10"}
                     -The MP requirement needs to make sense and scale together with the spell tier and rarity
                  %s
