@@ -18,6 +18,7 @@ public class GameService {
     HelmetService helmetService;
     ShieldService shieldService;
     SpellService spellService;
+    WeaponService weaponService;
 
     @Autowired
     public GameService(CampaignService campaignService,
@@ -26,7 +27,8 @@ public class GameService {
                        ConsumableService consumableService,
                        HelmetService helmetService,
                        ShieldService shieldService,
-                       SpellService spellService) {
+                       SpellService spellService,
+                       WeaponService weaponService) {
         this.campaignService = campaignService;
         this.armorService = armorService;
         this.bootsService = bootsService;
@@ -34,6 +36,7 @@ public class GameService {
         this.helmetService = helmetService;
         this.shieldService = shieldService;
         this.spellService = spellService;
+        this.weaponService = weaponService;
     }
 
     public void startGame(Theme gameTheme) throws InterruptedException {
@@ -79,6 +82,11 @@ public class GameService {
         updateCampaignCreationState(CampaignCreationStateType.CREATING_SPELLS, campaign);
         spellService.createTwentyFiveNewSpellTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.SPELLS_CREATED, campaign);
+
+        //WEAPONS
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
+        weaponService.createTwentyFiveNewWeaponTemplates(campaign);
+        updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
     }
 
     public void updateCampaignCreationState(CampaignCreationStateType status, Campaign campaign) {
