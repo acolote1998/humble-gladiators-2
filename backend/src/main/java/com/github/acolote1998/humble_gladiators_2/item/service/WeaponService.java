@@ -5,7 +5,6 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.repository.WeaponTemplateRepository;
-import com.github.acolote1998.humble_gladiators_2.item.templates.SpellTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.WeaponTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
