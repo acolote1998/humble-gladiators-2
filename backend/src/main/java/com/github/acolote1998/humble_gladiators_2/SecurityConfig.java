@@ -17,7 +17,7 @@ public class SecurityConfig {
         http
                 .csrf((crsf -> crsf.disable()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/public/*").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/days/byUser/*").authenticated() //replace for actual needed enpoints
                         .requestMatchers(HttpMethod.POST, "/days").authenticated() //replace for actual needed enpoints
                 )
