@@ -105,6 +105,8 @@ public class GameService {
         //Tier 5 NPCs
         characterService.createTenNPCsOfDesiredTier(campaign, 5);
         updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
+
+        updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
     }
 
     public void updateCampaignCreationState(CampaignCreationStateType status, Campaign campaign) {
