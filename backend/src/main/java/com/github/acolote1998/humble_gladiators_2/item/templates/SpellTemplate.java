@@ -30,9 +30,9 @@ public class SpellTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer physicalDamage (0)
-                Integer magicalDamage (Math.round((super.getTier() * 2.5 * super.getRarity() * 3));)
-                Integer restoreHp (Math.round((super.getTier() * 2.5 * super.getRarity() * 3));)
+                Integer physicalDamage (always 0, calculated later on by the backend)
+                Integer magicalDamage (always 0, calculated later on by the backend)
+                Integer restoreHp (always 0, calculated later on by the backend)
                 
                 Important:
                 -If the spell will have restoreHp (healing spell), then magicalDamage value must be zero

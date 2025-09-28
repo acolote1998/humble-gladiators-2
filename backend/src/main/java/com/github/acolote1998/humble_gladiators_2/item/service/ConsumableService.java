@@ -38,8 +38,8 @@ public class ConsumableService {
             consumableTemplate.setQuantity(0); // templates always start at 0 quantity
             consumableTemplate.setEquipped(dto.equipped());
             consumableTemplate.setCampaign(campaign);
-            consumableTemplate.setRestoreHp(dto.restoreHp());
-            consumableTemplate.setRestoreMp(dto.restoreMp());
+            consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 1.5)));
+            consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * 2 * dto.rarity() * 4)));
             consumableTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedConsumableTemplates.add(consumableTemplate);
         });

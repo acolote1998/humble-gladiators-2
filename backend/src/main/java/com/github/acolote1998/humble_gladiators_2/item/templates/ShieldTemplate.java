@@ -29,8 +29,8 @@ public class ShieldTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer physicalDefense (Math.round((super.getTier() * 4 * super.getRarity() * 4.5));)
-                Integer magicalDefense (Math.round((super.getTier() * 4 * super.getRarity() * 4.5));)
+                Integer physicalDefense (always 0, calculated later on by the backend)
+                Integer magicalDefense (always 0, calculated later on by the backend)
                 }""", campaignId.toString());
     }
 }

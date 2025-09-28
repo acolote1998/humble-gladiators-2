@@ -29,8 +29,8 @@ public class ConsumableTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer restoreHp (Math.round((super.getTier() * 1.5 * super.getRarity() * 1.5));)
-                Integer restoreMp (Math.round((super.getTier() * 2 * super.getRarity() * 4));)
+                Integer restoreHp (always 0, calculated later on by the backend)
+                Integer restoreMp (always 0, calculated later on by the backend)
                 }""", campaignId.toString());
     }
 }

@@ -29,8 +29,8 @@ public class WeaponTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer physicalDamage (could be Math.round((super.getTier() * 2.5 * super.getRarity() * 3)))
-                Integer magicalDamage (could be Math.round((super.getTier() * 2.5 * super.getRarity() * 3)))
+                Integer physicalDamage (always 0, calculated later on by the backend)
+                Integer magicalDamage (always 0, calculated later on by the backend)
                 
                 Important:
                 -If the weapon will have physicalDamage, then magicalDamage value must be zero

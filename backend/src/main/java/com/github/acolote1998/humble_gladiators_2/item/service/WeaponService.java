@@ -5,7 +5,6 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.repository.WeaponTemplateRepository;
-import com.github.acolote1998.humble_gladiators_2.item.templates.SpellTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.WeaponTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,8 +38,8 @@ public class WeaponService {
             weaponTemplate.setQuantity(0); // templates always start at 0 quantity
             weaponTemplate.setEquipped(dto.equipped());
             weaponTemplate.setCampaign(campaign);
-            weaponTemplate.setPhysicalDamage(dto.physicalDamage());
-            weaponTemplate.setMagicalDamage(dto.magicalDamage());
+            weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             weaponTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedWeaponTemplates.add(weaponTemplate);
         });

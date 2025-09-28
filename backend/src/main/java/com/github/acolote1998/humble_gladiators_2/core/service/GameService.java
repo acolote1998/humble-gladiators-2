@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
@@ -19,6 +20,7 @@ public class GameService {
     ShieldService shieldService;
     SpellService spellService;
     WeaponService weaponService;
+    CharacterService characterService;
 
     @Autowired
     public GameService(CampaignService campaignService,
@@ -28,7 +30,8 @@ public class GameService {
                        HelmetService helmetService,
                        ShieldService shieldService,
                        SpellService spellService,
-                       WeaponService weaponService) {
+                       WeaponService weaponService,
+                       CharacterService characterService) {
         this.campaignService = campaignService;
         this.armorService = armorService;
         this.bootsService = bootsService;
@@ -37,6 +40,7 @@ public class GameService {
         this.shieldService = shieldService;
         this.spellService = spellService;
         this.weaponService = weaponService;
+        this.characterService = characterService;
     }
 
     public void startGame(Theme gameTheme) throws InterruptedException {
@@ -87,6 +91,22 @@ public class GameService {
         updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
         weaponService.createTwentyFiveNewWeaponTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
+
+        //NPCs (Characters)
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS, campaign);
+        //Tier 1 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 1);
+        //Tier 2 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 2);
+        //Tier 3 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 3);
+        //Tier 4 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 4);
+        //Tier 5 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 5);
+        updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
+
+        updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
     }
 
     public void updateCampaignCreationState(CampaignCreationStateType status, Campaign campaign) {

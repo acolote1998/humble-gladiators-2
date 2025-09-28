@@ -38,8 +38,8 @@ public class HelmetService {
             helmetTemplate.setQuantity(0); // templates always start at 0 quantity
             helmetTemplate.setEquipped(dto.equipped());
             helmetTemplate.setCampaign(campaign);
-            helmetTemplate.setMagicalDefense(dto.magicalDefense());
-            helmetTemplate.setPhysicalDefense(dto.physicalDefense());
+            helmetTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
+            helmetTemplate.setMagicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             helmetTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedHelmetsTemplates.add(helmetTemplate);
         });
