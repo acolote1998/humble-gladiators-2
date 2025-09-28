@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -21,6 +23,19 @@ public class WeaponService {
     public WeaponService(GeminiService geminiService, WeaponTemplateRepository weaponTemplateRepository) {
         this.geminiService = geminiService;
         this.weaponTemplateRepository = weaponTemplateRepository;
+    }
+
+    public Map<String, Object> getShortAIGeneratedReport() {
+        List<WeaponTemplate> allItems = weaponTemplateRepository.findAll();
+        Map<String, Object> itemValues = new HashMap<>();
+        Map<String, String> namesAndDescriptions = new HashMap<>();
+        allItems.forEach(weaponTemplate -> {
+            String name = weaponTemplate.getName();
+            String description = weaponTemplate.getDescription();
+            namesAndDescriptions.put(name, description);
+        });
+        itemValues.put("WeaponTemplates", namesAndDescriptions);
+        return itemValues;
     }
 
     public List<WeaponTemplate> createTwentyFiveNewWeaponTemplates(Campaign campaign) {

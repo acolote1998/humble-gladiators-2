@@ -85,17 +85,25 @@ public class GeminiService {
 
     private String getGeneralGenerationRules() {
         return """
-                 - Answer with ONLY json format, not extra text or explanations.
-                 - Do not include "id", "createdAt", or "updatedAt" in the JSON.
-                 - If a field represents an enum (like "requirementType"), it MUST be exactly one of the allowed provided values.
-                 - Do NOT invent any new enum values. Only use the ones listed above.
-                 - Do NOT generate item names or descriptions that imply in-game effects or powers. For example, avoid names like "Teleportation Boots" or descriptions like "This item gives the user the power of X".
-                 - When generating text (e.g., names, descriptions), use the language appropriate to the theme. For example, if the theme is "Pirata", a weapon name could be "Espada" instead of "Sword".
-                 - If the theme does not specify or imply a particular language (e.g., "Harry Potter" is language neutral, since it's just a person's name), always generate text in English.
-                - When generating names or descriptions, feel free to creatively mix elements from multiple wanted themes from time to time.
-                     For example:
-                       - If the wantedThemes are "soccer, Argentina, pirates", a weapon name could be "Sword of Messi the Pirate".
-                       - If the wantedThemes are "marvel, dragons, medieval, music", an NPC name could be "Thor, the Fire-Breathing Bard".""";
+                     - Answer with ONLY json format, not extra text or explanations.
+                     - Do not include "id", "createdAt", or "updatedAt" in the JSON.
+                     - If a field represents an enum (like "requirementType"), it MUST be exactly one of the allowed provided values.
+                     - Do NOT invent any new enum values. Only use the ones listed above.
+                     - Do NOT generate item names or descriptions that imply in-game effects or powers. For example, avoid names like "Teleportation Boots" or descriptions like "This item gives the user the power of X".
+                     - When generating text (e.g., names, descriptions), use the language appropriate to the theme. For example, if the theme is "Pirata", a weapon name could be "Espada" instead of "Sword".
+                     - If the theme does not specify or imply a particular language (e.g., "Harry Potter" is language neutral, since it's just a person's name), always generate text in English.
+                     - When generating names for characters or items:
+                         - Prefer short names by default, like "Karen Filippelli" or "Thor".
+                         - Only add extra descriptors if they make the character/item funnier, more memorable, or interesting in the context of the game.
+                         - Avoid unnecessarily long names that include multiple descriptors without added value.
+                     - When generating names or descriptions, you may mix elements from multiple wanted themes creatively, but only do so if this enhances the flavor, or thematic interest.
+                         Examples:
+                         - "Gamora, Scranton Branch Manager" ✅ (Good outcome: funny, thematic from 'The Office' + 'Marvel')
+                         - "Thor, the Fire-Breathing Bard" ✅ (Good outcome: fun, thematic from 'Marvel' + 'Medieval Fantasy' + 'Music')
+                         - "Karen Filippelli" ✅ (Good outcome: short, thematic from 'The Office', no need for extra context)
+                         - "Sword of Messi" ✅ (Good outcome: thematic from 'Soccer' + 'Pirates')
+                         - "Michael Scott, Regional Manager, That's What She Said" ❌ (Bad outcome: Too long, unnecessary)
+                """;
     }
 
     public String sendTestPrompt() throws InterruptedException {
