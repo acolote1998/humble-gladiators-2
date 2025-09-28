@@ -47,22 +47,21 @@ public class Stats {
 
     public static Stats mapStatsFromCharacterFromGeminiDto(CharacterFromGeminiDto dto) {
         Stats stats = new Stats();
-        CharacterFromGeminiDto.StatsFromGemini statsFromGemini = new CharacterFromGeminiDto.StatsFromGemini();
-        stats.constitution = statsFromGemini.constitution();
-        stats.intelligence = statsFromGemini.intelligence();
-        stats.dexterity = statsFromGemini.dexterity();
-        stats.strength = statsFromGemini.strength();
-        stats.speed = statsFromGemini.speed();
-        stats.luck = statsFromGemini.luck();
-        stats.maxHp = statsFromGemini.maxHp();
-        stats.currentHp = statsFromGemini.currentHp();
-        stats.maxMp = statsFromGemini.maxMp();
-        stats.currentMp = statsFromGemini.currentMp();
-        stats.height = statsFromGemini.height();
-        stats.weight = statsFromGemini.weight();
-        stats.level = statsFromGemini.level();
-        stats.currentExp = statsFromGemini.currentExp();
-        stats.expForNextLevel = statsFromGemini.expForNextLevel();
+        stats.constitution = dto.stats().constitution();
+        stats.intelligence = dto.stats().intelligence();
+        stats.dexterity = dto.stats().dexterity();
+        stats.strength = dto.stats().strength();
+        stats.speed = dto.stats().speed();
+        stats.luck = dto.stats().luck();
+        stats.maxHp = dto.stats().maxHp();
+        stats.currentHp = dto.stats().currentHp();
+        stats.maxMp = dto.stats().maxMp();
+        stats.currentMp = dto.stats().currentMp();
+        stats.height = dto.stats().height();
+        stats.weight = dto.stats().weight();
+        stats.level = dto.stats().level();
+        stats.currentExp = dto.stats().currentExp();
+        stats.expForNextLevel = dto.stats().expForNextLevel();
         return stats;
     }
 }
