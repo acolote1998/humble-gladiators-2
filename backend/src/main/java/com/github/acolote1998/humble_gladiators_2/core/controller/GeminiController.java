@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/gemini")
+@RequestMapping("/api/public/gemini")
 @RequiredArgsConstructor
 public class GeminiController {
 

@@ -27,7 +27,7 @@ public class HumbleGladiators2Application {
         theme.setUnwantedThemes(unwantedThemes);
 
         //Try game logic
-        context.getBean(GameService.class).startGame(theme);
+//        context.getBean(GameService.class).startGame(theme);
 
     }
 }
