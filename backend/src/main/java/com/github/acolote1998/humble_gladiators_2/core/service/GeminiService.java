@@ -92,7 +92,10 @@ public class GeminiService {
                  - Do NOT generate item names or descriptions that imply in-game effects or powers. For example, avoid names like "Teleportation Boots" or descriptions like "This item gives the user the power of X".
                  - When generating text (e.g., names, descriptions), use the language appropriate to the theme. For example, if the theme is "Pirata", a weapon name could be "Espada" instead of "Sword".
                  - If the theme does not specify a particular language (e.g., "Harry Potter"), always generate text in English.
-                """;
+                - When generating names or descriptions, feel free to creatively mix elements from multiple wanted themes.
+                     For example:
+                       - If the wantedThemes are "soccer, Argentina, pirates", a weapon name could be "Sword of Messi the Pirate".
+                       - If the wantedThemes are "The Office, dragons, medieval, music", an NPC name could be "Dwight, the Fire-Breathing Bard".""";
     }
 
     public String sendTestPrompt() throws InterruptedException {
