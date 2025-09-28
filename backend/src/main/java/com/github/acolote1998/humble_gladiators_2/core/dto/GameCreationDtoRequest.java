@@ -7,8 +7,8 @@ public record GameCreationDtoRequest(
         ThemeDtoRequest theme
 ) {
     public record ThemeDtoRequest(
-            List<String> wantedThemesDto,
-            List<String> unwantedThemesDto
+            List<String> wantedThemes,
+            List<String> unwantedThemes
     ) {
     }
 }

@@ -24,8 +24,8 @@ public class CampaignService {
 
     public Campaign createCampaign(GameCreationDtoRequest newCampaignDto) {
         Campaign newCampaign = new Campaign();
-        List<String> wantedThemes = newCampaignDto.theme().wantedThemesDto();
-        List<String> unwantedThemes = newCampaignDto.theme().unwantedThemesDto();
+        List<String> wantedThemes = newCampaignDto.theme().wantedThemes();
+        List<String> unwantedThemes = newCampaignDto.theme().unwantedThemes();
         Theme campaignTheme = new Theme();
         campaignTheme.setCampaign(newCampaign);
         campaignTheme.setUnwantedThemes(unwantedThemes);

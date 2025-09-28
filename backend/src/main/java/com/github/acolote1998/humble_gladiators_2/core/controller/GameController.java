@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.net.URI;
 
 @Controller
-@RequestMapping("/api/game/")
+@RequestMapping("/api/game")
 @CrossOrigin
 @Slf4j
 public class GameController {
