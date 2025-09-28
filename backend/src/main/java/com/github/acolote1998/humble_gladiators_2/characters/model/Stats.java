@@ -27,6 +27,7 @@ public class Stats {
 
     public static String ObjectStructure() {
         return """
+                Stats{
                 int constitution ((from 14 to 20 ) + rarity + tier)
                 int intelligence ((from 14 to 20 ) + rarity + tier)
                 int dexterity ((from 14 to 20 ) + rarity + tier)
@@ -42,6 +43,7 @@ public class Stats {
                 int level (1 - 99)
                 int currentExp (0)
                 int expForNextLevel (0)
+                }
                 """;
     }
 

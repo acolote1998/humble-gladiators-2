@@ -171,17 +171,17 @@ public class GeminiService {
                 
                   Generate in json format an Array of 25 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
-                  The "Requirement" structure is: %s
+                  The "Requirement" structure is: \n %s
                 
-                  The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: \n %s
                 
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
@@ -229,17 +229,17 @@ public class GeminiService {
                 
                   Generate in json format an Array of 25 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
-                  The "Requirement" structure is: %s
+                  The "Requirement" structure is: \n %s
                 
-                  The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: \n %s
                 
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
@@ -285,17 +285,17 @@ public class GeminiService {
                 
                   Generate in json format an Array of 25 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
-                  The "Requirement" structure is: %s
+                  The "Requirement" structure is: \n %s
                 
-                  The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: \n %s
                 
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
@@ -341,17 +341,17 @@ public class GeminiService {
                 
                   Generate in json format an Array of 25 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
-                  The "Requirement" structure is: %s
+                  The "Requirement" structure is: \n %s
                 
-                  The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: \n %s
                 
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
@@ -397,17 +397,17 @@ public class GeminiService {
                 
                   Generate in json format an Array of 25 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
-                  The "Requirement" structure is: %s
+                  The "Requirement" structure is: \n %s
                 
-                  The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: \n %s
                 
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
@@ -459,17 +459,17 @@ public class GeminiService {
                 
                   Generate in json format an Array of 25 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
-                  The "Requirement" structure is: %s
+                  The "Requirement" structure is: \n %s
                 
-                  The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: \n %s
                 
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
@@ -518,17 +518,17 @@ public class GeminiService {
                 
                   Generate in json format an Array of 25 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
-                  The "Requirement" structure is: %s
+                  The "Requirement" structure is: \n %s
                 
-                  The "RequirementEntry" structure is: %s
+                  The "RequirementEntry" structure is: \n %s
                 
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
@@ -581,13 +581,13 @@ public class GeminiService {
                 
                   Generate in json format an Array of 10 "%s".
                 
-                  The name, description have to be tailored to this theme context
+                  The name, description have to be tailored to the theme context
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  Theme context is: " %s "
+                  " %s "
                 
-                  The object structure context is: %s
+                  The object structure context is: \n %s
                 
                   The "Stats" structure is: %s
                 
@@ -602,8 +602,8 @@ public class GeminiService {
                 "'CharacterInstance' (NPCs - Tier 1)",
                 campaignTheme,
                 CharacterInstance.ObjectStructure(campaignId),
-                charsForContext,
                 Stats.ObjectStructure(),
+                charsForContext,
                 getGeneralGenerationRules());
 
         String rawAnswer = "";

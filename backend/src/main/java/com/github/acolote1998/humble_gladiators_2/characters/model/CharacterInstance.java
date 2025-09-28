@@ -21,6 +21,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
     public static String ObjectStructure(Long campaignId) {
         return String.format("""
+                CharacterInstance{
                 Stats stats
                 characterType (either "PLAYER" or "NPC")
                 String name (character name generated based on the wanted themes)
@@ -33,4 +34,12 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 }""", campaignId.toString());
     }
 
+    @Override
+    public String toString() {
+        return "ExistingCharacterInstanceContext{" +
+                ", name=" + super.getName() +
+                ", tier=" + tier +
+                ", rarity=" + rarity +
+                '}';
+    }
 }
