@@ -45,7 +45,7 @@ public class CharacterService {
             savedCharacterInstances.add(characterInstance);
         });
         characterInstanceRepository.saveAll(savedCharacterInstances);
-        log.info(savedCharacterInstances.size() + " characters successfully created and persisted");
+        log.info(savedCharacterInstances.size() + " characters tier " + tier + " successfully created and persisted");
         return savedCharacterInstances;
     }
 }
