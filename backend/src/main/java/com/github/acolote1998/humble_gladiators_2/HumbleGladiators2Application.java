@@ -20,8 +20,6 @@ public class HumbleGladiators2Application {
         Theme theme = new Theme();
         List<String> wantedThemes = new ArrayList<>();
         wantedThemes.add("the office");
-        wantedThemes.add("breaking bad");
-        wantedThemes.add("messi");
         List<String> unwantedThemes = new ArrayList<>();
         unwantedThemes.add("Unicorns");
         theme.setWantedThemes(wantedThemes);
