@@ -100,7 +100,7 @@ public class GameService {
         }
     }
 
-    public void startGame(GameCreationDtoRequest gameCreationDtoRequest) throws InterruptedException {
+    public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest) throws InterruptedException {
         Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest);
         //THEMES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_THEMES, campaign);
@@ -167,6 +167,7 @@ public class GameService {
         log.info("Creating report of generated content");
 
         updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
+        return campaign;
     }
 
     public void updateCampaignCreationState(CampaignCreationStateType status, Campaign campaign) {
