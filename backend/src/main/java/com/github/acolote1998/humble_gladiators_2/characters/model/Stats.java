@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,5 +43,26 @@ public class Stats {
                 int currentExp (0)
                 int expForNextLevel (0)
                 """;
+    }
+
+    public static Stats mapStatsFromCharacterFromGeminiDto(CharacterFromGeminiDto dto) {
+        Stats stats = new Stats();
+        CharacterFromGeminiDto.StatsFromGemini statsFromGemini = new CharacterFromGeminiDto.StatsFromGemini();
+        stats.constitution = statsFromGemini.constitution();
+        stats.intelligence = statsFromGemini.intelligence();
+        stats.dexterity = statsFromGemini.dexterity();
+        stats.strength = statsFromGemini.strength();
+        stats.speed = statsFromGemini.speed();
+        stats.luck = statsFromGemini.luck();
+        stats.maxHp = statsFromGemini.maxHp();
+        stats.currentHp = statsFromGemini.currentHp();
+        stats.maxMp = statsFromGemini.maxMp();
+        stats.currentMp = statsFromGemini.currentMp();
+        stats.height = statsFromGemini.height();
+        stats.weight = statsFromGemini.weight();
+        stats.level = statsFromGemini.level();
+        stats.currentExp = statsFromGemini.currentExp();
+        stats.expForNextLevel = statsFromGemini.expForNextLevel();
+        return stats;
     }
 }
