@@ -94,7 +94,16 @@ public class GameService {
 
         //NPCs (Characters)
         updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS, campaign);
-        characterService.createTenNPCsTierOne(campaign);
+        //Tier 1 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 1);
+        //Tier 2 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 2);
+        //Tier 3 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 3);
+        //Tier 4 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 4);
+        //Tier 5 NPCs
+        characterService.createTenNPCsOfDesiredTier(campaign, 5);
         updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
     }
 
