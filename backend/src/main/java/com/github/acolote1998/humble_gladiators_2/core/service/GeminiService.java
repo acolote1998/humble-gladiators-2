@@ -90,6 +90,8 @@ public class GeminiService {
                  - If a field represents an enum (like "requirementType"), it MUST be exactly one of the allowed provided values.
                  - Do NOT invent any new enum values. Only use the ones listed above.
                  - Do NOT generate item names or descriptions that imply in-game effects or powers. For example, avoid names like "Teleportation Boots" or descriptions like "This item gives the user the power of X".
+                 - When generating text (e.g., names, descriptions), use the language appropriate to the theme. For example, if the theme is "Pirata", a weapon name could be "Espada" instead of "Sword".
+                 - If the theme does not specify a particular language (e.g., "Harry Potter"), always generate text in English.
                 """;
     }
 
