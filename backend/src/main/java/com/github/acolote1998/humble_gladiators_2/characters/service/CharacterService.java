@@ -38,8 +38,8 @@ public class CharacterService {
             characterInstance.setCampaign(campaign);
             characterInstance.setRarity(characterFromGeminiDto.rarity());
             characterInstance.setTier(characterFromGeminiDto.tier());
-            characterInstance.setGoldReward(characterFromGeminiDto.goldReward());
-            characterInstance.setExpReward(characterFromGeminiDto.expReward());
+            characterInstance.setGoldReward(characterFromGeminiDto.stats().level() * 10 * characterFromGeminiDto.rarity() * characterFromGeminiDto.tier());
+            characterInstance.setExpReward(characterFromGeminiDto.stats().level() * 20 * characterFromGeminiDto.rarity() * characterFromGeminiDto.tier());
             Inventory inventory = InventoryService.createBlankInventory();
             characterInstance.setInventory(inventory);
             savedCharacterInstances.add(characterInstance);

@@ -29,8 +29,8 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 Long campaign_id (%s)
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer goldReward (level * 10 * rarity * tier)
-                Integer expReward (level * 20 * rarity * tier)
+                Integer goldReward (always 0, calculated later on by the backend)
+                Integer expReward (always 0, calculated later on by the backend)
                 }""", campaignId.toString());
     }
 
