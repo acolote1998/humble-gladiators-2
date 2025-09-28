@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.characters.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.characters.repository.CharacterInstanceRepository;
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -25,7 +26,23 @@ public class CharacterService {
     public List<CharacterInstance> createTenNPCsTierOne(Campaign campaign) {
         List<CharacterInstance> existingCharactersForContext = characterInstanceRepository.findAll();
         List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsTierOne(campaign, existingCharactersForContext);
-        List<CharacterInstance> test = new ArrayList<>();
-        return test;
+        List<CharacterInstance> savedCharacterInstances = new ArrayList<>();
+
+        generatedDtos.forEach(characterFromGeminiDto -> {
+            CharacterInstance characterInstance = new CharacterInstance();
+            characterInstance.setStats(Stats.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
+            characterInstance.setCharacterType(characterFromGeminiDto.characterType());
+            characterInstance.setName(characterFromGeminiDto.name());
+            characterInstance.setDiscovered(characterFromGeminiDto.discovered());
+            characterInstance.setCampaign(campaign);
+            characterInstance.setRarity(characterFromGeminiDto.rarity());
+            characterInstance.setTier(characterFromGeminiDto.tier());
+            characterInstance.setGoldReward(characterFromGeminiDto.goldReward());
+            characterInstance.setExpReward(characterFromGeminiDto.expReward());
+            savedCharacterInstances.add(characterInstance);
+        });
+        characterInstanceRepository.saveAll(savedCharacterInstances);
+        log.info(savedCharacterInstances.size() + " characters succesfully created and persisted");
+        return savedCharacterInstances;
     }
 }
