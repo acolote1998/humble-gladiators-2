@@ -5,6 +5,8 @@ target/
 !**/src/test/**/target/
 .env
 
+src/main/reosurces/generation_reports/*
+
 ### STS ###
 .apt_generated
 .classpath

@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -21,6 +23,19 @@ public class SpellService {
     public SpellService(GeminiService geminiService, SpellTemplateRepository spellTemplateRepository) {
         this.geminiService = geminiService;
         this.spellTemplateRepository = spellTemplateRepository;
+    }
+
+    public Map<String, Object> getShortAIGeneratedReport() {
+        List<SpellTemplate> allItems = spellTemplateRepository.findAll();
+        Map<String, Object> itemValues = new HashMap<>();
+        Map<String, String> namesAndDescriptions = new HashMap<>();
+        allItems.forEach(spellTemplate -> {
+            String name = spellTemplate.getName();
+            String description = spellTemplate.getDescription();
+            namesAndDescriptions.put(name, description);
+        });
+        itemValues.put("SpellTemplates", namesAndDescriptions);
+        return itemValues;
     }
 
     public List<SpellTemplate> createTwentyFiveNewSpellTemplates(Campaign campaign) {

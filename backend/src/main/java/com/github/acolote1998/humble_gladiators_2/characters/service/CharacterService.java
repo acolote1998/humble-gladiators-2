@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -22,6 +24,19 @@ public class CharacterService {
     public CharacterService(GeminiService geminiService, CharacterInstanceRepository characterInstanceRepository) {
         this.geminiService = geminiService;
         this.characterInstanceRepository = characterInstanceRepository;
+    }
+
+    public Map<String, Object> getShortAIGeneratedReport() {
+        List<CharacterInstance> allCharacters = characterInstanceRepository.findAll();
+        Map<String, Object> characterValues = new HashMap<>();
+        Map<String, String> namesAndDescriptions = new HashMap<>();
+        allCharacters.forEach(characterInstance -> {
+            String name = characterInstance.getName();
+            String description = "Tier: " + characterInstance.getTier() + ", Rarity: " + characterInstance.getRarity();
+            namesAndDescriptions.put(name, description);
+        });
+        characterValues.put("CharacterInstances", namesAndDescriptions);
+        return characterValues;
     }
 
     public List<CharacterInstance> createTenNPCsOfDesiredTier(Campaign campaign, Integer tier) {

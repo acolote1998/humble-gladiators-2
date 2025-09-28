@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -21,6 +23,19 @@ public class ConsumableService {
     public ConsumableService(ConsumableTemplateRepository consumableTemplateRepository, GeminiService geminiService) {
         this.consumableTemplateRepository = consumableTemplateRepository;
         this.geminiService = geminiService;
+    }
+
+    public Map<String, Object> getShortAIGeneratedReport() {
+        List<ConsumableTemplate> allItems = consumableTemplateRepository.findAll();
+        Map<String, Object> itemValues = new HashMap<>();
+        Map<String, String> namesAndDescriptions = new HashMap<>();
+        allItems.forEach(consumableTemplate -> {
+            String name = consumableTemplate.getName();
+            String description = consumableTemplate.getDescription();
+            namesAndDescriptions.put(name, description);
+        });
+        itemValues.put("ConsumableTemplates", namesAndDescriptions);
+        return itemValues;
     }
 
     public List<ConsumableTemplate> createTwentyFiveNewConsumableTemplates(Campaign campaign) {

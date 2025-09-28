@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -49,5 +51,18 @@ public class BootsService {
     public BootsService(BootsTemplateRepository bootsTemplateRepository, GeminiService geminiService) {
         this.bootsTemplateRepository = bootsTemplateRepository;
         this.geminiService = geminiService;
+    }
+
+    public Map<String, Object> getShortAIGeneratedReport() {
+        List<BootsTemplate> allItems = bootsTemplateRepository.findAll();
+        Map<String, Object> itemValues = new HashMap<>();
+        Map<String, String> namesAndDescriptions = new HashMap<>();
+        allItems.forEach(bootsTemplate -> {
+            String name = bootsTemplate.getName();
+            String description = bootsTemplate.getDescription();
+            namesAndDescriptions.put(name, description);
+        });
+        itemValues.put("BootsTemplates", namesAndDescriptions);
+        return itemValues;
     }
 }
