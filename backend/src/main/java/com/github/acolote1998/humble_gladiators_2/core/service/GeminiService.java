@@ -107,7 +107,7 @@ public class GeminiService {
         log.info("Starting List<DrawingAction> generation attempt");
         String prompt = String.format("""
                 Return ONLY a valid JSON array (no explanations, no markdown).
-                Each object in the array must include ALL fields exactly as defined, even if unused:\s
+                Each object in the array must include ALL fields exactly as defined, even if unused:
                 { "drawingMethod": int, "initialX": int, "initialY": int, "red": int, "green": int, "blue": int, "alpha": int, "size": int, "width": int, "height": int, "radius": int }
                 
                 TASK:
@@ -125,25 +125,25 @@ public class GeminiService {
                 
                 DRAWING METHODS (exact behavior from rendering engine):
                 
-                0: SQUARE — solid square, top-left at (initialX, initialY), size = side length \s
-                1: RECTANGLE — solid rectangle, top-left at (initialX, initialY), width × height \s
-                2: HORIZONTAL_LINE — line starting at (initialX, initialY), length = width \s
-                3: VERTICAL_LINE — line starting at (initialX, initialY), length = height \s
-                4: CIRCLE — solid circle, center at (initialX, initialY), radius \s
-                5: HOLLOW_SQUARE — outline only, top-left at (initialX, initialY), size = side length \s
-                6: DOT — single pixel at (initialX, initialY) \s
-                7: TRIANGLE_UP — apex at (initialX, initialY), height = size \s
-                8: TRIANGLE_DOWN — apex at (initialX, initialY), height = size \s
-                9: TRIANGLE_LEFT — tip at (initialX, initialY), width = size \s
-                10: TRIANGLE_RIGHT — tip at (initialX, initialY), width = size \s
-                11: DIAMOND — centered at (initialX, initialY), size = diagonal length \s
-                12: ELLIPSE — centered at (initialX, initialY), width × height \s
-                13: ARC — centered at (initialX, initialY), radius, size = start angle (degrees), width = end angle (degrees) \s
-                14: CURVED_LINE — start at (initialX, initialY), width = end X offset, height = end Y offset, size = curve height \s
-                15: STAR — centered at (initialX, initialY), radius = outer radius, size = number of points (5–8) \s
-                16: GRADIENT_SQUARE — solid gradient square, top-left at (initialX, initialY), size = side length \s
-                    - red = start R, green = start G \s
-                    - blue = end R, alpha = end G \s
+                0: SQUARE — solid square, top-left at (initialX, initialY), size = side length 
+                1: RECTANGLE — solid rectangle, top-left at (initialX, initialY), width × height 
+                2: HORIZONTAL_LINE — line starting at (initialX, initialY), length = width 
+                3: VERTICAL_LINE — line starting at (initialX, initialY), length = height 
+                4: CIRCLE — solid circle, center at (initialX, initialY), radius 
+                5: HOLLOW_SQUARE — outline only, top-left at (initialX, initialY), size = side length 
+                6: DOT — single pixel at (initialX, initialY) 
+                7: TRIANGLE_UP — apex at (initialX, initialY), height = size 
+                8: TRIANGLE_DOWN — apex at (initialX, initialY), height = size 
+                9: TRIANGLE_LEFT — tip at (initialX, initialY), width = size 
+                10: TRIANGLE_RIGHT — tip at (initialX, initialY), width = size 
+                11: DIAMOND — centered at (initialX, initialY), size = diagonal length 
+                12: ELLIPSE — centered at (initialX, initialY), width × height 
+                13: ARC — centered at (initialX, initialY), radius, size = start angle (degrees), width = end angle (degrees) 
+                14: CURVED_LINE — start at (initialX, initialY), width = end X offset, height = end Y offset, size = curve height 
+                15: STAR — centered at (initialX, initialY), radius = outer radius, size = number of points (5–8) 
+                16: GRADIENT_SQUARE — solid gradient square, top-left at (initialX, initialY), size = side length 
+                    - red = start R, green = start G 
+                    - blue = end R, alpha = end G 
                     - blue channel is fixed at 128, alpha is fixed at 255 during rendering
                 
                 DESIGN APPROACH:
