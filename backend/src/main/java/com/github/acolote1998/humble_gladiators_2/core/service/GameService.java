@@ -60,7 +60,8 @@ public class GameService {
         // Add campaign metadata
         Map<String, Object> campaignInfo = new HashMap<>();
         campaignInfo.put("campaignId", campaign.getId());
-        campaignInfo.put("theme", campaign.getTheme());
+        campaignInfo.put("wantedThemes", campaign.getTheme().getWantedThemes());
+        campaignInfo.put("unwantedThemes", campaign.getTheme().getUnwantedThemes());
         campaignInfo.put("generationTimestamp", System.currentTimeMillis());
         report.put("campaignInfo", campaignInfo);
 
