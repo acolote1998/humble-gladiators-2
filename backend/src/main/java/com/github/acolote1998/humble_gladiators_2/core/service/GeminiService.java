@@ -565,8 +565,10 @@ public class GeminiService {
         return generatedItems;
     }
 
-    public List<CharacterFromGeminiDto> generateTenNpcsTierOne(Campaign campaign, List<CharacterInstance> existingCharsForContext) {
-        log.info("Trying to generate 10 NPCs Tier 1 through Gemini");
+    public List<CharacterFromGeminiDto> generateTenNpcsOfDesiredTier(Campaign campaign,
+                                                                     List<CharacterInstance> existingCharsForContext,
+                                                                     Integer tierToGenerate) {
+        log.info(String.format("Trying to generate 10 NPCs Tier %s through Gemini", tierToGenerate));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String charsForContext = "";
@@ -593,24 +595,28 @@ public class GeminiService {
                 
                   %s
                 
-                  - Generate 2 NPCs of tier 1 for each rarity level. Example: {NPC1 tier 1, rarity 1}, {NPC2 tier 1, rarity 1}, {NPC3 tier 1 rarity 2}, etc.
+                  - Generate 2 NPCs of tier %s for each rarity level. Example: {NPC1 tier %s, rarity 1}, {NPC2 tier %s, rarity 1}, {NPC3 tier %s, rarity 2}, etc.
                   %s
                 """;
 
         String formattedPrompt = String.format(
                 rawPrompt,
-                "'CharacterInstance' (NPCs - Tier 1)",
+                "'CharacterInstance' (NPCs - Tier " + tierToGenerate + ")",
                 campaignTheme,
                 CharacterInstance.ObjectStructure(campaignId),
                 Stats.ObjectStructure(),
                 charsForContext,
+                tierToGenerate,
+                tierToGenerate,
+                tierToGenerate,
+                tierToGenerate,
                 getGeneralGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating Weapon: " + e.getMessage());
+            log.error("Error generating Char tier " + tierToGenerate + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
