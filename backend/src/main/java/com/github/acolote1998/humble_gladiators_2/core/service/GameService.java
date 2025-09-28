@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
+import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
@@ -55,11 +56,12 @@ public class GameService {
 
     public void getShortReportOfAIGeneratedContent(Campaign campaign) {
         Map<String, Object> report = new HashMap<>();
-        
+
         // Add campaign metadata
         Map<String, Object> campaignInfo = new HashMap<>();
         campaignInfo.put("campaignId", campaign.getId());
-        campaignInfo.put("theme", campaign.getTheme());
+        campaignInfo.put("wantedThemes", campaign.getTheme().getWantedThemes());
+        campaignInfo.put("unwantedThemes", campaign.getTheme().getUnwantedThemes());
         campaignInfo.put("generationTimestamp", System.currentTimeMillis());
         report.put("campaignInfo", campaignInfo);
 
@@ -99,8 +101,8 @@ public class GameService {
         }
     }
 
-    public void startGame(Theme gameTheme) throws InterruptedException {
-        Campaign campaign = campaignService.createCampaign(gameTheme);
+    public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest) throws InterruptedException {
+        Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest);
         //THEMES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_THEMES, campaign);
         Thread.sleep(500);
@@ -166,6 +168,7 @@ public class GameService {
         log.info("Creating report of generated content");
 
         updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
+        return campaign;
     }
 
     public void updateCampaignCreationState(CampaignCreationStateType status, Campaign campaign) {

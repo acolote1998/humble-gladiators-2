@@ -17,17 +17,17 @@ public class HumbleGladiators2Application {
 
         ConfigurableApplicationContext context = SpringApplication.run(HumbleGladiators2Application.class, args);
 
-        Theme theme = new Theme();
-        List<String> wantedThemes = new ArrayList<>();
-        wantedThemes.add("the office");
-        wantedThemes.add("marvel");
-        List<String> unwantedThemes = new ArrayList<>();
-        unwantedThemes.add("Unicorns");
-        theme.setWantedThemes(wantedThemes);
-        theme.setUnwantedThemes(unwantedThemes);
-
-        //Try game logic
-//        context.getBean(GameService.class).startGame(theme);
+//        Theme theme = new Theme();
+//        List<String> wantedThemes = new ArrayList<>();
+//        wantedThemes.add("the office");
+//        wantedThemes.add("marvel");
+//        List<String> unwantedThemes = new ArrayList<>();
+//        unwantedThemes.add("Unicorns");
+//        theme.setWantedThemes(wantedThemes);
+//        theme.setUnwantedThemes(unwantedThemes);
+//
+//        //Try game logic
+////        context.getBean(GameService.class).startGame(theme);
 
     }
 }
