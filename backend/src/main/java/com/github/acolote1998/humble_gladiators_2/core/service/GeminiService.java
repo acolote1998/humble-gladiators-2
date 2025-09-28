@@ -91,7 +91,7 @@ public class GeminiService {
                  - Do NOT invent any new enum values. Only use the ones listed above.
                  - Do NOT generate item names or descriptions that imply in-game effects or powers. For example, avoid names like "Teleportation Boots" or descriptions like "This item gives the user the power of X".
                  - When generating text (e.g., names, descriptions), use the language appropriate to the theme. For example, if the theme is "Pirata", a weapon name could be "Espada" instead of "Sword".
-                 - If the theme does not specify a particular language (e.g., "Harry Potter"), always generate text in English.
+                 - If the theme does not specify or imply a particular language (e.g., "Harry Potter" is language neutral, since it's just a person's name), always generate text in English.
                 - When generating names or descriptions, feel free to creatively mix elements from multiple wanted themes from time to time.
                      For example:
                        - If the wantedThemes are "soccer, Argentina, pirates", a weapon name could be "Sword of Messi the Pirate".
@@ -191,7 +191,7 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - The only allowed object categories things like are: armors, robes, cloaks, chestplates, chestwear.
+                 - The only allowed object categories are things like: armors, robes, cloaks, capes, chestplates, breastplates and chest wear objects.
                  - Do not invent or include any other equipment types (for example helmets, gloves, shields).
                  %s
                 """;
