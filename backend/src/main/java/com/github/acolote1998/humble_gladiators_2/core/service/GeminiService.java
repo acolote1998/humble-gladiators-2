@@ -565,10 +565,17 @@ public class GeminiService {
         return generatedItems;
     }
 
-    public List<CharacterFromGeminiDto> generateTenNpcsTierOne(Campaign campaign) {
+    public List<CharacterFromGeminiDto> generateTenNpcsTierOne(Campaign campaign, List<CharacterInstance> existingCharsForContext) {
         log.info("Trying to generate 10 NPCs Tier 1 through Gemini");
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
+        String charsForContext = "";
+        if (!existingCharsForContext.isEmpty()) {
+            charsForContext = String.format("""
+                    ** Just for context, this is a list of the already existing characters. Avoid creating the same ones again:  **
+                    - List: %s
+                    """, existingCharsForContext.toString());
+        }
         String rawPrompt = """
                   You are generating data to create content for an RPG game.
                 
@@ -584,6 +591,8 @@ public class GeminiService {
                 
                   The "Stats" structure is: %s
                 
+                  %s
+                
                   - Generate 2 NPCs of tier 1 for each rarity level. Example: {NPC1 tier 1, rarity 1}, {NPC2 tier 1, rarity 1}, {NPC3 tier 1 rarity 2}, etc.
                   %s
                 """;
@@ -593,6 +602,7 @@ public class GeminiService {
                 "'CharacterInstance' (NPCs - Tier 1)",
                 campaignTheme,
                 CharacterInstance.ObjectStructure(campaignId),
+                charsForContext,
                 Stats.ObjectStructure(),
                 getGeneralGenerationRules());
 

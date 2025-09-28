@@ -23,8 +23,8 @@ public class CharacterService {
     }
 
     public List<CharacterInstance> createTenNPCsTierOne(Campaign campaign) {
-        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsTierOne(campaign);
-
+        List<CharacterInstance> existingCharactersForContext = characterInstanceRepository.findAll();
+        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsTierOne(campaign, existingCharactersForContext);
         List<CharacterInstance> test = new ArrayList<>();
         return test;
     }
