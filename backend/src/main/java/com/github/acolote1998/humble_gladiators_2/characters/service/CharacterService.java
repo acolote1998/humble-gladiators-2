@@ -24,9 +24,9 @@ public class CharacterService {
         this.characterInstanceRepository = characterInstanceRepository;
     }
 
-    public List<CharacterInstance> createTenNPCsTierOne(Campaign campaign) {
+    public List<CharacterInstance> createTenNPCsOfDesiredTier(Campaign campaign, Integer tier) {
         List<CharacterInstance> existingCharactersForContext = characterInstanceRepository.findAll();
-        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsTierOne(campaign, existingCharactersForContext);
+        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsOfDesiredTier(campaign, existingCharactersForContext, tier);
         List<CharacterInstance> savedCharacterInstances = new ArrayList<>();
 
         generatedDtos.forEach(characterFromGeminiDto -> {
