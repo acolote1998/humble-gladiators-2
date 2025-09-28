@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.characters.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.characters.repository.CharacterInstanceRepository;
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
@@ -39,6 +40,8 @@ public class CharacterService {
             characterInstance.setTier(characterFromGeminiDto.tier());
             characterInstance.setGoldReward(characterFromGeminiDto.goldReward());
             characterInstance.setExpReward(characterFromGeminiDto.expReward());
+            Inventory inventory = InventoryService.createBlankInventory();
+            characterInstance.setInventory(inventory);
             savedCharacterInstances.add(characterInstance);
         });
         characterInstanceRepository.saveAll(savedCharacterInstances);
