@@ -38,8 +38,8 @@ public class ArmorService {
             armorTemplate.setQuantity(0); // templates always start at 0 quantity
             armorTemplate.setEquipped(dto.equipped());
             armorTemplate.setCampaign(campaign);
-            armorTemplate.setMagicalDefense(dto.magicalDefense());
-            armorTemplate.setPhysicalDefense(dto.physicalDefense());
+            armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1 * dto.rarity() * 1.5)));
+            armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 0.2 * dto.rarity() * 0.5)));
             armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedArmorTemplates.add(armorTemplate);
         });

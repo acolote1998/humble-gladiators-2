@@ -38,9 +38,9 @@ public class SpellService {
             spellTemplate.setQuantity(0); // templates always start at 0 quantity
             spellTemplate.setEquipped(dto.equipped());
             spellTemplate.setCampaign(campaign);
-            spellTemplate.setRestoreHp(dto.restoreHp());
-            spellTemplate.setPhysicalDamage(dto.physicalDamage());
-            spellTemplate.setMagicalDamage(dto.magicalDamage());
+            spellTemplate.setPhysicalDamage(0);
+            spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             spellTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedSpellTemplates.add(spellTemplate);
         });

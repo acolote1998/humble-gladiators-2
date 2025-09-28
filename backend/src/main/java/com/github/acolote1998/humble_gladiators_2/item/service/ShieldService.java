@@ -38,8 +38,8 @@ public class ShieldService {
             shieldTemplate.setQuantity(0); // templates always start at 0 quantity
             shieldTemplate.setEquipped(dto.equipped());
             shieldTemplate.setCampaign(campaign);
-            shieldTemplate.setMagicalDefense(dto.magicalDefense());
-            shieldTemplate.setPhysicalDefense(dto.physicalDefense());
+            shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
+            shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
             shieldTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedShieldTemplates.add(shieldTemplate);
         });

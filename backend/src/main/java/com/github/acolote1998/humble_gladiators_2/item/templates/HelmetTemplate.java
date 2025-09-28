@@ -29,8 +29,8 @@ public class HelmetTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
-                Integer physicalDefense (Math.round((super.getTier() * 1.5 * super.getRarity() * 2));)
-                Integer magicalDefense (Math.round((super.getTier() * 2.5 * super.getRarity() * 3));)
+                Integer physicalDefense (always 0, calculated later on by the backend)
+                Integer magicalDefense (always 0, calculated later on by the backend)
                 }""", campaignId.toString());
     }
 }
