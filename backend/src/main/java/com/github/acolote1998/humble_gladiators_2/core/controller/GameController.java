@@ -35,7 +35,7 @@ public class GameController {
         String userId = jwt.getSubject();
         Campaign createdCampaign = new Campaign();
         try {
-            createdCampaign = gameService.startGame(gameCreationDtoRequest);
+            createdCampaign = gameService.startGame(gameCreationDtoRequest, userId);
             log.info("Campaign " + createdCampaign.getId() + " - '" + createdCampaign.getName() + "' created successfully");
         } catch (Exception e) {
             log.error("Error creating new campaign: " + e.getMessage());

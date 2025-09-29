@@ -22,7 +22,7 @@ public class CampaignService {
         return repository.save(campaign);
     }
 
-    public Campaign createCampaign(GameCreationDtoRequest newCampaignDto) {
+    public Campaign createCampaign(GameCreationDtoRequest newCampaignDto, String userId) {
         Campaign newCampaign = new Campaign();
         List<String> wantedThemes = newCampaignDto.theme().wantedThemes();
         List<String> unwantedThemes = newCampaignDto.theme().unwantedThemes();
@@ -31,6 +31,7 @@ public class CampaignService {
         campaignTheme.setUnwantedThemes(unwantedThemes);
         campaignTheme.setWantedThemes(wantedThemes);
         newCampaign.setTheme(campaignTheme);
+        newCampaign.setUserId(userId);
         newCampaign.setName(newCampaignDto.campaignName());
         newCampaign = save(newCampaign);
         save(newCampaign);

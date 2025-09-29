@@ -103,8 +103,8 @@ public class GameService {
         }
     }
 
-    public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest) throws InterruptedException {
-        Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest);
+    public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest, String userId) throws InterruptedException {
+        Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest, userId);
         //THEMES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_THEMES, campaign);
         Thread.sleep(500);
