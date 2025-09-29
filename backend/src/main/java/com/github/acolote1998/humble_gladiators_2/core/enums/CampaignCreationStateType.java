@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.core.enums;
 
 public enum CampaignCreationStateType {
+    CAMPAIGN_NOT_FOUND,
     STARTING_NEW_CAMPAIGN,
     CREATING_THEMES,
     THEMES_CREATED,

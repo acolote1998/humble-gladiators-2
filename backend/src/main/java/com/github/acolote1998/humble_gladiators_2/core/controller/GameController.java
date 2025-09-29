@@ -47,7 +47,7 @@ public class GameController {
         String userId = jwt.getSubject();
         Campaign campaign = gameService.getCampaignService().getCampaignBeingCreatedByUserId(userId);
         if (campaign == null) {
-            throw new RuntimeException("Campaign Not Found");
+            return ResponseEntity.ok(CampaignCreationStateType.CAMPAIGN_NOT_FOUND);
         }
         return ResponseEntity.ok(campaign.getCampaignCreationState());
     }

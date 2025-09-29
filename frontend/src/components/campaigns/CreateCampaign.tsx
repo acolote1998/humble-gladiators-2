@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateCampaign } from "../../hooks/useCampaigns";
 import { useGetCreationCampaignState } from "../../hooks/useCampaigns";
+import { useQueryClient } from "@tanstack/react-query";
 const CreateCampaign = () => {
+  const {
+    data: campaignCreationState,
+    isError: errorGetitngCampaignCreationState,
+    isLoading: loadingGettingCampaignCreationState,
+  } = useGetCreationCampaignState();
   const { mutate: createCampaign } = useCreateCampaign();
   const [campaignName, setCampaignName] = useState<string>("");
   const [wantedThemes, setWantedThemes] = useState<string[]>([]);
   const [unwantedThemes, setUnwantedThemes] = useState<string[]>([]);
+  const [isCreatingCampaign, setIsCreatingCampaign] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    if (isCreatingCampaign && campaignCreationState !== "GAME_CREATED") {
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["gameCreationState"] });
+      }, 300);
+    } else {
+      if (campaignCreationState === "GAME_CREATED")
+        setIsCreatingCampaign(false);
+    }
+  }, [queryClient, isCreatingCampaign, campaignCreationState]);
 
   const getThemesFromInput = (themesWithComma: string): string[] => {
     const themes = themesWithComma.split(",");
@@ -66,6 +84,7 @@ const CreateCampaign = () => {
       </div>
       <p
         onClick={() => {
+          setIsCreatingCampaign(true);
           createCampaign({
             campaignName: campaignName,
             theme: {
@@ -77,6 +96,10 @@ const CreateCampaign = () => {
       >
         Create Campaign
       </p>
+
+      {campaignCreationState !== "CAMPAIGN_NOT_FOUND" &&
+        campaignCreationState !== "GAME_CREATED" &&
+        campaignCreationState !== undefined && <p>{campaignCreationState}</p>}
     </div>
   );
 };

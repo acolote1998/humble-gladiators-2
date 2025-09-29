@@ -9,6 +9,7 @@ type ThemeForCampaignType = {
 };
 
 export type CampaignCreationStateType =
+  | "CAMPAIGN_NOT_FOUND"
   | "STARTING_NEW_CAMPAIGN"
   | "CREATING_THEMES"
   | "THEMES_CREATED"
