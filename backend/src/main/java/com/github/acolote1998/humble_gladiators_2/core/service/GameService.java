@@ -6,6 +6,7 @@ import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationSta
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.nio.file.Paths;
 
 @Service
 @Slf4j
+@Getter
 public class GameService {
     CampaignService campaignService;
     ArmorService armorService;
@@ -60,6 +62,8 @@ public class GameService {
         // Add campaign metadata
         Map<String, Object> campaignInfo = new HashMap<>();
         campaignInfo.put("campaignId", campaign.getId());
+        campaignInfo.put("name", campaign.getName());
+        campaignInfo.put("userId", campaign.getUserId());
         campaignInfo.put("wantedThemes", campaign.getTheme().getWantedThemes());
         campaignInfo.put("unwantedThemes", campaign.getTheme().getUnwantedThemes());
         campaignInfo.put("generationTimestamp", System.currentTimeMillis());
@@ -101,8 +105,8 @@ public class GameService {
         }
     }
 
-    public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest) throws InterruptedException {
-        Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest);
+    public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest, String userId) throws InterruptedException {
+        Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest, userId);
         //THEMES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_THEMES, campaign);
         Thread.sleep(500);
