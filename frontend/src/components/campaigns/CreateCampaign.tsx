@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useCreateCampaign } from "../../hooks/useCampaigns";
+import { useGetCreationCampaignState } from "../../hooks/useCampaigns";
 const CreateCampaign = () => {
-  const { isSuccess, mutate: createCampaign } = useCreateCampaign();
+  const { mutate: createCampaign } = useCreateCampaign();
   const [campaignName, setCampaignName] = useState<string>("");
   const [wantedThemes, setWantedThemes] = useState<string[]>([]);
   const [unwantedThemes, setUnwantedThemes] = useState<string[]>([]);
@@ -10,10 +11,6 @@ const CreateCampaign = () => {
     const themes = themesWithComma.split(",");
     return themes;
   };
-
-  if (isSuccess) {
-    console.log("Campaign Created perrix");
-  }
 
   return (
     <div

@@ -7,3 +7,27 @@ type ThemeForCampaignType = {
   wantedThemes: string[];
   unwantedThemes: string[];
 };
+
+export type CampaignCreationStateType =
+  | "STARTING_NEW_CAMPAIGN"
+  | "CREATING_THEMES"
+  | "THEMES_CREATED"
+  | "CREATING_CAMPAIGN"
+  | "CAMPAIGN_CREATED"
+  | "CREATING_ARMORS"
+  | "ARMORS_CREATED"
+  | "CREATING_BOOTS"
+  | "BOOTS_CREATED"
+  | "CREATING_CONSUMABLES"
+  | "CONSUMABLES_CREATED"
+  | "CREATING_HELMETS"
+  | "HELMETS_CREATED"
+  | "CREATING_SHIELDS"
+  | "SHIELDS_CREATED"
+  | "CREATING_SPELLS"
+  | "SPELLS_CREATED"
+  | "CREATING_WEAPONS"
+  | "WEAPONS_CREATED"
+  | "CREATING_NPCS"
+  | "NPCS_CREATED"
+  | "GAME_CREATED";
