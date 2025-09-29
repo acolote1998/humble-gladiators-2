@@ -45,7 +45,7 @@ public class GameController {
     @GetMapping("/state")
     public ResponseEntity<CampaignCreationStateType> getGameCreationState(@AuthenticationPrincipal Jwt jwt) {
         String userId = jwt.getSubject();
-        Campaign campaign = gameService.getCampaignService().getCampaignByUserId(userId);
+        Campaign campaign = gameService.getCampaignService().getCampaignBeingCreatedByUserId(userId);
         if (campaign == null) {
             throw new RuntimeException("Campaign Not Found");
         }
