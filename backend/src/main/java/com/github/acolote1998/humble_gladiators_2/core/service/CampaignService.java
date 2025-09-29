@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
+import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.core.repository.CampaignRepository;
@@ -38,4 +39,14 @@ public class CampaignService {
         return newCampaign;
     }
 
+    public Campaign getCampaignBeingCreatedByUserId(String userId) {
+        List<Campaign> possibleCampaigns = repository.getCampaignsByUserId(userId);
+        Campaign campaignBeingCreated = possibleCampaigns
+                .stream()
+                .filter(campaign -> !campaign.getCampaignCreationState()
+                        .equals(CampaignCreationStateType.GAME_CREATED))
+                .findFirst()
+                .orElse(null);
+        return campaignBeingCreated;
+    }
 }

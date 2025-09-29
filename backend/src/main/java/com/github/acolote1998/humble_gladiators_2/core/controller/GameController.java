@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
+import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GameService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -42,5 +40,15 @@ public class GameController {
         }
 
         return ResponseEntity.created(URI.create("/api/campaign/" + createdCampaign.getId())).build();
+    }
+
+    @GetMapping("/state")
+    public ResponseEntity<CampaignCreationStateType> getGameCreationState(@AuthenticationPrincipal Jwt jwt) {
+        String userId = jwt.getSubject();
+        Campaign campaign = gameService.getCampaignService().getCampaignByUserId(userId);
+        if (campaign == null) {
+            throw new RuntimeException("Campaign Not Found");
+        }
+        return ResponseEntity.ok(campaign.getCampaignCreationState());
     }
 }

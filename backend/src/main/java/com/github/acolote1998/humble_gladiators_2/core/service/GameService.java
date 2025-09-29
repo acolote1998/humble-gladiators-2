@@ -6,6 +6,7 @@ import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationSta
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.nio.file.Paths;
 
 @Service
 @Slf4j
+@Getter
 public class GameService {
     CampaignService campaignService;
     ArmorService armorService;
