@@ -18,8 +18,8 @@ public class SecurityConfig {
                 .csrf((crsf -> crsf.disable()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/public/**").permitAll()
-                        .requestMatchers("/api/game/campaign").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/days").authenticated() //replace for actual needed enpoints, this is a copied example from old project
+                        .requestMatchers("/api/game/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/days").authenticated() //replace for actual needed endpoints, this is a copied example from old project
                 )
                 .cors(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));
