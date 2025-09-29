@@ -3,27 +3,29 @@ import { useCreateCampaign } from "../../hooks/useCampaigns";
 import { useGetCreationCampaignState } from "../../hooks/useCampaigns";
 import { useQueryClient } from "@tanstack/react-query";
 const CreateCampaign = () => {
-  const {
-    data: campaignCreationState,
-    isError: errorGetitngCampaignCreationState,
-    isLoading: loadingGettingCampaignCreationState,
-  } = useGetCreationCampaignState();
+  const { data: campaignCreationState } = useGetCreationCampaignState();
   const { mutate: createCampaign } = useCreateCampaign();
   const [campaignName, setCampaignName] = useState<string>("");
   const [wantedThemes, setWantedThemes] = useState<string[]>([]);
   const [unwantedThemes, setUnwantedThemes] = useState<string[]>([]);
   const [isCreatingCampaign, setIsCreatingCampaign] = useState<boolean>(false);
   const queryClient = useQueryClient();
+
   useEffect(() => {
-    if (isCreatingCampaign && campaignCreationState !== "GAME_CREATED") {
-      setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ["gameCreationState"] });
-      }, 300);
-    } else {
-      if (campaignCreationState === "GAME_CREATED")
-        setIsCreatingCampaign(false);
+    if (!isCreatingCampaign) return;
+
+    const interval = setInterval(() => {
+      queryClient.invalidateQueries({ queryKey: ["gameCreationState"] });
+    }, 300);
+
+    // Stop polling once the game is created
+    if (campaignCreationState === "GAME_CREATED") {
+      setIsCreatingCampaign(false);
+      clearInterval(interval);
     }
-  }, [queryClient, isCreatingCampaign, campaignCreationState]);
+
+    return () => clearInterval(interval);
+  }, [isCreatingCampaign, campaignCreationState, queryClient]);
 
   const getThemesFromInput = (themesWithComma: string): string[] => {
     const themes = themesWithComma.split(",");
