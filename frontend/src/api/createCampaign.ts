@@ -2,7 +2,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
 import type { CreateCampaignType } from "../types/campaignTypes";
 
-export const createCampaign = async (
+export const createCampaignPost = async (
   campaignToCreate: CreateCampaignType,
   bearerToken: string
 ) => {
