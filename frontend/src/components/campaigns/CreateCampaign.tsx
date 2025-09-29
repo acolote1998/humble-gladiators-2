@@ -1,4 +1,14 @@
+import { useState } from "react";
 const CreateCampaign = () => {
+  const [campaignName, setCampaignName] = useState<string>("");
+  const [wantedThemes, setWantedThemes] = useState<string[]>([]);
+  const [unwantedThemes, setUnwantedThemes] = useState<string[]>([]);
+
+  const getThemesFromInput = (themesWithComma: string): string[] => {
+    const themes = themesWithComma.split(",");
+    return themes;
+  };
+
   return (
     <div
       className="
@@ -23,15 +33,33 @@ const CreateCampaign = () => {
       </h2>
       <div className="flex">
         <h3 className="text-lg">Campaign name:</h3>
-        <input className="bg-gray-200 rounded-md border-1 mx-2" type="text" />
+        <input
+          onChange={(e) => {
+            setCampaignName(e.target.value);
+          }}
+          className="bg-gray-200 rounded-md border-1 mx-2"
+          type="text"
+        />
       </div>
       <div className="flex">
         <h3 className="text-lg">Wanted themes:</h3>
-        <input className="bg-gray-200 rounded-md border-1 mx-2" type="text" />
+        <input
+          onChange={(e) => {
+            setWantedThemes(getThemesFromInput(e.target.value));
+          }}
+          className="bg-gray-200 rounded-md border-1 mx-2"
+          type="text"
+        />
       </div>
       <div className="flex">
         <h3 className="text-lg">Unwanted themes:</h3>
-        <input className="bg-gray-200 rounded-md border-1 mx-2" type="text" />
+        <input
+          onChange={(e) => {
+            setUnwantedThemes(getThemesFromInput(e.target.value));
+          }}
+          className="bg-gray-200 rounded-md border-1 mx-2"
+          type="text"
+        />
       </div>
     </div>
   );
