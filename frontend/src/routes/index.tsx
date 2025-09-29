@@ -20,7 +20,8 @@ function Index() {
       <SignedIn>
         <p
           onClick={async () => {
-            console.log(await getToken());
+            const token = await getToken({ template: "infinityToken" });
+            console.log(token);
           }}
         >
           Token
