@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import GetInfinityToken from "../components/GetInfinityToken";
+import CreateCampaign from "../components/campaigns/CreateCampaign";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
-  return <GetInfinityToken />;
+  return <CreateCampaign />;
 }
