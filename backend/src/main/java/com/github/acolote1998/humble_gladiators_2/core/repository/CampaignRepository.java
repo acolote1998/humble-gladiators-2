@@ -11,4 +11,8 @@ public interface CampaignRepository extends ListCrudRepository<Campaign, Long> {
     List<Campaign> getCampaignsByUserId(String userId);
 
     List<Campaign> findAllByUserId(String userId);
+
+    Campaign findByUserId(String userId);
+
+    Campaign findByUserIdAndId(String userId, Long id);
 }

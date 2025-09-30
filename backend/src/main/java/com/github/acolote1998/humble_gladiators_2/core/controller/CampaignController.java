@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -32,5 +33,12 @@ public class CampaignController {
         String userId = jwt.getSubject();
         List<Campaign> campaignsForUser = campaignService.getAllCampainsForAUser(userId);
         return ResponseEntity.ok(CampaignResponseDto.mapCampaignEntityToResponseDtos(campaignsForUser));
+    }
+
+    @GetMapping("/{campaignId}")
+    public ResponseEntity<CampaignResponseDto> getCampaignByUserAndId(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
+        return ResponseEntity.ok(CampaignResponseDto.fromEntityToCampaignResponseDto(campaign));
     }
 }

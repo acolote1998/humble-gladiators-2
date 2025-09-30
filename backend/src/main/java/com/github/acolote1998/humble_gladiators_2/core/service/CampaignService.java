@@ -53,4 +53,8 @@ public class CampaignService {
     public List<Campaign> getAllCampainsForAUser(String userId) {
         return repository.findAllByUserId(userId);
     }
+
+    public Campaign getCampaignByIdAndUserId(String userId, Long campaignId) {
+        return repository.findByUserIdAndId(userId, campaignId);
+    }
 }

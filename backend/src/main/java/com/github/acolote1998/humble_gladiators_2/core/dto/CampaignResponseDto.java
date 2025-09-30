@@ -11,7 +11,7 @@ public record CampaignResponseDto(Long id, String name, ThemeResponseDto theme,
     private record ThemeResponseDto(List<String> wantedThemes, List<String> unwantedThemes) {
     }
 
-    private static CampaignResponseDto fromEntityToCampaignResponseDto(
+    public static CampaignResponseDto fromEntityToCampaignResponseDto(
             Campaign campaignToMap
     ) {
         return new CampaignResponseDto(
