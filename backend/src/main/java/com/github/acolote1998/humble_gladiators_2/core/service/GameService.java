@@ -112,65 +112,76 @@ public class GameService {
         Thread.sleep(500);
         updateCampaignCreationState(CampaignCreationStateType.THEMES_CREATED, campaign);
         Thread.sleep(500);
-
         //CAMPAIGN
         updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN, campaign);
         Thread.sleep(500);
         updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_CREATED, campaign);
         Thread.sleep(500);
-
         //ARMORS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_ARMORS, campaign);
         armorService.createTwentyFiveNewArmorTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.ARMORS_CREATED, campaign);
-
+        Thread.sleep(500);
         //BOOTS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_BOOTS, campaign);
+        Thread.sleep(500);
         bootsService.createTwentyFiveNewBootsTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.BOOTS_CREATED, campaign);
-
+        Thread.sleep(500);
         //CONSUMABLES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
+        Thread.sleep(500);
         consumableService.createTwentyFiveNewConsumableTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
-
+        Thread.sleep(500);
         //HELMETS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
+        Thread.sleep(500);
         helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
-
+        Thread.sleep(500);
         //SHIELDS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_SHIELDS, campaign);
+        Thread.sleep(500);
         shieldService.createTwentyFiveNewShieldTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.SHIELDS_CREATED, campaign);
-
+        Thread.sleep(500);
         //SPELLS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_SPELLS, campaign);
+        Thread.sleep(500);
         spellService.createTwentyFiveNewSpellTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.SPELLS_CREATED, campaign);
-
+        Thread.sleep(500);
         //WEAPONS
         updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
+        Thread.sleep(500);
         weaponService.createTwentyFiveNewWeaponTemplates(campaign);
         updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
-
+        Thread.sleep(500);
         //NPCs (Characters)
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS, campaign);
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_ONE, campaign);
+        Thread.sleep(500);
         //Tier 1 NPCs
         characterService.createTenNPCsOfDesiredTier(campaign, 1);
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_TWO, campaign);
+        Thread.sleep(500);
         //Tier 2 NPCs
         characterService.createTenNPCsOfDesiredTier(campaign, 2);
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_THREE, campaign);
+        Thread.sleep(500);
         //Tier 3 NPCs
         characterService.createTenNPCsOfDesiredTier(campaign, 3);
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FOUR, campaign);
+        Thread.sleep(500);
         //Tier 4 NPCs
         characterService.createTenNPCsOfDesiredTier(campaign, 4);
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FIVE, campaign);
+        Thread.sleep(500);
         //Tier 5 NPCs
         characterService.createTenNPCsOfDesiredTier(campaign, 5);
         updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
-
         getShortReportOfAIGeneratedContent(campaign);
         log.info("Creating report of generated content");
-
         Thread.sleep(500);
         updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
         return campaign;

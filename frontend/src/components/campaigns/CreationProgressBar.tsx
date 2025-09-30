@@ -97,13 +97,29 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedState = "Weapons created";
         formattedPercent = getPercentWidth(85);
         break;
-      case "CREATING_NPCS":
+      case "CREATING_NPCS_PHASE_ONE":
         formattedState = "Creating NPCs...";
         formattedPercent = getPercentWidth(90);
         break;
+      case "CREATING_NPCS_PHASE_TWO":
+        formattedState = "Creating NPCs...";
+        formattedPercent = getPercentWidth(92);
+        break;
+      case "CREATING_NPCS_PHASE_THREE":
+        formattedState = "Creating NPCs...";
+        formattedPercent = getPercentWidth(94);
+        break;
+      case "CREATING_NPCS_PHASE_FOUR":
+        formattedState = "Creating NPCs...";
+        formattedPercent = getPercentWidth(96);
+        break;
+      case "CREATING_NPCS_PHASE_FIVE":
+        formattedState = "Creating NPCs...";
+        formattedPercent = getPercentWidth(98);
+        break;
       case "NPCS_CREATED":
         formattedState = "NPCs created";
-        formattedPercent = getPercentWidth(95);
+        formattedPercent = getPercentWidth(100);
         break;
       case "GAME_CREATED":
         formattedState = "Game created!";
@@ -120,7 +136,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
   return (
     <div className="w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
       <div
-        className="h-6 bg-blue-600 rounded-full dark:bg-blue-500 flex items-center justify-center"
+        className="transition-all ease-in h-6 bg-blue-600 rounded-full dark:bg-blue-500 flex items-center justify-center"
         style={{ width: getPercentAndStateFormat().percent }}
       >
         <p className="text-white text-sm font-medium">
