@@ -37,6 +37,7 @@ function CampaignsRoute() {
             <p>No campaigns found</p>
           )}
           <button
+            className="bg-[var(--div-lighter-bg)] p-2 rounded-md"
             onClick={() => {
               navigate({ to: "/campaign/create" });
             }}
