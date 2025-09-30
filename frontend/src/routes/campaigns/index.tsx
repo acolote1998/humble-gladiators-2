@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useNavigate } from "@tanstack/react-router";
+import { SignedIn } from "@clerk/clerk-react";
 export const Route = createFileRoute("/campaigns/")({
   component: CampaignsRoute,
 });
@@ -7,14 +8,18 @@ export const Route = createFileRoute("/campaigns/")({
 function CampaignsRoute() {
   const navigate = useNavigate();
   return (
-    <div className="p-2">
-      <button
-        onClick={() => {
-          navigate({ to: "/campaigns/create" });
-        }}
-      >
-        Create Campaign
-      </button>
-    </div>
+    <>
+      <SignedIn>
+        <div className="p-2">
+          <button
+            onClick={() => {
+              navigate({ to: "/campaigns/create" });
+            }}
+          >
+            Create Campaign
+          </button>
+        </div>
+      </SignedIn>
+    </>
   );
 }

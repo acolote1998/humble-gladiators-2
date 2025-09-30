@@ -1,5 +1,10 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import {
+  SignInButton,
+  SignOutButton,
+  SignedIn,
+  SignedOut,
+} from "@clerk/clerk-react";
 
 const RootLayout = () => (
   <>
@@ -13,10 +18,15 @@ const RootLayout = () => (
       <Link to="/campaigns" className="[&.active]:font-bold">
         Campaigns
       </Link>
+      <SignedIn>
+        <SignOutButton />
+      </SignedIn>
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
     </div>
     <hr />
     <Outlet />
-    <TanStackRouterDevtools />
   </>
 );
 
