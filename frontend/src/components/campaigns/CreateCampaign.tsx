@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useCreateCampaign } from "../../hooks/useCampaigns";
 import { useGetCreationCampaignState } from "../../hooks/useCampaigns";
 import { useQueryClient } from "@tanstack/react-query";
+import CreationProgressBar from "./CreationProgressBar";
 const CreateCampaign = () => {
   const { data: campaignCreationState } = useGetCreationCampaignState();
   const { mutate: createCampaign } = useCreateCampaign();
@@ -98,6 +99,7 @@ const CreateCampaign = () => {
       >
         Create Campaign
       </p>
+      <CreationProgressBar percent={100} />
 
       {campaignCreationState !== "CAMPAIGN_NOT_FOUND" &&
         campaignCreationState !== "GAME_CREATED" &&
