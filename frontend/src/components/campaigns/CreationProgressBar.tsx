@@ -22,15 +22,15 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(0);
         break;
       case "CREATING_THEMES":
-        formattedState = "Starting new campaign...";
+        formattedState = "Starting new campaign";
         formattedPercent = getPercentWidth(0);
         break;
       case "THEMES_CREATED":
-        formattedState = "Creating themes...";
+        formattedState = "Creating themes";
         formattedPercent = getPercentWidth(3);
         break;
       case "CREATING_CAMPAIGN":
-        formattedState = "Creating campaign...";
+        formattedState = "Creating campaign";
         formattedPercent = getPercentWidth(6);
         break;
       case "CAMPAIGN_CREATED":
@@ -38,7 +38,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(10);
         break;
       case "CREATING_ARMORS":
-        formattedState = "Creating armors...";
+        formattedState = "Creating armors";
         formattedPercent = getPercentWidth(20);
         break;
       case "ARMORS_CREATED":
@@ -46,7 +46,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(25);
         break;
       case "CREATING_BOOTS":
-        formattedState = "Creating boots...";
+        formattedState = "Creating boots";
         formattedPercent = getPercentWidth(30);
         break;
       case "BOOTS_CREATED":
@@ -54,7 +54,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(35);
         break;
       case "CREATING_CONSUMABLES":
-        formattedState = "Creating consumables...";
+        formattedState = "Creating consumables";
         formattedPercent = getPercentWidth(40);
         break;
       case "CONSUMABLES_CREATED":
@@ -62,7 +62,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(45);
         break;
       case "CREATING_HELMETS":
-        formattedState = "Creating helmets...";
+        formattedState = "Creating helmets";
         formattedPercent = getPercentWidth(50);
         break;
       case "HELMETS_CREATED":
@@ -70,7 +70,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(55);
         break;
       case "CREATING_SHIELDS":
-        formattedState = "Creating shields...";
+        formattedState = "Creating shields";
         formattedPercent = getPercentWidth(60);
         break;
       case "SHIELDS_CREATED":
@@ -78,7 +78,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(65);
         break;
       case "CREATING_SPELLS":
-        formattedState = "Creating spells...";
+        formattedState = "Creating spells";
         formattedPercent = getPercentWidth(70);
         break;
       case "SPELLS_CREATED":
@@ -86,7 +86,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(75);
         break;
       case "CREATING_WEAPONS":
-        formattedState = "Creating weapons...";
+        formattedState = "Creating weapons";
         formattedPercent = getPercentWidth(80);
         break;
       case "WEAPONS_CREATED":
@@ -94,23 +94,23 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedPercent = getPercentWidth(85);
         break;
       case "CREATING_NPCS_PHASE_ONE":
-        formattedState = "Creating NPCs...";
+        formattedState = "Creating NPCs";
         formattedPercent = getPercentWidth(90);
         break;
       case "CREATING_NPCS_PHASE_TWO":
-        formattedState = "Creating NPCs...";
+        formattedState = "Creating NPCs";
         formattedPercent = getPercentWidth(92);
         break;
       case "CREATING_NPCS_PHASE_THREE":
-        formattedState = "Creating NPCs...";
+        formattedState = "Creating NPCs";
         formattedPercent = getPercentWidth(94);
         break;
       case "CREATING_NPCS_PHASE_FOUR":
-        formattedState = "Creating NPCs...";
+        formattedState = "Creating NPCs";
         formattedPercent = getPercentWidth(96);
         break;
       case "CREATING_NPCS_PHASE_FIVE":
-        formattedState = "Creating NPCs...";
+        formattedState = "Creating NPCs";
         formattedPercent = getPercentWidth(98);
         break;
       case "NPCS_CREATED":
@@ -130,14 +130,16 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
   };
 
   return (
-    <div className="w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
+    <div className="w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700 relative overflow-hidden">
       <div
-        className="transition-width ease-in-out duration-1000 h-6 bg-blue-600 rounded-full dark:bg-blue-500 flex items-center justify-center"
+        className="transition-width ease-in-out duration-1000 h-6 bg-blue-600 rounded-full dark:bg-blue-500"
         style={{ width: getPercentAndStateFormat().percent }}
-      >
+      ></div>
+      <div className="absolute inset-0 flex items-center justify-center">
         <p className="text-white text-sm font-medium">
-          {getPercentAndStateFormat().state}
+          {getPercentAndStateFormat().state}{" "}
         </p>
+        <p className="loader"></p>
       </div>
     </div>
   );

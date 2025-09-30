@@ -23,11 +23,18 @@ function CampaignsRoute() {
             <p>Loading campaigns</p>
           ) : isErrorLoadingAllCampaigns ? (
             <p>Error loading campaigns</p>
-          ) : (
-            allCampaigns &&
+          ) : allCampaigns && allCampaigns.length > 0 ? (
             allCampaigns.map((campaign) => (
-              <CampaignItem key={campaign.id} {...campaign} />
+              <div
+                onClick={() => {
+                  navigate({ to: `/campaign/${campaign.id}` });
+                }}
+              >
+                <CampaignItem key={campaign.id} {...campaign} />
+              </div>
             ))
+          ) : (
+            <p>No campaigns found</p>
           )}
           <button
             onClick={() => {
