@@ -36,3 +36,9 @@ export type CampaignCreationStateType =
   | "CREATING_NPCS_PHASE_FIVE"
   | "NPCS_CREATED"
   | "GAME_CREATED";
+
+export type CampaignDto = {
+  id: number;
+  name: string;
+  theme: ThemeForCampaignType;
+};
