@@ -21,25 +21,21 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedState = "Campaign not found";
         formattedPercent = getPercentWidth(0);
         break;
-      case "STARTING_NEW_CAMPAIGN":
-        formattedState = "Starting new campaign...";
-        formattedPercent = getPercentWidth(3);
-        break;
       case "CREATING_THEMES":
-        formattedState = "Creating themes...";
-        formattedPercent = getPercentWidth(6);
+        formattedState = "Starting new campaign...";
+        formattedPercent = getPercentWidth(0);
         break;
       case "THEMES_CREATED":
-        formattedState = "Themes created";
-        formattedPercent = getPercentWidth(9);
+        formattedState = "Creating themes...";
+        formattedPercent = getPercentWidth(3);
         break;
       case "CREATING_CAMPAIGN":
         formattedState = "Creating campaign...";
-        formattedPercent = getPercentWidth(12);
+        formattedPercent = getPercentWidth(6);
         break;
       case "CAMPAIGN_CREATED":
         formattedState = "Campaign created";
-        formattedPercent = getPercentWidth(15);
+        formattedPercent = getPercentWidth(10);
         break;
       case "CREATING_ARMORS":
         formattedState = "Creating armors...";
@@ -136,7 +132,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
   return (
     <div className="w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
       <div
-        className="transition-all ease-in h-6 bg-blue-600 rounded-full dark:bg-blue-500 flex items-center justify-center"
+        className="transition-width ease-in-out duration-1000 h-6 bg-blue-600 rounded-full dark:bg-blue-500 flex items-center justify-center"
         style={{ width: getPercentAndStateFormat().percent }}
       >
         <p className="text-white text-sm font-medium">
