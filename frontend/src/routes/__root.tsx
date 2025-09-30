@@ -15,8 +15,8 @@ const RootLayout = () => (
       <Link to="/about" className="[&.active]:font-bold">
         About
       </Link>
-      <Link to="/campaigns" className="[&.active]:font-bold">
-        Campaigns
+      <Link to="/campaign" className="[&.active]:font-bold">
+        Campaign
       </Link>
       <SignedIn>
         <SignOutButton />

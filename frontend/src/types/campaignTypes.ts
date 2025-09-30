@@ -41,4 +41,5 @@ export type CampaignDto = {
   id: number;
   name: string;
   theme: ThemeForCampaignType;
+  campaignCreationState: CampaignCreationStateType;
 };

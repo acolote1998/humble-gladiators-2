@@ -6,7 +6,7 @@ export const fetchAllChampaignsForAUser = async (
   bearerToken: string
 ): Promise<CampaignDto[]> => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/campaigns`, {
+    const response = await axios.get(`${BACKEND_URL}/campaign`, {
       headers: { Authorization: `Bearer ${bearerToken}` },
     });
     return response.data;
@@ -21,7 +21,7 @@ export const fetchCampaignByIdForAUser = async (
   bearerToken: string
 ): Promise<CampaignDto> => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/campaigns/${campaignId}`, {
+    const response = await axios.get(`${BACKEND_URL}/campaign/${campaignId}`, {
       headers: { Authorization: `Bearer ${bearerToken}` },
     });
     return response.data;
