@@ -99,11 +99,10 @@ const CreateCampaign = () => {
       >
         Create Campaign
       </p>
-      <CreationProgressBar percent={100} />
-
       {campaignCreationState !== "CAMPAIGN_NOT_FOUND" &&
-        campaignCreationState !== "GAME_CREATED" &&
-        campaignCreationState !== undefined && <p>{campaignCreationState}</p>}
+        campaignCreationState && (
+          <CreationProgressBar creationState={campaignCreationState} />
+        )}
     </div>
   );
 };

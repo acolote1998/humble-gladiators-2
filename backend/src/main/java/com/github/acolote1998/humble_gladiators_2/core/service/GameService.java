@@ -171,6 +171,7 @@ public class GameService {
         getShortReportOfAIGeneratedContent(campaign);
         log.info("Creating report of generated content");
 
+        Thread.sleep(500);
         updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
         return campaign;
     }
