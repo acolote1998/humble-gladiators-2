@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+:root {
+  --text-for-bg: white;
+  --div-bg: gray;
+  --div-lighter-bg: lightgray;
+}
+
 .loader {
   width: 13px;
   aspect-ratio: 1;

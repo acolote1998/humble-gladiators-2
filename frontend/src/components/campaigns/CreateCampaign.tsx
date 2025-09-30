@@ -36,7 +36,7 @@ const CreateCampaign = () => {
   return (
     <div
       className="
-    bg-gray-300
+    bg-[var(--div-bg)]
     m-10
     rounded-md
     p-5
@@ -51,41 +51,42 @@ const CreateCampaign = () => {
       <h2
         className="
       font-semibold
-      text-2xl"
+      text-2xl text-[var(--text-for-bg)]"
       >
         New Campaign
       </h2>
       <div className="flex">
-        <h3 className="text-lg">Campaign name:</h3>
+        <h3 className="text-lg text-[var(--text-for-bg)]">Campaign name:</h3>
         <input
           onChange={(e) => {
             setCampaignName(e.target.value);
           }}
-          className="bg-gray-200 rounded-md border-1 mx-2"
+          className="bg-[var(--div-lighter-bg)] rounded-md border-1 mx-2"
           type="text"
         />
       </div>
       <div className="flex">
-        <h3 className="text-lg">Wanted themes:</h3>
+        <h3 className="text-lg text-[var(--text-for-bg)]">Wanted themes:</h3>
         <input
           onChange={(e) => {
             setWantedThemes(getThemesFromInput(e.target.value));
           }}
-          className="bg-gray-200 rounded-md border-1 mx-2"
+          className="bg-[var(--div-lighter-bg)] rounded-md border-1 mx-2"
           type="text"
         />
       </div>
       <div className="flex">
-        <h3 className="text-lg">Unwanted themes:</h3>
+        <h3 className="text-lg text-[var(--text-for-bg)]">Unwanted themes:</h3>
         <input
           onChange={(e) => {
             setUnwantedThemes(getThemesFromInput(e.target.value));
           }}
-          className="bg-gray-200 rounded-md border-1 mx-2"
+          className="bg-[var(--div-lighter-bg)] rounded-md border-1 mx-2"
           type="text"
         />
       </div>
       <p
+        className="bg-[var(--div-lighter-bg)] p-2 rounded-md"
         onClick={() => {
           setIsCreatingCampaign(true);
           createCampaign({
