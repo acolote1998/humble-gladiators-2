@@ -49,4 +49,8 @@ public class CampaignService {
                 .orElse(null);
         return campaignBeingCreated;
     }
+
+    public List<Campaign> getAllCampainsForAUser(String userId) {
+        return repository.findAllByUserId(userId);
+    }
 }

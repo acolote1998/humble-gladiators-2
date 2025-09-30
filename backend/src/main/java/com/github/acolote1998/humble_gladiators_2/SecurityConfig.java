@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/game/**").authenticated()
+                        .requestMatchers("/api/campaign").authenticated()
                         .requestMatchers(HttpMethod.POST, "/days").authenticated() //replace for actual needed endpoints, this is a copied example from old project
                 )
                 .cors(withDefaults())

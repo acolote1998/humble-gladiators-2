@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface CampaignRepository extends ListCrudRepository<Campaign, Long> {
     List<Campaign> getCampaignsByUserId(String userId);
+
+    List<Campaign> findAllByUserId(String userId);
 }
