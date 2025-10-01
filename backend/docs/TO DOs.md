@@ -1,0 +1,58 @@
+# TO DOs - Humble Gladiators 2
+
+- [ ] IconType? Image Generation System based on enums? (pre saved images)
+    - [ ] NPC types for example
+        - Humanoid, Animal-like, Monster, Other
+    - [ ] Armor
+        - Robe, Plate, Mail, Shirt, Cape, Cloak, Backpack, Other
+    - [ ] Boots
+        - Boots, CombatBoots, Sneakers, Loafers, Slippers, Sandals, Heels, Moccasins, Clogs, Platforms, Other
+    - [ ] Consumables
+        - Food, Drink, Medicine, Treat, Toy, Tool, Gadget, Book, Document, Accessory, Miscellaneous, Other
+    - [ ] Helmet
+        - Helmet, HardHat, MilitaryHelmet, StealthHelmet, Visor, DecorativeHelmet, Mask, Hat, Other
+    - [ ] Shield
+        - Shield, Book, Amulet, Ring, Badge, Trophy, Tool, Miscellaneous, Bag, Stationery, Spellbook, Other
+    - [ ] Spell
+        - FireSpell, IceSpell, EarthSpell, WaterSpell, AirSpell, LightningSpell, HealingSpell, BuffSpell, DebuffSpell,
+          InvocationSpell, GeneralSpell, Other
+    - [ ] Weapon
+        - Sword, Axe, Mace, Dagger, Spear, Staff, Club, Hammer, Bow, Gun, Wand, Staff, Orb, EnchantedGlove, SpellFocus,
+          Tool, Whip, Throwable, Food Related, Other
+- [ ] Discovery system integration
+- [ ] ItemTemplate to ItemInstance methods
+- [ ] Logic for interface method implementation
+- [ ] Balance formulas
+    - [ ] gold reward
+    - [ ] exp reward
+    - [ ] const
+    - [ ] cons
+    - [ ] int
+    - [ ] dex
+    - [ ] str
+    - [ ] spd
+    - [ ] luck
+    - [ ] hp
+    - [ ] mp
+    - [ ] height
+    - [ ] weight
+    - [ ] level
+    - [ ] currentExp
+    - [ ] expForNextLevel
+- [ ] Inventory management service layer
+- [ ] Equipment system service layer
+- [ ] Combat Logic Service Layer
+    - [ ] Turn-based combat flow implementation
+    - [ ] Damage calculation logic
+    - [ ] Battle state management
+- [ ] Replay system / logic
+- [ ] Hero Creation
+
+- [ ] Discovery Logic
+    - [ ] Item discovery tracking
+    - [ ] Discovery API endpoints
+    - [ ] Achievement system
+- [ ] Buying / Selling System
+- [ ] Performance Optimization
+- [ ] Testing & Documentation
+- [ ] Deployment & Monitoring
