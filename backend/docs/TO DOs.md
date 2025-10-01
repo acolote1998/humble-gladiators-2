@@ -1,22 +1,22 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] IconType? Image Generation System based on enums? (pre saved images)
-    - [ ] NPC types for example
+- [ ] Categories - Image Generation System based on enums? (pre saved images)
+    - [X] NPC categories for example
         - Humanoid, Beast, Monster, Construct, Spirit, Undead, Elemental, Mythic, Celestial, Fiend, Aberration, Other
-    - [ ] Armor
+    - [ ] Armor categories
         - Robe, Plate, Mail, Shirt, Cape, Cloak, Backpack, Other
-    - [ ] Boots
+    - [ ] Boots categories
         - Boots, CombatBoots, Sneakers, Loafers, Slippers, Sandals, Heels, Moccasins, Clogs, Platforms, Other
-    - [ ] Consumables
+    - [ ] Consumables categories
         - Food, Drink, Medicine, Treat, Toy, Tool, Gadget, Book, Document, Accessory, Miscellaneous, Other
-    - [ ] Helmet
+    - [ ] Helmet categories
         - Helmet, HardHat, MilitaryHelmet, StealthHelmet, Visor, DecorativeHelmet, Mask, Hat, Other
-    - [ ] Shield
+    - [ ] Shield categories
         - Shield, Book, Amulet, Ring, Badge, Trophy, Tool, Miscellaneous, Bag, Stationery, Spellbook, Other
-    - [ ] Spell
+    - [ ] Spell categories
         - FireSpell, IceSpell, EarthSpell, WaterSpell, AirSpell, LightningSpell, HealingSpell, BuffSpell, DebuffSpell,
           InvocationSpell, GeneralSpell, Other
-    - [ ] Weapon
+    - [ ] Weapon categories
         - Sword, Axe, Mace, Dagger, Spear, Staff, Club, Hammer, Bow, Gun, Wand, Staff, Orb, EnchantedGlove, SpellFocus,
           Tool, Whip, Throwable, Food Related, Other
 - [ ] Discovery system integration
