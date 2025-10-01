@@ -10,7 +10,7 @@
     - [ ] Consumables categories
         - Food, Drink, Medicine, Treat, Toy, Tool, Gadget, Book, Document, Accessory, Miscellaneous, Other
     - [ ] Helmet categories
-        - Helmet, HardHat, MilitaryHelmet, StealthHelmet, Visor, DecorativeHelmet, Mask, Hat, Other
+        - Helmet, HardHat, MilitaryHelmet, Visor, DecorativeHelmet, Mask, Hat, Other
     - [ ] Shield categories
         - Shield, Book, Amulet, Ring, Badge, Trophy, Tool, Miscellaneous, Bag, Stationery, Spellbook, Other
     - [ ] Spell categories

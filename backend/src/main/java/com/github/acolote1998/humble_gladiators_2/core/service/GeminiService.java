@@ -16,6 +16,7 @@ import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingA
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.HelmetCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -377,14 +378,17 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-                
+
                   The "Requirement" structure is: \n %s
-                
+
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The HelmetCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
+                 - Do not force the generation to fit the HelmetCategory, if an object does not fit or does not make sense, just use "OTHER"
                  %s
                 """;
 
@@ -395,6 +399,7 @@ public class GeminiService {
                 HelmetTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                HelmetCategory.AllHelmetCategoryToString(),
                 "Helmet",
                 "Helmet",
                 getGeneralGenerationRules());
