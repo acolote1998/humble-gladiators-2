@@ -1,11 +1,13 @@
 package com.github.acolote1998.humble_gladiators_2.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterCategory;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 
 public record CharacterFromGeminiDto(
         StatsFromGemini stats,
         CharacterType characterType,
+        CharacterCategory category,
         String name,
         Boolean discovered,
         @JsonProperty("campaign_id")

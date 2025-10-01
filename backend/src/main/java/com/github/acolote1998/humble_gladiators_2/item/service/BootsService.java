@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.BootsTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ public class BootsService {
             bootsTemplate.setQuantity(0); // templates always start at 0 quantity
             bootsTemplate.setEquipped(dto.equipped());
             bootsTemplate.setCampaign(campaign);
+            bootsTemplate.setCategory(BootsCategory.valueOf(dto.category()));
             bootsTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             bootsTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
             bootsTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
@@ -55,11 +57,20 @@ public class BootsService {
 
     public Map<String, Object> getShortAIGeneratedReport() {
         List<BootsTemplate> allItems = bootsTemplateRepository.findAll();
+        // Sort by Tier (highest first) then Rarity (highest first)
+        allItems.sort((b1, b2) -> {
+            int tierComparison = Integer.compare(b2.getTier(), b1.getTier());
+            if (tierComparison != 0) {
+                return tierComparison;
+            }
+            return Integer.compare(b2.getRarity(), b1.getRarity());
+        });
+        
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(bootsTemplate -> {
             String name = bootsTemplate.getName();
-            String description = bootsTemplate.getDescription();
+            String description = "Tier: " + bootsTemplate.getTier() + ", Rarity: " + bootsTemplate.getRarity() + ", Category: " + bootsTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("BootsTemplates", namesAndDescriptions);

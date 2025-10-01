@@ -28,11 +28,21 @@ public class CharacterService {
 
     public Map<String, Object> getShortAIGeneratedReport() {
         List<CharacterInstance> allCharacters = characterInstanceRepository.findAll();
+        // Sort by Tier (highest first) then Rarity (highest first)
+        allCharacters.sort((c1, c2) -> {
+            int tierComparison = Integer.compare(c2.getTier(), c1.getTier());
+            if (tierComparison != 0) {
+                return tierComparison;
+            }
+            return Integer.compare(c2.getRarity(), c1.getRarity());
+        });
+        
         Map<String, Object> characterValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allCharacters.forEach(characterInstance -> {
             String name = characterInstance.getName();
-            String description = "Tier: " + characterInstance.getTier() + ", Rarity: " + characterInstance.getRarity();
+            String description = "Tier: " + characterInstance.getTier() + ", Rarity: " + characterInstance.getRarity() + ", Category: " + characterInstance.getCategory();
+            ;
             namesAndDescriptions.put(name, description);
         });
         characterValues.put("CharacterInstances", namesAndDescriptions);
@@ -48,6 +58,7 @@ public class CharacterService {
             CharacterInstance characterInstance = new CharacterInstance();
             characterInstance.setStats(Stats.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
             characterInstance.setCharacterType(characterFromGeminiDto.characterType());
+            characterInstance.setCategory(characterFromGeminiDto.category());
             characterInstance.setName(characterFromGeminiDto.name());
             characterInstance.setDiscovered(characterFromGeminiDto.discovered());
             characterInstance.setCampaign(campaign);

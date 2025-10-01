@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ArmorTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +28,20 @@ public class ArmorService {
 
     public Map<String, Object> getShortAIGeneratedReport() {
         List<ArmorTemplate> allItems = armorTemplateRepository.findAll();
+        // Sort by Tier (highest first) then Rarity (highest first)
+        allItems.sort((a1, a2) -> {
+            int tierComparison = Integer.compare(a2.getTier(), a1.getTier());
+            if (tierComparison != 0) {
+                return tierComparison;
+            }
+            return Integer.compare(a2.getRarity(), a1.getRarity());
+        });
+        
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(armorTemplate -> {
             String name = armorTemplate.getName();
-            String description = armorTemplate.getDescription();
+            String description = "Tier: " + armorTemplate.getTier() + ", Rarity: " + armorTemplate.getRarity() + ", Category: " + armorTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("ArmorTemplates", namesAndDescriptions);
@@ -53,6 +63,7 @@ public class ArmorService {
             armorTemplate.setQuantity(0); // templates always start at 0 quantity
             armorTemplate.setEquipped(dto.equipped());
             armorTemplate.setCampaign(campaign);
+            armorTemplate.setCategory(ArmorCategory.valueOf(dto.category()));
             armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1 * dto.rarity() * 1.5)));
             armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 0.2 * dto.rarity() * 0.5)));
             armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));

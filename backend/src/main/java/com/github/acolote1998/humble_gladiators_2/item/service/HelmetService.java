@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.HelmetCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.HelmetTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.HelmetTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +28,20 @@ public class HelmetService {
 
     public Map<String, Object> getShortAIGeneratedReport() {
         List<HelmetTemplate> allItems = helmetTemplateRepository.findAll();
+        // Sort by Tier (highest first) then Rarity (highest first)
+        allItems.sort((h1, h2) -> {
+            int tierComparison = Integer.compare(h2.getTier(), h1.getTier());
+            if (tierComparison != 0) {
+                return tierComparison;
+            }
+            return Integer.compare(h2.getRarity(), h1.getRarity());
+        });
+        
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(helmetTemplate -> {
             String name = helmetTemplate.getName();
-            String description = helmetTemplate.getDescription();
+            String description = "Tier: " + helmetTemplate.getTier() + ", Rarity: " + helmetTemplate.getRarity() + ", Category: " + helmetTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("HelmetTemplates", namesAndDescriptions);
@@ -53,6 +63,7 @@ public class HelmetService {
             helmetTemplate.setQuantity(0); // templates always start at 0 quantity
             helmetTemplate.setEquipped(dto.equipped());
             helmetTemplate.setCampaign(campaign);
+            helmetTemplate.setCategory(HelmetCategory.valueOf(dto.category()));
             helmetTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
             helmetTemplate.setMagicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             helmetTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));

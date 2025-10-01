@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterCategory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
@@ -12,6 +13,13 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.HelmetCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -103,6 +111,7 @@ public class GeminiService {
                          - "Karen Filippelli" ✅ (Good outcome: short, thematic from 'The Office', no need for extra context)
                          - "Sword of Messi" ✅ (Good outcome: thematic from 'Soccer' + 'Pirates')
                          - "Michael Scott, Regional Manager, That's What She Said" ❌ (Bad outcome: Too long, unnecessary)
+                     - Do not force the generation to fit the category, if an object does not fit or does not make sense, just use "OTHER"
                 """;
     }
 
@@ -191,11 +200,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-                
+
                   The "Requirement" structure is: \n %s
-                
+
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The ArmorCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -211,6 +222,7 @@ public class GeminiService {
                 ArmorTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                ArmorCategory.AllArmorCategoryToString(),
                 "Armor",
                 "Armor",
                 getGeneralGenerationRules());
@@ -249,11 +261,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-                
+
                   The "Requirement" structure is: \n %s
-                
+
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The BootsCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -267,6 +281,7 @@ public class GeminiService {
                 BootsTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                BootsCategory.AllBootsCategoryToString(),
                 "Boot",
                 "Boot",
                 getGeneralGenerationRules());
@@ -305,11 +320,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-                
+
                   The "Requirement" structure is: \n %s
-                
+
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The ConsumablesCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -323,6 +340,7 @@ public class GeminiService {
                 ConsumableTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                ConsumablesCategory.AllConsumablesCategoryToString(),
                 "Consumable",
                 "Consumable",
                 getGeneralGenerationRules());
@@ -361,11 +379,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-                
+
                   The "Requirement" structure is: \n %s
-                
+
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The HelmetCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -379,6 +399,7 @@ public class GeminiService {
                 HelmetTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                HelmetCategory.AllHelmetCategoryToString(),
                 "Helmet",
                 "Helmet",
                 getGeneralGenerationRules());
@@ -421,7 +442,9 @@ public class GeminiService {
                   The "Requirement" structure is: \n %s
                 
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The ShieldCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -441,6 +464,7 @@ public class GeminiService {
                 ShieldTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                ShieldCategory.AllShieldCategoryToString(),
                 "Shield",
                 "Shield",
                 getGeneralGenerationRules());
@@ -483,7 +507,9 @@ public class GeminiService {
                   The "Requirement" structure is: \n %s
                 
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The SpellCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -500,6 +526,7 @@ public class GeminiService {
                 SpellTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                SpellCategory.AllSpellCategoryToString(),
                 "Spell",
                 "Spell",
                 getGeneralGenerationRules());
@@ -542,7 +569,9 @@ public class GeminiService {
                   The "Requirement" structure is: \n %s
                 
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The WeaponCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -556,6 +585,7 @@ public class GeminiService {
                 WeaponTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                WeaponCategory.AllWeaponCategoryToString(),
                 "Weapon",
                 "Weapon",
                 getGeneralGenerationRules());
@@ -604,10 +634,13 @@ public class GeminiService {
                 
                   The object structure context is: \n %s
                 
-                  The "Stats" structure is: %s
+                  The CharacterCategory values are: \n %s
+                
+                  The "Stats" structure is: \n %s
                 
                   %s
                 
+                  - Do not force the generation to fit the CharacterCategory, if an object does not fit or does not make sense, just use "OTHER"
                   - Generate 2 NPCs of tier %s for each rarity level. Example: {NPC1 tier %s, rarity 1}, {NPC2 tier %s, rarity 1}, {NPC3 tier %s, rarity 2}, etc.
                   %s
                 """;
@@ -617,6 +650,7 @@ public class GeminiService {
                 "'CharacterInstance' (NPCs - Tier " + tierToGenerate + ")",
                 campaignTheme,
                 CharacterInstance.ObjectStructure(campaignId),
+                CharacterCategory.AllCharacterCategoryToString(),
                 Stats.ObjectStructure(),
                 charsForContext,
                 tierToGenerate,

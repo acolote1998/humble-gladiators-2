@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.SpellTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.SpellTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +28,20 @@ public class SpellService {
 
     public Map<String, Object> getShortAIGeneratedReport() {
         List<SpellTemplate> allItems = spellTemplateRepository.findAll();
+        // Sort by Tier (highest first) then Rarity (highest first)
+        allItems.sort((s1, s2) -> {
+            int tierComparison = Integer.compare(s2.getTier(), s1.getTier());
+            if (tierComparison != 0) {
+                return tierComparison;
+            }
+            return Integer.compare(s2.getRarity(), s1.getRarity());
+        });
+        
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(spellTemplate -> {
             String name = spellTemplate.getName();
-            String description = spellTemplate.getDescription();
+            String description = "Tier: " + spellTemplate.getTier() + ", Rarity: " + spellTemplate.getRarity() + ", Category: " + spellTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("SpellTemplates", namesAndDescriptions);
@@ -53,6 +63,7 @@ public class SpellService {
             spellTemplate.setQuantity(0); // templates always start at 0 quantity
             spellTemplate.setEquipped(dto.equipped());
             spellTemplate.setCampaign(campaign);
+            spellTemplate.setCategory(SpellCategory.valueOf(dto.category()));
             spellTemplate.setPhysicalDamage(0);
             spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));

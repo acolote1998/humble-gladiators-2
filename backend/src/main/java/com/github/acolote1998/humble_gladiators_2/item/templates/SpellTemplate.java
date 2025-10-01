@@ -1,7 +1,10 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
+import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +20,9 @@ public class SpellTemplate extends AbstractItem {
     private Integer magicalDamage;
     private Integer restoreHp;
 
+    @Enumerated(EnumType.STRING)
+    private SpellCategory category;
+
     public static String ObjectStructure(Long campaignId) {
         return String.format("""
                 SpellTemplate{
@@ -30,6 +36,7 @@ public class SpellTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
+                SpellCategory category (enum)
                 Integer physicalDamage (always 0, calculated later on by the backend)
                 Integer magicalDamage (always 0, calculated later on by the backend)
                 Integer restoreHp (always 0, calculated later on by the backend)

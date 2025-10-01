@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterCategory;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import jakarta.persistence.*;
@@ -41,6 +42,9 @@ public abstract class AbstractCharacter {
     private Integer goldReward; //for NPC characters
 
     private Integer expReward; //for NPC characters
+
+    @Enumerated(EnumType.STRING)
+    private CharacterCategory category;
 
     @CreationTimestamp
     private LocalDateTime createdAt; // Auto-managed by JPA

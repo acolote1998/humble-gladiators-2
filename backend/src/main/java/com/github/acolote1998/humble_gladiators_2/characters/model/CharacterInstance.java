@@ -23,6 +23,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         return String.format("""
                 CharacterInstance{
                 Stats stats
+                CharacterCategory category (enum)
                 characterType (either "PLAYER" or "NPC")
                 String name (character name generated based on the wanted themes)
                 Boolean discovered (always false)
