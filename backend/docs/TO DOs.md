@@ -1,24 +1,25 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] Categories - Image Generation System based on enums? (pre saved images)
-    - [X] NPC categories for example
-        - Humanoid, Beast, Monster, Construct, Spirit, Undead, Elemental, Mythic, Celestial, Fiend, Aberration, Other
-    - [ ] Armor categories
-        - Robe, Plate, Mail, Shirt, Cape, Cloak, Backpack, Other
-    - [ ] Boots categories
-        - Boots, CombatBoots, Sneakers, Loafers, Slippers, Sandals, Heels, Moccasins, Clogs, Platforms, Other
-    - [ ] Consumables categories
-        - Food, Drink, Medicine, Treat, Toy, Tool, Gadget, Book, Document, Accessory, Miscellaneous, Other
-    - [ ] Helmet categories
-        - Helmet, HardHat, MilitaryHelmet, Visor, DecorativeHelmet, Mask, Hat, Other
-    - [ ] Shield categories
-        - Shield, Book, Amulet, Ring, Badge, Trophy, Tool, Miscellaneous, Bag, Stationery, Spellbook, Other
-    - [ ] Spell categories
-        - FireSpell, IceSpell, EarthSpell, WaterSpell, AirSpell, LightningSpell, HealingSpell, BuffSpell, DebuffSpell,
-          InvocationSpell, GeneralSpell, Other
-    - [ ] Weapon categories
-        - Sword, Axe, Mace, Dagger, Spear, Staff, Club, Hammer, Bow, Gun, Wand, Staff, Orb, EnchantedGlove, SpellFocus,
-          Tool, Whip, Throwable, Food Related, Other
+- [ ] Card System
+    - [ ] Daily Card Pack
+        - [ ] Users can open one item card booster per day
+        - [ ] Each booster contains three random items (Armor, Boots, Consumables, Helmets, Shields, Spells, Weapons)
+    - [ ] Daily Enemy Encounter
+        - [ ] Users can face one enemy per day
+        - [ ] The user opens an enemy booster and the enemy card is drawn from there ahd the battle starts straight
+          away.
+    - [ ] Daily Merchant Encounter
+        - [ ] Users can meet one merchant per day
+        - [ ] The use opens a merchant booster and the merchant card is drawn from there. The user can keep the merchant
+          for as long as they want, the merchant will stay there until al three item cards get bought, or until the
+          user opens a new merchant booster
+            - [ ] Each merchant offers three random items for sale
+    - [ ] Card Tiers and Rarity
+        - [ ] Each card in any given booster has a chance to belong to a certain tier
+            - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
+        - [ ] Each card also has a rarity percentage within its tier
+            - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+
 - [ ] Discovery system integration
 - [ ] ItemTemplate to ItemInstance methods
 - [ ] Logic for interface method implementation
