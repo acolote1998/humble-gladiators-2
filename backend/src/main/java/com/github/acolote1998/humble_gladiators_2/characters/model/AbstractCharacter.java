@@ -43,6 +43,7 @@ public abstract class AbstractCharacter {
 
     private Integer expReward; //for NPC characters
 
+    @Enumerated(EnumType.STRING)
     private CharacterCategory category;
 
     @CreationTimestamp

@@ -48,6 +48,7 @@ public class CharacterService {
             CharacterInstance characterInstance = new CharacterInstance();
             characterInstance.setStats(Stats.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
             characterInstance.setCharacterType(characterFromGeminiDto.characterType());
+            characterInstance.setCategory(characterFromGeminiDto.category());
             characterInstance.setName(characterFromGeminiDto.name());
             characterInstance.setDiscovered(characterFromGeminiDto.discovered());
             characterInstance.setCampaign(campaign);
