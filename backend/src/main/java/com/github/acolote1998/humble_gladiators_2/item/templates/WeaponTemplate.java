@@ -1,7 +1,10 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
+import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +19,9 @@ public class WeaponTemplate extends AbstractItem {
     private Integer physicalDamage;
     private Integer magicalDamage;
 
+    @Enumerated(EnumType.STRING)
+    private WeaponCategory category;
+
     public static String ObjectStructure(Long campaignId) {
         return String.format("""
                 WeaponTemplate{
@@ -29,6 +35,7 @@ public class WeaponTemplate extends AbstractItem {
                 Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
+                WeaponCategory category (enum)
                 Integer physicalDamage (always 0, calculated later on by the backend)
                 Integer magicalDamage (always 0, calculated later on by the backend)
                 
