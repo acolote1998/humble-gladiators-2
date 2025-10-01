@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.BootsTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ public class BootsService {
             bootsTemplate.setQuantity(0); // templates always start at 0 quantity
             bootsTemplate.setEquipped(dto.equipped());
             bootsTemplate.setCampaign(campaign);
+            bootsTemplate.setCategory(BootsCategory.valueOf(dto.category()));
             bootsTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             bootsTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
             bootsTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
