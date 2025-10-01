@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,9 +58,10 @@ public class GameService {
     }
 
     public void getShortReportOfAIGeneratedContent(Campaign campaign) {
-        Map<String, Object> report = new HashMap<>();
+        // Use LinkedHashMap to preserve insertion order
+        Map<String, Object> report = new LinkedHashMap<>();
 
-        // Add campaign metadata
+        // Add campaign metadata first to ensure it appears at the beginning
         Map<String, Object> campaignInfo = new HashMap<>();
         campaignInfo.put("campaignId", campaign.getId());
         campaignInfo.put("name", campaign.getName());
@@ -80,10 +82,10 @@ public class GameService {
         report.putAll(characterService.getShortAIGeneratedReport());
 
         // Save report as JSON file
-        saveReportAsJson(report, campaign.getId());
+        saveReportAsJson(report, campaign);
     }
 
-    private void saveReportAsJson(Map<String, Object> report, Long campaignId) {
+    private void saveReportAsJson(Map<String, Object> report, Campaign campaign) {
         try {
             // Ensure the directory exists
             Path reportsDir = Paths.get("src/main/resources/generation_reports");
@@ -91,8 +93,11 @@ public class GameService {
                 Files.createDirectories(reportsDir);
             }
 
-            // Create filename
-            String filename = "campaign" + campaignId + "_generated_content.json";
+            // Create filename using wanted themes
+            String wantedThemes = String.join("-", campaign.getTheme().getWantedThemes());
+            // Replace spaces and special characters with underscores for filename safety
+            wantedThemes = wantedThemes.replaceAll("[^a-zA-Z0-9-]", "_");
+            String filename = wantedThemes + "_generated_content.json";
             Path filePath = reportsDir.resolve(filename);
 
             // Convert to JSON and save
@@ -101,7 +106,7 @@ public class GameService {
 
             log.info("Generated content report saved to: {}", filePath.toString());
         } catch (IOException e) {
-            log.error("Failed to save generated content report for campaign {}: {}", campaignId, e.getMessage());
+            log.error("Failed to save generated content report for campaign {}: {}", campaign.getId(), e.getMessage());
         }
     }
 

@@ -28,6 +28,15 @@ public class WeaponService {
 
     public Map<String, Object> getShortAIGeneratedReport() {
         List<WeaponTemplate> allItems = weaponTemplateRepository.findAll();
+        // Sort by Tier (highest first) then Rarity (highest first)
+        allItems.sort((w1, w2) -> {
+            int tierComparison = Integer.compare(w2.getTier(), w1.getTier());
+            if (tierComparison != 0) {
+                return tierComparison;
+            }
+            return Integer.compare(w2.getRarity(), w1.getRarity());
+        });
+        
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(weaponTemplate -> {

@@ -57,6 +57,15 @@ public class BootsService {
 
     public Map<String, Object> getShortAIGeneratedReport() {
         List<BootsTemplate> allItems = bootsTemplateRepository.findAll();
+        // Sort by Tier (highest first) then Rarity (highest first)
+        allItems.sort((b1, b2) -> {
+            int tierComparison = Integer.compare(b2.getTier(), b1.getTier());
+            if (tierComparison != 0) {
+                return tierComparison;
+            }
+            return Integer.compare(b2.getRarity(), b1.getRarity());
+        });
+        
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(bootsTemplate -> {
