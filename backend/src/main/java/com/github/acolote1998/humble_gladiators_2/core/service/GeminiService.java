@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterCategory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
@@ -604,10 +605,13 @@ public class GeminiService {
                 
                   The object structure context is: \n %s
                 
-                  The "Stats" structure is: %s
+                  The CharacterCategory values are: \n %s
+                
+                  The "Stats" structure is: \n %s
                 
                   %s
                 
+                  - Do not force the generation to fit the CharacterCategory, if an object does not fit or does not make sense, just use "OTHER"
                   - Generate 2 NPCs of tier %s for each rarity level. Example: {NPC1 tier %s, rarity 1}, {NPC2 tier %s, rarity 1}, {NPC3 tier %s, rarity 2}, etc.
                   %s
                 """;
@@ -617,6 +621,7 @@ public class GeminiService {
                 "'CharacterInstance' (NPCs - Tier " + tierToGenerate + ")",
                 campaignTheme,
                 CharacterInstance.ObjectStructure(campaignId),
+                CharacterCategory.AllCharacterCategoryToString(),
                 Stats.ObjectStructure(),
                 charsForContext,
                 tierToGenerate,

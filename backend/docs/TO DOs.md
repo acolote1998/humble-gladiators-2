@@ -2,7 +2,7 @@
 
 - [ ] IconType? Image Generation System based on enums? (pre saved images)
     - [ ] NPC types for example
-        - Humanoid, Animal-like, Monster, Other
+        - Humanoid, Beast, Monster, Construct, Spirit, Undead, Elemental, Mythic, Celestial, Fiend, Aberration, Other
     - [ ] Armor
         - Robe, Plate, Mail, Shirt, Cape, Cloak, Backpack, Other
     - [ ] Boots
