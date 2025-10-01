@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ConsumableTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,7 @@ public class ConsumableService {
             consumableTemplate.setQuantity(0); // templates always start at 0 quantity
             consumableTemplate.setEquipped(dto.equipped());
             consumableTemplate.setCampaign(campaign);
+            consumableTemplate.setCategory(ConsumablesCategory.valueOf(dto.category()));
             consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 1.5)));
             consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * 2 * dto.rarity() * 4)));
             consumableTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
