@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ShieldTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ShieldTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,7 @@ public class ShieldService {
             shieldTemplate.setQuantity(0); // templates always start at 0 quantity
             shieldTemplate.setEquipped(dto.equipped());
             shieldTemplate.setCampaign(campaign);
+            shieldTemplate.setCategory(ShieldCategory.valueOf(dto.category()));
             shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
             shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
             shieldTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));

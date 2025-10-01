@@ -17,6 +17,7 @@ import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.HelmetCategory;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -442,10 +443,13 @@ public class GeminiService {
                   The "Requirement" structure is: \n %s
                 
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The ShieldCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
+                 - Do not force the generation to fit the ShieldCategory, if an object does not fit or does not make sense, just use "OTHER"
                  - You must always reinterpret "Shield" in the context of the campaign theme.
                  - A "Shield" does not always mean a physical shield.
                  - Instead, treat it as a right-hand defensive or thematic equipment item.
@@ -462,6 +466,7 @@ public class GeminiService {
                 ShieldTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                ShieldCategory.AllShieldCategoryToString(),
                 "Shield",
                 "Shield",
                 getGeneralGenerationRules());
