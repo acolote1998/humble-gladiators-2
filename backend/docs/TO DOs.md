@@ -19,6 +19,7 @@
             - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
         - [ ] Each card also has a rarity percentage within its tier
             - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+    - The second any booster gets opened, those card entities will be marked as "discovered"
 
 - [ ] Discovery system integration
 - [ ] ItemTemplate to ItemInstance methods
@@ -48,7 +49,6 @@
     - [ ] Battle state management
 - [ ] Replay system / logic
 - [ ] Hero Creation
-
 - [ ] Discovery Logic
     - [ ] Item discovery tracking
     - [ ] Discovery API endpoints
