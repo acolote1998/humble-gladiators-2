@@ -32,7 +32,7 @@ public class ArmorService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(armorTemplate -> {
             String name = armorTemplate.getName();
-            String description = armorTemplate.getDescription();
+            String description = "Tier: " + armorTemplate.getTier() + ", Rarity: " + armorTemplate.getRarity() + ", Category: " + armorTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("ArmorTemplates", namesAndDescriptions);

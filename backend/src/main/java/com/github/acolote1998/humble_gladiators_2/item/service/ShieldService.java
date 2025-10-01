@@ -32,7 +32,7 @@ public class ShieldService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(shieldTemplate -> {
             String name = shieldTemplate.getName();
-            String description = shieldTemplate.getDescription();
+            String description = "Tier: " + shieldTemplate.getTier() + ", Rarity: " + shieldTemplate.getRarity() + ", Category: " + shieldTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("ShieldTemplates", namesAndDescriptions);

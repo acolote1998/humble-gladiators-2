@@ -32,7 +32,7 @@ public class ConsumableService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(consumableTemplate -> {
             String name = consumableTemplate.getName();
-            String description = consumableTemplate.getDescription();
+            String description = "Tier: " + consumableTemplate.getTier() + ", Rarity: " + consumableTemplate.getRarity() + ", Category: " + consumableTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("ConsumableTemplates", namesAndDescriptions);

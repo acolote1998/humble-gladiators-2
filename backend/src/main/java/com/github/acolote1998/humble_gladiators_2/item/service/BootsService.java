@@ -61,7 +61,7 @@ public class BootsService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(bootsTemplate -> {
             String name = bootsTemplate.getName();
-            String description = bootsTemplate.getDescription();
+            String description = "Tier: " + bootsTemplate.getTier() + ", Rarity: " + bootsTemplate.getRarity() + ", Category: " + bootsTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("BootsTemplates", namesAndDescriptions);

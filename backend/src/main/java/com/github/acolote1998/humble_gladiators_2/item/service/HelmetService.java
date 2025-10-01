@@ -32,7 +32,7 @@ public class HelmetService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(helmetTemplate -> {
             String name = helmetTemplate.getName();
-            String description = helmetTemplate.getDescription();
+            String description = "Tier: " + helmetTemplate.getTier() + ", Rarity: " + helmetTemplate.getRarity() + ", Category: " + helmetTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("HelmetTemplates", namesAndDescriptions);

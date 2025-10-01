@@ -32,7 +32,7 @@ public class SpellService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(spellTemplate -> {
             String name = spellTemplate.getName();
-            String description = spellTemplate.getDescription();
+            String description = "Tier: " + spellTemplate.getTier() + ", Rarity: " + spellTemplate.getRarity() + ", Category: " + spellTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("SpellTemplates", namesAndDescriptions);
