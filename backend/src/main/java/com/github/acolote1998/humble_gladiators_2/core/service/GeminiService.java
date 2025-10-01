@@ -111,6 +111,7 @@ public class GeminiService {
                          - "Karen Filippelli" ✅ (Good outcome: short, thematic from 'The Office', no need for extra context)
                          - "Sword of Messi" ✅ (Good outcome: thematic from 'Soccer' + 'Pirates')
                          - "Michael Scott, Regional Manager, That's What She Said" ❌ (Bad outcome: Too long, unnecessary)
+                     - Do not force the generation to fit the category, if an object does not fit or does not make sense, just use "OTHER"
                 """;
     }
 
@@ -209,7 +210,6 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - Do not force the generation to fit the ArmorCategory, if an object does not fit or does not make sense, just use "OTHER"
                  - The only allowed object categories are things like: armors, robes, cloaks, capes, chestplates, breastplates and chest wear objects.
                  - Do not invent or include any other equipment types (for example helmets, gloves, shields).
                  %s
@@ -271,7 +271,6 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - Do not force the generation to fit the BootsCategory, if an object does not fit or does not make sense, just use "OTHER"
                  %s
                 """;
 
@@ -331,7 +330,6 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - Do not force the generation to fit the ConsumablesCategory, if an object does not fit or does not make sense, just use "OTHER"
                  %s
                 """;
 
@@ -391,7 +389,6 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - Do not force the generation to fit the HelmetCategory, if an object does not fit or does not make sense, just use "OTHER"
                  %s
                 """;
 
@@ -451,7 +448,6 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - Do not force the generation to fit the ShieldCategory, if an object does not fit or does not make sense, just use "OTHER"
                  - You must always reinterpret "Shield" in the context of the campaign theme.
                  - A "Shield" does not always mean a physical shield.
                  - Instead, treat it as a right-hand defensive or thematic equipment item.
@@ -517,7 +513,6 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - Do not force the generation to fit the SpellCategory, if an object does not fit or does not make sense, just use "OTHER"
                  - All spells must have a RequirementEntry that forces the user to have certain minimum MP (magic points)
                     -Example: {requirementType: MP, operator: MOREOREQUALTHAN, value: "10"}
                     -The MP requirement needs to make sense and scale together with the spell tier and rarity
@@ -580,7 +575,6 @@ public class GeminiService {
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
-                 - Do not force the generation to fit the WeaponCategory, if an object does not fit or does not make sense, just use "OTHER"
                  %s
                 """;
 

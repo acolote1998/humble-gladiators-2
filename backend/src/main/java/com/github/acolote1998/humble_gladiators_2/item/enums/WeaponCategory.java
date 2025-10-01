@@ -14,7 +14,6 @@ public enum WeaponCategory {
     WAND,
     ORB,
     ENCHANTED_GLOVE,
-    SPELL_FOCUS,
     TOOL,
     WHIP,
     THROWABLE,
