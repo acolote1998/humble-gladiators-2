@@ -32,7 +32,8 @@ public class CharacterService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allCharacters.forEach(characterInstance -> {
             String name = characterInstance.getName();
-            String description = "Tier: " + characterInstance.getTier() + ", Rarity: " + characterInstance.getRarity();
+            String description = "Tier: " + characterInstance.getTier() + ", Rarity: " + characterInstance.getRarity() + ", Category: " + characterInstance.getCategory();
+            ;
             namesAndDescriptions.put(name, description);
         });
         characterValues.put("CharacterInstances", namesAndDescriptions);
