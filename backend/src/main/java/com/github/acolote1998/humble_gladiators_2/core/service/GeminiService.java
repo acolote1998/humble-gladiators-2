@@ -13,6 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -192,14 +193,17 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-                
+
                   The "Requirement" structure is: \n %s
-                
+
                   The "RequirementEntry" structure is: \n %s
-                
+
+                  The ArmorCategory values are: \n %s
+
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
+                 - Do not force the generation to fit the ArmorCategory, if an object does not fit or does not make sense, just use "OTHER"
                  - The only allowed object categories are things like: armors, robes, cloaks, capes, chestplates, breastplates and chest wear objects.
                  - Do not invent or include any other equipment types (for example helmets, gloves, shields).
                  %s
@@ -212,6 +216,7 @@ public class GeminiService {
                 ArmorTemplate.ObjectStructure(campaignId),
                 Requirement.RequirementStructure(campaignId),
                 RequirementEntry.RequirementEntryStructure(campaignId),
+                ArmorCategory.AllArmorCategoryToString(),
                 "Armor",
                 "Armor",
                 getGeneralGenerationRules());

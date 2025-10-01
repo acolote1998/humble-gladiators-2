@@ -18,6 +18,7 @@ public record ItemFromGeminiDto(
         @JsonProperty("campaign_id")
         Long campaignId,
         RequirementDto requirement,
+        String category,
         Integer physicalDefense,
         Integer magicalDefense,
         Integer restoreHp,

@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ArmorTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,7 @@ public class ArmorService {
             armorTemplate.setQuantity(0); // templates always start at 0 quantity
             armorTemplate.setEquipped(dto.equipped());
             armorTemplate.setCampaign(campaign);
+            armorTemplate.setCategory(ArmorCategory.valueOf(dto.category()));
             armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1 * dto.rarity() * 1.5)));
             armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 0.2 * dto.rarity() * 0.5)));
             armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
