@@ -21,7 +21,6 @@ public record CharacterFromGeminiDto(
     public record StatsFromGemini(
             Integer constitution,
             Integer intelligence,
-            Integer dexterity,
             Integer strength,
             Integer speed,
             Integer luck,

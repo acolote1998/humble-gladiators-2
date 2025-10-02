@@ -11,7 +11,6 @@ import lombok.Setter;
 public class Stats {
     private int constitution;
     private int intelligence;
-    private int dexterity;
     private int strength;
     private int speed;
     private int luck;
@@ -30,7 +29,6 @@ public class Stats {
                 Stats{
                 int constitution ((from 14 to 20 ) + rarity + tier)
                 int intelligence ((from 14 to 20 ) + rarity + tier)
-                int dexterity ((from 14 to 20 ) + rarity + tier)
                 int strength ((from 14 to 20 ) + rarity + tier)
                 int speed ((from 14 to 20 ) + rarity + tier)
                 int luck ((from 14 to 20 ) + rarity + tier)
@@ -53,7 +51,6 @@ public class Stats {
         // Base stats directly from Gemini
         stats.constitution = dto.stats().constitution();
         stats.intelligence = dto.stats().intelligence();
-        stats.dexterity = dto.stats().dexterity();
         stats.strength = dto.stats().strength();
         stats.speed = dto.stats().speed();
         stats.luck = dto.stats().luck();

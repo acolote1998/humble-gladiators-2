@@ -12,7 +12,6 @@ public enum RequirementEntryType {
     WEIGHT,
     CONSTITUTION,
     INTELLIGENCE,
-    DEXTERITY,
     STRENGTH,
     SPEED,
     LUCK,
