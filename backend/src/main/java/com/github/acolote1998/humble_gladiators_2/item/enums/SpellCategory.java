@@ -10,7 +10,7 @@ public enum SpellCategory {
     HEALING_SPELL,
     BUFF_SPELL,
     DEBUFF_SPELL,
-    INVOCATION_SPELL,
+    SUMMON_SPELL,
     GENERAL_SPELL,
     OTHER;
 
