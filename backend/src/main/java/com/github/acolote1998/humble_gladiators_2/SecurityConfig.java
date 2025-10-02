@@ -21,7 +21,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/game/**").authenticated()
                         .requestMatchers("/api/campaign").authenticated()
                         .requestMatchers("/api/campaign/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/days").authenticated() //replace for actual needed endpoints, this is a copied example from old project
                 )
                 .cors(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));

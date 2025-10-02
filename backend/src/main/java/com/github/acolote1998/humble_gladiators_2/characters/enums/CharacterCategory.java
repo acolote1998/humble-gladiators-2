@@ -1,7 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.characters.enums;
 
-import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryOperator;
-
 public enum CharacterCategory {
     HUMANOID,
     BEAST,
