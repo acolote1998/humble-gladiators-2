@@ -12,12 +12,12 @@ public enum WeaponCategory {
     BOW,
     GUN,
     WAND,
-    ORB,
+    MAGIC_ORB,
     ENCHANTED_GLOVE,
     TOOL,
     WHIP,
     THROWABLE,
-    FOOD_RELATED,
+    FOOD,
     OTHER;
 
     // Method to get all constants as a comma-separated string
