@@ -9,6 +9,7 @@ public record CharacterFromGeminiDto(
         CharacterType characterType,
         CharacterCategory category,
         String name,
+        String description,
         Boolean discovered,
         @JsonProperty("campaign_id")
         Long campaignId,

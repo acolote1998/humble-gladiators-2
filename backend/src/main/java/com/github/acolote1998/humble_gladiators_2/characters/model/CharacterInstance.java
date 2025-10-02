@@ -26,6 +26,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 CharacterCategory category (enum)
                 characterType (either "PLAYER" or "NPC")
                 String name (character name generated based on the wanted themes)
+                String description
                 Boolean discovered (always false)
                 Long campaign_id (%s)
                 Integer rarity (1 - 5)

@@ -36,7 +36,7 @@ public class CharacterService {
             }
             return Integer.compare(c2.getRarity(), c1.getRarity());
         });
-        
+
         Map<String, Object> characterValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allCharacters.forEach(characterInstance -> {
@@ -60,6 +60,7 @@ public class CharacterService {
             characterInstance.setCharacterType(characterFromGeminiDto.characterType());
             characterInstance.setCategory(characterFromGeminiDto.category());
             characterInstance.setName(characterFromGeminiDto.name());
+            characterInstance.setDescription(characterFromGeminiDto.description());
             characterInstance.setDiscovered(characterFromGeminiDto.discovered());
             characterInstance.setCampaign(campaign);
             characterInstance.setRarity(characterFromGeminiDto.rarity());

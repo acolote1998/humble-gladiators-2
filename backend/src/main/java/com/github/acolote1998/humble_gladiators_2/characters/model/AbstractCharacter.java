@@ -32,6 +32,7 @@ public abstract class AbstractCharacter {
     private Campaign campaign;
 
     private String name;
+    private String description;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Inventory inventory;
