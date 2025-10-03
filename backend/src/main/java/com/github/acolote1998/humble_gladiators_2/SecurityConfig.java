@@ -21,6 +21,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/game/**").authenticated()
                         .requestMatchers("/api/campaign").authenticated()
                         .requestMatchers("/api/campaign/**").authenticated()
+                        .requestMatchers("/api/campaign/**/**").authenticated()
+
                 )
                 .cors(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()));

@@ -48,7 +48,7 @@ public class GameService {
     private boolean GENERATE_BOOTS;
     @Value("${GENERATE_CONSUMABLES}")
     private boolean GENERATE_CONSUMABLES;
-    @Value("${GENERATE_HELMET}")
+    @Value("${GENERATE_HELMETS}")
     private boolean GENERATE_HELMETS;
     @Value("${GENERATE_SHIELDS}")
     private boolean GENERATE_SHIELDS;
