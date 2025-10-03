@@ -77,4 +77,8 @@ public class HelmetService {
 
         return savedHelmetsTemplates;
     }
+
+    public List<HelmetTemplate> getAllHelmetTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return helmetTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
+    }
 }

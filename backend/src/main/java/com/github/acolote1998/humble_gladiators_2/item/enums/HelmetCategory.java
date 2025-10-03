@@ -8,6 +8,7 @@ public enum HelmetCategory {
     DECORATIVE_HELMET,
     MASK,
     HAT,
+    HOOD,
     OTHER;
 
     // Method to get all constants as a comma-separated string
