@@ -9,6 +9,7 @@ import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -35,6 +36,26 @@ public class GameService {
     SpellService spellService;
     WeaponService weaponService;
     CharacterService characterService;
+
+    @Value("${GENERATE_ALL}")
+    private boolean GENERATE_ALL;
+
+    @Value("${GENERATE_NPCS}")
+    private boolean GENERATE_NPCS;
+    @Value("${GENERATE_ARMORS}")
+    private boolean GENERATE_ARMORS;
+    @Value("${GENERATE_BOOTS}")
+    private boolean GENERATE_BOOTS;
+    @Value("${GENERATE_CONSUMABLES}")
+    private boolean GENERATE_CONSUMABLES;
+    @Value("${GENERATE_HELMET}")
+    private boolean GENERATE_HELMETS;
+    @Value("${GENERATE_SHIELDS}")
+    private boolean GENERATE_SHIELDS;
+    @Value("${GENERATE_SPELLS}")
+    private boolean GENERATE_SPELLS;
+    @Value("${GENERATE_WEAPONS}")
+    private boolean GENERATE_WEAPONS;
 
     @Autowired
     public GameService(CampaignService campaignService,
@@ -123,71 +144,87 @@ public class GameService {
         updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_CREATED, campaign);
         Thread.sleep(500);
         //ARMORS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_ARMORS, campaign);
-        armorService.createTwentyFiveNewArmorTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.ARMORS_CREATED, campaign);
-        Thread.sleep(500);
+        if (GENERATE_ALL || GENERATE_ARMORS) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_ARMORS, campaign);
+            armorService.createTwentyFiveNewArmorTemplates(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.ARMORS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         //BOOTS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_BOOTS, campaign);
-        Thread.sleep(500);
-        bootsService.createTwentyFiveNewBootsTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.BOOTS_CREATED, campaign);
-        Thread.sleep(500);
+        if (GENERATE_ALL || GENERATE_BOOTS) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_BOOTS, campaign);
+            Thread.sleep(500);
+            bootsService.createTwentyFiveNewBootsTemplates(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.BOOTS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         //CONSUMABLES
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
-        Thread.sleep(500);
-        consumableService.createTwentyFiveNewConsumableTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
-        Thread.sleep(500);
+        if (GENERATE_ALL || GENERATE_CONSUMABLES) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
+            Thread.sleep(500);
+            consumableService.createTwentyFiveNewConsumableTemplates(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
+            Thread.sleep(500);
+        }
         //HELMETS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
-        Thread.sleep(500);
-        helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
-        Thread.sleep(500);
+        if (GENERATE_ALL || GENERATE_HELMETS) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
+            Thread.sleep(500);
+            helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         //SHIELDS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_SHIELDS, campaign);
-        Thread.sleep(500);
-        shieldService.createTwentyFiveNewShieldTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.SHIELDS_CREATED, campaign);
-        Thread.sleep(500);
+        if (GENERATE_ALL || GENERATE_SHIELDS) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_SHIELDS, campaign);
+            Thread.sleep(500);
+            shieldService.createTwentyFiveNewShieldTemplates(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.SHIELDS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         //SPELLS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_SPELLS, campaign);
-        Thread.sleep(500);
-        spellService.createTwentyFiveNewSpellTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.SPELLS_CREATED, campaign);
-        Thread.sleep(500);
+        if (GENERATE_ALL || GENERATE_SPELLS) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_SPELLS, campaign);
+            Thread.sleep(500);
+            spellService.createTwentyFiveNewSpellTemplates(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.SPELLS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         //WEAPONS
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
-        Thread.sleep(500);
-        weaponService.createTwentyFiveNewWeaponTemplates(campaign);
-        updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
-        Thread.sleep(500);
+        if (GENERATE_ALL || GENERATE_WEAPONS) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
+            Thread.sleep(500);
+            weaponService.createTwentyFiveNewWeaponTemplates(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         //NPCs (Characters)
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_ONE, campaign);
-        Thread.sleep(500);
-        //Tier 1 NPCs
-        characterService.createTenNPCsOfDesiredTier(campaign, 1);
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_TWO, campaign);
-        Thread.sleep(500);
-        //Tier 2 NPCs
-        characterService.createTenNPCsOfDesiredTier(campaign, 2);
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_THREE, campaign);
-        Thread.sleep(500);
-        //Tier 3 NPCs
-        characterService.createTenNPCsOfDesiredTier(campaign, 3);
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FOUR, campaign);
-        Thread.sleep(500);
-        //Tier 4 NPCs
-        characterService.createTenNPCsOfDesiredTier(campaign, 4);
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FIVE, campaign);
-        Thread.sleep(500);
-        //Tier 5 NPCs
-        characterService.createTenNPCsOfDesiredTier(campaign, 5);
-        updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
+        if (GENERATE_ALL || GENERATE_NPCS) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_ONE, campaign);
+            Thread.sleep(500);
+            //Tier 1 NPCs
+            characterService.createTenNPCsOfDesiredTier(campaign, 1);
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_TWO, campaign);
+            Thread.sleep(500);
+            //Tier 2 NPCs
+            characterService.createTenNPCsOfDesiredTier(campaign, 2);
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_THREE, campaign);
+            Thread.sleep(500);
+            //Tier 3 NPCs
+            characterService.createTenNPCsOfDesiredTier(campaign, 3);
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FOUR, campaign);
+            Thread.sleep(500);
+            //Tier 4 NPCs
+            characterService.createTenNPCsOfDesiredTier(campaign, 4);
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FIVE, campaign);
+            Thread.sleep(500);
+            //Tier 5 NPCs
+            characterService.createTenNPCsOfDesiredTier(campaign, 5);
+            updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         getShortReportOfAIGeneratedContent(campaign);
         log.info("Creating report of generated content");
-        Thread.sleep(500);
         updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
         return campaign;
     }
