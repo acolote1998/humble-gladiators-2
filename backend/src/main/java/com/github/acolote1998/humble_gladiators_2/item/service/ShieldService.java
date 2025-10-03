@@ -36,7 +36,7 @@ public class ShieldService {
             }
             return Integer.compare(s2.getRarity(), s1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(shieldTemplate -> {
@@ -56,6 +56,7 @@ public class ShieldService {
             ShieldTemplate shieldTemplate = new ShieldTemplate();
             shieldTemplate.setName(dto.name());
             shieldTemplate.setDescription(dto.description());
+            shieldTemplate.setUserId(campaign.getUserId());
             shieldTemplate.setRarity(dto.rarity());
             shieldTemplate.setTier(dto.tier());
             shieldTemplate.setValue(dto.value());

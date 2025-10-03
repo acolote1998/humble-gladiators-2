@@ -36,7 +36,7 @@ public class HelmetService {
             }
             return Integer.compare(h2.getRarity(), h1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(helmetTemplate -> {
@@ -56,6 +56,7 @@ public class HelmetService {
             HelmetTemplate helmetTemplate = new HelmetTemplate();
             helmetTemplate.setName(dto.name());
             helmetTemplate.setDescription(dto.description());
+            helmetTemplate.setUserId(campaign.getUserId());
             helmetTemplate.setRarity(dto.rarity());
             helmetTemplate.setTier(dto.tier());
             helmetTemplate.setValue(dto.value());

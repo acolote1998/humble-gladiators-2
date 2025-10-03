@@ -36,7 +36,7 @@ public class WeaponService {
             }
             return Integer.compare(w2.getRarity(), w1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(weaponTemplate -> {
@@ -56,6 +56,7 @@ public class WeaponService {
             WeaponTemplate weaponTemplate = new WeaponTemplate();
             weaponTemplate.setName(dto.name());
             weaponTemplate.setDescription(dto.description());
+            weaponTemplate.setUserId(campaign.getUserId());
             weaponTemplate.setRarity(dto.rarity());
             weaponTemplate.setTier(dto.tier());
             weaponTemplate.setValue(dto.value());

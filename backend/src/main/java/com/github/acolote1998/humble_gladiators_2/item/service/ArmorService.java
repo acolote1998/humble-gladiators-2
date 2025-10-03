@@ -36,7 +36,7 @@ public class ArmorService {
             }
             return Integer.compare(a2.getRarity(), a1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(armorTemplate -> {
@@ -56,6 +56,7 @@ public class ArmorService {
             ArmorTemplate armorTemplate = new ArmorTemplate();
             armorTemplate.setName(dto.name());
             armorTemplate.setDescription(dto.description());
+            armorTemplate.setUserId(campaign.getUserId());
             armorTemplate.setRarity(dto.rarity());
             armorTemplate.setTier(dto.tier());
             armorTemplate.setValue(dto.value());

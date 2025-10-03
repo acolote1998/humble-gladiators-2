@@ -36,7 +36,7 @@ public class SpellService {
             }
             return Integer.compare(s2.getRarity(), s1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(spellTemplate -> {
@@ -56,6 +56,7 @@ public class SpellService {
             SpellTemplate spellTemplate = new SpellTemplate();
             spellTemplate.setName(dto.name());
             spellTemplate.setDescription(dto.description());
+            spellTemplate.setUserId(campaign.getUserId());
             spellTemplate.setRarity(dto.rarity());
             spellTemplate.setTier(dto.tier());
             spellTemplate.setValue(dto.value());
