@@ -77,4 +77,8 @@ public class ShieldService {
 
         return savedShieldTemplates;
     }
+
+    public List<ShieldTemplate> getAllShieldTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return shieldTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
+    }
 }
