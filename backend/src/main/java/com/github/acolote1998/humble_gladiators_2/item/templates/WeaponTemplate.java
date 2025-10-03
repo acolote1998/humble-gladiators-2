@@ -36,12 +36,14 @@ public class WeaponTemplate extends AbstractItem {
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
                 WeaponCategory category (enum)
-                Integer physicalDamage (always 0, calculated later on by the backend)
-                Integer magicalDamage (always 0, calculated later on by the backend)
+                        // Combat effect flags
+                        // - Use 1 to enable, 0 to disable.
+                Integer physicalDamage (1 = weapon deals physical damage, 0 = does not)
+                Integer magicalDamage (1 = weapon deals magical damage, 0 = does not)
                 
-                Important:
-                -If the weapon will have physicalDamage, then magicalDamage value must be zero
-                -If the spell will have magicalDamage, then the physicalDamage value must be zero
+                Rules:
+                  - At least one of these flags must be 1. Both cannot be 0.
+                  - If both physicalDamage and magicalDamage would be 0, it will be consider a total failure.
                 }""", campaignId.toString());
     }
 }

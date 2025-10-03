@@ -36,7 +36,7 @@ public class SpellService {
             }
             return Integer.compare(s2.getRarity(), s1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(spellTemplate -> {
@@ -56,6 +56,7 @@ public class SpellService {
             SpellTemplate spellTemplate = new SpellTemplate();
             spellTemplate.setName(dto.name());
             spellTemplate.setDescription(dto.description());
+            spellTemplate.setUserId(campaign.getUserId());
             spellTemplate.setRarity(dto.rarity());
             spellTemplate.setTier(dto.tier());
             spellTemplate.setValue(dto.value());
@@ -64,9 +65,21 @@ public class SpellService {
             spellTemplate.setEquipped(dto.equipped());
             spellTemplate.setCampaign(campaign);
             spellTemplate.setCategory(SpellCategory.valueOf(dto.category()));
-            spellTemplate.setPhysicalDamage(0);
-            spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            if (dto.physicalDamage() == 1) {
+                spellTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            } else {
+                spellTemplate.setPhysicalDamage(0);
+            }
+            if (dto.magicalDamage() == 1) {
+                spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            } else {
+                spellTemplate.setMagicalDamage(0);
+            }
+            if (dto.restoreHp() == 1) {
+                spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            } else {
+                spellTemplate.setRestoreHp(0);
+            }
             spellTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedSpellTemplates.add(spellTemplate);
         });
@@ -76,5 +89,9 @@ public class SpellService {
         log.info(savedSpellTemplates.size() + " spells successfully created an persisted");
 
         return savedSpellTemplates;
+    }
+
+    public List<SpellTemplate> getAllSpellTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return spellTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 }

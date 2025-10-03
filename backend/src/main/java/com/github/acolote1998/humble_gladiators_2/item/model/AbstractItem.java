@@ -25,6 +25,7 @@ public abstract class AbstractItem {
     private Boolean discovered;
     private Integer quantity;
     private Boolean equipped;
+    private String userId; //from Clerk
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id")

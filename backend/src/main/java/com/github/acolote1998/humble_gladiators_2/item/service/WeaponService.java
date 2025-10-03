@@ -36,7 +36,7 @@ public class WeaponService {
             }
             return Integer.compare(w2.getRarity(), w1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(weaponTemplate -> {
@@ -56,6 +56,7 @@ public class WeaponService {
             WeaponTemplate weaponTemplate = new WeaponTemplate();
             weaponTemplate.setName(dto.name());
             weaponTemplate.setDescription(dto.description());
+            weaponTemplate.setUserId(campaign.getUserId());
             weaponTemplate.setRarity(dto.rarity());
             weaponTemplate.setTier(dto.tier());
             weaponTemplate.setValue(dto.value());
@@ -64,8 +65,16 @@ public class WeaponService {
             weaponTemplate.setEquipped(dto.equipped());
             weaponTemplate.setCampaign(campaign);
             weaponTemplate.setCategory(WeaponCategory.valueOf(dto.category()));
-            weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            if (dto.physicalDamage() == 1) {
+                weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            } else {
+                weaponTemplate.setPhysicalDamage(0);
+            }
+            if (dto.magicalDamage() == 1) {
+                weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            } else {
+                weaponTemplate.setMagicalDamage(0);
+            }
             weaponTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedWeaponTemplates.add(weaponTemplate);
         });
@@ -75,5 +84,9 @@ public class WeaponService {
         log.info(savedWeaponTemplates.size() + " weapons successfully created an persisted");
 
         return savedWeaponTemplates;
+    }
+
+    public List<WeaponTemplate> getAllWeaponTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return weaponTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 }

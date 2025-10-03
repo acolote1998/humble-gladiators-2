@@ -36,7 +36,7 @@ public class ConsumableService {
             }
             return Integer.compare(c2.getRarity(), c1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(consumableTemplate -> {
@@ -56,6 +56,7 @@ public class ConsumableService {
             ConsumableTemplate consumableTemplate = new ConsumableTemplate();
             consumableTemplate.setName(dto.name());
             consumableTemplate.setDescription(dto.description());
+            consumableTemplate.setUserId(campaign.getUserId());
             consumableTemplate.setRarity(dto.rarity());
             consumableTemplate.setTier(dto.tier());
             consumableTemplate.setValue(dto.value());
@@ -75,5 +76,9 @@ public class ConsumableService {
         log.info(savedConsumableTemplates.size() + " consumables successfully created an persisted");
 
         return savedConsumableTemplates;
+    }
+
+    public List<ConsumableTemplate> getAllConsumableTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return consumableTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 }

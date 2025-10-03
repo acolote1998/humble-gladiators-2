@@ -56,6 +56,7 @@ public class CharacterService {
 
         generatedDtos.forEach(characterFromGeminiDto -> {
             CharacterInstance characterInstance = new CharacterInstance();
+            characterInstance.setUserId(campaign.getUserId());
             characterInstance.setStats(Stats.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
             characterInstance.setCharacterType(characterFromGeminiDto.characterType());
             characterInstance.setCategory(characterFromGeminiDto.category());
@@ -74,5 +75,9 @@ public class CharacterService {
         characterInstanceRepository.saveAll(savedCharacterInstances);
         log.info(savedCharacterInstances.size() + " characters tier " + tier + " successfully created and persisted");
         return savedCharacterInstances;
+    }
+
+    public List<CharacterInstance> getAllCharacterInstancesForACampaignAndUser(String userId, Long campaignId) {
+        return characterInstanceRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 }

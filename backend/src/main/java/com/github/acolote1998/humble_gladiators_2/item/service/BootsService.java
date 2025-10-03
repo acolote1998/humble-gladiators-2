@@ -29,6 +29,7 @@ public class BootsService {
             BootsTemplate bootsTemplate = new BootsTemplate();
             bootsTemplate.setName(dto.name());
             bootsTemplate.setDescription(dto.description());
+            bootsTemplate.setUserId(campaign.getUserId());
             bootsTemplate.setRarity(dto.rarity());
             bootsTemplate.setTier(dto.tier());
             bootsTemplate.setValue(dto.value());
@@ -65,7 +66,7 @@ public class BootsService {
             }
             return Integer.compare(b2.getRarity(), b1.getRarity());
         });
-        
+
         Map<String, Object> itemValues = new HashMap<>();
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(bootsTemplate -> {
@@ -75,5 +76,9 @@ public class BootsService {
         });
         itemValues.put("BootsTemplates", namesAndDescriptions);
         return itemValues;
+    }
+
+    public List<BootsTemplate> getAllBootsTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return bootsTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 }
