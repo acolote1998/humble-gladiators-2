@@ -70,9 +70,11 @@ public class WeaponService {
             } else {
                 weaponTemplate.setPhysicalDamage(0);
             }
-            if (dto.magicalDamage()==1){
+            if (dto.magicalDamage() == 1) {
                 weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            }else{weaponTemplate.setMagicalDamage(0);
+            } else {
+                weaponTemplate.setMagicalDamage(0);
+            }
             weaponTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedWeaponTemplates.add(weaponTemplate);
         });
