@@ -48,7 +48,7 @@ public class SpellTemplate extends AbstractItem {
                   - Healing spells (restoreHp = 1) must have physicalDamage = 0 and magicalDamage = 0.
                   - Damage spells (physicalDamage = 1 or magicalDamage = 1) must have restoreHp = 0.
                   - At least one of these flags must be 1. All three cannot be 0.
-                  - The spell’s effect must align with its description and category (e.g. do not create a protection spell that only deals damage).
+                  - If all three: restoreHp, physicalDamage and magicalDamage would be 0, it will be consider a total failure.
                 }""", campaignId.toString());
     }
 }

@@ -43,6 +43,7 @@ public class WeaponTemplate extends AbstractItem {
                 
                 Rules:
                   - At least one of these flags must be 1. Both cannot be 0.
+                  - If both physicalDamage and magicalDamage would be 0, it will be consider a total failure.
                 }""", campaignId.toString());
     }
 }
