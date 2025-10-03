@@ -77,4 +77,8 @@ public class WeaponService {
 
         return savedWeaponTemplates;
     }
+
+    public List<WeaponTemplate> getAllWeaponTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return weaponTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
+    }
 }
