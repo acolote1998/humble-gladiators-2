@@ -78,4 +78,8 @@ public class ArmorService {
         return savedArmorTemplates;
     }
 
+    public List<ArmorTemplate> getAllArmorTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return armorTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
+    }
+
 }
