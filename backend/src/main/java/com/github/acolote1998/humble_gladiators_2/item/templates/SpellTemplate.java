@@ -37,13 +37,18 @@ public class SpellTemplate extends AbstractItem {
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
                 SpellCategory category (enum)
-                Integer physicalDamage (always 0, calculated later on by the backend)
-                Integer magicalDamage (always 0, calculated later on by the backend)
-                Integer restoreHp (always 0, calculated later on by the backend)
                 
-                Important:
-                -If the spell will have restoreHp (healing spell), then magicalDamage value must be zero
-                -If the spell will have magicalDamage (damage spell), then the restoreHp value must be zero
+                        // Combat effect flags (mutually exclusive):
+                        // - Use 1 to enable, 0 to disable.
+                Integer physicalDamage (1 = spell deals physical damage, 0 = does not)
+                Integer magicalDamage (1 = spell deals magical damage, 0 = does not)
+                Integer restoreHp (1 = spell restores HP, 0 = does not)
+                
+                Rules:
+                  - Healing spells (restoreHp = 1) must have physicalDamage = 0 and magicalDamage = 0.
+                  - Damage spells (physicalDamage = 1 or magicalDamage = 1) must have restoreHp = 0.
+                  - At least one of these flags must be 1. All three cannot be 0.
+                  - The spell’s effect must align with its description and category (e.g. do not create a protection spell that only deals damage).
                 }""", campaignId.toString());
     }
 }
