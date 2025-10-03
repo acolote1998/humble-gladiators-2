@@ -65,8 +65,14 @@ public class WeaponService {
             weaponTemplate.setEquipped(dto.equipped());
             weaponTemplate.setCampaign(campaign);
             weaponTemplate.setCategory(WeaponCategory.valueOf(dto.category()));
-            weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            if (dto.physicalDamage() == 1) {
+                weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            } else {
+                weaponTemplate.setPhysicalDamage(0);
+            }
+            if (dto.magicalDamage()==1){
+                weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            }else{weaponTemplate.setMagicalDamage(0);
             weaponTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedWeaponTemplates.add(weaponTemplate);
         });

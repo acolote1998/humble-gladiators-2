@@ -38,7 +38,7 @@ public class SpellTemplate extends AbstractItem {
                 Requirement requirement (create a requirement object)
                 SpellCategory category (enum)
                 
-                        // Combat effect flags (mutually exclusive):
+                        // Combat effect flags
                         // - Use 1 to enable, 0 to disable.
                 Integer physicalDamage (1 = spell deals physical damage, 0 = does not)
                 Integer magicalDamage (1 = spell deals magical damage, 0 = does not)
