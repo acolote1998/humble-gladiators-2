@@ -77,4 +77,8 @@ public class ConsumableService {
 
         return savedConsumableTemplates;
     }
+
+    public List<ConsumableTemplate> getAllConsumableTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return consumableTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
+    }
 }
