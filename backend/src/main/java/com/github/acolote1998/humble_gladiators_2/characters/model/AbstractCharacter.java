@@ -22,7 +22,7 @@ public abstract class AbstractCharacter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId; //from Clerk
+    private String userId; //from Clerk
 
     @Embedded
     private Stats stats;
