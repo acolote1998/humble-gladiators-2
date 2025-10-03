@@ -77,4 +77,8 @@ public class BootsService {
         itemValues.put("BootsTemplates", namesAndDescriptions);
         return itemValues;
     }
+
+    public List<BootsTemplate> getAllBootsTemplatesForACampaignAndUser(String userId, Long campaignId) {
+        return bootsTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
+    }
 }
