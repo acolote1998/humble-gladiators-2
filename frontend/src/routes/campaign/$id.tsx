@@ -51,16 +51,11 @@ function RouteComponent() {
       ) : (
         campaignData && <CampaignItem {...campaignData} />
       )}
-      <p
-        onClick={() => {
-          console.log(characterInstancesData);
-        }}
-      >
-        Log Characters
-      </p>
-      {characterInstancesData?.map((char) => (
-        <CharacterInstanceCard {...char} />
-      ))}
+      <div className="grid grid-cols-3">
+        {characterInstancesData?.map((char) => (
+          <CharacterInstanceCard {...char} />
+        ))}
+      </div>
       <p
         onClick={() => {
           console.log(armorTemplatesData);
