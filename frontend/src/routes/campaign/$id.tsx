@@ -8,6 +8,7 @@ import { useGetAllConsumableTemplatesForCampaignByUser } from "../../hooks/useCo
 import { useGetAllHelmetTemplatesForCampaignByUser } from "../../hooks/useHelmets";
 import { useGetAllShieldTemplatesForCampaignByUser } from "../../hooks/useShields";
 import { useGetAllSpellTemplatesForCampaignByUser } from "../../hooks/useSpells";
+import { useGetAllWeaponTemplatesForCampaignByUser } from "../../hooks/useWeapons";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -33,6 +34,8 @@ function RouteComponent() {
   const { data: spellTemplatesData } = useGetAllSpellTemplatesForCampaignByUser(
     Number(campaignId)
   );
+  const { data: weaponTemplatesData } =
+    useGetAllWeaponTemplatesForCampaignByUser(Number(campaignId));
   const {
     data: campaignData,
     isError: isCampaignError,
@@ -95,6 +98,13 @@ function RouteComponent() {
         }}
       >
         Log Spells
+      </p>
+      <p
+        onClick={() => {
+          console.log(weaponTemplatesData);
+        }}
+      >
+        Log Weapons
       </p>
     </>
   );
