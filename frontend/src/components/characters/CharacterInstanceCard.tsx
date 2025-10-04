@@ -14,11 +14,19 @@ export const CharacterInstanceCard = ({
       style={{ backgroundImage: "url('/templates/charCardTemplate.png')" }}
     >
       {/* Top stats */}
-      <div className="flex justify-center gap-8.5 text-sm mt-3">
-        <p>❤️ {stats.currentHp}</p>
-        <p>⚔️ {stats.strength}</p>
-        <p>🔷 {stats.currentMp}</p>
-        <p>🔮 {stats.intelligence}</p>
+      <div className="grid grid-cols-4 text-sm mt-3">
+        <div className="absolute left-8.5 w-20">
+          <p>❤️ {stats.currentHp}</p>
+        </div>
+        <div className="absolute left-26 w-15">
+          <p>⚔️ {stats.strength}</p>
+        </div>
+        <div className="absolute left-43 w-20">
+          <p>🔷 {stats.currentMp}</p>
+        </div>
+        <div className="absolute left-61 w-20">
+          <p>🔮 {stats.intelligence}</p>
+        </div>
       </div>
 
       {/* Tier & rarity */}
@@ -28,7 +36,7 @@ export const CharacterInstanceCard = ({
       </div>
 
       {/* Category & name */}
-      <div className="flex flex-col items-center mt-1.25">
+      <div className="flex flex-col items-center mt-6">
         <img
           draggable={false}
           src={`/categories/${category}.png`}
