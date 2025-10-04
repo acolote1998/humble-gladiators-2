@@ -2,6 +2,7 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useGetCampaignByIdForAUser } from "../../hooks/useCampaigns";
 import CampaignItem from "../../components/campaigns/CampaignItem";
 import { useGetCharactersByCampaignAndUser } from "../../hooks/userCharacters";
+import { useGetAllArmorTemplatesForCampaignByUser } from "../../hooks/useArmors";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -10,6 +11,9 @@ export const Route = createFileRoute("/campaign/$id")({
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id" });
   const { data: characterInstancesData } = useGetCharactersByCampaignAndUser(
+    Number(campaignId)
+  );
+  const { data: armorTemplatesData } = useGetAllArmorTemplatesForCampaignByUser(
     Number(campaignId)
   );
   const {
@@ -32,6 +36,13 @@ function RouteComponent() {
         }}
       >
         Log Characters
+      </p>
+      <p
+        onClick={() => {
+          console.log(armorTemplatesData);
+        }}
+      >
+        Log Armors
       </p>
     </>
   );
