@@ -9,6 +9,7 @@ import { useGetAllHelmetTemplatesForCampaignByUser } from "../../hooks/useHelmet
 import { useGetAllShieldTemplatesForCampaignByUser } from "../../hooks/useShields";
 import { useGetAllSpellTemplatesForCampaignByUser } from "../../hooks/useSpells";
 import { useGetAllWeaponTemplatesForCampaignByUser } from "../../hooks/useWeapons";
+import { CharacterInstanceCard } from "../../components/characters/CharacterInstanceCard";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -57,6 +58,9 @@ function RouteComponent() {
       >
         Log Characters
       </p>
+      {characterInstancesData?.map((char) => (
+        <CharacterInstanceCard {...char} />
+      ))}
       <p
         onClick={() => {
           console.log(armorTemplatesData);
