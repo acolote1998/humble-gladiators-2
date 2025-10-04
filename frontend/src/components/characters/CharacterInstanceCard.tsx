@@ -8,53 +8,47 @@ export const CharacterInstanceCard = ({
   stats,
   tier,
 }: CharacterInstanceType) => {
-  const getCategory = () => {
-    return `/categories/${category}.png`;
-  };
   return (
-    <div className="w-100 h-150 relative">
-      <p className="absolute z-1 left-15 top-6 font-bold">
-        ❤️ {stats.currentHp}
-      </p>
-      <p className="absolute z-1 left-34 top-6 font-bold">
-        {
-          //PHYSICAL DAMAGE => AFFECTED BY THE STRENGTH
-        }
-        ⚔️ {stats.strength}
-      </p>
-      <p className="absolute z-1 left-56 top-6 font-bold">
-        🔷 {stats.currentMp}
-      </p>
-      <p className="absolute z-1 left-75 top-6 font-bold">
-        {
-          //MAGIC DAMAGE => AFFECTED BY THE INTELLIGENCE
-        }
-        🔮 {stats.intelligence}
-      </p>
-      <p className="absolute z-1 left-34 top-80 font-bold">{name}</p>
-      <p className="absolute z-1 left-25 top-73 font-bold">Tier {tier}</p>
-      <p className="absolute z-1 left-62 top-73 font-bold">Rarity {rarity}</p>
-      <p className="absolute z-1 left-12 top-90 font-thin">{description}</p>
-      <img
-        className="absolute z-1 h-57 w-auto left-12 top-13"
-        src={getCategory()}
-      />
-      <p className="absolute z-1 left-13 top-122.5 font-bold">
-        LV. {stats.level}
-      </p>
-      <p className="absolute z-1 left-27 top-122.5 font-bold">
-        ⚡ {stats.speed}
-      </p>
-      <p className="absolute z-1 left-44 top-122.5 font-bold">
-        🍀 {stats.luck}
-      </p>
-      <p className="absolute z-1 left-60.5 top-122.5 font-bold">
-        🪨 {stats.weight}
-      </p>
-      <p className="absolute z-1 left-75 top-122.5 font-bold">
-        📏 {stats.height}
-      </p>
-      <img className="absolute z-0" src="/templates/charCardTemplate.png" />
+    <div
+      className="relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer"
+      style={{ backgroundImage: "url('/templates/charCardTemplate.png')" }}
+    >
+      {/* Top stats */}
+      <div className="flex justify-center gap-8.5 text-sm mt-3">
+        <p>❤️ {stats.currentHp}</p>
+        <p>⚔️ {stats.strength}</p>
+        <p>🔷 {stats.currentMp}</p>
+        <p>🔮 {stats.intelligence}</p>
+      </div>
+
+      {/* Tier & rarity */}
+      <div className="flex justify-center gap-25 absolute bottom-52.5 left-0 right-0 px-4 text-sm">
+        <p>Tier {tier}</p>
+        <p>Rarity {rarity}</p>
+      </div>
+
+      {/* Category & name */}
+      <div className="flex flex-col items-center mt-1.25">
+        <img
+          draggable={false}
+          src={`/categories/${category}.png`}
+          alt={category}
+          className="w-65.5 h-auto"
+        />
+        <p className="text-lg mt-8 ">{name}</p>
+        <p className="text-sm opacity-80 text-center p-1 mt-0.5">
+          {description}
+        </p>
+      </div>
+
+      {/* Bottom stats */}
+      <div className="flex justify-center gap-5 absolute bottom-9.5 left-0 right-0 px-2 text-sm">
+        <p>LV. {stats.level}</p>
+        <p>⚡ {stats.speed}</p>
+        <p>🍀 {stats.luck}</p>
+        <p>🪨 {stats.weight}</p>
+        <p>📏 {stats.height}</p>
+      </div>
     </div>
   );
 };
