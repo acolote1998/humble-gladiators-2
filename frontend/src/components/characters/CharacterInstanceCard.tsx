@@ -36,18 +36,28 @@ export const CharacterInstanceCard = ({
           className="w-65.5 h-auto"
         />
         <p className="text-lg mt-8 ">{name}</p>
-        <p className="text-sm opacity-80 text-center p-1 mt-0.5">
+        <p className="text-sm opacity-80 text-center p-1 mt-0.5 px-7">
           {description}
         </p>
       </div>
 
       {/* Bottom stats */}
-      <div className="flex justify-center gap-5 absolute bottom-9.5 left-0 right-0 px-2 text-sm">
-        <p>LV. {stats.level}</p>
-        <p>⚡ {stats.speed}</p>
-        <p>🍀 {stats.luck}</p>
-        <p>🪨 {stats.weight}</p>
-        <p>📏 {stats.height}</p>
+      <div className="grid grid-cols-5 absolute bottom-14.5 text-sm">
+        <div className="absolute left-7 w-15">
+          <p>LV. {stats.level}</p>
+        </div>
+        <div className="absolute left-21 w-15">
+          <p>⚡ {stats.speed}</p>
+        </div>
+        <div className="absolute left-34.5 w-15">
+          <p>🍀 {stats.luck}</p>
+        </div>
+        <div className="absolute left-48 w-15">
+          <p>🪨 {stats.weight}</p>
+        </div>
+        <div className="absolute left-62 w-15">
+          <p>📏 {stats.height}</p>
+        </div>
       </div>
     </div>
   );
