@@ -8,24 +8,27 @@ export const CharacterInstanceCard = ({
   stats,
   tier,
 }: CharacterInstanceType) => {
+  //Toggle to see all information of the card
+  //   discovered = true;
+
   return (
     <div
       className="relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer"
-      style={{ backgroundImage: "url('/templates/charCardTemplate.png')" }}
+      style={{ backgroundImage: `url('/templates/charCardTemplate.png')` }}
     >
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">
         <div className="absolute left-8.5 w-20">
-          <p>❤️ {stats.currentHp}</p>
+          <p>❤️ {discovered ? stats.currentHp : "?"}</p>
         </div>
         <div className="absolute left-26 w-15">
-          <p>⚔️ {stats.strength}</p>
+          <p>⚔️ {discovered ? stats.strength : "?"}</p>
         </div>
         <div className="absolute left-43 w-20">
-          <p>🔷 {stats.currentMp}</p>
+          <p>🔷 {discovered ? stats.currentMp : "?"}</p>
         </div>
         <div className="absolute left-61 w-20">
-          <p>🔮 {stats.intelligence}</p>
+          <p>🔮 {discovered ? stats.intelligence : "?"}</p>
         </div>
       </div>
 
@@ -39,32 +42,34 @@ export const CharacterInstanceCard = ({
       <div className="flex flex-col items-center mt-6">
         <img
           draggable={false}
-          src={`/categories/${category}.png`}
+          src={
+            discovered ? `/categories/${category}.png` : `/categories/OTHER.png`
+          }
           alt={category}
           className="w-65.5 h-auto"
         />
-        <p className="text-lg mt-8 ">{name}</p>
+        <p className="text-lg mt-8 ">{discovered ? name : "?"}</p>
         <p className="text-sm opacity-80 text-center p-1 mt-0.5 px-7">
-          {description}
+          {discovered ? description : "?"}
         </p>
       </div>
 
       {/* Bottom stats */}
       <div className="grid grid-cols-5 absolute bottom-14.5 text-sm">
         <div className="absolute left-7 w-15">
-          <p>LV. {stats.level}</p>
+          <p>LV. {discovered ? stats.level : "?"}</p>
         </div>
         <div className="absolute left-21 w-15">
-          <p>⚡ {stats.speed}</p>
+          <p>⚡ {discovered ? stats.speed : "?"}</p>
         </div>
         <div className="absolute left-34.5 w-15">
-          <p>🍀 {stats.luck}</p>
+          <p>🍀 {discovered ? stats.luck : "?"}</p>
         </div>
         <div className="absolute left-48 w-15">
-          <p>🪨 {stats.weight}</p>
+          <p>🪨 {discovered ? stats.weight : "?"}</p>
         </div>
         <div className="absolute left-62 w-15">
-          <p>📏 {stats.height}</p>
+          <p>📏 {discovered ? stats.height : "?"}</p>
         </div>
       </div>
     </div>
