@@ -21,7 +21,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/game/**").authenticated()
                         .requestMatchers("/api/campaign").authenticated()
                         .requestMatchers("/api/campaign/**").authenticated()
-                        .requestMatchers("/api/campaign/**/**").authenticated()
 
                 )
                 .cors(withDefaults())
