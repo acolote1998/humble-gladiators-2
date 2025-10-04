@@ -4,6 +4,7 @@ import CampaignItem from "../../components/campaigns/CampaignItem";
 import { useGetCharactersByCampaignAndUser } from "../../hooks/userCharacters";
 import { useGetAllArmorTemplatesForCampaignByUser } from "../../hooks/useArmors";
 import { useGetAllBootsTemplatesForCampaignByUser } from "../../hooks/useBoots";
+import { useGetAllConsumableTemplatesForCampaignByUser } from "../../hooks/useConsumables";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -20,6 +21,8 @@ function RouteComponent() {
   const { data: bootsTemplatesData } = useGetAllBootsTemplatesForCampaignByUser(
     Number(campaignId)
   );
+  const { data: consumableTemplatesData } =
+    useGetAllConsumableTemplatesForCampaignByUser(Number(campaignId));
   const {
     data: campaignData,
     isError: isCampaignError,
@@ -54,6 +57,13 @@ function RouteComponent() {
         }}
       >
         Log Boots
+      </p>
+      <p
+        onClick={() => {
+          console.log(consumableTemplatesData);
+        }}
+      >
+        Log Consumables
       </p>
     </>
   );
