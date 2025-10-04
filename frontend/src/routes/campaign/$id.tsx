@@ -7,6 +7,7 @@ import { useGetAllBootsTemplatesForCampaignByUser } from "../../hooks/useBoots";
 import { useGetAllConsumableTemplatesForCampaignByUser } from "../../hooks/useConsumables";
 import { useGetAllHelmetTemplatesForCampaignByUser } from "../../hooks/useHelmets";
 import { useGetAllShieldTemplatesForCampaignByUser } from "../../hooks/useShields";
+import { useGetAllSpellTemplatesForCampaignByUser } from "../../hooks/useSpells";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -29,6 +30,9 @@ function RouteComponent() {
     useGetAllHelmetTemplatesForCampaignByUser(Number(campaignId));
   const { data: shieldTemplatesData } =
     useGetAllShieldTemplatesForCampaignByUser(Number(campaignId));
+  const { data: spellTemplatesData } = useGetAllSpellTemplatesForCampaignByUser(
+    Number(campaignId)
+  );
   const {
     data: campaignData,
     isError: isCampaignError,
@@ -84,6 +88,13 @@ function RouteComponent() {
         }}
       >
         Log Shields
+      </p>
+      <p
+        onClick={() => {
+          console.log(spellTemplatesData);
+        }}
+      >
+        Log Spells
       </p>
     </>
   );
