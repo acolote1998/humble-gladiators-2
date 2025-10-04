@@ -3,6 +3,7 @@ import { useGetCampaignByIdForAUser } from "../../hooks/useCampaigns";
 import CampaignItem from "../../components/campaigns/CampaignItem";
 import { useGetCharactersByCampaignAndUser } from "../../hooks/userCharacters";
 import { useGetAllArmorTemplatesForCampaignByUser } from "../../hooks/useArmors";
+import { useGetAllBootsTemplatesForCampaignByUser } from "../../hooks/useBoots";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -14,6 +15,9 @@ function RouteComponent() {
     Number(campaignId)
   );
   const { data: armorTemplatesData } = useGetAllArmorTemplatesForCampaignByUser(
+    Number(campaignId)
+  );
+  const { data: bootsTemplatesData } = useGetAllBootsTemplatesForCampaignByUser(
     Number(campaignId)
   );
   const {
@@ -43,6 +47,13 @@ function RouteComponent() {
         }}
       >
         Log Armors
+      </p>
+      <p
+        onClick={() => {
+          console.log(bootsTemplatesData);
+        }}
+      >
+        Log Boots
       </p>
     </>
   );
