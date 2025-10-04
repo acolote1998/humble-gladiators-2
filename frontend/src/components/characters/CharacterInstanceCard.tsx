@@ -1,4 +1,5 @@
 import type { CharacterInstanceType } from "../../types/characterTypes";
+import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const CharacterInstanceCard = ({
   category,
   description,
@@ -33,9 +34,16 @@ export const CharacterInstanceCard = ({
       </div>
 
       {/* Tier & rarity */}
-      <div className="flex justify-center gap-25 absolute bottom-52.5 left-0 right-0 px-4 text-sm">
-        <p>Tier {tier}</p>
-        <p>Rarity {rarity}</p>
+      <div className="absolute bottom-51.5 left-0 text-sm">
+        <div className="relative h-6">
+          {/* container for absolute children; give it a height so top:0 has meaning */}
+          <span className="absolute left-12 top-0 z-20 w-50">
+            T {calculateTierAndRarityStars(tier)}
+          </span>
+          <span className="absolute left-46 top-0 z-10 w-50">
+            R {calculateTierAndRarityStars(rarity)}
+          </span>
+        </div>
       </div>
 
       {/* Category & name */}
