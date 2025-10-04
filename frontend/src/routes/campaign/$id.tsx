@@ -5,6 +5,7 @@ import { useGetCharactersByCampaignAndUser } from "../../hooks/userCharacters";
 import { useGetAllArmorTemplatesForCampaignByUser } from "../../hooks/useArmors";
 import { useGetAllBootsTemplatesForCampaignByUser } from "../../hooks/useBoots";
 import { useGetAllConsumableTemplatesForCampaignByUser } from "../../hooks/useConsumables";
+import { useGetAllHelmetTemplatesForCampaignByUser } from "../../hooks/useHelmets";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -23,6 +24,8 @@ function RouteComponent() {
   );
   const { data: consumableTemplatesData } =
     useGetAllConsumableTemplatesForCampaignByUser(Number(campaignId));
+  const { data: helmetTemplatesData } =
+    useGetAllHelmetTemplatesForCampaignByUser(Number(campaignId));
   const {
     data: campaignData,
     isError: isCampaignError,
@@ -64,6 +67,13 @@ function RouteComponent() {
         }}
       >
         Log Consumables
+      </p>
+      <p
+        onClick={() => {
+          console.log(helmetTemplatesData);
+        }}
+      >
+        Log Helmets
       </p>
     </>
   );
