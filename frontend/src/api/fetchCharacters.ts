@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
 import type { CharacterInstanceType } from "../types/characterTypes";
-export const fetchAllChampaignsForAUser = async (
+export const fetchAllCharactersForCampaignByUser = async (
   bearerToken: string,
   campaignId: number
 ): Promise<CharacterInstanceType[]> => {
