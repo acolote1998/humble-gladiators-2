@@ -1,8 +1,10 @@
 package com.github.acolote1998.humble_gladiators_2.booster.controller;
 
 import com.github.acolote1998.humble_gladiators_2.booster.dto.ItemBoosterResponseDto;
+import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.service.ItemsBoosterService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -28,6 +30,13 @@ public class BoosterController {
         return ResponseEntity
                 .created(URI.create("/api/campaign/" + campaignId + "/items-booster/" + modelBooster.getId()))
                 .body(responseDto);
+    }
+
+    @ExceptionHandler(DailyBoosterAlreadyOpened.class)
+    public ResponseEntity<String> handleDailyBoosterAlreadyOpened(DailyBoosterAlreadyOpened ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT) // 409 Conflict
+                .body(ex.getMessage());
     }
 
 }
