@@ -19,6 +19,7 @@ public class AbstractBooster {
 
     @ManyToOne
     private Campaign campaign;
+    
     String userId;
 
     @CreationTimestamp

@@ -3,11 +3,10 @@ package com.github.acolote1998.humble_gladiators_2.booster.service;
 import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.repository.ItemsBoosterRepository;
+import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@Getter
-@Setter
 @Slf4j
 public class ItemsBoosterService {
 
@@ -29,6 +26,7 @@ public class ItemsBoosterService {
     private ShieldService shieldService;
     private SpellService spellService;
     private WeaponService weaponService;
+    private CampaignService campaignService;
     private ItemsBoosterRepository itemsBoosterRepository;
 
 
@@ -39,7 +37,8 @@ public class ItemsBoosterService {
                                ShieldService shieldService,
                                SpellService spellService,
                                WeaponService weaponService,
-                               ItemsBoosterRepository itemsBoosterRepository) {
+                               ItemsBoosterRepository itemsBoosterRepository,
+                               CampaignService campaignService) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -48,10 +47,11 @@ public class ItemsBoosterService {
         this.spellService = spellService;
         this.weaponService = weaponService;
         this.itemsBoosterRepository = itemsBoosterRepository;
+        this.campaignService = campaignService;
     }
 
     @Transactional
-    ItemsBooster getItemsBooster(Long campaignId, String userId) {
+    public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
         ItemsBooster newBooster = new ItemsBooster();
         List<ArmorTemplate> armors = new ArrayList<>();
         List<BootsTemplate> boots = new ArrayList<>();
@@ -116,6 +116,8 @@ public class ItemsBoosterService {
         newBooster.setShields(shields);
         newBooster.setSpells(spells);
         newBooster.setWeapons(weapons);
+        newBooster.setUserId(userId);
+        newBooster.setCampaign(campaignService.getCampaignByIdAndUserId(userId, campaignId));
         return itemsBoosterRepository.save(newBooster);
     }
 
