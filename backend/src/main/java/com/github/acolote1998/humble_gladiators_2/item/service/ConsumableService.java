@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ConsumableTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -88,5 +90,28 @@ public class ConsumableService {
 
     public ConsumableTemplate saveConsumable(ConsumableTemplate consumable) {
         return consumableTemplateRepository.save(consumable);
+    }
+
+    private ConsumableInstance instanceFromConsumableTemplate(ConsumableTemplate template, Inventory inventoryItBelongsTo) {
+        ConsumableInstance instance = new ConsumableInstance();
+        instance.setTemplate(template);
+        instance.setDiscovered(true);
+        instance.setInventory(inventoryItBelongsTo);
+        instance.setDescription(template.getDescription());
+        instance.setCampaign(template.getCampaign());
+        instance.setEquipped(false);
+        instance.setName(template.getName());
+        instance.setQuantity(1);
+        instance.setRarity(template.getRarity());
+        instance.setTier(template.getTier());
+        instance.setRequirement(template.getRequirement());
+        instance.setValue(template.getValue());
+        return instance;
+    }
+
+    public List<ConsumableInstance> instancesFromConsumableTemplates(List<ConsumableTemplate> templates, Inventory inventoryItBelongsTo) {
+        List<ConsumableInstance> instances = new ArrayList<>();
+        templates.forEach(template -> instances.add(instanceFromConsumableTemplate(template, inventoryItBelongsTo)));
+        return instances;
     }
 }

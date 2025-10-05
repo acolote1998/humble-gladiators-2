@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ShieldTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ShieldTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -88,5 +90,28 @@ public class ShieldService {
 
     public ShieldTemplate saveShield(ShieldTemplate shield) {
         return shieldTemplateRepository.save(shield);
+    }
+
+    private ShieldInstance instanceFromShieldTemplate(ShieldTemplate template, Inventory inventoryItBelongsTo) {
+        ShieldInstance instance = new ShieldInstance();
+        instance.setTemplate(template);
+        instance.setDiscovered(true);
+        instance.setInventory(inventoryItBelongsTo);
+        instance.setDescription(template.getDescription());
+        instance.setCampaign(template.getCampaign());
+        instance.setEquipped(false);
+        instance.setName(template.getName());
+        instance.setQuantity(1);
+        instance.setRarity(template.getRarity());
+        instance.setTier(template.getTier());
+        instance.setRequirement(template.getRequirement());
+        instance.setValue(template.getValue());
+        return instance;
+    }
+
+    public List<ShieldInstance> instancesFromShieldTemplates(List<ShieldTemplate> templates, Inventory inventoryItBelongsTo) {
+        List<ShieldInstance> instances = new ArrayList<>();
+        templates.forEach(template -> instances.add(instanceFromShieldTemplate(template, inventoryItBelongsTo)));
+        return instances;
     }
 }

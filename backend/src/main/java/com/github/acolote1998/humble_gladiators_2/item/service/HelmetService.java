@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.enums.HelmetCategory;
+import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.HelmetTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.HelmetTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -88,5 +90,28 @@ public class HelmetService {
 
     public HelmetTemplate saveHelmet(HelmetTemplate helmet) {
         return helmetTemplateRepository.save(helmet);
+    }
+
+    private HelmetInstance instanceFromHelmetTemplate(HelmetTemplate template, Inventory inventoryItBelongsTo) {
+        HelmetInstance instance = new HelmetInstance();
+        instance.setTemplate(template);
+        instance.setDiscovered(true);
+        instance.setInventory(inventoryItBelongsTo);
+        instance.setDescription(template.getDescription());
+        instance.setCampaign(template.getCampaign());
+        instance.setEquipped(false);
+        instance.setName(template.getName());
+        instance.setQuantity(1);
+        instance.setRarity(template.getRarity());
+        instance.setTier(template.getTier());
+        instance.setRequirement(template.getRequirement());
+        instance.setValue(template.getValue());
+        return instance;
+    }
+
+    public List<HelmetInstance> instancesFromHelmetTemplates(List<HelmetTemplate> templates, Inventory inventoryItBelongsTo) {
+        List<HelmetInstance> instances = new ArrayList<>();
+        templates.forEach(template -> instances.add(instanceFromHelmetTemplate(template, inventoryItBelongsTo)));
+        return instances;
     }
 }

@@ -8,7 +8,6 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInst
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -142,6 +141,12 @@ public class ItemsBoosterService {
         CharacterInstance hero = characterService.getHero(campaignId, userId);
         Inventory heroInventory = hero.getInventory();
         heroInventory.getArmors().addAll(armorService.instancesFromArmorTemplates(armorTemplates, heroInventory));
+        heroInventory.getBoots().addAll(bootsService.instancesFromBootsTemplates(bootsTemplates, heroInventory));
+        heroInventory.getConsumables().addAll(consumableService.instancesFromConsumableTemplates(consumableTemplates, heroInventory));
+        heroInventory.getHelmets().addAll(helmetService.instancesFromHelmetTemplates(helmetTemplates, heroInventory));
+        heroInventory.getShields().addAll(shieldService.instancesFromShieldTemplates(shieldTemplates, heroInventory));
+        heroInventory.getSpells().addAll(spellService.instancesFromSpellTemplates(spellTemplates, heroInventory));
+        heroInventory.getWeapons().addAll(weaponService.instancesFromWeaponTemplates(weaponTemplates, heroInventory));
         characterService.saveCharacter(hero);
 
         newBooster.setArmors(armorTemplates);
@@ -168,4 +173,6 @@ public class ItemsBoosterService {
         Collections.shuffle(itemTypes);
         return itemTypes.getFirst();
     }
+
+
 }

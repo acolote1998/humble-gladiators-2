@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
+import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.WeaponTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.WeaponTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -96,5 +98,28 @@ public class WeaponService {
 
     public WeaponTemplate saveWeapon(WeaponTemplate weapon) {
         return weaponTemplateRepository.save(weapon);
+    }
+
+    private WeaponInstance instanceFromWeaponTemplate(WeaponTemplate template, Inventory inventoryItBelongsTo) {
+        WeaponInstance instance = new WeaponInstance();
+        instance.setTemplate(template);
+        instance.setDiscovered(true);
+        instance.setInventory(inventoryItBelongsTo);
+        instance.setDescription(template.getDescription());
+        instance.setCampaign(template.getCampaign());
+        instance.setEquipped(false);
+        instance.setName(template.getName());
+        instance.setQuantity(1);
+        instance.setRarity(template.getRarity());
+        instance.setTier(template.getTier());
+        instance.setRequirement(template.getRequirement());
+        instance.setValue(template.getValue());
+        return instance;
+    }
+
+    public List<WeaponInstance> instancesFromWeaponTemplates(List<WeaponTemplate> templates, Inventory inventoryItBelongsTo) {
+        List<WeaponInstance> instances = new ArrayList<>();
+        templates.forEach(template -> instances.add(instanceFromWeaponTemplate(template, inventoryItBelongsTo)));
+        return instances;
     }
 }
