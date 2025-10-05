@@ -17,12 +17,14 @@ import { HelmetTemplateCard } from "../../components/characters/HelmetTemplateCa
 import { ShieldTemplateCard } from "../../components/characters/ShieldTemplateCard";
 import { SpellTemplateCard } from "../../components/characters/SpellTemplateCard";
 import { WeaponTemplateCard } from "../../components/characters/WeaponTemplateCard";
+import { useGetHeroByCampaignAndUser } from "../../hooks/userCharacters";
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id" });
+  const { data: heroData } = useGetHeroByCampaignAndUser(Number(campaignId));
   const { data: characterInstancesData } = useGetCharactersByCampaignAndUser(
     Number(campaignId)
   );
@@ -57,6 +59,15 @@ function RouteComponent() {
       ) : (
         campaignData && <CampaignItem {...campaignData} />
       )}
+
+      <p
+        onClick={() => {
+          console.log(heroData);
+        }}
+        className="bg-gray-400 p-3 rounded-lg"
+      >
+        Log Hero Data
+      </p>
       <div className="grid grid-cols-3">
         {characterInstancesData?.map((char) => (
           <CharacterInstanceCard key={char.name} {...char} />
