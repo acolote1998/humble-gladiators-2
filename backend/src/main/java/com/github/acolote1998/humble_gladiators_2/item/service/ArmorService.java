@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ArmorTemplateRepository;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +90,29 @@ public class ArmorService {
 
     public ArmorTemplate saveArmor(ArmorTemplate armor) {
         return armorTemplateRepository.save(armor);
+    }
+
+    private ArmorInstance instanceFromArmorTemplate(ArmorTemplate template, Inventory inventoryItBelongsTo) {
+        ArmorInstance instance = new ArmorInstance();
+        instance.setTemplate(template);
+        instance.setDiscovered(true);
+        instance.setInventory(inventoryItBelongsTo);
+        instance.setDescription(template.getDescription());
+        instance.setCampaign(template.getCampaign());
+        instance.setEquipped(false);
+        instance.setName(template.getName());
+        instance.setQuantity(1);
+        instance.setRarity(template.getRarity());
+        instance.setTier(template.getTier());
+        instance.setRequirement(template.getRequirement());
+        instance.setValue(template.getValue());
+        return instance;
+    }
+
+    public List<ArmorInstance> instancesFromArmorTemplates(List<ArmorTemplate> templates, Inventory inventoryItBelongsTo) {
+        List<ArmorInstance> instances = new ArrayList<>();
+        templates.forEach(template -> instances.add(instanceFromArmorTemplate(template, inventoryItBelongsTo)));
+        return instances;
     }
 
 }

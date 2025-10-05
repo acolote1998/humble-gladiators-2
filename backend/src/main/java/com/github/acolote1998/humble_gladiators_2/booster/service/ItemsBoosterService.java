@@ -4,7 +4,11 @@ import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBoos
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.repository.ItemsBoosterRepository;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
+import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -31,6 +35,7 @@ public class ItemsBoosterService {
     private WeaponService weaponService;
     private CampaignService campaignService;
     private ItemsBoosterRepository itemsBoosterRepository;
+    private CharacterService characterService;
 
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
@@ -43,7 +48,8 @@ public class ItemsBoosterService {
                                SpellService spellService,
                                WeaponService weaponService,
                                ItemsBoosterRepository itemsBoosterRepository,
-                               CampaignService campaignService) {
+                               CampaignService campaignService,
+                               CharacterService characterService) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -53,6 +59,7 @@ public class ItemsBoosterService {
         this.weaponService = weaponService;
         this.itemsBoosterRepository = itemsBoosterRepository;
         this.campaignService = campaignService;
+        this.characterService = characterService;
     }
 
     private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
@@ -76,69 +83,74 @@ public class ItemsBoosterService {
             throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
         }
         ItemsBooster newBooster = new ItemsBooster();
-        List<ArmorTemplate> armors = new ArrayList<>();
-        List<BootsTemplate> boots = new ArrayList<>();
-        List<ConsumableTemplate> consumables = new ArrayList<>();
-        List<HelmetTemplate> helmets = new ArrayList<>();
-        List<ShieldTemplate> shields = new ArrayList<>();
-        List<SpellTemplate> spells = new ArrayList<>();
-        List<WeaponTemplate> weapons = new ArrayList<>();
+        List<ArmorTemplate> armorTemplates = new ArrayList<>();
+        List<BootsTemplate> bootsTemplates = new ArrayList<>();
+        List<ConsumableTemplate> consumableTemplates = new ArrayList<>();
+        List<HelmetTemplate> helmetTemplates = new ArrayList<>();
+        List<ShieldTemplate> shieldTemplates = new ArrayList<>();
+        List<SpellTemplate> spellTemplates = new ArrayList<>();
+        List<WeaponTemplate> weaponTemplates = new ArrayList<>();
 
         //Gets three items
         for (int i = 0; i < 3; i++) {
             switch (getRandomItemType()) {
                 case ARMORS -> {
-                    ArmorTemplate armorItem = armorService.getRandomArmorTemplate(campaignId, userId);
-                    armorItem.setDiscovered(true);
-                    armorService.saveArmor(armorItem);
-                    armors.add(armorItem);
+                    ArmorTemplate armorTemplate = armorService.getRandomArmorTemplate(campaignId, userId);
+                    armorTemplate.setDiscovered(true);
+                    armorService.saveArmor(armorTemplate);
+                    armorTemplates.add(armorTemplate);
                 }
                 case BOOTS -> {
-                    BootsTemplate bootsItem = bootsService.getRandomBootTemplate(campaignId, userId);
-                    bootsItem.setDiscovered(true);
-                    bootsService.saveBoots(bootsItem);
-                    boots.add(bootsItem);
+                    BootsTemplate bootTemplate = bootsService.getRandomBootTemplate(campaignId, userId);
+                    bootTemplate.setDiscovered(true);
+                    bootsService.saveBoots(bootTemplate);
+                    bootsTemplates.add(bootTemplate);
                 }
                 case CONSUMABLES -> {
-                    ConsumableTemplate consumable = consumableService.getRandomConsumableTemplate(campaignId, userId);
-                    consumable.setDiscovered(true);
-                    consumableService.saveConsumable(consumable);
-                    consumables.add(consumable);
+                    ConsumableTemplate consumableTemplate = consumableService.getRandomConsumableTemplate(campaignId, userId);
+                    consumableTemplate.setDiscovered(true);
+                    consumableService.saveConsumable(consumableTemplate);
+                    consumableTemplates.add(consumableTemplate);
                 }
                 case HELMETS -> {
-                    HelmetTemplate helmet = helmetService.getRandomHelmetTemplate(campaignId, userId);
-                    helmet.setDiscovered(true);
-                    helmetService.saveHelmet(helmet);
-                    helmets.add(helmet);
+                    HelmetTemplate helmetTemplate = helmetService.getRandomHelmetTemplate(campaignId, userId);
+                    helmetTemplate.setDiscovered(true);
+                    helmetService.saveHelmet(helmetTemplate);
+                    helmetTemplates.add(helmetTemplate);
                 }
                 case SHIELDS -> {
-                    ShieldTemplate shield = shieldService.getRandomShieldTemplate(campaignId, userId);
-                    shield.setDiscovered(true);
-                    shieldService.saveShield(shield);
-                    shields.add(shield);
+                    ShieldTemplate shieldTemplate = shieldService.getRandomShieldTemplate(campaignId, userId);
+                    shieldTemplate.setDiscovered(true);
+                    shieldService.saveShield(shieldTemplate);
+                    shieldTemplates.add(shieldTemplate);
                 }
                 case SPELLS -> {
-                    SpellTemplate spell = spellService.getRandomSpellTemplate(campaignId, userId);
-                    spell.setDiscovered(true);
-                    spellService.saveSpell(spell);
-                    spells.add(spell);
+                    SpellTemplate spellTemplate = spellService.getRandomSpellTemplate(campaignId, userId);
+                    spellTemplate.setDiscovered(true);
+                    spellService.saveSpell(spellTemplate);
+                    spellTemplates.add(spellTemplate);
                 }
                 case WEAPONS -> {
-                    WeaponTemplate weapon = weaponService.getRandomWeaponTemplate(campaignId, userId);
-                    weapon.setDiscovered(true);
-                    weaponService.saveWeapon(weapon);
-                    weapons.add(weapon);
+                    WeaponTemplate weaponTemplate = weaponService.getRandomWeaponTemplate(campaignId, userId);
+                    weaponTemplate.setDiscovered(true);
+                    weaponService.saveWeapon(weaponTemplate);
+                    weaponTemplates.add(weaponTemplate);
                 }
             }
         }
 
-        newBooster.setArmors(armors);
-        newBooster.setBoots(boots);
-        newBooster.setConsumables(consumables);
-        newBooster.setHelmets(helmets);
-        newBooster.setShields(shields);
-        newBooster.setSpells(spells);
-        newBooster.setWeapons(weapons);
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        Inventory heroInventory = hero.getInventory();
+        heroInventory.getArmors().addAll(armorService.instancesFromArmorTemplates(armorTemplates, heroInventory));
+        characterService.saveCharacter(hero);
+
+        newBooster.setArmors(armorTemplates);
+        newBooster.setBoots(bootsTemplates);
+        newBooster.setConsumables(consumableTemplates);
+        newBooster.setHelmets(helmetTemplates);
+        newBooster.setShields(shieldTemplates);
+        newBooster.setSpells(spellTemplates);
+        newBooster.setWeapons(weaponTemplates);
         newBooster.setUserId(userId);
         newBooster.setCampaign(campaignService.getCampaignByIdAndUserId(userId, campaignId));
         log.info(String.format("%s - Campaign %s successfully opened an item booster", userId, campaignId));
