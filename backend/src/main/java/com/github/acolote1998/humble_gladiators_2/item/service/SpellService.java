@@ -94,4 +94,12 @@ public class SpellService {
     public List<SpellTemplate> getAllSpellTemplatesForACampaignAndUser(String userId, Long campaignId) {
         return spellTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
+
+    public SpellTemplate getRandomSpellTemplate(Long campaignId, String userId) {
+        return spellTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    }
+
+    public SpellTemplate saveSpell(SpellTemplate spell) {
+        return spellTemplateRepository.save(spell);
+    }
 }

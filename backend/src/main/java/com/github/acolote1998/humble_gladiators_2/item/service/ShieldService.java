@@ -81,4 +81,12 @@ public class ShieldService {
     public List<ShieldTemplate> getAllShieldTemplatesForACampaignAndUser(String userId, Long campaignId) {
         return shieldTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
+
+    public ShieldTemplate getRandomShieldTemplate(Long campaignId, String userId) {
+        return shieldTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    }
+
+    public ShieldTemplate saveShield(ShieldTemplate shield) {
+        return shieldTemplateRepository.save(shield);
+    }
 }

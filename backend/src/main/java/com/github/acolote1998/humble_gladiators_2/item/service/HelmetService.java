@@ -81,4 +81,12 @@ public class HelmetService {
     public List<HelmetTemplate> getAllHelmetTemplatesForACampaignAndUser(String userId, Long campaignId) {
         return helmetTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
+
+    public HelmetTemplate getRandomHelmetTemplate(Long campaignId, String userId) {
+        return helmetTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    }
+
+    public HelmetTemplate saveHelmet(HelmetTemplate helmet) {
+        return helmetTemplateRepository.save(helmet);
+    }
 }
