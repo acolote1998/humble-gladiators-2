@@ -22,6 +22,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/campaign").authenticated()
                         .requestMatchers("/api/campaign/**").authenticated()
                         .requestMatchers("/api/campaign/*/items-booster").authenticated()
+                        .requestMatchers("/api/campaign/*/character-instances/hero").authenticated()
 
                 )
                 .cors(withDefaults())

@@ -36,9 +36,11 @@ public class CharacterController {
         return ResponseEntity.ok(dtos);
     }
 
-    @PostMapping("/{campaignId}/character-instances")
-    ResponseEntity<HeroResponseDto> createCharacterForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @RequestBody CreateHeroRequestDto dtoRequest) {
+    @PostMapping("/{campaignId}/character-instances/hero")
+    ResponseEntity<HeroResponseDto> createHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @RequestBody CreateHeroRequestDto dtoRequest) {
         String userId = jwt.getSubject();
         CharacterInstance model = characterService.createHero(campaignService.getCampaignByIdAndUserId(userId, campaignId), userId, dtoRequest);
+        HeroResponseDto dto = HeroResponseDto.fromModelToDto(model);
+        return ResponseEntity.ok(dto);
     }
 }
