@@ -1,36 +1,37 @@
-import type { CharacterInstanceType } from "../../types/characterTypes";
+import type { ShieldTemplateType } from "../../types/shieldTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-export const CharacterInstanceCard = ({
+export const ShieldTemplateCard = ({
   category,
   description,
   discovered,
   name,
   rarity,
-  stats,
   tier,
-}: CharacterInstanceType) => {
+  magicalDefense,
+  physicalDefense,
+}: ShieldTemplateType) => {
   //Toggle to see all information of the card
-  //   discovered = true;
+  discovered = true;
 
   return (
     <div
       className="relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer"
-      style={{ backgroundImage: `url('/templates/charCardTemplate.png')` }}
+      style={{ backgroundImage: `url('/templates/shieldCardTemplate.png')` }}
     >
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">
-        <div className="absolute left-8.5 w-20">
-          <p>❤️ {discovered ? stats.currentHp : "?"}</p>
+        {/* <div className="absolute left-8.5 w-20">
+          <p>❤️ {discovered ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-26 w-15">
-          <p>⚔️ {discovered ? stats.strength : "?"}</p>
+          <p>⚔️ {discovered ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-43 w-20">
-          <p>🔷 {discovered ? stats.currentMp : "?"}</p>
+          <p>🔷 {discovered ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-61 w-20">
-          <p>🔮 {discovered ? stats.intelligence : "?"}</p>
-        </div>
+          <p>🔮 {discovered ? "pl" : "?"}</p>
+        </div> */}
       </div>
 
       {/* Tier & rarity */}
@@ -63,22 +64,19 @@ export const CharacterInstanceCard = ({
       </div>
 
       {/* Bottom stats */}
-      <div className="grid grid-cols-5 absolute bottom-14.5 text-sm">
+      <div className="grid grid-cols-5 absolute bottom-14 text-sm">
         <div className="absolute left-7 w-15">
-          <p>LV. {discovered ? stats.level : "?"}</p>
+          <p>🛡️ {discovered ? physicalDefense : "?"}</p>
         </div>
-        <div className="absolute left-21 w-15">
-          <p>⚡ {discovered ? stats.speed : "?"}</p>
+        {/* <div className="absolute left-23 w-15">
+          <p>❤️ {discovered ? restoreHp : "?"}</p>
+        </div> */}
+        <div className="absolute left-41.5 w-15">
+          <p>✨ {discovered ? magicalDefense : "?"}</p>
         </div>
-        <div className="absolute left-34.5 w-15">
-          <p>🍀 {discovered ? stats.luck : "?"}</p>
-        </div>
-        <div className="absolute left-48 w-15">
-          <p>🪨 {discovered ? stats.weight : "?"}</p>
-        </div>
-        <div className="absolute left-62 w-15">
-          <p>📏 {discovered ? stats.height : "?"}</p>
-        </div>
+        {/* <div className="absolute left-58.5 w-15">
+          <p>🧉 {discovered ? restoreMp : "?"}</p>
+        </div> */}
       </div>
     </div>
   );

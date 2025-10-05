@@ -10,7 +10,13 @@ import { useGetAllShieldTemplatesForCampaignByUser } from "../../hooks/useShield
 import { useGetAllSpellTemplatesForCampaignByUser } from "../../hooks/useSpells";
 import { useGetAllWeaponTemplatesForCampaignByUser } from "../../hooks/useWeapons";
 import { CharacterInstanceCard } from "../../components/characters/CharacterInstanceCard";
-
+import { ArmorTemplateCard } from "../../components/characters/ArmorTemplateCard";
+import { BootsTemplateCard } from "../../components/characters/BootsTemplateCard";
+import { ConsumableTemplateCard } from "../../components/characters/ConsumableTemplateCard";
+import { HelmetTemplateCard } from "../../components/characters/HelmetTemplateCard";
+import { ShieldTemplateCard } from "../../components/characters/ShieldTemplateCard";
+import { SpellTemplateCard } from "../../components/characters/SpellTemplateCard";
+import { WeaponTemplateCard } from "../../components/characters/WeaponTemplateCard";
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
 });
@@ -56,55 +62,41 @@ function RouteComponent() {
           <CharacterInstanceCard {...char} />
         ))}
       </div>
-      <p
-        onClick={() => {
-          console.log(armorTemplatesData);
-        }}
-      >
-        Log Armors
-      </p>
-      <p
-        onClick={() => {
-          console.log(bootsTemplatesData);
-        }}
-      >
-        Log Boots
-      </p>
-      <p
-        onClick={() => {
-          console.log(consumableTemplatesData);
-        }}
-      >
-        Log Consumables
-      </p>
-      <p
-        onClick={() => {
-          console.log(helmetTemplatesData);
-        }}
-      >
-        Log Helmets
-      </p>
-      <p
-        onClick={() => {
-          console.log(shieldTemplatesData);
-        }}
-      >
-        Log Shields
-      </p>
-      <p
-        onClick={() => {
-          console.log(spellTemplatesData);
-        }}
-      >
-        Log Spells
-      </p>
-      <p
-        onClick={() => {
-          console.log(weaponTemplatesData);
-        }}
-      >
-        Log Weapons
-      </p>
+      <div className="grid grid-cols-3">
+        {armorTemplatesData?.map((armor) => (
+          <ArmorTemplateCard {...armor} />
+        ))}
+      </div>
+      <div className="grid grid-cols-3">
+        {bootsTemplatesData?.map((armor) => (
+          <BootsTemplateCard {...armor} />
+        ))}
+      </div>
+      <div className="grid grid-cols-3">
+        {consumableTemplatesData?.map((armor) => (
+          <ConsumableTemplateCard {...armor} />
+        ))}
+      </div>
+      <div className="grid grid-cols-3">
+        {helmetTemplatesData?.map((armor) => (
+          <HelmetTemplateCard {...armor} />
+        ))}
+      </div>
+      <div className="grid grid-cols-3">
+        {shieldTemplatesData?.map((armor) => (
+          <ShieldTemplateCard {...armor} />
+        ))}
+      </div>
+      <div className="grid grid-cols-3">
+        {spellTemplatesData?.map((armor) => (
+          <SpellTemplateCard {...armor} />
+        ))}
+      </div>
+      <div className="grid grid-cols-3">
+        {weaponTemplatesData?.map((armor) => (
+          <WeaponTemplateCard {...armor} />
+        ))}
+      </div>
     </>
   );
 }
