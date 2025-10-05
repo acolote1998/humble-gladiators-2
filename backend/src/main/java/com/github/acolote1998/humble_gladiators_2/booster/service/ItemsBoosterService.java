@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,6 +72,7 @@ public class ItemsBoosterService {
     @Transactional
     public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
         if (!canTheUserOpenAnItemPack(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s tried to open an item booster, but they had already opened one today", userId, campaignId));
             throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
         }
         ItemsBooster newBooster = new ItemsBooster();
@@ -141,6 +141,7 @@ public class ItemsBoosterService {
         newBooster.setWeapons(weapons);
         newBooster.setUserId(userId);
         newBooster.setCampaign(campaignService.getCampaignByIdAndUserId(userId, campaignId));
+        log.info(String.format("%s - Campaign %s successfully opened an item booster", userId, campaignId));
         return itemsBoosterRepository.save(newBooster);
     }
 

@@ -1,8 +1,9 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Hero Creation
 - [ ] Card System
     - [ ] Daily Card Pack
-        - [ ] Users can open one item card booster per day
+        - [X] Users can open one item card booster per day
         - [X] Each booster contains three random items (Armor, Boots, Consumables, Helmets, Shields, Spells, Weapons)
         - [X] When opening the pack, the obtained cards are now DISCOVERED = true
         - [ ] When opening the pack, we convert the ItemTemplate to ItemInstance
