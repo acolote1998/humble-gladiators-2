@@ -1,12 +1,15 @@
 package com.github.acolote1998.humble_gladiators_2.characters.controller;
 
+import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
+import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -48,10 +51,17 @@ public class CharacterController {
     }
 
     @GetMapping("/{campaignId}/character-instances/hero")
-    ResponseEntity<HeroResponseDto> createHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+    ResponseEntity<HeroResponseDto> getHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         CharacterInstance heroModel = characterService.getHero(campaignId, userId);
         HeroResponseDto dto = HeroResponseDto.fromModelToDto(heroModel);
         return ResponseEntity.ok(dto);
+    }
+
+    @ExceptionHandler(HeroAlreadyCreated.class)
+    public ResponseEntity<String> handleHeroAlreadyCreated(HeroAlreadyCreated ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT) // 409 Conflict
+                .body(ex.getMessage());
     }
 }

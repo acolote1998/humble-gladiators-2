@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
+import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
@@ -84,6 +85,10 @@ public class CharacterService {
     }
 
     public CharacterInstance createHero(Campaign campaign, String userId, CreateHeroRequestDto dto) {
+        CharacterInstance doesAHeroExist = getHero(campaign.getId(), userId);
+        if (doesAHeroExist != null) {
+            throw new HeroAlreadyCreated("A hero already exists for this campaign");
+        }
         CharacterInstance model = new CharacterInstance();
         model.setUserId(userId);
         model.setCampaign(campaign);

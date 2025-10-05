@@ -2,6 +2,8 @@
 
 - [X] Hero Creation backend
     - [ ] Make a hero creating button for the frontend
+    - [X] Add validation in backend to never allow more than one hero created by campaign
+    - [X] Log Hero data in frontend
     - [ ] Make a hero fetcher for displaying the hero in the frontend
 - [ ] Card System
     - [ ] Daily Card Pack
