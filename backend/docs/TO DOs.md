@@ -1,13 +1,15 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] Hero Creation
+- [X] Hero Creation backend
+    - [ ] Make a hero creating button for the frontend
+    - [ ] Make a hero fetcher for displaying the hero in the frontend
 - [ ] Card System
     - [ ] Daily Card Pack
         - [X] Users can open one item card booster per day
         - [X] Each booster contains three random items (Armor, Boots, Consumables, Helmets, Shields, Spells, Weapons)
         - [X] When opening the pack, the obtained cards are now DISCOVERED = true
-        - [ ] When opening the pack, we convert the ItemTemplate to ItemInstance
-        - [ ] When opening the pack, we add the ItemInstance to the hero's inventory
+        - [X] When opening the pack, we convert the ItemTemplate to ItemInstance
+        - [X] When opening the pack, we add the ItemInstance to the hero's inventory
         - [ ] Frontend implementation for pack opening
             - [ ] Handle error if pack was already opened for the day
     - [ ] Daily Enemy Encounter
