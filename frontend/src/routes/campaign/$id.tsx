@@ -59,42 +59,42 @@ function RouteComponent() {
       )}
       <div className="grid grid-cols-3">
         {characterInstancesData?.map((char) => (
-          <CharacterInstanceCard {...char} />
+          <CharacterInstanceCard key={char.name} {...char} />
         ))}
       </div>
       <div className="grid grid-cols-3">
         {armorTemplatesData?.map((armor) => (
-          <ArmorTemplateCard {...armor} />
+          <ArmorTemplateCard key={armor.name} {...armor} />
         ))}
       </div>
       <div className="grid grid-cols-3">
-        {bootsTemplatesData?.map((armor) => (
-          <BootsTemplateCard {...armor} />
+        {bootsTemplatesData?.map((boot) => (
+          <BootsTemplateCard key={boot.name} {...boot} />
         ))}
       </div>
       <div className="grid grid-cols-3">
-        {consumableTemplatesData?.map((armor) => (
-          <ConsumableTemplateCard {...armor} />
+        {consumableTemplatesData?.map((consumable) => (
+          <ConsumableTemplateCard key={consumable.name} {...consumable} />
         ))}
       </div>
       <div className="grid grid-cols-3">
-        {helmetTemplatesData?.map((armor) => (
-          <HelmetTemplateCard {...armor} />
+        {helmetTemplatesData?.map((helmet) => (
+          <HelmetTemplateCard key={helmet.name} {...helmet} />
         ))}
       </div>
       <div className="grid grid-cols-3">
-        {shieldTemplatesData?.map((armor) => (
-          <ShieldTemplateCard {...armor} />
+        {shieldTemplatesData?.map((shield) => (
+          <ShieldTemplateCard key={shield.name} {...shield} />
         ))}
       </div>
       <div className="grid grid-cols-3">
-        {spellTemplatesData?.map((armor) => (
-          <SpellTemplateCard {...armor} />
+        {spellTemplatesData?.map((spell) => (
+          <SpellTemplateCard key={spell.name} {...spell} />
         ))}
       </div>
       <div className="grid grid-cols-3">
-        {weaponTemplatesData?.map((armor) => (
-          <WeaponTemplateCard {...armor} />
+        {weaponTemplatesData?.map((weapon) => (
+          <WeaponTemplateCard key={weapon.name} {...weapon} />
         ))}
       </div>
     </>
