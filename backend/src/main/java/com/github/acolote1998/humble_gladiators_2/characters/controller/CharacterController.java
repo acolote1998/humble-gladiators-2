@@ -30,4 +30,9 @@ public class CharacterController {
         List<FullCharacterResponseDto> dtos = FullCharacterResponseDto.fromListOfCharInstToListOfCharDto(charactersFromDb);
         return ResponseEntity.ok(dtos);
     }
+
+    @PostMapping("/{campaignId}/character-instances")
+    ResponseEntity<FullCharacterResponseDto> createCharacterForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+    }
 }
