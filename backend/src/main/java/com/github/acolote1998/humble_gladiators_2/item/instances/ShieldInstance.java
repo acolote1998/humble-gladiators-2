@@ -17,18 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name = "shield_instance")
 @Slf4j
 public class ShieldInstance extends AbstractItem implements Discoverable, Equippable, Tradeable {
-    
-    private Integer physicalDefense;
-    private Integer magicalDefense;
-    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
     private ShieldTemplate template;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-    
+
     @Override
     public void discover() {
 

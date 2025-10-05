@@ -18,18 +18,15 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name = "weapon_instance")
 @Slf4j
 public class WeaponInstance extends AbstractItem implements Attacker, Discoverable, Equippable, Tradeable {
-    
-    private Integer physicalDamage;
-    private Integer magicalDamage;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
     private WeaponTemplate template;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-    
+
     @Override
     public void attack() {
 

@@ -19,10 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SpellInstance extends AbstractItem implements Castable, Discoverable, Equippable, Tradeable {
 
-    private Integer physicalDamage;
-    private Integer magicalDamage;
-    private Integer restoreHp;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
     private SpellTemplate template;

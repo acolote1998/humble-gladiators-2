@@ -219,8 +219,8 @@ public record HeroResponseDto(
                         armor.getEquipped(),
                         mapRequirement(armor.getRequirement()),
                         armor.getTemplate().getCategory(),
-                        armor.getPhysicalDefense(),
-                        armor.getMagicalDefense()
+                        armor.getTemplate().getPhysicalDefense(),
+                        armor.getTemplate().getMagicalDefense()
                 ))
                 .toList();
     }
@@ -238,8 +238,8 @@ public record HeroResponseDto(
                         boot.getEquipped(),
                         mapRequirement(boot.getRequirement()),
                         boot.getTemplate().getCategory(),
-                        boot.getPhysicalDefense(),
-                        boot.getMagicalDefense()
+                        boot.getTemplate().getPhysicalDefense(),
+                        boot.getTemplate().getMagicalDefense()
                 ))
                 .toList();
     }
@@ -257,8 +257,8 @@ public record HeroResponseDto(
                         consumable.getEquipped(),
                         mapRequirement(consumable.getRequirement()),
                         consumable.getTemplate().getCategory(),
-                        consumable.getRestoreHp(),
-                        consumable.getRestoreMp()
+                        consumable.getTemplate().getRestoreHp(),
+                        consumable.getTemplate().getRestoreMp()
                 ))
                 .toList();
     }
@@ -276,8 +276,8 @@ public record HeroResponseDto(
                         helmet.getEquipped(),
                         mapRequirement(helmet.getRequirement()),
                         helmet.getTemplate().getCategory(),
-                        helmet.getPhysicalDefense(),
-                        helmet.getMagicalDefense()
+                        helmet.getTemplate().getPhysicalDefense(),
+                        helmet.getTemplate().getMagicalDefense()
                 ))
                 .toList();
     }
@@ -295,8 +295,8 @@ public record HeroResponseDto(
                         shield.getEquipped(),
                         mapRequirement(shield.getRequirement()),
                         shield.getTemplate().getCategory(),
-                        shield.getPhysicalDefense(),
-                        shield.getMagicalDefense()
+                        shield.getTemplate().getPhysicalDefense(),
+                        shield.getTemplate().getMagicalDefense()
                 ))
                 .toList();
     }
@@ -314,9 +314,9 @@ public record HeroResponseDto(
                         spell.getEquipped(),
                         mapRequirement(spell.getRequirement()),
                         spell.getTemplate().getCategory(),
-                        spell.getPhysicalDamage(),
-                        spell.getMagicalDamage(),
-                        spell.getRestoreHp()
+                        spell.getTemplate().getPhysicalDamage(),
+                        spell.getTemplate().getMagicalDamage(),
+                        spell.getTemplate().getRestoreHp()
                 ))
                 .toList();
     }
@@ -334,8 +334,8 @@ public record HeroResponseDto(
                         weapon.getEquipped(),
                         mapRequirement(weapon.getRequirement()),
                         weapon.getTemplate().getCategory(),
-                        weapon.getPhysicalDamage(),
-                        weapon.getMagicalDamage()
+                        weapon.getTemplate().getPhysicalDamage(),
+                        weapon.getTemplate().getMagicalDamage()
                 ))
                 .toList();
     }

@@ -17,18 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name = "armor_instance")
 @Slf4j
 public class ArmorInstance extends AbstractItem implements Discoverable, Equippable, Tradeable {
-    
-    private Integer physicalDefense;
-    private Integer magicalDefense;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
     private ArmorTemplate template;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-    
+
     @Override
     public void discover() {
 
