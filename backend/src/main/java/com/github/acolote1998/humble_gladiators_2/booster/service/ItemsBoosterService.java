@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.booster.service;
 
 import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBooster;
+import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.repository.ItemsBoosterRepository;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
@@ -68,6 +69,9 @@ public class ItemsBoosterService {
 
     @Transactional
     public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
+        if (!canTheUserOpenAnItemPack(campaignId, userId)) {
+            throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
+        }
         ItemsBooster newBooster = new ItemsBooster();
         List<ArmorTemplate> armors = new ArrayList<>();
         List<BootsTemplate> boots = new ArrayList<>();
