@@ -81,4 +81,8 @@ public class ConsumableService {
     public List<ConsumableTemplate> getAllConsumableTemplatesForACampaignAndUser(String userId, Long campaignId) {
         return consumableTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
+
+    public ConsumableTemplate getRandomConsumableTemplate(Long campaignId, String userId) {
+        return consumableTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    }
 }

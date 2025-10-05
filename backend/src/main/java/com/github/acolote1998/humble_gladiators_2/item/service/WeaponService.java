@@ -89,4 +89,8 @@ public class WeaponService {
     public List<WeaponTemplate> getAllWeaponTemplatesForACampaignAndUser(String userId, Long campaignId) {
         return weaponTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
+
+    public WeaponTemplate getRandomWeaponTemplate(Long campaignId, String userId) {
+        return weaponTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    }
 }

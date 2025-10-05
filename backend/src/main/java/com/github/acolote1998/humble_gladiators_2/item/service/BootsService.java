@@ -81,4 +81,8 @@ public class BootsService {
     public List<BootsTemplate> getAllBootsTemplatesForACampaignAndUser(String userId, Long campaignId) {
         return bootsTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
+
+    public BootsTemplate getRandomBootTemplate(Long campaignId, String userId) {
+        return bootsTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    }
 }
