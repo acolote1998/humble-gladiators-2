@@ -11,6 +11,7 @@ import { useGetAllSpellTemplatesForCampaignByUser } from "../../hooks/useSpells"
 import { useGetAllWeaponTemplatesForCampaignByUser } from "../../hooks/useWeapons";
 import { CharacterInstanceCard } from "../../components/characters/CharacterInstanceCard";
 import { ArmorTemplateCard } from "../../components/characters/ArmorTemplateCard";
+import { BootsTemplateCard } from "../../components/characters/BootsTemplateCard";
 
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
@@ -62,13 +63,11 @@ function RouteComponent() {
           <ArmorTemplateCard {...armor} />
         ))}
       </div>
-      <p
-        onClick={() => {
-          console.log(bootsTemplatesData);
-        }}
-      >
-        Log Boots
-      </p>
+      <div className="grid grid-cols-3">
+        {bootsTemplatesData?.map((armor) => (
+          <BootsTemplateCard {...armor} />
+        ))}
+      </div>
       <p
         onClick={() => {
           console.log(consumableTemplatesData);
