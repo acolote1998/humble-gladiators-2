@@ -1,8 +1,11 @@
 package com.github.acolote1998.humble_gladiators_2.characters.controller;
 
+import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
+import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
+import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,10 +20,12 @@ import java.util.List;
 public class CharacterController {
 
     CharacterService characterService;
+    CampaignService campaignService;
 
     @Autowired
-    public CharacterController(CharacterService characterService) {
+    public CharacterController(CharacterService characterService, CampaignService campaignService) {
         this.characterService = characterService;
+        this.campaignService = campaignService;
     }
 
     @GetMapping("/{campaignId}/character-instances")
@@ -32,7 +37,8 @@ public class CharacterController {
     }
 
     @PostMapping("/{campaignId}/character-instances")
-    ResponseEntity<FullCharacterResponseDto> createCharacterForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+    ResponseEntity<HeroResponseDto> createCharacterForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @RequestBody CreateHeroRequestDto dtoRequest) {
         String userId = jwt.getSubject();
+        CharacterInstance model = characterService.createHero(campaignService.getCampaignByIdAndUserId(userId, campaignId), userId, dtoRequest);
     }
 }

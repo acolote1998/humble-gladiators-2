@@ -5,6 +5,8 @@ import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Random;
+
 @Embeddable
 @Getter
 @Setter
@@ -66,6 +68,26 @@ public class Stats {
         stats.maxMp = (int) Math.round(stats.intelligence * stats.level * 10 * ((dto.rarity() / 2.0) + (dto.tier() / 2.0)));
         stats.currentMp = stats.maxMp;
 
+        return stats;
+    }
+
+    public static Stats createRandomInitialStats() {
+        Stats stats = new Stats();
+        Random randomNumber = new Random();
+        stats.setConstitution(randomNumber.nextInt(14, 21));// between 14 and 20
+        stats.setIntelligence(randomNumber.nextInt(14, 21));// between 14 and 20
+        stats.setStrength(randomNumber.nextInt(14, 21));// between 14 and 20
+        stats.setSpeed(randomNumber.nextInt(14, 21));// between 14 and 20
+        stats.setLuck(randomNumber.nextInt(14, 21));// between 14 and 20
+        stats.setMaxHp(stats.getConstitution() * 5);// rework this formula?
+        stats.setCurrentHp(stats.getMaxHp());
+        stats.setMaxMp(stats.getIntelligence() * 10);// rework this formula?
+        stats.setCurrentMp(stats.getMaxMp());
+        stats.setHeight(randomNumber.nextInt(50, 251));// between 50 and 250 cm
+        stats.setWeight(randomNumber.nextInt(50, 251));// between 50 and 250 kg
+        stats.setLevel(1);
+        stats.setCurrentExp(0);
+        stats.setExpForNextLevel(0); //rework this
         return stats;
     }
 }

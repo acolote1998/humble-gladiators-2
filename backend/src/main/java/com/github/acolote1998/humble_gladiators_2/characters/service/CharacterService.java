@@ -1,6 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2.characters.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
+import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
@@ -82,20 +84,14 @@ public class CharacterService {
         return characterInstanceRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public CharacterInstance createCharacterInstance(Campaign campaign, String userId, FullCharacterResponseDto dto) {
+    public CharacterInstance createHero(Campaign campaign, String userId, CreateHeroRequestDto dto) {
         CharacterInstance model = new CharacterInstance();
         model.setUserId(userId);
         model.setCampaign(campaign);
         model.setName(dto.name());
-        model.setDescription(dto.description());
         model.setInventory(InventoryService.createBlankInventory());
-        model.setCharacterType(dto.characterType());
-        model.setGoldReward(dto.goldReward());
-        model.setExpReward(dto.expReward());
-        model.setCategory(dto.category());
-        model.setDiscovered(dto.discovered());
-        model.setTier(dto.tier());
-        model.setRarity(dto.rarity());
+        model.setStats(Stats.createRandomInitialStats());
+        model.setCharacterType(CharacterType.PLAYER);
         return characterInstanceRepository.save(model);
     }
 }
