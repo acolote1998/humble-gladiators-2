@@ -8,8 +8,10 @@ import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,6 +31,8 @@ public class ItemsBoosterService {
     private CampaignService campaignService;
     private ItemsBoosterRepository itemsBoosterRepository;
 
+    @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
+    private boolean UNLIMITED_BOOSTERS_ALLOWED;
 
     public ItemsBoosterService(ArmorService armorService,
                                BootsService bootsService,
@@ -48,6 +52,18 @@ public class ItemsBoosterService {
         this.weaponService = weaponService;
         this.itemsBoosterRepository = itemsBoosterRepository;
         this.campaignService = campaignService;
+    }
+
+    private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
+        if (!UNLIMITED_BOOSTERS_ALLOWED) {
+            ItemsBooster todaysBooster = itemsBoosterRepository
+                    .findByUpdatedAt_DateAndCampaign_IdAndUserId(
+                            (LocalDate.now()),
+                            campaignId,
+                            userId);
+            return todaysBooster == null;
+        }
+        return UNLIMITED_BOOSTERS_ALLOWED;
     }
 
     @Transactional
