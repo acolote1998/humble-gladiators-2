@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -57,11 +58,13 @@ public class ItemsBoosterService {
 
     private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
         if (!UNLIMITED_BOOSTERS_ALLOWED) {
+            LocalDate today = LocalDate.now();
             ItemsBooster todaysBooster = itemsBoosterRepository
-                    .findByUpdatedAt_DateAndCampaign_IdAndUserId(
-                            (LocalDate.now()),
+                    .findByCampaignIdAndUserIdAndUpdatedAtDate(
                             campaignId,
-                            userId);
+                            userId,
+                            today);
+
             return todaysBooster == null;
         }
         return UNLIMITED_BOOSTERS_ALLOWED;
