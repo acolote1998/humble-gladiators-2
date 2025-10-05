@@ -82,4 +82,8 @@ public class ArmorService {
         return armorTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
+    public ArmorTemplate getRandomArmorTemplate() {
+
+    }
+
 }
