@@ -12,7 +12,7 @@ export type ConsumableTemplateType = {
   restoreMp: number;
 };
 
-type ConsumablesCategoriesEnum =
+export type ConsumablesCategoriesEnum =
   | "FOOD"
   | "DRINK"
   | "MEDICINE"

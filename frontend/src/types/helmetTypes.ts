@@ -12,7 +12,7 @@ export type HelmetTemplateType = {
   magicalDefense: number;
 };
 
-type HelmetCategoriesEnum =
+export type HelmetCategoriesEnum =
   | "HELMET"
   | "HARD_HAT"
   | "MILITARY_HELMET"

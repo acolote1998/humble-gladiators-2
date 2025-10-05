@@ -13,7 +13,7 @@ export type SpellTemplateType = {
   restoreHp: number;
 };
 
-type SpellCategoriesEnum =
+export type SpellCategoriesEnum =
   | "FIRE_SPELL"
   | "ICE_SPELL"
   | "EARTH_SPELL"

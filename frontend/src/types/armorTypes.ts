@@ -12,7 +12,7 @@ export type ArmorTemplateType = {
   magicalDefense: number;
 };
 
-type ArmorCategoriesEnum =
+export type ArmorCategoriesEnum =
   | "ROBE"
   | "PLATE"
   | "MAIL"

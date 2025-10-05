@@ -12,7 +12,7 @@ export type ShieldTemplateType = {
   magicalDefense: number;
 };
 
-type ShieldCategoriesEnum =
+export type ShieldCategoriesEnum =
   | "SHIELD"
   | "BOOK"
   | "AMULET"

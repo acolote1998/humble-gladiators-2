@@ -12,7 +12,7 @@ export type WeaponTemplateType = {
   magicalDamage: number;
 };
 
-type WeaponCategoriesEnum =
+export type WeaponCategoriesEnum =
   | "SWORD"
   | "AXE"
   | "MACE"

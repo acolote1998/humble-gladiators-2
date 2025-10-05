@@ -12,7 +12,7 @@ export type BootsTemplateType = {
   magicalDefense: number;
 };
 
-type BootsCategoriesEnum =
+export type BootsCategoriesEnum =
   | "BOOTS"
   | "COMBAT_BOOTS"
   | "SNEAKERS"
