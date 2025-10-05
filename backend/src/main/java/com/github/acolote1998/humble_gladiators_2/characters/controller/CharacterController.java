@@ -46,4 +46,12 @@ public class CharacterController {
                 .created(URI.create("/api/campaign/character-instances/hero"))
                 .body(dto);
     }
+
+    @GetMapping("/{campaignId}/character-instances/hero")
+    ResponseEntity<HeroResponseDto> createHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance heroModel = characterService.getHero(campaignId, userId);
+        HeroResponseDto dto = HeroResponseDto.fromModelToDto(heroModel);
+        return ResponseEntity.ok(dto);
+    }
 }

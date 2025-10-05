@@ -94,4 +94,8 @@ public class CharacterService {
         log.info(String.format("Hero Created - Campaign %s - %s", campaign.getId(), userId));
         return characterInstanceRepository.save(model);
     }
+
+    public CharacterInstance getHero(Long campaignId, String userId) {
+        return characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId, userId, CharacterType.PLAYER);
+    }
 }
