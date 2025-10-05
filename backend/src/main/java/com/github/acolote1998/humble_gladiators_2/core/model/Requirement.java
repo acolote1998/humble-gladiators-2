@@ -41,4 +41,14 @@ public class Requirement {
                 RequirementEntry[] requirements
                 }""", campaignId.toString());
     }
+
+    public static Requirement cloneRequirement(Requirement original) {
+        if (original == null) return null;
+
+        Requirement cloned = new Requirement();
+        cloned.setCampaign(original.getCampaign());
+        cloned.setRequirements(RequirementEntry.cloneRequirementEntries(original.getRequirements()));
+        cloned.getRequirements().forEach(requirementEntry -> requirementEntry.setCampaign(original.getCampaign()));
+        return cloned;
+    }
 }

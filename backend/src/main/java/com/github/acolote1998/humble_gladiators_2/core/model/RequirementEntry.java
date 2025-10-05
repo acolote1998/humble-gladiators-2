@@ -10,6 +10,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -60,5 +62,17 @@ public class RequirementEntry {
                 RequirementEntryOperator.AllRequirementEntryOperatorToString(),
                 campaignId.toString()
         );
+    }
+
+    public static List<RequirementEntry> cloneRequirementEntries(List<RequirementEntry> originalEntries) {
+        List<RequirementEntry> clonedEntries = new ArrayList<>();
+        originalEntries.forEach(requirementEntry -> {
+            RequirementEntry newEntry = new RequirementEntry();
+            newEntry.setRequirementType(requirementEntry.getRequirementType());
+            newEntry.setOperator(requirementEntry.getOperator());
+            newEntry.setValue(requirementEntry.getValue());
+            newEntry.setCampaign(requirementEntry.getCampaign());
+        });
+        return clonedEntries;
     }
 }
