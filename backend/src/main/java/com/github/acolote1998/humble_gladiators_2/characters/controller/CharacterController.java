@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -41,6 +42,8 @@ public class CharacterController {
         String userId = jwt.getSubject();
         CharacterInstance model = characterService.createHero(campaignService.getCampaignByIdAndUserId(userId, campaignId), userId, dtoRequest);
         HeroResponseDto dto = HeroResponseDto.fromModelToDto(model);
-        return ResponseEntity.ok(dto);
+        return (ResponseEntity<HeroResponseDto>) ResponseEntity
+                .created(URI.create("/api/campaign/character-instances/hero"))
+                .body(dto);
     }
 }

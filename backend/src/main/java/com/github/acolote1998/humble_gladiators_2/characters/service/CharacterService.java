@@ -1,7 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
-import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
@@ -88,10 +87,11 @@ public class CharacterService {
         CharacterInstance model = new CharacterInstance();
         model.setUserId(userId);
         model.setCampaign(campaign);
-        model.setName(dto.name());
+        model.setName(dto.heroName());
         model.setInventory(InventoryService.createBlankInventory());
         model.setStats(Stats.createRandomInitialStats());
         model.setCharacterType(CharacterType.PLAYER);
+        log.info(String.format("Hero Created - Campaign %s - %s", campaign.getId(), userId));
         return characterInstanceRepository.save(model);
     }
 }
