@@ -98,4 +98,8 @@ public class SpellService {
     public SpellTemplate getRandomSpellTemplate(Long campaignId, String userId) {
         return spellTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
     }
+
+    public SpellTemplate saveSpell(SpellTemplate spell) {
+        return spellTemplateRepository.save(spell);
+    }
 }

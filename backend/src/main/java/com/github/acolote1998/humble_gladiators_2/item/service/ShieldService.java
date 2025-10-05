@@ -85,4 +85,8 @@ public class ShieldService {
     public ShieldTemplate getRandomShieldTemplate(Long campaignId, String userId) {
         return shieldTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
     }
+
+    public ShieldTemplate saveShield(ShieldTemplate shield) {
+        return shieldTemplateRepository.save(shield);
+    }
 }

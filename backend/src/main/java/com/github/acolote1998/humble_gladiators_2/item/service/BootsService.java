@@ -6,6 +6,7 @@ import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.repository.BootsTemplateRepository;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -84,5 +85,9 @@ public class BootsService {
 
     public BootsTemplate getRandomBootTemplate(Long campaignId, String userId) {
         return bootsTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    }
+
+    public BootsTemplate saveBoots(BootsTemplate boots) {
+        return bootsTemplateRepository.save(boots);
     }
 }

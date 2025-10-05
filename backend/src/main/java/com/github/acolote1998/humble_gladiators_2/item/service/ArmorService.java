@@ -86,4 +86,8 @@ public class ArmorService {
         return armorTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
     }
 
+    public ArmorTemplate saveArmor(ArmorTemplate armor) {
+        return armorTemplateRepository.save(armor);
+    }
+
 }

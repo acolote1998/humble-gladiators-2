@@ -85,4 +85,8 @@ public class ConsumableService {
     public ConsumableTemplate getRandomConsumableTemplate(Long campaignId, String userId) {
         return consumableTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
     }
+
+    public ConsumableTemplate saveConsumable(ConsumableTemplate consumable) {
+        return consumableTemplateRepository.save(consumable);
+    }
 }

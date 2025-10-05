@@ -93,4 +93,8 @@ public class WeaponService {
     public WeaponTemplate getRandomWeaponTemplate(Long campaignId, String userId) {
         return weaponTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
     }
+
+    public WeaponTemplate saveWeapon(WeaponTemplate weapon) {
+        return weaponTemplateRepository.save(weapon);
+    }
 }
