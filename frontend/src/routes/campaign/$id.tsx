@@ -16,6 +16,7 @@ import { ConsumableTemplateCard } from "../../components/characters/ConsumableTe
 import { HelmetTemplateCard } from "../../components/characters/HelmetTemplateCard";
 import { ShieldTemplateCard } from "../../components/characters/ShieldTemplateCard";
 import { SpellTemplateCard } from "../../components/characters/SpellTemplateCard";
+import { WeaponTemplateCard } from "../../components/characters/WeaponTemplateCard";
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
 });
@@ -91,13 +92,11 @@ function RouteComponent() {
           <SpellTemplateCard {...armor} />
         ))}
       </div>
-      <p
-        onClick={() => {
-          console.log(weaponTemplatesData);
-        }}
-      >
-        Log Weapons
-      </p>
+      <div className="grid grid-cols-3">
+        {weaponTemplatesData?.map((armor) => (
+          <WeaponTemplateCard {...armor} />
+        ))}
+      </div>
     </>
   );
 }
