@@ -11,7 +11,7 @@ export const WeaponTemplateCard = ({
   magicalDamage,
 }: WeaponTemplateType) => {
   //Toggle to see all information of the card
-  discovered = true;
+  // discovered = true;
 
   return (
     <div

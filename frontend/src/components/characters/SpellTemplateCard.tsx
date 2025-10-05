@@ -12,7 +12,7 @@ export const SpellTemplateCard = ({
   restoreHp,
 }: SpellTemplateType) => {
   //Toggle to see all information of the card
-  discovered = true;
+  // discovered = true;
 
   return (
     <div

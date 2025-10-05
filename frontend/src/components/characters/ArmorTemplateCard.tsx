@@ -11,7 +11,7 @@ export const ArmorTemplateCard = ({
   physicalDefense,
 }: ArmorTemplateType) => {
   //Toggle to see all information of the card
-  discovered = true;
+  // discovered = true;
 
   return (
     <div
