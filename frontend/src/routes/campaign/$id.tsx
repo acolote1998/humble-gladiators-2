@@ -90,9 +90,12 @@ function RouteComponent() {
         </p>
       )}
       <div className="grid grid-cols-3">
-        {characterInstancesData?.map((char) => (
-          <CharacterInstanceCard key={char.name} {...char} />
-        ))}
+        {characterInstancesData?.map(
+          (char) =>
+            char.characterType === "NPC" && (
+              <CharacterInstanceCard key={char.name} {...char} />
+            )
+        )}
       </div>
       <div className="grid grid-cols-3">
         {armorTemplatesData?.map((armor) => (
