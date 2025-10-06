@@ -18,6 +18,7 @@ import { ShieldTemplateCard } from "../../components/characters/ShieldTemplateCa
 import { SpellTemplateCard } from "../../components/characters/SpellTemplateCard";
 import { WeaponTemplateCard } from "../../components/characters/WeaponTemplateCard";
 import { useGetHeroByCampaignAndUser } from "../../hooks/userCharacters";
+import { useCreateItemBooster } from "../../hooks/useBoosters";
 export const Route = createFileRoute("/campaign/$id")({
   component: RouteComponent,
 });
@@ -25,6 +26,8 @@ export const Route = createFileRoute("/campaign/$id")({
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id" });
   const { data: heroData } = useGetHeroByCampaignAndUser(Number(campaignId));
+  const { mutate: createItemBoosterMutation, data: dataFromItemBooster } =
+    useCreateItemBooster();
   const { data: characterInstancesData } = useGetCharactersByCampaignAndUser(
     Number(campaignId)
   );
@@ -68,10 +71,31 @@ function RouteComponent() {
       >
         Log Hero Data
       </p>
+      <p
+        onClick={() => {
+          createItemBoosterMutation(Number(campaignId));
+        }}
+        className="bg-gray-400 p-3 rounded-lg"
+      >
+        Open Item Booster
+      </p>
+      {dataFromItemBooster && (
+        <p
+          onClick={() => {
+            console.log(dataFromItemBooster);
+          }}
+          className="bg-gray-400 p-3 rounded-lg"
+        >
+          Log Item Booster
+        </p>
+      )}
       <div className="grid grid-cols-3">
-        {characterInstancesData?.map((char) => (
-          <CharacterInstanceCard key={char.name} {...char} />
-        ))}
+        {characterInstancesData?.map(
+          (char) =>
+            char.characterType === "NPC" && (
+              <CharacterInstanceCard key={char.name} {...char} />
+            )
+        )}
       </div>
       <div className="grid grid-cols-3">
         {armorTemplatesData?.map((armor) => (
