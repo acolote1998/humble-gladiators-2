@@ -3,12 +3,17 @@ import { BACKEND_URL } from "../util/backendUrl";
 import type { ItemBoosterType } from "../types/boosterTypes";
 
 export const createItemBooster = async (
-  bearerToken: string
+  bearerToken: string,
+  campaignId: number
 ): Promise<ItemBoosterType> => {
   try {
-    const response = await axios.post(`${BACKEND_URL}/game/campaign`, {
-      headers: { Authorization: `Bearer ${bearerToken}` },
-    });
+    const response = await axios.post(
+      `${BACKEND_URL}/campaign/${campaignId}/items-booster`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(error);
