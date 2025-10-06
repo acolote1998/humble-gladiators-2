@@ -14,6 +14,7 @@
         - [X] When opening the pack, we add the ItemInstance to the hero's inventory
         - [ ] Frontend implementation for pack opening
             - [ ] Handle error if pack was already opened for the day
+            - [X] implementation of opening item booster
     - [ ] Daily Enemy Encounter
         - [ ] Users can face one enemy per day
         - [ ] The user opens an enemy booster and the enemy card is drawn from there ahd the battle starts straight
