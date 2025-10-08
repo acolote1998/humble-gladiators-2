@@ -7,6 +7,7 @@ import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryOpe
 import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
+import com.github.acolote1998.humble_gladiators_2.item.dto.ArmorInstanceResponseDto;
 import com.github.acolote1998.humble_gladiators_2.item.enums.*;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 
@@ -35,7 +36,7 @@ public record HeroResponseDto(
     ) {
     }
 
-    private record CharacterInventoryResponseDto(
+    public record CharacterInventoryResponseDto(
             List<ArmorInstanceResponseDto> armors,
             List<BootsInstanceResponseDto> boots,
             List<ConsumableInstanceResponseDto> consumables,
@@ -44,24 +45,8 @@ public record HeroResponseDto(
             List<SpellInstanceResponseDto> spells,
             List<WeaponInstanceResponseDto> weapons
     ) {
-        private record ArmorInstanceResponseDto(
-                String name,
-                String description,
-                Integer rarity,
-                Integer tier,
-                Integer value,
-                Integer quantity,
-                Boolean equipped,
-                RequirementResponseDto requirement,
-                ArmorCategory category,
-                Integer physicalDefense,
-                Integer magicalDefense,
-                String imgBase64
-        ) {
 
-        }
-
-        private record BootsInstanceResponseDto(
+        public record BootsInstanceResponseDto(
                 String name,
                 String description,
                 Integer rarity,
@@ -158,7 +143,7 @@ public record HeroResponseDto(
 
         }
 
-        private record RequirementResponseDto(List<RequirementEntryResponseDto> requirements) {
+        public record RequirementResponseDto(List<RequirementEntryResponseDto> requirements) {
 
             private record RequirementEntryResponseDto(
                     RequirementEntryType requirementType,
@@ -196,7 +181,7 @@ public record HeroResponseDto(
         );
     }
 
-    private static CharacterInventoryResponseDto mapInventory(Inventory inventory) {
+    public static CharacterInventoryResponseDto mapInventory(Inventory inventory) {
         return new CharacterInventoryResponseDto(
                 mapArmorInstances(inventory.getArmors()),
                 mapBootsInstances(inventory.getBoots()),
@@ -208,10 +193,10 @@ public record HeroResponseDto(
         );
     }
 
-    private static List<CharacterInventoryResponseDto.ArmorInstanceResponseDto> mapArmorInstances(List<ArmorInstance> armors) {
+    private static List<ArmorInstanceResponseDto> mapArmorInstances(List<ArmorInstance> armors) {
         if (armors == null) return List.of();
         return armors.stream()
-                .map(armor -> new CharacterInventoryResponseDto.ArmorInstanceResponseDto(
+                .map(armor -> new ArmorInstanceResponseDto(
                         armor.getName(),
                         armor.getDescription(),
                         armor.getRarity(),
