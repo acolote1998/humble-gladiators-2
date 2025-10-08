@@ -137,6 +137,11 @@ public class ItemsBoosterService {
                 }
                 case HELMETS -> {
                     HelmetTemplate helmetTemplate = helmetService.getRandomHelmetTemplate(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && helmetTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateHelmetTemplateImageToBytes(campaign, helmetTemplate);
+                        helmetTemplate.setImgBytes(generatedImage);
+                    }
                     helmetTemplate.setDiscovered(true);
                     helmetService.saveHelmet(helmetTemplate);
                     helmetTemplates.add(helmetTemplate);
