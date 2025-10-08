@@ -101,12 +101,10 @@ public class CharacterService {
         return characterInstanceRepository.save(model);
     }
 
-    @Transactional
     public CharacterInstance getHero(Long campaignId, String userId) {
         return characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId, userId, CharacterType.PLAYER);
     }
 
-    @Transactional
     public CharacterInstance saveCharacter(CharacterInstance model) {
         return characterInstanceRepository.save(model);
     }
