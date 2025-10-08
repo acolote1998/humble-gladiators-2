@@ -170,6 +170,11 @@ public class ItemsBoosterService {
                 }
                 case WEAPONS -> {
                     WeaponTemplate weaponTemplate = weaponService.getRandomWeaponTemplate(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && weaponTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateWeaponTemplateImageToBytes(campaign, weaponTemplate);
+                        weaponTemplate.setImgBytes(generatedImage);
+                    }
                     weaponTemplate.setDiscovered(true);
                     weaponService.saveWeapon(weaponTemplate);
                     weaponTemplates.add(weaponTemplate);
