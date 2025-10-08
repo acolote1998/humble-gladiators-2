@@ -39,37 +39,39 @@ public class RunwareService {
         return requestBody;
     }
 
-    private String imgUrlToBase64(String imgUrl) {
-        String base64Image = "";
+    byte[] imgUrlToBytes(String imgUrl) {
         try (InputStream in = new URL(imgUrl).openStream()) {
-            // Read all bytes from the InputStream
             byte[] imageBytes = in.readAllBytes();
-            // Encode to Base64
-            base64Image = Base64.getEncoder().encodeToString(imageBytes);
-            log.info("Image successfully encoded to base64");
+            log.info("Image bytes successfully processed");
+            return imageBytes;
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Error processing image to bytes");
+            return null;
         }
-        log.error("Error encoding generated image to  base64");
-        return base64Image = "Error encoding generated image to  base64";
     }
 
-    public String getBase64GeneratedImage() {
+    public byte[] getGeneratedImageBytes() {
         String prompt = "Generate an image of a red dragon";
-        String negativePrompt = "The dragon cannot have wings";
+        String negativePrompt = "The dragon cannot have a tail";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(API_KEY);
 
-        HttpEntity<List<HashMap<String, Object>>> entity = new HttpEntity<>(getRequestBody(prompt, negativePrompt), headers);
+        HttpEntity<List<HashMap<String, Object>>> entity =
+                new HttpEntity<>(getRequestBody(prompt, negativePrompt), headers);
 
-        ResponseEntity<RunwareImageGenResponse> response = restTemplate.exchange(
-                IMG_GEN_URL, HttpMethod.POST, entity, RunwareImageGenResponse.class
-        );
+        ResponseEntity<RunwareImageGenResponse> response =
+                restTemplate.exchange(IMG_GEN_URL, HttpMethod.POST, entity, RunwareImageGenResponse.class);
+
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
-            return imgUrlToBase64(imgUrl);
-        } else return "Error generating card image";
+            return imgUrlToBytes(imgUrl);
+        } else {
+            log.error("Error generating card image");
+            return null;
+        }
     }
+
 }
