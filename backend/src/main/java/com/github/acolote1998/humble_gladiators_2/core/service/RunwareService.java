@@ -1,6 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
+import com.github.acolote1998.humble_gladiators_2.core.dto.RunwareImageGenResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,7 +39,21 @@ public class RunwareService {
     }
 
 
-    String getBase64GeneratedImage() {
+    public String getBase64GeneratedImage() {
+        String prompt = "Generate an image of a red dragon";
+        String negativePrompt = "The dragon cannot have wings";
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(API_KEY);
+
+        HttpEntity<List<HashMap<String, Object>>> entity = new HttpEntity<>(getRequestBody(prompt, negativePrompt), headers);
+
+        ResponseEntity<RunwareImageGenResponse> response = restTemplate.exchange(
+                IMG_GEN_URL, HttpMethod.POST, entity, RunwareImageGenResponse.class
+        );
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody().data().getFirst().imageURL();
+        } else return "Error generating card image";
     }
 }
