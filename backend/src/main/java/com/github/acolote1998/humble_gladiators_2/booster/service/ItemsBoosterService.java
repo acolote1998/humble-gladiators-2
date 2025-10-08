@@ -115,6 +115,11 @@ public class ItemsBoosterService {
                 }
                 case BOOTS -> {
                     BootsTemplate bootTemplate = bootsService.getRandomBootTemplate(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && bootTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateBootsTemplateImageToBytes(campaign, bootTemplate);
+                        bootTemplate.setImgBytes(generatedImage);
+                    }
                     bootTemplate.setDiscovered(true);
                     bootsService.saveBoots(bootTemplate);
                     bootsTemplates.add(bootTemplate);
