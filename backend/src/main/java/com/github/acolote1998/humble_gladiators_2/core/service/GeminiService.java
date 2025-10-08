@@ -612,4 +612,14 @@ public class GeminiService {
         return generatedCharacters;
     }
 
+    public String getPositivePromptForRuneware(String promptForGemini) {
+        log.info("Trying to generate prompt for runeware to generate an image");
+        String geminiAnswer = "";
+        try {
+            geminiAnswer = callGemini(promptForGemini);
+        } catch (InterruptedException e) {
+            log.error("Error generating prompt for runeware" + e.getMessage());
+        }
+        return cleanResponseToJson(geminiAnswer);
+    }
 }
