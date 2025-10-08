@@ -9,6 +9,7 @@ export const ShieldTemplateCard = ({
   tier,
   magicalDefense,
   physicalDefense,
+  imgBase64,
 }: ShieldTemplateType) => {
   //Toggle to see all information of the card
   // discovered = true;
@@ -49,14 +50,21 @@ export const ShieldTemplateCard = ({
 
       {/* Category & name */}
       <div className="flex flex-col items-center mt-6">
-        <img
-          draggable={false}
-          src={
-            discovered ? `/categories/${category}.png` : `/categories/OTHER.png`
-          }
-          alt={category}
-          className="w-65.5 h-auto"
-        />
+        {discovered && imgBase64 ? (
+          <img
+            draggable={false}
+            src={`data:image/jpeg;base64,${imgBase64}`}
+            alt={category}
+            className="w-66 h-48.5"
+          />
+        ) : (
+          <img
+            draggable={false}
+            src={`/categories/${category}.png`}
+            alt={category}
+            className="w-65.5 h-auto"
+          />
+        )}
         <p className="text-lg mt-8 ">{discovered ? name : "?"}</p>
         <p className="text-sm opacity-80 text-center p-1 mt-0.5 px-7">
           {discovered ? description : "?"}
