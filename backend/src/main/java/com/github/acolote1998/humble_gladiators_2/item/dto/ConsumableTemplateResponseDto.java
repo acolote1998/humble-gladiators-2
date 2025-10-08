@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
 
@@ -19,7 +20,8 @@ public record ConsumableTemplateResponseDto(
         Long campaignId,
         ConsumablesCategory category,
         Integer restoreHp,
-        Integer restoreMp
+        Integer restoreMp,
+        String imgBase64
 ) {
 
     private static ConsumableTemplateResponseDto fromModelToDto(ConsumableTemplate consumableTemplate) {
@@ -36,7 +38,8 @@ public record ConsumableTemplateResponseDto(
                 consumableTemplate.getCampaign().getId(),
                 consumableTemplate.getCategory(),
                 consumableTemplate.getRestoreHp(),
-                consumableTemplate.getRestoreMp()
+                consumableTemplate.getRestoreMp(),
+                BytesToBase64.bytesToBase64(consumableTemplate.getImgBytes())
         );
     }
 

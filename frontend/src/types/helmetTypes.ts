@@ -9,6 +9,7 @@ export type HelmetTemplateType = {
   campaignId: number;
   category: HelmetCategoriesEnum;
   physicalDefense: number;
+  imgBase64: string;
   magicalDefense: number;
 };
 

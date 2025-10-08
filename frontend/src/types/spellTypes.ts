@@ -10,6 +10,7 @@ export type SpellTemplateType = {
   category: SpellCategoriesEnum;
   physicalDamage: number;
   magicalDamage: number;
+  imgBase64: string;
   restoreHp: number;
 };
 

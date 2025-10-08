@@ -90,6 +90,7 @@ type HeroConsumablesType = {
   requirement: HeroRequirementType;
   category: ConsumablesCategoriesEnum;
   restoreHp: number;
+  imgBase64: string;
   restoreMp: number;
 };
 
@@ -104,6 +105,7 @@ type HeroSpellsType = {
   requirement: HeroRequirementType;
   category: SpellCategoriesEnum;
   restoreHp: number;
+  imgBase64: string;
   physicalDamage: number;
   magicalDamage: number;
 };
@@ -118,6 +120,7 @@ type HeroWeaponsType = {
   equipped: boolean;
   requirement: HeroRequirementType;
   category: WeaponCategoriesEnum;
+  imgBase64: string;
   physicalDamage: number;
   magicalDamage: number;
 };
@@ -133,6 +136,7 @@ type HeroShieldsType = {
   requirement: HeroRequirementType;
   category: ShieldCategoriesEnum;
   physicalDefense: number;
+  imgBase64: string;
   magicalDefense: number;
 };
 
@@ -147,6 +151,7 @@ type HeroBootsType = {
   requirement: HeroRequirementType;
   category: BootsCategoriesEnum;
   physicalDefense: number;
+  imgBase64: string;
   magicalDefense: number;
 };
 
@@ -160,6 +165,7 @@ type HeroHelmetsType = {
   equipped: boolean;
   requirement: HeroRequirementType;
   category: HelmetCategoriesEnum;
+  imgBase64: string;
   physicalDefense: number;
   magicalDefense: number;
 };
@@ -176,6 +182,7 @@ type HeroArmorType = {
   category: ArmorCategoriesEnum;
   physicalDefense: number;
   magicalDefense: number;
+  imgBase64: string;
 };
 
 type RequirementEntryOperatorEnum =

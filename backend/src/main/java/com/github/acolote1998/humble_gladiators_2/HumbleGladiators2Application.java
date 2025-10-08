@@ -8,9 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class HumbleGladiators2Application {
 
     public static void main(String[] args) throws InterruptedException {
-
-
+        
         ConfigurableApplicationContext context = SpringApplication.run(HumbleGladiators2Application.class, args);
-
     }
 }

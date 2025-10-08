@@ -9,6 +9,7 @@ export type ShieldTemplateType = {
   campaignId: number;
   category: ShieldCategoriesEnum;
   physicalDefense: number;
+  imgBase64: string;
   magicalDefense: number;
 };
 

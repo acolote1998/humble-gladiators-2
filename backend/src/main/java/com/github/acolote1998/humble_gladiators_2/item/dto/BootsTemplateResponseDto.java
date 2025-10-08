@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 
@@ -19,7 +20,8 @@ public record BootsTemplateResponseDto(
         Long campaignId,
         BootsCategory category,
         Integer physicalDefense,
-        Integer magicalDefense
+        Integer magicalDefense,
+        String imgBase64
 ) {
 
     private static BootsTemplateResponseDto fromModelToDto(BootsTemplate bootsTemplate) {
@@ -36,7 +38,8 @@ public record BootsTemplateResponseDto(
                 bootsTemplate.getCampaign().getId(),
                 bootsTemplate.getCategory(),
                 bootsTemplate.getPhysicalDefense(),
-                bootsTemplate.getMagicalDefense()
+                bootsTemplate.getMagicalDefense(),
+                BytesToBase64.bytesToBase64(bootsTemplate.getImgBytes())
         );
     }
 

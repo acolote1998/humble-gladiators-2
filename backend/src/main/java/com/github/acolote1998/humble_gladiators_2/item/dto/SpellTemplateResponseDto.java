@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.SpellTemplate;
 
@@ -20,7 +21,8 @@ public record SpellTemplateResponseDto(
         SpellCategory category,
         Integer physicalDamage,
         Integer magicalDamage,
-        Integer restoreHp
+        Integer restoreHp,
+        String imgBase64
 ) {
 
     private static SpellTemplateResponseDto fromModelToDto(SpellTemplate spellTemplate) {
@@ -38,7 +40,8 @@ public record SpellTemplateResponseDto(
                 spellTemplate.getCategory(),
                 spellTemplate.getPhysicalDamage(),
                 spellTemplate.getMagicalDamage(),
-                spellTemplate.getRestoreHp()
+                spellTemplate.getRestoreHp(),
+                BytesToBase64.bytesToBase64(spellTemplate.getImgBytes())
         );
     }
 

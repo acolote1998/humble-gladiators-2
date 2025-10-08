@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.WeaponTemplate;
 
@@ -19,7 +20,8 @@ public record WeaponTemplateResponseDto(
         Long campaignId,
         WeaponCategory category,
         Integer physicalDamage,
-        Integer magicalDamage
+        Integer magicalDamage,
+        String imgBase64
 ) {
 
     private static WeaponTemplateResponseDto fromModelToDto(WeaponTemplate weaponTemplate) {
@@ -36,7 +38,8 @@ public record WeaponTemplateResponseDto(
                 weaponTemplate.getCampaign().getId(),
                 weaponTemplate.getCategory(),
                 weaponTemplate.getPhysicalDamage(),
-                weaponTemplate.getMagicalDamage()
+                weaponTemplate.getMagicalDamage(),
+                BytesToBase64.bytesToBase64(weaponTemplate.getImgBytes())
         );
     }
 

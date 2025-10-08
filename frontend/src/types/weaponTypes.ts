@@ -9,6 +9,7 @@ export type WeaponTemplateType = {
   campaignId: number;
   category: WeaponCategoriesEnum;
   physicalDamage: number;
+  imgBase64: string;
   magicalDamage: number;
 };
 

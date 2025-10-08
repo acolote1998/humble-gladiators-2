@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.HelmetCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.HelmetTemplate;
 
@@ -19,7 +20,8 @@ public record HelmetTemplateResponseDto(
         Long campaignId,
         HelmetCategory category,
         Integer physicalDefense,
-        Integer magicalDefense
+        Integer magicalDefense,
+        String imgBase64
 ) {
 
     private static HelmetTemplateResponseDto fromModelToDto(HelmetTemplate helmetTemplate) {
@@ -36,7 +38,8 @@ public record HelmetTemplateResponseDto(
                 helmetTemplate.getCampaign().getId(),
                 helmetTemplate.getCategory(),
                 helmetTemplate.getPhysicalDefense(),
-                helmetTemplate.getMagicalDefense()
+                helmetTemplate.getMagicalDefense(),
+                BytesToBase64.bytesToBase64(helmetTemplate.getImgBytes())
         );
     }
 
