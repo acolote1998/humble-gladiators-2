@@ -617,6 +617,7 @@ public class GeminiService {
         String geminiAnswer = "";
         try {
             geminiAnswer = callGemini(promptForGemini);
+            log.info("Prompt for Runeware is ready");
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
