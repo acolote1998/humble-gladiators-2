@@ -19,7 +19,8 @@ public record ArmorTemplateResponseDto(
         Long campaignId,
         ArmorCategory category,
         Integer physicalDefense,
-        Integer magicalDefense
+        Integer magicalDefense,
+        String imgBase64
 ) {
 
     private static ArmorTemplateResponseDto fromModelToDto(ArmorTemplate armorTemplate) {
