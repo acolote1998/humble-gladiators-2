@@ -6,6 +6,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryOperator;
 import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.*;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 
@@ -54,7 +55,8 @@ public record HeroResponseDto(
                 RequirementResponseDto requirement,
                 ArmorCategory category,
                 Integer physicalDefense,
-                Integer magicalDefense
+                Integer magicalDefense,
+                String imgBase64
         ) {
 
         }
@@ -220,7 +222,8 @@ public record HeroResponseDto(
                         mapRequirement(armor.getRequirement()),
                         armor.getTemplate().getCategory(),
                         armor.getTemplate().getPhysicalDefense(),
-                        armor.getTemplate().getMagicalDefense()
+                        armor.getTemplate().getMagicalDefense(),
+                        BytesToBase64.bytesToBase64(armor.getImgBytes())
                 ))
                 .toList();
     }

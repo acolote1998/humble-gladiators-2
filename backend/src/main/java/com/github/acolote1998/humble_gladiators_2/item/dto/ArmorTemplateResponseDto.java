@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 
@@ -37,7 +38,8 @@ public record ArmorTemplateResponseDto(
                 armorTemplate.getCampaign().getId(),
                 armorTemplate.getCategory(),
                 armorTemplate.getPhysicalDefense(),
-                armorTemplate.getMagicalDefense()
+                armorTemplate.getMagicalDefense(),
+                BytesToBase64.bytesToBase64(armorTemplate.getImgBytes())
         );
     }
 
