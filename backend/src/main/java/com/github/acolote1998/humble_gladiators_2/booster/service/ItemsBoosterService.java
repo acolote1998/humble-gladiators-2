@@ -185,8 +185,7 @@ public class ItemsBoosterService {
                 ItemTypesForBooster.SPELLS,
                 ItemTypesForBooster.WEAPONS));
         Collections.shuffle(itemTypes);
-//        return itemTypes.getFirst();
-        return ItemTypesForBooster.ARMORS;
+        return itemTypes.getFirst();
     }
 
 
