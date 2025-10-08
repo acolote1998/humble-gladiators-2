@@ -98,8 +98,14 @@ public class RunwareService {
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
-            byte[] imgBytes = imgUrlToBytes(imgUrl);
-            return imgBytes;
+            try {
+                byte[] imgBytes = imgUrlToBytes(imgUrl);
+                return imgBytes;
+            } catch (Exception e) {
+                log.error("Could not convert img url to bytes - " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
         } else {
             log.error("Error generating card image");
             return null;
