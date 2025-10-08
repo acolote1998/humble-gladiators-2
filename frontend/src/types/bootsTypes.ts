@@ -9,6 +9,7 @@ export type BootsTemplateType = {
   campaignId: number;
   category: BootsCategoriesEnum;
   physicalDefense: number;
+  imgBase64: string;
   magicalDefense: number;
 };
 

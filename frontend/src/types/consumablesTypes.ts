@@ -10,6 +10,7 @@ export type ConsumableTemplateType = {
   category: ConsumablesCategoriesEnum;
   restoreHp: number;
   restoreMp: number;
+  imgBase64: string;
 };
 
 export type ConsumablesCategoriesEnum =
