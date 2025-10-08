@@ -1,17 +1,18 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.RunwareImageGenResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.*;
 
 @Service
+@Slf4j
 public class RunwareService {
     RestTemplate restTemplate = new RestTemplate();
 
@@ -38,6 +39,20 @@ public class RunwareService {
         return requestBody;
     }
 
+    private String imgUrlToBase64(String imgUrl) {
+        String base64Image = "";
+        try (InputStream in = new URL(imgUrl).openStream()) {
+            // Read all bytes from the InputStream
+            byte[] imageBytes = in.readAllBytes();
+            // Encode to Base64
+            base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            log.info("Image successfully encoded to base64");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.error("Error encoding generated image to  base64");
+        return base64Image = "Error encoding generated image to  base64";
+    }
 
     public String getBase64GeneratedImage() {
         String prompt = "Generate an image of a red dragon";
@@ -53,7 +68,8 @@ public class RunwareService {
                 IMG_GEN_URL, HttpMethod.POST, entity, RunwareImageGenResponse.class
         );
         if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody().data().getFirst().imageURL();
+            String imgUrl = response.getBody().data().getFirst().imageURL();
+            return imgUrlToBase64(imgUrl);
         } else return "Error generating card image";
     }
 }
