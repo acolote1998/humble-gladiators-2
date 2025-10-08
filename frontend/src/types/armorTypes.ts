@@ -10,6 +10,7 @@ export type ArmorTemplateType = {
   category: ArmorCategoriesEnum;
   physicalDefense: number;
   magicalDefense: number;
+  imgBase64: string;
 };
 
 export type ArmorCategoriesEnum =

@@ -176,6 +176,7 @@ type HeroArmorType = {
   category: ArmorCategoriesEnum;
   physicalDefense: number;
   magicalDefense: number;
+  imgBase64: string;
 };
 
 type RequirementEntryOperatorEnum =
