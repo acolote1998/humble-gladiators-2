@@ -104,7 +104,7 @@ public class ItemsBoosterService {
             switch (getRandomItemType()) {
                 case ARMORS -> {
                     ArmorTemplate armorTemplate = armorService.getRandomArmorTemplate(campaignId, userId);
-                    if (IMAGE_GENERATION_ACTIVATED && armorTemplate.getImgBytes() != null) {
+                    if (IMAGE_GENERATION_ACTIVATED && armorTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateArmorTemplateImageToBytes(campaign, armorTemplate);
                         armorTemplate.setImgBytes(generatedImage);
@@ -185,7 +185,8 @@ public class ItemsBoosterService {
                 ItemTypesForBooster.SPELLS,
                 ItemTypesForBooster.WEAPONS));
         Collections.shuffle(itemTypes);
-        return itemTypes.getFirst();
+//        return itemTypes.getFirst();
+        return ItemTypesForBooster.ARMORS;
     }
 
 

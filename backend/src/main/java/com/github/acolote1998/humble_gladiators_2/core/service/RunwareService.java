@@ -68,6 +68,7 @@ public class RunwareService {
         log.info(String.format("Attempt to generate image for %s - %s", armorTemplate.getName(), ArmorTemplate.class));
         String positivePrompt = String.format("""
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
+                        - The object to illustrate is of type: %s
                         - The card belongs to the campaign theme: %s.
                         - The object to illustrate is: "%s".
                         - A description of the object (for extra context): "%s"
@@ -83,6 +84,7 @@ public class RunwareService {
                           - Realistic fantasy illustration, painterly, with depth and shading
                           - Emphasize color, texture, and thematic storytelling (e.g., dragon scales, mystical elements)
                         """,
+                "Armor",
                 campaign.getTheme().getWantedThemes().toString(),
                 armorTemplate.getName(),
                 armorTemplate.getDescription());
@@ -93,7 +95,8 @@ public class RunwareService {
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
-            return imgUrlToBytes(imgUrl);
+            byte[] imgBytes = imgUrlToBytes(imgUrl);
+            return imgBytes;
         } else {
             log.error("Error generating card image");
             return null;
