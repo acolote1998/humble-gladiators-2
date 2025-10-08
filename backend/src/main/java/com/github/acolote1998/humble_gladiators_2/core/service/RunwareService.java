@@ -80,28 +80,28 @@ public class RunwareService {
         if (tier == null) return "";
         return switch (tier) {
             case 1 ->
-                    "Simple, low-tier craftsmanship — made of common materials, showing signs of wear or basic construction.";
-            case 2 -> "Moderate-tier equipment — reliable design with some ornamentation or improved materials.";
+                    "Low-tier — simple and basic in form or power, made with common means or showing limited refinement.";
+            case 2 -> "Moderate-tier — reliable quality or moderate potency, showing some refinement or stability.";
             case 3 ->
-                    "Well-crafted, balanced tier — detailed workmanship, durable, and battle-ready with distinct style.";
+                    "Advanced-tier — balanced, durable, or well-developed, crafted or manifested with notable skill or energy.";
             case 4 ->
-                    "High-tier craftsmanship — ornate, polished, and made with superior materials or faint magical glow.";
+                    "High-tier — exceptional quality or strong magical energy, refined, polished, or imbued with clear power.";
             case 5 ->
-                    "Legendary-tier artifact — masterpiece of design, glowing with enchantment, radiating immense power and prestige.";
+                    "Legendary-tier — extraordinary and awe-inspiring, a masterpiece or source of immense power and prestige.";
             default -> "";
         };
     }
 
+
     public String rarityToContext(Integer rarity) {
         if (rarity == null) return "";
         return switch (rarity) {
-            case 1 -> "Common rarity — plain and utilitarian, lacking decoration or special properties.";
-            case 2 -> "Uncommon rarity — slightly refined, showing minor magical traits or uncommon materials.";
-            case 3 -> "Rare rarity — detailed, elegant, with unique characteristics and notable craftsmanship.";
-            case 4 ->
-                    "Epic rarity — visually impressive, glowing or enchanted, crafted by master artisans or imbued with strong magic.";
+            case 1 -> "Common rarity — ordinary and widely found, simple or unremarkable in nature.";
+            case 2 -> "Uncommon rarity — slightly distinctive, showing minor magical or unusual qualities.";
+            case 3 -> "Rare rarity — unique or exceptional in appearance, power, or craftsmanship.";
+            case 4 -> "Epic rarity — striking and powerful, infused with great energy, artistry, or legend.";
             case 5 ->
-                    "Legendary rarity — one-of-a-kind artifact, awe-inspiring, exuding mythic energy and grand design.";
+                    "Legendary rarity — one-of-a-kind and mythical, surrounded by stories of greatness or divine origin.";
             default -> "";
         };
     }
