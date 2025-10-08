@@ -148,6 +148,11 @@ public class ItemsBoosterService {
                 }
                 case SHIELDS -> {
                     ShieldTemplate shieldTemplate = shieldService.getRandomShieldTemplate(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && shieldTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateShieldTemplateImageToBytes(campaign, shieldTemplate);
+                        shieldTemplate.setImgBytes(generatedImage);
+                    }
                     shieldTemplate.setDiscovered(true);
                     shieldService.saveShield(shieldTemplate);
                     shieldTemplates.add(shieldTemplate);

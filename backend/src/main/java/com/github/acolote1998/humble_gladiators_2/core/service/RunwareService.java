@@ -6,6 +6,7 @@ import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.HelmetTemplate;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ShieldTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -292,6 +293,52 @@ public class RunwareService {
                 helmetTemplate.getDescription(),
                 tierToContext(helmetTemplate.getTier()),
                 rarityToContext(helmetTemplate.getRarity()),
+                getGeneralRules());
+        String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
+        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
+                + campaign.getTheme().getUnwantedThemes().toString();
+
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String imgUrl = response.getBody().data().getFirst().imageURL();
+            try {
+                byte[] imgBytes = imgUrlToBytes(imgUrl);
+                return imgBytes;
+            } catch (Exception e) {
+                log.error("Could not convert img url to bytes - " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            log.error("Error generating card image");
+            return null;
+        }
+    }
+
+    public byte[] generateShieldTemplateImageToBytes(Campaign campaign, ShieldTemplate shieldTemplate) {
+        log.info(String.format("Attempt to generate image for %s - %s", shieldTemplate.getName(), ShieldTemplate.class));
+        String promptForGemini = String.format("""
+                        You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
+                        For generating the prompt, use this context:
+                        You are generating high-quality fantasy artwork for a trading card in an RPG game.
+                        - The object to illustrate is of type: %s
+                        - Focus strictly on the requested subject. Do not include any additional or implied elements unless explicitly specified \s
+                        (e.g., if illustrating a shield, render only the shield—no body, mannequin, or person holding it unless instructed or included \s
+                        in the object name or description).
+                        - The card belongs to the campaign theme: %s.
+                        - The object to illustrate is: "%s".
+                        - A description of the object (for extra context): "%s"
+                        - Details needed: %s
+                        - Details needed: %s
+                        %s
+                        """,
+                "Shield",
+                campaign.getTheme().getWantedThemes().toString(),
+                shieldTemplate.getName(),
+                shieldTemplate.getDescription(),
+                tierToContext(shieldTemplate.getTier()),
+                rarityToContext(shieldTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "

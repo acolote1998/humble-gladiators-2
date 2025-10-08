@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ShieldTemplate;
 
@@ -19,7 +20,8 @@ public record ShieldTemplateResponseDto(
         Long campaignId,
         ShieldCategory category,
         Integer physicalDefense,
-        Integer magicalDefense
+        Integer magicalDefense,
+        String imgBase64
 ) {
 
     private static ShieldTemplateResponseDto fromModelToDto(ShieldTemplate shieldTemplate) {
@@ -36,7 +38,8 @@ public record ShieldTemplateResponseDto(
                 shieldTemplate.getCampaign().getId(),
                 shieldTemplate.getCategory(),
                 shieldTemplate.getPhysicalDefense(),
-                shieldTemplate.getMagicalDefense()
+                shieldTemplate.getMagicalDefense(),
+                BytesToBase64.bytesToBase64(shieldTemplate.getImgBytes())
         );
     }
 
