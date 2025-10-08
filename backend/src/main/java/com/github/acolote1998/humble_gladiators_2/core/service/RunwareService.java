@@ -119,9 +119,12 @@ public class RunwareService {
                           - High-quality, vibrant, detailed, and visually striking
                           - Consistent with the campaign theme
                           - Focused on the item/character, no background clutter
+                        - Background: Use a subtle, thematic background that complements the item without overwhelming it
+                          (e.g., dark gradient, mystical atmosphere, textured surface, or environmental hint that matches the campaign theme)
                         - Avoid:
                           - Any text, logos, or symbols
                           - Any references to unrelated themes
+                          - Plain white or completely empty backgrounds
                         - Style:
                           - Realistic fantasy illustration, painterly, with depth and shading
                           - Emphasize color, texture, and thematic storytelling (e.g., dragon scales, mystical elements)
@@ -132,6 +135,12 @@ public class RunwareService {
                             - Do NOT use markdown code blocks or backticks.
                             - Just return the raw text that will be sent to the image generator.
                 """;
+    }
+
+    public String buildNegativePrompt(String unwantedThemes) {
+        return "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
+                + unwantedThemes 
+                + ", white background, plain background, empty background, studio lighting";
     }
 
     public byte[] generateArmorTemplateImageToBytes(Campaign campaign, ArmorTemplate armorTemplate) {
@@ -159,8 +168,7 @@ public class RunwareService {
                 rarityToContext(armorTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + campaign.getTheme().getUnwantedThemes().toString();
+        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -205,8 +213,7 @@ public class RunwareService {
                 rarityToContext(bootsTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + campaign.getTheme().getUnwantedThemes().toString();
+        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -251,8 +258,7 @@ public class RunwareService {
                 rarityToContext(consumableTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + campaign.getTheme().getUnwantedThemes().toString();
+        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -297,8 +303,7 @@ public class RunwareService {
                 rarityToContext(helmetTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + campaign.getTheme().getUnwantedThemes().toString();
+        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -343,8 +348,7 @@ public class RunwareService {
                 rarityToContext(shieldTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + campaign.getTheme().getUnwantedThemes().toString();
+        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -391,8 +395,7 @@ public class RunwareService {
                 rarityToContext(spellTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + campaign.getTheme().getUnwantedThemes().toString();
+        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -439,8 +442,7 @@ public class RunwareService {
                 rarityToContext(weaponTemplate.getRarity()),
                 getGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + campaign.getTheme().getUnwantedThemes().toString();
+        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
