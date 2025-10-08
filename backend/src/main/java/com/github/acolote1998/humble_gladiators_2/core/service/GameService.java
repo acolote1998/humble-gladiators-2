@@ -4,7 +4,6 @@ import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterSe
 import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

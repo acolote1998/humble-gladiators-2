@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.characters.controller;
 
-import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
