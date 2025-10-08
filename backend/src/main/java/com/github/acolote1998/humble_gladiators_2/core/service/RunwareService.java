@@ -9,6 +9,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
@@ -41,15 +43,16 @@ public class RunwareService {
         return requestBody;
     }
 
-    byte[] imgUrlToBytes(String imgUrl) {
+    byte[] imgUrlToBytes(String imgUrl) throws InterruptedException {
         try (InputStream in = new URL(imgUrl).openStream()) {
             byte[] imageBytes = in.readAllBytes();
             log.info("Image bytes successfully processed");
             return imageBytes;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            log.error("Error processing image to bytes");
-            return null;
+            log.error("Error processing image to bytes, retrying");
+            Thread.sleep(500);
+            return imgUrlToBytes(imgUrl);
         }
     }
 
