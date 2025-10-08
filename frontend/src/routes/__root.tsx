@@ -5,6 +5,7 @@ import {
   SignedIn,
   SignedOut,
 } from "@clerk/clerk-react";
+import GetInfinityToken from "../components/GetInfinityToken";
 
 const RootLayout = () => (
   <>
@@ -19,6 +20,7 @@ const RootLayout = () => (
         Campaign
       </Link>
       <SignedIn>
+        <GetInfinityToken />
         <SignOutButton />
       </SignedIn>
       <SignedOut>
