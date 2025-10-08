@@ -50,7 +50,7 @@ export const HelmetTemplateCard = ({
 
       {/* Category & name */}
       <div className="flex flex-col items-center mt-6">
-        {discovered ? (
+        {discovered && imgBase64 ? (
           <img
             draggable={false}
             src={`data:image/jpeg;base64,${imgBase64}`}
