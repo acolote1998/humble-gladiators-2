@@ -27,6 +27,9 @@ public abstract class AbstractItem {
     private Boolean equipped;
     private String userId; //from Clerk
 
+    @Lob
+    byte[] imgBytes;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;

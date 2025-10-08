@@ -31,6 +31,9 @@ public abstract class AbstractCharacter {
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
+    @Lob
+    byte[] imgBytes;
+
     private String name;
     private String description;
 
