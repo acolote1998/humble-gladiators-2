@@ -159,6 +159,11 @@ public class ItemsBoosterService {
                 }
                 case SPELLS -> {
                     SpellTemplate spellTemplate = spellService.getRandomSpellTemplate(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && spellTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateSpellTemplateImageToBytes(campaign, spellTemplate);
+                        spellTemplate.setImgBytes(generatedImage);
+                    }
                     spellTemplate.setDiscovered(true);
                     spellService.saveSpell(spellTemplate);
                     spellTemplates.add(spellTemplate);
