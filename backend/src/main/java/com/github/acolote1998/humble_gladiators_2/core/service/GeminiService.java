@@ -12,7 +12,6 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
-import com.github.acolote1998.humble_gladiators_2.imagegeneration.model.DrawingAction;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
@@ -120,70 +119,6 @@ public class GeminiService {
         return callGemini(prompt);
     }
 
-    public List<DrawingAction> generateDrawingActionsTest(String imageToGenerate, Integer width, Integer height) throws JsonProcessingException, InterruptedException {
-        log.info("Starting List<DrawingAction> generation attempt");
-        String prompt = String.format("""
-                Return ONLY a valid JSON array (no explanations, no markdown).
-                Each object in the array must include ALL fields exactly as defined, even if unused:
-                { "drawingMethod": int, "initialX": int, "initialY": int, "red": int, "green": int, "blue": int, "alpha": int, "size": int, "width": int, "height": int, "radius": int }
-                
-                TASK:
-                Generate a JSON array of drawing actions to create a MINIMALISTIC %s image.
-                
-                SYSTEM OVERVIEW:
-                - Canvas: %dx%d pixels with transparent background
-                - Actions are layered in order: first = background, last = foreground
-                - Shapes are pixel-filled based on the rules below
-                - Generate between 40 and 80 drawing actions
-                - Use color variations for depth and recognizability
-                - Center the main figure around coordinates %d,%d
-                - All color values must be integers in range 0–255
-                - All unused parameters must be 0
-                
-                DRAWING METHODS (exact behavior from rendering engine):
-                
-                0: SQUARE — solid square, top-left at (initialX, initialY), size = side length 
-                1: RECTANGLE — solid rectangle, top-left at (initialX, initialY), width × height 
-                2: HORIZONTAL_LINE — line starting at (initialX, initialY), length = width 
-                3: VERTICAL_LINE — line starting at (initialX, initialY), length = height 
-                4: CIRCLE — solid circle, center at (initialX, initialY), radius 
-                5: HOLLOW_SQUARE — outline only, top-left at (initialX, initialY), size = side length 
-                6: DOT — single pixel at (initialX, initialY) 
-                7: TRIANGLE_UP — apex at (initialX, initialY), height = size 
-                8: TRIANGLE_DOWN — apex at (initialX, initialY), height = size 
-                9: TRIANGLE_LEFT — tip at (initialX, initialY), width = size 
-                10: TRIANGLE_RIGHT — tip at (initialX, initialY), width = size 
-                11: DIAMOND — centered at (initialX, initialY), size = diagonal length 
-                12: ELLIPSE — centered at (initialX, initialY), width × height 
-                13: ARC — centered at (initialX, initialY), radius, size = start angle (degrees), width = end angle (degrees) 
-                14: CURVED_LINE — start at (initialX, initialY), width = end X offset, height = end Y offset, size = curve height 
-                15: STAR — centered at (initialX, initialY), radius = outer radius, size = number of points (5–8) 
-                16: GRADIENT_SQUARE — solid gradient square, top-left at (initialX, initialY), size = side length 
-                    - red = start R, green = start G 
-                    - blue = end R, alpha = end G 
-                    - blue channel is fixed at 128, alpha is fixed at 255 during rendering
-                
-                DESIGN APPROACH:
-                - Build the %s using overlapping shapes
-                - Ensure it is minimalistic but clearly recognizable
-                - Use depth layering for clarity
-                - Keep the drawing centered around %d,%d
-                
-                """, imageToGenerate, width, height, width / 2, height / 2, width - 1, width, height, width / 2, height / 2);
-
-        try {
-            String resultText = callGemini(prompt);
-            resultText = resultText.replaceAll("`", "").replaceAll("json", "");
-            List<DrawingAction> resultList = mapper.readValue(resultText, new TypeReference<List<DrawingAction>>() {
-            });
-            log.info("Success. List<DrawingAction> generated " + resultList.size() + " actions");
-            return resultList;
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            throw e;
-        }
-    }
-
     public List<ItemFromGeminiDto> generateTwentyFiveArmors(Campaign campaign) {
         log.info("Trying to generate 25 armors through Gemini");
         Long campaignId = campaign.getId();
@@ -200,13 +135,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-
+                
                   The "Requirement" structure is: \n %s
-
+                
                   The "RequirementEntry" structure is: \n %s
-
+                
                   The ArmorCategory values are: \n %s
-
+                
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -261,13 +196,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-
+                
                   The "Requirement" structure is: \n %s
-
+                
                   The "RequirementEntry" structure is: \n %s
-
+                
                   The BootsCategory values are: \n %s
-
+                
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -320,13 +255,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-
+                
                   The "Requirement" structure is: \n %s
-
+                
                   The "RequirementEntry" structure is: \n %s
-
+                
                   The ConsumablesCategory values are: \n %s
-
+                
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -379,13 +314,13 @@ public class GeminiService {
                   " %s "
                 
                   The object structure context is: \n %s
-
+                
                   The "Requirement" structure is: \n %s
-
+                
                   The "RequirementEntry" structure is: \n %s
-
+                
                   The HelmetCategory values are: \n %s
-
+                
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -442,9 +377,9 @@ public class GeminiService {
                   The "Requirement" structure is: \n %s
                 
                   The "RequirementEntry" structure is: \n %s
-
+                
                   The ShieldCategory values are: \n %s
-
+                
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -507,9 +442,9 @@ public class GeminiService {
                   The "Requirement" structure is: \n %s
                 
                   The "RequirementEntry" structure is: \n %s
-
+                
                   The SpellCategory values are: \n %s
-
+                
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
@@ -569,9 +504,9 @@ public class GeminiService {
                   The "Requirement" structure is: \n %s
                 
                   The "RequirementEntry" structure is: \n %s
-
+                
                   The WeaponCategory values are: \n %s
-
+                
                  - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                  - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                  - If the generated object will not have a requirement, then make it null
