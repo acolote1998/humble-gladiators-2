@@ -126,6 +126,11 @@ public class ItemsBoosterService {
                 }
                 case CONSUMABLES -> {
                     ConsumableTemplate consumableTemplate = consumableService.getRandomConsumableTemplate(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && consumableTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateConsumableTemplateImageToBytes(campaign, consumableTemplate);
+                        consumableTemplate.setImgBytes(generatedImage);
+                    }
                     consumableTemplate.setDiscovered(true);
                     consumableService.saveConsumable(consumableTemplate);
                     consumableTemplates.add(consumableTemplate);
