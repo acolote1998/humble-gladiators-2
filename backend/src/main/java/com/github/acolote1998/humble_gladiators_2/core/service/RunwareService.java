@@ -1,6 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.RunwareImageGenResponse;
+import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -51,19 +53,43 @@ public class RunwareService {
         }
     }
 
-    public byte[] getGeneratedImageBytes() {
-        String prompt = "Generate an image of a red dragon";
-        String negativePrompt = "The dragon cannot have a tail";
-
+    public ResponseEntity<RunwareImageGenResponse> sendRequestToImageGenerator(String prompt, String negativePrompt) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(API_KEY);
 
-        HttpEntity<List<HashMap<String, Object>>> entity =
+        HttpEntity<List<HashMap<String, Object>>> entityToSend =
                 new HttpEntity<>(getRequestBody(prompt, negativePrompt), headers);
 
-        ResponseEntity<RunwareImageGenResponse> response =
-                restTemplate.exchange(IMG_GEN_URL, HttpMethod.POST, entity, RunwareImageGenResponse.class);
+        return restTemplate.exchange(IMG_GEN_URL, HttpMethod.POST, entityToSend, RunwareImageGenResponse.class);
+    }
+
+    public byte[] generateArmorTemplateImageToBytes(Campaign campaign, ArmorTemplate armorTemplate) {
+        log.info(String.format("Attempt to generate image for %s - %s", armorTemplate.getName(), ArmorTemplate.class));
+        String positivePrompt = String.format("""
+                        You are generating high-quality fantasy artwork for a trading card in an RPG game.
+                        - The card belongs to the campaign theme: %s.
+                        - The object to illustrate is: "%s".
+                        - A description of the object (for extra context): "%s"
+                        - The artwork should be:
+                          - Standalone (no card frame, no text, no border, no logos)
+                          - High-quality, vibrant, detailed, and visually striking
+                          - Consistent with the campaign theme
+                          - Focused on the item/character, no background clutter
+                        - Avoid:
+                          - Any text, logos, or symbols
+                          - Any references to unrelated themes
+                        - Style:
+                          - Realistic fantasy illustration, painterly, with depth and shading
+                          - Emphasize color, texture, and thematic storytelling (e.g., dragon scales, mystical elements)
+                        """,
+                campaign.getTheme().getWantedThemes().toString(),
+                armorTemplate.getName(),
+                armorTemplate.getDescription());
+        String negativePrompt = "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
+                + campaign.getTheme().getUnwantedThemes().toString();
+
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();

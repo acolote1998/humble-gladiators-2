@@ -7,7 +7,9 @@ import com.github.acolote1998.humble_gladiators_2.booster.repository.ItemsBooste
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
+import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
+import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -35,9 +37,13 @@ public class ItemsBoosterService {
     private CampaignService campaignService;
     private ItemsBoosterRepository itemsBoosterRepository;
     private CharacterService characterService;
+    private RunwareService runwareService;
 
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
+
+    @Value("${GENERATE_IMAGES}")
+    private boolean IMAGE_GENERATION_ACTIVATED;
 
     public ItemsBoosterService(ArmorService armorService,
                                BootsService bootsService,
@@ -48,7 +54,8 @@ public class ItemsBoosterService {
                                WeaponService weaponService,
                                ItemsBoosterRepository itemsBoosterRepository,
                                CampaignService campaignService,
-                               CharacterService characterService) {
+                               CharacterService characterService,
+                               RunwareService runwareService) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -59,6 +66,7 @@ public class ItemsBoosterService {
         this.itemsBoosterRepository = itemsBoosterRepository;
         this.campaignService = campaignService;
         this.characterService = characterService;
+        this.runwareService = runwareService;
     }
 
     private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
@@ -81,6 +89,7 @@ public class ItemsBoosterService {
             log.warn(String.format("WARNING - %s - Campaign %s tried to open an item booster, but they had already opened one today", userId, campaignId));
             throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
         }
+        Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
         ItemsBooster newBooster = new ItemsBooster();
         List<ArmorTemplate> armorTemplates = new ArrayList<>();
         List<BootsTemplate> bootsTemplates = new ArrayList<>();
@@ -95,6 +104,11 @@ public class ItemsBoosterService {
             switch (getRandomItemType()) {
                 case ARMORS -> {
                     ArmorTemplate armorTemplate = armorService.getRandomArmorTemplate(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && armorTemplate.getImgBytes() != null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateArmorTemplateImageToBytes(campaign, armorTemplate);
+                        armorTemplate.setImgBytes(generatedImage);
+                    }
                     armorTemplate.setDiscovered(true);
                     armorService.saveArmor(armorTemplate);
                     armorTemplates.add(armorTemplate);
@@ -157,7 +171,7 @@ public class ItemsBoosterService {
         newBooster.setSpells(spellTemplates);
         newBooster.setWeapons(weaponTemplates);
         newBooster.setUserId(userId);
-        newBooster.setCampaign(campaignService.getCampaignByIdAndUserId(userId, campaignId));
+        newBooster.setCampaign(campaign);
         log.info(String.format("%s - Campaign %s successfully opened an item booster", userId, campaignId));
         return itemsBoosterRepository.save(newBooster);
     }
