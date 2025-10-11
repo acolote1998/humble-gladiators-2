@@ -67,12 +67,12 @@ public class ConsumableService {
             consumableTemplate.setEquipped(false);
             consumableTemplate.setCampaign(campaign);
             consumableTemplate.setCategory(ConsumablesCategory.valueOf(dto.category()));
-            if (consumableTemplate.getRestoreHp() == 1) {
+            if (dto.restoreHp() == 1) {
                 consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 1.5)));
             } else {
                 consumableTemplate.setRestoreHp(0);
             }
-            if (consumableTemplate.getRestoreMp() == 1) {
+            if (dto.restoreMp() == 1) {
                 consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * 2 * dto.rarity() * 4)));
             } else {
                 consumableTemplate.setRestoreMp(0);

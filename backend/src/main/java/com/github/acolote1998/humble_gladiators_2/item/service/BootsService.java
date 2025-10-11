@@ -40,12 +40,12 @@ public class BootsService {
             bootsTemplate.setEquipped(false); //templates always start with equipped = false
             bootsTemplate.setCampaign(campaign);
             bootsTemplate.setCategory(BootsCategory.valueOf(dto.category()));
-            if (bootsTemplate.getPhysicalDefense() == 1) {
+            if (dto.physicalDefense() == 1) {
                 bootsTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             } else {
                 bootsTemplate.setPhysicalDefense(0);
             }
-            if (bootsTemplate.getMagicalDefense() == 1) {
+            if (dto.magicalDefense() == 1) {
                 bootsTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
             } else {
                 bootsTemplate.setMagicalDefense(0);
