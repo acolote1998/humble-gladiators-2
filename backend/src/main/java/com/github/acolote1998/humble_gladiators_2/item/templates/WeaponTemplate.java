@@ -35,11 +35,15 @@ public class WeaponTemplate extends AbstractItem {
                 Integer physicalDamage (1 or 0)
                 Integer magicalDamage (1 or 0)
                 }
+                //
                 // Combat effect flags:
-                //  - physicalDamage (1 = enable weapon to deal physical damage, 0 = weapon won't deal physical damage)
-                //  - magicalDamage (1 = enable weapon to deal magical damage, 0 = weapon won't deal magical damage)
+                //
+                //  - physicalDamage (1 = enables weapon to deal physical damage, 0 = weapon won't deal physical damage)
+                //  - magicalDamage (1 = enables weapon to deal magical damage, 0 = weapon won't deal magical damage)
                 //  - Use 1 to enable, 0 to disable.
+                //
                 // Combat effect flags rules:
+                //
                 //  - At least one of these flags must be 1
                 //  - Both cannot be 0.
                 """, campaignId.toString());
