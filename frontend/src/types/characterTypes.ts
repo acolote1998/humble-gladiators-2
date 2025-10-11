@@ -7,7 +7,7 @@ import type { SpellCategoriesEnum } from "./spellTypes";
 import type { WeaponCategoriesEnum } from "./weaponTypes";
 
 export type CharacterInstanceType = {
-  stats: CharacterStats;
+  stats: CharacterStatsResponseDto;
   category: CharacterCategoriesEnum;
   characterType: CharacterTypeEnum;
   name: string;
@@ -20,7 +20,7 @@ export type CharacterInstanceType = {
   expReward: number;
 };
 
-type CharacterStats = {
+type CharacterStatsResponseDto = {
   constitution: number;
   intelligence: number;
   strength: number;
@@ -53,33 +53,33 @@ type CharacterCategoriesEnum =
 
 type CharacterTypeEnum = "PLAYER" | "NPC" | "SNAPSHOT";
 
-export type HeroCharacterType = {
+export type HeroResponseDto = {
   name: string;
-  stats: CharacterStats;
-  inventory: HeroInventoryType;
+  stats: CharacterStatsResponseDto;
+  inventory: CharacterInventoryResponseDto;
 };
 
-type HeroInventoryType = {
-  armors: HeroArmorType[];
-  boots: HeroBootsType[];
-  consumables: HeroConsumablesType[];
-  helmets: HeroHelmetsType[];
-  shields: HeroShieldsType[];
-  spells: HeroSpellsType[];
-  weapons: HeroWeaponsType[];
+type CharacterInventoryResponseDto = {
+  armors: ArmorInstanceResponseDto[];
+  boots: BootsInstanceResponseDto[];
+  consumables: ConsumableInstanceResponseDto[];
+  helmets: HelmetInstanceResponseDto[];
+  shields: ShieldInstanceResponseDto[];
+  spells: SpellInstanceResponseDto[];
+  weapons: WeaponInstanceResponseDto[];
 };
 
-type HeroRequirementType = {
-  requirements: HeroRequirementEntryType[];
+type RequirementResponseDto = {
+  requirements: RequirementEntryResponseDto[];
 };
 
-type HeroRequirementEntryType = {
+type RequirementEntryResponseDto = {
   requirementType: RequirementEntryTypeEnum;
   operator: RequirementEntryOperatorEnum;
   value: string;
 };
 
-type HeroConsumablesType = {
+type ConsumableInstanceResponseDto = {
   name: string;
   description: string;
   rarity: number;
@@ -87,14 +87,14 @@ type HeroConsumablesType = {
   value: number;
   quantity: number;
   equipped: boolean;
-  requirement: HeroRequirementType;
+  requirement: RequirementResponseDto;
   category: ConsumablesCategoriesEnum;
   restoreHp: number;
   imgBase64: string;
   restoreMp: number;
 };
 
-type HeroSpellsType = {
+type SpellInstanceResponseDto = {
   name: string;
   description: string;
   rarity: number;
@@ -102,7 +102,7 @@ type HeroSpellsType = {
   value: number;
   quantity: number;
   equipped: boolean;
-  requirement: HeroRequirementType;
+  requirement: RequirementResponseDto;
   category: SpellCategoriesEnum;
   restoreHp: number;
   imgBase64: string;
@@ -110,7 +110,7 @@ type HeroSpellsType = {
   magicalDamage: number;
 };
 
-type HeroWeaponsType = {
+type WeaponInstanceResponseDto = {
   name: string;
   description: string;
   rarity: number;
@@ -118,14 +118,14 @@ type HeroWeaponsType = {
   value: number;
   quantity: number;
   equipped: boolean;
-  requirement: HeroRequirementType;
+  requirement: RequirementResponseDto;
   category: WeaponCategoriesEnum;
   imgBase64: string;
   physicalDamage: number;
   magicalDamage: number;
 };
 
-type HeroShieldsType = {
+type ShieldInstanceResponseDto = {
   name: string;
   description: string;
   rarity: number;
@@ -133,14 +133,14 @@ type HeroShieldsType = {
   value: number;
   quantity: number;
   equipped: boolean;
-  requirement: HeroRequirementType;
+  requirement: RequirementResponseDto;
   category: ShieldCategoriesEnum;
   physicalDefense: number;
   imgBase64: string;
   magicalDefense: number;
 };
 
-type HeroBootsType = {
+type BootsInstanceResponseDto = {
   name: string;
   description: string;
   rarity: number;
@@ -148,14 +148,14 @@ type HeroBootsType = {
   value: number;
   quantity: number;
   equipped: boolean;
-  requirement: HeroRequirementType;
+  requirement: RequirementResponseDto;
   category: BootsCategoriesEnum;
   physicalDefense: number;
   imgBase64: string;
   magicalDefense: number;
 };
 
-type HeroHelmetsType = {
+type HelmetInstanceResponseDto = {
   name: string;
   description: string;
   rarity: number;
@@ -163,14 +163,14 @@ type HeroHelmetsType = {
   value: number;
   quantity: number;
   equipped: boolean;
-  requirement: HeroRequirementType;
+  requirement: RequirementResponseDto;
   category: HelmetCategoriesEnum;
   imgBase64: string;
   physicalDefense: number;
   magicalDefense: number;
 };
 
-type HeroArmorType = {
+type ArmorInstanceResponseDto = {
   name: string;
   description: string;
   rarity: number;
@@ -178,7 +178,7 @@ type HeroArmorType = {
   value: number;
   quantity: number;
   equipped: boolean;
-  requirement: HeroRequirementType;
+  requirement: RequirementResponseDto;
   category: ArmorCategoriesEnum;
   physicalDefense: number;
   magicalDefense: number;
