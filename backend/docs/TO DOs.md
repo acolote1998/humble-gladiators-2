@@ -72,7 +72,7 @@
     - [ ] Damage calculation logic
     - [ ] Battle state management
 - [ ] Replay system / logic
-- [ ] Hero Creation
+- [X] Hero Creation
 - [ ] Discovery Logic
     - [ ] Item discovery tracking
     - [ ] Discovery API endpoints
