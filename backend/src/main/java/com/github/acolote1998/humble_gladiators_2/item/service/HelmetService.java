@@ -67,8 +67,16 @@ public class HelmetService {
             helmetTemplate.setEquipped(false);
             helmetTemplate.setCampaign(campaign);
             helmetTemplate.setCategory(HelmetCategory.valueOf(dto.category()));
-            helmetTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
-            helmetTemplate.setMagicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            if (helmetTemplate.getPhysicalDefense() == 1) {
+                helmetTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
+            } else {
+                helmetTemplate.setPhysicalDefense(0);
+            }
+            if (helmetTemplate.getMagicalDefense() == 1) {
+                helmetTemplate.setMagicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            } else {
+                helmetTemplate.setMagicalDefense(0);
+            }
             helmetTemplate.setValue(
                     (helmetTemplate.getMagicalDefense() + helmetTemplate.getPhysicalDefense())
                             * helmetTemplate.getTier()
