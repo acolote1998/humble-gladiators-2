@@ -35,14 +35,17 @@ public class BootsService {
             bootsTemplate.setUserId(campaign.getUserId());
             bootsTemplate.setRarity(dto.rarity());
             bootsTemplate.setTier(dto.tier());
-            bootsTemplate.setValue(dto.value());
-            bootsTemplate.setDiscovered(dto.discovered());
+            bootsTemplate.setDiscovered(false);
             bootsTemplate.setQuantity(0); // templates always start at 0 quantity
-            bootsTemplate.setEquipped(dto.equipped());
+            bootsTemplate.setEquipped(false);
             bootsTemplate.setCampaign(campaign);
             bootsTemplate.setCategory(BootsCategory.valueOf(dto.category()));
             bootsTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
             bootsTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
+            bootsTemplate.setValue(
+                    (bootsTemplate.getMagicalDefense() + bootsTemplate.getPhysicalDefense())
+                            * bootsTemplate.getRarity()
+                            * bootsTemplate.getTier());
             bootsTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedBootsTemplates.add(bootsTemplate);
         });
