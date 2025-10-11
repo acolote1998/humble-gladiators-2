@@ -26,11 +26,12 @@ function CampaignsRoute() {
           ) : allCampaigns && allCampaigns.length > 0 ? (
             allCampaigns.map((campaign) => (
               <div
+                key={campaign.id}
                 onClick={() => {
                   navigate({ to: `/campaign/${campaign.id}` });
                 }}
               >
-                <CampaignItem key={campaign.id} {...campaign} />
+                <CampaignItem {...campaign} />
               </div>
             ))
           ) : (
