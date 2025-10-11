@@ -43,10 +43,11 @@ public class SpellTemplate extends AbstractItem {
                 //  - physicalDamage (1 = enables spell to deal physical damage, 0 = spell won't deal physical damage)
                 //  - magicalDamage (1 = enables spell to deal magical damage, 0 = spell won't deal magical damage)
                 //  - restoreHp (1 = enables spell to restore Hp, 0 = spell won't be able to restore Hp)
-                //  - Use 1 to enable, 0 to disable.
                 //
                 // Combat effect flags rules:
                 //
+                //  - Use 1 to enable, 0 to disable.
+                //  - Never send null values
                 //  - Healing spells (restoreHp = 1) must have physicalDamage = 0 and magicalDamage = 0.
                 //  - Damage spells (physicalDamage = 1 or magicalDamage = 1) must have restoreHp = 0.
                 //  - At least one of these flags must be 1.

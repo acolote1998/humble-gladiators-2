@@ -40,10 +40,11 @@ public class ConsumableTemplate extends AbstractItem {
                 //
                 //  - restoreHp (1 = enables consumable to restore hp upon use, 0 = consumable won't restore hp upon use)
                 //  - restoreMp (1 = enables consumable to restore mp upon use, 0 = consumable won't restore mp upon use)
-                //  - Use 1 to enable, 0 to disable.
                 //
                 // Combat effect flags rules:
                 //
+                //  - Use 1 to enable, 0 to disable.
+                //  - Never send null values
                 //  - At least one of these flags must be 1
                 //  - Both cannot be 0.""", campaignId.toString());
     }

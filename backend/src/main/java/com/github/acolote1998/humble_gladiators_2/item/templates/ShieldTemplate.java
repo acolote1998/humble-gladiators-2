@@ -40,10 +40,11 @@ public class ShieldTemplate extends AbstractItem {
                 //
                 //  - physicalDefense (1 = enables shield to provide physical armor, 0 = shield won't provide physical armor)
                 //  - magicalDefense (1 = enables shield to have magical armor, 0 = shield won't provide magical armor)
-                //  - Use 1 to enable, 0 to disable.
                 //
                 // Combat effect flags rules:
                 //
+                //  - Use 1 to enable, 0 to disable.
+                //  - Never send null values
                 //  - At least one of these flags must be 1
                 //  - Both cannot be 0.
                 """, campaignId.toString());
