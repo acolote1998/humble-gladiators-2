@@ -62,14 +62,17 @@ public class HelmetService {
             helmetTemplate.setUserId(campaign.getUserId());
             helmetTemplate.setRarity(dto.rarity());
             helmetTemplate.setTier(dto.tier());
-            helmetTemplate.setValue(dto.value());
-            helmetTemplate.setDiscovered(dto.discovered());
+            helmetTemplate.setDiscovered(false);
             helmetTemplate.setQuantity(0); // templates always start at 0 quantity
-            helmetTemplate.setEquipped(dto.equipped());
+            helmetTemplate.setEquipped(false);
             helmetTemplate.setCampaign(campaign);
             helmetTemplate.setCategory(HelmetCategory.valueOf(dto.category()));
             helmetTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
             helmetTemplate.setMagicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+            helmetTemplate.setValue(
+                    (helmetTemplate.getMagicalDefense() + helmetTemplate.getPhysicalDefense())
+                            * helmetTemplate.getTier()
+                            * helmetTemplate.getRarity());
             helmetTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedHelmetsTemplates.add(helmetTemplate);
         });
