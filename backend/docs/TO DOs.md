@@ -15,7 +15,7 @@
       in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
       through gemini
 - [X] Hero Creation backend
-    - [ ] Make a hero creating button for the frontend
+    - [X] Make a hero creating button for the frontend
     - [X] Add validation in backend to never allow more than one hero created by campaign
     - [X] Log Hero data in frontend
     - [X] Make a hero fetcher for displaying the hero in the frontend
@@ -44,7 +44,7 @@
             - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
         - [ ] Each card also has a rarity percentage within its tier
             - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
-    - The second any booster gets opened, those card entities will be marked as "discovered"
+    - [X] The second any booster gets opened, those card entities will be marked as "discovered"
 
 - [ ] Discovery system integration
 - [ ] Logic for interface method implementation
