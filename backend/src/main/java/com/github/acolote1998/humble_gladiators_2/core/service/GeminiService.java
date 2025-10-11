@@ -132,7 +132,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 
@@ -194,7 +194,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 
@@ -254,7 +254,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 
@@ -314,7 +314,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 
@@ -374,7 +374,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 
@@ -440,7 +440,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 
@@ -503,7 +503,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 
@@ -572,7 +572,7 @@ public class GeminiService {
                   - Create content following the wantedThemes
                   - Avoid following unwantedThemes
                 
-                  " %s "
+                  %s
                 
                   The object structure context is: \n %s
                 

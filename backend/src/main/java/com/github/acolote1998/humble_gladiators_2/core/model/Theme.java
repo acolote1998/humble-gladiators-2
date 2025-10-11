@@ -26,9 +26,6 @@ public class Theme {
 
     @Override
     public String toString() {
-        return "Theme{" +
-                "wantedThemes=" + wantedThemes +
-                ", unwantedThemes=" + unwantedThemes +
-                '}';
+        return String.format("- wantedThemes= %s\n  - unwantedThemes= %s", wantedThemes, unwantedThemes);
     }
 }
