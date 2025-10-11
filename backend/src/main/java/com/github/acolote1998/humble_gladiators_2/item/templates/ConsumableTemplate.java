@@ -32,8 +32,19 @@ public class ConsumableTemplate extends AbstractItem {
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
                 ConsumablesCategory category (enum)
-                Integer restoreHp (always 0, calculated later on by the backend)
-                Integer restoreMp (always 0, calculated later on by the backend)
-                }""", campaignId.toString());
+                Integer restoreHp (1 or 0)
+                Integer restoreMp (1 or 0)
+                }
+                //
+                // Combat effect flags:
+                //
+                //  - restoreHp (1 = enables consumable to restore hp upon use, 0 = consumable won't restore hp upon use)
+                //  - restoreMp (1 = enables consumable to restore mp upon use, 0 = consumable won't restore mp upon use)
+                //  - Use 1 to enable, 0 to disable.
+                //
+                // Combat effect flags rules:
+                //
+                //  - At least one of these flags must be 1
+                //  - Both cannot be 0.""", campaignId.toString());
     }
 }

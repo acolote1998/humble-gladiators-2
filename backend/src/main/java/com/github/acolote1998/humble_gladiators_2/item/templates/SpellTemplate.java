@@ -33,18 +33,24 @@ public class SpellTemplate extends AbstractItem {
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
                 SpellCategory category (enum)
-                
-                        // Combat effect flags
-                        // - Use 1 to enable, 0 to disable.
-                Integer physicalDamage (1 = spell deals physical damage, 0 = does not)
-                Integer magicalDamage (1 = spell deals magical damage, 0 = does not)
-                Integer restoreHp (1 = spell restores HP, 0 = does not)
-                
-                Rules:
-                  - Healing spells (restoreHp = 1) must have physicalDamage = 0 and magicalDamage = 0.
-                  - Damage spells (physicalDamage = 1 or magicalDamage = 1) must have restoreHp = 0.
-                  - At least one of these flags must be 1. All three cannot be 0.
-                  - If all three: restoreHp, physicalDamage and magicalDamage would be 0, it will be consider a total failure.
-                }""", campaignId.toString());
+                Integer physicalDamage (1 or 0)
+                Integer magicalDamage (1 or 0)
+                Integer restoreHp (1 or 0)
+                }
+                //
+                // Combat effect flags:
+                //
+                //  - physicalDamage (1 = enables spell to deal physical damage, 0 = spell won't deal physical damage)
+                //  - magicalDamage (1 = enables spell to deal magical damage, 0 = spell won't deal magical damage)
+                //  - restoreHp (1 = enables spell to restore Hp, 0 = spell won't be able to restore Hp)
+                //  - Use 1 to enable, 0 to disable.
+                //
+                // Combat effect flags rules:
+                //
+                //  - Healing spells (restoreHp = 1) must have physicalDamage = 0 and magicalDamage = 0.
+                //  - Damage spells (physicalDamage = 1 or magicalDamage = 1) must have restoreHp = 0.
+                //  - At least one of these flags must be 1.
+                //  - All three cannot be 0.
+                """, campaignId.toString());
     }
 }

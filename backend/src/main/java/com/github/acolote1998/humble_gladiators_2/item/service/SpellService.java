@@ -79,6 +79,8 @@ public class SpellService {
             }
             if (dto.restoreHp() == 1) {
                 spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                spellTemplate.setMagicalDamage(0); //if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
+                spellTemplate.setPhysicalDamage(0); //if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
             } else {
                 spellTemplate.setRestoreHp(0);
             }

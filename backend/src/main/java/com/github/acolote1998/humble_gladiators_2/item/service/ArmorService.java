@@ -67,8 +67,16 @@ public class ArmorService {
             armorTemplate.setEquipped(false); //templates always start with equipped = false
             armorTemplate.setCampaign(campaign);
             armorTemplate.setCategory(ArmorCategory.valueOf(dto.category()));
-            armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1 * dto.rarity() * 1.5)));
-            armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 0.2 * dto.rarity() * 0.5)));
+            if (armorTemplate.getPhysicalDefense() == 1) {
+                armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1 * dto.rarity() * 1.5)));
+            } else {
+                armorTemplate.setPhysicalDefense(0);
+            }
+            if (armorTemplate.getMagicalDefense() == 1) {
+                armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 0.2 * dto.rarity() * 0.5)));
+            } else {
+                armorTemplate.setMagicalDefense(0);
+            }
             armorTemplate.setValue(
                     (armorTemplate.getMagicalDefense() + armorTemplate.getPhysicalDefense())
                             * armorTemplate.getTier()
