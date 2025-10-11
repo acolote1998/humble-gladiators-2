@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.service;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
+import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
@@ -102,7 +103,12 @@ public class CharacterService {
     }
 
     public CharacterInstance getHero(Long campaignId, String userId) {
-        return characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId, userId, CharacterType.PLAYER);
+        CharacterInstance hero = characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId, userId, CharacterType.PLAYER);
+        if (hero != null) {
+            return hero;
+        } else {
+            throw new HeroDoesNotExist("A hero has not been created for this campaign yet");
+        }
     }
 
     public CharacterInstance saveCharacter(CharacterInstance model) {

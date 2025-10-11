@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroReque
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
+import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
@@ -55,6 +56,12 @@ public class CharacterController {
         CharacterInstance heroModel = characterService.getHero(campaignId, userId);
         HeroResponseDto dto = HeroResponseDto.fromModelToDto(heroModel);
         return ResponseEntity.ok(dto);
+    }
+
+    @ExceptionHandler(HeroDoesNotExist.class)
+    public ResponseEntity<String> handleHeroHasNotBeenCreated(HeroDoesNotExist ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
     }
 
     @ExceptionHandler(HeroAlreadyCreated.class)
