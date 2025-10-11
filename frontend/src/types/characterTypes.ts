@@ -6,6 +6,10 @@ import type { ConsumablesCategoriesEnum } from "./consumablesTypes";
 import type { SpellCategoriesEnum } from "./spellTypes";
 import type { WeaponCategoriesEnum } from "./weaponTypes";
 
+export type CreateHeroType = {
+  heroName: string;
+};
+
 export type CharacterInstanceType = {
   stats: CharacterStatsResponseDto;
   category: CharacterCategoriesEnum;
