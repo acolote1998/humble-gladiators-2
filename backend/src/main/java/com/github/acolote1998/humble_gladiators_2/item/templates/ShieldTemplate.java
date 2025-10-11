@@ -38,8 +38,8 @@ public class ShieldTemplate extends AbstractItem {
                 //
                 // Combat effect flags:
                 //
-                //  - physicalDefense (1 = enables shield to have physical armor, 0 = shield won't have physical armor)
-                //  - magicalDefense (1 = enables shield to deal magical armor, 0 = shield won't deal magical armor)
+                //  - physicalDefense (1 = enables shield to provide physical armor, 0 = shield won't provide physical armor)
+                //  - magicalDefense (1 = enables shield to have magical armor, 0 = shield won't provide magical armor)
                 //  - Use 1 to enable, 0 to disable.
                 //
                 // Combat effect flags rules:
