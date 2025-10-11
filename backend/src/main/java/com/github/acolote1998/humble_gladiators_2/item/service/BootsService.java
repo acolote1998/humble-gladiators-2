@@ -35,9 +35,9 @@ public class BootsService {
             bootsTemplate.setUserId(campaign.getUserId());
             bootsTemplate.setRarity(dto.rarity());
             bootsTemplate.setTier(dto.tier());
-            bootsTemplate.setDiscovered(false);
+            bootsTemplate.setDiscovered(false); //templates always start with discovered = false
             bootsTemplate.setQuantity(0); // templates always start at 0 quantity
-            bootsTemplate.setEquipped(false);
+            bootsTemplate.setEquipped(false); //templates always start with equipped = false
             bootsTemplate.setCampaign(campaign);
             bootsTemplate.setCategory(BootsCategory.valueOf(dto.category()));
             bootsTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));

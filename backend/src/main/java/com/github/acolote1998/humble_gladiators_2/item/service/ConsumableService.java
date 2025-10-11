@@ -62,14 +62,17 @@ public class ConsumableService {
             consumableTemplate.setUserId(campaign.getUserId());
             consumableTemplate.setRarity(dto.rarity());
             consumableTemplate.setTier(dto.tier());
-            consumableTemplate.setValue(dto.value());
-            consumableTemplate.setDiscovered(dto.discovered());
+            consumableTemplate.setDiscovered(false);
             consumableTemplate.setQuantity(0); // templates always start at 0 quantity
-            consumableTemplate.setEquipped(dto.equipped());
+            consumableTemplate.setEquipped(false);
             consumableTemplate.setCampaign(campaign);
             consumableTemplate.setCategory(ConsumablesCategory.valueOf(dto.category()));
             consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 1.5)));
             consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * 2 * dto.rarity() * 4)));
+            consumableTemplate.setValue(
+                    (consumableTemplate.getRestoreHp() + consumableTemplate.getRestoreMp())
+                            * consumableTemplate.getTier()
+                            * consumableTemplate.getRarity());
             consumableTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedConsumableTemplates.add(consumableTemplate);
         });
