@@ -72,7 +72,7 @@ public class ShieldService {
             } else {
                 shieldTemplate.setPhysicalDefense(0);
             }
-            if (dto.magicalDamage() == 1) {
+            if (dto.magicalDefense() == 1) {
                 shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
             } else {
                 shieldTemplate.setMagicalDefense(0);
