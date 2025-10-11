@@ -14,6 +14,12 @@
       setted, and get those values for the name and description fields. Possibly, we could check if all the fields exist
       in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
       through gemini
+-  [ ] Offload Gemini by generating more things on the server and less through ai
+    - [ ] Stats
+    - [ ] Gold reward
+    - [ ] Exp Reward
+    - [ ] Discovered
+    - [ ] refactor mapStatsFromCharacterFromGeminiDto
 - [X] Hero Creation backend
     - [ ] Make a hero creating button for the frontend
     - [X] Add validation in backend to never allow more than one hero created by campaign

@@ -35,13 +35,5 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 Integer expReward (always 0, calculated later on by the backend)
                 }""", campaignId.toString());
     }
-
-    @Override
-    public String toString() {
-        return "ExistingCharacterInstanceContext{" +
-                ", name=" + super.getName() +
-                ", tier=" + tier +
-                ", rarity=" + rarity +
-                '}';
-    }
+    
 }
