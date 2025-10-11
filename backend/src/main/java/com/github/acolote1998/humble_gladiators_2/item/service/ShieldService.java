@@ -29,8 +29,8 @@ public class ShieldService {
         this.shieldTemplateRepository = shieldTemplateRepository;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<ShieldTemplate> allItems = shieldTemplateRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<ShieldTemplate> allItems = shieldTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
         allItems.sort((s1, s2) -> {
             int tierComparison = Integer.compare(s2.getTier(), s1.getTier());

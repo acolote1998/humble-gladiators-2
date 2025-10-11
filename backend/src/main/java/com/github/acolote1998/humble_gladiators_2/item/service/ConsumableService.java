@@ -29,8 +29,8 @@ public class ConsumableService {
         this.geminiService = geminiService;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<ConsumableTemplate> allItems = consumableTemplateRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<ConsumableTemplate> allItems = consumableTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
         allItems.sort((c1, c2) -> {
             int tierComparison = Integer.compare(c2.getTier(), c1.getTier());

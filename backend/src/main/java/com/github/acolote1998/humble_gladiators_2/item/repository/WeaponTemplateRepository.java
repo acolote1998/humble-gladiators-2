@@ -27,4 +27,5 @@ public interface WeaponTemplateRepository extends ListCrudRepository<WeaponTempl
             @Param("userId") String userId
     );
 
+    List<WeaponTemplate> findAllByCampaign_Id(Long campaignId);
 }

@@ -27,4 +27,5 @@ public interface ConsumableTemplateRepository extends ListCrudRepository<Consuma
             @Param("userId") String userId
     );
 
+    List<ConsumableTemplate> findAllByCampaign_Id(Long campaignId);
 }

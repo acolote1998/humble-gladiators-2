@@ -29,8 +29,8 @@ public class WeaponService {
         this.weaponTemplateRepository = weaponTemplateRepository;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<WeaponTemplate> allItems = weaponTemplateRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<WeaponTemplate> allItems = weaponTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
         allItems.sort((w1, w2) -> {
             int tierComparison = Integer.compare(w2.getTier(), w1.getTier());

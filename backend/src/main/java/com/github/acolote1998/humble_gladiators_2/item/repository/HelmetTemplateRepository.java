@@ -27,4 +27,5 @@ public interface HelmetTemplateRepository extends ListCrudRepository<HelmetTempl
             @Param("userId") String userId
     );
 
+    List<HelmetTemplate> findAllByCampaign_Id(Long campaignId);
 }

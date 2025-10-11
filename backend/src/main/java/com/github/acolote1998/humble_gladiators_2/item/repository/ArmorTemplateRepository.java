@@ -28,4 +28,5 @@ public interface ArmorTemplateRepository extends ListCrudRepository<ArmorTemplat
     );
 
 
+    List<ArmorTemplate> findAllByCampaign_Id(Long campaignId);
 }

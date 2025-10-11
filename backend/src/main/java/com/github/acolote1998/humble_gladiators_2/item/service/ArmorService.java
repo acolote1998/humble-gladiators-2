@@ -29,8 +29,8 @@ public class ArmorService {
         this.armorTemplateRepository = armorTemplateRepository;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<ArmorTemplate> allItems = armorTemplateRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<ArmorTemplate> allItems = armorTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
         allItems.sort((a1, a2) -> {
             int tierComparison = Integer.compare(a2.getTier(), a1.getTier());

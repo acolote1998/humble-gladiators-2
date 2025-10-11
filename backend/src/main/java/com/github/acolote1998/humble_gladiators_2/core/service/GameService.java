@@ -92,14 +92,14 @@ public class GameService {
         report.put("campaignInfo", campaignInfo);
 
         // Collect reports from all services
-        report.putAll(armorService.getShortAIGeneratedReport());
-        report.putAll(bootsService.getShortAIGeneratedReport());
-        report.putAll(consumableService.getShortAIGeneratedReport());
-        report.putAll(helmetService.getShortAIGeneratedReport());
-        report.putAll(shieldService.getShortAIGeneratedReport());
-        report.putAll(spellService.getShortAIGeneratedReport());
-        report.putAll(weaponService.getShortAIGeneratedReport());
-        report.putAll(characterService.getShortAIGeneratedReport());
+        report.putAll(armorService.getShortAIGeneratedReport(campaign.getId()));
+        report.putAll(bootsService.getShortAIGeneratedReport(campaign.getId()));
+        report.putAll(consumableService.getShortAIGeneratedReport(campaign.getId()));
+        report.putAll(helmetService.getShortAIGeneratedReport(campaign.getId()));
+        report.putAll(shieldService.getShortAIGeneratedReport(campaign.getId()));
+        report.putAll(spellService.getShortAIGeneratedReport(campaign.getId()));
+        report.putAll(weaponService.getShortAIGeneratedReport(campaign.getId()));
+        report.putAll(characterService.getShortAIGeneratedReport(campaign.getId()));
 
         // Save report as JSON file
         saveReportAsJson(report, campaign);

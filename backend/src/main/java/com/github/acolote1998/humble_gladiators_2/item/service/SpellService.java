@@ -29,8 +29,8 @@ public class SpellService {
         this.spellTemplateRepository = spellTemplateRepository;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<SpellTemplate> allItems = spellTemplateRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<SpellTemplate> allItems = spellTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
         allItems.sort((s1, s2) -> {
             int tierComparison = Integer.compare(s2.getTier(), s1.getTier());

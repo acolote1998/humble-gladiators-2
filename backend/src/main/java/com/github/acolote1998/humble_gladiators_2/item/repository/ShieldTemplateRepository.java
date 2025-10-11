@@ -27,4 +27,5 @@ public interface ShieldTemplateRepository extends ListCrudRepository<ShieldTempl
             @Param("userId") String userId
     );
 
+    List<ShieldTemplate> findAllByCampaign_Id(Long campaignId);
 }

@@ -29,8 +29,8 @@ public class HelmetService {
         this.helmetTemplateRepository = helmetTemplateRepository;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<HelmetTemplate> allItems = helmetTemplateRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<HelmetTemplate> allItems = helmetTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
         allItems.sort((h1, h2) -> {
             int tierComparison = Integer.compare(h2.getTier(), h1.getTier());

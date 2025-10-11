@@ -70,8 +70,8 @@ public class BootsService {
         this.geminiService = geminiService;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<BootsTemplate> allItems = bootsTemplateRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<BootsTemplate> allItems = bootsTemplateRepository.findAllByCampaign_Id((campaignId));
         // Sort by Tier (highest first) then Rarity (highest first)
         allItems.sort((b1, b2) -> {
             int tierComparison = Integer.compare(b2.getTier(), b1.getTier());

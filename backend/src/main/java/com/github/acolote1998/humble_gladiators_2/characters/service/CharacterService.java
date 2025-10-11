@@ -31,8 +31,8 @@ public class CharacterService {
         this.characterInstanceRepository = characterInstanceRepository;
     }
 
-    public Map<String, Object> getShortAIGeneratedReport() {
-        List<CharacterInstance> allCharacters = characterInstanceRepository.findAll();
+    public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
+        List<CharacterInstance> allCharacters = characterInstanceRepository.findAllByCampaign_IdAndCharacterType(campaignId, CharacterType.NPC);
         // Sort by Tier (highest first) then Rarity (highest first)
         allCharacters.sort((c1, c2) -> {
             int tierComparison = Integer.compare(c2.getTier(), c1.getTier());

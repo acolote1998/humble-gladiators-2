@@ -27,4 +27,5 @@ public interface SpellTemplateRepository extends ListCrudRepository<SpellTemplat
             @Param("userId") String userId
     );
 
+    List<SpellTemplate> findAllByCampaign_Id(Long campaignId);
 }
