@@ -67,7 +67,7 @@ public class ShieldService {
             shieldTemplate.setEquipped(false);
             shieldTemplate.setCampaign(campaign);
             shieldTemplate.setCategory(ShieldCategory.valueOf(dto.category()));
-            if (dto.physicalDamage() == 1) {
+            if (dto.physicalDefense() == 1) {
                 shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
             } else {
                 shieldTemplate.setPhysicalDefense(0);
