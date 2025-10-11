@@ -62,10 +62,9 @@ public class SpellService {
             spellTemplate.setUserId(campaign.getUserId());
             spellTemplate.setRarity(dto.rarity());
             spellTemplate.setTier(dto.tier());
-            spellTemplate.setValue(dto.value());
-            spellTemplate.setDiscovered(dto.discovered());
+            spellTemplate.setDiscovered(false);
             spellTemplate.setQuantity(0); // templates always start at 0 quantity
-            spellTemplate.setEquipped(dto.equipped());
+            spellTemplate.setEquipped(false);
             spellTemplate.setCampaign(campaign);
             spellTemplate.setCategory(SpellCategory.valueOf(dto.category()));
             if (dto.physicalDamage() == 1) {
@@ -83,6 +82,10 @@ public class SpellService {
             } else {
                 spellTemplate.setRestoreHp(0);
             }
+            spellTemplate.setValue(
+                    (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
+                            * spellTemplate.getTier()
+                            * spellTemplate.getRarity());
             spellTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedSpellTemplates.add(spellTemplate);
         });
