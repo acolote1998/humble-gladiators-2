@@ -175,7 +175,8 @@ public class GeminiService {
             generatedArmors = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated armors to ItemFromGeminiDto " + e.getMessage());
+            e.printStackTrace();
         }
         return generatedArmors;
     }
@@ -234,7 +235,8 @@ public class GeminiService {
             generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated boots to ItemFromGeminiDto: " + e.getMessage());
+            e.printStackTrace();
         }
         return generatedItems;
     }
@@ -293,7 +295,8 @@ public class GeminiService {
             generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated consumables to ItemFromGeminiDto: " + e.getMessage());
+            e.printStackTrace();
         }
         return generatedItems;
     }
@@ -352,7 +355,8 @@ public class GeminiService {
             generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated helmets to ItemFromGeminiDto: " + e.getMessage());
+            e.printStackTrace();
         }
         return generatedItems;
     }
@@ -417,7 +421,8 @@ public class GeminiService {
             generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated shields to ItemFromGeminiDto: " + e.getMessage());
+            e.printStackTrace();
         }
         return generatedItems;
     }
@@ -479,7 +484,8 @@ public class GeminiService {
             generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated items to ItemFromGeminiDto: " + e.getMessage());
+            e.printStackTrace();
         }
         return generatedItems;
     }
@@ -538,7 +544,8 @@ public class GeminiService {
             generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated items to ItemFromGeminiDto");
+            log.error("Could not map generated weapons to ItemFromGeminiDto: " + e.getMessage());
+            e.printStackTrace();
         }
         return generatedItems;
     }
