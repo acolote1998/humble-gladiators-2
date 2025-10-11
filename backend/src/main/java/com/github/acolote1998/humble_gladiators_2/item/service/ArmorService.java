@@ -62,14 +62,17 @@ public class ArmorService {
             armorTemplate.setUserId(campaign.getUserId());
             armorTemplate.setRarity(dto.rarity());
             armorTemplate.setTier(dto.tier());
-            armorTemplate.setValue(dto.value());
-            armorTemplate.setDiscovered(dto.discovered());
+            armorTemplate.setDiscovered(false); //templates always start with discovered = false
             armorTemplate.setQuantity(0); // templates always start at 0 quantity
-            armorTemplate.setEquipped(dto.equipped());
+            armorTemplate.setEquipped(false); //templates always start with equipped = false
             armorTemplate.setCampaign(campaign);
             armorTemplate.setCategory(ArmorCategory.valueOf(dto.category()));
             armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1 * dto.rarity() * 1.5)));
             armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 0.2 * dto.rarity() * 0.5)));
+            armorTemplate.setValue(
+                    (armorTemplate.getMagicalDefense() + armorTemplate.getPhysicalDefense())
+                            * armorTemplate.getTier()
+                            * armorTemplate.getRarity());
             armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedArmorTemplates.add(armorTemplate);
         });

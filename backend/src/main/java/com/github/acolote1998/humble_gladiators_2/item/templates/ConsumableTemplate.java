@@ -29,10 +29,6 @@ public class ConsumableTemplate extends AbstractItem {
                 String description
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer value ( (tier*13)+(rarity*13) )
-                Boolean discovered (always false)
-                Integer quantity (always 0)
-                Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
                 ConsumablesCategory category (enum)

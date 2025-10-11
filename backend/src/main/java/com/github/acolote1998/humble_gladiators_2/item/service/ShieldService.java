@@ -62,14 +62,17 @@ public class ShieldService {
             shieldTemplate.setUserId(campaign.getUserId());
             shieldTemplate.setRarity(dto.rarity());
             shieldTemplate.setTier(dto.tier());
-            shieldTemplate.setValue(dto.value());
-            shieldTemplate.setDiscovered(dto.discovered());
+            shieldTemplate.setDiscovered(false);
             shieldTemplate.setQuantity(0); // templates always start at 0 quantity
-            shieldTemplate.setEquipped(dto.equipped());
+            shieldTemplate.setEquipped(false);
             shieldTemplate.setCampaign(campaign);
             shieldTemplate.setCategory(ShieldCategory.valueOf(dto.category()));
             shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
             shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
+            shieldTemplate.setValue(
+                    (shieldTemplate.getMagicalDefense() + shieldTemplate.getPhysicalDefense())
+                            * shieldTemplate.getTier()
+                            * shieldTemplate.getRarity());
             shieldTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedShieldTemplates.add(shieldTemplate);
         });

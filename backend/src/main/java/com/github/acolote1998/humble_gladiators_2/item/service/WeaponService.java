@@ -62,10 +62,9 @@ public class WeaponService {
             weaponTemplate.setUserId(campaign.getUserId());
             weaponTemplate.setRarity(dto.rarity());
             weaponTemplate.setTier(dto.tier());
-            weaponTemplate.setValue(dto.value());
-            weaponTemplate.setDiscovered(dto.discovered());
+            weaponTemplate.setDiscovered(false);
             weaponTemplate.setQuantity(0); // templates always start at 0 quantity
-            weaponTemplate.setEquipped(dto.equipped());
+            weaponTemplate.setEquipped(false);
             weaponTemplate.setCampaign(campaign);
             weaponTemplate.setCategory(WeaponCategory.valueOf(dto.category()));
             if (dto.physicalDamage() == 1) {
@@ -78,6 +77,10 @@ public class WeaponService {
             } else {
                 weaponTemplate.setMagicalDamage(0);
             }
+            weaponTemplate.setValue(
+                    (weaponTemplate.getMagicalDamage() + weaponTemplate.getPhysicalDamage())
+                            * weaponTemplate.getTier()
+                            * weaponTemplate.getRarity());
             weaponTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedWeaponTemplates.add(weaponTemplate);
         });

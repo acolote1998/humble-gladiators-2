@@ -29,10 +29,6 @@ public class ShieldTemplate extends AbstractItem {
                 String description
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer value ( (tier*100)+(rarity*300) )
-                Boolean discovered (always false)
-                Integer quantity (always 0)
-                Boolean equipped (always false)
                 Long campaign_id (%s)
                 Requirement requirement (create a requirement object)
                 ShieldCategory category (enum)
