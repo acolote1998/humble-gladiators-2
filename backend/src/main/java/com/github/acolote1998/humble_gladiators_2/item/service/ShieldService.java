@@ -67,8 +67,16 @@ public class ShieldService {
             shieldTemplate.setEquipped(false);
             shieldTemplate.setCampaign(campaign);
             shieldTemplate.setCategory(ShieldCategory.valueOf(dto.category()));
-            shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
-            shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
+            if (shieldTemplate.getPhysicalDefense() == 1) {
+                shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
+            } else {
+                shieldTemplate.setPhysicalDefense(0);
+            }
+            if (shieldTemplate.getMagicalDefense() == 1) {
+                shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
+            } else {
+                shieldTemplate.setMagicalDefense(0);
+            }
             shieldTemplate.setValue(
                     (shieldTemplate.getMagicalDefense() + shieldTemplate.getPhysicalDefense())
                             * shieldTemplate.getTier()
