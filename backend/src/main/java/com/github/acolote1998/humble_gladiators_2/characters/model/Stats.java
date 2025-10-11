@@ -29,33 +29,22 @@ public class Stats {
     public static String ObjectStructure() {
         return """
                 Stats{
-                int constitution ((from 14 to 20 ) + rarity + tier)
-                int intelligence ((from 14 to 20 ) + rarity + tier)
-                int strength ((from 14 to 20 ) + rarity + tier)
-                int speed ((from 14 to 20 ) + rarity + tier)
-                int luck ((from 14 to 20 ) + rarity + tier)
-                int maxHp (always 0, calculated later on by the backend)
-                int currentHp (always 0, calculated later on by the backend)
-                int maxMp (always 0, calculated later on by the backend)
-                int currentMp (always 0, calculated later on by the backend)
                 int height (50 to 500) (for context: it is centimeters)
                 int weight (20 to 2000) (for context: it is kilograms)
                 int level (1 - 99)
-                int currentExp (0)
-                int expForNextLevel (0)
                 }
                 """;
     }
 
     public static Stats mapStatsFromCharacterFromGeminiDto(CharacterFromGeminiDto dto) {
         Stats stats = new Stats();
-
-        // Base stats directly from Gemini
-        stats.constitution = dto.stats().constitution();
-        stats.intelligence = dto.stats().intelligence();
-        stats.strength = dto.stats().strength();
-        stats.speed = dto.stats().speed();
-        stats.luck = dto.stats().luck();
+        Random randomNumber = new Random();
+        
+        stats.constitution = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();
+        stats.intelligence = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();
+        stats.strength = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();
+        stats.speed = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();
+        stats.luck = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();
         stats.height = dto.stats().height();
         stats.weight = dto.stats().weight();
         stats.level = dto.stats().level();
