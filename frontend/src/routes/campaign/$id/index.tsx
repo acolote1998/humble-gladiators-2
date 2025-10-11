@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
 import CampaignItem from "../../../components/campaigns/CampaignItem";
-import { useGetHeroByCampaignAndUser } from "../../../hooks/userCharacters";
+import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
 import { useCreateItemBooster } from "../../../hooks/useBoosters";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
@@ -18,7 +18,14 @@ function RouteComponent() {
     data: heroData,
     isLoading: heroLoading,
     isError: isHeroError,
+    error: heroErrorDetails,
   } = useGetHeroByCampaignAndUser(Number(campaignId));
+
+  // Check if it's specifically a 404 error (hero not found)
+  const isHeroNotFound =
+    isHeroError &&
+    (heroErrorDetails as Error & { response?: { status: number } })?.response
+      ?.status === 404;
   const { mutate: createItemBoosterMutation, data: dataFromItemBooster } =
     useCreateItemBooster();
 
@@ -36,7 +43,7 @@ function RouteComponent() {
       ) : (
         campaignData && <CampaignItem {...campaignData} />
       )}
-      {isHeroError ? (
+      {isHeroNotFound ? (
         <p
           onClick={() => {
             navigate({ to: `/campaign/${campaignId}/createHero` });
@@ -44,6 +51,8 @@ function RouteComponent() {
         >
           Click here to create your hero
         </p>
+      ) : isHeroError ? (
+        <p>Error loading hero. Please try again.</p>
       ) : heroLoading ? (
         <p>Loading hero</p>
       ) : (
