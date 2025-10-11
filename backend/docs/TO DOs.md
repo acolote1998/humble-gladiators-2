@@ -1,5 +1,19 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Language content module
+    - [ ] Make campaign have a language (an enum of available languages)
+    - [ ] Make all items and characters have a name and description per language (example EN_NAME, EN_DESCRIPTION)
+        - [ ] On booster opening, check the language of the campaign, and then try to get that name and description
+          in that language. if the result is null, we need to send the name and description in english to
+          Gemini, and generate the name and description in the desired language. Then add the translated
+          name and description to the ItemTemplate or CharacterInstance, which will then be saved together with the
+          rest. This way, we always
+          translate on demand on booster opening, instead of generating ALL languages when all the content is created,
+          this way we favour efficency and performance of the app)
+    - [ ] When sending items and so to the frontend, the server would have to check in which language the campaign is
+      setted, and get those values for the name and description fields. Possibly, we could check if all the fields exist
+      in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
+      through gemini
 - [X] Hero Creation backend
     - [ ] Make a hero creating button for the frontend
     - [X] Add validation in backend to never allow more than one hero created by campaign
