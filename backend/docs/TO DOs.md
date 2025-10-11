@@ -1,5 +1,10 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Generate a campaign image cover in the logic of game creation
+    - [ ] Similar to how we generate card images, we should send information regarding the campaign to gemini to get a
+      refined prompt that will serve as prompt for runaware to generate the campaign cover
+    - [ ] have the campaign have an image cover attribute (saved in the DB and all)
+    - [ ] have the frontend display the image cover
 - [ ] Language content module
     - [ ] Make campaign have a language (an enum of available languages)
     - [ ] Make all items and characters have a name and description per language (example EN_NAME, EN_DESCRIPTION)
