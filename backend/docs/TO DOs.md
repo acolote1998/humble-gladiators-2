@@ -14,12 +14,6 @@
       setted, and get those values for the name and description fields. Possibly, we could check if all the fields exist
       in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
       through gemini
--  [X] Offload Gemini by generating more things on the server and less through ai
-    - [X] Stats
-    - [X] Gold reward
-    - [X] Exp Reward
-    - [X] Discovered
-    - [X] refactor mapStatsFromCharacterFromGeminiDto
 - [X] Hero Creation backend
     - [ ] Make a hero creating button for the frontend
     - [X] Add validation in backend to never allow more than one hero created by campaign
@@ -53,7 +47,6 @@
     - The second any booster gets opened, those card entities will be marked as "discovered"
 
 - [ ] Discovery system integration
-- [ ] ItemTemplate to ItemInstance methods
 - [ ] Logic for interface method implementation
 - [ ] Balance formulas
     - [ ] gold reward
