@@ -66,7 +66,7 @@ public class CharacterService {
             characterInstance.setCategory(characterFromGeminiDto.category());
             characterInstance.setName(characterFromGeminiDto.name());
             characterInstance.setDescription(characterFromGeminiDto.description());
-            characterInstance.setDiscovered(characterFromGeminiDto.discovered());
+            characterInstance.setDiscovered(false);
             characterInstance.setCampaign(campaign);
             characterInstance.setRarity(characterFromGeminiDto.rarity());
             characterInstance.setTier(characterFromGeminiDto.tier());

@@ -16,9 +16,9 @@
       through gemini
 -  [ ] Offload Gemini by generating more things on the server and less through ai
     - [ ] Stats
-    - [ ] Gold reward
-    - [ ] Exp Reward
-    - [ ] Discovered
+    - [X] Gold reward
+    - [X] Exp Reward
+    - [X] Discovered
     - [ ] refactor mapStatsFromCharacterFromGeminiDto
 - [X] Hero Creation backend
     - [ ] Make a hero creating button for the frontend

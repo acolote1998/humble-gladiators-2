@@ -24,16 +24,13 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 CharacterInstance{
                 Stats stats
                 CharacterCategory category (enum)
-                characterType (either "PLAYER" or "NPC")
+                characterType (must be "NPC")
                 String name (character name generated based on the wanted themes)
                 String description
-                Boolean discovered (always false)
                 Long campaign_id (%s)
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
-                Integer goldReward (always 0, calculated later on by the backend)
-                Integer expReward (always 0, calculated later on by the backend)
                 }""", campaignId.toString());
     }
-    
+
 }
