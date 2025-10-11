@@ -22,7 +22,7 @@ export const Route = createFileRoute("/campaign/$id/compendium")({
 });
 
 function RouteComponent() {
-  const { id: campaignId } = useParams({ from: "/campaign/$id/" });
+  const { id: campaignId } = useParams({ from: "/campaign/$id/compendium" });
   const { data: characterInstancesData } = useGetCharactersByCampaignAndUser(
     Number(campaignId)
   );

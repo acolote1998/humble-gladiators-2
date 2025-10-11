@@ -66,6 +66,14 @@ function RouteComponent() {
               Log Item Booster
             </p>
           )}
+          <p
+            onClick={() => {
+              navigate({ to: `/campaign/${campaignId}/compendium` });
+            }}
+            className="bg-gray-400 p-3 rounded-lg"
+          >
+            Go to the compendium
+          </p>
         </>
       ) : (
         heroError && (
