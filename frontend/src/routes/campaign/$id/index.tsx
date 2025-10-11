@@ -16,8 +16,8 @@ function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
   const {
     data: heroData,
-    isError: heroError,
     isLoading: heroLoading,
+    isError: isHeroError,
   } = useGetHeroByCampaignAndUser(Number(campaignId));
   const { mutate: createItemBoosterMutation, data: dataFromItemBooster } =
     useCreateItemBooster();
@@ -36,54 +36,54 @@ function RouteComponent() {
       ) : (
         campaignData && <CampaignItem {...campaignData} />
       )}
-      {heroLoading ? (
-        "Loading hero"
-      ) : heroData ? (
-        <>
-          <p
-            onClick={() => {
-              console.log(heroData);
-            }}
-            className="bg-gray-400 p-3 rounded-lg"
-          >
-            Log Hero Data
-          </p>
-          <p
-            onClick={() => {
-              createItemBoosterMutation(Number(campaignId));
-            }}
-            className="bg-gray-400 p-3 rounded-lg"
-          >
-            Open Item Booster
-          </p>
-          {dataFromItemBooster && (
+      {isHeroError ? (
+        <p
+          onClick={() => {
+            navigate({ to: `/campaign/${campaignId}/createHero` });
+          }}
+        >
+          Click here to create your hero
+        </p>
+      ) : heroLoading ? (
+        <p>Loading hero</p>
+      ) : (
+        heroData && (
+          <>
             <p
               onClick={() => {
-                console.log(dataFromItemBooster);
+                console.log(heroData);
               }}
               className="bg-gray-400 p-3 rounded-lg"
             >
-              Log Item Booster
+              Log Hero Data
             </p>
-          )}
-          <p
-            onClick={() => {
-              navigate({ to: `/campaign/${campaignId}/compendium` });
-            }}
-            className="bg-gray-400 p-3 rounded-lg"
-          >
-            Go to the compendium
-          </p>
-        </>
-      ) : (
-        heroError && (
-          <p
-            onClick={() => {
-              navigate({ to: `/campaign/${campaignId}/createHero` });
-            }}
-          >
-            Click here to create your hero
-          </p>
+            <p
+              onClick={() => {
+                createItemBoosterMutation(Number(campaignId));
+              }}
+              className="bg-gray-400 p-3 rounded-lg"
+            >
+              Open Item Booster
+            </p>
+            {dataFromItemBooster && (
+              <p
+                onClick={() => {
+                  console.log(dataFromItemBooster);
+                }}
+                className="bg-gray-400 p-3 rounded-lg"
+              >
+                Log Item Booster
+              </p>
+            )}
+            <p
+              onClick={() => {
+                navigate({ to: `/campaign/${campaignId}/compendium` });
+              }}
+              className="bg-gray-400 p-3 rounded-lg"
+            >
+              Go to the compendium
+            </p>
+          </>
         )
       )}
     </>

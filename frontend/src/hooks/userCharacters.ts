@@ -32,8 +32,9 @@ export const useGetHeroByCampaignAndUser = (campaignId: number) => {
       }
       return fetchHeroForCampaignByUser(bearerToken, campaignId);
     },
+    retry: false,
   });
-  return { data, isError, isLoading };
+  return { data, isLoading, isError };
 };
 
 export const useCreateHero = () => {
