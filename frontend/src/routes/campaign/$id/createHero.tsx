@@ -6,7 +6,7 @@ import {
 import {
   useCreateHero,
   useGetHeroByCampaignAndUser,
-} from "../../../hooks/userCharacters";
+} from "../../../hooks/useCharacters";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -22,8 +22,15 @@ function RouteComponent() {
   const {
     data: heroData,
     isError: heroError,
+    error: heroErrorDetails,
     isLoading: heroLoading,
   } = useGetHeroByCampaignAndUser(Number(campaignId));
+
+  // Check if it's specifically a 404 error (hero not found)
+  const isHeroNotFound =
+    heroError &&
+    (heroErrorDetails as Error & { response?: { status: number } })?.response
+      ?.status === 404;
 
   useEffect(() => {
     if (heroData) {
@@ -35,29 +42,29 @@ function RouteComponent() {
     <div>
       {heroLoading ? (
         <p>Loading...</p>
-      ) : (
-        heroError && (
-          <>
-            <p>Type your hero's name</p>
-            <input
-              type="text"
-              onChange={(e) => {
-                setHeroName(e.target.value);
-              }}
-            />
-            <button
-              onClick={() => {
-                createHero({
-                  campaignId: Number(campaignId),
-                  heroName: heroName,
-                });
-              }}
-            >
-              Create Hero
-            </button>
-          </>
-        )
-      )}
+      ) : isHeroNotFound ? (
+        <>
+          <p>Type your hero's name</p>
+          <input
+            type="text"
+            onChange={(e) => {
+              setHeroName(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              createHero({
+                campaignId: Number(campaignId),
+                heroName: heroName,
+              });
+            }}
+          >
+            Create Hero
+          </button>
+        </>
+      ) : heroError ? (
+        <p>Error loading hero. Please try again.</p>
+      ) : null}
     </div>
   );
 }
