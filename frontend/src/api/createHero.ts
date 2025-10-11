@@ -2,14 +2,13 @@ import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
 import type { CreateHeroType } from "../types/characterTypes";
 export const createHeroForACampaignPost = async (
-  heroToCreate: CreateHeroType,
-  campaignId: number,
+  heroToCreateVariables: CreateHeroType,
   bearerToken: string
 ) => {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/campaign/${campaignId}/character-instances/hero`,
-      heroToCreate,
+      `${BACKEND_URL}/campaign/${heroToCreateVariables.campaignId}/character-instances/hero`,
+      { heroName: heroToCreateVariables.heroName },
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }

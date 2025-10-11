@@ -86,8 +86,14 @@ public class CharacterService {
         return characterInstanceRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
+    public CharacterInstance findHeroOrNull(Long campaignId, String userId) {
+        return characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(
+                campaignId, userId, CharacterType.PLAYER
+        );
+    }
+
     public CharacterInstance createHero(Campaign campaign, String userId, CreateHeroRequestDto dto) {
-        CharacterInstance doesAHeroExist = getHero(campaign.getId(), userId);
+        CharacterInstance doesAHeroExist = findHeroOrNull(campaign.getId(), userId);
         if (doesAHeroExist != null) {
             throw new HeroAlreadyCreated("A hero already exists for this campaign");
         }

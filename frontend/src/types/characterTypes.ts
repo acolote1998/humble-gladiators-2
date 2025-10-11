@@ -8,6 +8,7 @@ import type { WeaponCategoriesEnum } from "./weaponTypes";
 
 export type CreateHeroType = {
   heroName: string;
+  campaignId: number;
 };
 
 export type CharacterInstanceType = {

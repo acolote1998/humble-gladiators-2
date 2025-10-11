@@ -1,4 +1,8 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useNavigate,
+  useParams,
+} from "@tanstack/react-router";
 import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
 import CampaignItem from "../../../components/campaigns/CampaignItem";
 import { useGetHeroByCampaignAndUser } from "../../../hooks/userCharacters";
@@ -8,6 +12,7 @@ export const Route = createFileRoute("/campaign/$id/")({
 });
 
 function RouteComponent() {
+  const navigate = useNavigate();
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
   const {
     data: heroData,
@@ -63,7 +68,15 @@ function RouteComponent() {
           )}
         </>
       ) : (
-        heroError && "Please create a hero for this campaign"
+        heroError && (
+          <p
+            onClick={() => {
+              navigate({ to: `/campaign/${campaignId}/createHero` });
+            }}
+          >
+            Click here to create your hero
+          </p>
+        )
       )}
     </>
   );
