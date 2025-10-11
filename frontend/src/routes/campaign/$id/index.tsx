@@ -9,7 +9,11 @@ export const Route = createFileRoute("/campaign/$id/")({
 
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
-  const { data: heroData } = useGetHeroByCampaignAndUser(Number(campaignId));
+  const {
+    data: heroData,
+    isError: heroError,
+    isLoading: heroLoading,
+  } = useGetHeroByCampaignAndUser(Number(campaignId));
   const { mutate: createItemBoosterMutation, data: dataFromItemBooster } =
     useCreateItemBooster();
 
@@ -27,32 +31,39 @@ function RouteComponent() {
       ) : (
         campaignData && <CampaignItem {...campaignData} />
       )}
-
-      <p
-        onClick={() => {
-          console.log(heroData);
-        }}
-        className="bg-gray-400 p-3 rounded-lg"
-      >
-        Log Hero Data
-      </p>
-      <p
-        onClick={() => {
-          createItemBoosterMutation(Number(campaignId));
-        }}
-        className="bg-gray-400 p-3 rounded-lg"
-      >
-        Open Item Booster
-      </p>
-      {dataFromItemBooster && (
-        <p
-          onClick={() => {
-            console.log(dataFromItemBooster);
-          }}
-          className="bg-gray-400 p-3 rounded-lg"
-        >
-          Log Item Booster
-        </p>
+      {heroLoading ? (
+        "Loading hero"
+      ) : heroData ? (
+        <>
+          <p
+            onClick={() => {
+              console.log(heroData);
+            }}
+            className="bg-gray-400 p-3 rounded-lg"
+          >
+            Log Hero Data
+          </p>
+          <p
+            onClick={() => {
+              createItemBoosterMutation(Number(campaignId));
+            }}
+            className="bg-gray-400 p-3 rounded-lg"
+          >
+            Open Item Booster
+          </p>
+          {dataFromItemBooster && (
+            <p
+              onClick={() => {
+                console.log(dataFromItemBooster);
+              }}
+              className="bg-gray-400 p-3 rounded-lg"
+            >
+              Log Item Booster
+            </p>
+          )}
+        </>
+      ) : (
+        heroError && "Please create a hero for this campaign"
       )}
     </>
   );
