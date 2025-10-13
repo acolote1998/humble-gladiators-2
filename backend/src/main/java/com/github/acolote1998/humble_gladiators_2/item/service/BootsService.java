@@ -24,6 +24,22 @@ public class BootsService {
     private BootsTemplateRepository bootsTemplateRepository;
     private GeminiService geminiService;
 
+    public Map<String, String> getTier5BootsContextForCampaignCover(Campaign campaign) {
+        List<BootsTemplate> boots = bootsTemplateRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (BootsTemplate boot : boots) {
+            if (boot.getName() != null && !boot.getName().isBlank()) {
+                context.put(
+                        boot.getName(),
+                        boot.getDescription() != null ? boot.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public List<BootsTemplate> createTwentyFiveNewBootsTemplates(Campaign campaign) {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveBoots(campaign);
         List<BootsTemplate> savedBootsTemplates = new ArrayList<>();
