@@ -54,6 +54,22 @@ public class CharacterService {
         return characterValues;
     }
 
+    public Map<String, String> getTier5NpcsContextForCampaignCover(Campaign campaign) {
+        List<CharacterInstance> npcs = characterInstanceRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (CharacterInstance npc : npcs) {
+            if (npc.getName() != null && !npc.getName().isBlank()) {
+                context.put(
+                        npc.getName(),
+                        npc.getDescription() != null ? npc.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public List<CharacterInstance> createTenNPCsOfDesiredTier(Campaign campaign, Integer tier) {
         List<CharacterInstance> existingCharactersForContext = characterInstanceRepository.findAll();
         List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsOfDesiredTier(campaign, existingCharactersForContext, tier);
