@@ -29,4 +29,6 @@ public interface BootsTemplateRepository extends ListCrudRepository<BootsTemplat
 
 
     List<BootsTemplate> findAllByCampaign_Id(Long campaignId);
+
+    List<BootsTemplate> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
 }
