@@ -159,29 +159,8 @@ public class RunwareService {
 
     public byte[] generateHelmetTemplateImageToBytes(Campaign campaign, HelmetTemplate helmetTemplate) {
         log.info(String.format("Attempt to generate image for %s - %s", helmetTemplate.getName(), HelmetTemplate.class));
-        String promptForGemini = String.format("""
-                        You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
-                        For generating the prompt, use this context:
-                        You are generating high-quality fantasy artwork for a trading card in an RPG game.
-                        - The object to illustrate is of type: %s
-                        - Focus strictly on the requested subject. Do not include any additional or implied elements unless explicitly specified \s
-                        (e.g., if illustrating a helmet, render only the helmet—no body, mannequin, or person wearing it unless instructed or included \s
-                        in the object name or description).
-                        - The card belongs to the campaign theme: %s.
-                        - The object to illustrate is: "%s".
-                        - A description of the object (for extra context): "%s"
-                        - Details needed: %s
-                        - Details needed: %s
-                        %s
-                        """,
-                "Helmet",
-                campaign.getTheme().getWantedThemes().toString(),
-                helmetTemplate.getName(),
-                helmetTemplate.getDescription(),
-                TierToContext(helmetTemplate.getTier()),
-                RarityToContext(helmetTemplate.getRarity()),
-                GetCardImageGenerationGeneralRules());
-        String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
+
+        String positivePrompt = geminiService.getPositiveHelmetPromptForRuneware(campaign, helmetTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
