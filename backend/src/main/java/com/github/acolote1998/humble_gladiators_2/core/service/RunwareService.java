@@ -112,7 +112,7 @@ public class RunwareService {
         };
     }
 
-    public String getGeneralRules() {
+    public String getCardGenerationGeneralRules() {
         return """
                         - The artwork should be:
                           - Standalone (no card frame, no text, no border, no logos)
@@ -139,7 +139,7 @@ public class RunwareService {
 
     public String buildNegativePrompt(String unwantedThemes) {
         return "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + unwantedThemes 
+                + unwantedThemes
                 + ", white background, plain background, empty background, studio lighting";
     }
 
@@ -166,7 +166,7 @@ public class RunwareService {
                 armorTemplate.getDescription(),
                 tierToContext(armorTemplate.getTier()),
                 rarityToContext(armorTemplate.getRarity()),
-                getGeneralRules());
+                getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -211,7 +211,7 @@ public class RunwareService {
                 bootsTemplate.getDescription(),
                 tierToContext(bootsTemplate.getTier()),
                 rarityToContext(bootsTemplate.getRarity()),
-                getGeneralRules());
+                getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -256,7 +256,7 @@ public class RunwareService {
                 consumableTemplate.getDescription(),
                 tierToContext(consumableTemplate.getTier()),
                 rarityToContext(consumableTemplate.getRarity()),
-                getGeneralRules());
+                getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -301,7 +301,7 @@ public class RunwareService {
                 helmetTemplate.getDescription(),
                 tierToContext(helmetTemplate.getTier()),
                 rarityToContext(helmetTemplate.getRarity()),
-                getGeneralRules());
+                getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -346,7 +346,7 @@ public class RunwareService {
                 shieldTemplate.getDescription(),
                 tierToContext(shieldTemplate.getTier()),
                 rarityToContext(shieldTemplate.getRarity()),
-                getGeneralRules());
+                getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -393,7 +393,7 @@ public class RunwareService {
                 spellTemplate.getDescription(),
                 tierToContext(spellTemplate.getTier()),
                 rarityToContext(spellTemplate.getRarity()),
-                getGeneralRules());
+                getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -440,7 +440,7 @@ public class RunwareService {
                 weaponTemplate.getDescription(),
                 tierToContext(weaponTemplate.getTier()),
                 rarityToContext(weaponTemplate.getRarity()),
-                getGeneralRules());
+                getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
