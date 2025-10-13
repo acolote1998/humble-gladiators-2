@@ -55,4 +55,10 @@ public class PromptAider {
                             - Just return the raw text that will be sent to the image generator.
                 """;
     }
+
+    public static String BuildNegativePromptForRunware(String unwantedThemes) {
+        return "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
+                + unwantedThemes
+                + ", white background, plain background, empty background, studio lighting";
+    }
 }

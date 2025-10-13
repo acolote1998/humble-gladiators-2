@@ -2,7 +2,6 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.RunwareImageGenResponse;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.util.PromptAider.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
@@ -86,12 +85,6 @@ public class RunwareService {
     }
 
 
-    public String buildNegativePrompt(String unwantedThemes) {
-        return "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
-                + unwantedThemes
-                + ", white background, plain background, empty background, studio lighting";
-    }
-
     public byte[] generateArmorTemplateImageToBytes(Campaign campaign, ArmorTemplate armorTemplate) {
         log.info(String.format("Attempt to generate image for %s - %s", armorTemplate.getName(), ArmorTemplate.class));
         String promptForGemini = String.format("""
@@ -117,7 +110,7 @@ public class RunwareService {
                 RarityToContext(armorTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -162,7 +155,7 @@ public class RunwareService {
                 RarityToContext(bootsTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -207,7 +200,7 @@ public class RunwareService {
                 RarityToContext(consumableTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -252,7 +245,7 @@ public class RunwareService {
                 RarityToContext(helmetTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -297,7 +290,7 @@ public class RunwareService {
                 RarityToContext(shieldTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -344,7 +337,7 @@ public class RunwareService {
                 RarityToContext(spellTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
@@ -391,7 +384,7 @@ public class RunwareService {
                 RarityToContext(weaponTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
-        String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
 
