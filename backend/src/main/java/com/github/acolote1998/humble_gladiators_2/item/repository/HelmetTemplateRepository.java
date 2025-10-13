@@ -28,4 +28,6 @@ public interface HelmetTemplateRepository extends ListCrudRepository<HelmetTempl
     );
 
     List<HelmetTemplate> findAllByCampaign_Id(Long campaignId);
+
+    List<HelmetTemplate> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
 }
