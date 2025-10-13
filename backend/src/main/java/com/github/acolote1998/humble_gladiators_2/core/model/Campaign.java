@@ -27,6 +27,9 @@ public class Campaign {
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Theme theme;
 
+    @Lob
+    byte[] coverImgBytes;
+
     @Enumerated(EnumType.STRING)
     private CampaignCreationStateType campaignCreationState = CampaignCreationStateType.STARTING_NEW_CAMPAIGN;
 
