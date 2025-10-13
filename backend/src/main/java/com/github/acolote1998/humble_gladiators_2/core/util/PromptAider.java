@@ -61,4 +61,26 @@ public class PromptAider {
                 + unwantedThemes
                 + ", white background, plain background, empty background, studio lighting";
     }
+
+    public static String GetGeneralObjectGenerationRules() {
+        return """
+                    - Answer with ONLY json format, not extra text or explanations.
+                    - Do not include "id", "createdAt", or "updatedAt" in the JSON.
+                    - If a field represents an enum (like "requirementType"), it MUST be exactly one of the allowed provided values.
+                    - Do NOT invent any new enum values. Only use the ones listed above.
+                    - Do NOT generate item names or descriptions that promise in-game effects or powers. For example, avoid names like "Teleportation Boots" or descriptions like "This item gives the user the power of X".
+                    - Always generate text in English.
+                    - When generating names for characters or items:
+                        - Prefer short names by default, like "Karen Filippelli" or "Thor".
+                        - Only add extra descriptors if they make the character/item funnier, more memorable, or rich/interesting in the context of the game.
+                        - Avoid unnecessarily long names that include multiple descriptors without added value.
+                    - When generating names or descriptions, you may mix elements from multiple wanted themes creatively, but only do so if this enhances the flavor, or thematic interest.
+                        Examples:
+                            - "Thor, the Fire-Breathing Bard" ✅ (Good outcome: fun, thematic from 'Marvel' + 'Medieval Fantasy' + 'Music')
+                            - "Karen Filippelli" ✅ (Good outcome: short, thematic from 'The Office', no need for extra context)
+                            - "Sword of Messi" ✅ (Good outcome: thematic from 'Soccer' + 'Pirates')
+                            - "Michael Scott, Regional Manager, That's What She Said" ❌ (Bad outcome: Too long, unnecessary)
+                    - Do not force the generation to fit the category, if an object does not fit or does not make sense, just use "OTHER"
+                """;
+    }
 }
