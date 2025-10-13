@@ -29,6 +29,22 @@ public class ArmorService {
         this.armorTemplateRepository = armorTemplateRepository;
     }
 
+    public Map<String, String> getTier5ArmorsContextForCampaignCover(Campaign campaign) {
+        List<ArmorTemplate> armors = armorTemplateRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (ArmorTemplate armor : armors) {
+            if (armor.getName() != null && !armor.getName().isBlank()) {
+                context.put(
+                        armor.getName(),
+                        armor.getDescription() != null ? armor.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
         List<ArmorTemplate> allItems = armorTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
