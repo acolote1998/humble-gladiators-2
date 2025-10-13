@@ -95,6 +95,13 @@ function RouteComponent() {
           </>
         )
       )}
+      {campaignData?.coverImgBase64 && (
+        <img
+          draggable={false}
+          src={`data:image/jpeg;base64,${campaignData?.coverImgBase64}`}
+          alt={campaignData?.name}
+        />
+      )}
     </>
   );
 }
