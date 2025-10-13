@@ -39,6 +39,9 @@ public class GameService {
     @Value("${GENERATE_ALL}")
     private boolean GENERATE_ALL;
 
+    @Value("${GENERATE_IMAGES}")
+    private boolean GENERATE_IMAGES;
+
     @Value("${GENERATE_NPCS}")
     private boolean GENERATE_NPCS;
     @Value("${GENERATE_ARMORS}")
@@ -222,9 +225,16 @@ public class GameService {
             updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
             Thread.sleep(500);
         }
+
+        // CAMPAIGN COVER IMAGE
+        if (GENERATE_ALL && GENERATE_IMAGES) {
+            campaignService.generateImageCoverForCampaign(campaign);
+            updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
+            Thread.sleep(500);
+        }
         getShortReportOfAIGeneratedContent(campaign);
         log.info("Creating report of generated content");
-        updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
+        updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN_COVER_IMAGE, campaign);
         return campaign;
     }
 
