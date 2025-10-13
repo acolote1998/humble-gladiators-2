@@ -29,6 +29,22 @@ public class WeaponService {
         this.weaponTemplateRepository = weaponTemplateRepository;
     }
 
+    public Map<String, String> getTier5WeaponsContextForCampaignCover(Campaign campaign) {
+        List<WeaponTemplate> weapons = weaponTemplateRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (WeaponTemplate weapon : weapons) {
+            if (weapon.getName() != null && !weapon.getName().isBlank()) {
+                context.put(
+                        weapon.getName(),
+                        weapon.getDescription() != null ? weapon.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
         List<WeaponTemplate> allItems = weaponTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
