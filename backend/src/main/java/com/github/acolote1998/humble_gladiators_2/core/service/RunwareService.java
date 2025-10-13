@@ -135,28 +135,7 @@ public class RunwareService {
 
     public byte[] generateConsumableTemplateImageToBytes(Campaign campaign, ConsumableTemplate consumableTemplate) {
         log.info(String.format("Attempt to generate image for %s - %s", consumableTemplate.getName(), ConsumableTemplate.class));
-        String promptForGemini = String.format("""
-                        You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
-                        For generating the prompt, use this context:
-                        You are generating high-quality fantasy artwork for a trading card in an RPG game.
-                        - The object to illustrate is of type: %s
-                        - Focus strictly on the requested subject. Do not include any additional or implied elements unless explicitly specified \s
-                        (e.g., if illustrating a consumable, render only the consumable item—no background characters or additional objects unless instructed or included \s
-                        in the object name or description).
-                        - The card belongs to the campaign theme: %s.
-                        - The object to illustrate is: "%s".
-                        - A description of the object (for extra context): "%s"
-                        - Details needed: %s
-                        - Details needed: %s
-                        %s
-                        """,
-                "Consumable",
-                campaign.getTheme().getWantedThemes().toString(),
-                consumableTemplate.getName(),
-                consumableTemplate.getDescription(),
-                TierToContext(consumableTemplate.getTier()),
-                RarityToContext(consumableTemplate.getRarity()),
-                GetCardImageGenerationGeneralRules());
+
         String positivePrompt = geminiService.getPositiveConsumablesPromptForRuneware(campaign, consumableTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
