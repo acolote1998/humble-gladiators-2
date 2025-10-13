@@ -23,11 +23,11 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         break;
       case "CREATING_THEMES":
         formattedState = "Starting new campaign";
-        formattedPercent = getPercentWidth(0);
+        formattedPercent = getPercentWidth(2);
         break;
       case "THEMES_CREATED":
         formattedState = "Creating themes";
-        formattedPercent = getPercentWidth(3);
+        formattedPercent = getPercentWidth(4);
         break;
       case "CREATING_CAMPAIGN":
         formattedState = "Creating campaign";
@@ -35,87 +35,95 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         break;
       case "CAMPAIGN_CREATED":
         formattedState = "Campaign created";
-        formattedPercent = getPercentWidth(10);
+        formattedPercent = getPercentWidth(8);
         break;
       case "CREATING_ARMORS":
         formattedState = "Creating armors";
-        formattedPercent = getPercentWidth(20);
+        formattedPercent = getPercentWidth(12);
         break;
       case "ARMORS_CREATED":
         formattedState = "Armors created";
-        formattedPercent = getPercentWidth(25);
+        formattedPercent = getPercentWidth(16);
         break;
       case "CREATING_BOOTS":
         formattedState = "Creating boots";
-        formattedPercent = getPercentWidth(30);
+        formattedPercent = getPercentWidth(20);
         break;
       case "BOOTS_CREATED":
         formattedState = "Boots created";
-        formattedPercent = getPercentWidth(35);
+        formattedPercent = getPercentWidth(24);
         break;
       case "CREATING_CONSUMABLES":
         formattedState = "Creating consumables";
-        formattedPercent = getPercentWidth(40);
+        formattedPercent = getPercentWidth(28);
         break;
       case "CONSUMABLES_CREATED":
         formattedState = "Consumables created";
-        formattedPercent = getPercentWidth(45);
+        formattedPercent = getPercentWidth(32);
         break;
       case "CREATING_HELMETS":
         formattedState = "Creating helmets";
-        formattedPercent = getPercentWidth(50);
+        formattedPercent = getPercentWidth(36);
         break;
       case "HELMETS_CREATED":
         formattedState = "Helmets created";
-        formattedPercent = getPercentWidth(55);
+        formattedPercent = getPercentWidth(40);
         break;
       case "CREATING_SHIELDS":
         formattedState = "Creating shields";
-        formattedPercent = getPercentWidth(60);
+        formattedPercent = getPercentWidth(44);
         break;
       case "SHIELDS_CREATED":
         formattedState = "Shields created";
-        formattedPercent = getPercentWidth(65);
+        formattedPercent = getPercentWidth(48);
         break;
       case "CREATING_SPELLS":
         formattedState = "Creating spells";
-        formattedPercent = getPercentWidth(70);
+        formattedPercent = getPercentWidth(52);
         break;
       case "SPELLS_CREATED":
         formattedState = "Spells created";
-        formattedPercent = getPercentWidth(75);
+        formattedPercent = getPercentWidth(56);
         break;
       case "CREATING_WEAPONS":
         formattedState = "Creating weapons";
-        formattedPercent = getPercentWidth(80);
+        formattedPercent = getPercentWidth(60);
         break;
       case "WEAPONS_CREATED":
         formattedState = "Weapons created";
-        formattedPercent = getPercentWidth(85);
+        formattedPercent = getPercentWidth(64);
         break;
       case "CREATING_NPCS_PHASE_ONE":
         formattedState = "Creating NPCs";
-        formattedPercent = getPercentWidth(90);
+        formattedPercent = getPercentWidth(68);
         break;
       case "CREATING_NPCS_PHASE_TWO":
         formattedState = "Creating NPCs";
-        formattedPercent = getPercentWidth(92);
+        formattedPercent = getPercentWidth(71);
         break;
       case "CREATING_NPCS_PHASE_THREE":
         formattedState = "Creating NPCs";
-        formattedPercent = getPercentWidth(94);
+        formattedPercent = getPercentWidth(74);
         break;
       case "CREATING_NPCS_PHASE_FOUR":
         formattedState = "Creating NPCs";
-        formattedPercent = getPercentWidth(96);
+        formattedPercent = getPercentWidth(77);
         break;
       case "CREATING_NPCS_PHASE_FIVE":
         formattedState = "Creating NPCs";
-        formattedPercent = getPercentWidth(98);
+        formattedPercent = getPercentWidth(80);
         break;
       case "NPCS_CREATED":
         formattedState = "NPCs created";
-        formattedPercent = getPercentWidth(100);
+        formattedPercent = getPercentWidth(84);
+        break;
+      case "CREATING_CAMPAIGN_COVER_IMAGE":
+        formattedState = "Creating Campaign Cover Image";
+        formattedPercent = getPercentWidth(92);
+        break;
+      case "CAMPAIGN_COVER_IMAGE_CREATED":
+        formattedState = "Campaign's cover image created";
+        formattedPercent = getPercentWidth(96);
         break;
       case "GAME_CREATED":
         formattedState = "Game created!";
