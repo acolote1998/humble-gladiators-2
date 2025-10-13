@@ -13,10 +13,12 @@ import java.util.List;
 public class CampaignService {
     GeminiService geminiService;
     CampaignRepository repository;
+    RunwareService runwareService;
 
-    public CampaignService(GeminiService geminiService, CampaignRepository repository) {
+    public CampaignService(GeminiService geminiService, CampaignRepository repository, RunwareService runwareService) {
         this.geminiService = geminiService;
         this.repository = repository;
+        this.runwareService = runwareService;
     }
 
     Campaign save(Campaign campaign) {
@@ -37,6 +39,31 @@ public class CampaignService {
         newCampaign = save(newCampaign);
         save(newCampaign);
         return newCampaign;
+    }
+
+    public byte[] generateImageCoverForCampaign(Campaign campaign,
+                                                String tier5Characters,
+                                                String tier5Armors,
+                                                String tier5Boots,
+                                                String tier5Helmets,
+                                                String tier5Shields,
+                                                String tier5Weapons,
+                                                String tier5Spells,
+                                                String tier5Consumables) {
+        String promptForImageGeneration = geminiService.getPositiveCampaignImageCoverPromptForRuneware(
+                campaign,
+                tier5Characters,
+                tier5Armors,
+                tier5Boots,
+                tier5Helmets,
+                tier5Shields,
+                tier5Weapons,
+                tier5Spells,
+                tier5Consumables);
+        byte[] generatedImageBytes = runwareService.generateCampaignCoverImageToBytes(promptForImageGeneration, campaign);
+        campaign.setCoverImgBytes(generatedImageBytes);
+        repository.save(campaign);
+        return generatedImageBytes;
     }
 
     public Campaign getCampaignBeingCreatedByUserId(String userId) {

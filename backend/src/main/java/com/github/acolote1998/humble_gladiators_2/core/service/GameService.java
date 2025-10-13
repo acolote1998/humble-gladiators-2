@@ -228,13 +228,23 @@ public class GameService {
 
         // CAMPAIGN COVER IMAGE
         if (GENERATE_ALL && GENERATE_IMAGES) {
-            campaignService.generateImageCoverForCampaign(campaign);
-            updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN_COVER_IMAGE, campaign);
+            campaignService.generateImageCoverForCampaign(
+                    campaign,
+                    characterService.getTier5NpcsContextForCampaignCover(campaign).toString(),
+                    armorService.getTier5ArmorsContextForCampaignCover(campaign).toString(),
+                    bootsService.getTier5BootsContextForCampaignCover(campaign).toString(),
+                    helmetService.getTier5HelmetsContextForCampaignCover(campaign).toString(),
+                    shieldService.getTier5ShieldsContextForCampaignCover(campaign).toString(),
+                    weaponService.getTier5WeaponsContextForCampaignCover(campaign).toString(),
+                    spellService.getTier5SpellsContextForCampaignCover(campaign).toString(),
+                    consumableService.getTier5ConsumablesContextForCampaignCover(campaign).toString());
+            updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_COVER_IMAGE_CREATED, campaign);
             Thread.sleep(500);
         }
         getShortReportOfAIGeneratedContent(campaign);
         log.info("Creating report of generated content");
-        updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN_COVER_IMAGE, campaign);
+        updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
         return campaign;
     }
 
