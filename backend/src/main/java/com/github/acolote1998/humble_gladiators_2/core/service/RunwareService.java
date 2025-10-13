@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.RunwareImageGenResponse;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
+import com.github.acolote1998.humble_gladiators_2.core.util.PromptAider;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
@@ -99,19 +100,6 @@ public class RunwareService {
     }
 
 
-    public String rarityToContext(Integer rarity) {
-        if (rarity == null) return "";
-        return switch (rarity) {
-            case 1 -> "Common rarity — ordinary and widely found, simple or unremarkable in nature.";
-            case 2 -> "Uncommon rarity — slightly distinctive, showing minor magical or unusual qualities.";
-            case 3 -> "Rare rarity — unique or exceptional in appearance, power, or craftsmanship.";
-            case 4 -> "Epic rarity — striking and powerful, infused with great energy, artistry, or legend.";
-            case 5 ->
-                    "Legendary rarity — one-of-a-kind and mythical, surrounded by stories of greatness or divine origin.";
-            default -> "";
-        };
-    }
-
     public String getCardGenerationGeneralRules() {
         return """
                         - The artwork should be:
@@ -165,7 +153,7 @@ public class RunwareService {
                 armorTemplate.getName(),
                 armorTemplate.getDescription(),
                 tierToContext(armorTemplate.getTier()),
-                rarityToContext(armorTemplate.getRarity()),
+                PromptAider.RarityToContext(armorTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
@@ -210,7 +198,7 @@ public class RunwareService {
                 bootsTemplate.getName(),
                 bootsTemplate.getDescription(),
                 tierToContext(bootsTemplate.getTier()),
-                rarityToContext(bootsTemplate.getRarity()),
+                PromptAider.RarityToContext(bootsTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
@@ -255,7 +243,7 @@ public class RunwareService {
                 consumableTemplate.getName(),
                 consumableTemplate.getDescription(),
                 tierToContext(consumableTemplate.getTier()),
-                rarityToContext(consumableTemplate.getRarity()),
+                PromptAider.RarityToContext(consumableTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
@@ -300,7 +288,7 @@ public class RunwareService {
                 helmetTemplate.getName(),
                 helmetTemplate.getDescription(),
                 tierToContext(helmetTemplate.getTier()),
-                rarityToContext(helmetTemplate.getRarity()),
+                PromptAider.RarityToContext(helmetTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
@@ -345,7 +333,7 @@ public class RunwareService {
                 shieldTemplate.getName(),
                 shieldTemplate.getDescription(),
                 tierToContext(shieldTemplate.getTier()),
-                rarityToContext(shieldTemplate.getRarity()),
+                PromptAider.RarityToContext(shieldTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
@@ -392,7 +380,7 @@ public class RunwareService {
                 spellTemplate.getName(),
                 spellTemplate.getDescription(),
                 tierToContext(spellTemplate.getTier()),
-                rarityToContext(spellTemplate.getRarity()),
+                PromptAider.RarityToContext(spellTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
@@ -439,7 +427,7 @@ public class RunwareService {
                 weaponTemplate.getName(),
                 weaponTemplate.getDescription(),
                 tierToContext(weaponTemplate.getTier()),
-                rarityToContext(weaponTemplate.getRarity()),
+                PromptAider.RarityToContext(weaponTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
