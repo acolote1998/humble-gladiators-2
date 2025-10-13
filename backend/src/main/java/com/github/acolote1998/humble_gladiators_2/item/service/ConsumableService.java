@@ -29,6 +29,22 @@ public class ConsumableService {
         this.geminiService = geminiService;
     }
 
+    public Map<String, String> getTier5ConsumablesContextForCampaignCover(Campaign campaign) {
+        List<ConsumableTemplate> consumables = consumableTemplateRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (ConsumableTemplate consumable : consumables) {
+            if (consumable.getName() != null && !consumable.getName().isBlank()) {
+                context.put(
+                        consumable.getName(),
+                        consumable.getDescription() != null ? consumable.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
         List<ConsumableTemplate> allItems = consumableTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)

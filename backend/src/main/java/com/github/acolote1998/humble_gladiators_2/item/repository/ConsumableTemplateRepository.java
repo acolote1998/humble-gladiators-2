@@ -28,4 +28,6 @@ public interface ConsumableTemplateRepository extends ListCrudRepository<Consuma
     );
 
     List<ConsumableTemplate> findAllByCampaign_Id(Long campaignId);
+
+    List<ConsumableTemplate> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
 }
