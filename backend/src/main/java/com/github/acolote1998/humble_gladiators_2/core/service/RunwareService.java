@@ -2,7 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.RunwareImageGenResponse;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.util.PromptAider;
+import com.github.acolote1998.humble_gladiators_2.core.util.PromptAider.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
+import static com.github.acolote1998.humble_gladiators_2.core.util.PromptAider.*;
 
 @Service
 @Slf4j
@@ -84,31 +86,6 @@ public class RunwareService {
     }
 
 
-    public String getCardGenerationGeneralRules() {
-        return """
-                        - The artwork should be:
-                          - Standalone (no card frame, no text, no border, no logos)
-                          - High-quality, vibrant, detailed, and visually striking
-                          - Consistent with the campaign theme
-                          - Focused on the item/character, no background clutter
-                        - Background: Use a subtle, thematic background that complements the item without overwhelming it
-                          (e.g., dark gradient, mystical atmosphere, textured surface, or environmental hint that matches the campaign theme)
-                        - Avoid:
-                          - Any text, logos, or symbols
-                          - Any references to unrelated themes
-                          - Plain white or completely empty backgrounds
-                        - Style:
-                          - Realistic fantasy illustration, painterly, with depth and shading
-                          - Emphasize color, texture, and thematic storytelling (e.g., dragon scales, mystical elements)
-                        - OUTPUT INSTRUCTIONS:
-                            - Output ONLY the final text of the image prompt.
-                            - Do NOT add introductions, explanations, or meta commentary.
-                            - Do NOT include phrases like "Here is your prompt:" or "Okay, here’s...".
-                            - Do NOT use markdown code blocks or backticks.
-                            - Just return the raw text that will be sent to the image generator.
-                """;
-    }
-
     public String buildNegativePrompt(String unwantedThemes) {
         return "This is a list of the themes that we DO NOT WANT to be part of the campaign: "
                 + unwantedThemes
@@ -136,9 +113,9 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 armorTemplate.getName(),
                 armorTemplate.getDescription(),
-                PromptAider.TierToContext(armorTemplate.getTier()),
-                PromptAider.RarityToContext(armorTemplate.getRarity()),
-                getCardGenerationGeneralRules());
+                TierToContext(armorTemplate.getTier()),
+                RarityToContext(armorTemplate.getRarity()),
+                GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -181,9 +158,9 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 bootsTemplate.getName(),
                 bootsTemplate.getDescription(),
-                PromptAider.TierToContext(bootsTemplate.getTier()),
-                PromptAider.RarityToContext(bootsTemplate.getRarity()),
-                getCardGenerationGeneralRules());
+                TierToContext(bootsTemplate.getTier()),
+                RarityToContext(bootsTemplate.getRarity()),
+                GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -226,9 +203,9 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 consumableTemplate.getName(),
                 consumableTemplate.getDescription(),
-                PromptAider.TierToContext(consumableTemplate.getTier()),
-                PromptAider.RarityToContext(consumableTemplate.getRarity()),
-                getCardGenerationGeneralRules());
+                TierToContext(consumableTemplate.getTier()),
+                RarityToContext(consumableTemplate.getRarity()),
+                GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -271,9 +248,9 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 helmetTemplate.getName(),
                 helmetTemplate.getDescription(),
-                PromptAider.TierToContext(helmetTemplate.getTier()),
-                PromptAider.RarityToContext(helmetTemplate.getRarity()),
-                getCardGenerationGeneralRules());
+                TierToContext(helmetTemplate.getTier()),
+                RarityToContext(helmetTemplate.getRarity()),
+                GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -316,9 +293,9 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 shieldTemplate.getName(),
                 shieldTemplate.getDescription(),
-                PromptAider.TierToContext(shieldTemplate.getTier()),
-                PromptAider.RarityToContext(shieldTemplate.getRarity()),
-                getCardGenerationGeneralRules());
+                TierToContext(shieldTemplate.getTier()),
+                RarityToContext(shieldTemplate.getRarity()),
+                GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -363,9 +340,9 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 spellTemplate.getName(),
                 spellTemplate.getDescription(),
-                PromptAider.TierToContext(spellTemplate.getTier()),
-                PromptAider.RarityToContext(spellTemplate.getRarity()),
-                getCardGenerationGeneralRules());
+                TierToContext(spellTemplate.getTier()),
+                RarityToContext(spellTemplate.getRarity()),
+                GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
@@ -410,9 +387,9 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 weaponTemplate.getName(),
                 weaponTemplate.getDescription(),
-                PromptAider.TierToContext(weaponTemplate.getTier()),
-                PromptAider.RarityToContext(weaponTemplate.getRarity()),
-                getCardGenerationGeneralRules());
+                TierToContext(weaponTemplate.getTier()),
+                RarityToContext(weaponTemplate.getRarity()),
+                GetCardImageGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
         String negativePrompt = buildNegativePrompt(campaign.getTheme().getUnwantedThemes().toString());
 
