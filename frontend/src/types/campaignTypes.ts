@@ -44,4 +44,5 @@ export type CampaignDto = {
   name: string;
   theme: ThemeForCampaignType;
   campaignCreationState: CampaignCreationStateType;
+  coverImgBase64: string;
 };
