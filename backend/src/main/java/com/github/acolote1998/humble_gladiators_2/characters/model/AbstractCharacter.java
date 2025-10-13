@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +34,7 @@ public abstract class AbstractCharacter {
     private Campaign campaign;
 
     @Lob
+    @JdbcTypeCode(SqlTypes.BINARY)
     byte[] imgBytes;
 
     private String name;
