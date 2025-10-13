@@ -28,4 +28,6 @@ public interface ShieldTemplateRepository extends ListCrudRepository<ShieldTempl
     );
 
     List<ShieldTemplate> findAllByCampaign_Id(Long campaignId);
+
+    List<ShieldTemplate> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
 }
