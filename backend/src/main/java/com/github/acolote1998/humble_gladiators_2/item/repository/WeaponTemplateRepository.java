@@ -28,4 +28,6 @@ public interface WeaponTemplateRepository extends ListCrudRepository<WeaponTempl
     );
 
     List<WeaponTemplate> findAllByCampaign_Id(Long campaignId);
+
+    List<WeaponTemplate> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
 }

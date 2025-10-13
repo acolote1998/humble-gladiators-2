@@ -38,19 +38,25 @@ public class RunwareService {
     @Value("${RUNWARE_API_KEY}")
     String API_KEY;
 
+    private final Integer cardImageWidth = 768;
+    private final Integer cardImageHeight = 576;
+
+    private final Integer campaignCoverImageWidth = 1344;
+    private final Integer campaignCoverImageHeight = 896;
+
     @Autowired
     public RunwareService(GeminiService geminiService) {
         this.geminiService = geminiService;
     }
 
-    List<HashMap<String, Object>> getRequestBody(String prompt, String unwantedThemesContext) {
+    List<HashMap<String, Object>> getRequestBody(String prompt, String unwantedThemesContext, Integer width, Integer height) {
         HashMap<String, Object> requestBodyObject = new HashMap<>();
         requestBodyObject.put("taskType", "imageInference");
         requestBodyObject.put("taskUUID", UUID.randomUUID().toString());
         requestBodyObject.put("positivePrompt", prompt);
         requestBodyObject.put("negativePrompt", unwantedThemesContext);
-        requestBodyObject.put("width", 768);
-        requestBodyObject.put("height", 576);
+        requestBodyObject.put("width", width); //768
+        requestBodyObject.put("height", height); // x 576 for card images
         requestBodyObject.put("model", "runware:101@1");
         requestBodyObject.put("numberResults", 1);
         requestBodyObject.put("includeCost", true);
@@ -73,17 +79,19 @@ public class RunwareService {
         }
     }
 
-    public ResponseEntity<RunwareImageGenResponse> sendRequestToImageGenerator(String prompt, String negativePrompt) {
+    public ResponseEntity<RunwareImageGenResponse> sendRequestToImageGenerator(String prompt,
+                                                                               String negativePrompt,
+                                                                               Integer imgWidth,
+                                                                               Integer imgHeight) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(API_KEY);
 
         HttpEntity<List<HashMap<String, Object>>> entityToSend =
-                new HttpEntity<>(getRequestBody(prompt, negativePrompt), headers);
+                new HttpEntity<>(getRequestBody(prompt, negativePrompt, imgWidth, imgHeight), headers);
 
         return restTemplate.exchange(IMG_GEN_URL, HttpMethod.POST, entityToSend, RunwareImageGenResponse.class);
     }
-
 
     public byte[] generateArmorTemplateImageToBytes(Campaign campaign, ArmorTemplate armorTemplate) {
         log.info(String.format("Attempt to generate image for %s - %s", armorTemplate.getName(), ArmorTemplate.class));
@@ -91,7 +99,12 @@ public class RunwareService {
         String positivePrompt = geminiService.getPositiveArmorPromptForRuneware(campaign, armorTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
-        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight
+        );
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
@@ -115,7 +128,11 @@ public class RunwareService {
         String positivePrompt = geminiService.getPositiveBootsPromptForRuneware(campaign, bootsTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
-        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
@@ -139,7 +156,11 @@ public class RunwareService {
         String positivePrompt = geminiService.getPositiveConsumablesPromptForRuneware(campaign, consumableTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
-        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
@@ -163,7 +184,11 @@ public class RunwareService {
         String positivePrompt = geminiService.getPositiveHelmetPromptForRuneware(campaign, helmetTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
-        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
@@ -187,7 +212,11 @@ public class RunwareService {
         String positivePrompt = geminiService.getPositiveShieldPromptForRuneware(campaign, shieldTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
-        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
@@ -211,7 +240,11 @@ public class RunwareService {
         String positivePrompt = geminiService.getPositiveSpellPromptForRuneware(campaign, spellTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
-        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
@@ -235,7 +268,38 @@ public class RunwareService {
         String positivePrompt = geminiService.getPositiveWeaponPromptForRuneware(campaign, weaponTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
-        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String imgUrl = response.getBody().data().getFirst().imageURL();
+            try {
+                byte[] imgBytes = imgUrlToBytes(imgUrl);
+                return imgBytes;
+            } catch (Exception e) {
+                log.error("Could not convert img url to bytes - " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            log.error("Error generating card image");
+            return null;
+        }
+    }
+
+    public byte[] generateCampaignCoverImageToBytes(String positivePrompt, Campaign campaign) {
+        log.info(String.format("Attempt to generate campaign cover image for ID %s - %s", campaign.getId(), campaign.getName()));
+
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
+
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                campaignCoverImageWidth,
+                campaignCoverImageHeight);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();

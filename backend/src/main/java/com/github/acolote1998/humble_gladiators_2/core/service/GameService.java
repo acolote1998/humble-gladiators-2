@@ -39,6 +39,9 @@ public class GameService {
     @Value("${GENERATE_ALL}")
     private boolean GENERATE_ALL;
 
+    @Value("${GENERATE_IMAGES}")
+    private boolean GENERATE_IMAGES;
+
     @Value("${GENERATE_NPCS}")
     private boolean GENERATE_NPCS;
     @Value("${GENERATE_ARMORS}")
@@ -220,6 +223,23 @@ public class GameService {
             //Tier 5 NPCs
             characterService.createTenNPCsOfDesiredTier(campaign, 5);
             updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
+            Thread.sleep(500);
+        }
+
+        // CAMPAIGN COVER IMAGE
+        if (GENERATE_ALL && GENERATE_IMAGES) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN_COVER_IMAGE, campaign);
+            campaignService.generateImageCoverForCampaign(
+                    campaign,
+                    characterService.getTier5NpcsContextForCampaignCover(campaign).toString(),
+                    armorService.getTier5ArmorsContextForCampaignCover(campaign).toString(),
+                    bootsService.getTier5BootsContextForCampaignCover(campaign).toString(),
+                    helmetService.getTier5HelmetsContextForCampaignCover(campaign).toString(),
+                    shieldService.getTier5ShieldsContextForCampaignCover(campaign).toString(),
+                    weaponService.getTier5WeaponsContextForCampaignCover(campaign).toString(),
+                    spellService.getTier5SpellsContextForCampaignCover(campaign).toString(),
+                    consumableService.getTier5ConsumablesContextForCampaignCover(campaign).toString());
+            updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_COVER_IMAGE_CREATED, campaign);
             Thread.sleep(500);
         }
         getShortReportOfAIGeneratedContent(campaign);

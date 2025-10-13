@@ -35,6 +35,8 @@ export type CampaignCreationStateType =
   | "CREATING_NPCS_PHASE_FOUR"
   | "CREATING_NPCS_PHASE_FIVE"
   | "NPCS_CREATED"
+  | "CREATING_CAMPAIGN_COVER_IMAGE"
+  | "CAMPAIGN_COVER_IMAGE_CREATED"
   | "GAME_CREATED";
 
 export type CampaignDto = {
@@ -42,4 +44,5 @@ export type CampaignDto = {
   name: string;
   theme: ThemeForCampaignType;
   campaignCreationState: CampaignCreationStateType;
+  coverImgBase64: string;
 };

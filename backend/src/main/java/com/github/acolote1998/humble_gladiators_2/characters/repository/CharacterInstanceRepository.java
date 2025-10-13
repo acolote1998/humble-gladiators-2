@@ -12,4 +12,6 @@ public interface CharacterInstanceRepository extends ListCrudRepository<Characte
     CharacterInstance findFirstByCampaign_IdAndUserIdAndCharacterType(Long campaignId, String userId, CharacterType characterType);
 
     List<CharacterInstance> findAllByCampaign_IdAndCharacterType(Long campaignId, CharacterType characterType);
+    
+    List<CharacterInstance> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
 }

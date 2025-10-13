@@ -28,4 +28,6 @@ public interface SpellTemplateRepository extends ListCrudRepository<SpellTemplat
     );
 
     List<SpellTemplate> findAllByCampaign_Id(Long campaignId);
+
+    List<SpellTemplate> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
 }

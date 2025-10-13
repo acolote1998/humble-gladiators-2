@@ -29,6 +29,22 @@ public class ShieldService {
         this.shieldTemplateRepository = shieldTemplateRepository;
     }
 
+    public Map<String, String> getTier5ShieldsContextForCampaignCover(Campaign campaign) {
+        List<ShieldTemplate> shields = shieldTemplateRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (ShieldTemplate shield : shields) {
+            if (shield.getName() != null && !shield.getName().isBlank()) {
+                context.put(
+                        shield.getName(),
+                        shield.getDescription() != null ? shield.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
         List<ShieldTemplate> allItems = shieldTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)

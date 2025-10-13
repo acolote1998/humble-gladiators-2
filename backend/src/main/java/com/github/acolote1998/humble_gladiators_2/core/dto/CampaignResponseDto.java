@@ -2,12 +2,13 @@ package com.github.acolote1998.humble_gladiators_2.core.dto;
 
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public record CampaignResponseDto(Long id, String name, ThemeResponseDto theme,
-                                  CampaignCreationStateType campaignCreationState) {
+                                  CampaignCreationStateType campaignCreationState, String coverImgBase64) {
     private record ThemeResponseDto(List<String> wantedThemes, List<String> unwantedThemes) {
     }
 
@@ -18,7 +19,8 @@ public record CampaignResponseDto(Long id, String name, ThemeResponseDto theme,
                 campaignToMap.getId(),
                 campaignToMap.getName(),
                 new ThemeResponseDto(campaignToMap.getTheme().getWantedThemes(), campaignToMap.getTheme().getUnwantedThemes()),
-                campaignToMap.getCampaignCreationState());
+                campaignToMap.getCampaignCreationState(),
+                BytesToBase64.bytesToBase64(campaignToMap.getCoverImgBytes()));
     }
 
     public static List<CampaignResponseDto> mapCampaignEntityToResponseDtos(List<Campaign> campaigns) {

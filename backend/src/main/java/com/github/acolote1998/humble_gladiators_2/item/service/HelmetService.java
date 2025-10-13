@@ -29,6 +29,22 @@ public class HelmetService {
         this.helmetTemplateRepository = helmetTemplateRepository;
     }
 
+    public Map<String, String> getTier5HelmetsContextForCampaignCover(Campaign campaign) {
+        List<HelmetTemplate> helmets = helmetTemplateRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (HelmetTemplate helmet : helmets) {
+            if (helmet.getName() != null && !helmet.getName().isBlank()) {
+                context.put(
+                        helmet.getName(),
+                        helmet.getDescription() != null ? helmet.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
         List<HelmetTemplate> allItems = helmetTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)

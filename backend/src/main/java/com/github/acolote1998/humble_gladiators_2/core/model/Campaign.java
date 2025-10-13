@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -26,6 +28,10 @@ public class Campaign {
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Theme theme;
+
+    @Lob
+    @JdbcTypeCode(SqlTypes.BINARY)
+    byte[] coverImgBytes;
 
     @Enumerated(EnumType.STRING)
     private CampaignCreationStateType campaignCreationState = CampaignCreationStateType.STARTING_NEW_CAMPAIGN;

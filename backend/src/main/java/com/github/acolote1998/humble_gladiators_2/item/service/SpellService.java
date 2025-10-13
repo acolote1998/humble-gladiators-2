@@ -29,6 +29,22 @@ public class SpellService {
         this.spellTemplateRepository = spellTemplateRepository;
     }
 
+    public Map<String, String> getTier5SpellsContextForCampaignCover(Campaign campaign) {
+        List<SpellTemplate> spells = spellTemplateRepository.findAllByTierAndCampaign_Id(5, campaign.getId());
+
+        Map<String, String> context = new HashMap<>();
+        for (SpellTemplate spell : spells) {
+            if (spell.getName() != null && !spell.getName().isBlank()) {
+                context.put(
+                        spell.getName(),
+                        spell.getDescription() != null ? spell.getDescription() : ""
+                );
+            }
+        }
+
+        return context;
+    }
+
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
         List<SpellTemplate> allItems = spellTemplateRepository.findAllByCampaign_Id(campaignId);
         // Sort by Tier (highest first) then Rarity (highest first)
