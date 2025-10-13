@@ -157,7 +157,7 @@ public class RunwareService {
                 TierToContext(consumableTemplate.getTier()),
                 RarityToContext(consumableTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
-        String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
+        String positivePrompt = geminiService.getPositiveConsumablesPromptForRuneware(campaign, consumableTemplate);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(positivePrompt, negativePrompt);
