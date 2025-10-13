@@ -14,4 +14,20 @@ public class PromptAider {
             default -> "";
         };
     }
+
+    public static String TierToContext(Integer tier) {
+        if (tier == null) return "";
+        return switch (tier) {
+            case 1 ->
+                    "Low-tier — simple and basic in form or power, made with common means or showing limited refinement.";
+            case 2 -> "Moderate-tier — reliable quality or moderate potency, showing some refinement or stability.";
+            case 3 ->
+                    "Advanced-tier — balanced, durable, or well-developed, crafted or manifested with notable skill or energy.";
+            case 4 ->
+                    "High-tier — exceptional quality or strong magical energy, refined, polished, or imbued with clear power.";
+            case 5 ->
+                    "Legendary-tier — extraordinary and awe-inspiring, a masterpiece or source of immense power and prestige.";
+            default -> "";
+        };
+    }
 }

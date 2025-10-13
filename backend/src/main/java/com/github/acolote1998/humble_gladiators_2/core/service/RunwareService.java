@@ -83,22 +83,6 @@ public class RunwareService {
         return restTemplate.exchange(IMG_GEN_URL, HttpMethod.POST, entityToSend, RunwareImageGenResponse.class);
     }
 
-    public String tierToContext(Integer tier) {
-        if (tier == null) return "";
-        return switch (tier) {
-            case 1 ->
-                    "Low-tier — simple and basic in form or power, made with common means or showing limited refinement.";
-            case 2 -> "Moderate-tier — reliable quality or moderate potency, showing some refinement or stability.";
-            case 3 ->
-                    "Advanced-tier — balanced, durable, or well-developed, crafted or manifested with notable skill or energy.";
-            case 4 ->
-                    "High-tier — exceptional quality or strong magical energy, refined, polished, or imbued with clear power.";
-            case 5 ->
-                    "Legendary-tier — extraordinary and awe-inspiring, a masterpiece or source of immense power and prestige.";
-            default -> "";
-        };
-    }
-
 
     public String getCardGenerationGeneralRules() {
         return """
@@ -152,7 +136,7 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 armorTemplate.getName(),
                 armorTemplate.getDescription(),
-                tierToContext(armorTemplate.getTier()),
+                PromptAider.TierToContext(armorTemplate.getTier()),
                 PromptAider.RarityToContext(armorTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
@@ -197,7 +181,7 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 bootsTemplate.getName(),
                 bootsTemplate.getDescription(),
-                tierToContext(bootsTemplate.getTier()),
+                PromptAider.TierToContext(bootsTemplate.getTier()),
                 PromptAider.RarityToContext(bootsTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
@@ -242,7 +226,7 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 consumableTemplate.getName(),
                 consumableTemplate.getDescription(),
-                tierToContext(consumableTemplate.getTier()),
+                PromptAider.TierToContext(consumableTemplate.getTier()),
                 PromptAider.RarityToContext(consumableTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
@@ -287,7 +271,7 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 helmetTemplate.getName(),
                 helmetTemplate.getDescription(),
-                tierToContext(helmetTemplate.getTier()),
+                PromptAider.TierToContext(helmetTemplate.getTier()),
                 PromptAider.RarityToContext(helmetTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
@@ -332,7 +316,7 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 shieldTemplate.getName(),
                 shieldTemplate.getDescription(),
-                tierToContext(shieldTemplate.getTier()),
+                PromptAider.TierToContext(shieldTemplate.getTier()),
                 PromptAider.RarityToContext(shieldTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
@@ -379,7 +363,7 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 spellTemplate.getName(),
                 spellTemplate.getDescription(),
-                tierToContext(spellTemplate.getTier()),
+                PromptAider.TierToContext(spellTemplate.getTier()),
                 PromptAider.RarityToContext(spellTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
@@ -426,7 +410,7 @@ public class RunwareService {
                 campaign.getTheme().getWantedThemes().toString(),
                 weaponTemplate.getName(),
                 weaponTemplate.getDescription(),
-                tierToContext(weaponTemplate.getTier()),
+                PromptAider.TierToContext(weaponTemplate.getTier()),
                 PromptAider.RarityToContext(weaponTemplate.getRarity()),
                 getCardGenerationGeneralRules());
         String positivePrompt = geminiService.getPositivePromptForRuneware(promptForGemini);
