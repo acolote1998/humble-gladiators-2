@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -81,6 +78,33 @@ public class ItemsBoosterService {
             return todaysBooster == null;
         }
         return UNLIMITED_BOOSTERS_ALLOWED;
+    }
+
+    private Integer getCalculatedTier() {
+        Random random = new Random();
+        Integer chance = random.nextInt(1, 101);
+        Integer tier = 0;
+        //Tier 1 – 52%
+        // Tier 2 – 32%
+        // Tier 3 – 8%
+        // Tier 4 – 5%
+        // Tier 5 – 3%
+        if (chance <= 52) {
+            tier = 1;
+        }
+        if (chance > 52 && chance <= 84) {
+            tier = 2;
+        }
+        if (chance > 84 && chance <= 92) {
+            tier = 3;
+        }
+        if (chance > 92 && chance <= 97) {
+            tier = 4;
+        }
+        if (chance > 97 && chance <= 100) {
+            tier = 5;
+        }
+        return tier;
     }
 
     @Transactional

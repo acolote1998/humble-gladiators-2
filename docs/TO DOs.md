@@ -31,7 +31,7 @@
   - [ ] Each card in any given booster has a chance to belong to a certain tier
     - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
   - [ ] Each card also has a rarity percentage within its tier
-    - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+    - [ ] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
 
 - [ ] Daily Item Card Pack
 
@@ -46,7 +46,7 @@
   - [ ] Each card in any given booster has a chance to belong to a certain tier
     - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
   - [ ] Each card also has a rarity percentage within its tier
-    - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+    - [ ] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
   - [x] The second any booster gets opened, those card entities will be marked as "discovered"
 
 - [ ] Daily Enemy Encounter
@@ -64,7 +64,7 @@
   - [ ] Each card in any given booster has a chance to belong to a certain tier
     - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
   - [ ] Each card also has a rarity percentage within its tier
-    - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+    - [ ] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
 
 - [ ] Discovery system integration
 - [ ] Logic for interface method implementation
