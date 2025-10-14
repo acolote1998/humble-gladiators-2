@@ -12,19 +12,23 @@ public interface SpellTemplateRepository extends ListCrudRepository<SpellTemplat
 
     @Query(
             value = """
-                      SELECT sp.* 
-                      FROM spell_template sp
-                      JOIN campaign c ON sp.campaign_id = c.id
-                      WHERE c.id = :campaignId
-                        AND c.user_id = :userId
-                      ORDER BY RANDOM() 
-                      LIMIT 1
+                    SELECT sp.* 
+                    FROM spell_template sp
+                    JOIN campaign c ON sp.campaign_id = c.id
+                    WHERE c.id = :campaignId
+                      AND c.user_id = :userId
+                      AND sp.rarity = :rarity
+                      AND sp.tier = :tier
+                    ORDER BY RANDOM()
+                    LIMIT 1
                     """,
             nativeQuery = true
     )
-    SpellTemplate findRandomByCampaignIdAndUserId(
+    SpellTemplate findRandomByCampaignAndRarityAndTier(
             @Param("campaignId") Long campaignId,
-            @Param("userId") String userId
+            @Param("userId") String userId,
+            @Param("rarity") Integer rarity,
+            @Param("tier") Integer tier
     );
 
     List<SpellTemplate> findAllByCampaign_Id(Long campaignId);
