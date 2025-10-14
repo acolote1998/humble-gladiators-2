@@ -1,7 +1,5 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] add the new enum CREATING_CAMPAIGN_COVER_IMAGE to the progress bar in frontend when creating campaign
-
 - [ ] Generate a campaign image cover in the logic of game creation
     - [ ] Similar to how we generate card images, we should send information regarding the campaign to gemini to get a
       refined prompt that will serve as prompt for runaware to generate the campaign cover
