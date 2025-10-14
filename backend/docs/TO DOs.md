@@ -67,11 +67,7 @@
     - [ ] Damage calculation logic
     - [ ] Battle state management
 - [ ] Replay system / logic
-- [X] Hero Creation
-- [ ] Discovery Logic
-    - [ ] Item discovery tracking
-    - [ ] Discovery API endpoints
-    - [ ] Achievement system
+- [ ] Achievement system
 - [ ] Buying / Selling System
 - [ ] Performance Optimization
 - [ ] Testing & Documentation
