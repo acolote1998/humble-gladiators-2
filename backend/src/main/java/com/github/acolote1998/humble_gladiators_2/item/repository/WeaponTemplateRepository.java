@@ -12,19 +12,23 @@ public interface WeaponTemplateRepository extends ListCrudRepository<WeaponTempl
 
     @Query(
             value = """
-                      SELECT wt.* 
-                      FROM weapon_template wt
-                      JOIN campaign c ON wt.campaign_id = c.id
-                      WHERE c.id = :campaignId
-                        AND c.user_id = :userId
-                      ORDER BY RANDOM() 
-                      LIMIT 1
+                    SELECT wt.* 
+                    FROM weapon_template wt
+                    JOIN campaign c ON wt.campaign_id = c.id
+                    WHERE c.id = :campaignId
+                      AND c.user_id = :userId
+                      AND wt.rarity = :rarity
+                      AND wt.tier = :tier
+                    ORDER BY RANDOM()
+                    LIMIT 1
                     """,
             nativeQuery = true
     )
-    WeaponTemplate findRandomByCampaignIdAndUserId(
+    WeaponTemplate findRandomByCampaignAndRarityAndTier(
             @Param("campaignId") Long campaignId,
-            @Param("userId") String userId
+            @Param("userId") String userId,
+            @Param("rarity") Integer rarity,
+            @Param("tier") Integer tier
     );
 
     List<WeaponTemplate> findAllByCampaign_Id(Long campaignId);
