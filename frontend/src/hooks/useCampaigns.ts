@@ -7,7 +7,9 @@ import {
   fetchAllChampaignsForAUser,
   fetchCampaignByIdForAUser,
 } from "../api/fetchCampaigns";
+import { useNavigate } from "@tanstack/react-router";
 export const useCreateCampaign = () => {
+  const navigate = useNavigate();
   const { getToken } = useAuth();
   const mutation = useMutation({
     mutationFn: async (campaignToCreate: CreateCampaignType) => {
@@ -16,6 +18,13 @@ export const useCreateCampaign = () => {
         throw new Error("No bearer token available");
       }
       return createCampaignPost(campaignToCreate, bearerToken);
+    },
+    onSuccess: (data) => {
+      if (data) {
+        const location = data.headers["location"];
+        const campaignId = location?.split("/").pop();
+        navigate({ to: `/campaign/${campaignId}` });
+      }
     },
   });
   return mutation;

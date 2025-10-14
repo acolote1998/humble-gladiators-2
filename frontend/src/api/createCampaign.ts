@@ -14,7 +14,7 @@ export const createCampaignPost = async (
         headers: { Authorization: `Bearer ${bearerToken}` },
       }
     );
-    return response.data;
+    return response;
   } catch (error) {
     console.log(error);
   }
