@@ -54,39 +54,81 @@ function RouteComponent() {
         )}
       </div>
       <div className="grid grid-cols-3">
-        {armorTemplatesData?.map((armor) => (
-          <ArmorTemplateCard key={armor.name} {...armor} />
-        ))}
+        {armorTemplatesData
+          ?.sort((a, b) => {
+            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+            return 0; // both have or both don't → keep order
+          })
+          .map((armor) => (
+            <ArmorTemplateCard key={armor.name} {...armor} />
+          ))}
       </div>
       <div className="grid grid-cols-3">
-        {bootsTemplatesData?.map((boot) => (
-          <BootsTemplateCard key={boot.name} {...boot} />
-        ))}
+        {bootsTemplatesData
+          ?.sort((a, b) => {
+            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+            return 0; // both have or both don't → keep order
+          })
+          .map((boot) => (
+            <BootsTemplateCard key={boot.name} {...boot} />
+          ))}
       </div>
       <div className="grid grid-cols-3">
-        {consumableTemplatesData?.map((consumable) => (
-          <ConsumableTemplateCard key={consumable.name} {...consumable} />
-        ))}
+        {consumableTemplatesData
+          ?.sort((a, b) => {
+            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+            return 0; // both have or both don't → keep order
+          })
+          .map((consumable) => (
+            <ConsumableTemplateCard key={consumable.name} {...consumable} />
+          ))}
       </div>
       <div className="grid grid-cols-3">
-        {helmetTemplatesData?.map((helmet) => (
-          <HelmetTemplateCard key={helmet.name} {...helmet} />
-        ))}
+        {helmetTemplatesData
+          ?.sort((a, b) => {
+            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+            return 0; // both have or both don't → keep order
+          })
+          .map((helmet) => (
+            <HelmetTemplateCard key={helmet.name} {...helmet} />
+          ))}
       </div>
       <div className="grid grid-cols-3">
-        {shieldTemplatesData?.map((shield) => (
-          <ShieldTemplateCard key={shield.name} {...shield} />
-        ))}
+        {shieldTemplatesData
+          ?.sort((a, b) => {
+            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+            return 0; // both have or both don't → keep order
+          })
+          .map((shield) => (
+            <ShieldTemplateCard key={shield.name} {...shield} />
+          ))}
       </div>
       <div className="grid grid-cols-3">
-        {spellTemplatesData?.map((spell) => (
-          <SpellTemplateCard key={spell.name} {...spell} />
-        ))}
+        {spellTemplatesData
+          ?.sort((a, b) => {
+            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+            return 0; // both have or both don't → keep order
+          })
+          .map((spell) => (
+            <SpellTemplateCard key={spell.name} {...spell} />
+          ))}
       </div>
       <div className="grid grid-cols-3">
-        {weaponTemplatesData?.map((weapon) => (
-          <WeaponTemplateCard key={weapon.name} {...weapon} />
-        ))}
+        {weaponTemplatesData
+          ?.sort((a, b) => {
+            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+            return 0; // both have or both don't → keep order
+          })
+          .map((weapon) => (
+            <WeaponTemplateCard key={weapon.name} {...weapon} />
+          ))}
       </div>
     </>
   );
