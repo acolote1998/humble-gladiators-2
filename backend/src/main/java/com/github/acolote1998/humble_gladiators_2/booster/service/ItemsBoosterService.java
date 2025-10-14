@@ -165,7 +165,7 @@ public class ItemsBoosterService {
                     armorTemplates.add(armorTemplate);
                 }
                 case BOOTS -> {
-                    BootsTemplate bootTemplate = bootsService.getRandomBootTemplate(campaignId, userId);
+                    BootsTemplate bootTemplate = bootsService.getRandomBootTemplateForItemBooster(campaignId, userId);
                     if (IMAGE_GENERATION_ACTIVATED && bootTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateBootsTemplateImageToBytes(campaign, bootTemplate);

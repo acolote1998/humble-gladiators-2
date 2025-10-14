@@ -12,19 +12,23 @@ public interface BootsTemplateRepository extends ListCrudRepository<BootsTemplat
 
     @Query(
             value = """
-                      SELECT bt.* 
-                      FROM boots_template bt
-                      JOIN campaign c ON bt.campaign_id = c.id
-                      WHERE c.id = :campaignId
-                        AND c.user_id = :userId
-                      ORDER BY RANDOM() 
-                      LIMIT 1
+                    SELECT bt.* 
+                    FROM boots_template bt
+                    JOIN campaign c ON bt.campaign_id = c.id
+                    WHERE c.id = :campaignId
+                      AND c.user_id = :userId
+                      AND bt.rarity = :rarity
+                      AND bt.tier = :tier
+                    ORDER BY RANDOM()
+                    LIMIT 1
                     """,
             nativeQuery = true
     )
-    BootsTemplate findRandomByCampaignIdAndUserId(
+    BootsTemplate findRandomByCampaignAndRarityAndTier(
             @Param("campaignId") Long campaignId,
-            @Param("userId") String userId
+            @Param("userId") String userId,
+            @Param("rarity") Integer rarity,
+            @Param("tier") Integer tier
     );
 
 
