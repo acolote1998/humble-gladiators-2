@@ -80,7 +80,7 @@ public class ItemsBoosterService {
         return UNLIMITED_BOOSTERS_ALLOWED;
     }
 
-    private Integer getCalculatedTier() {
+    public static Integer GetCalculatedTier() {
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer tier = 0;
@@ -107,7 +107,7 @@ public class ItemsBoosterService {
         return tier;
     }
 
-    private Integer getCalculatedRarity() {
+    public static Integer GetCalculatedRarity() {
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer rarity = 0;
@@ -154,7 +154,7 @@ public class ItemsBoosterService {
         for (int i = 0; i < 3; i++) {
             switch (getRandomItemType()) {
                 case ARMORS -> {
-                    ArmorTemplate armorTemplate = armorService.getRandomArmorTemplate(campaignId, userId);
+                    ArmorTemplate armorTemplate = armorService.getRandomArmorTemplateForItemBooster(campaignId, userId);
                     if (IMAGE_GENERATION_ACTIVATED && armorTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateArmorTemplateImageToBytes(campaign, armorTemplate);

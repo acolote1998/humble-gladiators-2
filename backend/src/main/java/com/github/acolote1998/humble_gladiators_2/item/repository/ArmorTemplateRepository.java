@@ -12,19 +12,23 @@ public interface ArmorTemplateRepository extends ListCrudRepository<ArmorTemplat
 
     @Query(
             value = """
-                      SELECT at.* 
-                      FROM armor_template at
-                      JOIN campaign c ON at.campaign_id = c.id
-                      WHERE c.id = :campaignId
-                        AND c.user_id = :userId
-                      ORDER BY RANDOM() 
-                      LIMIT 1
+                    SELECT at.* 
+                    FROM armor_template at
+                    JOIN campaign c ON at.campaign_id = c.id
+                    WHERE c.id = :campaignId
+                      AND c.user_id = :userId
+                      AND at.rarity = :rarity
+                      AND at.tier = :tier
+                    ORDER BY RANDOM()
+                    LIMIT 1
                     """,
             nativeQuery = true
     )
-    ArmorTemplate findRandomByCampaignIdAndUserId(
+    ArmorTemplate findRandomByCampaignAndRarityAndTier(
             @Param("campaignId") Long campaignId,
-            @Param("userId") String userId
+            @Param("userId") String userId,
+            @Param("rarity") Integer rarity,
+            @Param("tier") Integer tier
     );
 
 
