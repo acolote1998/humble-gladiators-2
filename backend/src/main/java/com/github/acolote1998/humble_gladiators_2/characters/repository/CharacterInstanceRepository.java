@@ -20,9 +20,9 @@ public interface CharacterInstanceRepository extends ListCrudRepository<Characte
 
     @Query(
             value = """
-                    SELECT at.* 
+                    SELECT ci.* 
                     FROM character_instance ci
-                    JOIN campaign c ON at.campaign_id = c.id
+                    JOIN campaign c ON ci.campaign_id = c.id
                     WHERE c.id = :campaignId
                       AND c.user_id = :userId
                       AND ci.rarity = :rarity
