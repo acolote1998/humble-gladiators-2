@@ -54,4 +54,5 @@ Tuesday 14/10
 - Improved frontend flow after creating a campaign -> on successfull creation, we navigate to the campaign page
 - Improved order in the compendium -> Now cards that have an image will appear first
 - Improved the organisation in the compendium -> Now all categories are contained withing a <detail> component
+- Since now the campaign can have an img cover, I updated the default campaign in data.sql to contain one
 ```
