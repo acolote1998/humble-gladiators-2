@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Improve AI accuracy for content generation :
+  - Sometimes we are generating a weapon and it generates something that would fit more like an armor, and things like that. Needs to stick to the category better
 - [ ] Language content module
   - [ ] Make campaign have a language (an enum of available languages)
   - [ ] Make all items and characters have a name and description per language (example EN_NAME, EN_DESCRIPTION)
