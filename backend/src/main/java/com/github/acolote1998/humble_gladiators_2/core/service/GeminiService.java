@@ -634,6 +634,42 @@ public class GeminiService {
         return cleanResponseToJson(geminiAnswer);
     }
 
+    public String getPositiveCharacterInstancePromptForRuneware(
+            Campaign campaign,
+            CharacterInstance characterInstance) {
+        log.info("Trying to generate prompt for runeware to generate an image");
+        String geminiAnswer = "";
+        String promptForGemini = String.format("""
+                        You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
+                        For generating the prompt, use this context:
+                        You are generating high-quality fantasy artwork for a trading card in an RPG game.
+                        - The object to illustrate is of type: %s
+                        - Focus strictly on the requested subject. Do not include any additional or implied elements unless explicitly specified \s
+                        (e.g., if illustrating an armor, render only the armor—no body, mannequin, or person wearing it unless instructed or included \s
+                        in the object name or description).
+                        - The card belongs to the campaign theme: %s.
+                        - The object to illustrate is: "%s".
+                        - A description of the object (for extra context): "%s"
+                        - Details needed: %s
+                        - Details needed: %s
+                        %s
+                        """,
+                "Character",
+                campaign.getTheme().getWantedThemes().toString(),
+                characterInstance.getName(),
+                characterInstance.getDescription(),
+                TierToContext(characterInstance.getTier()),
+                RarityToContext(characterInstance.getRarity()),
+                GetCardImageGenerationGeneralRules());
+        try {
+            geminiAnswer = callGemini(promptForGemini);
+            log.info("Prompt for Runeware is ready");
+        } catch (InterruptedException e) {
+            log.error("Error generating prompt for runeware" + e.getMessage());
+        }
+        return cleanResponseToJson(geminiAnswer);
+    }
+
     public String getPositiveBootsPromptForRuneware(
             Campaign campaign,
             BootsTemplate bootsTemplate) {
