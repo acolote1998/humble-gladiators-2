@@ -42,6 +42,9 @@ public class BoosterService {
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
 
+    @Value("${REAL_RARITY_AND_TIER_RATE}")
+    private static boolean REAL_RARITY_AND_TIER_RATE;
+
     @Value("${GENERATE_IMAGES}")
     private boolean IMAGE_GENERATION_ACTIVATED;
 
@@ -100,6 +103,9 @@ public class BoosterService {
     }
 
     public static Integer GetCalculatedTier() {
+        if (!REAL_RARITY_AND_TIER_RATE) {
+            return 1;
+        }
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer tier = 0;
@@ -127,6 +133,9 @@ public class BoosterService {
     }
 
     public static Integer GetCalculatedRarity() {
+        if (!REAL_RARITY_AND_TIER_RATE) {
+            return 1;
+        }
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer rarity = 0;
