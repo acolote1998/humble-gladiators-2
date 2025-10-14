@@ -107,6 +107,33 @@ public class ItemsBoosterService {
         return tier;
     }
 
+    private Integer getCalculatedRarity() {
+        Random random = new Random();
+        Integer chance = random.nextInt(1, 101);
+        Integer rarity = 0;
+        //Rarity 1 – 52%
+        // Rarity 2 – 32%
+        // Rarity 3 – 8%
+        // Rarity 4 – 5%
+        // Rarity 5 – 3%
+        if (chance <= 52) {
+            rarity = 1;
+        }
+        if (chance > 52 && chance <= 84) {
+            rarity = 2;
+        }
+        if (chance > 84 && chance <= 92) {
+            rarity = 3;
+        }
+        if (chance > 92 && chance <= 97) {
+            rarity = 4;
+        }
+        if (chance > 97 && chance <= 100) {
+            rarity = 5;
+        }
+        return rarity;
+    }
+
     @Transactional
     public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
         if (!canTheUserOpenAnItemPack(campaignId, userId)) {
