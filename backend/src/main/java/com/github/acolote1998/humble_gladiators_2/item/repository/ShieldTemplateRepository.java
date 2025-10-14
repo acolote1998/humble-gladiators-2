@@ -12,19 +12,23 @@ public interface ShieldTemplateRepository extends ListCrudRepository<ShieldTempl
 
     @Query(
             value = """
-                      SELECT st.* 
-                      FROM shield_template st
-                      JOIN campaign c ON st.campaign_id = c.id
-                      WHERE c.id = :campaignId
-                        AND c.user_id = :userId
-                      ORDER BY RANDOM() 
-                      LIMIT 1
+                    SELECT st.* 
+                    FROM shield_template st
+                    JOIN campaign c ON st.campaign_id = c.id
+                    WHERE c.id = :campaignId
+                      AND c.user_id = :userId
+                      AND st.rarity = :rarity
+                      AND st.tier = :tier
+                    ORDER BY RANDOM()
+                    LIMIT 1
                     """,
             nativeQuery = true
     )
-    ShieldTemplate findRandomByCampaignIdAndUserId(
+    ShieldTemplate findRandomByCampaignAndRarityAndTier(
             @Param("campaignId") Long campaignId,
-            @Param("userId") String userId
+            @Param("userId") String userId,
+            @Param("rarity") Integer rarity,
+            @Param("tier") Integer tier
     );
 
     List<ShieldTemplate> findAllByCampaign_Id(Long campaignId);

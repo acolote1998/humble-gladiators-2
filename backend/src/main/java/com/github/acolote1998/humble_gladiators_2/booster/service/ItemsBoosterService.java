@@ -198,7 +198,7 @@ public class ItemsBoosterService {
                     helmetTemplates.add(helmetTemplate);
                 }
                 case SHIELDS -> {
-                    ShieldTemplate shieldTemplate = shieldService.getRandomShieldTemplate(campaignId, userId);
+                    ShieldTemplate shieldTemplate = shieldService.getRandomShieldTemplateForItemBooster(campaignId, userId);
                     if (IMAGE_GENERATION_ACTIVATED && shieldTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateShieldTemplateImageToBytes(campaign, shieldTemplate);
