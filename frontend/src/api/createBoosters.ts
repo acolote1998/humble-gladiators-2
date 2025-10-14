@@ -1,7 +1,9 @@
 import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
-import type { ItemBoosterType } from "../types/boosterTypes";
-import type { CharacterInstanceType } from "../types/characterTypes";
+import type {
+  CharacterBoosterType,
+  ItemBoosterType,
+} from "../types/boosterTypes";
 
 export const createItemBooster = async (
   bearerToken: string,
@@ -25,7 +27,7 @@ export const createItemBooster = async (
 export const createCharacterBooster = async (
   bearerToken: string,
   campaignId: number
-): Promise<CharacterInstanceType> => {
+): Promise<CharacterBoosterType> => {
   try {
     const response = await axios.post(
       `${BACKEND_URL}/campaign/${campaignId}/character-booster`,

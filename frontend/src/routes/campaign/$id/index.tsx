@@ -8,6 +8,7 @@ import CampaignItem from "../../../components/campaigns/CampaignItem";
 import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
 import { useCreateItemBooster } from "../../../hooks/useBoosters";
 import { useCreateCharacterBooster } from "../../../hooks/useBoosters";
+import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -100,14 +101,7 @@ function RouteComponent() {
               Open Character Booster
             </p>
             {dataFromCharacterBooster && (
-              <p
-                onClick={() => {
-                  console.log(dataFromCharacterBooster);
-                }}
-                className="bg-gray-400 p-3 rounded-lg"
-              >
-                Log Character Booster
-              </p>
+              <CharacterBooster {...dataFromCharacterBooster} />
             )}
             <p
               onClick={() => {
