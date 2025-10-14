@@ -49,5 +49,9 @@ Monday 13/10
 - Had the passion project introduction presentation
 - Integrated the campaign cover image to the project
 - Improved architecture of the runware + gemini services (moved certain prompts / functions to a new util class called Prompt Aider)
+
+Tuesday 14/10
 - Improved frontend flow after creating a campaign -> on successfull creation, we navigate to the campaign page
+- Improved order in the compendium -> Now cards that have an image will appear first
+- Improved the organisation in the compendium -> Now all categories are contained withing a <detail> component
 ```
