@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
+import com.github.acolote1998.humble_gladiators_2.booster.service.ItemsBoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -112,8 +113,13 @@ public class HelmetService {
         return helmetTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public HelmetTemplate getRandomHelmetTemplate(Long campaignId, String userId) {
-        return helmetTemplateRepository.findRandomByCampaignIdAndUserId(campaignId, userId);
+    public HelmetTemplate getRandomHelmetTemplateForItemBooster(Long campaignId, String userId) {
+        return helmetTemplateRepository.findRandomByCampaignAndRarityAndTier(
+                campaignId,
+                userId,
+                ItemsBoosterService.GetCalculatedRarity(),
+                ItemsBoosterService.GetCalculatedTier()
+        );
     }
 
     public HelmetTemplate saveHelmet(HelmetTemplate helmet) {

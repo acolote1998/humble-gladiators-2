@@ -12,19 +12,23 @@ public interface HelmetTemplateRepository extends ListCrudRepository<HelmetTempl
 
     @Query(
             value = """
-                      SELECT ht.* 
-                      FROM helmet_template ht
-                      JOIN campaign c ON ht.campaign_id = c.id
-                      WHERE c.id = :campaignId
-                        AND c.user_id = :userId
-                      ORDER BY RANDOM() 
-                      LIMIT 1
+                    SELECT ht.* 
+                    FROM helmet_template ht
+                    JOIN campaign c ON ht.campaign_id = c.id
+                    WHERE c.id = :campaignId
+                      AND c.user_id = :userId
+                      AND ht.rarity = :rarity
+                      AND ht.tier = :tier
+                    ORDER BY RANDOM()
+                    LIMIT 1
                     """,
             nativeQuery = true
     )
-    HelmetTemplate findRandomByCampaignIdAndUserId(
+    HelmetTemplate findRandomByCampaignAndRarityAndTier(
             @Param("campaignId") Long campaignId,
-            @Param("userId") String userId
+            @Param("userId") String userId,
+            @Param("rarity") Integer rarity,
+            @Param("tier") Integer tier
     );
 
     List<HelmetTemplate> findAllByCampaign_Id(Long campaignId);
