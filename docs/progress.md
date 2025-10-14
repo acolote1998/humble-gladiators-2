@@ -55,4 +55,5 @@ Tuesday 14/10
 - Improved order in the compendium -> Now cards that have an image will appear first
 - Improved the organisation in the compendium -> Now all categories are contained withing a <detail> component
 - Since now the campaign can have an img cover, I updated the default campaign in data.sql to contain one
+- Implemented character booster in the backend
 ```
