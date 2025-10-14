@@ -18,31 +18,53 @@
         through gemini
 - [ ] Card System
 
-  - [ ] Daily Card Pack
-    - [x] Users can open one item card booster per day
-    - [x] Each booster contains three random items (Armor, Boots, Consumables, Helmets, Shields, Spells, Weapons)
-    - [x] When opening the pack, the obtained cards are now DISCOVERED = true
-    - [x] When opening the pack, we convert the ItemTemplate to ItemInstance
-    - [x] When opening the pack, we add the ItemInstance to the hero's inventory
-    - [ ] Frontend implementation for pack opening (MVI)
-      - [ ] Handle error if pack was already opened for the day
-      - [x] implementation of opening item booster
-  - [ ] Daily Enemy Encounter
-    - [ ] Users can face one enemy per day
-    - [ ] The user opens an enemy booster and the enemy card is drawn from there ahd the battle starts straight
-          away.
-  - [ ] Daily Merchant Encounter
-    - [ ] Users can meet one merchant per day
-    - [ ] The use opens a merchant booster and the merchant card is drawn from there. The user can keep the merchant
-          for as long as they want, the merchant will stay there until al three item cards get bought, or until the
-          user opens a new merchant booster
-      - [ ] Each merchant offers three random items for sale
-  - [ ] Card Tiers and Rarity
-    - [ ] Each card in any given booster has a chance to belong to a certain tier
-      - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
-    - [ ] Each card also has a rarity percentage within its tier
-      - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+- [ ] Daily NPC Card Pack
+
+  - [] Users can open one npc card booster per day
+  - [] Each booster contains one random NPC
+  - [] When opening the pack, the obtained card are now DISCOVERED = true
+  - [] Make an endpoint something like "getEnemyForToday" -> Find the best way to do it? How do we make the enemy available for only that day, and also possible to be retrieved some other days in the future?
+  - [ ] Frontend implementation for pack enemy opening (MVI)
+    - [ ] Handle error if pack was already opened for the day
+    - [] implementation of opening npc booster
   - [x] The second any booster gets opened, those card entities will be marked as "discovered"
+  - [ ] Each card in any given booster has a chance to belong to a certain tier
+    - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
+  - [ ] Each card also has a rarity percentage within its tier
+    - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+
+- [ ] Daily Item Card Pack
+
+  - [x] Users can open one item card booster per day
+  - [x] Each booster contains three random items (Armor, Boots, Consumables, Helmets, Shields, Spells, Weapons)
+  - [x] When opening the pack, the obtained cards are now DISCOVERED = true
+  - [x] When opening the pack, we convert the ItemTemplate to ItemInstance
+  - [x] When opening the pack, we add the ItemInstance to the hero's inventory
+  - [ ] Frontend implementation for pack opening (MVI)
+    - [ ] Handle error if pack was already opened for the day
+    - [x] implementation of opening item booster
+  - [ ] Each card in any given booster has a chance to belong to a certain tier
+    - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
+  - [ ] Each card also has a rarity percentage within its tier
+    - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
+  - [x] The second any booster gets opened, those card entities will be marked as "discovered"
+
+- [ ] Daily Enemy Encounter
+  - [ ] Users can face one enemy per day
+  - [ ] The user opens an enemy booster and the enemy card is drawn from there ahd the battle starts straight
+        away.
+- [ ] Daily Merchant Encounter
+  - [ ] Users can meet one merchant per day
+  - [ ] The use opens a merchant booster and the merchant card is drawn from there. The user can keep the merchant
+        for as long as they want, the merchant will stay there until al three item cards get bought, or until the
+        user opens a new merchant booster
+    - [ ] Each merchant offers three random items for sale
+- [ ] Card Tiers and Rarity
+
+  - [ ] Each card in any given booster has a chance to belong to a certain tier
+    - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
+  - [ ] Each card also has a rarity percentage within its tier
+    - [ ] Example: Tier 1 – 30%, Tier 2 – 25%, Tier 3 – 20%, Tier 4 – 15%, Tier 5 – 10%
 
 - [ ] Discovery system integration
 - [ ] Logic for interface method implementation
