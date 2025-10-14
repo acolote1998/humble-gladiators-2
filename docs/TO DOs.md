@@ -27,7 +27,7 @@
   - [x] Users can open one npc card booster per day
   - [x] Each booster contains one random NPC
   - [x] When opening the pack, the obtained card are now DISCOVERED = true
-  - [] Make an endpoint something like "getEnemyForToday" -> Find the best way to do it? How do we make the enemy available for only that day, and also possible to be retrieved some other days in the future?
+  - [] Make an endpoint something like "getEnemyForToday" -> Find the best way to do it? How do we make the enemy available for only that day, and also possible to be retrieved some other days in the future? ( we can use similar logic to canTheUserOpenACharacterPack to check if there is an enemy updated today)
   - [ ] Frontend implementation for pack enemy opening (MVI)
     - [ ] Handle error if pack was already opened for the day
     - [x] implementation of opening npc booster
