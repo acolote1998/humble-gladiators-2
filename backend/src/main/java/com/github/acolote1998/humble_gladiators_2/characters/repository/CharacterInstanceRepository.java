@@ -2,7 +2,6 @@ package com.github.acolote1998.humble_gladiators_2.characters.repository;
 
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
-import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;

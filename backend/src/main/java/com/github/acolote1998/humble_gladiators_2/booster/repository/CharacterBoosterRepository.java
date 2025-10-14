@@ -1,7 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.booster.repository;
 
 import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
-import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
