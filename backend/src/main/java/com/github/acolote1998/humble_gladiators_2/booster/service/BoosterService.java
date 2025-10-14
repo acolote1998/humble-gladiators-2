@@ -2,7 +2,9 @@ package com.github.acolote1998.humble_gladiators_2.booster.service;
 
 import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
+import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
+import com.github.acolote1998.humble_gladiators_2.booster.repository.CharacterBoosterRepository;
 import com.github.acolote1998.humble_gladiators_2.booster.repository.ItemsBoosterRepository;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
@@ -34,6 +36,7 @@ public class BoosterService {
     private CampaignService campaignService;
     private ItemsBoosterRepository itemsBoosterRepository;
     private CharacterService characterService;
+    private CharacterBoosterRepository characterBoosterRepository;
     private RunwareService runwareService;
 
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
@@ -52,7 +55,8 @@ public class BoosterService {
                           ItemsBoosterRepository itemsBoosterRepository,
                           CampaignService campaignService,
                           CharacterService characterService,
-                          RunwareService runwareService) {
+                          RunwareService runwareService,
+                          CharacterBoosterRepository characterBoosterRepository) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -64,12 +68,27 @@ public class BoosterService {
         this.campaignService = campaignService;
         this.characterService = characterService;
         this.runwareService = runwareService;
+        this.characterBoosterRepository = characterBoosterRepository;
     }
 
     private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
         if (!UNLIMITED_BOOSTERS_ALLOWED) {
             LocalDate today = LocalDate.now();
             ItemsBooster todaysBooster = itemsBoosterRepository
+                    .findByCampaignIdAndUserIdAndUpdatedAtDate(
+                            campaignId,
+                            userId,
+                            today);
+
+            return todaysBooster == null;
+        }
+        return UNLIMITED_BOOSTERS_ALLOWED;
+    }
+
+    private Boolean canTheUserOpenACharacterPack(Long campaignId, String userId) {
+        if (!UNLIMITED_BOOSTERS_ALLOWED) {
+            LocalDate today = LocalDate.now();
+            CharacterBooster todaysBooster = characterBoosterRepository
                     .findByCampaignIdAndUserIdAndUpdatedAtDate(
                             campaignId,
                             userId,
@@ -258,7 +277,7 @@ public class BoosterService {
     }
 
     @Transactional
-    public ItemsBooster getNewCharacterBooster(Long campaignId, String userId) {
+    public CharacterBooster getNewCharacterBooster(Long campaignId, String userId) {
         if (!canTheUserOpenAnItemPack(campaignId, userId)) {
             log.warn(String.format("WARNING - %s - Campaign %s tried to open an item booster, but they had already opened one today", userId, campaignId));
             throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
