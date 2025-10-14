@@ -27,6 +27,7 @@ public class GameController {
         this.gameService = gameService;
     }
 
+    @CrossOrigin(exposedHeaders = {"Location"})
     @PostMapping("/campaign")
     public ResponseEntity<Void> createNewCampaign(@AuthenticationPrincipal Jwt jwt,
                                                   @RequestBody GameCreationDtoRequest gameCreationDtoRequest) {
