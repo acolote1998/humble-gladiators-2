@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.booster.controller;
 
 import com.github.acolote1998.humble_gladiators_2.booster.dto.ItemBoosterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
+import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,16 @@ public class BoosterController {
         ItemBoosterResponseDto responseDto = ItemBoosterResponseDto.fromModelToDto(modelBooster);
         return ResponseEntity
                 .created(URI.create("/api/campaign/" + campaignId + "/items-booster/" + modelBooster.getId()))
+                .body(responseDto);
+    }
+
+    @PostMapping("/{campaignId}/character-booster")
+    ResponseEntity<CharacterBoosterResponseDto> openNewCharacterBooster(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterBooster modelBooster = boosterService.getNewCharacterBooster(campaignId, userId);
+        CharacterBoosterResponseDto responseDto = CharacterBoosterResponseDto.fromModelToDto(modelBooster);
+        return ResponseEntity
+                .created(URI.create("/api/campaign/" + campaignId + "/character-booster/" + modelBooster.getId()))
                 .body(responseDto);
     }
 
