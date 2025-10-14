@@ -1,5 +1,0 @@
-Interface Discoverable
-
-discover()
-isDiscovered()
-getDiscoveryDescription() // Returns description for discovered items, "???" or silhouette info for undiscovered
