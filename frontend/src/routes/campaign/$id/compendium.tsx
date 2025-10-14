@@ -48,12 +48,18 @@ function RouteComponent() {
       <details>
         <summary>NPCs</summary>
         <div className="grid grid-cols-3">
-          {characterInstancesData?.map(
-            (char) =>
-              char.characterType === "NPC" && (
-                <CharacterInstanceCard key={char.name} {...char} />
-              )
-          )}
+          {characterInstancesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map(
+              (char) =>
+                char.characterType === "NPC" && (
+                  <CharacterInstanceCard key={char.name} {...char} />
+                )
+            )}
         </div>
       </details>
       <details>

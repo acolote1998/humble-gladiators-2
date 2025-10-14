@@ -113,12 +113,12 @@ public class WeaponService {
         return weaponTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public WeaponTemplate getRandomWeaponTemplateForItemBooster(Long campaignId, String userId) {
+    public WeaponTemplate getRandomWeaponTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
         return weaponTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 

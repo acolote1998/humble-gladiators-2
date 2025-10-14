@@ -120,12 +120,12 @@ public class SpellService {
         return spellTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public SpellTemplate getRandomSpellTemplateForItemBooster(Long campaignId, String userId) {
+    public SpellTemplate getRandomSpellTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
         return spellTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 

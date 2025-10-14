@@ -113,12 +113,12 @@ public class ConsumableService {
         return consumableTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public ConsumableTemplate getRandomConsumableTemplateForItemBooster(Long campaignId, String userId) {
+    public ConsumableTemplate getRandomConsumableTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
         return consumableTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 

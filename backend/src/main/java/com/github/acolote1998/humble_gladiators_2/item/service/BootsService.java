@@ -113,12 +113,12 @@ public class BootsService {
         return bootsTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public BootsTemplate getRandomBootTemplateForItemBooster(Long campaignId, String userId) {
+    public BootsTemplate getRandomBootTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
         return bootsTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 

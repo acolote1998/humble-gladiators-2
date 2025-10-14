@@ -12,7 +12,6 @@ import com.github.acolote1998.humble_gladiators_2.characters.repository.Characte
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
-import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -55,12 +54,16 @@ public class CharacterService {
         return characterValues;
     }
 
-    public CharacterInstance getRandomCharacterInstanceForItemBooster(Long campaignId, String userId) {
+    public CharacterInstance getRandomCharacterInstanceForCharacterBooster(
+            Long campaignId,
+            String userId,
+            Integer rarity,
+            Integer tier) {
         return characterInstanceRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 

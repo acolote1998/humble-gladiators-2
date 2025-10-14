@@ -113,12 +113,12 @@ public class ArmorService {
         return armorTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public ArmorTemplate getRandomArmorTemplateForItemBooster(Long campaignId, String userId) {
+    public ArmorTemplate getRandomArmorTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
         return armorTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 

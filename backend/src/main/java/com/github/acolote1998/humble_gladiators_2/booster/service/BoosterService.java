@@ -43,7 +43,7 @@ public class BoosterService {
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
 
     @Value("${REAL_RARITY_AND_TIER_RATE}")
-    private static boolean REAL_RARITY_AND_TIER_RATE;
+    private boolean REAL_RARITY_AND_TIER_RATE;
 
     @Value("${GENERATE_IMAGES}")
     private boolean IMAGE_GENERATION_ACTIVATED;
@@ -85,7 +85,7 @@ public class BoosterService {
 
             return todaysBooster == null;
         }
-        return UNLIMITED_BOOSTERS_ALLOWED;
+        return true;
     }
 
     private Boolean canTheUserOpenACharacterPack(Long campaignId, String userId) {
@@ -99,10 +99,10 @@ public class BoosterService {
 
             return todaysBooster == null;
         }
-        return UNLIMITED_BOOSTERS_ALLOWED;
+        return true;
     }
 
-    public static Integer GetCalculatedTier() {
+    public Integer getCalculatedTier() {
         if (!REAL_RARITY_AND_TIER_RATE) {
             return 1;
         }
@@ -132,7 +132,7 @@ public class BoosterService {
         return tier;
     }
 
-    public static Integer GetCalculatedRarity() {
+    public Integer getCalculatedRarity() {
         if (!REAL_RARITY_AND_TIER_RATE) {
             return 1;
         }
@@ -182,7 +182,7 @@ public class BoosterService {
         for (int i = 0; i < 3; i++) {
             switch (getRandomItemType()) {
                 case ARMORS -> {
-                    ArmorTemplate armorTemplate = armorService.getRandomArmorTemplateForItemBooster(campaignId, userId);
+                    ArmorTemplate armorTemplate = armorService.getRandomArmorTemplateForItemBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
                     if (IMAGE_GENERATION_ACTIVATED && armorTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateArmorTemplateImageToBytes(campaign, armorTemplate);
@@ -193,7 +193,7 @@ public class BoosterService {
                     armorTemplates.add(armorTemplate);
                 }
                 case BOOTS -> {
-                    BootsTemplate bootTemplate = bootsService.getRandomBootTemplateForItemBooster(campaignId, userId);
+                    BootsTemplate bootTemplate = bootsService.getRandomBootTemplateForItemBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
                     if (IMAGE_GENERATION_ACTIVATED && bootTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateBootsTemplateImageToBytes(campaign, bootTemplate);
@@ -204,7 +204,7 @@ public class BoosterService {
                     bootsTemplates.add(bootTemplate);
                 }
                 case CONSUMABLES -> {
-                    ConsumableTemplate consumableTemplate = consumableService.getRandomConsumableTemplateForItemBooster(campaignId, userId);
+                    ConsumableTemplate consumableTemplate = consumableService.getRandomConsumableTemplateForItemBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
                     if (IMAGE_GENERATION_ACTIVATED && consumableTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateConsumableTemplateImageToBytes(campaign, consumableTemplate);
@@ -215,7 +215,7 @@ public class BoosterService {
                     consumableTemplates.add(consumableTemplate);
                 }
                 case HELMETS -> {
-                    HelmetTemplate helmetTemplate = helmetService.getRandomHelmetTemplateForItemBooster(campaignId, userId);
+                    HelmetTemplate helmetTemplate = helmetService.getRandomHelmetTemplateForItemBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
                     if (IMAGE_GENERATION_ACTIVATED && helmetTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateHelmetTemplateImageToBytes(campaign, helmetTemplate);
@@ -226,7 +226,7 @@ public class BoosterService {
                     helmetTemplates.add(helmetTemplate);
                 }
                 case SHIELDS -> {
-                    ShieldTemplate shieldTemplate = shieldService.getRandomShieldTemplateForItemBooster(campaignId, userId);
+                    ShieldTemplate shieldTemplate = shieldService.getRandomShieldTemplateForItemBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
                     if (IMAGE_GENERATION_ACTIVATED && shieldTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateShieldTemplateImageToBytes(campaign, shieldTemplate);
@@ -237,7 +237,7 @@ public class BoosterService {
                     shieldTemplates.add(shieldTemplate);
                 }
                 case SPELLS -> {
-                    SpellTemplate spellTemplate = spellService.getRandomSpellTemplateForItemBooster(campaignId, userId);
+                    SpellTemplate spellTemplate = spellService.getRandomSpellTemplateForItemBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
                     if (IMAGE_GENERATION_ACTIVATED && spellTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateSpellTemplateImageToBytes(campaign, spellTemplate);
@@ -248,7 +248,7 @@ public class BoosterService {
                     spellTemplates.add(spellTemplate);
                 }
                 case WEAPONS -> {
-                    WeaponTemplate weaponTemplate = weaponService.getRandomWeaponTemplateForItemBooster(campaignId, userId);
+                    WeaponTemplate weaponTemplate = weaponService.getRandomWeaponTemplateForItemBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
                     if (IMAGE_GENERATION_ACTIVATED && weaponTemplate.getImgBytes() == null) {
                         //Image for this card does not exist, so we have to generate it
                         byte[] generatedImage = runwareService.generateWeaponTemplateImageToBytes(campaign, weaponTemplate);
@@ -297,7 +297,7 @@ public class BoosterService {
 
         //Gets one character
         for (int i = 0; i < 1; i++) {
-            CharacterInstance characterInstance = characterService.getRandomCharacterInstanceForItemBooster(campaignId, userId);
+            CharacterInstance characterInstance = characterService.getRandomCharacterInstanceForCharacterBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
             if (IMAGE_GENERATION_ACTIVATED && characterInstance.getImgBytes() == null) {
                 //Image for this card does not exist, so we have to generate it
                 byte[] generatedImage = runwareService.generateCharacterInstanceImageToBytes(campaign, characterInstance);

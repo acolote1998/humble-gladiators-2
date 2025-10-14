@@ -113,12 +113,12 @@ public class ShieldService {
         return shieldTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public ShieldTemplate getRandomShieldTemplateForItemBooster(Long campaignId, String userId) {
+    public ShieldTemplate getRandomShieldTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
         return shieldTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 

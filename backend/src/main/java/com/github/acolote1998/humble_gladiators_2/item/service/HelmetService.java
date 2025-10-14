@@ -113,12 +113,12 @@ public class HelmetService {
         return helmetTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public HelmetTemplate getRandomHelmetTemplateForItemBooster(Long campaignId, String userId) {
+    public HelmetTemplate getRandomHelmetTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
         return helmetTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
-                BoosterService.GetCalculatedRarity(),
-                BoosterService.GetCalculatedTier()
+                rarity,
+                tier
         );
     }
 
