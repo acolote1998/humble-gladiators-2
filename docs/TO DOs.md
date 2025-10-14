@@ -3,6 +3,7 @@
 - [ ] Improve AI accuracy for content generation :
   - Sometimes we are generating a weapon and it generates something that would fit more like an armor, and things like that. Needs to stick to the category better
 - [ ] Language content module
+
   - [ ] Make campaign have a language (an enum of available languages)
   - [ ] Make all items and characters have a name and description per language (example EN_NAME, EN_DESCRIPTION)
     - [ ] On booster opening, check the language of the campaign, and then try to get that name and description
@@ -16,7 +17,10 @@
         setted, and get those values for the name and description fields. Possibly, we could check if all the fields exist
         in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
         through gemini
-- [ ] Card System
+
+- [ ] Create endpoints like GET canOpenItemBooster and canOpenCharacterBooster, and doesHeroExistForCampaign -[ ] After the response, then conditionally render certain elements in the frontend
+      -> At the moment, for example we do checks on the error if the hero does not exist to render or not, and rendering based on an error is bad.
+      -> Better to do doesHeroExistForCampaign, and if the backend answers with false, then we can allow the frontend to create a hero
 
 - [ ] Daily NPC Card Pack
 
