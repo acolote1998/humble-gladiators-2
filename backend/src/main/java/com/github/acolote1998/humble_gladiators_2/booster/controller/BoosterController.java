@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.booster.controller;
 
+import com.github.acolote1998.humble_gladiators_2.booster.dto.CharacterBoosterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.booster.dto.ItemBoosterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;

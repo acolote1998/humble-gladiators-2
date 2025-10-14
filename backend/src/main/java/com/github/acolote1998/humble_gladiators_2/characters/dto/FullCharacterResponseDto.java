@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.dto;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterCategory;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,8 @@ public record FullCharacterResponseDto(
         Integer rarity,
         Integer tier,
         Integer goldReward,
-        Integer expReward
+        Integer expReward,
+        String imgBase64
 ) {
 
     private static FullCharacterResponseDto fromModelToDto(CharacterInstance character) {
@@ -48,7 +50,8 @@ public record FullCharacterResponseDto(
                 character.getRarity(),
                 character.getTier(),
                 character.getGoldReward(),
-                character.getExpReward()
+                character.getExpReward(),
+                BytesToBase64.bytesToBase64(character.getImgBytes())
         );
         return dto;
     }
