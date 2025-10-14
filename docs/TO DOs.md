@@ -43,10 +43,10 @@
   - [ ] Frontend implementation for pack opening (MVI)
     - [ ] Handle error if pack was already opened for the day
     - [x] implementation of opening item booster
-  - [ ] Each card in any given booster has a chance to belong to a certain tier
-    - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
-  - [ ] Each card also has a rarity percentage within its tier
-    - [ ] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
+  - [x] Each card in any given booster has a chance to belong to a certain tier
+    - [x] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
+  - [x] Each card also has a rarity percentage within its tier
+    - [x] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
   - [x] The second any booster gets opened, those card entities will be marked as "discovered"
 
 - [ ] Daily Enemy Encounter
