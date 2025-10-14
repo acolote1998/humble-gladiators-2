@@ -45,91 +45,115 @@ function RouteComponent() {
     useGetAllWeaponTemplatesForCampaignByUser(Number(campaignId));
   return (
     <>
-      <div className="grid grid-cols-3">
-        {characterInstancesData?.map(
-          (char) =>
-            char.characterType === "NPC" && (
-              <CharacterInstanceCard key={char.name} {...char} />
-            )
-        )}
-      </div>
-      <div className="grid grid-cols-3">
-        {armorTemplatesData
-          ?.sort((a, b) => {
-            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-            return 0; // both have or both don't → keep order
-          })
-          .map((armor) => (
-            <ArmorTemplateCard key={armor.name} {...armor} />
-          ))}
-      </div>
-      <div className="grid grid-cols-3">
-        {bootsTemplatesData
-          ?.sort((a, b) => {
-            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-            return 0; // both have or both don't → keep order
-          })
-          .map((boot) => (
-            <BootsTemplateCard key={boot.name} {...boot} />
-          ))}
-      </div>
-      <div className="grid grid-cols-3">
-        {consumableTemplatesData
-          ?.sort((a, b) => {
-            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-            return 0; // both have or both don't → keep order
-          })
-          .map((consumable) => (
-            <ConsumableTemplateCard key={consumable.name} {...consumable} />
-          ))}
-      </div>
-      <div className="grid grid-cols-3">
-        {helmetTemplatesData
-          ?.sort((a, b) => {
-            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-            return 0; // both have or both don't → keep order
-          })
-          .map((helmet) => (
-            <HelmetTemplateCard key={helmet.name} {...helmet} />
-          ))}
-      </div>
-      <div className="grid grid-cols-3">
-        {shieldTemplatesData
-          ?.sort((a, b) => {
-            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-            return 0; // both have or both don't → keep order
-          })
-          .map((shield) => (
-            <ShieldTemplateCard key={shield.name} {...shield} />
-          ))}
-      </div>
-      <div className="grid grid-cols-3">
-        {spellTemplatesData
-          ?.sort((a, b) => {
-            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-            return 0; // both have or both don't → keep order
-          })
-          .map((spell) => (
-            <SpellTemplateCard key={spell.name} {...spell} />
-          ))}
-      </div>
-      <div className="grid grid-cols-3">
-        {weaponTemplatesData
-          ?.sort((a, b) => {
-            if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-            if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-            return 0; // both have or both don't → keep order
-          })
-          .map((weapon) => (
-            <WeaponTemplateCard key={weapon.name} {...weapon} />
-          ))}
-      </div>
+      <details>
+        <summary>NPCs</summary>
+        <div className="grid grid-cols-3">
+          {characterInstancesData?.map(
+            (char) =>
+              char.characterType === "NPC" && (
+                <CharacterInstanceCard key={char.name} {...char} />
+              )
+          )}
+        </div>
+      </details>
+      <details>
+        <summary>Armors</summary>
+        <div className="grid grid-cols-3">
+          {armorTemplatesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map((armor) => (
+              <ArmorTemplateCard key={armor.name} {...armor} />
+            ))}
+        </div>
+      </details>
+      <details>
+        <summary>Boots</summary>
+        <div className="grid grid-cols-3">
+          {bootsTemplatesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map((boot) => (
+              <BootsTemplateCard key={boot.name} {...boot} />
+            ))}
+        </div>
+      </details>
+      <details>
+        <summary>Consumables</summary>
+        <div className="grid grid-cols-3">
+          {consumableTemplatesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map((consumable) => (
+              <ConsumableTemplateCard key={consumable.name} {...consumable} />
+            ))}
+        </div>
+      </details>
+      <details>
+        <summary>Helmets</summary>
+        <div className="grid grid-cols-3">
+          {helmetTemplatesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map((helmet) => (
+              <HelmetTemplateCard key={helmet.name} {...helmet} />
+            ))}
+        </div>
+      </details>
+      <details>
+        <summary>Shields</summary>
+        <div className="grid grid-cols-3">
+          {shieldTemplatesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map((shield) => (
+              <ShieldTemplateCard key={shield.name} {...shield} />
+            ))}
+        </div>
+      </details>
+      <details>
+        <summary>Spells</summary>
+        <div className="grid grid-cols-3">
+          {spellTemplatesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map((spell) => (
+              <SpellTemplateCard key={spell.name} {...spell} />
+            ))}
+        </div>
+      </details>
+      <details>
+        <summary>Weapons</summary>
+        <div className="grid grid-cols-3">
+          {weaponTemplatesData
+            ?.sort((a, b) => {
+              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+              return 0; // both have or both don't → keep order
+            })
+            .map((weapon) => (
+              <WeaponTemplateCard key={weapon.name} {...weapon} />
+            ))}
+        </div>
+      </details>
     </>
   );
 }
