@@ -1,9 +1,11 @@
 package com.github.acolote1998.humble_gladiators_2.booster.controller;
 
+import com.github.acolote1998.humble_gladiators_2.booster.dto.CharacterBoosterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.booster.dto.ItemBoosterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
+import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
-import com.github.acolote1998.humble_gladiators_2.booster.service.ItemsBoosterService;
+import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,19 +19,29 @@ import java.net.URI;
 @RequestMapping("/api/campaign")
 public class BoosterController {
 
-    ItemsBoosterService itemsBoosterService;
+    BoosterService boosterService;
 
-    public BoosterController(ItemsBoosterService itemsBoosterService) {
-        this.itemsBoosterService = itemsBoosterService;
+    public BoosterController(BoosterService boosterService) {
+        this.boosterService = boosterService;
     }
 
     @PostMapping("/{campaignId}/items-booster")
     ResponseEntity<ItemBoosterResponseDto> openNewItemBooster(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        ItemsBooster modelBooster = itemsBoosterService.getNewItemsBooster(campaignId, userId);
+        ItemsBooster modelBooster = boosterService.getNewItemsBooster(campaignId, userId);
         ItemBoosterResponseDto responseDto = ItemBoosterResponseDto.fromModelToDto(modelBooster);
         return ResponseEntity
                 .created(URI.create("/api/campaign/" + campaignId + "/items-booster/" + modelBooster.getId()))
+                .body(responseDto);
+    }
+
+    @PostMapping("/{campaignId}/character-booster")
+    ResponseEntity<CharacterBoosterResponseDto> openNewCharacterBooster(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterBooster modelBooster = boosterService.getNewCharacterBooster(campaignId, userId);
+        CharacterBoosterResponseDto responseDto = CharacterBoosterResponseDto.fromModelToDto(modelBooster);
+        return ResponseEntity
+                .created(URI.create("/api/campaign/" + campaignId + "/character-booster/" + modelBooster.getId()))
                 .body(responseDto);
     }
 

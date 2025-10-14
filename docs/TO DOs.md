@@ -20,18 +20,18 @@
 
 - [ ] Daily NPC Card Pack
 
-  - [] Users can open one npc card booster per day
-  - [] Each booster contains one random NPC
-  - [] When opening the pack, the obtained card are now DISCOVERED = true
+  - [x] Users can open one npc card booster per day
+  - [x] Each booster contains one random NPC
+  - [x] When opening the pack, the obtained card are now DISCOVERED = true
   - [] Make an endpoint something like "getEnemyForToday" -> Find the best way to do it? How do we make the enemy available for only that day, and also possible to be retrieved some other days in the future?
   - [ ] Frontend implementation for pack enemy opening (MVI)
     - [ ] Handle error if pack was already opened for the day
-    - [] implementation of opening npc booster
+    - [x] implementation of opening npc booster
   - [x] The second any booster gets opened, those card entities will be marked as "discovered"
-  - [ ] Each card in any given booster has a chance to belong to a certain tier
-    - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
-  - [ ] Each card also has a rarity percentage within its tier
-    - [ ] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
+  - [x] Each card in any given booster has a chance to belong to a certain tier
+    - [x] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
+  - [x] Each card also has a rarity percentage within its tier
+    - [x] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
 
 - [ ] Daily Item Card Pack
 

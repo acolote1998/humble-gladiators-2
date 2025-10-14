@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.core.dto.RunwareImageGenResponse;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
@@ -266,6 +267,34 @@ public class RunwareService {
         log.info(String.format("Attempt to generate image for %s - %s", weaponTemplate.getName(), WeaponTemplate.class));
 
         String positivePrompt = geminiService.getPositiveWeaponPromptForRuneware(campaign, weaponTemplate);
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
+
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardImageWidth,
+                cardImageHeight);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String imgUrl = response.getBody().data().getFirst().imageURL();
+            try {
+                byte[] imgBytes = imgUrlToBytes(imgUrl);
+                return imgBytes;
+            } catch (Exception e) {
+                log.error("Could not convert img url to bytes - " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            log.error("Error generating card image");
+            return null;
+        }
+    }
+
+    public byte[] generateCharacterInstanceImageToBytes(Campaign campaign, CharacterInstance characterInstance) {
+        log.info(String.format("Attempt to generate image for %s - %s", characterInstance.getName(), CharacterInstance.class));
+
+        String positivePrompt = geminiService.getPositiveCharacterInstancePromptForRuneware(campaign, characterInstance);
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(

@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.service;
 
+import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
@@ -11,7 +12,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.repository.Characte
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
-import jakarta.transaction.Transactional;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,15 @@ public class CharacterService {
         });
         characterValues.put("CharacterInstances", namesAndDescriptions);
         return characterValues;
+    }
+
+    public CharacterInstance getRandomCharacterInstanceForItemBooster(Long campaignId, String userId) {
+        return characterInstanceRepository.findRandomByCampaignAndRarityAndTier(
+                campaignId,
+                userId,
+                BoosterService.GetCalculatedRarity(),
+                BoosterService.GetCalculatedTier()
+        );
     }
 
     public Map<String, String> getTier5NpcsContextForCampaignCover(Campaign campaign) {

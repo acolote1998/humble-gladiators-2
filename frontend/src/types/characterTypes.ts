@@ -23,6 +23,7 @@ export type CharacterInstanceType = {
   tier: number;
   goldReward: number;
   expReward: number;
+  imgBase64: string;
 };
 
 type CharacterStatsResponseDto = {

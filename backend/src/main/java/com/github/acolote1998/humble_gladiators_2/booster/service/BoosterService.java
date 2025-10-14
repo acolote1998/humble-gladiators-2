@@ -2,7 +2,9 @@ package com.github.acolote1998.humble_gladiators_2.booster.service;
 
 import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
+import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
+import com.github.acolote1998.humble_gladiators_2.booster.repository.CharacterBoosterRepository;
 import com.github.acolote1998.humble_gladiators_2.booster.repository.ItemsBoosterRepository;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
@@ -22,7 +24,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class ItemsBoosterService {
+public class BoosterService {
 
     private ArmorService armorService;
     private BootsService bootsService;
@@ -34,25 +36,30 @@ public class ItemsBoosterService {
     private CampaignService campaignService;
     private ItemsBoosterRepository itemsBoosterRepository;
     private CharacterService characterService;
+    private CharacterBoosterRepository characterBoosterRepository;
     private RunwareService runwareService;
 
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
 
+    @Value("${REAL_RARITY_AND_TIER_RATE}")
+    private static boolean REAL_RARITY_AND_TIER_RATE;
+
     @Value("${GENERATE_IMAGES}")
     private boolean IMAGE_GENERATION_ACTIVATED;
 
-    public ItemsBoosterService(ArmorService armorService,
-                               BootsService bootsService,
-                               ConsumableService consumableService,
-                               HelmetService helmetService,
-                               ShieldService shieldService,
-                               SpellService spellService,
-                               WeaponService weaponService,
-                               ItemsBoosterRepository itemsBoosterRepository,
-                               CampaignService campaignService,
-                               CharacterService characterService,
-                               RunwareService runwareService) {
+    public BoosterService(ArmorService armorService,
+                          BootsService bootsService,
+                          ConsumableService consumableService,
+                          HelmetService helmetService,
+                          ShieldService shieldService,
+                          SpellService spellService,
+                          WeaponService weaponService,
+                          ItemsBoosterRepository itemsBoosterRepository,
+                          CampaignService campaignService,
+                          CharacterService characterService,
+                          RunwareService runwareService,
+                          CharacterBoosterRepository characterBoosterRepository) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -64,6 +71,7 @@ public class ItemsBoosterService {
         this.campaignService = campaignService;
         this.characterService = characterService;
         this.runwareService = runwareService;
+        this.characterBoosterRepository = characterBoosterRepository;
     }
 
     private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
@@ -80,7 +88,24 @@ public class ItemsBoosterService {
         return UNLIMITED_BOOSTERS_ALLOWED;
     }
 
+    private Boolean canTheUserOpenACharacterPack(Long campaignId, String userId) {
+        if (!UNLIMITED_BOOSTERS_ALLOWED) {
+            LocalDate today = LocalDate.now();
+            CharacterBooster todaysBooster = characterBoosterRepository
+                    .findByCampaignIdAndUserIdAndUpdatedAtDate(
+                            campaignId,
+                            userId,
+                            today);
+
+            return todaysBooster == null;
+        }
+        return UNLIMITED_BOOSTERS_ALLOWED;
+    }
+
     public static Integer GetCalculatedTier() {
+        if (!REAL_RARITY_AND_TIER_RATE) {
+            return 1;
+        }
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer tier = 0;
@@ -108,6 +133,9 @@ public class ItemsBoosterService {
     }
 
     public static Integer GetCalculatedRarity() {
+        if (!REAL_RARITY_AND_TIER_RATE) {
+            return 1;
+        }
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer rarity = 0;
@@ -255,6 +283,36 @@ public class ItemsBoosterService {
         newBooster.setCampaign(campaign);
         log.info(String.format("%s - Campaign %s successfully opened an item booster", userId, campaignId));
         return itemsBoosterRepository.save(newBooster);
+    }
+
+    @Transactional
+    public CharacterBooster getNewCharacterBooster(Long campaignId, String userId) {
+        if (!canTheUserOpenACharacterPack(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s tried to open a character booster, but they had already opened one today", userId, campaignId));
+            throw new DailyBoosterAlreadyOpened("The user already opened a character booster today");
+        }
+        Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
+        CharacterBooster newBooster = new CharacterBooster();
+        List<CharacterInstance> characterInstances = new ArrayList<>();
+
+        //Gets one character
+        for (int i = 0; i < 1; i++) {
+            CharacterInstance characterInstance = characterService.getRandomCharacterInstanceForItemBooster(campaignId, userId);
+            if (IMAGE_GENERATION_ACTIVATED && characterInstance.getImgBytes() == null) {
+                //Image for this card does not exist, so we have to generate it
+                byte[] generatedImage = runwareService.generateCharacterInstanceImageToBytes(campaign, characterInstance);
+                characterInstance.setImgBytes(generatedImage);
+            }
+            characterInstance.setDiscovered(true);
+            characterService.saveCharacter(characterInstance);
+            characterInstances.add(characterInstance);
+        }
+
+        newBooster.setCharacters(characterInstances);
+        newBooster.setUserId(userId);
+        newBooster.setCampaign(campaign);
+        log.info(String.format("%s - Campaign %s successfully opened a character booster", userId, campaignId));
+        return characterBoosterRepository.save(newBooster);
     }
 
     private ItemTypesForBooster getRandomItemType() {

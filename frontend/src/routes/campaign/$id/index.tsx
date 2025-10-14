@@ -7,6 +7,7 @@ import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
 import CampaignItem from "../../../components/campaigns/CampaignItem";
 import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
 import { useCreateItemBooster } from "../../../hooks/useBoosters";
+import { useCreateCharacterBooster } from "../../../hooks/useBoosters";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -26,8 +27,14 @@ function RouteComponent() {
     isHeroError &&
     (heroErrorDetails as Error & { response?: { status: number } })?.response
       ?.status === 404;
+
   const { mutate: createItemBoosterMutation, data: dataFromItemBooster } =
     useCreateItemBooster();
+
+  const {
+    mutate: createCharacterBoosterMutation,
+    data: dataFromCharacterBooster,
+  } = useCreateCharacterBooster();
 
   const {
     data: campaignData,
@@ -82,6 +89,24 @@ function RouteComponent() {
                 className="bg-gray-400 p-3 rounded-lg"
               >
                 Log Item Booster
+              </p>
+            )}
+            <p
+              onClick={() => {
+                createCharacterBoosterMutation(Number(campaignId));
+              }}
+              className="bg-gray-400 p-3 rounded-lg"
+            >
+              Open Character Booster
+            </p>
+            {dataFromCharacterBooster && (
+              <p
+                onClick={() => {
+                  console.log(dataFromCharacterBooster);
+                }}
+                className="bg-gray-400 p-3 rounded-lg"
+              >
+                Log Character Booster
               </p>
             )}
             <p

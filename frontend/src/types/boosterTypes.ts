@@ -1,5 +1,6 @@
 import type { ArmorTemplateType } from "./armorTypes";
 import type { BootsTemplateType } from "./bootsTypes";
+import type { CharacterInstanceType } from "./characterTypes";
 import type { ConsumableTemplateType } from "./consumablesTypes";
 import type { HelmetTemplateType } from "./helmetTypes";
 import type { ShieldTemplateType } from "./shieldTypes";
@@ -13,4 +14,8 @@ export type ItemBoosterType = {
   shields: ShieldTemplateType[];
   spells: SpellTemplateType[];
   weapons: WeaponTemplateType[];
+};
+
+export type CharacterBoosterType = {
+  characters: CharacterInstanceType[];
 };

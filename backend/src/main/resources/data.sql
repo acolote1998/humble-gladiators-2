@@ -65,7 +65,7 @@ INSERT INTO character_instance (user_id, campaign_id, name, description, charact
                                 speed, luck, max_hp, current_hp, max_mp, current_mp, height, weight, level, current_exp,
                                 exp_for_next_level, created_at, updated_at)
 VALUES ('user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 'Sir Gareth the Bold', 'A brave knight wielding a mighty sword',
-        'NPC', 'HUMANOID', false, 2, 3, 0, 0, 1, 18, 14, 20, 16, 15, 0, 0, 0, 0, 180, 85, 5, 0, 0, NOW(), NOW());
+        'NPC', 'HUMANOID', false, 1, 1, 0, 0, 1, 18, 14, 20, 16, 15, 0, 0, 0, 0, 180, 85, 5, 0, 0, NOW(), NOW());
 
 INSERT INTO character_instance (user_id, campaign_id, name, description, character_type, category, discovered, tier,
                                 rarity, gold_reward, exp_reward, inventory_id, constitution, intelligence, strength,
@@ -78,7 +78,7 @@ VALUES ('user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 'Mystic Elara', 'A powerful mage 
 INSERT INTO armor_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                             campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
                             updated_at)
-VALUES ('Iron Chainmail', 'Sturdy chainmail armor forged from iron', 2, 2, 840, false, 0, false,
+VALUES ('Iron Chainmail', 'Sturdy chainmail armor forged from iron', 1, 1, 840, false, 0, false,
         'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 1, 'MAIL', 0, 0, NOW(), NOW());
 
 INSERT INTO armor_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
@@ -115,7 +115,7 @@ VALUES ('Mana Elixir', 'A blue elixir that restores magical energy', 3, 2, 65, f
 INSERT INTO helmet_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                              campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
                              updated_at)
-VALUES ('Iron Helm', 'A basic iron helmet for head protection', 2, 2, 720, false, 0, false,
+VALUES ('Iron Helm', 'A basic iron helmet for head protection', 1, 1, 720, false, 0, false,
         'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 7, 'HELMET', 0, 0, NOW(), NOW());
 
 INSERT INTO helmet_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
@@ -141,7 +141,7 @@ VALUES ('Tower Shield of Fortitude', 'A massive shield providing excellent prote
 INSERT INTO spell_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                             campaign_id, requirement_id, category, physical_damage, magical_damage, restore_hp,
                             created_at, updated_at)
-VALUES ('Fireball', 'A blazing sphere of fire that damages enemies', 2, 2, 720, false, 0, false,
+VALUES ('Fireball', 'A blazing sphere of fire that damages enemies', 1, 1, 720, false, 0, false,
         'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 11, 'FIRE_SPELL', 0, 1, 0, NOW(), NOW());
 
 INSERT INTO spell_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
@@ -154,7 +154,7 @@ VALUES ('Healing Light', 'A divine spell that restores health to allies', 3, 3, 
 INSERT INTO weapon_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                              campaign_id, requirement_id, category, physical_damage, magical_damage, created_at,
                              updated_at)
-VALUES ('Iron Sword', 'A well-crafted iron sword with a sharp edge', 2, 2, 720, false, 0, false,
+VALUES ('Iron Sword', 'A well-crafted iron sword with a sharp edge', 1, 1, 720, false, 0, false,
         'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 13, 'SWORD', 1, 0, NOW(), NOW());
 
 INSERT INTO weapon_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
