@@ -278,7 +278,7 @@ public class BoosterService {
 
     @Transactional
     public CharacterBooster getNewCharacterBooster(Long campaignId, String userId) {
-        if (!canTheUserOpenAnItemPack(campaignId, userId)) {
+        if (!canTheUserOpenACharacterPack(campaignId, userId)) {
             log.warn(String.format("WARNING - %s - Campaign %s tried to open a character booster, but they had already opened one today", userId, campaignId));
             throw new DailyBoosterAlreadyOpened("The user already opened a character booster today");
         }
