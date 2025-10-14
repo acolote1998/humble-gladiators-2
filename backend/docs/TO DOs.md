@@ -14,11 +14,6 @@
       setted, and get those values for the name and description fields. Possibly, we could check if all the fields exist
       in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
       through gemini
-- [X] Hero Creation backend
-    - [X] Make a hero creating button for the frontend
-    - [X] Add validation in backend to never allow more than one hero created by campaign
-    - [X] Log Hero data in frontend
-    - [X] Make a hero fetcher for displaying the hero in the frontend
 - [ ] Card System
     - [ ] Daily Card Pack
         - [X] Users can open one item card booster per day
