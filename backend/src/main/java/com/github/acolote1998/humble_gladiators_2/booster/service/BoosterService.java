@@ -22,7 +22,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class ItemsBoosterService {
+public class BoosterService {
 
     private ArmorService armorService;
     private BootsService bootsService;
@@ -42,17 +42,17 @@ public class ItemsBoosterService {
     @Value("${GENERATE_IMAGES}")
     private boolean IMAGE_GENERATION_ACTIVATED;
 
-    public ItemsBoosterService(ArmorService armorService,
-                               BootsService bootsService,
-                               ConsumableService consumableService,
-                               HelmetService helmetService,
-                               ShieldService shieldService,
-                               SpellService spellService,
-                               WeaponService weaponService,
-                               ItemsBoosterRepository itemsBoosterRepository,
-                               CampaignService campaignService,
-                               CharacterService characterService,
-                               RunwareService runwareService) {
+    public BoosterService(ArmorService armorService,
+                          BootsService bootsService,
+                          ConsumableService consumableService,
+                          HelmetService helmetService,
+                          ShieldService shieldService,
+                          SpellService spellService,
+                          WeaponService weaponService,
+                          ItemsBoosterRepository itemsBoosterRepository,
+                          CampaignService campaignService,
+                          CharacterService characterService,
+                          RunwareService runwareService) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -136,6 +136,129 @@ public class ItemsBoosterService {
 
     @Transactional
     public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
+        if (!canTheUserOpenAnItemPack(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s tried to open an item booster, but they had already opened one today", userId, campaignId));
+            throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
+        }
+        Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
+        ItemsBooster newBooster = new ItemsBooster();
+        List<ArmorTemplate> armorTemplates = new ArrayList<>();
+        List<BootsTemplate> bootsTemplates = new ArrayList<>();
+        List<ConsumableTemplate> consumableTemplates = new ArrayList<>();
+        List<HelmetTemplate> helmetTemplates = new ArrayList<>();
+        List<ShieldTemplate> shieldTemplates = new ArrayList<>();
+        List<SpellTemplate> spellTemplates = new ArrayList<>();
+        List<WeaponTemplate> weaponTemplates = new ArrayList<>();
+
+        //Gets three items
+        for (int i = 0; i < 3; i++) {
+            switch (getRandomItemType()) {
+                case ARMORS -> {
+                    ArmorTemplate armorTemplate = armorService.getRandomArmorTemplateForItemBooster(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && armorTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateArmorTemplateImageToBytes(campaign, armorTemplate);
+                        armorTemplate.setImgBytes(generatedImage);
+                    }
+                    armorTemplate.setDiscovered(true);
+                    armorService.saveArmor(armorTemplate);
+                    armorTemplates.add(armorTemplate);
+                }
+                case BOOTS -> {
+                    BootsTemplate bootTemplate = bootsService.getRandomBootTemplateForItemBooster(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && bootTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateBootsTemplateImageToBytes(campaign, bootTemplate);
+                        bootTemplate.setImgBytes(generatedImage);
+                    }
+                    bootTemplate.setDiscovered(true);
+                    bootsService.saveBoots(bootTemplate);
+                    bootsTemplates.add(bootTemplate);
+                }
+                case CONSUMABLES -> {
+                    ConsumableTemplate consumableTemplate = consumableService.getRandomConsumableTemplateForItemBooster(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && consumableTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateConsumableTemplateImageToBytes(campaign, consumableTemplate);
+                        consumableTemplate.setImgBytes(generatedImage);
+                    }
+                    consumableTemplate.setDiscovered(true);
+                    consumableService.saveConsumable(consumableTemplate);
+                    consumableTemplates.add(consumableTemplate);
+                }
+                case HELMETS -> {
+                    HelmetTemplate helmetTemplate = helmetService.getRandomHelmetTemplateForItemBooster(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && helmetTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateHelmetTemplateImageToBytes(campaign, helmetTemplate);
+                        helmetTemplate.setImgBytes(generatedImage);
+                    }
+                    helmetTemplate.setDiscovered(true);
+                    helmetService.saveHelmet(helmetTemplate);
+                    helmetTemplates.add(helmetTemplate);
+                }
+                case SHIELDS -> {
+                    ShieldTemplate shieldTemplate = shieldService.getRandomShieldTemplateForItemBooster(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && shieldTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateShieldTemplateImageToBytes(campaign, shieldTemplate);
+                        shieldTemplate.setImgBytes(generatedImage);
+                    }
+                    shieldTemplate.setDiscovered(true);
+                    shieldService.saveShield(shieldTemplate);
+                    shieldTemplates.add(shieldTemplate);
+                }
+                case SPELLS -> {
+                    SpellTemplate spellTemplate = spellService.getRandomSpellTemplateForItemBooster(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && spellTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateSpellTemplateImageToBytes(campaign, spellTemplate);
+                        spellTemplate.setImgBytes(generatedImage);
+                    }
+                    spellTemplate.setDiscovered(true);
+                    spellService.saveSpell(spellTemplate);
+                    spellTemplates.add(spellTemplate);
+                }
+                case WEAPONS -> {
+                    WeaponTemplate weaponTemplate = weaponService.getRandomWeaponTemplateForItemBooster(campaignId, userId);
+                    if (IMAGE_GENERATION_ACTIVATED && weaponTemplate.getImgBytes() == null) {
+                        //Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateWeaponTemplateImageToBytes(campaign, weaponTemplate);
+                        weaponTemplate.setImgBytes(generatedImage);
+                    }
+                    weaponTemplate.setDiscovered(true);
+                    weaponService.saveWeapon(weaponTemplate);
+                    weaponTemplates.add(weaponTemplate);
+                }
+            }
+        }
+
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        Inventory heroInventory = hero.getInventory();
+        heroInventory.getArmors().addAll(armorService.instancesFromArmorTemplates(armorTemplates, heroInventory));
+        heroInventory.getBoots().addAll(bootsService.instancesFromBootsTemplates(bootsTemplates, heroInventory));
+        heroInventory.getConsumables().addAll(consumableService.instancesFromConsumableTemplates(consumableTemplates, heroInventory));
+        heroInventory.getHelmets().addAll(helmetService.instancesFromHelmetTemplates(helmetTemplates, heroInventory));
+        heroInventory.getShields().addAll(shieldService.instancesFromShieldTemplates(shieldTemplates, heroInventory));
+        heroInventory.getSpells().addAll(spellService.instancesFromSpellTemplates(spellTemplates, heroInventory));
+        heroInventory.getWeapons().addAll(weaponService.instancesFromWeaponTemplates(weaponTemplates, heroInventory));
+        characterService.saveCharacter(hero);
+
+        newBooster.setArmors(armorTemplates);
+        newBooster.setBoots(bootsTemplates);
+        newBooster.setConsumables(consumableTemplates);
+        newBooster.setHelmets(helmetTemplates);
+        newBooster.setShields(shieldTemplates);
+        newBooster.setSpells(spellTemplates);
+        newBooster.setWeapons(weaponTemplates);
+        newBooster.setUserId(userId);
+        newBooster.setCampaign(campaign);
+        log.info(String.format("%s - Campaign %s successfully opened an item booster", userId, campaignId));
+        return itemsBoosterRepository.save(newBooster);
+    }
+
+    @Transactional
+    public ItemsBooster getNewCharacterBooster(Long campaignId, String userId) {
         if (!canTheUserOpenAnItemPack(campaignId, userId)) {
             log.warn(String.format("WARNING - %s - Campaign %s tried to open an item booster, but they had already opened one today", userId, campaignId));
             throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
