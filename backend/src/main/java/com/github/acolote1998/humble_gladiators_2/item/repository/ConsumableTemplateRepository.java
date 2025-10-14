@@ -12,19 +12,23 @@ public interface ConsumableTemplateRepository extends ListCrudRepository<Consuma
 
     @Query(
             value = """
-                      SELECT ct.* 
-                      FROM consumable_template ct
-                      JOIN campaign c ON ct.campaign_id = c.id
-                      WHERE c.id = :campaignId
-                        AND c.user_id = :userId
-                      ORDER BY RANDOM() 
-                      LIMIT 1
+                    SELECT ct.* 
+                    FROM consumable_template ct
+                    JOIN campaign c ON ct.campaign_id = c.id
+                    WHERE c.id = :campaignId
+                      AND c.user_id = :userId
+                      AND ct.rarity = :rarity
+                      AND ct.tier = :tier
+                    ORDER BY RANDOM()
+                    LIMIT 1
                     """,
             nativeQuery = true
     )
-    ConsumableTemplate findRandomByCampaignIdAndUserId(
+    ConsumableTemplate findRandomByCampaignAndRarityAndTier(
             @Param("campaignId") Long campaignId,
-            @Param("userId") String userId
+            @Param("userId") String userId,
+            @Param("rarity") Integer rarity,
+            @Param("tier") Integer tier
     );
 
     List<ConsumableTemplate> findAllByCampaign_Id(Long campaignId);
