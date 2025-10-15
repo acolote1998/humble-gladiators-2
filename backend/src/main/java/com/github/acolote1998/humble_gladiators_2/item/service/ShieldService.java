@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
-import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -38,8 +37,7 @@ public class ShieldService {
             if (shield.getName() != null && !shield.getName().isBlank()) {
                 context.put(
                         shield.getName(),
-                        shield.getDescription() != null ? shield.getDescription() : ""
-                );
+                        shield.getDescription() != null ? shield.getDescription() : "");
             }
         }
 
@@ -61,7 +59,8 @@ public class ShieldService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(shieldTemplate -> {
             String name = shieldTemplate.getName();
-            String description = "Tier: " + shieldTemplate.getTier() + ", Rarity: " + shieldTemplate.getRarity() + ", Category: " + shieldTemplate.getCategory();
+            String description = "Tier: " + shieldTemplate.getTier() + ", Rarity: " + shieldTemplate.getRarity()
+                    + ", Category: " + shieldTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("ShieldTemplates", namesAndDescriptions);
@@ -102,6 +101,11 @@ public class ShieldService {
             savedShieldTemplates.add(shieldTemplate);
         });
 
+        if (!ShieldTemplate.areValidShields(savedShieldTemplates, 25)) {
+            log.warn(String.format("Campaign %s - Generated shields not valid -> Generating again", campaign.getId()));
+            return createTwentyFiveNewShieldTemplates(campaign);
+        }
+
         shieldTemplateRepository.saveAll(savedShieldTemplates);
 
         log.info(savedShieldTemplates.size() + " shields successfully created an persisted");
@@ -113,13 +117,13 @@ public class ShieldService {
         return shieldTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public ShieldTemplate getRandomShieldTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
+    public ShieldTemplate getRandomShieldTemplateForItemBooster(Long campaignId, String userId, Integer rarity,
+            Integer tier) {
         return shieldTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
                 rarity,
-                tier
-        );
+                tier);
     }
 
     public ShieldTemplate saveShield(ShieldTemplate shield) {
@@ -143,7 +147,8 @@ public class ShieldService {
         return instance;
     }
 
-    public List<ShieldInstance> instancesFromShieldTemplates(List<ShieldTemplate> templates, Inventory inventoryItBelongsTo) {
+    public List<ShieldInstance> instancesFromShieldTemplates(List<ShieldTemplate> templates,
+            Inventory inventoryItBelongsTo) {
         List<ShieldInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromShieldTemplate(template, inventoryItBelongsTo)));
         return instances;

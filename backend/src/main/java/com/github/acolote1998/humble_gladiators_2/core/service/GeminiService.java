@@ -47,7 +47,6 @@ public class GeminiService {
     // Gemini API endpoint for content generation
     private static final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
-
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
@@ -59,9 +58,7 @@ public class GeminiService {
         // Prepare the request body according to Gemini API specification
         Map<String, Object> body = Map.of(
                 "contents", List.of(
-                        Map.of("parts", List.of(Map.of("text", prompt)))
-                )
-        );
+                        Map.of("parts", List.of(Map.of("text", prompt)))));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new HttpEntity<>(body, headers);
@@ -78,7 +75,8 @@ public class GeminiService {
 
     private String callGemini(String prompt) throws InterruptedException {
         try {
-            ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(getFullUrl(), HttpMethod.POST, produceEntity(prompt), GeminiResponseDto.class);
+            ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(getFullUrl(), HttpMethod.POST,
+                    produceEntity(prompt), GeminiResponseDto.class);
             String resultText = Objects.requireNonNull(response.getBody())
                     .candidates().get(0)
                     .content().parts().get(0)
@@ -86,12 +84,11 @@ public class GeminiService {
             return resultText;
         } catch (Exception e) {
             log.error("RETRYING. Error: " + e.getMessage());
-            Thread.sleep(1000); //Waiting 1 sec before retrying
+            Thread.sleep(1000); // Waiting 1 sec before retrying
             return callGemini(prompt);
-//            return "Error: Failed to communicate with Gemini API - " + e.getMessage();
+            // return "Error: Failed to communicate with Gemini API - " + e.getMessage();
         }
     }
-
 
     public String sendTestPrompt() throws InterruptedException {
         String prompt = "This is just a status check. If you are receiving this, answer with a flat string being 'Online: Gemini Controller is up'.";
@@ -104,23 +101,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 25 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The "Requirement" structure is: \n%s
-                
+
                 The "RequirementEntry" structure is: \n%s
-                
+
                 The ArmorCategory values are: \n%s
-                
+
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -168,23 +165,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 25 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The "Requirement" structure is: \n%s
-                
+
                 The "RequirementEntry" structure is: \n%s
-                
+
                 The BootsCategory values are: \n%s
-                
+
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -230,23 +227,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 25 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The "Requirement" structure is: \n%s
-                
+
                 The "RequirementEntry" structure is: \n%s
-                
+
                 The ConsumablesCategory values are: \n%s
-                
+
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -292,23 +289,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 25 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The "Requirement" structure is: \n%s
-                
+
                 The "RequirementEntry" structure is: \n%s
-                
+
                 The HelmetCategory values are: \n%s
-                
+
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -354,23 +351,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 25 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The "Requirement" structure is: \n%s
-                
+
                 The "RequirementEntry" structure is: \n%s
-                
+
                 The ShieldCategory values are: \n%s
-                
+
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -403,15 +400,17 @@ public class GeminiService {
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
-        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        List<ItemFromGeminiDto> generatedShields = new ArrayList<>();
         try {
-            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            generatedShields = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
             log.error("Could not map generated shields to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
+            log.info("Running whole shields generation again due to invalid generation");
+            return generateTwentyFiveShields(campaign);
         }
-        return generatedItems;
+        return generatedShields;
     }
 
     public List<ItemFromGeminiDto> generateTwentyFiveSpells(Campaign campaign) {
@@ -420,23 +419,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 25 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The "Requirement" structure is: \n%s
-                
+
                 The "RequirementEntry" structure is: \n%s
-                
+
                 The SpellCategory values are: \n%s
-                
+
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -483,23 +482,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 25 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The "Requirement" structure is: \n%s
-                
+
                 The "RequirementEntry" structure is: \n%s
-                
+
                 The WeaponCategory values are: \n%s
-                
+
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -538,37 +537,39 @@ public class GeminiService {
     }
 
     public List<CharacterFromGeminiDto> generateTenNpcsOfDesiredTier(Campaign campaign,
-                                                                     List<CharacterInstance> existingCharsForContext,
-                                                                     Integer tierToGenerate) {
+            List<CharacterInstance> existingCharsForContext,
+            Integer tierToGenerate) {
         log.info(String.format("Trying to generate 10 NPCs Tier %s through Gemini", tierToGenerate));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String charsForContext = "";
         if (!existingCharsForContext.isEmpty()) {
-            charsForContext = String.format("""
-                    ** Just for context, this is a list of the already existing characters. Avoid creating the same ones again:  **
-                    - List: %s
-                    """, existingCharsForContext.toString());
+            charsForContext = String.format(
+                    """
+                            ** Just for context, this is a list of the already existing characters. Avoid creating the same ones again:  **
+                            - List: %s
+                            """,
+                    existingCharsForContext.toString());
         }
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-                
+
                 Generate in json format an Array of 10 "%s".
-                
+
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-                
+
                 %s
-                
+
                 The object structure context is: \n%s
-                
+
                 The CharacterCategory values are: \n%s
-                
+
                 The "Stats" structure is: \n%s
-                
+
                 %s
-                
+
                     - Do not force the generation to fit the CharacterCategory, if an object does not fit or does not make sense, just use "OTHER"
                     - Generate 2 NPCs of tier %s for each rarity level. Example: {NPC1 tier %s, rarity 1}, {NPC2 tier %s, rarity 1}, {NPC3 tier %s, rarity 2}, etc.
                 %s
@@ -611,7 +612,8 @@ public class GeminiService {
             ArmorTemplate armorTemplate) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -647,7 +649,8 @@ public class GeminiService {
             CharacterInstance characterInstance) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -683,7 +686,8 @@ public class GeminiService {
             BootsTemplate bootsTemplate) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -719,7 +723,8 @@ public class GeminiService {
             ConsumableTemplate consumableTemplate) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -755,7 +760,8 @@ public class GeminiService {
             HelmetTemplate helmetTemplate) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -791,7 +797,8 @@ public class GeminiService {
             ShieldTemplate shieldTemplate) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -827,7 +834,8 @@ public class GeminiService {
             SpellTemplate spellTemplate) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -865,7 +873,8 @@ public class GeminiService {
             WeaponTemplate weaponTemplate) {
         log.info("Trying to generate prompt for runeware to generate an image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
                         For generating the prompt, use this context:
                         You are generating high-quality fantasy artwork for a trading card in an RPG game.
@@ -909,7 +918,8 @@ public class GeminiService {
             String tier5Consumables) {
         log.info("Trying to generate prompt for runeware to generate the campaign cover image");
         String geminiAnswer = "";
-        String promptForGemini = String.format("""
+        String promptForGemini = String.format(
+                """
                         You have to generate a prompt that will be sent to an AI that will generate high-quality, visually striking artwork for the COVER of a game about to launch.
                         For generating the prompt, use this context:
                         - The artwork should visually represent the campaign’s overall theme, tone, and atmosphere.
@@ -918,7 +928,7 @@ public class GeminiService {
                         - Example: if the game is fantasy, the title may appear in ornate, glowing letters; if futuristic, in sleek metallic typography; if sports-themed, in bold, dynamic lettering, etc.
                         - It should feel like official cover art — cohesive, expressive, and attention-grabbing.
                         - Focus on composition, mood, and storytelling elements that reflect the campaign’s subject.
-                        
+
                         - Themes of the campaign: %s
                         - The campaign name is: "%s"
                         - The following Tier 5 elements define the campaign’s key thematic / visual identity (<name,description>):
@@ -930,7 +940,7 @@ public class GeminiService {
                             • Weapons: %s
                             • Spells: %s
                             • Consumables: %s
-                        
+
                         - Art Direction:
                             • Composition: cinematic and balanced, with clear focal points.
                             • Style and atmosphere should reflect the campaign theme — for example:
@@ -941,12 +951,12 @@ public class GeminiService {
                             • The image should feel cohesive and professional — not a collage.
                             • Avoid plain or empty backgrounds unless they serve the aesthetic.
                             • Do not include text, logos, or borders.
-                        
+
                         - Style:
                             • High-quality, detailed, consistent with the tone of the theme.
                             • Strong sense of mood, atmosphere, and storytelling.
                             • Should feel like promotional art for a game launch.
-                        
+
                         - OUTPUT INSTRUCTIONS:
                             - Output ONLY the final text of the image prompt.
                             - Do NOT add introductions, explanations, or meta commentary.
@@ -965,7 +975,6 @@ public class GeminiService {
                 tier5Weapons,
                 tier5Spells,
                 tier5Consumables);
-
 
         try {
             geminiAnswer = callGemini(promptForGemini);
