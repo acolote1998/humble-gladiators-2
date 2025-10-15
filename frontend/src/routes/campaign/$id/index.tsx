@@ -39,6 +39,7 @@ function RouteComponent() {
   const {
     mutate: createCharacterBoosterMutation,
     data: dataFromCharacterBooster,
+    reset: cleanCharacterBooster,
   } = useCreateCharacterBooster();
 
   const {
@@ -101,7 +102,10 @@ function RouteComponent() {
               Open Character Booster
             </p>
             {dataFromCharacterBooster && (
-              <CharacterBooster {...dataFromCharacterBooster} />
+              <CharacterBooster
+                {...dataFromCharacterBooster}
+                cleanCharacterBooster={cleanCharacterBooster}
+              />
             )}
             <p
               onClick={() => {

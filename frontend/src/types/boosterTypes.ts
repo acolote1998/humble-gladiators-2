@@ -19,4 +19,5 @@ export type ItemBoosterType = {
 
 export type CharacterBoosterType = {
   characters: CharacterInstanceType[];
+  cleanCharacterBooster?: () => void;
 };
