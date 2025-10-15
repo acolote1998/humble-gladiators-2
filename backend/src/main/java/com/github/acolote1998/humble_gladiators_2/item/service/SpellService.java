@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
-import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -38,8 +37,7 @@ public class SpellService {
             if (spell.getName() != null && !spell.getName().isBlank()) {
                 context.put(
                         spell.getName(),
-                        spell.getDescription() != null ? spell.getDescription() : ""
-                );
+                        spell.getDescription() != null ? spell.getDescription() : "");
             }
         }
 
@@ -61,7 +59,8 @@ public class SpellService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(spellTemplate -> {
             String name = spellTemplate.getName();
-            String description = "Tier: " + spellTemplate.getTier() + ", Rarity: " + spellTemplate.getRarity() + ", Category: " + spellTemplate.getCategory();
+            String description = "Tier: " + spellTemplate.getTier() + ", Rarity: " + spellTemplate.getRarity()
+                    + ", Category: " + spellTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("SpellTemplates", namesAndDescriptions);
@@ -96,18 +95,25 @@ public class SpellService {
             }
             if (dto.restoreHp() == 1) {
                 spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-                spellTemplate.setMagicalDamage(0); //if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
-                spellTemplate.setPhysicalDamage(0); //if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
+                spellTemplate.setMagicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
+                spellTemplate.setPhysicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid
+                                                    // bugs
             } else {
                 spellTemplate.setRestoreHp(0);
             }
             spellTemplate.setValue(
-                    (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
+                    (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage()
+                            + spellTemplate.getRestoreHp())
                             * spellTemplate.getTier()
                             * spellTemplate.getRarity());
             spellTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedSpellTemplates.add(spellTemplate);
         });
+
+        if (!SpellTemplate.areValidSpells(savedSpellTemplates, 25)) {
+            log.warn(String.format("Campaign %s - Generated spells not valid -> Generating again", campaign.getId()));
+            return createTwentyFiveNewSpellTemplates(campaign);
+        }
 
         spellTemplateRepository.saveAll(savedSpellTemplates);
 
@@ -120,13 +126,13 @@ public class SpellService {
         return spellTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public SpellTemplate getRandomSpellTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
+    public SpellTemplate getRandomSpellTemplateForItemBooster(Long campaignId, String userId, Integer rarity,
+            Integer tier) {
         return spellTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
                 rarity,
-                tier
-        );
+                tier);
     }
 
     public SpellTemplate saveSpell(SpellTemplate spell) {
@@ -150,7 +156,8 @@ public class SpellService {
         return instance;
     }
 
-    public List<SpellInstance> instancesFromSpellTemplates(List<SpellTemplate> templates, Inventory inventoryItBelongsTo) {
+    public List<SpellInstance> instancesFromSpellTemplates(List<SpellTemplate> templates,
+            Inventory inventoryItBelongsTo) {
         List<SpellInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromSpellTemplate(template, inventoryItBelongsTo)));
         return instances;

@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
-import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -101,6 +100,11 @@ public class ConsumableService {
             consumableTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedConsumableTemplates.add(consumableTemplate);
         });
+
+        if (!ConsumableTemplate.areValidConsumables(savedConsumableTemplates, 25)) {
+            log.warn(String.format("Campaign %s - Generated consumables not valid -> Generating again", campaign.getId()));
+            return createTwentyFiveNewConsumableTemplates(campaign);
+        }
 
         consumableTemplateRepository.saveAll(savedConsumableTemplates);
 

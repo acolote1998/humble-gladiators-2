@@ -85,12 +85,12 @@ public class ArmorService {
             armorTemplate.setCampaign(campaign);
             armorTemplate.setCategory(ArmorCategory.valueOf(dto.category()));
             if (dto.physicalDefense() == 1) {
-                armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1 * dto.rarity() * 1.5)));
+                armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2 * dto.rarity() * 2.5)));
             } else {
                 armorTemplate.setPhysicalDefense(0);
             }
             if (dto.magicalDefense() == 1) {
-                armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 0.2 * dto.rarity() * 0.5)));
+                armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.2 * dto.rarity() * 1.5)));
             } else {
                 armorTemplate.setMagicalDefense(0);
             }
@@ -101,6 +101,11 @@ public class ArmorService {
             armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedArmorTemplates.add(armorTemplate);
         });
+
+        if (!ArmorTemplate.areValidArmors(savedArmorTemplates, 25)) {
+            log.warn(String.format("Campaign %s - Generated armors not valid -> Generating again", campaign.getId()));
+            return createTwentyFiveNewArmorTemplates(campaign);
+        }
 
         armorTemplateRepository.saveAll(savedArmorTemplates);
 

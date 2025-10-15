@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.characters.service;
 
-import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
@@ -32,7 +31,8 @@ public class CharacterService {
     }
 
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
-        List<CharacterInstance> allCharacters = characterInstanceRepository.findAllByCampaign_IdAndCharacterType(campaignId, CharacterType.NPC);
+        List<CharacterInstance> allCharacters = characterInstanceRepository
+                .findAllByCampaign_IdAndCharacterType(campaignId, CharacterType.NPC);
         // Sort by Tier (highest first) then Rarity (highest first)
         allCharacters.sort((c1, c2) -> {
             int tierComparison = Integer.compare(c2.getTier(), c1.getTier());
@@ -46,7 +46,8 @@ public class CharacterService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allCharacters.forEach(characterInstance -> {
             String name = characterInstance.getName();
-            String description = "Tier: " + characterInstance.getTier() + ", Rarity: " + characterInstance.getRarity() + ", Category: " + characterInstance.getCategory();
+            String description = "Tier: " + characterInstance.getTier() + ", Rarity: " + characterInstance.getRarity()
+                    + ", Category: " + characterInstance.getCategory();
             ;
             namesAndDescriptions.put(name, description);
         });
@@ -63,8 +64,7 @@ public class CharacterService {
                 campaignId,
                 userId,
                 rarity,
-                tier
-        );
+                tier);
     }
 
     public Map<String, String> getTier5NpcsContextForCampaignCover(Campaign campaign) {
@@ -75,8 +75,7 @@ public class CharacterService {
             if (npc.getName() != null && !npc.getName().isBlank()) {
                 context.put(
                         npc.getName(),
-                        npc.getDescription() != null ? npc.getDescription() : ""
-                );
+                        npc.getDescription() != null ? npc.getDescription() : "");
             }
         }
 
@@ -85,7 +84,8 @@ public class CharacterService {
 
     public List<CharacterInstance> createTenNPCsOfDesiredTier(Campaign campaign, Integer tier) {
         List<CharacterInstance> existingCharactersForContext = characterInstanceRepository.findAll();
-        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsOfDesiredTier(campaign, existingCharactersForContext, tier);
+        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsOfDesiredTier(campaign,
+                existingCharactersForContext, tier);
         List<CharacterInstance> savedCharacterInstances = new ArrayList<>();
 
         generatedDtos.forEach(characterFromGeminiDto -> {
@@ -100,12 +100,21 @@ public class CharacterService {
             characterInstance.setCampaign(campaign);
             characterInstance.setRarity(characterFromGeminiDto.rarity());
             characterInstance.setTier(characterFromGeminiDto.tier());
-            characterInstance.setGoldReward(characterFromGeminiDto.stats().level() * 10 * characterFromGeminiDto.rarity() * characterFromGeminiDto.tier());
-            characterInstance.setExpReward(characterFromGeminiDto.stats().level() * 20 * characterFromGeminiDto.rarity() * characterFromGeminiDto.tier());
+            characterInstance.setGoldReward(characterFromGeminiDto.stats().level() * 10
+                    * characterFromGeminiDto.rarity() * characterFromGeminiDto.tier());
+            characterInstance.setExpReward(characterFromGeminiDto.stats().level() * 20 * characterFromGeminiDto.rarity()
+                    * characterFromGeminiDto.tier());
             Inventory inventory = InventoryService.createBlankInventory();
             characterInstance.setInventory(inventory);
             savedCharacterInstances.add(characterInstance);
         });
+
+        if (!CharacterInstance.areValidCharacters(savedCharacterInstances, 10)) {
+            log.warn(String.format("Campaign %s - Generated characters not valid -> Generating again",
+                    campaign.getId()));
+            return createTenNPCsOfDesiredTier(campaign, tier);
+        }
+
         characterInstanceRepository.saveAll(savedCharacterInstances);
         log.info(savedCharacterInstances.size() + " characters tier " + tier + " successfully created and persisted");
         return savedCharacterInstances;
@@ -117,8 +126,7 @@ public class CharacterService {
 
     public CharacterInstance findHeroOrNull(Long campaignId, String userId) {
         return characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(
-                campaignId, userId, CharacterType.PLAYER
-        );
+                campaignId, userId, CharacterType.PLAYER);
     }
 
     public CharacterInstance createHero(Campaign campaign, String userId, CreateHeroRequestDto dto) {
@@ -138,7 +146,8 @@ public class CharacterService {
     }
 
     public CharacterInstance getHero(Long campaignId, String userId) {
-        CharacterInstance hero = characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId, userId, CharacterType.PLAYER);
+        CharacterInstance hero = characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId,
+                userId, CharacterType.PLAYER);
         if (hero != null) {
             return hero;
         } else {
@@ -147,7 +156,8 @@ public class CharacterService {
     }
 
     public boolean doesHeroExistForACampaign(Long campaignId, String userId) {
-        CharacterInstance hero = characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId, userId, CharacterType.PLAYER);
+        CharacterInstance hero = characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId,
+                userId, CharacterType.PLAYER);
         return hero != null;
     }
 
