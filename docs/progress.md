@@ -68,4 +68,6 @@ Wednesday 15/10
 - Improved the loading phase of booster opening a bit
 - Created validation layer during objects generation process to make sure all generated content is valid and will never crash the campaign on runtime
 - Improved seeded data in example campaign to be more coherent
+- Simple styling improvement to hero creation screen
+- Simple styling improvement to session info component
 ```
