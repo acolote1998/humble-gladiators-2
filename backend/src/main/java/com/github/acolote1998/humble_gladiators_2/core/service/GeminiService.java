@@ -606,7 +606,10 @@ public class GeminiService {
             generatedCharacters = mapper.readValue(processedAnswer, new TypeReference<List<CharacterFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
-            log.error("Could not map generated characters to CharacterFromGeminiDto");
+            log.error("Could not map generated characters to CharacterFromGeminiDto: " + e.getMessage());
+            e.printStackTrace();
+            log.info("Running whole characters generation again due to invalid generation");
+            return generateTenNpcsOfDesiredTier(campaign, existingCharsForContext, tierToGenerate);
         }
         return generatedCharacters;
     }
