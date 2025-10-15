@@ -7,18 +7,15 @@ import { HelmetTemplateCard } from "../characters/HelmetTemplateCard";
 import { ShieldTemplateCard } from "../characters/ShieldTemplateCard";
 import { SpellTemplateCard } from "../characters/SpellTemplateCard";
 import { WeaponTemplateCard } from "../characters/WeaponTemplateCard";
+import { useCreateItemBooster } from "../../hooks/useBoosters";
+import type { ItemBoosterInterface } from "../../types/boosterTypes";
 
-export const ItemsBooster = ({
-  armors,
-  boots,
-  consumables,
-  helmets,
-  shields,
-  spells,
-  weapons,
-  cleanItemBooster,
-}: ItemBoosterType) => {
-  const [isBoosterOpen, setIsBoosterOpen] = useState<boolean>(false);
+export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
+  const {
+    mutate: createItemBoosterMutation,
+    data: dataFromItemBooster,
+    reset: cleanItemBooster,
+  } = useCreateItemBooster();
   const [cards, setCards] = useState<ItemBoosterType>();
   const isLastCard = () => {
     if (cards)
@@ -52,16 +49,17 @@ export const ItemsBooster = ({
   };
 
   useEffect(() => {
-    setCards({
-      armors: [...armors],
-      boots: [...boots],
-      consumables: [...consumables],
-      helmets: [...helmets],
-      shields: [...shields],
-      spells: [...spells],
-      weapons: [...weapons],
-    });
-  }, [armors, boots, consumables, helmets, shields, spells, weapons]);
+    if (dataFromItemBooster)
+      setCards({
+        armors: [...dataFromItemBooster.armors],
+        boots: [...dataFromItemBooster.boots],
+        consumables: [...dataFromItemBooster.consumables],
+        helmets: [...dataFromItemBooster.helmets],
+        shields: [...dataFromItemBooster.shields],
+        spells: [...dataFromItemBooster.spells],
+        weapons: [...dataFromItemBooster.weapons],
+      });
+  }, [dataFromItemBooster]);
   const updateRemainingCards = () => {
     if (cards)
       setCards({
@@ -79,17 +77,15 @@ export const ItemsBooster = ({
   };
   return (
     <div>
-      {!isBoosterOpen && (
-        <p
-          onClick={() => {
-            setIsBoosterOpen(true);
-          }}
-          className="bg-red-400 text-center p-2 m-2 rounded-xl"
-        >
-          Open item booster!
-        </p>
-      )}
-      {isBoosterOpen && (
+      <p
+        onClick={() => {
+          createItemBoosterMutation(Number(campaignId));
+        }}
+        className="bg-gray-400 p-3 rounded-lg"
+      >
+        Open Item Booster
+      </p>
+      {dataFromItemBooster && (
         <div>
           {/* Armors */}
           {cards?.armors && cards?.armors?.length > 0 && (
@@ -222,16 +218,6 @@ export const ItemsBooster = ({
                 </p>
               </>
             )}
-
-          {/* Close button */}
-          <p
-            onClick={() => {
-              setIsBoosterOpen(false);
-            }}
-            className="bg-red-300 text-center p-2 m-2 rounded-xl"
-          >
-            Close
-          </p>
         </div>
       )}
     </div>

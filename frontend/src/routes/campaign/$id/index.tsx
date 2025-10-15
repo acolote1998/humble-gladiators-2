@@ -6,7 +6,7 @@ import {
 import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
 import CampaignItem from "../../../components/campaigns/CampaignItem";
 import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
-import { useCreateItemBooster } from "../../../hooks/useBoosters";
+
 import { useCreateCharacterBooster } from "../../../hooks/useBoosters";
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
@@ -29,12 +29,6 @@ function RouteComponent() {
     isHeroError &&
     (heroErrorDetails as Error & { response?: { status: number } })?.response
       ?.status === 404;
-
-  const {
-    mutate: createItemBoosterMutation,
-    data: dataFromItemBooster,
-    reset: cleanItemBooster,
-  } = useCreateItemBooster();
 
   const {
     mutate: createCharacterBoosterMutation,
@@ -79,20 +73,8 @@ function RouteComponent() {
             >
               Log Hero Data
             </p>
-            <p
-              onClick={() => {
-                createItemBoosterMutation(Number(campaignId));
-              }}
-              className="bg-gray-400 p-3 rounded-lg"
-            >
-              Open Item Booster
-            </p>
-            {dataFromItemBooster && (
-              <ItemsBooster
-                {...dataFromItemBooster}
-                cleanItemBooster={cleanItemBooster}
-              />
-            )}
+
+            <ItemsBooster campaignId={campaignId} />
             <p
               onClick={() => {
                 createCharacterBoosterMutation(Number(campaignId));
