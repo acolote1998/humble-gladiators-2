@@ -42,6 +42,9 @@ public class GameService {
     @Value("${GENERATE_IMAGES}")
     private boolean GENERATE_IMAGES;
 
+    @Value("${GENERATE_CAMPAIGN_COVER}")
+    private boolean GENERATE_CAMPAIGN_COVER;
+
     @Value("${GENERATE_NPCS}")
     private boolean GENERATE_NPCS;
     @Value("${GENERATE_ARMORS}")
@@ -227,7 +230,7 @@ public class GameService {
         }
 
         // CAMPAIGN COVER IMAGE
-        if (GENERATE_ALL && GENERATE_IMAGES) {
+        if ((GENERATE_ALL && GENERATE_IMAGES) || (GENERATE_IMAGES && GENERATE_CAMPAIGN_COVER)) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN_COVER_IMAGE, campaign);
             campaignService.generateImageCoverForCampaign(
                     campaign,
