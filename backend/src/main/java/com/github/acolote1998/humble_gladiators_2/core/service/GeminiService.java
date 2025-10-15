@@ -156,6 +156,8 @@ public class GeminiService {
         } catch (JsonProcessingException e) {
             log.error("Could not map generated armors to ItemFromGeminiDto " + e.getMessage());
             e.printStackTrace();
+            log.info("Running whole armor generation again due to invalid generation");
+            return generateTwentyFiveArmors(campaign);
         }
         return generatedArmors;
     }
