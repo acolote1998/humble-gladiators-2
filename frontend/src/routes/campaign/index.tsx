@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useNavigate } from "@tanstack/react-router";
 import { SignedIn } from "@clerk/clerk-react";
 import { useGetAllCampaignsForAUser } from "../../hooks/useCampaigns";
-import CampaignItem from "../../components/campaigns/CampaignItem";
+import CampaignInfo from "../../components/campaigns/CampaignInfo";
 export const Route = createFileRoute("/campaign/")({
   component: CampaignsRoute,
 });
@@ -31,7 +31,7 @@ function CampaignsRoute() {
                   navigate({ to: `/campaign/${campaign.id}` });
                 }}
               >
-                <CampaignItem {...campaign} />
+                <CampaignInfo {...campaign} />
               </div>
             ))
           ) : (

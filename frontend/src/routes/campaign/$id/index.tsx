@@ -4,7 +4,7 @@ import {
   useParams,
 } from "@tanstack/react-router";
 import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
-import CampaignItem from "../../../components/campaigns/CampaignItem";
+import CampaignInfo from "../../../components/campaigns/CampaignInfo";
 import { useGetHeroExistence } from "../../../hooks/useCharacters";
 
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
@@ -36,7 +36,7 @@ function RouteComponent() {
       ) : (
         campaignData && (
           <>
-            <CampaignItem {...campaignData} />
+            <CampaignInfo {...campaignData} />
             {doesHeroExistLoading ? (
               <p>Loading hero availability</p>
             ) : doesHeroExistError ? (
