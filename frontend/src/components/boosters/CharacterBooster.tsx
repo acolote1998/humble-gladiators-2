@@ -84,10 +84,14 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
               {/* Characters */}
               {cards?.characters && cards?.characters?.length > 0 && (
                 <>
-                  <CharacterInstanceCard
-                    {...cards.characters[0]}
-                    renderingFromBooster={true}
-                  />
+                  <div
+                    className={`${cards.characters[0].tier === 5 && cards.characters[0].rarity === 5 ? "character-tier-5-rarity-5" : `character-tier-${cards.characters[0].tier}`} w-fit h-fit`}
+                  >
+                    <CharacterInstanceCard
+                      {...cards.characters[0]}
+                      renderingFromBooster={true}
+                    />
+                  </div>
                   {!cards.characters[0].discovered && (
                     <p className="bg-amber-300">NEW!</p>
                   )}
