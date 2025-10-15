@@ -20,8 +20,21 @@ export const ItemsBooster = ({
 }: ItemBoosterType) => {
   const [isBoosterOpen, setIsBoosterOpen] = useState<boolean>(false);
   const [cards, setCards] = useState<ItemBoosterType>();
-  const checkIfBoosterIsEmpty = () => {
-    if (
+  const isLastCard = () => {
+    if (cards)
+      return (
+        cards?.armors?.length +
+          cards?.boots?.length +
+          cards?.consumables?.length +
+          cards?.helmets?.length +
+          cards?.shields?.length +
+          cards?.spells?.length +
+          cards?.weapons?.length ===
+        1
+      );
+  };
+  const isBoosterEmpty = () => {
+    return (
       cards?.armors.length === 0 &&
       cards?.boots.length === 0 &&
       cards?.consumables.length === 0 &&
@@ -29,9 +42,13 @@ export const ItemsBooster = ({
       cards.shields.length === 0 &&
       cards.spells.length === 0 &&
       cards.weapons.length === 0
-    ) {
-      if (cleanItemBooster) cleanItemBooster();
-    }
+    );
+  };
+
+  const textNextOrClose = () => {
+    if (isLastCard()) {
+      return "Close booster";
+    } else return "Next card";
   };
 
   useEffect(() => {
@@ -56,7 +73,9 @@ export const ItemsBooster = ({
         spells: [...cards.spells],
         weapons: [...cards.weapons],
       });
-    checkIfBoosterIsEmpty();
+    if (isBoosterEmpty() && cleanItemBooster) {
+      cleanItemBooster();
+    }
   };
   return (
     <div>
@@ -83,7 +102,7 @@ export const ItemsBooster = ({
                 }}
                 className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
               >
-                Next
+                {textNextOrClose()}
               </p>
             </>
           )}
@@ -99,7 +118,7 @@ export const ItemsBooster = ({
                 }}
                 className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
               >
-                Next
+                {textNextOrClose()}
               </p>
             </>
           )}
@@ -117,7 +136,7 @@ export const ItemsBooster = ({
                   }}
                   className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
                 >
-                  Next
+                  {textNextOrClose()}
                 </p>
               </>
             )}
@@ -136,7 +155,7 @@ export const ItemsBooster = ({
                   }}
                   className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
                 >
-                  Next
+                  {textNextOrClose()}
                 </p>
               </>
             )}
@@ -156,7 +175,7 @@ export const ItemsBooster = ({
                   }}
                   className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
                 >
-                  Next
+                  {textNextOrClose()}
                 </p>
               </>
             )}
@@ -177,7 +196,7 @@ export const ItemsBooster = ({
                   }}
                   className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
                 >
-                  Next
+                  {textNextOrClose()}
                 </p>
               </>
             )}
@@ -199,7 +218,7 @@ export const ItemsBooster = ({
                   }}
                   className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
                 >
-                  Next
+                  {textNextOrClose()}
                 </p>
               </>
             )}
