@@ -59,4 +59,8 @@ Tuesday 14/10
 - Implemented a flag to activate/deactivate the real tier/rarity randomness
 - Implemented character booster in the backend
 - Implemented character booster in the frontend
+
+Wednesday 15/10
+- Integrated item booster opening MVI
+- Integrated character booster opening MVI
 ```
