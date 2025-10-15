@@ -335,15 +335,17 @@ public class GeminiService {
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
-        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        List<ItemFromGeminiDto> generatedHelmets = new ArrayList<>();
         try {
-            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            generatedHelmets = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
             log.error("Could not map generated helmets to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
+            log.info("Running whole helmets generation again due to invalid generation");
+            return generateTwentyFiveHelmets(campaign);
         }
-        return generatedItems;
+        return generatedHelmets;
     }
 
     public List<ItemFromGeminiDto> generateTwentyFiveShields(Campaign campaign) {

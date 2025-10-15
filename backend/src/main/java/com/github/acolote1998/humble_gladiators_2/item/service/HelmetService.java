@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
-import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -101,6 +100,11 @@ public class HelmetService {
             helmetTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
             savedHelmetsTemplates.add(helmetTemplate);
         });
+
+        if (!HelmetTemplate.areValidHelmets(savedHelmetsTemplates, 25)) {
+            log.warn(String.format("Campaign %s - Generated helmets not valid -> Generating again", campaign.getId()));
+            return createTwentyFiveNewHelmetsTemplates(campaign);
+        }
 
         helmetTemplateRepository.saveAll(savedHelmetsTemplates);
 
