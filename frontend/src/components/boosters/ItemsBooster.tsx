@@ -233,10 +233,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.helmets?.length === 0 &&
                 cards?.shields?.length > 0 && (
                   <>
-                    <ShieldTemplateCard
-                      {...cards.shields[0]}
-                      renderingFromBooster={true}
-                    />
+                    <div
+                      className={`${cards.shields[0].tier === 5 && cards.shields[0].rarity === 5 ? "shield-tier-5-rarity-5" : `shield-tier-${cards.shields[0].tier}`} w-fit h-fit`}
+                    >
+                      <ShieldTemplateCard
+                        {...cards.shields[0]}
+                        renderingFromBooster={true}
+                      />
+                    </div>
                     {!cards.shields[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
