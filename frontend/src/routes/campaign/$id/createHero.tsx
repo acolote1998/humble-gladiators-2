@@ -44,23 +44,41 @@ function RouteComponent() {
         <p>Loading...</p>
       ) : isHeroNotFound ? (
         <>
-          <p>Type your hero's name</p>
-          <input
-            type="text"
-            onChange={(e) => {
-              setHeroName(e.target.value);
-            }}
-          />
-          <button
-            onClick={() => {
-              createHero({
-                campaignId: Number(campaignId),
-                heroName: heroName,
-              });
-            }}
+          <div
+            className="
+          bg-emerald-200
+            p-2
+            m-2
+            rounded-lg
+            border-1
+            border-emerald-400
+            flex
+            flex-col
+            items-center
+            text-center
+            gap-4"
           >
-            Create Hero
-          </button>
+            <h2 className="text-lg font-semibold">Hero Creation</h2>
+            <p>Type your hero's name</p>
+            <input
+              className="bg-emerald-100 p-1 rounded-md"
+              type="text"
+              onChange={(e) => {
+                setHeroName(e.target.value);
+              }}
+            />
+            <button
+              className="bg-emerald-300 p-2 rounded-md border-1 border-emerald-500"
+              onClick={() => {
+                createHero({
+                  campaignId: Number(campaignId),
+                  heroName: heroName,
+                });
+              }}
+            >
+              Create Hero
+            </button>
+          </div>
         </>
       ) : heroError ? (
         <p>Error loading hero. Please try again.</p>
