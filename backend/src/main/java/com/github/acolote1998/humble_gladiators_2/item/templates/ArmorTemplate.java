@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -113,5 +115,15 @@ public class ArmorTemplate extends AbstractItem {
             return false;
         }
         return true;
+    }
+
+    public static boolean areValidArmors(List<ArmorTemplate> armors) {
+        boolean areAllValid = true;
+        for (ArmorTemplate armor : armors) {
+            if (!ArmorTemplate.isValidArmor(armor)) {
+                areAllValid = false;
+            }
+        }
+        return areAllValid;
     }
 }
