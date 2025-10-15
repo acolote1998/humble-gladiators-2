@@ -1,5 +1,8 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Add validation during each step of the campaign creation to ensure campaign is created successfully -[ ] Example: Try creating the shields, and after they are "created", then
+      check if they are actually persisted properly in the DB, and so on
+  - [ ] We can create methods in each model such as "isValidShield" to return true or not, to validate the data
 - [ ] Improve AI accuracy for content generation :
   - Sometimes we are generating a weapon and it generates something that would fit more like an armor, and things like that. Needs to stick to the category better
 - [ ] Language content module
