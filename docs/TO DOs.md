@@ -1,5 +1,11 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Improve rendering of campaign list in frontend -> make the campaign itm list more visually attractive.
+
+  - [ ] Remove unnecessary information from there
+
+- [ ] Improve rendering of campaign component itself
+
 - [ ] Improve AI accuracy for content generation :
   - Sometimes we are generating a weapon and it generates something that would fit more like an armor, and things like that. Needs to stick to the category better
 - [ ] Language content module

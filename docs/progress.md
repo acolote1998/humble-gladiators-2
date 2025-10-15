@@ -67,4 +67,5 @@ Wednesday 15/10
 - Implemented validation for booster opening and hero existence in frontend
 - Improved the loading phase of booster opening a bit
 - Created validation layer during objects generation process to make sure all generated content is valid and will never crash the campaign on runtime
+- Improved seeded data in example campaign to be more coherent
 ```
