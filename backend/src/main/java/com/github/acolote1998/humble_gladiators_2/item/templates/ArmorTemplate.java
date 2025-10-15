@@ -117,13 +117,15 @@ public class ArmorTemplate extends AbstractItem {
         return true;
     }
 
-    public static boolean areValidArmors(List<ArmorTemplate> armors) {
-        boolean areAllValid = true;
+    public static boolean areValidArmors(List<ArmorTemplate> armors, Integer expectedAmount) {
+        if (armors.size() != expectedAmount) {
+            return false;
+        }
         for (ArmorTemplate armor : armors) {
             if (!ArmorTemplate.isValidArmor(armor)) {
-                areAllValid = false;
+                return false;
             }
         }
-        return areAllValid;
+        return true;
     }
 }

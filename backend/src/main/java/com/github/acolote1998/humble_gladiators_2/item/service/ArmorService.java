@@ -102,7 +102,7 @@ public class ArmorService {
             savedArmorTemplates.add(armorTemplate);
         });
 
-        if (!ArmorTemplate.areValidArmors(savedArmorTemplates)) {
+        if (!ArmorTemplate.areValidArmors(savedArmorTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated armors not valid -> Generating again", campaign.getId()));
             return createTwentyFiveNewArmorTemplates(campaign);
         }
