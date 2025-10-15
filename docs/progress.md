@@ -64,4 +64,6 @@ Wednesday 15/10
 - Integrated item booster opening MVI
 - Integrated character booster opening MVI
 - Improving validation & logging for invalid booster opening attempts
+- Implemented validation for booster opening and hero existence in frontend
+- Improved the loading phase of booster opening a bit
 ```

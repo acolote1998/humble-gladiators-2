@@ -18,11 +18,6 @@
         in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
         through gemini
 
-- [x] Create endpoints like GET canOpenItemBooster and canOpenCharacterBooster, and doesHeroExistForCampaign
-- [ ] After the response, then conditionally render certain elements in the frontend
-      -> At the moment, for example we do checks on the error if the hero does not exist to render or not, and rendering based on an error is bad.
-      -> Better to do doesHeroExistForCampaign, and if the backend answers with false, then we can allow the frontend to create a hero
-
 - [ ] Daily NPC Card Pack
 
   - [x] Users can open one npc card booster per day
@@ -37,22 +32,6 @@
     - [x] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
   - [x] Each card also has a rarity percentage within its tier
     - [x] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
-
-- [ ] Daily Item Card Pack
-
-  - [x] Users can open one item card booster per day
-  - [x] Each booster contains three random items (Armor, Boots, Consumables, Helmets, Shields, Spells, Weapons)
-  - [x] When opening the pack, the obtained cards are now DISCOVERED = true
-  - [x] When opening the pack, we convert the ItemTemplate to ItemInstance
-  - [x] When opening the pack, we add the ItemInstance to the hero's inventory
-  - [x] Frontend implementation for pack opening (MVI)
-    - [ ] Handle error if pack was already opened for the day
-    - [x] implementation of opening item booster
-  - [x] Each card in any given booster has a chance to belong to a certain tier
-    - [x] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
-  - [x] Each card also has a rarity percentage within its tier
-    - [x] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
-  - [x] The second any booster gets opened, those card entities will be marked as "discovered"
 
 - [ ] Daily Enemy Encounter
   - [ ] Users can face one enemy per day
