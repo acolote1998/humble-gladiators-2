@@ -28,7 +28,7 @@
   - [x] Each booster contains one random NPC
   - [x] When opening the pack, the obtained card are now DISCOVERED = true
   - [] Make an endpoint something like "getEnemyForToday" -> Find the best way to do it? How do we make the enemy available for only that day, and also possible to be retrieved some other days in the future? ( we can use similar logic to canTheUserOpenACharacterPack to check if there is an enemy updated today)
-  - [ ] Frontend implementation for pack enemy opening (MVI)
+  - [x] Frontend implementation for pack enemy opening (MVI)
     - [ ] Handle error if pack was already opened for the day
     - [x] implementation of opening npc booster
   - [x] The second any booster gets opened, those card entities will be marked as "discovered"
@@ -44,7 +44,7 @@
   - [x] When opening the pack, the obtained cards are now DISCOVERED = true
   - [x] When opening the pack, we convert the ItemTemplate to ItemInstance
   - [x] When opening the pack, we add the ItemInstance to the hero's inventory
-  - [ ] Frontend implementation for pack opening (MVI)
+  - [x] Frontend implementation for pack opening (MVI)
     - [ ] Handle error if pack was already opened for the day
     - [x] implementation of opening item booster
   - [x] Each card in any given booster has a chance to belong to a certain tier
@@ -58,17 +58,12 @@
   - [ ] The user opens an enemy booster and the enemy card is drawn from there ahd the battle starts straight
         away.
 - [ ] Daily Merchant Encounter
+
   - [ ] Users can meet one merchant per day
   - [ ] The use opens a merchant booster and the merchant card is drawn from there. The user can keep the merchant
         for as long as they want, the merchant will stay there until al three item cards get bought, or until the
         user opens a new merchant booster
     - [ ] Each merchant offers three random items for sale
-- [ ] Card Tiers and Rarity
-
-  - [ ] Each card in any given booster has a chance to belong to a certain tier
-    - [ ] Example: Tier 1 – 42%, Tier 2 – 25%, Tier 3 – 8%, Tier 4 – 5%, Tier 5 – 3%
-  - [ ] Each card also has a rarity percentage within its tier
-    - [ ] Example: Rarity 1 – 30%, Rarity 2 – 25%, Rarity 3 – 20%, Rarity 4 – 15%, Rarity 5 – 10%
 
 - [ ] Discovery system integration
 - [ ] Logic for interface method implementation
