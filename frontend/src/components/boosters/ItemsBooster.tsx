@@ -174,10 +174,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.boots?.length === 0 &&
                 cards?.consumables?.length > 0 && (
                   <>
-                    <ConsumableTemplateCard
-                      {...cards.consumables[0]}
-                      renderingFromBooster={true}
-                    />
+                    <div
+                      className={`${cards.consumables[0].tier === 5 && cards.consumables[0].rarity === 5 ? "consumable-tier-5-rarity-5" : `consumable-tier-${cards.consumables[0].tier}`} w-fit h-fit`}
+                    >
+                      <ConsumableTemplateCard
+                        {...cards.consumables[0]}
+                        renderingFromBooster={true}
+                      />
+                    </div>
                     {!cards.consumables[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
