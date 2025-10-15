@@ -36,3 +36,21 @@ export const fetchItemBoosterAvailability = async (
     throw error;
   }
 };
+
+export const fetchHeroExistence = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<boolean> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/character-instances/hero/check-if-exists`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
