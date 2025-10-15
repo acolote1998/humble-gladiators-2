@@ -22,5 +22,8 @@ export type ItemBoosterInterface = {
 
 export type CharacterBoosterType = {
   characters: CharacterInstanceType[];
-  cleanCharacterBooster?: () => void;
+};
+
+export type CharacterBoosterInterface = {
+  campaignId: string;
 };

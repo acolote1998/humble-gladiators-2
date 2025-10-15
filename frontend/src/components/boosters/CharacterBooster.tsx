@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import type { CharacterBoosterType } from "../../types/boosterTypes";
+import type { CharacterBoosterInterface } from "../../types/boosterTypes";
 import { CharacterInstanceCard } from "../characters/CharacterInstanceCard";
+import { useCreateCharacterBooster } from "../../hooks/useBoosters";
 
-export const CharacterBooster = ({
-  characters,
-  cleanCharacterBooster,
-}: CharacterBoosterType) => {
-  const [isBoosterOpen, setIsBoosterOpen] = useState<boolean>(false);
+export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
   const [cards, setCards] = useState<CharacterBoosterType>();
   const isLastCard = () => {
     if (cards) return cards?.characters?.length === 1;
@@ -21,11 +19,18 @@ export const CharacterBooster = ({
     } else return "Next card";
   };
 
+  const {
+    mutate: createCharacterBoosterMutation,
+    data: dataFromCharacterBooster,
+    reset: cleanCharacterBooster,
+  } = useCreateCharacterBooster();
+
   useEffect(() => {
-    setCards({
-      characters: [...characters],
-    });
-  }, [characters]);
+    if (dataFromCharacterBooster)
+      setCards({
+        characters: [...dataFromCharacterBooster.characters],
+      });
+  }, [dataFromCharacterBooster]);
   const updateRemainingCards = () => {
     if (cards)
       setCards({
@@ -37,17 +42,15 @@ export const CharacterBooster = ({
   };
   return (
     <div>
-      {!isBoosterOpen && (
-        <p
-          onClick={() => {
-            setIsBoosterOpen(true);
-          }}
-          className="bg-red-400 text-center p-2 m-2 rounded-xl"
-        >
-          Open character booster!
-        </p>
-      )}
-      {isBoosterOpen && (
+      <p
+        onClick={() => {
+          createCharacterBoosterMutation(Number(campaignId));
+        }}
+        className="bg-gray-400 p-3 rounded-lg"
+      >
+        Open Character Booster
+      </p>
+      {dataFromCharacterBooster && (
         <div>
           {/* Characters */}
           {cards?.characters && cards?.characters?.length > 0 && (
@@ -64,16 +67,6 @@ export const CharacterBooster = ({
               </p>
             </>
           )}
-
-          {/* Close button */}
-          <p
-            onClick={() => {
-              setIsBoosterOpen(false);
-            }}
-            className="bg-red-300 text-center p-2 m-2 rounded-xl"
-          >
-            Close
-          </p>
         </div>
       )}
     </div>

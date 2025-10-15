@@ -75,20 +75,8 @@ function RouteComponent() {
             </p>
 
             <ItemsBooster campaignId={campaignId} />
-            <p
-              onClick={() => {
-                createCharacterBoosterMutation(Number(campaignId));
-              }}
-              className="bg-gray-400 p-3 rounded-lg"
-            >
-              Open Character Booster
-            </p>
-            {dataFromCharacterBooster && (
-              <CharacterBooster
-                {...dataFromCharacterBooster}
-                cleanCharacterBooster={cleanCharacterBooster}
-              />
-            )}
+
+            <CharacterBooster campaignId={campaignId} />
             <p
               onClick={() => {
                 navigate({ to: `/campaign/${campaignId}/compendium` });
