@@ -71,4 +71,5 @@ Wednesday 15/10
 - Simple styling improvement to hero creation screen
 - Simple styling improvement to session info component
 - Flagging when a card is NEW when opening an item or character booster
+- Making cards glow according to their tier / rarity
 ```
