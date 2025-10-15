@@ -527,15 +527,17 @@ public class GeminiService {
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
-        List<ItemFromGeminiDto> generatedItems = new ArrayList<>();
+        List<ItemFromGeminiDto> generatedWeapons = new ArrayList<>();
         try {
-            generatedItems = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
+            generatedWeapons = mapper.readValue(processedAnswer, new TypeReference<List<ItemFromGeminiDto>>() {
             });
         } catch (JsonProcessingException e) {
             log.error("Could not map generated weapons to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
+            log.info("Running whole weapons generation again due to invalid generation");
+            return generateTwentyFiveWeapons(campaign);
         }
-        return generatedItems;
+        return generatedWeapons;
     }
 
     public List<CharacterFromGeminiDto> generateTenNpcsOfDesiredTier(Campaign campaign,

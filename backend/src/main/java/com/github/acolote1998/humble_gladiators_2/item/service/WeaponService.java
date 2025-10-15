@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
-import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -38,8 +37,7 @@ public class WeaponService {
             if (weapon.getName() != null && !weapon.getName().isBlank()) {
                 context.put(
                         weapon.getName(),
-                        weapon.getDescription() != null ? weapon.getDescription() : ""
-                );
+                        weapon.getDescription() != null ? weapon.getDescription() : "");
             }
         }
 
@@ -61,7 +59,8 @@ public class WeaponService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(weaponTemplate -> {
             String name = weaponTemplate.getName();
-            String description = "Tier: " + weaponTemplate.getTier() + ", Rarity: " + weaponTemplate.getRarity() + ", Category: " + weaponTemplate.getCategory();
+            String description = "Tier: " + weaponTemplate.getTier() + ", Rarity: " + weaponTemplate.getRarity()
+                    + ", Category: " + weaponTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("WeaponTemplates", namesAndDescriptions);
@@ -102,6 +101,11 @@ public class WeaponService {
             savedWeaponTemplates.add(weaponTemplate);
         });
 
+        if (!WeaponTemplate.areValidWeapons(savedWeaponTemplates, 25)) {
+            log.warn(String.format("Campaign %s - Generated weapons not valid -> Generating again", campaign.getId()));
+            return createTwentyFiveNewWeaponTemplates(campaign);
+        }
+
         weaponTemplateRepository.saveAll(savedWeaponTemplates);
 
         log.info(savedWeaponTemplates.size() + " weapons successfully created an persisted");
@@ -113,13 +117,13 @@ public class WeaponService {
         return weaponTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public WeaponTemplate getRandomWeaponTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
+    public WeaponTemplate getRandomWeaponTemplateForItemBooster(Long campaignId, String userId, Integer rarity,
+            Integer tier) {
         return weaponTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
                 rarity,
-                tier
-        );
+                tier);
     }
 
     public WeaponTemplate saveWeapon(WeaponTemplate weapon) {
@@ -143,7 +147,8 @@ public class WeaponService {
         return instance;
     }
 
-    public List<WeaponInstance> instancesFromWeaponTemplates(List<WeaponTemplate> templates, Inventory inventoryItBelongsTo) {
+    public List<WeaponInstance> instancesFromWeaponTemplates(List<WeaponTemplate> templates,
+            Inventory inventoryItBelongsTo) {
         List<WeaponInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromWeaponTemplate(template, inventoryItBelongsTo)));
         return instances;
