@@ -57,6 +57,7 @@ function RouteComponent() {
               </>
             ) : (
               <p
+                className="p-2 bg-green-300 w-fit rounded-md m-2 border-1 border-green-500"
                 onClick={() => {
                   navigate({ to: `/campaign/${campaignId}/createHero` });
                 }}
