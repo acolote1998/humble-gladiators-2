@@ -70,4 +70,5 @@ Wednesday 15/10
 - Improved seeded data in example campaign to be more coherent
 - Simple styling improvement to hero creation screen
 - Simple styling improvement to session info component
+- Flagging when a card is NEW when opening an item or character booster
 ```

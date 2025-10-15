@@ -2,8 +2,6 @@
 
 - [ ] Make each character instance have an attribute imgbyte[] (whatever it is) battleScenario / battleGround. And when we get the character from the booster, we also generate its battle scenario, so each scenario and battle can feel unique.
 
-- [ ] make the response DTO for objects have a boolean new attribute, so when we open a booster, we can display in the frontend if the card is new or we already had / had seen it
-
 - [ ] impement hero inventory, equippment / removing equippment function
 
 - [ ] Implement back of cards generation on campaign creation
