@@ -18,7 +18,8 @@
         in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing
         through gemini
 
-- [ ] Create endpoints like GET canOpenItemBooster and canOpenCharacterBooster, and doesHeroExistForCampaign -[ ] After the response, then conditionally render certain elements in the frontend
+- [x] Create endpoints like GET canOpenItemBooster and canOpenCharacterBooster, and doesHeroExistForCampaign
+- [ ] After the response, then conditionally render certain elements in the frontend
       -> At the moment, for example we do checks on the error if the hero does not exist to render or not, and rendering based on an error is bad.
       -> Better to do doesHeroExistForCampaign, and if the backend answers with false, then we can allow the frontend to create a hero
 

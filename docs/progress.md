@@ -63,4 +63,5 @@ Tuesday 14/10
 Wednesday 15/10
 - Integrated item booster opening MVI
 - Integrated character booster opening MVI
+- Improving validation & logging for invalid booster opening attempts
 ```

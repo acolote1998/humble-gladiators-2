@@ -58,6 +58,12 @@ public class CharacterController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/{campaignId}/character-instances/hero/check-if-exists")
+    ResponseEntity<Boolean> doesHeroExistsForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        return ResponseEntity.ok(characterService.doesHeroExistForACampaign(campaignId, userId));
+    }
+
     @ExceptionHandler(HeroDoesNotExist.class)
     public ResponseEntity<String> handleHeroHasNotBeenCreated(HeroDoesNotExist ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)

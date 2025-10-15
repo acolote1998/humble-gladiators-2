@@ -1,7 +1,9 @@
 package com.github.acolote1998.humble_gladiators_2.booster.service;
 
+import com.github.acolote1998.humble_gladiators_2.booster.enums.IntentionTowardsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
+import com.github.acolote1998.humble_gladiators_2.booster.exception.InvalidBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.repository.CharacterBoosterRepository;
@@ -74,7 +76,33 @@ public class BoosterService {
         this.characterBoosterRepository = characterBoosterRepository;
     }
 
-    private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
+    public Boolean canOpenAValidItemBooster(Long campaignId, String userId, IntentionTowardsBooster intention) {
+        if (intention == IntentionTowardsBooster.OPEN_BOOSTER) {
+            if (!userHasDailyItemBoosterAvailable(campaignId, userId)) {
+                log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Already opened one today", userId, campaignId));
+            }
+            if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
+                log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Hero does not exist", userId, campaignId));
+            }
+        }
+        return (userHasDailyItemBoosterAvailable(campaignId, userId) &&
+                characterService.doesHeroExistForACampaign(campaignId, userId));
+    }
+
+    public Boolean canOpenAValidCharacterBooster(Long campaignId, String userId, IntentionTowardsBooster intention) {
+        if (intention == IntentionTowardsBooster.OPEN_BOOSTER) {
+            if (!userHasDailyCharacterBoosterAvailable(campaignId, userId)) {
+                log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Already opened one today", userId, campaignId));
+            }
+            if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
+                log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Hero does not exist", userId, campaignId));
+            }
+        }
+        return (userHasDailyCharacterBoosterAvailable(campaignId, userId) &&
+                characterService.doesHeroExistForACampaign(campaignId, userId));
+    }
+
+    public Boolean userHasDailyItemBoosterAvailable(Long campaignId, String userId) {
         if (!UNLIMITED_BOOSTERS_ALLOWED) {
             LocalDate today = LocalDate.now();
             ItemsBooster todaysBooster = itemsBoosterRepository
@@ -88,7 +116,7 @@ public class BoosterService {
         return true;
     }
 
-    private Boolean canTheUserOpenACharacterPack(Long campaignId, String userId) {
+    public Boolean userHasDailyCharacterBoosterAvailable(Long campaignId, String userId) {
         if (!UNLIMITED_BOOSTERS_ALLOWED) {
             LocalDate today = LocalDate.now();
             CharacterBooster todaysBooster = characterBoosterRepository
@@ -96,7 +124,6 @@ public class BoosterService {
                             campaignId,
                             userId,
                             today);
-
             return todaysBooster == null;
         }
         return true;
@@ -164,9 +191,8 @@ public class BoosterService {
 
     @Transactional
     public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
-        if (!canTheUserOpenAnItemPack(campaignId, userId)) {
-            log.warn(String.format("WARNING - %s - Campaign %s tried to open an item booster, but they had already opened one today", userId, campaignId));
-            throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
+        if (!canOpenAValidItemBooster(campaignId, userId, IntentionTowardsBooster.OPEN_BOOSTER)) {
+            throw new InvalidBooster("The attempt to open an item booster is not valid");
         }
         Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
         ItemsBooster newBooster = new ItemsBooster();
@@ -287,9 +313,8 @@ public class BoosterService {
 
     @Transactional
     public CharacterBooster getNewCharacterBooster(Long campaignId, String userId) {
-        if (!canTheUserOpenACharacterPack(campaignId, userId)) {
-            log.warn(String.format("WARNING - %s - Campaign %s tried to open a character booster, but they had already opened one today", userId, campaignId));
-            throw new DailyBoosterAlreadyOpened("The user already opened a character booster today");
+        if (!canOpenAValidCharacterBooster(campaignId, userId, IntentionTowardsBooster.OPEN_BOOSTER)) {
+            throw new InvalidBooster("The attempt to open an character booster is not valid");
         }
         Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
         CharacterBooster newBooster = new CharacterBooster();

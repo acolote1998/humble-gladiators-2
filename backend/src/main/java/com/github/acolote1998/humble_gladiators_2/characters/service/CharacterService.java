@@ -146,6 +146,11 @@ public class CharacterService {
         }
     }
 
+    public boolean doesHeroExistForACampaign(Long campaignId, String userId) {
+        CharacterInstance hero = characterInstanceRepository.findFirstByCampaign_IdAndUserIdAndCharacterType(campaignId, userId, CharacterType.PLAYER);
+        return hero != null;
+    }
+
     public CharacterInstance saveCharacter(CharacterInstance model) {
         return characterInstanceRepository.save(model);
     }

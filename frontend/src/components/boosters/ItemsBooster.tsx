@@ -9,11 +9,20 @@ import { SpellTemplateCard } from "../characters/SpellTemplateCard";
 import { WeaponTemplateCard } from "../characters/WeaponTemplateCard";
 import { useCreateItemBooster } from "../../hooks/useBoosters";
 import type { ItemBoosterInterface } from "../../types/boosterTypes";
+import { useGetItemBoosterAvailability } from "../../hooks/useBoosters";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
+  const queryClient = useQueryClient();
+  const {
+    data: isBoosterAvailable,
+    isLoading: isBoosterAvailableLoading,
+    isError: isBoosterAvailableError,
+  } = useGetItemBoosterAvailability(Number(campaignId));
   const {
     mutate: createItemBoosterMutation,
     data: dataFromItemBooster,
+    isPending: dataFromBoosterLoading,
     reset: cleanItemBooster,
   } = useCreateItemBooster();
   const [cards, setCards] = useState<ItemBoosterType>();
@@ -73,153 +82,176 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
       });
     if (isBoosterEmpty() && cleanItemBooster) {
       cleanItemBooster();
+      queryClient.invalidateQueries({
+        queryKey: ["items-booster-availability"],
+      });
     }
   };
   return (
-    <div>
-      <p
-        onClick={() => {
-          createItemBoosterMutation(Number(campaignId));
-        }}
-        className="bg-gray-400 p-3 rounded-lg"
-      >
-        Open Item Booster
-      </p>
-      {dataFromItemBooster && (
-        <div>
-          {/* Armors */}
-          {cards?.armors && cards?.armors?.length > 0 && (
-            <>
-              <ArmorTemplateCard {...cards.armors[0]} />
-              <p
-                onClick={() => {
-                  cards.armors.shift();
-                  updateRemainingCards();
-                }}
-                className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-              >
-                {textNextOrClose()}
-              </p>
-            </>
-          )}
+    <>
+      <div>
+        {isBoosterAvailableLoading ? (
+          <p>Loading booster availability</p>
+        ) : isBoosterAvailableError ? (
+          <p>Error loading booster availability</p>
+        ) : isBoosterAvailable && !dataFromItemBooster ? (
+          <p
+            onClick={() => {
+              createItemBoosterMutation(Number(campaignId));
+            }}
+            className="bg-gray-400 p-3 rounded-lg"
+          >
+            Open Item Booster
+          </p>
+        ) : (
+          <p className="bg-gray-500 p-3 rounded-lg cursor-not-allowed">
+            Come back tomorrow for a new item booster!
+          </p>
+        )}
 
-          {/* Boots */}
-          {cards?.armors?.length === 0 && cards?.boots?.length > 0 && (
-            <>
-              <BootsTemplateCard {...cards.boots[0]} />
-              <p
-                onClick={() => {
-                  cards.boots.shift();
-                  updateRemainingCards();
-                }}
-                className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-              >
-                {textNextOrClose()}
-              </p>
-            </>
-          )}
+        {dataFromBoosterLoading ? (
+          <div className="flex gap-5">
+            <p>Opening booster</p>
+            <p className="loader"></p>
+          </div>
+        ) : (
+          dataFromItemBooster && (
+            <div>
+              {/* Armors */}
+              {cards?.armors && cards?.armors?.length > 0 && (
+                <>
+                  <ArmorTemplateCard {...cards.armors[0]} />
+                  <p
+                    onClick={() => {
+                      cards.armors.shift();
+                      updateRemainingCards();
+                    }}
+                    className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                  >
+                    {textNextOrClose()}
+                  </p>
+                </>
+              )}
 
-          {/* Consumables */}
-          {cards?.armors?.length === 0 &&
-            cards?.boots?.length === 0 &&
-            cards?.consumables?.length > 0 && (
-              <>
-                <ConsumableTemplateCard {...cards.consumables[0]} />
-                <p
-                  onClick={() => {
-                    cards.consumables.shift();
-                    updateRemainingCards();
-                  }}
-                  className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-                >
-                  {textNextOrClose()}
-                </p>
-              </>
-            )}
+              {/* Boots */}
+              {cards?.armors?.length === 0 && cards?.boots?.length > 0 && (
+                <>
+                  <BootsTemplateCard {...cards.boots[0]} />
+                  <p
+                    onClick={() => {
+                      cards.boots.shift();
+                      updateRemainingCards();
+                    }}
+                    className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                  >
+                    {textNextOrClose()}
+                  </p>
+                </>
+              )}
 
-          {/* Helmets */}
-          {cards?.armors?.length === 0 &&
-            cards?.boots?.length === 0 &&
-            cards?.consumables?.length === 0 &&
-            cards?.helmets?.length > 0 && (
-              <>
-                <HelmetTemplateCard {...cards.helmets[0]} />
-                <p
-                  onClick={() => {
-                    cards.helmets.shift();
-                    updateRemainingCards();
-                  }}
-                  className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-                >
-                  {textNextOrClose()}
-                </p>
-              </>
-            )}
+              {/* Consumables */}
+              {cards?.armors?.length === 0 &&
+                cards?.boots?.length === 0 &&
+                cards?.consumables?.length > 0 && (
+                  <>
+                    <ConsumableTemplateCard {...cards.consumables[0]} />
+                    <p
+                      onClick={() => {
+                        cards.consumables.shift();
+                        updateRemainingCards();
+                      }}
+                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    >
+                      {textNextOrClose()}
+                    </p>
+                  </>
+                )}
 
-          {/* Shields */}
-          {cards?.armors?.length === 0 &&
-            cards?.boots?.length === 0 &&
-            cards?.consumables?.length === 0 &&
-            cards?.helmets?.length === 0 &&
-            cards?.shields?.length > 0 && (
-              <>
-                <ShieldTemplateCard {...cards.shields[0]} />
-                <p
-                  onClick={() => {
-                    cards.shields.shift();
-                    updateRemainingCards();
-                  }}
-                  className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-                >
-                  {textNextOrClose()}
-                </p>
-              </>
-            )}
+              {/* Helmets */}
+              {cards?.armors?.length === 0 &&
+                cards?.boots?.length === 0 &&
+                cards?.consumables?.length === 0 &&
+                cards?.helmets?.length > 0 && (
+                  <>
+                    <HelmetTemplateCard {...cards.helmets[0]} />
+                    <p
+                      onClick={() => {
+                        cards.helmets.shift();
+                        updateRemainingCards();
+                      }}
+                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    >
+                      {textNextOrClose()}
+                    </p>
+                  </>
+                )}
 
-          {/* Spells */}
-          {cards?.armors?.length === 0 &&
-            cards?.boots?.length === 0 &&
-            cards?.consumables?.length === 0 &&
-            cards?.helmets?.length === 0 &&
-            cards?.shields?.length === 0 &&
-            cards?.spells?.length > 0 && (
-              <>
-                <SpellTemplateCard {...cards.spells[0]} />
-                <p
-                  onClick={() => {
-                    cards.spells.shift();
-                    updateRemainingCards();
-                  }}
-                  className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-                >
-                  {textNextOrClose()}
-                </p>
-              </>
-            )}
+              {/* Shields */}
+              {cards?.armors?.length === 0 &&
+                cards?.boots?.length === 0 &&
+                cards?.consumables?.length === 0 &&
+                cards?.helmets?.length === 0 &&
+                cards?.shields?.length > 0 && (
+                  <>
+                    <ShieldTemplateCard {...cards.shields[0]} />
+                    <p
+                      onClick={() => {
+                        cards.shields.shift();
+                        updateRemainingCards();
+                      }}
+                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    >
+                      {textNextOrClose()}
+                    </p>
+                  </>
+                )}
 
-          {/* Weapons */}
-          {cards?.armors?.length === 0 &&
-            cards?.boots?.length === 0 &&
-            cards?.consumables?.length === 0 &&
-            cards?.helmets?.length === 0 &&
-            cards?.shields?.length === 0 &&
-            cards?.spells?.length === 0 &&
-            cards?.weapons?.length > 0 && (
-              <>
-                <WeaponTemplateCard {...cards.weapons[0]} />
-                <p
-                  onClick={() => {
-                    cards.weapons.shift();
-                    updateRemainingCards();
-                  }}
-                  className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-                >
-                  {textNextOrClose()}
-                </p>
-              </>
-            )}
-        </div>
-      )}
-    </div>
+              {/* Spells */}
+              {cards?.armors?.length === 0 &&
+                cards?.boots?.length === 0 &&
+                cards?.consumables?.length === 0 &&
+                cards?.helmets?.length === 0 &&
+                cards?.shields?.length === 0 &&
+                cards?.spells?.length > 0 && (
+                  <>
+                    <SpellTemplateCard {...cards.spells[0]} />
+                    <p
+                      onClick={() => {
+                        cards.spells.shift();
+                        updateRemainingCards();
+                      }}
+                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    >
+                      {textNextOrClose()}
+                    </p>
+                  </>
+                )}
+
+              {/* Weapons */}
+              {cards?.armors?.length === 0 &&
+                cards?.boots?.length === 0 &&
+                cards?.consumables?.length === 0 &&
+                cards?.helmets?.length === 0 &&
+                cards?.shields?.length === 0 &&
+                cards?.spells?.length === 0 &&
+                cards?.weapons?.length > 0 && (
+                  <>
+                    <WeaponTemplateCard {...cards.weapons[0]} />
+                    <p
+                      onClick={() => {
+                        cards.weapons.shift();
+                        updateRemainingCards();
+                      }}
+                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    >
+                      {textNextOrClose()}
+                    </p>
+                  </>
+                )}
+            </div>
+          )
+        )}
+      </div>
+    </>
   );
 };
