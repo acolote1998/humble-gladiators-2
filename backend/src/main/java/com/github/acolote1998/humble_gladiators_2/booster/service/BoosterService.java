@@ -321,11 +321,9 @@ public class BoosterService {
                 byte[] generatedImage = runwareService.generateCharacterInstanceImageToBytes(campaign, characterInstance);
                 characterInstance.setImgBytes(generatedImage);
             }
-            characterInstance.setDiscovered(true);
             characterService.saveCharacter(characterInstance);
             characterInstances.add(characterInstance);
         }
-
         newBooster.setCharacters(characterInstances);
         newBooster.setUserId(userId);
         newBooster.setCampaign(campaign);
@@ -407,6 +405,17 @@ public class BoosterService {
                 weaponTemplate.setDiscovered(true);
                 weaponService.saveWeapon(weaponTemplate);
                 log.info(String.format("%s discovered and persisted", weaponTemplate.getName()));
+            }
+        });
+    }
+
+    public void discoverContentOfCharacterBooster(CharacterBooster booster) {
+        List<CharacterInstance> characterInstances = booster.getCharacters();
+        characterInstances.forEach(characterInstance -> {
+            if (!characterInstance.getDiscovered()) {
+                characterInstance.setDiscovered(true);
+                characterService.saveCharacter(characterInstance);
+                log.info(String.format("%s discovered and persisted", characterInstance.getName()));
             }
         });
     }

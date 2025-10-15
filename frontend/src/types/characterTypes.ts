@@ -24,6 +24,7 @@ export type CharacterInstanceType = {
   goldReward: number;
   expReward: number;
   imgBase64: string;
+  renderingFromBooster?: boolean;
 };
 
 type CharacterStatsResponseDto = {

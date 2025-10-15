@@ -42,6 +42,7 @@ public class BoosterController {
         String userId = jwt.getSubject();
         CharacterBooster modelBooster = boosterService.getNewCharacterBooster(campaignId, userId);
         CharacterBoosterResponseDto responseDto = CharacterBoosterResponseDto.fromModelToDto(modelBooster);
+        boosterService.discoverContentOfCharacterBooster(modelBooster);
         return ResponseEntity
                 .created(URI.create("/api/campaign/" + campaignId + "/character-booster/" + modelBooster.getId()))
                 .body(responseDto);

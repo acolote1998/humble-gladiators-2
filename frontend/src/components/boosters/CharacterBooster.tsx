@@ -84,7 +84,13 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
               {/* Characters */}
               {cards?.characters && cards?.characters?.length > 0 && (
                 <>
-                  <CharacterInstanceCard {...cards.characters[0]} />
+                  <CharacterInstanceCard
+                    {...cards.characters[0]}
+                    renderingFromBooster={true}
+                  />
+                  {!cards.characters[0].discovered && (
+                    <p className="bg-amber-300">NEW!</p>
+                  )}
                   <p
                     onClick={() => {
                       cards.characters.shift();

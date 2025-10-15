@@ -121,6 +121,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
               {cards?.armors && cards?.armors?.length > 0 && (
                 <>
                   <ArmorTemplateCard {...cards.armors[0]} />
+                  {!cards.armors[0].discovered && (
+                    <p className="bg-amber-300">NEW!</p>
+                  )}
                   <p
                     onClick={() => {
                       cards.armors.shift();
@@ -137,6 +140,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
               {cards?.armors?.length === 0 && cards?.boots?.length > 0 && (
                 <>
                   <BootsTemplateCard {...cards.boots[0]} />
+                  {!cards.boots[0].discovered && (
+                    <p className="bg-amber-300">NEW!</p>
+                  )}
                   <p
                     onClick={() => {
                       cards.boots.shift();
@@ -155,6 +161,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.consumables?.length > 0 && (
                   <>
                     <ConsumableTemplateCard {...cards.consumables[0]} />
+                    {!cards.consumables[0].discovered && (
+                      <p className="bg-amber-300">NEW!</p>
+                    )}
                     <p
                       onClick={() => {
                         cards.consumables.shift();
@@ -174,6 +183,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.helmets?.length > 0 && (
                   <>
                     <HelmetTemplateCard {...cards.helmets[0]} />
+                    {!cards.helmets[0].discovered && (
+                      <p className="bg-amber-300">NEW!</p>
+                    )}
                     <p
                       onClick={() => {
                         cards.helmets.shift();
@@ -194,6 +206,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.shields?.length > 0 && (
                   <>
                     <ShieldTemplateCard {...cards.shields[0]} />
+                    {!cards.shields[0].discovered && (
+                      <p className="bg-amber-300">NEW!</p>
+                    )}
                     <p
                       onClick={() => {
                         cards.shields.shift();
@@ -215,6 +230,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.spells?.length > 0 && (
                   <>
                     <SpellTemplateCard {...cards.spells[0]} />
+                    {!cards.spells[0].discovered && (
+                      <p className="bg-amber-300">NEW!</p>
+                    )}
                     <p
                       onClick={() => {
                         cards.spells.shift();
@@ -237,6 +255,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.weapons?.length > 0 && (
                   <>
                     <WeaponTemplateCard {...cards.weapons[0]} />
+                    {!cards.weapons[0].discovered && (
+                      <p className="bg-amber-300">NEW!</p>
+                    )}
                     <p
                       onClick={() => {
                         cards.weapons.shift();
