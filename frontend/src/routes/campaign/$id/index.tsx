@@ -7,7 +7,6 @@ import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
 import CampaignItem from "../../../components/campaigns/CampaignItem";
 import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
 
-import { useCreateCharacterBooster } from "../../../hooks/useBoosters";
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
 export const Route = createFileRoute("/campaign/$id/")({
@@ -29,12 +28,6 @@ function RouteComponent() {
     isHeroError &&
     (heroErrorDetails as Error & { response?: { status: number } })?.response
       ?.status === 404;
-
-  const {
-    mutate: createCharacterBoosterMutation,
-    data: dataFromCharacterBooster,
-    reset: cleanCharacterBooster,
-  } = useCreateCharacterBooster();
 
   const {
     data: campaignData,
