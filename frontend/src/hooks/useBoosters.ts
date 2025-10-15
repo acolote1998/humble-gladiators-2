@@ -6,7 +6,6 @@ import {
 } from "../api/createBoosters";
 import { fetchItemBoosterAvailability } from "../api/fetchAvailabilities";
 import { fetchCharacterBoosterAvailability } from "../api/fetchAvailabilities";
-import { fetchHeroExistence } from "../api/fetchAvailabilities";
 
 export const useCreateItemBooster = () => {
   const { getToken } = useAuth();
@@ -61,21 +60,6 @@ export const useGetCharacterBoosterAvailability = (campaignId: number) => {
         throw new Error("No bearer token available");
       }
       return fetchCharacterBoosterAvailability(bearerToken, campaignId);
-    },
-  });
-  return { data, isError, isLoading };
-};
-
-export const useGetHeroExistence = (campaignId: number) => {
-  const { getToken } = useAuth();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["hero-existence", campaignId],
-    queryFn: async () => {
-      const bearerToken = await getToken();
-      if (!bearerToken) {
-        throw new Error("No bearer token available");
-      }
-      return fetchHeroExistence(bearerToken, campaignId);
     },
   });
   return { data, isError, isLoading };
