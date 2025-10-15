@@ -16,7 +16,7 @@ export const CharacterInstanceCard = ({
 
   return (
     <div
-      className="weapon-tier-5-rarity-5 relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer"
+      className="relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer"
       style={{ backgroundImage: `url('/templates/charCardTemplate.png')` }}
     >
       {/* Top stats */}
