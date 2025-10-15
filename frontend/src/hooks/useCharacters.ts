@@ -5,6 +5,7 @@ import { fetchHeroForCampaignByUser } from "../api/fetchCharacters";
 import type { CreateHeroType } from "../types/characterTypes";
 import { createHeroForACampaignPost } from "../api/createHero";
 import { useNavigate } from "@tanstack/react-router";
+import { fetchHeroExistence } from "../api/fetchAvailabilities";
 
 export const useGetCharactersByCampaignAndUser = (campaignId: number) => {
   const { getToken } = useAuth();
@@ -53,4 +54,19 @@ export const useCreateHero = () => {
     },
   });
   return mutation;
+};
+
+export const useGetHeroExistence = (campaignId: number) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["hero-existence", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return fetchHeroExistence(bearerToken, campaignId);
+    },
+  });
+  return { data, isError, isLoading };
 };
