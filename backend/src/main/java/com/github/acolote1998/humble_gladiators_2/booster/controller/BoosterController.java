@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.booster.controller;
 
 import com.github.acolote1998.humble_gladiators_2.booster.dto.CharacterBoosterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.booster.dto.ItemBoosterResponseDto;
+import com.github.acolote1998.humble_gladiators_2.booster.enums.IntentionTowardsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
@@ -48,13 +49,13 @@ public class BoosterController {
     @GetMapping("/{campaignId}/character-booster/check-if-available")
     ResponseEntity<Boolean> canPlayerOpenCharacterBooster(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        return ResponseEntity.ok(boosterService.canTheUserOpenACharacterBooster(campaignId, userId));
+        return ResponseEntity.ok(boosterService.canOpenAValidCharacterBooster(campaignId, userId, IntentionTowardsBooster.CHECK_AVAILABILITY));
     }
 
     @GetMapping("/{campaignId}/items-booster/check-if-available")
     ResponseEntity<Boolean> canPlayerOpenItemsBooster(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        return ResponseEntity.ok(boosterService.canTheUserOpenAnItemBooster(campaignId, userId));
+        return ResponseEntity.ok(boosterService.canOpenAValidItemBooster(campaignId, userId, IntentionTowardsBooster.CHECK_AVAILABILITY));
     }
 
     @ExceptionHandler(DailyBoosterAlreadyOpened.class)
