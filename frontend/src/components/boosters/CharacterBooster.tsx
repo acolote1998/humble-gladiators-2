@@ -30,6 +30,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
   const {
     mutate: createCharacterBoosterMutation,
     data: dataFromCharacterBooster,
+    isPending: dataFromBoosterLoading,
     reset: cleanCharacterBooster,
   } = useCreateCharacterBooster();
 
@@ -72,25 +73,31 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
             Come back tomorrow for a new character booster!
           </p>
         )}
-
-        {dataFromCharacterBooster && (
-          <div>
-            {/* Characters */}
-            {cards?.characters && cards?.characters?.length > 0 && (
-              <>
-                <CharacterInstanceCard {...cards.characters[0]} />
-                <p
-                  onClick={() => {
-                    cards.characters.shift();
-                    updateRemainingCards();
-                  }}
-                  className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
-                >
-                  {textNextOrClose()}
-                </p>
-              </>
-            )}
+        {dataFromBoosterLoading ? (
+          <div className="flex gap-5">
+            <p>Opening booster</p>
+            <p className="loader"></p>
           </div>
+        ) : (
+          dataFromCharacterBooster && (
+            <div>
+              {/* Characters */}
+              {cards?.characters && cards?.characters?.length > 0 && (
+                <>
+                  <CharacterInstanceCard {...cards.characters[0]} />
+                  <p
+                    onClick={() => {
+                      cards.characters.shift();
+                      updateRemainingCards();
+                    }}
+                    className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                  >
+                    {textNextOrClose()}
+                  </p>
+                </>
+              )}
+            </div>
+          )
         )}
       </div>
     </>
