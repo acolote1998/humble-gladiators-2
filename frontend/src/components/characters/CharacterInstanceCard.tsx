@@ -13,10 +13,9 @@ export const CharacterInstanceCard = ({
 }: CharacterInstanceType) => {
   //Toggle to see all information of the card
   //   discovered = true;
-
   return (
     <div
-      className="relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer"
+      className={`relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `character-tier-5-rarity-5` : `character-tier-${tier}`) : ""}`}
       style={{ backgroundImage: `url('/templates/charCardTemplate.png')` }}
     >
       {/* Top stats */}
