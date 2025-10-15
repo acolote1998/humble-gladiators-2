@@ -203,10 +203,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.consumables?.length === 0 &&
                 cards?.helmets?.length > 0 && (
                   <>
-                    <HelmetTemplateCard
-                      {...cards.helmets[0]}
-                      renderingFromBooster={true}
-                    />
+                    <div
+                      className={`${cards.helmets[0].tier === 5 && cards.helmets[0].rarity === 5 ? "helmet-tier-5-rarity-5" : `helmet-tier-${cards.helmets[0].tier}`} w-fit h-fit`}
+                    >
+                      <HelmetTemplateCard
+                        {...cards.helmets[0]}
+                        renderingFromBooster={true}
+                      />
+                    </div>
                     {!cards.helmets[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
