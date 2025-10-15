@@ -45,6 +45,18 @@ public class BoosterController {
                 .body(responseDto);
     }
 
+    @GetMapping("/{campaignId}/character-booster/check-if-available")
+    ResponseEntity<Boolean> canPlayerOpenCharacterBooster(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        return ResponseEntity.ok(boosterService.canTheUserOpenACharacterBooster(campaignId, userId));
+    }
+
+    @GetMapping("/{campaignId}/items-booster/check-if-available")
+    ResponseEntity<Boolean> canPlayerOpenItemsBooster(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        return ResponseEntity.ok(boosterService.canTheUserOpenAnItemBooster(campaignId, userId));
+    }
+
     @ExceptionHandler(DailyBoosterAlreadyOpened.class)
     public ResponseEntity<String> handleDailyBoosterAlreadyOpened(DailyBoosterAlreadyOpened ex) {
         return ResponseEntity

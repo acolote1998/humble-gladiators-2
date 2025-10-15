@@ -74,7 +74,7 @@ public class BoosterService {
         this.characterBoosterRepository = characterBoosterRepository;
     }
 
-    private Boolean canTheUserOpenAnItemPack(Long campaignId, String userId) {
+    public Boolean canTheUserOpenAnItemBooster(Long campaignId, String userId) {
         if (!UNLIMITED_BOOSTERS_ALLOWED) {
             LocalDate today = LocalDate.now();
             ItemsBooster todaysBooster = itemsBoosterRepository
@@ -88,7 +88,7 @@ public class BoosterService {
         return true;
     }
 
-    private Boolean canTheUserOpenACharacterPack(Long campaignId, String userId) {
+    public Boolean canTheUserOpenACharacterBooster(Long campaignId, String userId) {
         if (!UNLIMITED_BOOSTERS_ALLOWED) {
             LocalDate today = LocalDate.now();
             CharacterBooster todaysBooster = characterBoosterRepository
@@ -164,7 +164,7 @@ public class BoosterService {
 
     @Transactional
     public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
-        if (!canTheUserOpenAnItemPack(campaignId, userId)) {
+        if (!canTheUserOpenAnItemBooster(campaignId, userId)) {
             log.warn(String.format("WARNING - %s - Campaign %s tried to open an item booster, but they had already opened one today", userId, campaignId));
             throw new DailyBoosterAlreadyOpened("The user already opened an item booster today");
         }
@@ -287,7 +287,7 @@ public class BoosterService {
 
     @Transactional
     public CharacterBooster getNewCharacterBooster(Long campaignId, String userId) {
-        if (!canTheUserOpenACharacterPack(campaignId, userId)) {
+        if (!canTheUserOpenACharacterBooster(campaignId, userId)) {
             log.warn(String.format("WARNING - %s - Campaign %s tried to open a character booster, but they had already opened one today", userId, campaignId));
             throw new DailyBoosterAlreadyOpened("The user already opened a character booster today");
         }
