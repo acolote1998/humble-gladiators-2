@@ -214,7 +214,6 @@ public class BoosterService {
                         byte[] generatedImage = runwareService.generateArmorTemplateImageToBytes(campaign, armorTemplate);
                         armorTemplate.setImgBytes(generatedImage);
                     }
-                    armorTemplate.setDiscovered(true);
                     armorService.saveArmor(armorTemplate);
                     armorTemplates.add(armorTemplate);
                 }
@@ -225,7 +224,6 @@ public class BoosterService {
                         byte[] generatedImage = runwareService.generateBootsTemplateImageToBytes(campaign, bootTemplate);
                         bootTemplate.setImgBytes(generatedImage);
                     }
-                    bootTemplate.setDiscovered(true);
                     bootsService.saveBoots(bootTemplate);
                     bootsTemplates.add(bootTemplate);
                 }
@@ -236,7 +234,6 @@ public class BoosterService {
                         byte[] generatedImage = runwareService.generateConsumableTemplateImageToBytes(campaign, consumableTemplate);
                         consumableTemplate.setImgBytes(generatedImage);
                     }
-                    consumableTemplate.setDiscovered(true);
                     consumableService.saveConsumable(consumableTemplate);
                     consumableTemplates.add(consumableTemplate);
                 }
@@ -247,7 +244,6 @@ public class BoosterService {
                         byte[] generatedImage = runwareService.generateHelmetTemplateImageToBytes(campaign, helmetTemplate);
                         helmetTemplate.setImgBytes(generatedImage);
                     }
-                    helmetTemplate.setDiscovered(true);
                     helmetService.saveHelmet(helmetTemplate);
                     helmetTemplates.add(helmetTemplate);
                 }
@@ -258,7 +254,6 @@ public class BoosterService {
                         byte[] generatedImage = runwareService.generateShieldTemplateImageToBytes(campaign, shieldTemplate);
                         shieldTemplate.setImgBytes(generatedImage);
                     }
-                    shieldTemplate.setDiscovered(true);
                     shieldService.saveShield(shieldTemplate);
                     shieldTemplates.add(shieldTemplate);
                 }
@@ -269,7 +264,6 @@ public class BoosterService {
                         byte[] generatedImage = runwareService.generateSpellTemplateImageToBytes(campaign, spellTemplate);
                         spellTemplate.setImgBytes(generatedImage);
                     }
-                    spellTemplate.setDiscovered(true);
                     spellService.saveSpell(spellTemplate);
                     spellTemplates.add(spellTemplate);
                 }
@@ -280,7 +274,6 @@ public class BoosterService {
                         byte[] generatedImage = runwareService.generateWeaponTemplateImageToBytes(campaign, weaponTemplate);
                         weaponTemplate.setImgBytes(generatedImage);
                     }
-                    weaponTemplate.setDiscovered(true);
                     weaponService.saveWeapon(weaponTemplate);
                     weaponTemplates.add(weaponTemplate);
                 }
@@ -352,5 +345,69 @@ public class BoosterService {
         return itemTypes.getFirst();
     }
 
+    public void discoverContentOfItemBooster(ItemsBooster booster) {
+        List<ArmorTemplate> armorTemplates = booster.getArmors();
+        List<BootsTemplate> bootsTemplates = booster.getBoots();
+        List<ConsumableTemplate> consumableTemplates = booster.getConsumables();
+        List<HelmetTemplate> helmetTemplates = booster.getHelmets();
+        List<ShieldTemplate> shieldTemplates = booster.getShields();
+        List<SpellTemplate> spellTemplates = booster.getSpells();
+        List<WeaponTemplate> weaponTemplates = booster.getWeapons();
 
+        armorTemplates.forEach(armorTemplate -> {
+            if (!armorTemplate.getDiscovered()) {
+                armorTemplate.setDiscovered(true);
+                armorService.saveArmor(armorTemplate);
+                log.info(String.format("%s discovered and persisted", armorTemplate.getName()));
+            }
+        });
+
+        bootsTemplates.forEach(bootsTemplate -> {
+            if (!bootsTemplate.getDiscovered()) {
+                bootsTemplate.setDiscovered(true);
+                bootsService.saveBoots(bootsTemplate);
+                log.info(String.format("%s discovered and persisted", bootsTemplate.getName()));
+            }
+        });
+
+        consumableTemplates.forEach(consumableTemplate -> {
+            if (!consumableTemplate.getDiscovered()) {
+                consumableTemplate.setDiscovered(true);
+                consumableService.saveConsumable(consumableTemplate);
+                log.info(String.format("%s discovered and persisted", consumableTemplate.getName()));
+            }
+        });
+
+        helmetTemplates.forEach(helmetTemplate -> {
+            if (!helmetTemplate.getDiscovered()) {
+                helmetTemplate.setDiscovered(true);
+                helmetService.saveHelmet(helmetTemplate);
+                log.info(String.format("%s discovered and persisted", helmetTemplate.getName()));
+            }
+        });
+
+        shieldTemplates.forEach(shieldTemplate -> {
+            if (!shieldTemplate.getDiscovered()) {
+                shieldTemplate.setDiscovered(true);
+                shieldService.saveShield(shieldTemplate);
+                log.info(String.format("%s discovered and persisted", shieldTemplate.getName()));
+            }
+        });
+
+        spellTemplates.forEach(spellTemplate -> {
+            if (!spellTemplate.getDiscovered()) {
+                spellTemplate.setDiscovered(true);
+                spellService.saveSpell(spellTemplate);
+                log.info(String.format("%s discovered and persisted", spellTemplate.getName()));
+            }
+        });
+
+        weaponTemplates.forEach(weaponTemplate -> {
+            if (!weaponTemplate.getDiscovered()) {
+                weaponTemplate.setDiscovered(true);
+                weaponService.saveWeapon(weaponTemplate);
+                log.info(String.format("%s discovered and persisted", weaponTemplate.getName()));
+            }
+        });
+    }
 }
