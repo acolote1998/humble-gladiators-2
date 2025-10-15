@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
 import CampaignItem from "../../../components/campaigns/CampaignItem";
-import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
+import { useGetHeroExistence } from "../../../hooks/useCharacters";
 
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
@@ -17,67 +17,53 @@ function RouteComponent() {
   const navigate = useNavigate();
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
   const {
-    data: heroData,
-    isLoading: heroLoading,
-    isError: isHeroError,
-    error: heroErrorDetails,
-  } = useGetHeroByCampaignAndUser(Number(campaignId));
-
-  // Check if it's specifically a 404 error (hero not found)
-  const isHeroNotFound =
-    isHeroError &&
-    (heroErrorDetails as Error & { response?: { status: number } })?.response
-      ?.status === 404;
+    data: doesHeroExist,
+    isLoading: doesHeroExistLoading,
+    isError: doesHeroExistError,
+  } = useGetHeroExistence(Number(campaignId));
 
   const {
     data: campaignData,
     isError: isCampaignError,
-    isLoading: isCampaignLoadingError,
+    isLoading: isCampaignLoading,
   } = useGetCampaignByIdForAUser(Number(campaignId));
   return (
     <>
-      {isCampaignError ? (
-        <p>Loading</p>
-      ) : isCampaignLoadingError ? (
-        <p>Error loading</p>
+      {isCampaignLoading ? (
+        <p>Loading campaign</p>
+      ) : isCampaignError ? (
+        <p>Error loading campaign</p>
       ) : (
-        campaignData && <CampaignItem {...campaignData} />
-      )}
-      {isHeroNotFound ? (
-        <p
-          onClick={() => {
-            navigate({ to: `/campaign/${campaignId}/createHero` });
-          }}
-        >
-          Click here to create your hero
-        </p>
-      ) : isHeroError ? (
-        <p>Error loading hero. Please try again.</p>
-      ) : heroLoading ? (
-        <p>Loading hero</p>
-      ) : (
-        heroData && (
+        campaignData && (
           <>
-            <p
-              onClick={() => {
-                console.log(heroData);
-              }}
-              className="bg-gray-400 p-3 rounded-lg"
-            >
-              Log Hero Data
-            </p>
+            <CampaignItem {...campaignData} />
+            {doesHeroExistLoading ? (
+              <p>Loading hero availability</p>
+            ) : doesHeroExistError ? (
+              <p>Error loading hero availability</p>
+            ) : doesHeroExist ? (
+              <>
+                <ItemsBooster campaignId={campaignId} />
 
-            <ItemsBooster campaignId={campaignId} />
-
-            <CharacterBooster campaignId={campaignId} />
-            <p
-              onClick={() => {
-                navigate({ to: `/campaign/${campaignId}/compendium` });
-              }}
-              className="bg-gray-400 p-3 rounded-lg"
-            >
-              Go to the compendium
-            </p>
+                <CharacterBooster campaignId={campaignId} />
+                <p
+                  onClick={() => {
+                    navigate({ to: `/campaign/${campaignId}/compendium` });
+                  }}
+                  className="bg-gray-400 p-3 rounded-lg"
+                >
+                  Go to the compendium
+                </p>
+              </>
+            ) : (
+              <p
+                onClick={() => {
+                  navigate({ to: `/campaign/${campaignId}/createHero` });
+                }}
+              >
+                Click here to create your hero
+              </p>
+            )}
           </>
         )
       )}
