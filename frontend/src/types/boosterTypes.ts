@@ -14,6 +14,7 @@ export type ItemBoosterType = {
   shields: ShieldTemplateType[];
   spells: SpellTemplateType[];
   weapons: WeaponTemplateType[];
+  cleanItemBooster?: () => void;
 };
 
 export type CharacterBoosterType = {

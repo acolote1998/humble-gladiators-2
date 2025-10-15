@@ -9,6 +9,7 @@ import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
 import { useCreateItemBooster } from "../../../hooks/useBoosters";
 import { useCreateCharacterBooster } from "../../../hooks/useBoosters";
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
+import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -29,8 +30,11 @@ function RouteComponent() {
     (heroErrorDetails as Error & { response?: { status: number } })?.response
       ?.status === 404;
 
-  const { mutate: createItemBoosterMutation, data: dataFromItemBooster } =
-    useCreateItemBooster();
+  const {
+    mutate: createItemBoosterMutation,
+    data: dataFromItemBooster,
+    reset: cleanItemBooster,
+  } = useCreateItemBooster();
 
   const {
     mutate: createCharacterBoosterMutation,
@@ -83,14 +87,10 @@ function RouteComponent() {
               Open Item Booster
             </p>
             {dataFromItemBooster && (
-              <p
-                onClick={() => {
-                  console.log(dataFromItemBooster);
-                }}
-                className="bg-gray-400 p-3 rounded-lg"
-              >
-                Log Item Booster
-              </p>
+              <ItemsBooster
+                {...dataFromItemBooster}
+                cleanItemBooster={cleanItemBooster}
+              />
             )}
             <p
               onClick={() => {

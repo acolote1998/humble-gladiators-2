@@ -3,17 +3,17 @@ import type { CharacterBoosterType } from "../../types/boosterTypes";
 import { CharacterInstanceCard } from "../characters/CharacterInstanceCard";
 
 export const CharacterBooster = ({ characters }: CharacterBoosterType) => {
-  const [isBoosterOpen, setIsBosterOpen] = useState<boolean>(false);
+  const [isBoosterOpen, setIsBoosterOpen] = useState<boolean>(false);
   return (
     <div>
       {!isBoosterOpen && (
         <p
           onClick={() => {
-            setIsBosterOpen(true);
+            setIsBoosterOpen(true);
           }}
           className="bg-red-400 text-center p-2 m-2 rounded-xl"
         >
-          Open booster!
+          Open character booster!
         </p>
       )}
       {isBoosterOpen && (
@@ -23,7 +23,7 @@ export const CharacterBooster = ({ characters }: CharacterBoosterType) => {
           ))}
           <p
             onClick={() => {
-              setIsBosterOpen(false);
+              setIsBoosterOpen(false);
             }}
             className="bg-red-300 text-center p-2 m-2 rounded-xl"
           >
