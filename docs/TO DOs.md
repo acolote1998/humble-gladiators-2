@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Implement back of cards generation on campaign creation
+
 - [ ] Improve rendering of campaign list in frontend -> make the campaign itm list more visually attractive.
 
   - [ ] Remove unnecessary information from there
