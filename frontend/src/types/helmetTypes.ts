@@ -11,6 +11,7 @@ export type HelmetTemplateType = {
   physicalDefense: number;
   imgBase64: string;
   magicalDefense: number;
+  renderingFromBooster?: boolean;
 };
 
 export type HelmetCategoriesEnum =

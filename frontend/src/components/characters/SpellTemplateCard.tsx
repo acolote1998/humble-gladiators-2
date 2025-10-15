@@ -11,6 +11,7 @@ export const SpellTemplateCard = ({
   magicalDamage,
   restoreHp,
   imgBase64,
+  renderingFromBooster,
 }: SpellTemplateType) => {
   //Toggle to see all information of the card
   // discovered = true;
@@ -23,16 +24,16 @@ export const SpellTemplateCard = ({
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">
         {/* <div className="absolute left-8.5 w-20">
-          <p>❤️ {discovered ? "pl" : "?"}</p>
+          <p>❤️ {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-26 w-15">
-          <p>⚔️ {discovered ? "pl" : "?"}</p>
+          <p>⚔️ {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-43 w-20">
-          <p>🔷 {discovered ? "pl" : "?"}</p>
+          <p>🔷 {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-61 w-20">
-          <p>🔮 {discovered ? "pl" : "?"}</p>
+          <p>🔮 {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
         </div> */}
       </div>
 
@@ -51,7 +52,7 @@ export const SpellTemplateCard = ({
 
       {/* Category & name */}
       <div className="flex flex-col items-center mt-6">
-        {discovered && imgBase64 ? (
+        {(discovered || renderingFromBooster) && imgBase64 ? (
           <img
             draggable={false}
             src={`data:image/jpeg;base64,${imgBase64}`}
@@ -66,25 +67,27 @@ export const SpellTemplateCard = ({
             className="w-65.5 h-auto"
           />
         )}
-        <p className="text-lg mt-8 ">{discovered ? name : "?"}</p>
+        <p className="text-lg mt-8 ">
+          {discovered || renderingFromBooster ? name : "?"}
+        </p>
         <p className="text-sm opacity-80 text-center p-1 mt-0.5 px-7">
-          {discovered ? description : "?"}
+          {discovered || renderingFromBooster ? description : "?"}
         </p>
       </div>
 
       {/* Bottom stats */}
       <div className="grid grid-cols-5 absolute bottom-14 text-sm">
         <div className="absolute left-7 w-15">
-          <p>⚔️ {discovered ? physicalDamage : "?"}</p>
+          <p>⚔️ {discovered || renderingFromBooster ? physicalDamage : "?"}</p>
         </div>
         <div className="absolute left-24 w-15">
-          <p>❤️ {discovered ? restoreHp : "?"}</p>
+          <p>❤️ {discovered || renderingFromBooster ? restoreHp : "?"}</p>
         </div>
         <div className="absolute left-41.5 w-15">
-          <p>✨ {discovered ? magicalDamage : "?"}</p>
+          <p>✨ {discovered || renderingFromBooster ? magicalDamage : "?"}</p>
         </div>
         {/* <div className="absolute left-58.5 w-15">
-          <p>🧉 {discovered ? restoreMp : "?"}</p>
+          <p>🧉 {(discovered || renderingFromBooster) ? restoreMp : "?"}</p>
         </div> */}
       </div>
     </div>

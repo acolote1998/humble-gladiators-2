@@ -11,6 +11,7 @@ export type ArmorTemplateType = {
   physicalDefense: number;
   magicalDefense: number;
   imgBase64: string;
+  renderingFromBooster?: boolean;
 };
 
 export type ArmorCategoriesEnum =

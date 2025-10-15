@@ -12,6 +12,7 @@ export type SpellTemplateType = {
   magicalDamage: number;
   imgBase64: string;
   restoreHp: number;
+  renderingFromBooster?: boolean;
 };
 
 export type SpellCategoriesEnum =

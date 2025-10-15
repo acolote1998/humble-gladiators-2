@@ -120,7 +120,10 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
               {/* Armors */}
               {cards?.armors && cards?.armors?.length > 0 && (
                 <>
-                  <ArmorTemplateCard {...cards.armors[0]} />
+                  <ArmorTemplateCard
+                    {...cards.armors[0]}
+                    renderingFromBooster={true}
+                  />
                   {!cards.armors[0].discovered && (
                     <p className="bg-amber-300">NEW!</p>
                   )}
@@ -139,7 +142,10 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
               {/* Boots */}
               {cards?.armors?.length === 0 && cards?.boots?.length > 0 && (
                 <>
-                  <BootsTemplateCard {...cards.boots[0]} />
+                  <BootsTemplateCard
+                    {...cards.boots[0]}
+                    renderingFromBooster={true}
+                  />
                   {!cards.boots[0].discovered && (
                     <p className="bg-amber-300">NEW!</p>
                   )}
@@ -160,7 +166,10 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.boots?.length === 0 &&
                 cards?.consumables?.length > 0 && (
                   <>
-                    <ConsumableTemplateCard {...cards.consumables[0]} />
+                    <ConsumableTemplateCard
+                      {...cards.consumables[0]}
+                      renderingFromBooster={true}
+                    />
                     {!cards.consumables[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
@@ -182,7 +191,10 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.consumables?.length === 0 &&
                 cards?.helmets?.length > 0 && (
                   <>
-                    <HelmetTemplateCard {...cards.helmets[0]} />
+                    <HelmetTemplateCard
+                      {...cards.helmets[0]}
+                      renderingFromBooster={true}
+                    />
                     {!cards.helmets[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
@@ -205,7 +217,10 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.helmets?.length === 0 &&
                 cards?.shields?.length > 0 && (
                   <>
-                    <ShieldTemplateCard {...cards.shields[0]} />
+                    <ShieldTemplateCard
+                      {...cards.shields[0]}
+                      renderingFromBooster={true}
+                    />
                     {!cards.shields[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
@@ -229,7 +244,10 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.shields?.length === 0 &&
                 cards?.spells?.length > 0 && (
                   <>
-                    <SpellTemplateCard {...cards.spells[0]} />
+                    <SpellTemplateCard
+                      {...cards.spells[0]}
+                      renderingFromBooster={true}
+                    />
                     {!cards.spells[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
@@ -254,7 +272,10 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.spells?.length === 0 &&
                 cards?.weapons?.length > 0 && (
                   <>
-                    <WeaponTemplateCard {...cards.weapons[0]} />
+                    <WeaponTemplateCard
+                      {...cards.weapons[0]}
+                      renderingFromBooster={true}
+                    />
                     {!cards.weapons[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}

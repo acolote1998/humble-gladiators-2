@@ -11,6 +11,7 @@ export type ConsumableTemplateType = {
   restoreHp: number;
   restoreMp: number;
   imgBase64: string;
+  renderingFromBooster?: boolean;
 };
 
 export type ConsumablesCategoriesEnum =

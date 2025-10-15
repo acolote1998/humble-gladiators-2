@@ -11,6 +11,7 @@ export type BootsTemplateType = {
   physicalDefense: number;
   imgBase64: string;
   magicalDefense: number;
+  renderingFromBooster?: boolean;
 };
 
 export type BootsCategoriesEnum =

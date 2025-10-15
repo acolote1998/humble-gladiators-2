@@ -11,6 +11,7 @@ export type ShieldTemplateType = {
   physicalDefense: number;
   imgBase64: string;
   magicalDefense: number;
+  renderingFromBooster?: boolean;
 };
 
 export type ShieldCategoriesEnum =

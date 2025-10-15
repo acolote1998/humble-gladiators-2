@@ -11,6 +11,7 @@ export type WeaponTemplateType = {
   physicalDamage: number;
   imgBase64: string;
   magicalDamage: number;
+  renderingFromBooster?: boolean;
 };
 
 export type WeaponCategoriesEnum =
