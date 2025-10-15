@@ -264,10 +264,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.shields?.length === 0 &&
                 cards?.spells?.length > 0 && (
                   <>
-                    <SpellTemplateCard
-                      {...cards.spells[0]}
-                      renderingFromBooster={true}
-                    />
+                    <div
+                      className={`${cards.spells[0].tier === 5 && cards.spells[0].rarity === 5 ? "spell-tier-5-rarity-5" : `spell-tier-${cards.spells[0].tier}`} w-fit h-fit`}
+                    >
+                      <SpellTemplateCard
+                        {...cards.spells[0]}
+                        renderingFromBooster={true}
+                      />
+                    </div>
                     {!cards.spells[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
                     )}
