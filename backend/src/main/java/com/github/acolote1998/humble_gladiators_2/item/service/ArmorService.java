@@ -102,6 +102,11 @@ public class ArmorService {
             savedArmorTemplates.add(armorTemplate);
         });
 
+        if (!ArmorTemplate.areValidArmors(savedArmorTemplates)) {
+            log.warn(String.format("Campaign %s - Generated armors not valid -> Generating again", campaign.getId()));
+            return createTwentyFiveNewArmorTemplates(campaign);
+        }
+
         armorTemplateRepository.saveAll(savedArmorTemplates);
 
         log.info(savedArmorTemplates.size() + " armors successfully created an persisted");
