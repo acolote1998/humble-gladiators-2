@@ -18,3 +18,21 @@ export const fetchCharacterBoosterAvailability = async (
     throw error;
   }
 };
+
+export const fetchItemBoosterAvailability = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<boolean> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/items-booster/check-if-available`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
