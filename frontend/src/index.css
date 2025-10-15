@@ -6,339 +6,252 @@
   --div-lighter-bg: lightgray;
 }
 .character-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(17, 0, 255, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(17, 0, 255, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(17, 0, 255, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(17, 0, 255, 0.6);
   border-radius: 20px;
 }
 
 .character-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(17, 0, 255, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(17, 0, 255, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(17, 0, 255, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(17, 0, 255, 0.6);
   border-radius: 20px;
 }
 
 .character-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(17, 0, 255, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(17, 0, 255, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(17, 0, 255, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(17, 0, 255, 0.5);
   border-radius: 20px;
 }
 
 .character-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(17, 0, 255, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(17, 0, 255, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(17, 0, 255, 0.3);
+  box-shadow: 0px 0px 20px 4px rgba(17, 0, 255, 0.4);
   border-radius: 20px;
 }
 
 .character-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(17, 0, 255, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(17, 0, 255, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(17, 0, 255, 0.2);
+  box-shadow: 0px 0px 18px 3px rgba(17, 0, 255, 0.3);
   border-radius: 20px;
 }
 
 .character-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(17, 0, 255, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(17, 0, 255, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(17, 0, 255, 0.1);
+  box-shadow: 0px 0px 15px 2px rgba(17, 0, 255, 0.2);
   border-radius: 20px;
 }
 
+/* --- ARMOR --- */
 .armor-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(179, 178, 204, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(179, 178, 204, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(179, 178, 204, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(179, 178, 204, 0.6);
   border-radius: 20px;
 }
 
 .armor-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(179, 178, 204, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(179, 178, 204, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(179, 178, 204, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(179, 178, 204, 0.6);
   border-radius: 20px;
 }
 
 .armor-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(179, 178, 204, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(179, 178, 204, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(179, 178, 204, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(179, 178, 204, 0.5);
   border-radius: 20px;
 }
 
 .armor-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(179, 178, 204, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(179, 178, 204, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(179, 178, 204, 0.3);
+  box-shadow: 0px 0px 18px 4px rgba(179, 178, 204, 0.4);
   border-radius: 20px;
 }
 
 .armor-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(179, 178, 204, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(179, 178, 204, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(179, 178, 204, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(179, 178, 204, 0.3);
   border-radius: 20px;
 }
 
 .armor-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(179, 178, 204, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(179, 178, 204, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(179, 178, 204, 0.1);
+  box-shadow: 0px 0px 14px 2px rgba(179, 178, 204, 0.2);
   border-radius: 20px;
 }
 
+/* --- BOOTS --- */
 .boot-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(158, 99, 9, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(158, 99, 9, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(158, 99, 9, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(158, 99, 9, 0.6);
   border-radius: 20px;
 }
 
 .boot-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(158, 99, 9, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(158, 99, 9, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(158, 99, 9, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(158, 99, 9, 0.6);
   border-radius: 20px;
 }
 
 .boot-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(158, 99, 9, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(158, 99, 9, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(158, 99, 9, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(158, 99, 9, 0.5);
   border-radius: 20px;
 }
 
 .boot-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(158, 99, 9, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(158, 99, 9, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(158, 99, 9, 0.3);
+  box-shadow: 0px 0px 18px 4px rgba(158, 99, 9, 0.4);
   border-radius: 20px;
 }
 
 .boot-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(158, 99, 9, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(158, 99, 9, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(158, 99, 9, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(158, 99, 9, 0.3);
   border-radius: 20px;
 }
 
 .boot-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(158, 99, 9, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(158, 99, 9, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(158, 99, 9, 0.1);
+  box-shadow: 0px 0px 14px 2px rgba(158, 99, 9, 0.2);
   border-radius: 20px;
 }
 
+/* --- CONSUMABLES --- */
 .consumable-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(122, 255, 142, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(122, 255, 142, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(122, 255, 142, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(122, 255, 142, 0.6);
   border-radius: 20px;
 }
 
 .consumable-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(122, 255, 142, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(122, 255, 142, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(122, 255, 142, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(122, 255, 142, 0.6);
   border-radius: 20px;
 }
 
 .consumable-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(122, 255, 142, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(122, 255, 142, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(122, 255, 142, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(122, 255, 142, 0.5);
   border-radius: 20px;
 }
 
 .consumable-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(122, 255, 142, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(122, 255, 142, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(122, 255, 142, 0.3);
+  box-shadow: 0px 0px 18px 4px rgba(122, 255, 142, 0.4);
   border-radius: 20px;
 }
 
 .consumable-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(122, 255, 142, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(122, 255, 142, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(122, 255, 142, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(122, 255, 142, 0.3);
   border-radius: 20px;
 }
 
 .consumable-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(122, 255, 142, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(122, 255, 142, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(122, 255, 142, 0.1);
+  box-shadow: 0px 0px 14px 2px rgba(122, 255, 142, 0.2);
   border-radius: 20px;
 }
 
+/* --- HELMETS --- */
 .helmet-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(255, 242, 0, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(255, 242, 0, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(255, 242, 0, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(255, 242, 0, 0.6);
   border-radius: 20px;
 }
 
 .helmet-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(255, 242, 0, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(255, 242, 0, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(255, 242, 0, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(255, 242, 0, 0.6);
   border-radius: 20px;
 }
 
 .helmet-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(255, 242, 0, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(255, 242, 0, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(255, 242, 0, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(255, 242, 0, 0.5);
   border-radius: 20px;
 }
 
 .helmet-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(255, 242, 0, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(255, 242, 0, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(255, 242, 0, 0.3);
+  box-shadow: 0px 0px 18px 4px rgba(255, 242, 0, 0.4);
   border-radius: 20px;
 }
 
 .helmet-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(255, 242, 0, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(255, 242, 0, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(255, 242, 0, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(255, 242, 0, 0.3);
   border-radius: 20px;
 }
 
 .helmet-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(255, 242, 0, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(255, 242, 0, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(255, 242, 0, 0.1);
+  box-shadow: 0px 0px 14px 2px rgba(255, 242, 0, 0.2);
   border-radius: 20px;
 }
 
+/* --- SHIELDS --- */
 .shield-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(245, 152, 12, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(245, 152, 12, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(245, 152, 12, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(245, 152, 12, 0.6);
   border-radius: 20px;
 }
 
 .shield-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(245, 152, 12, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(245, 152, 12, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(245, 152, 12, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(245, 152, 12, 0.6);
   border-radius: 20px;
 }
 
 .shield-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(245, 152, 12, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(245, 152, 12, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(245, 152, 12, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(245, 152, 12, 0.5);
   border-radius: 20px;
 }
 
 .shield-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(245, 152, 12, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(245, 152, 12, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(245, 152, 12, 0.3);
+  box-shadow: 0px 0px 18px 4px rgba(245, 152, 12, 0.4);
   border-radius: 20px;
 }
 
 .shield-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(245, 152, 12, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(245, 152, 12, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(245, 152, 12, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(245, 152, 12, 0.3);
   border-radius: 20px;
 }
 
 .shield-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(245, 152, 12, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(245, 152, 12, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(245, 152, 12, 0.1);
+  box-shadow: 0px 0px 14px 2px rgba(245, 152, 12, 0.2);
   border-radius: 20px;
 }
 
+/* --- SPELLS --- */
 .spell-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(187, 0, 204, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(187, 0, 204, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(187, 0, 204, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(187, 0, 204, 0.6);
   border-radius: 20px;
 }
 
 .spell-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(187, 0, 204, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(187, 0, 204, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(187, 0, 204, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(187, 0, 204, 0.6);
   border-radius: 20px;
 }
 
 .spell-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(187, 0, 204, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(187, 0, 204, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(187, 0, 204, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(187, 0, 204, 0.5);
   border-radius: 20px;
 }
 
 .spell-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(187, 0, 204, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(187, 0, 204, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(187, 0, 204, 0.3);
+  box-shadow: 0px 0px 18px 4px rgba(187, 0, 204, 0.4);
   border-radius: 20px;
 }
 
 .spell-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(187, 0, 204, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(187, 0, 204, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(187, 0, 204, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(187, 0, 204, 0.3);
   border-radius: 20px;
 }
 
 .spell-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(187, 0, 204, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(187, 0, 204, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(187, 0, 204, 0.1);
+  box-shadow: 0px 0px 14px 2px rgba(187, 0, 204, 0.2);
   border-radius: 20px;
 }
+
+/* --- WEAPONS --- */
 .weapon-tier-5-rarity-5 {
-  -webkit-box-shadow: 0px 0px 15px 15px rgba(245, 12, 12, 0.5);
-  -moz-box-shadow: 0px 0px 15px 15px rgba(245, 12, 12, 0.5);
-  box-shadow: 0px 0px 15px 15px rgba(245, 12, 12, 0.5);
+  box-shadow: 0px 0px 25px 25px rgba(245, 12, 12, 0.6);
   border-radius: 20px;
 }
 
 .weapon-tier-5 {
-  -webkit-box-shadow: 0px 0px 15px 5px rgba(245, 12, 12, 0.5);
-  -moz-box-shadow: 0px 0px 15px 5px rgba(245, 12, 12, 0.5);
-  box-shadow: 0px 0px 15px 5px rgba(245, 12, 12, 0.5);
+  box-shadow: 0px 0px 20px 8px rgba(245, 12, 12, 0.6);
   border-radius: 20px;
 }
 
 .weapon-tier-4 {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(245, 12, 12, 0.4);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(245, 12, 12, 0.4);
-  box-shadow: 0px 0px 15px 4px rgba(245, 12, 12, 0.4);
+  box-shadow: 0px 0px 20px 6px rgba(245, 12, 12, 0.5);
   border-radius: 20px;
 }
 
 .weapon-tier-3 {
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(245, 12, 12, 0.3);
-  -moz-box-shadow: 0px 0px 15px 3px rgba(245, 12, 12, 0.3);
-  box-shadow: 0px 0px 15px 3px rgba(245, 12, 12, 0.3);
+  box-shadow: 0px 0px 18px 4px rgba(245, 12, 12, 0.4);
   border-radius: 20px;
 }
 
 .weapon-tier-2 {
-  -webkit-box-shadow: 0px 0px 15px 2px rgba(245, 12, 12, 0.2);
-  -moz-box-shadow: 0px 0px 15px 2px rgba(245, 12, 12, 0.2);
-  box-shadow: 0px 0px 15px 2px rgba(245, 12, 12, 0.2);
+  box-shadow: 0px 0px 16px 3px rgba(245, 12, 12, 0.3);
   border-radius: 20px;
 }
 
 .weapon-tier-1 {
-  -webkit-box-shadow: 0px 0px 15px 1px rgba(245, 12, 12, 0.1);
-  -moz-box-shadow: 0px 0px 15px 1px rgba(245, 12, 12, 0.1);
-  box-shadow: 0px 0px 15px 1px rgba(245, 12, 12, 0.1);
+  box-shadow: 0px 0px 14px 2px rgba(245, 12, 12, 0.2);
   border-radius: 20px;
 }
+
 .loader {
   width: 13px;
   aspect-ratio: 1;
