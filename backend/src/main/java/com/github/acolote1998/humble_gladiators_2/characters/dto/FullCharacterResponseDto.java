@@ -23,7 +23,7 @@ public record FullCharacterResponseDto(
         String imgBase64
 ) {
 
-    private static FullCharacterResponseDto fromModelToDto(CharacterInstance character) {
+    public static FullCharacterResponseDto fromModelToDto(CharacterInstance character) {
         FullCharacterResponseDto dto = new FullCharacterResponseDto(
                 new CharacterStatsResponseDto(
                         character.getStats().getConstitution(),

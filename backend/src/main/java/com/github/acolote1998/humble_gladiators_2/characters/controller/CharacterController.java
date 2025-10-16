@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.controller;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
+import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
@@ -58,6 +59,14 @@ public class CharacterController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/{campaignId}/character-instances/daily-enemy")
+    ResponseEntity<FullCharacterResponseDto> getDailyEnemyForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance dailyEnemy = characterService.getDailyEnemy(campaignId, userId);
+        FullCharacterResponseDto dto = FullCharacterResponseDto.fromModelToDto(dailyEnemy);
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/{campaignId}/character-instances/hero/check-if-exists")
     ResponseEntity<Boolean> doesHeroExistsForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
@@ -75,5 +84,10 @@ public class CharacterController {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT) // 409 Conflict
                 .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DailyEnemyNotFound.class)
+    public ResponseEntity<String> handleDailyEnemyNotFound() {
+        return ResponseEntity.ok("Daily enemy not found");
     }
 }

@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
+import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
@@ -14,6 +15,7 @@ import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,6 +154,20 @@ public class CharacterService {
             return hero;
         } else {
             throw new HeroDoesNotExist("A hero has not been created for this campaign yet");
+        }
+    }
+
+    public CharacterInstance getDailyEnemy(Long campaignId, String userId) {
+        LocalDate today = LocalDate.now();
+        CharacterInstance enemy = characterInstanceRepository.findEnemyByCampaignIdAndUserIdAndUpdatedAtDate(
+                campaignId,
+                userId,
+                today,
+                CharacterType.NPC.name());
+        if (enemy != null) {
+            return enemy;
+        } else {
+            throw new DailyEnemyNotFound("Enemy not found for today. Booster not opened?");
         }
     }
 
