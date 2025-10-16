@@ -111,4 +111,9 @@ public class CampaignService {
     public Campaign getCampaignByIdAndUserId(String userId, Long campaignId) {
         return repository.findByUserIdAndId(userId, campaignId);
     }
+
+    public byte[] getBackCardImgForCampaignAndUser(String userId, Long campaignId) {
+        Campaign campaign = repository.getCampaignByUserIdAndId(userId, campaignId);
+        return campaign.getCardBackImgBytes();
+    }
 }
