@@ -6,6 +6,134 @@
   --div-lighter-bg: lightgray;
 }
 
+.rarity-1,
+.rarity-2,
+.rarity-3,
+.rarity-4,
+.rarity-5 {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Rarity 1 - weakest */
+.rarity-1::before {
+  filter: blur(80px);
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    0deg,
+    transparent,
+    transparent 95%,
+    rgba(255, 230, 0, 0.05)
+  );
+  transform: rotate(-45deg);
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+/* Rarity 2 */
+.rarity-2::before {
+  filter: blur(80px);
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    0deg,
+    transparent,
+    transparent 75%,
+    rgba(255, 230, 0, 0.15)
+  );
+  transform: rotate(-45deg);
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+/* Rarity 3 */
+.rarity-3::before {
+  filter: blur(80px);
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    0deg,
+    transparent,
+    transparent 50%,
+    rgba(255, 230, 0, 0.3)
+  );
+  transform: rotate(-45deg);
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+/* Rarity 4 */
+.rarity-4::before {
+  filter: blur(80px);
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    0deg,
+    transparent,
+    transparent 25%,
+    rgba(255, 230, 0, 0.45)
+  );
+  transform: rotate(-45deg);
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+/* Rarity 5 - strongest */
+.rarity-5::before {
+  filter: blur(80px);
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    0deg,
+    transparent,
+    transparent 5%,
+    rgba(255, 230, 0, 0.55)
+  );
+  transform: rotate(-45deg);
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+/* Hover effect for all */
+.rarity-1:hover::before,
+.rarity-2:hover::before,
+.rarity-3:hover::before,
+.rarity-4:hover::before,
+.rarity-5:hover::before {
+  opacity: 1;
+  transform: rotate(-45deg) translateY(100%);
+}
+
+.rarity-1:hover::before,
+.rarity-2:hover::before,
+.rarity-3:hover::before,
+.rarity-4:hover::before,
+.rarity-5:hover::before {
+  opacity: 1;
+  transform: rotate(-45deg) translateY(100%);
+}
+
 .cursor-zoom {
   transition: transform 0.1s ease;
   cursor: zoom-in;

@@ -72,4 +72,9 @@ Wednesday 15/10
 - Simple styling improvement to session info component
 - Flagging when a card is NEW when opening an item or character booster
 - Making cards glow according to their tier / rarity
+
+Thursday 16/10
+- Integrated validation of requirements to avoid runtime crashes
+- Adding zoom to discovered cards on hover
+- Adding holo to discovered cards on hover
 ```

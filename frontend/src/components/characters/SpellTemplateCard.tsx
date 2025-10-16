@@ -18,7 +18,7 @@ export const SpellTemplateCard = ({
 
   return (
     <div
-      className={`${(discovered || renderingFromBooster) && "cursor-zoom"} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `spell-tier-5-rarity-5` : `spell-tier-${tier}`) : ""}`}
+      className={`${(discovered || renderingFromBooster) && `cursor-zoom rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `spell-tier-5-rarity-5` : `spell-tier-${tier}`) : ""}`}
       style={{ backgroundImage: `url('/templates/spellCardTemplate.png')` }}
     >
       {/* Top stats */}
