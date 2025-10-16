@@ -80,4 +80,5 @@ Thursday 16/10
 - Adding getDailyEnemy endpoint + logic
 - Card back image generation
 - Card back component
+- Adding card flipping when opening booster
 ```

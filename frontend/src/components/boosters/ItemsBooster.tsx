@@ -87,11 +87,11 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
       });
     if (isBoosterEmpty() && cleanItemBooster) {
       cleanItemBooster();
-      setFlipped(false);
       queryClient.invalidateQueries({
         queryKey: ["items-booster-availability"],
       });
     }
+    setFlipped(false);
   };
   return (
     <>
