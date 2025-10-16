@@ -17,7 +17,22 @@ export const HelmetTemplateCard = ({
 
   return (
     <div
-      className={`${renderingFromBooster && "rotate-y-180"} ${discovered && !renderingFromBooster && `cursor-zoom rarity-${rarity} ${discovered && !renderingFromBooster ? (tier == 5 && rarity == 5 ? `helmet-tier-5-rarity-5` : `helmet-tier-${tier}`) : ""}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer `}
+      className={[
+        // Conditional classes
+        renderingFromBooster ? "rotate-y-180" : "",
+        discovered && !renderingFromBooster ? "cursor-zoom" : "",
+        discovered && !renderingFromBooster ? `rarity-${rarity}` : "",
+        discovered && !renderingFromBooster
+          ? tier === 5 && rarity === 5
+            ? "character-tier-5-rarity-5"
+            : `character-tier-${tier}`
+          : "",
+
+        // Always-applied classes
+        "relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer",
+      ]
+        .filter(Boolean) // removes empty strings
+        .join(" ")} // join with spaces
       style={{ backgroundImage: `url('/templates/helmetCardTemplate.png')` }}
     >
       {/* Top stats */}
