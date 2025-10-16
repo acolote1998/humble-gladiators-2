@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -100,8 +101,8 @@ public class ShieldTemplate extends AbstractItem {
             return false;
         }
 
-        if (shield.getRequirement() == null) {
-            log.warn("{} has no requirement assigned", shield);
+        if (!Requirement.isValidRequirement(shield.getRequirement())) {
+            log.warn("{} has invalid requirement", shield);
             return false;
         }
 

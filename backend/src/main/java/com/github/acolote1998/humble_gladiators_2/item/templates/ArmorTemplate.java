@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -97,8 +98,8 @@ public class ArmorTemplate extends AbstractItem {
             return false;
         }
 
-        if (armor.getRequirement() == null) {
-            log.warn("{} has no requirement assigned", armor);
+        if (!Requirement.isValidRequirement(armor.getRequirement())) {
+            log.warn("{} has invalid requirement", armor);
             return false;
         }
 

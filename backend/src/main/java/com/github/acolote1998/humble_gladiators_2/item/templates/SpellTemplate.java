@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -103,8 +104,8 @@ public class SpellTemplate extends AbstractItem {
             return false;
         }
 
-        if (spell.getRequirement() == null) {
-            log.warn("{} has no requirement assigned", spell);
+        if (!Requirement.isValidRequirement(spell.getRequirement())) {
+            log.warn("{} has invalid requirement", spell);
             return false;
         }
 

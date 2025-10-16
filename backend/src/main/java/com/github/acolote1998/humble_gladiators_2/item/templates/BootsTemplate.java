@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -98,8 +99,8 @@ public class BootsTemplate extends AbstractItem {
             return false;
         }
 
-        if (boot.getRequirement() == null) {
-            log.warn("{} has no requirement assigned", boot);
+        if (!Requirement.isValidRequirement(boot.getRequirement())) {
+            log.warn("{} has invalid requirement", boot);
             return false;
         }
 
