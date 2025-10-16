@@ -7,10 +7,13 @@
 - [ ] add a flag that makes all boosters give tier 4+ and rarity 4+ content only?
 - [ ] Make each character instance have an attribute imgbyte[] (whatever it is) battleScenario / battleGround. And when we get the character from the booster, we also generate its battle scenario, so each scenario and battle can feel unique.
 - [ ] improve UI for campaign creation to avoid having comma separated wantedThemes and unwantedThemes
+
 - [ ] create an endpoint to generate interesting campaign name, and themes and call it from the frontend with a button [Get Random Campaign Idea]
 
   - [ ] it should auto fill up the campaign name and the campaign themes UI intstantly.
   - [ ] the backend can request from gemini a JSON of {name:string, wantedThemes:string[], unwantedThemes:string[]}
+
+- [ ] create a "tutorial"? of how things work? and how to get better results?
 
 - [ ] impement hero inventory, equippment / removing equippment function
 
