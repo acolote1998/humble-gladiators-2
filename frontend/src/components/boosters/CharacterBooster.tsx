@@ -103,7 +103,6 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                         <div className="absolute h-full w-full backface-hidden">
                           <CardBack campaignId={String(campaignId)} />
                         </div>
-                        <div className="backface-hidden"></div>
                         <CharacterInstanceCard
                           {...cards.characters[0]}
                           renderingFromBooster={true}
