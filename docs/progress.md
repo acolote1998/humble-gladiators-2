@@ -82,4 +82,5 @@ Thursday 16/10
 - Card back component
 - Adding card flipping when opening booster
 - Fixing visual bug related to the card back -> had to redesign component & rendring flow due to a race condition
+- Improving className of all card components in frontend
 ```
