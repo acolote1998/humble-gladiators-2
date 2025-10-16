@@ -6,6 +6,22 @@
   --div-lighter-bg: lightgray;
 }
 
+.perspective {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
 .rarity-1,
 .rarity-2,
 .rarity-3,
