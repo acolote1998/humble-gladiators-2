@@ -5,6 +5,16 @@
   --div-bg: gray;
   --div-lighter-bg: lightgray;
 }
+
+.cursor-zoom {
+  transition: transform 0.1s ease;
+  cursor: zoom-in;
+}
+
+.cursor-zoom:hover {
+  transform: scale(1.02);
+}
+
 .character-tier-5-rarity-5 {
   box-shadow: 0px 0px 25px 25px rgba(17, 0, 255, 0.6);
   border-radius: 20px;

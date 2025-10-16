@@ -17,7 +17,7 @@ export const ShieldTemplateCard = ({
 
   return (
     <div
-      className={`relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `shield-tier-5-rarity-5` : `shield-tier-${tier}`) : ""}`}
+      className={`${(discovered || renderingFromBooster) && "cursor-zoom"} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `shield-tier-5-rarity-5` : `shield-tier-${tier}`) : ""}`}
       style={{ backgroundImage: `url('/templates/shieldCardTemplate.png')` }}
     >
       {/* Top stats */}
