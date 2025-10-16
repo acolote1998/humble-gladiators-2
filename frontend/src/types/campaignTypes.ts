@@ -47,4 +47,5 @@ export type CampaignDto = {
   theme: ThemeForCampaignType;
   campaignCreationState: CampaignCreationStateType;
   coverImgBase64: string;
+  cardBackImgBase64: string;
 };

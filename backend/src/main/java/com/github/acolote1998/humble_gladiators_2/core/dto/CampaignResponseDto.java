@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record CampaignResponseDto(Long id, String name, ThemeResponseDto theme,
-                                  CampaignCreationStateType campaignCreationState, String coverImgBase64) {
+                                  CampaignCreationStateType campaignCreationState, String coverImgBase64,
+                                  String cardBackImgBase64) {
     private record ThemeResponseDto(List<String> wantedThemes, List<String> unwantedThemes) {
     }
 
@@ -20,7 +21,8 @@ public record CampaignResponseDto(Long id, String name, ThemeResponseDto theme,
                 campaignToMap.getName(),
                 new ThemeResponseDto(campaignToMap.getTheme().getWantedThemes(), campaignToMap.getTheme().getUnwantedThemes()),
                 campaignToMap.getCampaignCreationState(),
-                BytesToBase64.bytesToBase64(campaignToMap.getCoverImgBytes()));
+                BytesToBase64.bytesToBase64(campaignToMap.getCoverImgBytes()),
+                BytesToBase64.bytesToBase64(campaignToMap.getCardBackImgBytes()));
     }
 
     public static List<CampaignResponseDto> mapCampaignEntityToResponseDtos(List<Campaign> campaigns) {
