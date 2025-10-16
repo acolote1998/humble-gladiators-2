@@ -2,6 +2,8 @@
 
 - [ ] Write prompt_log flag to be able to LOG the "refined" prompts (and maybe all prompts?) to be able to assess prompt quality and potential improvments
 - [ ] Organice css better. break down index.css into smaller css classes
+- [ ] add difficulty? maybe an easy campaign will calculate the hero's modifiers and items with a plus in its formulas, and
+      a normal campaign no modification, and a hard campaign will increase the enemies stats + decrease the potential obtainable stats for the hero?
 
 - [ ] Make each character instance have an attribute imgbyte[] (whatever it is) battleScenario / battleGround. And when we get the character from the booster, we also generate its battle scenario, so each scenario and battle can feel unique.
 
