@@ -78,4 +78,6 @@ Thursday 16/10
 - Adding zoom to discovered cards on hover
 - Adding holo to discovered cards on hover
 - Adding getDailyEnemy endpoint + logic
+- Card back image generation
+- Card back component
 ```
