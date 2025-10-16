@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Organice css better. break down index.css into smaller css classes
+
 - [ ] Make each character instance have an attribute imgbyte[] (whatever it is) battleScenario / battleGround. And when we get the character from the booster, we also generate its battle scenario, so each scenario and battle can feel unique.
 
 - [ ] impement hero inventory, equippment / removing equippment function
