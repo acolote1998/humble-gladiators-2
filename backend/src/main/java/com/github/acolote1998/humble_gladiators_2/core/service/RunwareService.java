@@ -45,6 +45,9 @@ public class RunwareService {
     private final Integer campaignCoverImageWidth = 1344;
     private final Integer campaignCoverImageHeight = 896;
 
+    private final Integer campaignCardBackImageWidth = 1;
+    private final Integer campaignCardBackImageHeight = 1;
+
     @Autowired
     public RunwareService(GeminiService geminiService) {
         this.geminiService = geminiService;
@@ -354,8 +357,8 @@ public class RunwareService {
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
                 positivePrompt,
                 negativePrompt,
-                campaignCoverImageWidth,
-                campaignCoverImageHeight);
+                campaignCardBackImageWidth,
+                campaignCardBackImageHeight);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             String imgUrl = response.getBody().data().getFirst().imageURL();
