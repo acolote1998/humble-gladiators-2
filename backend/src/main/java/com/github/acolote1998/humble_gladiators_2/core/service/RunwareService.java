@@ -45,8 +45,8 @@ public class RunwareService {
     private final Integer campaignCoverImageWidth = 1344;
     private final Integer campaignCoverImageHeight = 896;
 
-    private final Integer campaignCardBackImageWidth = 1;
-    private final Integer campaignCardBackImageHeight = 1;
+    private final Integer campaignCardBackImageWidth = 1024;
+    private final Integer campaignCardBackImageHeight = 1408;
 
     @Autowired
     public RunwareService(GeminiService geminiService) {
