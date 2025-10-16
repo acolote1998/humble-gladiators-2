@@ -341,7 +341,34 @@ public class RunwareService {
                 return null;
             }
         } else {
-            log.error("Error generating card image");
+            log.error("Error generating campaign cover image");
+            return null;
+        }
+    }
+
+    public byte[] generateCampaignCardBackImageToBytes(String positivePrompt, Campaign campaign) {
+        log.info(String.format("Attempt to generate campaign card back image for ID %s - %s", campaign.getId(), campaign.getName()));
+
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
+
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                campaignCoverImageWidth,
+                campaignCoverImageHeight);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String imgUrl = response.getBody().data().getFirst().imageURL();
+            try {
+                byte[] imgBytes = imgUrlToBytes(imgUrl);
+                return imgBytes;
+            } catch (Exception e) {
+                log.error("Could not convert img url to bytes - " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            log.error("Error generating campaign back card image");
             return null;
         }
     }

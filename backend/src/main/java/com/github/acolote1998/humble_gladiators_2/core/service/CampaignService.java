@@ -77,7 +77,7 @@ public class CampaignService {
                                                    String tier5Weapons,
                                                    String tier5Spells,
                                                    String tier5Consumables) {
-        String promptForImageGeneration = geminiService.getPositiveCampaignImageCoverPromptForRuneware(
+        String promptForImageGeneration = geminiService.getPositiveCampaignBackCardImagePromptForRuneware(
                 campaign,
                 tier5Characters,
                 tier5Armors,
