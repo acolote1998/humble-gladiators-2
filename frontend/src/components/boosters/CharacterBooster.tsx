@@ -6,8 +6,10 @@ import { useCreateCharacterBooster } from "../../hooks/useBoosters";
 import { useGetCharacterBoosterAvailability } from "../../hooks/useBoosters";
 import { useQueryClient } from "@tanstack/react-query";
 import { CardBack } from "../cards/CardBack";
+import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
 
 export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
+  const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
   const [flipped, setFlipped] = useState(false);
   const handleFlip = () => {
     if (!flipped) setFlipped(true);
@@ -100,13 +102,19 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                       <div
                         className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                       >
-                        <div className="absolute h-full w-full backface-hidden">
-                          <CardBack campaignId={String(campaignId)} />
-                        </div>
-                        <CharacterInstanceCard
-                          {...cards.characters[0]}
-                          renderingFromBooster={true}
-                        />
+                        {cardBack && (
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack
+                              cardBackImgBase64={cardBack?.cardBackImgBase64}
+                            />
+                          </div>
+                        )}
+                        {cardBack && (
+                          <CharacterInstanceCard
+                            {...cards.characters[0]}
+                            renderingFromBooster={true}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

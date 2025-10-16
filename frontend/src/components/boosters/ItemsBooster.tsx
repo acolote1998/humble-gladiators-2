@@ -12,8 +12,10 @@ import type { ItemBoosterInterface } from "../../types/boosterTypes";
 import { useGetItemBoosterAvailability } from "../../hooks/useBoosters";
 import { useQueryClient } from "@tanstack/react-query";
 import { CardBack } from "../cards/CardBack";
+import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
 
 export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
+  const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
   const [flipped, setFlipped] = useState(false);
   const handleFlip = () => {
     if (!flipped) setFlipped(true);
@@ -136,13 +138,19 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                       <div
                         className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                       >
-                        <div className="absolute h-full w-full backface-hidden">
-                          <CardBack campaignId={String(campaignId)} />
-                        </div>
-                        <ArmorTemplateCard
-                          {...cards.armors[0]}
-                          renderingFromBooster={true}
-                        />
+                        {cardBack && (
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack
+                              cardBackImgBase64={cardBack.cardBackImgBase64}
+                            />
+                          </div>
+                        )}
+                        {cardBack && (
+                          <ArmorTemplateCard
+                            {...cards.armors[0]}
+                            renderingFromBooster={true}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -174,13 +182,19 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                       <div
                         className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                       >
-                        <div className="absolute h-full w-full backface-hidden">
-                          <CardBack campaignId={String(campaignId)} />
-                        </div>
-                        <BootsTemplateCard
-                          {...cards.boots[0]}
-                          renderingFromBooster={true}
-                        />
+                        {cardBack && (
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack
+                              cardBackImgBase64={cardBack.cardBackImgBase64}
+                            />
+                          </div>
+                        )}
+                        {cardBack && (
+                          <BootsTemplateCard
+                            {...cards.boots[0]}
+                            renderingFromBooster={true}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -214,13 +228,19 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                         >
-                          <div className="absolute h-full w-full backface-hidden">
-                            <CardBack campaignId={String(campaignId)} />
-                          </div>
-                          <ConsumableTemplateCard
-                            {...cards.consumables[0]}
-                            renderingFromBooster={true}
-                          />
+                          {cardBack && (
+                            <div className="absolute h-full w-full backface-hidden">
+                              <CardBack
+                                cardBackImgBase64={cardBack.cardBackImgBase64}
+                              />
+                            </div>
+                          )}
+                          {cardBack && (
+                            <ConsumableTemplateCard
+                              {...cards.consumables[0]}
+                              renderingFromBooster={true}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -255,13 +275,19 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                         >
-                          <div className="absolute h-full w-full backface-hidden">
-                            <CardBack campaignId={String(campaignId)} />
-                          </div>
-                          <HelmetTemplateCard
-                            {...cards.helmets[0]}
-                            renderingFromBooster={true}
-                          />
+                          {cardBack && (
+                            <div className="absolute h-full w-full backface-hidden">
+                              <CardBack
+                                cardBackImgBase64={cardBack.cardBackImgBase64}
+                              />
+                            </div>
+                          )}
+                          {cardBack && (
+                            <HelmetTemplateCard
+                              {...cards.helmets[0]}
+                              renderingFromBooster={true}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -297,13 +323,19 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                         >
-                          <div className="absolute h-full w-full backface-hidden">
-                            <CardBack campaignId={String(campaignId)} />
-                          </div>
-                          <ShieldTemplateCard
-                            {...cards.shields[0]}
-                            renderingFromBooster={true}
-                          />
+                          {cardBack && (
+                            <div className="absolute h-full w-full backface-hidden">
+                              <CardBack
+                                cardBackImgBase64={cardBack.cardBackImgBase64}
+                              />
+                            </div>
+                          )}
+                          {cardBack && (
+                            <ShieldTemplateCard
+                              {...cards.shields[0]}
+                              renderingFromBooster={true}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -340,13 +372,19 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                         >
-                          <div className="absolute h-full w-full backface-hidden">
-                            <CardBack campaignId={String(campaignId)} />
-                          </div>
-                          <SpellTemplateCard
-                            {...cards.spells[0]}
-                            renderingFromBooster={true}
-                          />
+                          {cardBack && (
+                            <div className="absolute h-full w-full backface-hidden">
+                              <CardBack
+                                cardBackImgBase64={cardBack.cardBackImgBase64}
+                              />
+                            </div>
+                          )}
+                          {cardBack && (
+                            <SpellTemplateCard
+                              {...cards.spells[0]}
+                              renderingFromBooster={true}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -384,13 +422,19 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
                         >
-                          <div className="absolute h-full w-full backface-hidden">
-                            <CardBack campaignId={String(campaignId)} />
-                          </div>
-                          <WeaponTemplateCard
-                            {...cards.weapons[0]}
-                            renderingFromBooster={true}
-                          />
+                          {cardBack && (
+                            <div className="absolute h-full w-full backface-hidden">
+                              <CardBack
+                                cardBackImgBase64={cardBack.cardBackImgBase64}
+                              />
+                            </div>
+                          )}
+                          {cardBack && (
+                            <WeaponTemplateCard
+                              {...cards.weapons[0]}
+                              renderingFromBooster={true}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
