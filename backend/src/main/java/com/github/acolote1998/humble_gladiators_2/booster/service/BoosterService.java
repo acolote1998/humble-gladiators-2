@@ -2,7 +2,6 @@ package com.github.acolote1998.humble_gladiators_2.booster.service;
 
 import com.github.acolote1998.humble_gladiators_2.booster.enums.IntentionTowardsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBooster;
-import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.InvalidBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
