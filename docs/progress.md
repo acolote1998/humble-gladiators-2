@@ -77,4 +77,5 @@ Thursday 16/10
 - Integrated validation of requirements to avoid runtime crashes
 - Adding zoom to discovered cards on hover
 - Adding holo to discovered cards on hover
+- Adding getDailyEnemy endpoint + logic
 ```
