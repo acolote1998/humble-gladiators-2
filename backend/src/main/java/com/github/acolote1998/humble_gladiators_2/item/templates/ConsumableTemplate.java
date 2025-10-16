@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
+import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -97,8 +98,8 @@ public class ConsumableTemplate extends AbstractItem {
             return false;
         }
 
-        if (consumable.getRequirement() == null) {
-            log.warn("{} has no requirement assigned", consumable);
+        if (!Requirement.isValidRequirement(consumable.getRequirement())) {
+            log.warn("{} has invalid requirement", consumable);
             return false;
         }
 

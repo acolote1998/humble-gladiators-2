@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.core.model;
 
 import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryOperator;
 import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryType;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -74,5 +75,40 @@ public class RequirementEntry {
             newEntry.setCampaign(requirementEntry.getCampaign());
         });
         return clonedEntries;
+    }
+
+    public static boolean isValidRequirementEntry(RequirementEntry requirementEntry) {
+        if (requirementEntry != null) {
+            if (requirementEntry.getRequirementType() == null) {
+                log.warn("requirementEntry is null");
+                return false;
+            }
+            try {
+                RequirementEntryType.valueOf(String.valueOf(requirementEntry.getRequirementType()));
+            } catch (Exception e) {
+                log.warn("RequirementEntryType not valid");
+                return false;
+            }
+            try {
+                RequirementEntryOperator.valueOf(String.valueOf(requirementEntry.getOperator()));
+            } catch (Exception e) {
+                log.warn("requirement entry value not valid");
+                return false;
+            }
+            if (requirementEntry.getValue() == null || requirementEntry.getValue().isBlank()) {
+                log.warn("RequirementEntryOperator not valid");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean areValidRequirementEntries(List<RequirementEntry> requirementEntries) {
+        for (RequirementEntry entry : requirementEntries) {
+            if (!RequirementEntry.isValidRequirementEntry(entry)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -51,4 +51,14 @@ public class Requirement {
         cloned.getRequirements().forEach(requirementEntry -> requirementEntry.setCampaign(original.getCampaign()));
         return cloned;
     }
+
+    public static boolean isValidRequirement(Requirement requirement) {
+        if (requirement != null) {
+            if (!RequirementEntry.areValidRequirementEntries(requirement.getRequirements())) {
+                log.warn("Requirement contains invalid requirementEntries");
+                return false;
+            }
+        }
+        return true;
+    }
 }
