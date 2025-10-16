@@ -37,6 +37,8 @@ export type CampaignCreationStateType =
   | "NPCS_CREATED"
   | "CREATING_CAMPAIGN_COVER_IMAGE"
   | "CAMPAIGN_COVER_IMAGE_CREATED"
+  | "CREATING_CAMPAIGN_CARD_BACK_IMAGE"
+  | "CAMPAIGN_CARD_BACK_IMAGE_CREATED"
   | "GAME_CREATED";
 
 export type CampaignDto = {
