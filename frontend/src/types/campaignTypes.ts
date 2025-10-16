@@ -49,3 +49,7 @@ export type CampaignDto = {
   coverImgBase64: string;
   cardBackImgBase64: string;
 };
+
+export type CardBackDto = {
+  cardBackImgBase64: string;
+};

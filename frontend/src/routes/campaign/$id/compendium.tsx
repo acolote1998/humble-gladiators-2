@@ -8,14 +8,14 @@ import { useGetAllShieldTemplatesForCampaignByUser } from "../../../hooks/useShi
 import { useGetAllSpellTemplatesForCampaignByUser } from "../../../hooks/useSpells";
 import { useGetAllWeaponTemplatesForCampaignByUser } from "../../../hooks/useWeapons";
 import { useGetCharactersByCampaignAndUser } from "../../../hooks/userCharacters";
-import { CharacterInstanceCard } from "../../../components/characters/CharacterInstanceCard";
-import { ArmorTemplateCard } from "../../../components/characters/ArmorTemplateCard";
-import { BootsTemplateCard } from "../../../components/characters/BootsTemplateCard";
-import { ConsumableTemplateCard } from "../../../components/characters/ConsumableTemplateCard";
-import { HelmetTemplateCard } from "../../../components/characters/HelmetTemplateCard";
-import { ShieldTemplateCard } from "../../../components/characters/ShieldTemplateCard";
-import { SpellTemplateCard } from "../../../components/characters/SpellTemplateCard";
-import { WeaponTemplateCard } from "../../../components/characters/WeaponTemplateCard";
+import { CharacterInstanceCard } from "../../../components/cards/CharacterInstanceCard";
+import { ArmorTemplateCard } from "../../../components/cards/ArmorTemplateCard";
+import { BootsTemplateCard } from "../../../components/cards/BootsTemplateCard";
+import { ConsumableTemplateCard } from "../../../components/cards/ConsumableTemplateCard";
+import { HelmetTemplateCard } from "../../../components/cards/HelmetTemplateCard";
+import { ShieldTemplateCard } from "../../../components/cards/ShieldTemplateCard";
+import { SpellTemplateCard } from "../../../components/cards/SpellTemplateCard";
+import { WeaponTemplateCard } from "../../../components/cards/WeaponTemplateCard";
 
 export const Route = createFileRoute("/campaign/$id/compendium")({
   component: RouteComponent,
