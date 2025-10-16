@@ -352,6 +352,8 @@ public class RunwareService {
     public byte[] generateCampaignCardBackImageToBytes(String positivePrompt, Campaign campaign) {
         log.info(String.format("Attempt to generate campaign card back image for ID %s - %s", campaign.getId(), campaign.getName()));
 
+        positivePrompt = positivePrompt + " IMPORTANT INSTRUCTION: Ensure the generated image extends to the edges of the card, leaving no empty or transparent background.";
+
         String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
 
         ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
