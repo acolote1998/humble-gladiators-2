@@ -11,8 +11,13 @@ import { useCreateItemBooster } from "../../hooks/useBoosters";
 import type { ItemBoosterInterface } from "../../types/boosterTypes";
 import { useGetItemBoosterAvailability } from "../../hooks/useBoosters";
 import { useQueryClient } from "@tanstack/react-query";
+import { CardBack } from "../cards/CardBack";
 
 export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
+  const [flipped, setFlipped] = useState(false);
+  const handleFlip = () => {
+    if (!flipped) setFlipped(true);
+  };
   const queryClient = useQueryClient();
   const {
     data: isBoosterAvailable,
@@ -86,6 +91,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
         queryKey: ["items-booster-availability"],
       });
     }
+    setFlipped(false);
   };
   return (
     <>
@@ -123,10 +129,22 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <div
                     className={`${cards.armors[0].tier === 5 && cards.armors[0].rarity === 5 ? "armor-tier-5-rarity-5" : `armor-tier-${cards.armors[0].tier}`} w-fit h-fit`}
                   >
-                    <ArmorTemplateCard
-                      {...cards.armors[0]}
-                      renderingFromBooster={true}
-                    />
+                    <div
+                      className="perspective cursor-pointer"
+                      onClick={handleFlip}
+                    >
+                      <div
+                        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                      >
+                        <div className="absolute h-full w-full backface-hidden">
+                          <CardBack campaignId={String(campaignId)} />
+                        </div>
+                        <ArmorTemplateCard
+                          {...cards.armors[0]}
+                          renderingFromBooster={true}
+                        />
+                      </div>
+                    </div>
                   </div>
                   {!cards.armors[0].discovered && (
                     <p className="bg-amber-300">NEW!</p>
@@ -149,10 +167,22 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <div
                     className={`${cards.boots[0].tier === 5 && cards.boots[0].rarity === 5 ? "boot-tier-5-rarity-5" : `boot-tier-${cards.boots[0].tier}`} w-fit h-fit`}
                   >
-                    <BootsTemplateCard
-                      {...cards.boots[0]}
-                      renderingFromBooster={true}
-                    />
+                    <div
+                      className="perspective cursor-pointer"
+                      onClick={handleFlip}
+                    >
+                      <div
+                        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                      >
+                        <div className="absolute h-full w-full backface-hidden">
+                          <CardBack campaignId={String(campaignId)} />
+                        </div>
+                        <BootsTemplateCard
+                          {...cards.boots[0]}
+                          renderingFromBooster={true}
+                        />
+                      </div>
+                    </div>
                   </div>
                   {!cards.boots[0].discovered && (
                     <p className="bg-amber-300">NEW!</p>
@@ -177,10 +207,22 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div
                       className={`${cards.consumables[0].tier === 5 && cards.consumables[0].rarity === 5 ? "consumable-tier-5-rarity-5" : `consumable-tier-${cards.consumables[0].tier}`} w-fit h-fit`}
                     >
-                      <ConsumableTemplateCard
-                        {...cards.consumables[0]}
-                        renderingFromBooster={true}
-                      />
+                      <div
+                        className="perspective cursor-pointer"
+                        onClick={handleFlip}
+                      >
+                        <div
+                          className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                        >
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack campaignId={String(campaignId)} />
+                          </div>
+                          <ConsumableTemplateCard
+                            {...cards.consumables[0]}
+                            renderingFromBooster={true}
+                          />
+                        </div>
+                      </div>
                     </div>
                     {!cards.consumables[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
@@ -206,10 +248,22 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div
                       className={`${cards.helmets[0].tier === 5 && cards.helmets[0].rarity === 5 ? "helmet-tier-5-rarity-5" : `helmet-tier-${cards.helmets[0].tier}`} w-fit h-fit`}
                     >
-                      <HelmetTemplateCard
-                        {...cards.helmets[0]}
-                        renderingFromBooster={true}
-                      />
+                      <div
+                        className="perspective cursor-pointer"
+                        onClick={handleFlip}
+                      >
+                        <div
+                          className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                        >
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack campaignId={String(campaignId)} />
+                          </div>
+                          <HelmetTemplateCard
+                            {...cards.helmets[0]}
+                            renderingFromBooster={true}
+                          />
+                        </div>
+                      </div>
                     </div>
                     {!cards.helmets[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
@@ -236,10 +290,22 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div
                       className={`${cards.shields[0].tier === 5 && cards.shields[0].rarity === 5 ? "shield-tier-5-rarity-5" : `shield-tier-${cards.shields[0].tier}`} w-fit h-fit`}
                     >
-                      <ShieldTemplateCard
-                        {...cards.shields[0]}
-                        renderingFromBooster={true}
-                      />
+                      <div
+                        className="perspective cursor-pointer"
+                        onClick={handleFlip}
+                      >
+                        <div
+                          className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                        >
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack campaignId={String(campaignId)} />
+                          </div>
+                          <ShieldTemplateCard
+                            {...cards.shields[0]}
+                            renderingFromBooster={true}
+                          />
+                        </div>
+                      </div>
                     </div>
                     {!cards.shields[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
@@ -267,10 +333,22 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div
                       className={`${cards.spells[0].tier === 5 && cards.spells[0].rarity === 5 ? "spell-tier-5-rarity-5" : `spell-tier-${cards.spells[0].tier}`} w-fit h-fit`}
                     >
-                      <SpellTemplateCard
-                        {...cards.spells[0]}
-                        renderingFromBooster={true}
-                      />
+                      <div
+                        className="perspective cursor-pointer"
+                        onClick={handleFlip}
+                      >
+                        <div
+                          className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                        >
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack campaignId={String(campaignId)} />
+                          </div>
+                          <SpellTemplateCard
+                            {...cards.spells[0]}
+                            renderingFromBooster={true}
+                          />
+                        </div>
+                      </div>
                     </div>
                     {!cards.spells[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>
@@ -299,10 +377,22 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div
                       className={`${cards.weapons[0].tier === 5 && cards.weapons[0].rarity === 5 ? "weapon-tier-5-rarity-5" : `weapon-tier-${cards.weapons[0].tier}`} w-fit h-fit`}
                     >
-                      <WeaponTemplateCard
-                        {...cards.weapons[0]}
-                        renderingFromBooster={true}
-                      />
+                      <div
+                        className="perspective cursor-pointer"
+                        onClick={handleFlip}
+                      >
+                        <div
+                          className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                        >
+                          <div className="absolute h-full w-full backface-hidden">
+                            <CardBack campaignId={String(campaignId)} />
+                          </div>
+                          <WeaponTemplateCard
+                            {...cards.weapons[0]}
+                            renderingFromBooster={true}
+                          />
+                        </div>
+                      </div>
                     </div>
                     {!cards.weapons[0].discovered && (
                       <p className="bg-amber-300">NEW!</p>

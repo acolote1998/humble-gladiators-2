@@ -5,8 +5,13 @@ import { CharacterInstanceCard } from "../cards/CharacterInstanceCard";
 import { useCreateCharacterBooster } from "../../hooks/useBoosters";
 import { useGetCharacterBoosterAvailability } from "../../hooks/useBoosters";
 import { useQueryClient } from "@tanstack/react-query";
+import { CardBack } from "../cards/CardBack";
 
 export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
+  const [flipped, setFlipped] = useState(false);
+  const handleFlip = () => {
+    if (!flipped) setFlipped(true);
+  };
   const queryClient = useQueryClient();
   const {
     data: isBoosterAvailable,
@@ -47,6 +52,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
       });
     if (isBoosterEmpty() && cleanCharacterBooster) {
       cleanCharacterBooster();
+      setFlipped(false);
       queryClient.invalidateQueries({
         queryKey: ["character-booster-availability"],
       });
@@ -87,10 +93,22 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                   <div
                     className={`${cards.characters[0].tier === 5 && cards.characters[0].rarity === 5 ? "character-tier-5-rarity-5" : `character-tier-${cards.characters[0].tier}`} w-fit h-fit`}
                   >
-                    <CharacterInstanceCard
-                      {...cards.characters[0]}
-                      renderingFromBooster={true}
-                    />
+                    <div
+                      className="perspective cursor-pointer"
+                      onClick={handleFlip}
+                    >
+                      <div
+                        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
+                      >
+                        <div className="absolute h-full w-full backface-hidden">
+                          <CardBack campaignId={String(campaignId)} />
+                        </div>
+                        <CharacterInstanceCard
+                          {...cards.characters[0]}
+                          renderingFromBooster={true}
+                        />
+                      </div>
+                    </div>
                   </div>
                   {!cards.characters[0].discovered && (
                     <p className="bg-amber-300">NEW!</p>

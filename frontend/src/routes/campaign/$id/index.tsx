@@ -8,7 +8,6 @@ import CampaignInfo from "../../../components/campaigns/CampaignInfo";
 import { useGetHeroExistence } from "../../../hooks/useCharacters";
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
-import { CardBack } from "../../../components/cards/CardBack";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -76,7 +75,6 @@ function RouteComponent() {
           alt={campaignData?.name}
         />
       )}
-      <CardBack campaignId={campaignId} />
     </>
   );
 }
