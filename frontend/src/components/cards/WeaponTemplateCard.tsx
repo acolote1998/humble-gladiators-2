@@ -17,7 +17,7 @@ export const WeaponTemplateCard = ({
 
   return (
     <div
-      className={`${renderingFromBooster && "rotate-y-180"} ${(discovered || renderingFromBooster) && `cursor-zoom rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `weapon-tier-5-rarity-5` : `weapon-tier-${tier}`) : ""}`}
+      className={`${renderingFromBooster && "rotate-y-180"} ${discovered && !renderingFromBooster && `cursor-zoom rarity-${rarity} ${discovered && !renderingFromBooster ? (tier == 5 && rarity == 5 ? `weapon-tier-5-rarity-5` : `weapon-tier-${tier}`) : ""}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer `}
       style={{ backgroundImage: `url('/templates/weaponCardTemplate.png')` }}
     >
       {/* Top stats */}
