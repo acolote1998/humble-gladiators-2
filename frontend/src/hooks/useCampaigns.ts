@@ -8,6 +8,7 @@ import {
   fetchCampaignByIdForAUser,
 } from "../api/fetchCampaigns";
 import { useNavigate } from "@tanstack/react-router";
+import { fetchBackCardFoCampaignByIdForAUser } from "../api/fetchCampaigns";
 export const useCreateCampaign = () => {
   const navigate = useNavigate();
   const { getToken } = useAuth();
@@ -70,6 +71,21 @@ export const useGetCampaignByIdForAUser = (campaignId: number) => {
         throw new Error("No bearer token available");
       }
       return fetchCampaignByIdForAUser(campaignId, bearerToken);
+    },
+  });
+  return { data, isError, isLoading };
+};
+
+export const useGetCardBackForCampaign = (campaignId: number) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["card-back", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return fetchBackCardFoCampaignByIdForAUser(campaignId, bearerToken);
     },
   });
   return { data, isError, isLoading };
