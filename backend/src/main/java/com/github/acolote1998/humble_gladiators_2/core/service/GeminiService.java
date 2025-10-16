@@ -101,23 +101,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 25 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The "Requirement" structure is: \n%s
-
+                
                 The "RequirementEntry" structure is: \n%s
-
+                
                 The ArmorCategory values are: \n%s
-
+                
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -165,23 +165,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 25 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The "Requirement" structure is: \n%s
-
+                
                 The "RequirementEntry" structure is: \n%s
-
+                
                 The BootsCategory values are: \n%s
-
+                
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -227,23 +227,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 25 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The "Requirement" structure is: \n%s
-
+                
                 The "RequirementEntry" structure is: \n%s
-
+                
                 The ConsumablesCategory values are: \n%s
-
+                
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -289,23 +289,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 25 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The "Requirement" structure is: \n%s
-
+                
                 The "RequirementEntry" structure is: \n%s
-
+                
                 The HelmetCategory values are: \n%s
-
+                
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -351,23 +351,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 25 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The "Requirement" structure is: \n%s
-
+                
                 The "RequirementEntry" structure is: \n%s
-
+                
                 The ShieldCategory values are: \n%s
-
+                
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -419,23 +419,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 25 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The "Requirement" structure is: \n%s
-
+                
                 The "RequirementEntry" structure is: \n%s
-
+                
                 The SpellCategory values are: \n%s
-
+                
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -484,23 +484,23 @@ public class GeminiService {
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 25 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The "Requirement" structure is: \n%s
-
+                
                 The "RequirementEntry" structure is: \n%s
-
+                
                 The WeaponCategory values are: \n%s
-
+                
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
                     - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
                     - If the generated object will not have a requirement, then make it null
@@ -541,8 +541,8 @@ public class GeminiService {
     }
 
     public List<CharacterFromGeminiDto> generateTenNpcsOfDesiredTier(Campaign campaign,
-            List<CharacterInstance> existingCharsForContext,
-            Integer tierToGenerate) {
+                                                                     List<CharacterInstance> existingCharsForContext,
+                                                                     Integer tierToGenerate) {
         log.info(String.format("Trying to generate 10 NPCs Tier %s through Gemini", tierToGenerate));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
@@ -557,23 +557,23 @@ public class GeminiService {
         }
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
-
+                
                 Generate in json format an Array of 10 "%s".
-
+                
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
                     - Avoid following unwantedThemes
-
+                
                 %s
-
+                
                 The object structure context is: \n%s
-
+                
                 The CharacterCategory values are: \n%s
-
+                
                 The "Stats" structure is: \n%s
-
+                
                 %s
-
+                
                     - Do not force the generation to fit the CharacterCategory, if an object does not fit or does not make sense, just use "OTHER"
                     - Generate 2 NPCs of tier %s for each rarity level. Example: {NPC1 tier %s, rarity 1}, {NPC2 tier %s, rarity 1}, {NPC3 tier %s, rarity 2}, etc.
                 %s
@@ -935,7 +935,7 @@ public class GeminiService {
                         - Example: if the game is fantasy, the title may appear in ornate, glowing letters; if futuristic, in sleek metallic typography; if sports-themed, in bold, dynamic lettering, etc.
                         - It should feel like official cover art — cohesive, expressive, and attention-grabbing.
                         - Focus on composition, mood, and storytelling elements that reflect the campaign’s subject.
-
+                        
                         - Themes of the campaign: %s
                         - The campaign name is: "%s"
                         - The following Tier 5 elements define the campaign’s key thematic / visual identity (<name,description>):
@@ -947,7 +947,7 @@ public class GeminiService {
                             • Weapons: %s
                             • Spells: %s
                             • Consumables: %s
-
+                        
                         - Art Direction:
                             • Composition: cinematic and balanced, with clear focal points.
                             • Style and atmosphere should reflect the campaign theme — for example:
@@ -958,12 +958,89 @@ public class GeminiService {
                             • The image should feel cohesive and professional — not a collage.
                             • Avoid plain or empty backgrounds unless they serve the aesthetic.
                             • Do not include text, logos, or borders.
-
+                        
                         - Style:
                             • High-quality, detailed, consistent with the tone of the theme.
                             • Strong sense of mood, atmosphere, and storytelling.
                             • Should feel like promotional art for a game launch.
+                        
+                        - OUTPUT INSTRUCTIONS:
+                            - Output ONLY the final text of the image prompt.
+                            - Do NOT add introductions, explanations, or meta commentary.
+                            - Do NOT include phrases like "Here is your prompt:".
+                            - Do NOT use markdown code blocks or backticks.
+                            - Just return the raw text that will be sent to the image generator.
+                        """,
+                campaign.getName(),
+                campaign.getTheme().getWantedThemes().toString(),
+                campaign.getName(),
+                tier5Characters,
+                tier5Armors,
+                tier5Boots,
+                tier5Helmets,
+                tier5Shields,
+                tier5Weapons,
+                tier5Spells,
+                tier5Consumables);
 
+        try {
+            geminiAnswer = callGemini(promptForGemini);
+            log.info("Prompt for Runeware is ready");
+        } catch (InterruptedException e) {
+            log.error("Error generating prompt for runeware" + e.getMessage());
+        }
+        return cleanResponseToJson(geminiAnswer);
+    }
+
+    public String getPositiveCampaignBackCardImagePromptForRuneware(
+            Campaign campaign, String tier5Characters,
+            String tier5Armors,
+            String tier5Boots,
+            String tier5Helmets,
+            String tier5Shields,
+            String tier5Weapons,
+            String tier5Spells,
+            String tier5Consumables) {
+        log.info("Trying to generate prompt for runeware to generate the campaign back card image");
+        String geminiAnswer = "";
+        String promptForGemini = String.format(
+                """
+                        You have to generate a prompt for an AI to produce detailed, visually striking artwork for a card back of a collectible card game, featuring iconic patterns, symbols, and thematic motifs.
+                        For generating the prompt, use this context:
+                        - The artwork should be iconic, instantly recognizable, and suitable for official card printing.
+                        - The artwork should visually represent the campaign’s overall theme, tone, and atmosphere.
+                        - Focus on abstract patterns, symbols, or motifs rather than literal characters or scenes.
+                        - It should feel like an official back card art — cohesive, expressive, and attention-grabbing.
+                        - Focus on composition, mood, and storytelling elements that reflect the campaign’s subject.
+                        
+                        - Themes of the campaign: %s
+                        - The campaign name is: "%s"
+                        - The following Tier 5 elements define the campaign’s key thematic / visual identity (<name,description>):
+                            • Characters: %s
+                            • Armors: %s
+                            • Boots: %s
+                            • Helmets: %s
+                            • Shields: %s
+                            • Weapons: %s
+                            • Spells: %s
+                            • Consumables: %s
+                        
+                        - Art Direction:
+                            • Composition: The composition should be balanced and harmonious, suitable for a small rectangular card.
+                            • Avoid including text, logos, or borders.
+                            • Style and atmosphere should reflect the campaign theme — for example:
+                                - if fantasy → ornate magical symbols, intricate textures, mystical glow
+                                - if sci-fi → sleek geometric shapes, metallic accents, high-tech feel
+                                - if nature → organic shapes, flowing patterns, vibrant colors
+                                - if modern → bold lines, emblematic motifs, dynamic shapes
+                            • The image should feel cohesive and professional — not a collage.
+                            • Avoid plain or empty backgrounds unless they serve the aesthetic.
+                            • Do not include text, logos, or borders.
+                        
+                        - Style:
+                            • High-quality, detailed, consistent with the tone of the theme.
+                            • Strong sense of mood, atmosphere, and storytelling.
+                        
                         - OUTPUT INSTRUCTIONS:
                             - Output ONLY the final text of the image prompt.
                             - Do NOT add introductions, explanations, or meta commentary.
