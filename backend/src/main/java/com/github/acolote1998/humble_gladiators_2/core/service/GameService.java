@@ -45,6 +45,9 @@ public class GameService {
     @Value("${GENERATE_CAMPAIGN_COVER}")
     private boolean GENERATE_CAMPAIGN_COVER;
 
+    @Value("${GENERATE_CAMPAIGN_CARD_BACK}")
+    private boolean GENERATE_CAMPAIGN_CARD_BACK;
+
     @Value("${GENERATE_NPCS}")
     private boolean GENERATE_NPCS;
     @Value("${GENERATE_ARMORS}")
@@ -243,6 +246,23 @@ public class GameService {
                     spellService.getTier5SpellsContextForCampaignCover(campaign).toString(),
                     consumableService.getTier5ConsumablesContextForCampaignCover(campaign).toString());
             updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_COVER_IMAGE_CREATED, campaign);
+            Thread.sleep(500);
+        }
+
+        // CARD BACK FOR CAMPAIGN IMAGE
+        if ((GENERATE_ALL && GENERATE_IMAGES) || (GENERATE_IMAGES && GENERATE_CAMPAIGN_CARD_BACK)) {
+            updateCampaignCreationState(CampaignCreationStateType.CREATING_CAMPAIGN_CARD_BACK_IMAGE, campaign);
+            campaignService.generateCardBackImageForCampaign(
+                    campaign,
+                    characterService.getTier5NpcsContextForCampaignCover(campaign).toString(),
+                    armorService.getTier5ArmorsContextForCampaignCover(campaign).toString(),
+                    bootsService.getTier5BootsContextForCampaignCover(campaign).toString(),
+                    helmetService.getTier5HelmetsContextForCampaignCover(campaign).toString(),
+                    shieldService.getTier5ShieldsContextForCampaignCover(campaign).toString(),
+                    weaponService.getTier5WeaponsContextForCampaignCover(campaign).toString(),
+                    spellService.getTier5SpellsContextForCampaignCover(campaign).toString(),
+                    consumableService.getTier5ConsumablesContextForCampaignCover(campaign).toString());
+            updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_CARD_BACK_IMAGE_CREATED, campaign);
             Thread.sleep(500);
         }
         getShortReportOfAIGeneratedContent(campaign);

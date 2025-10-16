@@ -125,6 +125,14 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         formattedState = "Campaign's cover image created";
         formattedPercent = getPercentWidth(96);
         break;
+      case "CREATING_CAMPAIGN_CARD_BACK_IMAGE":
+        formattedState = "Creating Campaign Card Back Image";
+        formattedPercent = getPercentWidth(97);
+        break;
+      case "CAMPAIGN_CARD_BACK_IMAGE_CREATED":
+        formattedState = "Campaign's card back image created";
+        formattedPercent = getPercentWidth(98);
+        break;
       case "GAME_CREATED":
         formattedState = "Game created!";
         formattedPercent = getPercentWidth(100);

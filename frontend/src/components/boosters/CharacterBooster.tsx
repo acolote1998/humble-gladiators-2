@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { CharacterBoosterType } from "../../types/boosterTypes";
 import type { CharacterBoosterInterface } from "../../types/boosterTypes";
-import { CharacterInstanceCard } from "../characters/CharacterInstanceCard";
+import { CharacterInstanceCard } from "../cards/CharacterInstanceCard";
 import { useCreateCharacterBooster } from "../../hooks/useBoosters";
 import { useGetCharacterBoosterAvailability } from "../../hooks/useBoosters";
 import { useQueryClient } from "@tanstack/react-query";

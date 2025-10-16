@@ -33,6 +33,10 @@ public class Campaign {
     @JdbcTypeCode(SqlTypes.BINARY)
     byte[] coverImgBytes;
 
+    @Lob
+    @JdbcTypeCode(SqlTypes.BINARY)
+    byte[] cardBackImgBytes;
+
     @Enumerated(EnumType.STRING)
     private CampaignCreationStateType campaignCreationState = CampaignCreationStateType.STARTING_NEW_CAMPAIGN;
 

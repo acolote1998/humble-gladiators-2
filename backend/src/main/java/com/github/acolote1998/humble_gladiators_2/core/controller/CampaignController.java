@@ -1,8 +1,10 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.CampaignResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.dto.CardBackResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +42,13 @@ public class CampaignController {
         String userId = jwt.getSubject();
         Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
         return ResponseEntity.ok(CampaignResponseDto.fromEntityToCampaignResponseDto(campaign));
+    }
+
+    @GetMapping("/{campaignId}/card-back")
+    public ResponseEntity<CardBackResponseDto> getCardBackForCampaignByUserAndId(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        byte[] cardBackImg = campaignService.getBackCardImgForCampaignAndUser(userId, campaignId);
+        CardBackResponseDto dto = new CardBackResponseDto(BytesToBase64.bytesToBase64(cardBackImg));
+        return ResponseEntity.ok(dto);
     }
 }

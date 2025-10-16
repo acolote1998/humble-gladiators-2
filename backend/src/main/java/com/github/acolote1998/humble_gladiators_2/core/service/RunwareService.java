@@ -45,6 +45,9 @@ public class RunwareService {
     private final Integer campaignCoverImageWidth = 1344;
     private final Integer campaignCoverImageHeight = 896;
 
+    private final Integer campaignCardBackImageWidth = 1024;
+    private final Integer campaignCardBackImageHeight = 1408;
+
     @Autowired
     public RunwareService(GeminiService geminiService) {
         this.geminiService = geminiService;
@@ -341,7 +344,36 @@ public class RunwareService {
                 return null;
             }
         } else {
-            log.error("Error generating card image");
+            log.error("Error generating campaign cover image");
+            return null;
+        }
+    }
+
+    public byte[] generateCampaignCardBackImageToBytes(String positivePrompt, Campaign campaign) {
+        log.info(String.format("Attempt to generate campaign card back image for ID %s - %s", campaign.getId(), campaign.getName()));
+
+        positivePrompt = positivePrompt + " IMPORTANT INSTRUCTION: Ensure the generated image extends to the edges of the card, leaving no empty or transparent background.";
+
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
+
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                campaignCardBackImageWidth,
+                campaignCardBackImageHeight);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String imgUrl = response.getBody().data().getFirst().imageURL();
+            try {
+                byte[] imgBytes = imgUrlToBytes(imgUrl);
+                return imgBytes;
+            } catch (Exception e) {
+                log.error("Could not convert img url to bytes - " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            log.error("Error generating campaign back card image");
             return null;
         }
     }

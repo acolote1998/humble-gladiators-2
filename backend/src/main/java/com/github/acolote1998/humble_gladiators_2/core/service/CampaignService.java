@@ -5,11 +5,13 @@ import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationSta
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.core.repository.CampaignRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class CampaignService {
     GeminiService geminiService;
     CampaignRepository repository;
@@ -66,6 +68,31 @@ public class CampaignService {
         return generatedImageBytes;
     }
 
+    public byte[] generateCardBackImageForCampaign(Campaign campaign,
+                                                   String tier5Characters,
+                                                   String tier5Armors,
+                                                   String tier5Boots,
+                                                   String tier5Helmets,
+                                                   String tier5Shields,
+                                                   String tier5Weapons,
+                                                   String tier5Spells,
+                                                   String tier5Consumables) {
+        String promptForImageGeneration = geminiService.getPositiveCampaignBackCardImagePromptForRuneware(
+                campaign,
+                tier5Characters,
+                tier5Armors,
+                tier5Boots,
+                tier5Helmets,
+                tier5Shields,
+                tier5Weapons,
+                tier5Spells,
+                tier5Consumables);
+        byte[] generatedImageBytes = runwareService.generateCampaignCardBackImageToBytes(promptForImageGeneration, campaign);
+        campaign.setCardBackImgBytes(generatedImageBytes);
+        repository.save(campaign);
+        return generatedImageBytes;
+    }
+
     public Campaign getCampaignBeingCreatedByUserId(String userId) {
         List<Campaign> possibleCampaigns = repository.getCampaignsByUserId(userId);
         Campaign campaignBeingCreated = possibleCampaigns
@@ -83,5 +110,10 @@ public class CampaignService {
 
     public Campaign getCampaignByIdAndUserId(String userId, Long campaignId) {
         return repository.findByUserIdAndId(userId, campaignId);
+    }
+
+    public byte[] getBackCardImgForCampaignAndUser(String userId, Long campaignId) {
+        Campaign campaign = repository.getCampaignByUserIdAndId(userId, campaignId);
+        return campaign.getCardBackImgBytes();
     }
 }
