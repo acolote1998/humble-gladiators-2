@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.core.model;
 
-import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
