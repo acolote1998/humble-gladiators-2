@@ -17,7 +17,7 @@ export const BootsTemplateCard = ({
 
   return (
     <div
-      className={`${(discovered || renderingFromBooster) && `cursor-zoom rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `boot-tier-5-rarity-5` : `boot-tier-${tier}`) : ""}`}
+      className={`${renderingFromBooster && "rotate-y-180"} ${(discovered || renderingFromBooster) && `cursor-zoom rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer ${discovered ? (tier == 5 && rarity == 5 ? `boot-tier-5-rarity-5` : `boot-tier-${tier}`) : ""}`}
       style={{ backgroundImage: `url('/templates/bootCardTemplate.png')` }}
     >
       {/* Top stats */}
