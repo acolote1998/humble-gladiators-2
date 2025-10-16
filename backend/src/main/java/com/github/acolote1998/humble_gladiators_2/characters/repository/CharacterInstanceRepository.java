@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CharacterInstanceRepository extends ListCrudRepository<CharacterInstance, Long> {
@@ -37,4 +38,16 @@ public interface CharacterInstanceRepository extends ListCrudRepository<Characte
             @Param("rarity") Integer rarity,
             @Param("tier") Integer tier
     );
+
+    @Query(value = "SELECT * FROM character_instance " +
+            "WHERE campaign_id = :campaignId " +
+            "AND user_id = :userId " +
+            "AND character_type = :characterType " +
+            "AND DATE(updated_at) = :today " +
+            "LIMIT 1", nativeQuery = true)
+    CharacterInstance findEnemyByCampaignIdAndUserIdAndUpdatedAtDate(
+            @Param("campaignId") Long campaignId,
+            @Param("userId") String userId,
+            @Param("today") LocalDate today,
+            @Param("characterType") String characterType);
 }

@@ -65,14 +65,14 @@ INSERT INTO character_instance (user_id, campaign_id, name, description, charact
                                 speed, luck, max_hp, current_hp, max_mp, current_mp, height, weight, level, current_exp,
                                 exp_for_next_level, created_at, updated_at)
 VALUES ('user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 'Sir Gareth the Bold', 'A brave knight wielding a mighty sword',
-        'NPC', 'HUMANOID', false, 1, 1, 0, 0, 1, 18, 14, 20, 16, 15, 0, 0, 0, 0, 180, 85, 5, 0, 0, NOW(), NOW());
+        'NPC', 'HUMANOID', false, 1, 1, 0, 0, 1, 18, 14, 20, 16, 15, 0, 0, 0, 0, 180, 85, 5, 0, 0, NOW(),     NOW() - INTERVAL '1 day');
 
 INSERT INTO character_instance (user_id, campaign_id, name, description, character_type, category, discovered, tier,
                                 rarity, gold_reward, exp_reward, inventory_id, constitution, intelligence, strength,
                                 speed, luck, max_hp, current_hp, max_mp, current_mp, height, weight, level, current_exp,
                                 exp_for_next_level, created_at, updated_at)
 VALUES ('user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 'Mystic Elara', 'A powerful mage with ancient knowledge', 'NPC',
-        'HUMANOID', false, 3, 4, 0, 0, 2, 16, 22, 12, 18, 17, 0, 0, 0, 0, 165, 60, 7, 0, 0, NOW(), NOW());
+        'HUMANOID', false, 3, 4, 0, 0, 2, 16, 22, 12, 18, 17, 0, 0, 0, 0, 165, 60, 7, 0, 0, NOW(), NOW() - INTERVAL '1 day');
 
 -- Insert Armor Templates (2)
 INSERT INTO armor_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
