@@ -1,15 +1,19 @@
 package com.github.acolote1998.humble_gladiators_2.characters.controller;
 
-import com.github.acolote1998.humble_gladiators_2.characters.dto.EquipArmorRequestDto;
+import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.item.dto.ArmorInstanceResponseDto;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @CrossOrigin
@@ -26,9 +30,19 @@ public class InventoryController {
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/armor/{itemId}")
-    ResponseEntity<ArmorInstanceResponseDto> equipArmorToHero(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @RequestBody EquipArmorRequestDto dtoRequest) {
-        ArmorInstance updatedArmor = characterService.equipArmor(dtoRequest.armorId());
+    ResponseEntity<ArmorInstanceResponseDto> equipArmorToHero(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @PathVariable Long itemId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        ArmorInstance updatedArmor = characterService.equipArmor(hero, itemId);
         ArmorInstanceResponseDto dto = ArmorInstanceResponseDto.fromModel(updatedArmor);
         return ResponseEntity.ok(dto);
+    }
+
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleItemNotFound(NoSuchElementException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body("Could not equip item: item not found.");
     }
 }

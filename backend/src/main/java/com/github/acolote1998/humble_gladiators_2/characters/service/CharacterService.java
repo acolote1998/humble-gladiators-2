@@ -12,14 +12,13 @@ import com.github.acolote1998.humble_gladiators_2.characters.repository.Characte
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -27,9 +26,54 @@ public class CharacterService {
     GeminiService geminiService;
     CharacterInstanceRepository characterInstanceRepository;
 
+    @Value("${SKIP_REQUIREMENTS}")
+    private boolean SKIP_REQUIREMENTS;
+
     public CharacterService(GeminiService geminiService, CharacterInstanceRepository characterInstanceRepository) {
         this.geminiService = geminiService;
         this.characterInstanceRepository = characterInstanceRepository;
+    }
+
+    public ArmorInstance equipArmor(CharacterInstance hero, Long armorToEquipId) {
+        ArmorInstance armorToEquip =
+                hero.getInventory()
+                        .getArmors()
+                        .stream()
+                        .filter(
+                                armorInstance ->
+                                        Objects.equals(armorInstance.getId(), armorToEquipId)
+                        )
+                        .findFirst()
+                        .orElseThrow();
+        ArmorInstance alreadyEquippedArmor = getEquippedArmorForAHero(hero);
+        if (alreadyEquippedArmor != null) {
+            alreadyEquippedArmor.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(), alreadyEquippedArmor.getName(), alreadyEquippedArmor.getId());
+        } else {
+            log.info("Hero {} did not have any armor equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        armorToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping armor '{}' to hero '{}'", armorToEquip.getName(), hero.getName());
+        return armorToEquip;
+    }
+
+    public ArmorInstance getEquippedArmorForAHero(CharacterInstance hero) {
+        ArmorInstance equippedArmor = hero
+                .getInventory()
+                .getArmors()
+                .stream()
+                .filter(
+                        armorInstance -> armorInstance
+                                .getEquipped()
+                )
+                .findFirst()
+                .orElse(null);
+        return equippedArmor;
+
     }
 
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {
