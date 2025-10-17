@@ -5,8 +5,10 @@ import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterSe
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.item.dto.ArmorInstanceResponseDto;
 import com.github.acolote1998.humble_gladiators_2.item.dto.BootsInstanceResponseDto;
+import com.github.acolote1998.humble_gladiators_2.item.dto.HelmetInstanceResponseDto;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,16 @@ public class InventoryController {
         CharacterInstance hero = characterService.getHero(campaignId, userId);
         BootsInstance updatedBoots = characterService.equipBoots(hero, itemId);
         BootsInstanceResponseDto dto = BootsInstanceResponseDto.fromModel(updatedBoots);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/{campaignId}/character-instances/hero/equip/helmet/{itemId}")
+    ResponseEntity<HelmetInstanceResponseDto> equipHelmetToHero(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable Long campaignId, @PathVariable Long itemId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        HelmetInstance updatedHelmet = characterService.equipHelmet(hero, itemId);
+        HelmetInstanceResponseDto dto = HelmetInstanceResponseDto.fromModel(updatedHelmet);
         return ResponseEntity.ok(dto);
     }
 

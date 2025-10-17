@@ -14,6 +14,7 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,46 @@ public class CharacterService {
                 .findFirst()
                 .orElse(null);
         return equippedBoots;
+
+    }
+
+    public HelmetInstance equipHelmet(CharacterInstance hero, Long helmetToEquipId) {
+        HelmetInstance helmetToEquip = hero.getInventory()
+                .getHelmets()
+                .stream()
+                .filter(
+                        helmetInstance -> Objects.equals(helmetInstance.getId(), helmetToEquipId))
+                .findFirst()
+                .orElseThrow();
+        HelmetInstance alreadyEquippedHelmet = getEquippedHelmetForAHero(hero);
+        if (alreadyEquippedHelmet != null) {
+            alreadyEquippedHelmet.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedHelmet.getName(), alreadyEquippedHelmet.getId());
+        } else {
+            log.info("Hero {} did not have any helmet equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        helmetToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping helmet '{}' to hero '{}'", helmetToEquip.getName(), hero.getName());
+        return helmetToEquip;
+    }
+
+    public HelmetInstance getEquippedHelmetForAHero(CharacterInstance hero) {
+        HelmetInstance equippedHelmet = hero
+                .getInventory()
+                .getHelmets()
+                .stream()
+                .filter(
+                        helmetInstance -> helmetInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedHelmet;
 
     }
 
