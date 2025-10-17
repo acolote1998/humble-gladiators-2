@@ -15,6 +15,7 @@ import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -153,6 +154,46 @@ public class CharacterService {
                 .findFirst()
                 .orElse(null);
         return equippedHelmet;
+
+    }
+
+    public ShieldInstance equipShield(CharacterInstance hero, Long shieldToEquipId) {
+        ShieldInstance shieldToEquip = hero.getInventory()
+                .getShields()
+                .stream()
+                .filter(
+                        shieldInstance -> Objects.equals(shieldInstance.getId(), shieldToEquipId))
+                .findFirst()
+                .orElseThrow();
+        ShieldInstance alreadyEquippedShield = getEquippedShieldForAHero(hero);
+        if (alreadyEquippedShield != null) {
+            alreadyEquippedShield.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedShield.getName(), alreadyEquippedShield.getId());
+        } else {
+            log.info("Hero {} did not have any shield equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        shieldToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping shield '{}' to hero '{}'", shieldToEquip.getName(), hero.getName());
+        return shieldToEquip;
+    }
+
+    public ShieldInstance getEquippedShieldForAHero(CharacterInstance hero) {
+        ShieldInstance equippedShield = hero
+                .getInventory()
+                .getShields()
+                .stream()
+                .filter(
+                        shieldInstance -> shieldInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedShield;
 
     }
 

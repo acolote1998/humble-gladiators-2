@@ -32,12 +32,12 @@ public class ShieldInstance extends AbstractItem implements Discoverable, Equipp
 
     @Override
     public void equip() {
-
+        this.setEquipped(true);
     }
 
     @Override
     public void unequip() {
-
+        this.setEquipped(false);
     }
 
     @Override
