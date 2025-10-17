@@ -33,12 +33,12 @@ public class BootsInstance extends AbstractItem implements Discoverable, Equippa
 
     @Override
     public void equip() {
-
+        this.setEquipped(true);
     }
 
     @Override
     public void unequip() {
-
+        this.setEquipped(false);
     }
 
     @Override

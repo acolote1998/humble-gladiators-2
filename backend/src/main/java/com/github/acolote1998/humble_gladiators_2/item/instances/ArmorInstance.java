@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.instances;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Equippable;
@@ -33,12 +34,12 @@ public class ArmorInstance extends AbstractItem implements Discoverable, Equippa
 
     @Override
     public void equip() {
-
+        this.setEquipped(true);
     }
 
     @Override
     public void unequip() {
-
+        this.setEquipped(false);
     }
 
     @Override

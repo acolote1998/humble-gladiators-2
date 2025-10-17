@@ -12,14 +12,17 @@ import com.github.acolote1998.humble_gladiators_2.characters.repository.Characte
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -27,9 +30,212 @@ public class CharacterService {
     GeminiService geminiService;
     CharacterInstanceRepository characterInstanceRepository;
 
+    @Value("${SKIP_REQUIREMENTS}")
+    private boolean SKIP_REQUIREMENTS;
+
     public CharacterService(GeminiService geminiService, CharacterInstanceRepository characterInstanceRepository) {
         this.geminiService = geminiService;
         this.characterInstanceRepository = characterInstanceRepository;
+    }
+
+    public ArmorInstance equipArmor(CharacterInstance hero, Long armorToEquipId) {
+        ArmorInstance armorToEquip = hero.getInventory()
+                .getArmors()
+                .stream()
+                .filter(
+                        armorInstance -> Objects.equals(armorInstance.getId(), armorToEquipId))
+                .findFirst()
+                .orElseThrow();
+        ArmorInstance alreadyEquippedArmor = getEquippedArmorForAHero(hero);
+        if (alreadyEquippedArmor != null) {
+            alreadyEquippedArmor.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedArmor.getName(), alreadyEquippedArmor.getId());
+        } else {
+            log.info("Hero {} did not have any armor equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        armorToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping armor '{}' to hero '{}'", armorToEquip.getName(), hero.getName());
+        return armorToEquip;
+    }
+
+    public ArmorInstance getEquippedArmorForAHero(CharacterInstance hero) {
+        ArmorInstance equippedArmor = hero
+                .getInventory()
+                .getArmors()
+                .stream()
+                .filter(
+                        armorInstance -> armorInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedArmor;
+
+    }
+
+    public BootsInstance equipBoots(CharacterInstance hero, Long bootsToEquipId) {
+        BootsInstance bootsToEquip = hero.getInventory()
+                .getBoots()
+                .stream()
+                .filter(
+                        bootsInstance -> Objects.equals(bootsInstance.getId(), bootsToEquipId))
+                .findFirst()
+                .orElseThrow();
+        BootsInstance alreadyEquippedBoots = getEquippedBootsForAHero(hero);
+        if (alreadyEquippedBoots != null) {
+            alreadyEquippedBoots.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedBoots.getName(), alreadyEquippedBoots.getId());
+        } else {
+            log.info("Hero {} did not have any boots equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        bootsToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping boots '{}' to hero '{}'", bootsToEquip.getName(), hero.getName());
+        return bootsToEquip;
+    }
+
+    public BootsInstance getEquippedBootsForAHero(CharacterInstance hero) {
+        BootsInstance equippedBoots = hero
+                .getInventory()
+                .getBoots()
+                .stream()
+                .filter(
+                        bootsInstance -> bootsInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedBoots;
+
+    }
+
+    public HelmetInstance equipHelmet(CharacterInstance hero, Long helmetToEquipId) {
+        HelmetInstance helmetToEquip = hero.getInventory()
+                .getHelmets()
+                .stream()
+                .filter(
+                        helmetInstance -> Objects.equals(helmetInstance.getId(), helmetToEquipId))
+                .findFirst()
+                .orElseThrow();
+        HelmetInstance alreadyEquippedHelmet = getEquippedHelmetForAHero(hero);
+        if (alreadyEquippedHelmet != null) {
+            alreadyEquippedHelmet.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedHelmet.getName(), alreadyEquippedHelmet.getId());
+        } else {
+            log.info("Hero {} did not have any helmet equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        helmetToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping helmet '{}' to hero '{}'", helmetToEquip.getName(), hero.getName());
+        return helmetToEquip;
+    }
+
+    public HelmetInstance getEquippedHelmetForAHero(CharacterInstance hero) {
+        HelmetInstance equippedHelmet = hero
+                .getInventory()
+                .getHelmets()
+                .stream()
+                .filter(
+                        helmetInstance -> helmetInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedHelmet;
+
+    }
+
+    public ShieldInstance equipShield(CharacterInstance hero, Long shieldToEquipId) {
+        ShieldInstance shieldToEquip = hero.getInventory()
+                .getShields()
+                .stream()
+                .filter(
+                        shieldInstance -> Objects.equals(shieldInstance.getId(), shieldToEquipId))
+                .findFirst()
+                .orElseThrow();
+        ShieldInstance alreadyEquippedShield = getEquippedShieldForAHero(hero);
+        if (alreadyEquippedShield != null) {
+            alreadyEquippedShield.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedShield.getName(), alreadyEquippedShield.getId());
+        } else {
+            log.info("Hero {} did not have any shield equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        shieldToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping shield '{}' to hero '{}'", shieldToEquip.getName(), hero.getName());
+        return shieldToEquip;
+    }
+
+    public ShieldInstance getEquippedShieldForAHero(CharacterInstance hero) {
+        ShieldInstance equippedShield = hero
+                .getInventory()
+                .getShields()
+                .stream()
+                .filter(
+                        shieldInstance -> shieldInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedShield;
+
+    }
+
+    public WeaponInstance equipWeapon(CharacterInstance hero, Long weaponToEquipId) {
+        WeaponInstance weaponToEquip = hero.getInventory()
+                .getWeapons()
+                .stream()
+                .filter(
+                        weaponInstance -> Objects.equals(weaponInstance.getId(), weaponToEquipId))
+                .findFirst()
+                .orElseThrow();
+        WeaponInstance alreadyEquippedWeapon = getEquippedWeaponForAHero(hero);
+        if (alreadyEquippedWeapon != null) {
+            alreadyEquippedWeapon.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedWeapon.getName(), alreadyEquippedWeapon.getId());
+        } else {
+            log.info("Hero {} did not have any weapon equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        weaponToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping weapon '{}' to hero '{}'", weaponToEquip.getName(), hero.getName());
+        return weaponToEquip;
+    }
+
+    public WeaponInstance getEquippedWeaponForAHero(CharacterInstance hero) {
+        WeaponInstance equippedWeapon = hero
+                .getInventory()
+                .getWeapons()
+                .stream()
+                .filter(
+                        weaponInstance -> weaponInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedWeapon;
+
     }
 
     public Map<String, Object> getShortAIGeneratedReport(Long campaignId) {

@@ -22,23 +22,27 @@ public record ArmorInstanceResponseDto(
         String imgBase64
 ) {
 
+    public static ArmorInstanceResponseDto fromModel(ArmorInstance armor) {
+        return new ArmorInstanceResponseDto(
+                armor.getName(),
+                armor.getDescription(),
+                armor.getRarity(),
+                armor.getTier(),
+                armor.getValue(),
+                armor.getQuantity(),
+                armor.getEquipped(),
+                RequirementResponseDto.fromRequirement(armor.getRequirement()),
+                armor.getTemplate().getCategory(),
+                armor.getTemplate().getPhysicalDefense(),
+                armor.getTemplate().getMagicalDefense(),
+                BytesToBase64.bytesToBase64(armor.getTemplate().getImgBytes())
+        );
+    }
+
     public static List<ArmorInstanceResponseDto> fromInstances(List<ArmorInstance> armors) {
         if (armors == null) return List.of();
         return armors.stream()
-                .map(armor -> new ArmorInstanceResponseDto(
-                        armor.getName(),
-                        armor.getDescription(),
-                        armor.getRarity(),
-                        armor.getTier(),
-                        armor.getValue(),
-                        armor.getQuantity(),
-                        armor.getEquipped(),
-                        RequirementResponseDto.fromRequirement(armor.getRequirement()),
-                        armor.getTemplate().getCategory(),
-                        armor.getTemplate().getPhysicalDefense(),
-                        armor.getTemplate().getMagicalDefense(),
-                        BytesToBase64.bytesToBase64(armor.getTemplate().getImgBytes())
-                ))
+                .map(armor -> fromModel(armor))
                 .toList();
     }
 }

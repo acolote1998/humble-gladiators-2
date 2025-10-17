@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.repository;
 
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -50,4 +51,6 @@ public interface CharacterInstanceRepository extends ListCrudRepository<Characte
             @Param("userId") String userId,
             @Param("today") LocalDate today,
             @Param("characterType") String characterType);
+
+    CharacterInstance getById(Long id);
 }
