@@ -7,10 +7,12 @@ import com.github.acolote1998.humble_gladiators_2.item.dto.ArmorInstanceResponse
 import com.github.acolote1998.humble_gladiators_2.item.dto.BootsInstanceResponseDto;
 import com.github.acolote1998.humble_gladiators_2.item.dto.HelmetInstanceResponseDto;
 import com.github.acolote1998.humble_gladiators_2.item.dto.ShieldInstanceResponseDto;
+import com.github.acolote1998.humble_gladiators_2.item.dto.WeaponInstanceResponseDto;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +73,16 @@ public class InventoryController {
         CharacterInstance hero = characterService.getHero(campaignId, userId);
         ShieldInstance updatedShield = characterService.equipShield(hero, itemId);
         ShieldInstanceResponseDto dto = ShieldInstanceResponseDto.fromModel(updatedShield);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/{campaignId}/character-instances/hero/equip/weapon/{itemId}")
+    ResponseEntity<WeaponInstanceResponseDto> equipWeaponToHero(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable Long campaignId, @PathVariable Long itemId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        WeaponInstance updatedWeapon = characterService.equipWeapon(hero, itemId);
+        WeaponInstanceResponseDto dto = WeaponInstanceResponseDto.fromModel(updatedWeapon);
         return ResponseEntity.ok(dto);
     }
 

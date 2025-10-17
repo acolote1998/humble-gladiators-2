@@ -16,6 +16,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -194,6 +195,46 @@ public class CharacterService {
                 .findFirst()
                 .orElse(null);
         return equippedShield;
+
+    }
+
+    public WeaponInstance equipWeapon(CharacterInstance hero, Long weaponToEquipId) {
+        WeaponInstance weaponToEquip = hero.getInventory()
+                .getWeapons()
+                .stream()
+                .filter(
+                        weaponInstance -> Objects.equals(weaponInstance.getId(), weaponToEquipId))
+                .findFirst()
+                .orElseThrow();
+        WeaponInstance alreadyEquippedWeapon = getEquippedWeaponForAHero(hero);
+        if (alreadyEquippedWeapon != null) {
+            alreadyEquippedWeapon.setEquipped(false);
+            log.info("Hero {} already had '{} - {}' equipped. Unequipping it", hero.getName(),
+                    alreadyEquippedWeapon.getName(), alreadyEquippedWeapon.getId());
+        } else {
+            log.info("Hero {} did not have any weapon equipped", hero.getName());
+        }
+        if (!SKIP_REQUIREMENTS) {
+            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
+            // REQUIREMENTS TO EQUIP / USE THE ITEM
+        }
+        weaponToEquip.equip();
+        saveCharacter(hero);
+        log.info("Equipping weapon '{}' to hero '{}'", weaponToEquip.getName(), hero.getName());
+        return weaponToEquip;
+    }
+
+    public WeaponInstance getEquippedWeaponForAHero(CharacterInstance hero) {
+        WeaponInstance equippedWeapon = hero
+                .getInventory()
+                .getWeapons()
+                .stream()
+                .filter(
+                        weaponInstance -> weaponInstance
+                                .getEquipped())
+                .findFirst()
+                .orElse(null);
+        return equippedWeapon;
 
     }
 

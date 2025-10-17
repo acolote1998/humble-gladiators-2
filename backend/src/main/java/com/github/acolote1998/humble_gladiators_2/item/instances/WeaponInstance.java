@@ -39,12 +39,12 @@ public class WeaponInstance extends AbstractItem implements Attacker, Discoverab
 
     @Override
     public void equip() {
-
+        this.setEquipped(true);
     }
 
     @Override
     public void unequip() {
-
+        this.setEquipped(false);
     }
 
     @Override
