@@ -1,9 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.controller;
 
-import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.EquipArmorRequestDto;
-import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
-import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.item.dto.ArmorInstanceResponseDto;
