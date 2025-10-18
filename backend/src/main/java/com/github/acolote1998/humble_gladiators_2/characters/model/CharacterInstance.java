@@ -165,5 +165,15 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         return totalMagicalDefense;
     }
 
+    public Integer getPhysicalDamage() {
+        Integer totalPhysicalDamage = 0;
+        Inventory characterInventory = this.getInventory();
+        WeaponInstance equippedWeaepon = characterInventory.getWeapons().stream().filter(WeaponInstance::getEquipped).findFirst().orElse(null);
+        if (equippedWeaepon != null) {
+            totalPhysicalDamage += equippedWeaepon.getTemplate().getPhysicalDamage();
+        }
+        return totalPhysicalDamage;
+    }
+
 
 }
