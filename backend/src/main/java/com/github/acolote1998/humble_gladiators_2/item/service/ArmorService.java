@@ -127,7 +127,7 @@ public class ArmorService {
         return armorTemplateRepository.save(armor);
     }
 
-    private ArmorInstance instanceFromArmorTemplate(ArmorTemplate template, Inventory inventoryItBelongsTo) {
+    public ArmorInstance instanceFromArmorTemplate(ArmorTemplate template, Inventory inventoryItBelongsTo) {
         ArmorInstance instance = new ArmorInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -151,7 +151,7 @@ public class ArmorService {
     }
 
 
-    public ArmorTemplate getArmorByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
+    public ArmorTemplate getRandomArmorByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
         List<ArmorTemplate> armors = armorTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity, campaignId, userId);
         Collections.shuffle(armors);
         ArmorTemplate armor = armors.stream().findFirst().orElseThrow();
