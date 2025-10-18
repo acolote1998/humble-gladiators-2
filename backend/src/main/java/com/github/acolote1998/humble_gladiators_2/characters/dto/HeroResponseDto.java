@@ -28,7 +28,9 @@ public record HeroResponseDto(
             int currentExp,
             int expForNextLevel,
             int physicalDefense,
-            int magicalDefense
+            int magicalDefense,
+            int physicalDamage,
+            int magicalDamage
     ) {
     }
 
@@ -69,7 +71,9 @@ public record HeroResponseDto(
                 stats.getCurrentExp(),
                 stats.getExpForNextLevel(),
                 character.getPhysicalDefense(),
-                character.getMagicalDefense()
+                character.getMagicalDefense(),
+                character.getPhysicalDamage(),
+                character.getMagicalDamage()
         );
     }
 

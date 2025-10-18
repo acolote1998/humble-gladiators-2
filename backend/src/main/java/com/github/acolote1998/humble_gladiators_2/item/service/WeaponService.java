@@ -9,14 +9,12 @@ import com.github.acolote1998.humble_gladiators_2.core.service.RequirementServic
 import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.WeaponTemplateRepository;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.WeaponTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -118,7 +116,7 @@ public class WeaponService {
     }
 
     public WeaponTemplate getRandomWeaponTemplateForItemBooster(Long campaignId, String userId, Integer rarity,
-            Integer tier) {
+                                                                Integer tier) {
         return weaponTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
@@ -130,7 +128,7 @@ public class WeaponService {
         return weaponTemplateRepository.save(weapon);
     }
 
-    private WeaponInstance instanceFromWeaponTemplate(WeaponTemplate template, Inventory inventoryItBelongsTo) {
+    public WeaponInstance instanceFromWeaponTemplate(WeaponTemplate template, Inventory inventoryItBelongsTo) {
         WeaponInstance instance = new WeaponInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -148,9 +146,16 @@ public class WeaponService {
     }
 
     public List<WeaponInstance> instancesFromWeaponTemplates(List<WeaponTemplate> templates,
-            Inventory inventoryItBelongsTo) {
+                                                             Inventory inventoryItBelongsTo) {
         List<WeaponInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromWeaponTemplate(template, inventoryItBelongsTo)));
         return instances;
+    }
+
+    public WeaponTemplate getRandomWeaponByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
+        List<WeaponTemplate> weapons = weaponTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity, campaignId, userId);
+        Collections.shuffle(weapons);
+        WeaponTemplate weapon = weapons.stream().findFirst().orElseThrow();
+        return weapon;
     }
 }
