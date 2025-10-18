@@ -306,7 +306,7 @@ public class BoosterService {
 
     public Boolean doesCharacterGenerateThisItem() {
         Random randomChance = new Random();
-        return randomChance.nextInt(51, 101) >= 51;
+        return randomChance.nextInt(1, 101) >= 51;
     }
 
     @Transactional
@@ -321,12 +321,17 @@ public class BoosterService {
         //Gets one character
         for (int i = 0; i < 1; i++) {
             CharacterInstance characterInstance = characterService.getRandomCharacterInstanceForCharacterBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
+            Inventory characterInventory = characterInstance.getInventory();
             if (doesCharacterGenerateThisItem()) {
                 ArmorTemplate armorTemplate = armorService.getRandomArmorByTierAndRarityAndCampaignAndUserId(characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
-                ArmorInstance armorToEquip = armorService.instanceFromArmorTemplate(armorTemplate, characterInstance.getInventory());
-                characterInstance.getInventory().getArmors().forEach(ArmorInstance::unequip);
-                characterInstance.getInventory().getArmors().add(armorToEquip);
-                armorToEquip.equip();
+                if (armorTemplate != null) {
+                    ArmorInstance armorToEquip = armorService.instanceFromArmorTemplate(armorTemplate, characterInventory);
+                    if (armorToEquip != null) {
+                        characterInventory.getArmors().forEach(ArmorInstance::unequip);
+                        characterInventory.getArmors().add(armorToEquip);
+                        armorToEquip.equip();
+                    }
+                }
             }
             if (IMAGE_GENERATION_ACTIVATED && characterInstance.getImgBytes() == null) {
                 //Image for this card does not exist, so we have to generate it
