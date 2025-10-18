@@ -13,7 +13,6 @@ import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterSe
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -325,6 +324,9 @@ public class BoosterService {
         //Gets one character
         for (int i = 0; i < 1; i++) {
             CharacterInstance characterInstance = characterService.getRandomCharacterInstanceForCharacterBooster(campaignId, userId, getCalculatedRarity(), getCalculatedTier());
+            if(doesCharacterGenerateThisItem()){
+                ArmorTemplate armorToEquip = armorService
+            }
             if (IMAGE_GENERATION_ACTIVATED && characterInstance.getImgBytes() == null) {
                 //Image for this card does not exist, so we have to generate it
                 byte[] generatedImage = runwareService.generateCharacterInstanceImageToBytes(campaign, characterInstance);

@@ -35,4 +35,6 @@ public interface ArmorTemplateRepository extends ListCrudRepository<ArmorTemplat
     List<ArmorTemplate> findAllByCampaign_Id(Long campaignId);
 
     List<ArmorTemplate> findAllByTierAndCampaign_Id(Integer tier, Long campaignId);
+
+    List<ArmorTemplate> findAllByTierAndRarityAndCampaign_IdAndUserId(Integer tier, Integer rarity, Long campaignId, String userId);
 }
