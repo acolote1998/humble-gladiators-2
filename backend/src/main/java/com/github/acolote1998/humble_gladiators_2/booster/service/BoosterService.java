@@ -15,6 +15,7 @@ import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -366,6 +367,19 @@ public class BoosterService {
                         characterInventory.getBoots().forEach(BootsInstance::unequip);
                         characterInventory.getBoots().add(bootsToEquip);
                         bootsToEquip.equip();
+                    }
+                }
+            }
+            if (doesCharacterGenerateThisItem()) {
+                HelmetTemplate helmetTemplate = helmetService.getRandomHelmetByTierAndRarityAndCampaignAndUserId(
+                        characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
+                if (helmetTemplate != null) {
+                    HelmetInstance helmetToEquip = helmetService.instanceFromHelmetTemplate(helmetTemplate,
+                            characterInventory);
+                    if (helmetToEquip != null) {
+                        characterInventory.getHelmets().forEach(HelmetInstance::unequip);
+                        characterInventory.getHelmets().add(helmetToEquip);
+                        helmetToEquip.equip();
                     }
                 }
             }
