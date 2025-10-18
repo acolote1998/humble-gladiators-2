@@ -89,4 +89,6 @@ Week 43
 Saturday 18/10
 - Added defense equipment system for hero items
 - Added defense equipment system for NPCs
+- Added weapon equippable for hero
+- Added weapon equippable for npcs
 ```
