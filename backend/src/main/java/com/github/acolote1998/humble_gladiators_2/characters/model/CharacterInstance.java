@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -111,6 +112,11 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         if (equippedArmor != null) {
             totalPhysicalDefense += equippedArmor.getTemplate().getPhysicalDefense();
         }
+        BootsInstance equippedBoots = characterInventory.getBoots().stream().filter(BootsInstance::getEquipped).findFirst().orElse(null);
+        if (equippedBoots != null) {
+            totalPhysicalDefense += equippedBoots.getTemplate().getPhysicalDefense();
+        }
+
         return totalPhysicalDefense;
     }
 
