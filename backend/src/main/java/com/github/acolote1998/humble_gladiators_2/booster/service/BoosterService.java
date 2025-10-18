@@ -13,10 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterSe
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -397,6 +394,18 @@ public class BoosterService {
                     if (shieldToEquip != null) {
                         characterInventory.getShields().add(shieldToEquip);
                         shieldToEquip.equip();
+                    }
+                }
+            }
+            if (doesCharacterGenerateThisItem()) {
+                WeaponTemplate weaponTemplate = weaponService.getRandomWeaponByTierAndRarityAndCampaignAndUserId(
+                        characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
+                if (weaponTemplate != null) {
+                    WeaponInstance weaponToEquip = weaponService.instanceFromWeaponTemplate(weaponTemplate,
+                            characterInventory);
+                    if (weaponToEquip != null) {
+                        characterInventory.getWeapons().add(weaponToEquip);
+                        weaponToEquip.equip();
                     }
                 }
             }
