@@ -25,8 +25,6 @@ public class Stats {
     private int level;
     private int currentExp;
     private int expForNextLevel;
-    private int physicalDefense;
-    private int magicalDefense;
 
     public static String ObjectStructure() {
         return """
