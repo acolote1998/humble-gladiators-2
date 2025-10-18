@@ -15,6 +15,7 @@ export type CharacterInstanceType = {
   stats: CharacterStatsResponseDto;
   category: CharacterCategoriesEnum;
   characterType: CharacterTypeEnum;
+  inventory: CharacterInventoryResponseDto;
   name: string;
   description: string;
   discovered: boolean;

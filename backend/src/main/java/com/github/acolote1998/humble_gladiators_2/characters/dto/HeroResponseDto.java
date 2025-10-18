@@ -12,7 +12,7 @@ public record HeroResponseDto(
         CharacterStatsResponseDto stats,
         CharacterInventoryResponseDto inventory
 ) {
-    private record CharacterStatsResponseDto(
+    public record CharacterStatsResponseDto(
             int constitution,
             int intelligence,
             int strength,
@@ -46,12 +46,12 @@ public record HeroResponseDto(
     public static HeroResponseDto fromModelToDto(CharacterInstance model) {
         return new HeroResponseDto(
                 model.getName(),
-                mapStats(model),
+                MapStats(model),
                 mapInventory(model.getInventory())
         );
     }
 
-    private static CharacterStatsResponseDto mapStats(CharacterInstance character) {
+    public static CharacterStatsResponseDto MapStats(CharacterInstance character) {
         Stats stats = character.getStats();
         return new CharacterStatsResponseDto(
                 stats.getConstitution(),

@@ -306,11 +306,7 @@ public class BoosterService {
 
     public Boolean doesCharacterGenerateThisItem() {
         Random randomChance = new Random();
-        if (randomChance.nextInt(1, 101) >= 51) {
-            return true;
-        } else {
-            return false;
-        }
+        return randomChance.nextInt(51, 101) >= 51;
     }
 
     @Transactional
@@ -329,6 +325,7 @@ public class BoosterService {
                 ArmorTemplate armorTemplate = armorService.getRandomArmorByTierAndRarityAndCampaignAndUserId(characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                 ArmorInstance armorToEquip = armorService.instanceFromArmorTemplate(armorTemplate, characterInstance.getInventory());
                 characterInstance.getInventory().getArmors().forEach(ArmorInstance::unequip);
+                characterInstance.getInventory().getArmors().add(armorToEquip);
                 armorToEquip.equip();
             }
             if (IMAGE_GENERATION_ACTIVATED && characterInstance.getImgBytes() == null) {
