@@ -87,6 +87,6 @@ Thursday 16/10
 Week 43
 
 Saturday 18/10
-- Added equipment system for hero items
-- Added equipment system for NPCs
+- Added defense equipment system for hero items
+- Added defense equipment system for NPCs
 ```
