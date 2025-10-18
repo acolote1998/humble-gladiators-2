@@ -16,6 +16,7 @@ import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -380,6 +381,19 @@ public class BoosterService {
                         characterInventory.getHelmets().forEach(HelmetInstance::unequip);
                         characterInventory.getHelmets().add(helmetToEquip);
                         helmetToEquip.equip();
+                    }
+                }
+            }
+            if (doesCharacterGenerateThisItem()) {
+                ShieldTemplate shieldTemplate = shieldService.getRandomShieldByTierAndRarityAndCampaignAndUserId(
+                        characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
+                if (shieldTemplate != null) {
+                    ShieldInstance shieldToEquip = shieldService.instanceFromShieldTemplate(shieldTemplate,
+                            characterInventory);
+                    if (shieldToEquip != null) {
+                        characterInventory.getShields().forEach(ShieldInstance::unequip);
+                        characterInventory.getShields().add(shieldToEquip);
+                        shieldToEquip.equip();
                     }
                 }
             }
