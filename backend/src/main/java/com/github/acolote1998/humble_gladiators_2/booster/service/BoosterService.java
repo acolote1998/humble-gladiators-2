@@ -13,6 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterSe
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import com.github.acolote1998.humble_gladiators_2.item.templates.*;
 import jakarta.transaction.Transactional;
@@ -301,6 +302,15 @@ public class BoosterService {
         newBooster.setCampaign(campaign);
         log.info(String.format("%s - Campaign %s successfully opened an item booster", userId, campaignId));
         return itemsBoosterRepository.save(newBooster);
+    }
+
+    public Boolean doesCharacterGenerateThisItem() {
+        Random randomChance = new Random();
+        if (randomChance.nextInt(1, 101) >= 51) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Transactional
