@@ -26,7 +26,9 @@ public record HeroResponseDto(
             int weight,
             int level,
             int currentExp,
-            int expForNextLevel
+            int expForNextLevel,
+            int physicalDefense,
+            int magicalDefense
     ) {
     }
 
@@ -44,12 +46,13 @@ public record HeroResponseDto(
     public static HeroResponseDto fromModelToDto(CharacterInstance model) {
         return new HeroResponseDto(
                 model.getName(),
-                mapStats(model.getStats()),
+                mapStats(model),
                 mapInventory(model.getInventory())
         );
     }
 
-    private static CharacterStatsResponseDto mapStats(Stats stats) {
+    private static CharacterStatsResponseDto mapStats(CharacterInstance character) {
+        Stats stats = character.getStats();
         return new CharacterStatsResponseDto(
                 stats.getConstitution(),
                 stats.getIntelligence(),
@@ -64,7 +67,9 @@ public record HeroResponseDto(
                 stats.getWeight(),
                 stats.getLevel(),
                 stats.getCurrentExp(),
-                stats.getExpForNextLevel()
+                stats.getExpForNextLevel(),
+                character.getPhysicalDefense(),
+                character.getMagicalDefense()
         );
     }
 
