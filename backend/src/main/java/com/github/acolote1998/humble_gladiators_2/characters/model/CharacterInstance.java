@@ -123,8 +123,47 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         if (equippedShield != null) {
             totalPhysicalDefense += equippedShield.getTemplate().getPhysicalDefense();
         }
-
         return totalPhysicalDefense;
     }
+
+    public Integer getMagicalDefense() {
+        Integer totalMagicalDefense = 0;
+        Inventory characterInventory = this.getInventory();
+
+        ArmorInstance equippedArmor = characterInventory.getArmors().stream()
+                .filter(ArmorInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedArmor != null) {
+            totalMagicalDefense += equippedArmor.getTemplate().getMagicalDefense();
+        }
+
+        BootsInstance equippedBoots = characterInventory.getBoots().stream()
+                .filter(BootsInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedBoots != null) {
+            totalMagicalDefense += equippedBoots.getTemplate().getMagicalDefense();
+        }
+
+        HelmetInstance equippedHelmet = characterInventory.getHelmets().stream()
+                .filter(HelmetInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedHelmet != null) {
+            totalMagicalDefense += equippedHelmet.getTemplate().getMagicalDefense();
+        }
+
+        ShieldInstance equippedShield = characterInventory.getShields().stream()
+                .filter(ShieldInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedShield != null) {
+            totalMagicalDefense += equippedShield.getTemplate().getMagicalDefense();
+        }
+
+        return totalMagicalDefense;
+    }
+
 
 }
