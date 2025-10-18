@@ -54,17 +54,17 @@ public class BoosterService {
     private boolean IMAGE_GENERATION_ACTIVATED;
 
     public BoosterService(ArmorService armorService,
-            BootsService bootsService,
-            ConsumableService consumableService,
-            HelmetService helmetService,
-            ShieldService shieldService,
-            SpellService spellService,
-            WeaponService weaponService,
-            ItemsBoosterRepository itemsBoosterRepository,
-            CampaignService campaignService,
-            CharacterService characterService,
-            RunwareService runwareService,
-            CharacterBoosterRepository characterBoosterRepository) {
+                          BootsService bootsService,
+                          ConsumableService consumableService,
+                          HelmetService helmetService,
+                          ShieldService shieldService,
+                          SpellService spellService,
+                          WeaponService weaponService,
+                          ItemsBoosterRepository itemsBoosterRepository,
+                          CampaignService campaignService,
+                          CharacterService characterService,
+                          RunwareService runwareService,
+                          CharacterBoosterRepository characterBoosterRepository) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -345,6 +345,13 @@ public class BoosterService {
             CharacterInstance characterInstance = characterService.getRandomCharacterInstanceForCharacterBooster(
                     campaignId, userId, getCalculatedRarity(), getCalculatedTier());
             Inventory characterInventory = characterInstance.getInventory();
+            characterInventory.setArmors(new ArrayList<>());
+            characterInventory.setHelmets(new ArrayList<>());
+            characterInventory.setShields(new ArrayList<>());
+            characterInventory.setSpells(new ArrayList<>());
+            characterInventory.setWeapons(new ArrayList<>());
+            characterInventory.setBoots(new ArrayList<>());
+            characterInventory.setConsumables(new ArrayList<>());
             if (doesCharacterGenerateThisItem()) {
                 ArmorTemplate armorTemplate = armorService.getRandomArmorByTierAndRarityAndCampaignAndUserId(
                         characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
@@ -352,7 +359,6 @@ public class BoosterService {
                     ArmorInstance armorToEquip = armorService.instanceFromArmorTemplate(armorTemplate,
                             characterInventory);
                     if (armorToEquip != null) {
-                        characterInventory.getArmors().forEach(ArmorInstance::unequip);
                         characterInventory.getArmors().add(armorToEquip);
                         armorToEquip.equip();
                     }
@@ -365,7 +371,6 @@ public class BoosterService {
                     BootsInstance bootsToEquip = bootsService.instanceFromBootsTemplate(bootsTemplate,
                             characterInventory);
                     if (bootsToEquip != null) {
-                        characterInventory.getBoots().forEach(BootsInstance::unequip);
                         characterInventory.getBoots().add(bootsToEquip);
                         bootsToEquip.equip();
                     }
@@ -378,7 +383,6 @@ public class BoosterService {
                     HelmetInstance helmetToEquip = helmetService.instanceFromHelmetTemplate(helmetTemplate,
                             characterInventory);
                     if (helmetToEquip != null) {
-                        characterInventory.getHelmets().forEach(HelmetInstance::unequip);
                         characterInventory.getHelmets().add(helmetToEquip);
                         helmetToEquip.equip();
                     }
@@ -391,7 +395,6 @@ public class BoosterService {
                     ShieldInstance shieldToEquip = shieldService.instanceFromShieldTemplate(shieldTemplate,
                             characterInventory);
                     if (shieldToEquip != null) {
-                        characterInventory.getShields().forEach(ShieldInstance::unequip);
                         characterInventory.getShields().add(shieldToEquip);
                         shieldToEquip.equip();
                     }
