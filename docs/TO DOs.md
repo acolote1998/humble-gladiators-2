@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] make weapon equippable for both hero and characters
+
 - [ ] fix bug -> cards have "auras" during booster opening, the should not have the css class?
 - [ ] Write prompt_log flag to be able to LOG the "refined" prompts (and maybe all prompts?) to be able to assess prompt quality and potential improvments
 - [ ] Organice css better. break down index.css into smaller css classes
