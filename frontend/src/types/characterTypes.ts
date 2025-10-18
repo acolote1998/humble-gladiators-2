@@ -42,6 +42,8 @@ type CharacterStatsResponseDto = {
   level: number;
   currentExp: number;
   expForNextLevel: number;
+  physicalDefense: number;
+  magicalDefense: number;
 };
 
 type CharacterCategoriesEnum =
