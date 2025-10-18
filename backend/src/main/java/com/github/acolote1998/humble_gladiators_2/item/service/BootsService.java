@@ -13,10 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -32,8 +29,7 @@ public class BootsService {
             if (boot.getName() != null && !boot.getName().isBlank()) {
                 context.put(
                         boot.getName(),
-                        boot.getDescription() != null ? boot.getDescription() : ""
-                );
+                        boot.getDescription() != null ? boot.getDescription() : "");
             }
         }
 
@@ -51,9 +47,9 @@ public class BootsService {
             bootsTemplate.setUserId(campaign.getUserId());
             bootsTemplate.setRarity(dto.rarity());
             bootsTemplate.setTier(dto.tier());
-            bootsTemplate.setDiscovered(false); //templates always start with discovered = false
+            bootsTemplate.setDiscovered(false); // templates always start with discovered = false
             bootsTemplate.setQuantity(0); // templates always start at 0 quantity
-            bootsTemplate.setEquipped(false); //templates always start with equipped = false
+            bootsTemplate.setEquipped(false); // templates always start with equipped = false
             bootsTemplate.setCampaign(campaign);
             bootsTemplate.setCategory(BootsCategory.valueOf(dto.category()));
             if (dto.physicalDefense() == 1) {
@@ -106,7 +102,8 @@ public class BootsService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(bootsTemplate -> {
             String name = bootsTemplate.getName();
-            String description = "Tier: " + bootsTemplate.getTier() + ", Rarity: " + bootsTemplate.getRarity() + ", Category: " + bootsTemplate.getCategory();
+            String description = "Tier: " + bootsTemplate.getTier() + ", Rarity: " + bootsTemplate.getRarity()
+                    + ", Category: " + bootsTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("BootsTemplates", namesAndDescriptions);
@@ -117,20 +114,20 @@ public class BootsService {
         return bootsTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public BootsTemplate getRandomBootTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
+    public BootsTemplate getRandomBootTemplateForItemBooster(Long campaignId, String userId, Integer rarity,
+            Integer tier) {
         return bootsTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
                 rarity,
-                tier
-        );
+                tier);
     }
 
     public BootsTemplate saveBoots(BootsTemplate boots) {
         return bootsTemplateRepository.save(boots);
     }
 
-    private BootsInstance instanceFromBootsTemplate(BootsTemplate template, Inventory inventoryItBelongsTo) {
+    public BootsInstance instanceFromBootsTemplate(BootsTemplate template, Inventory inventoryItBelongsTo) {
         BootsInstance instance = new BootsInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -147,9 +144,19 @@ public class BootsService {
         return instance;
     }
 
-    public List<BootsInstance> instancesFromBootsTemplates(List<BootsTemplate> templates, Inventory inventoryItBelongsTo) {
+    public List<BootsInstance> instancesFromBootsTemplates(List<BootsTemplate> templates,
+            Inventory inventoryItBelongsTo) {
         List<BootsInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromBootsTemplate(template, inventoryItBelongsTo)));
         return instances;
+    }
+
+    public BootsTemplate getRandomBootsByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity,
+            Long campaignId, String userId) {
+        List<BootsTemplate> boots = bootsTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity,
+                campaignId, userId);
+        Collections.shuffle(boots);
+        BootsTemplate boot = boots.stream().findFirst().orElseThrow();
+        return boot;
     }
 }

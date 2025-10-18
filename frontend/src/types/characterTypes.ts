@@ -15,6 +15,7 @@ export type CharacterInstanceType = {
   stats: CharacterStatsResponseDto;
   category: CharacterCategoriesEnum;
   characterType: CharacterTypeEnum;
+  inventory: CharacterInventoryResponseDto;
   name: string;
   description: string;
   discovered: boolean;
@@ -42,6 +43,8 @@ type CharacterStatsResponseDto = {
   level: number;
   currentExp: number;
   expForNextLevel: number;
+  physicalDefense: number;
+  magicalDefense: number;
 };
 
 type CharacterCategoriesEnum =

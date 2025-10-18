@@ -13,10 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.item.templates.HelmetTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -37,8 +34,7 @@ public class HelmetService {
             if (helmet.getName() != null && !helmet.getName().isBlank()) {
                 context.put(
                         helmet.getName(),
-                        helmet.getDescription() != null ? helmet.getDescription() : ""
-                );
+                        helmet.getDescription() != null ? helmet.getDescription() : "");
             }
         }
 
@@ -60,7 +56,8 @@ public class HelmetService {
         Map<String, String> namesAndDescriptions = new HashMap<>();
         allItems.forEach(helmetTemplate -> {
             String name = helmetTemplate.getName();
-            String description = "Tier: " + helmetTemplate.getTier() + ", Rarity: " + helmetTemplate.getRarity() + ", Category: " + helmetTemplate.getCategory();
+            String description = "Tier: " + helmetTemplate.getTier() + ", Rarity: " + helmetTemplate.getRarity()
+                    + ", Category: " + helmetTemplate.getCategory();
             namesAndDescriptions.put(name, description);
         });
         itemValues.put("HelmetTemplates", namesAndDescriptions);
@@ -117,20 +114,20 @@ public class HelmetService {
         return helmetTemplateRepository.findAllByUserIdAndCampaign_Id(userId, campaignId);
     }
 
-    public HelmetTemplate getRandomHelmetTemplateForItemBooster(Long campaignId, String userId, Integer rarity, Integer tier) {
+    public HelmetTemplate getRandomHelmetTemplateForItemBooster(Long campaignId, String userId, Integer rarity,
+            Integer tier) {
         return helmetTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
                 rarity,
-                tier
-        );
+                tier);
     }
 
     public HelmetTemplate saveHelmet(HelmetTemplate helmet) {
         return helmetTemplateRepository.save(helmet);
     }
 
-    private HelmetInstance instanceFromHelmetTemplate(HelmetTemplate template, Inventory inventoryItBelongsTo) {
+    public HelmetInstance instanceFromHelmetTemplate(HelmetTemplate template, Inventory inventoryItBelongsTo) {
         HelmetInstance instance = new HelmetInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -147,9 +144,17 @@ public class HelmetService {
         return instance;
     }
 
-    public List<HelmetInstance> instancesFromHelmetTemplates(List<HelmetTemplate> templates, Inventory inventoryItBelongsTo) {
+    public List<HelmetInstance> instancesFromHelmetTemplates(List<HelmetTemplate> templates,
+            Inventory inventoryItBelongsTo) {
         List<HelmetInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromHelmetTemplate(template, inventoryItBelongsTo)));
         return instances;
+    }
+
+    public HelmetTemplate getRandomHelmetByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
+        List<HelmetTemplate> helmets = helmetTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity, campaignId, userId);
+        Collections.shuffle(helmets);
+        HelmetTemplate helmet = helmets.stream().findFirst().orElseThrow();
+        return helmet;
     }
 }

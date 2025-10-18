@@ -13,10 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -130,7 +127,7 @@ public class ArmorService {
         return armorTemplateRepository.save(armor);
     }
 
-    private ArmorInstance instanceFromArmorTemplate(ArmorTemplate template, Inventory inventoryItBelongsTo) {
+    public ArmorInstance instanceFromArmorTemplate(ArmorTemplate template, Inventory inventoryItBelongsTo) {
         ArmorInstance instance = new ArmorInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -151,6 +148,14 @@ public class ArmorService {
         List<ArmorInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromArmorTemplate(template, inventoryItBelongsTo)));
         return instances;
+    }
+
+
+    public ArmorTemplate getRandomArmorByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
+        List<ArmorTemplate> armors = armorTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity, campaignId, userId);
+        Collections.shuffle(armors);
+        ArmorTemplate armor = armors.stream().findFirst().orElseThrow();
+        return armor;
     }
 
 }

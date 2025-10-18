@@ -39,7 +39,7 @@ public class Stats {
     public static Stats mapStatsFromCharacterFromGeminiDto(CharacterFromGeminiDto dto) {
         Stats stats = new Stats();
         Random randomNumber = new Random();
-        
+
         stats.constitution = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();
         stats.intelligence = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();
         stats.strength = randomNumber.nextInt(14, 21) + dto.rarity() + dto.tier();

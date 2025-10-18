@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -102,5 +103,67 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         }
         return true;
     }
+
+    public Integer getPhysicalDefense() {
+        Integer totalPhysicalDefense = 0;
+        Inventory characterInventory = this.getInventory();
+        ArmorInstance equippedArmor = characterInventory.getArmors().stream().filter(ArmorInstance::getEquipped).findFirst().orElse(null);
+        if (equippedArmor != null) {
+            totalPhysicalDefense += equippedArmor.getTemplate().getPhysicalDefense();
+        }
+        BootsInstance equippedBoots = characterInventory.getBoots().stream().filter(BootsInstance::getEquipped).findFirst().orElse(null);
+        if (equippedBoots != null) {
+            totalPhysicalDefense += equippedBoots.getTemplate().getPhysicalDefense();
+        }
+        HelmetInstance equippedHelmet = characterInventory.getHelmets().stream().filter(HelmetInstance::getEquipped).findFirst().orElse(null);
+        if (equippedHelmet != null) {
+            totalPhysicalDefense += equippedHelmet.getTemplate().getPhysicalDefense();
+        }
+        ShieldInstance equippedShield = characterInventory.getShields().stream().filter(ShieldInstance::getEquipped).findFirst().orElse(null);
+        if (equippedShield != null) {
+            totalPhysicalDefense += equippedShield.getTemplate().getPhysicalDefense();
+        }
+        return totalPhysicalDefense;
+    }
+
+    public Integer getMagicalDefense() {
+        Integer totalMagicalDefense = 0;
+        Inventory characterInventory = this.getInventory();
+
+        ArmorInstance equippedArmor = characterInventory.getArmors().stream()
+                .filter(ArmorInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedArmor != null) {
+            totalMagicalDefense += equippedArmor.getTemplate().getMagicalDefense();
+        }
+
+        BootsInstance equippedBoots = characterInventory.getBoots().stream()
+                .filter(BootsInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedBoots != null) {
+            totalMagicalDefense += equippedBoots.getTemplate().getMagicalDefense();
+        }
+
+        HelmetInstance equippedHelmet = characterInventory.getHelmets().stream()
+                .filter(HelmetInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedHelmet != null) {
+            totalMagicalDefense += equippedHelmet.getTemplate().getMagicalDefense();
+        }
+
+        ShieldInstance equippedShield = characterInventory.getShields().stream()
+                .filter(ShieldInstance::getEquipped)
+                .findFirst()
+                .orElse(null);
+        if (equippedShield != null) {
+            totalMagicalDefense += equippedShield.getTemplate().getMagicalDefense();
+        }
+
+        return totalMagicalDefense;
+    }
+
 
 }

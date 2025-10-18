@@ -13,10 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.item.templates.ShieldTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -130,7 +127,7 @@ public class ShieldService {
         return shieldTemplateRepository.save(shield);
     }
 
-    private ShieldInstance instanceFromShieldTemplate(ShieldTemplate template, Inventory inventoryItBelongsTo) {
+    public ShieldInstance instanceFromShieldTemplate(ShieldTemplate template, Inventory inventoryItBelongsTo) {
         ShieldInstance instance = new ShieldInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -152,5 +149,12 @@ public class ShieldService {
         List<ShieldInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromShieldTemplate(template, inventoryItBelongsTo)));
         return instances;
+    }
+
+    public ShieldTemplate getRandomShieldByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
+        List<ShieldTemplate> shields = shieldTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity, campaignId, userId);
+        Collections.shuffle(shields);
+        ShieldTemplate shield = shields.stream().findFirst().orElseThrow();
+        return shield;
     }
 }
