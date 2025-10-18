@@ -83,4 +83,9 @@ Thursday 16/10
 - Adding card flipping when opening booster
 - Fixing visual bug related to the card back -> had to redesign component & rendring flow due to a race condition
 - Improving className of all card components in frontend
+
+Week 43
+
+Saturday 18/10
+- Added equipment system for hero items
 ```
