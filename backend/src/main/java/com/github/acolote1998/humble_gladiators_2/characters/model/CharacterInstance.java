@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.characters.exception.NoManaLeft;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.TargetHeroIsDead;
 import com.github.acolote1998.humble_gladiators_2.item.exceptions.NoConsumablesLeft;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker, Defendable, Aliveable, Usable {
+public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker, Defendable, Aliveable, Usable, Castable, Healable {
 
     private Boolean discovered;
     private Integer tier;
@@ -197,12 +198,30 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         return proposedDamage;
     }
 
+    @Override
+    public Integer causeMagicalDamage() {
+        Integer proposedDamage = 0;
+        Integer intelligenceModifier = Math.round((float) (this.getStats().getIntelligence() * this.getStats().getLevel()) / 2);
+        Integer magicalDamage = this.getMagicalDamage();
+        proposedDamage += intelligenceModifier + magicalDamage;
+        return proposedDamage;
+    }
+
 
     @Override
     public Integer defendPhysicalDamage(Integer incomingDamage) {
         Integer totalDamage = 0;
-        if (incomingDamage > this.getPhysicalDamage()) {
-            totalDamage = incomingDamage - this.getPhysicalDamage();
+        if (incomingDamage > this.getPhysicalDefense()) {
+            totalDamage = incomingDamage - this.getPhysicalDefense();
+        }
+        return totalDamage;
+    }
+
+    @Override
+    public Integer defendMagicalDamage(Integer incomingDamage) {
+        Integer totalDamage = 0;
+        if (incomingDamage > this.getMagicalDefense()) {
+            totalDamage = incomingDamage - this.getMagicalDamage();
         }
         return totalDamage;
     }
@@ -225,6 +244,19 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
         int currentHp = this.getStats().getCurrentHp();
         int newHp = Math.max(0, currentHp - amountOfDamage);
+        this.getStats().setCurrentHp(newHp);
+    }
+
+    @Override
+    public void heal(Integer amountOfHp) {
+        if (!this.isAlive()) {
+            throw new TargetHeroIsDead("The target character cannot heal since it is already dead");
+        }
+        if (amountOfHp == null || amountOfHp <= 0) {
+            return;
+        }
+        int currentHp = this.getStats().getCurrentHp();
+        int newHp = Math.max(0, currentHp + amountOfHp);
         this.getStats().setCurrentHp(newHp);
     }
 
@@ -253,4 +285,35 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         consumableToUse.setQuantity(consumableToUse.getQuantity() - 1);
     }
 
+    @Override
+    public void castSpell(SpellInstance spell, CharacterInstance targetCharacter) {
+        if (!this.isAlive()) {
+            throw new TargetHeroIsDead("Dead characters cannot cast spells");
+        }
+        if (this.getStats().getCurrentMp() < spell.getValue()) { // value = mana cost?
+            throw new NoManaLeft("Not enough mana to cast " + spell.getName());
+        }
+        this.getStats().setCurrentMp(this.getStats().getCurrentMp() - spell.getTemplate().getMpCost());
+
+        if (spell.getTemplate().getRestoreHp() > 0) {
+            targetCharacter.heal(spell.getTemplate().getRestoreHp());
+        }
+
+        if (spell.getTemplate().getPhysicalDamage() > 0) {
+            Integer potentialPhysicalDamage = this.casuePhysicalDamage() + spell.getTemplate().getPhysicalDamage();
+            Integer potentialPhysicalDamageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
+            if (potentialPhysicalDamageAfterDefense > 0) {
+                targetCharacter.sufferDamage(potentialPhysicalDamageAfterDefense);
+            }
+        }
+
+        if (spell.getTemplate().getMagicalDamage() > 0) {
+            Integer potentialMagicalDamage = this.causeMagicalDamage() + spell.getTemplate().getMagicalDamage();
+            Integer potentialMagicalDamageAfterDefense = targetCharacter.defendMagicalDamage(potentialMagicalDamage);
+            if (potentialMagicalDamageAfterDefense > 0) {
+                targetCharacter.sufferDamage(potentialMagicalDamageAfterDefense);
+            }
+        }
+
+    }
 }

@@ -12,6 +12,7 @@ export type SpellTemplateType = {
   magicalDamage: number;
   imgBase64: string;
   restoreHp: number;
+  mpCost: number;
   renderingFromBooster?: boolean;
 };
 

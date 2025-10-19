@@ -22,6 +22,7 @@ public record SpellTemplateResponseDto(
         Integer physicalDamage,
         Integer magicalDamage,
         Integer restoreHp,
+        Integer mpCost,
         String imgBase64
 ) {
 
@@ -41,6 +42,7 @@ public record SpellTemplateResponseDto(
                 spellTemplate.getPhysicalDamage(),
                 spellTemplate.getMagicalDamage(),
                 spellTemplate.getRestoreHp(),
+                spellTemplate.getMpCost(),
                 BytesToBase64.bytesToBase64(spellTemplate.getImgBytes())
         );
     }

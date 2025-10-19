@@ -22,6 +22,7 @@ public class SpellTemplate extends AbstractItem {
     private Integer physicalDamage;
     private Integer magicalDamage;
     private Integer restoreHp;
+    private Integer mpCost;
 
     @Enumerated(EnumType.STRING)
     private SpellCategory category;

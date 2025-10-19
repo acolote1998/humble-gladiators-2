@@ -80,6 +80,11 @@ public class SpellService {
             spellTemplate.setTier(dto.tier());
             spellTemplate.setDiscovered(false);
             spellTemplate.setQuantity(0); // templates always start at 0 quantity
+            spellTemplate.setMpCost(
+                    spellTemplate.getTier() *
+                            spellTemplate.getRarity() *
+                            (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
+            );
             spellTemplate.setEquipped(false);
             spellTemplate.setCampaign(campaign);
             spellTemplate.setCategory(SpellCategory.valueOf(dto.category()));
@@ -97,7 +102,7 @@ public class SpellService {
                 spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
                 spellTemplate.setMagicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
                 spellTemplate.setPhysicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid
-                                                    // bugs
+                // bugs
             } else {
                 spellTemplate.setRestoreHp(0);
             }
@@ -127,7 +132,7 @@ public class SpellService {
     }
 
     public SpellTemplate getRandomSpellTemplateForItemBooster(Long campaignId, String userId, Integer rarity,
-            Integer tier) {
+                                                              Integer tier) {
         return spellTemplateRepository.findRandomByCampaignAndRarityAndTier(
                 campaignId,
                 userId,
@@ -157,7 +162,7 @@ public class SpellService {
     }
 
     public List<SpellInstance> instancesFromSpellTemplates(List<SpellTemplate> templates,
-            Inventory inventoryItBelongsTo) {
+                                                           Inventory inventoryItBelongsTo) {
         List<SpellInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromSpellTemplate(template, inventoryItBelongsTo)));
         return instances;

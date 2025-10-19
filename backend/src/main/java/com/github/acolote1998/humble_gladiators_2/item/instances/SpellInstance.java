@@ -1,5 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.instances;
 
+import com.github.acolote1998.humble_gladiators_2.characters.exception.TargetHeroIsDead;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Castable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
@@ -17,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Entity
 @Table(name = "spell_instance")
 @Slf4j
-public class SpellInstance extends AbstractItem implements Castable, Discoverable, Equippable, Tradeable {
+public class SpellInstance extends AbstractItem implements Discoverable, Equippable, Tradeable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
@@ -27,10 +29,6 @@ public class SpellInstance extends AbstractItem implements Castable, Discoverabl
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
 
-    @Override
-    public void cast() {
-
-    }
 
     @Override
     public void discover() {

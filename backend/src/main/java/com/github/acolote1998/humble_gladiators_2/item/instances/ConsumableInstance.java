@@ -26,11 +26,6 @@ public class ConsumableInstance extends AbstractItem implements Tradeable, Disco
     private Inventory inventory;
 
     @Override
-    public void use() {
-
-    }
-
-    @Override
     public void discover() {
 
     }
