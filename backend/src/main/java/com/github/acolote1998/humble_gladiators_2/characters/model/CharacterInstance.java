@@ -221,7 +221,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     public Integer defendMagicalDamage(Integer incomingDamage) {
         Integer totalDamage = 0;
         if (incomingDamage > this.getMagicalDefense()) {
-            totalDamage = incomingDamage - this.getMagicalDamage();
+            totalDamage = incomingDamage - this.getMagicalDefense();
         }
         return totalDamage;
     }
@@ -256,7 +256,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
             return;
         }
         int currentHp = this.getStats().getCurrentHp();
-        int newHp = Math.max(0, currentHp + amountOfHp);
+        int newHp = Math.min(this.getStats().getMaxHp(), currentHp + amountOfHp);
         this.getStats().setCurrentHp(newHp);
     }
 
@@ -290,7 +290,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         if (!this.isAlive()) {
             throw new TargetHeroIsDead("Dead characters cannot cast spells");
         }
-        if (this.getStats().getCurrentMp() < spell.getValue()) { // value = mana cost?
+        if (this.getStats().getCurrentMp() < spell.getTemplate().getMpCost()) {
             throw new NoManaLeft("Not enough mana to cast " + spell.getName());
         }
         this.getStats().setCurrentMp(this.getStats().getCurrentMp() - spell.getTemplate().getMpCost());
