@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Attacker;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-public class CharacterInstance extends AbstractCharacter implements Discoverable {
+public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker {
 
     private Boolean discovered;
     private Integer tier;
@@ -186,4 +187,12 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     }
 
 
+    @Override
+    public Integer casuePhysicalDamage() {
+        Integer causedDamage = 0;
+        Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
+        Integer physicalDamage = this.getPhysicalDamage();
+        causedDamage += strengthDmgModifier + physicalDamage;
+        return causedDamage;
+    }
 }

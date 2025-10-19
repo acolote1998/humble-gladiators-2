@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.instances;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Attacker;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Entity
 @Table(name = "weapon_instance")
 @Slf4j
-public class WeaponInstance extends AbstractItem implements Attacker, Discoverable, Equippable, Tradeable {
+public class WeaponInstance extends AbstractItem implements Discoverable, Equippable, Tradeable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
@@ -26,11 +27,6 @@ public class WeaponInstance extends AbstractItem implements Attacker, Discoverab
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
-
-    @Override
-    public void attack() {
-
-    }
 
     @Override
     public void discover() {
