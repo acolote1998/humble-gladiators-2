@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.CardBackResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @Controller
 @Slf4j
@@ -31,5 +31,13 @@ public class BattleController {
     public ResponseEntity<Boolean> checkIfPossibleToStartABattleToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         return ResponseEntity.ok(battleService.isBattleAvailableForToday(campaignId, userId));
+    }
+
+    @PostMapping("/{campaignId}/battle/new/{enemyId}")
+    public ResponseEntity<BattleResponseDto> checkIfPossibleToStartABattleToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @PathVariable Long enemyId) {
+        String userId = jwt.getSubject();
+        Battle newBattle = battleService.createNewBattle(campaignId, userId, enemyId);
+        BattleResponseDto dto = new BattleResponseDto.fromModel(newBattle);
+        return ResponseEntity.created(URI.create("/api/campaign/" + campaignId + "/battle/" + newBattle.getId())).build();
     }
 }
