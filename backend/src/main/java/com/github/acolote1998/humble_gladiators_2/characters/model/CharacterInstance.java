@@ -195,6 +195,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
         Integer physicalDamage = this.getPhysicalDamage();
         proposedDamage += strengthDmgModifier + physicalDamage;
+        log.info("{} proposes {} physical damage", this.getName(), proposedDamage);
         return proposedDamage;
     }
 
@@ -204,6 +205,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         Integer intelligenceModifier = Math.round((float) (this.getStats().getIntelligence() * this.getStats().getLevel()) / 2);
         Integer magicalDamage = this.getMagicalDamage();
         proposedDamage += intelligenceModifier + magicalDamage;
+        log.info("'{}' proposes '{}' magical damage", this.getName(), proposedDamage);
         return proposedDamage;
     }
 
@@ -214,6 +216,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         if (incomingDamage > this.getPhysicalDefense()) {
             totalDamage = incomingDamage - this.getPhysicalDefense();
         }
+        log.info("'{}' had '{}' physical damage go through after defending", this.getName(), totalDamage);
         return totalDamage;
     }
 
@@ -223,13 +226,20 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         if (incomingDamage > this.getMagicalDefense()) {
             totalDamage = incomingDamage - this.getMagicalDefense();
         }
+        log.info("'{}' had '{}' magical damage go through after defending", this.getName(), totalDamage);
         return totalDamage;
     }
 
 
     @Override
     public boolean isAlive() {
-        return this.getStats().getCurrentHp() > 0;
+        boolean isAlive = this.getStats().getCurrentHp() > 0;
+        if (isAlive) {
+            log.info("'{}' is alive", this.getName());
+        } else {
+            log.info("'{}' is dead", this.getName());
+        }
+        return isAlive;
     }
 
     @Override
@@ -244,20 +254,36 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
         int currentHp = this.getStats().getCurrentHp();
         int newHp = Math.max(0, currentHp - amountOfDamage);
+        log.info("'{}' suffered '{}' damage, they now have '{}' hp", this.getName(), amountOfDamage, newHp);
         this.getStats().setCurrentHp(newHp);
     }
 
     @Override
-    public void heal(Integer amountOfHp) {
+    public void heal(Integer amountOfHpToHeal) {
         if (!this.isAlive()) {
             throw new TargetHeroIsDead("The target character cannot heal since it is already dead");
         }
-        if (amountOfHp == null || amountOfHp <= 0) {
+        if (amountOfHpToHeal == null || amountOfHpToHeal <= 0) {
             return;
         }
         int currentHp = this.getStats().getCurrentHp();
-        int newHp = Math.min(this.getStats().getMaxHp(), currentHp + amountOfHp);
+        int newHp = Math.min(this.getStats().getMaxHp(), currentHp + amountOfHpToHeal);
+        log.info("'{}' healed '{}' hp, the new hp is '{}'", this.getName(), amountOfHpToHeal, newHp);
         this.getStats().setCurrentHp(newHp);
+    }
+
+    @Override
+    public void recoverMp(Integer amountOfMp) {
+        if (!this.isAlive()) {
+            throw new TargetHeroIsDead("The target character cannot recover MP since it is already dead");
+        }
+        if (amountOfMp == null || amountOfMp <= 0) {
+            return;
+        }
+        int currentMp = this.getStats().getCurrentMp();
+        int newMp = Math.min(this.getStats().getMaxMp(), currentMp + amountOfMp);
+        log.info("'{}' recovered '{}' mp, the new mp is '{}'", this.getName(), amountOfMp, newMp);
+        this.getStats().setCurrentMp(newMp);
     }
 
     @Override
@@ -273,59 +299,98 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         int restoreHp = consumableToUse.getTemplate().getRestoreHp();
         int restoreMp = consumableToUse.getTemplate().getRestoreMp();
 
-        int currentHp = this.getStats().getCurrentHp();
-        int currentMp = this.getStats().getCurrentMp();
+        // Use the existing methods which handle clamping and logging
+        if (restoreHp > 0) {
+            this.heal(restoreHp);
+        }
 
-        int newHp = Math.min(this.getStats().getMaxHp(), currentHp + restoreHp);
-        int newMp = Math.min(this.getStats().getMaxMp(), currentMp + restoreMp);
+        if (restoreMp > 0) {
+            this.recoverMp(restoreMp);
+        }
 
-        this.getStats().setCurrentHp(newHp);
-        this.getStats().setCurrentMp(newMp);
-
+        // Decrement consumable quantity
         consumableToUse.setQuantity(consumableToUse.getQuantity() - 1);
+
+        log.info("'{}' used consumable '{}', remaining quantity: {}", this.getName(),
+                consumableToUse.getTemplate().getName(),
+                consumableToUse.getQuantity());
     }
+
 
     @Override
     public void castSpell(SpellInstance spell, CharacterInstance targetCharacter) {
         if (!this.isAlive()) {
             throw new TargetHeroIsDead("Dead characters cannot cast spells");
         }
-        if (this.getStats().getCurrentMp() < spell.getTemplate().getMpCost()) {
+
+        int mpCost = spell.getTemplate().getMpCost();
+        if (this.getStats().getCurrentMp() < mpCost) {
             throw new NoManaLeft("Not enough mana to cast " + spell.getName());
         }
-        this.getStats().setCurrentMp(this.getStats().getCurrentMp() - spell.getTemplate().getMpCost());
 
+        // Deduct mana
+        this.getStats().setCurrentMp(this.getStats().getCurrentMp() - mpCost);
+        log.info("'{}' casts '{}' on '{}', costing {} MP (remaining MP: {})",
+                this.getName(),
+                spell.getName(),
+                targetCharacter.getName(),
+                mpCost,
+                this.getStats().getCurrentMp());
+
+        // Healing spell
         if (spell.getTemplate().getRestoreHp() > 0) {
-            targetCharacter.heal(spell.getTemplate().getRestoreHp());
+            int healAmount = spell.getTemplate().getRestoreHp();
+            targetCharacter.heal(healAmount);
+            log.info("'{}' heals '{}' for {} HP", targetCharacter.getName(), targetCharacter.getName(), healAmount);
+            return; // Healing spells don't deal damage
         }
 
+        // Physical damage
         if (spell.getTemplate().getPhysicalDamage() > 0) {
-            Integer potentialPhysicalDamage = this.casuePhysicalDamage() + spell.getTemplate().getPhysicalDamage();
-            Integer potentialPhysicalDamageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
-            if (potentialPhysicalDamageAfterDefense > 0) {
-                targetCharacter.sufferDamage(potentialPhysicalDamageAfterDefense);
+            int potentialPhysicalDamage = this.casuePhysicalDamage() + spell.getTemplate().getPhysicalDamage();
+            int damageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
+            if (damageAfterDefense > 0) {
+                targetCharacter.sufferDamage(damageAfterDefense);
+                log.info("'{}' deals {} physical damage to '{}'", this.getName(), damageAfterDefense, targetCharacter.getName());
+            } else {
+                log.info("'{}' attacks '{}' with physical spell, but damage was fully blocked", this.getName(), targetCharacter.getName());
             }
         }
 
+        // Magical damage
         if (spell.getTemplate().getMagicalDamage() > 0) {
-            Integer potentialMagicalDamage = this.causeMagicalDamage() + spell.getTemplate().getMagicalDamage();
-            Integer potentialMagicalDamageAfterDefense = targetCharacter.defendMagicalDamage(potentialMagicalDamage);
-            if (potentialMagicalDamageAfterDefense > 0) {
-                targetCharacter.sufferDamage(potentialMagicalDamageAfterDefense);
+            int potentialMagicalDamage = this.causeMagicalDamage() + spell.getTemplate().getMagicalDamage();
+            int damageAfterDefense = targetCharacter.defendMagicalDamage(potentialMagicalDamage);
+            if (damageAfterDefense > 0) {
+                targetCharacter.sufferDamage(damageAfterDefense);
+                log.info("'{}' deals {} magical damage to '{}'", this.getName(), damageAfterDefense, targetCharacter.getName());
+            } else {
+                log.info("'{}' attacks '{}' with magical spell, but damage was fully blocked", this.getName(), targetCharacter.getName());
             }
         }
-
     }
+
 
     @Override
     public void usePhysicalAttack(CharacterInstance targetCharacter) {
         if (!this.isAlive()) {
             throw new TargetHeroIsDead("Dead characters cannot attack");
         }
-        Integer potentialPhysicalDamage = this.casuePhysicalDamage();
-        Integer potentialPhysicalDamageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
-        if (potentialPhysicalDamageAfterDefense > 0) {
-            targetCharacter.sufferDamage(potentialPhysicalDamageAfterDefense);
+
+        int potentialPhysicalDamage = this.casuePhysicalDamage();
+        int damageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
+
+        if (damageAfterDefense > 0) {
+            targetCharacter.sufferDamage(damageAfterDefense);
+            log.info("'{}' attacks '{}' with physical attack, dealing {} damage",
+                    this.getName(),
+                    targetCharacter.getName(),
+                    damageAfterDefense);
+        } else {
+            log.info("'{}' attacks '{}' with physical attack, but damage was fully blocked",
+                    this.getName(),
+                    targetCharacter.getName());
         }
     }
+
 }
