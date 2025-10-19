@@ -26,6 +26,8 @@ public class Battle {
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
+    private String userId;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "battle_id")
     private List<Turn> turns;
