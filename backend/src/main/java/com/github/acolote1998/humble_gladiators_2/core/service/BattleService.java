@@ -34,7 +34,7 @@ public class BattleService {
         } catch (DailyEnemyNotFound e) {
             return false;
         }
-        if (getBattleForTodayByCampaignAndUserId(campaignId, userId) == null) {
+        if (getBattleForTodayByCampaignAndUserId(campaignId, userId) != null) {
             return false;
         }
         return true;
