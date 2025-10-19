@@ -91,4 +91,7 @@ Saturday 18/10
 - Added defense equipment system for NPCs
 - Added weapon equippable for hero
 - Added weapon equippable for npcs
+
+Sunday 19/10
+- Added combat logic methods in CharacterInstance (attack, heal, use spells)
 ```
