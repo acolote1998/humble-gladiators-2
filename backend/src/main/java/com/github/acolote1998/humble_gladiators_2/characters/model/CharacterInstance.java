@@ -1,7 +1,9 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Aliveable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Attacker;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Defendable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker {
+public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker, Defendable, Aliveable {
 
     private Boolean discovered;
     private Integer tier;
@@ -189,10 +191,25 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
     @Override
     public Integer casuePhysicalDamage() {
-        Integer causedDamage = 0;
+        Integer proposedDamage = 0;
         Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
         Integer physicalDamage = this.getPhysicalDamage();
-        causedDamage += strengthDmgModifier + physicalDamage;
-        return causedDamage;
+        proposedDamage += strengthDmgModifier + physicalDamage;
+        return proposedDamage;
+    }
+
+
+    @Override
+    public Integer defendPhysicalDamage(Integer incomingDamage) {
+        Integer totalDamage = 0;
+        if (incomingDamage > this.getPhysicalDamage()) {
+            totalDamage = incomingDamage - this.getPhysicalDamage();
+        }
+        return totalDamage;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return false;
     }
 }
