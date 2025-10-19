@@ -316,4 +316,16 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         }
 
     }
+
+    @Override
+    public void usePhysicalAttack(CharacterInstance targetCharacter) {
+        if (!this.isAlive()) {
+            throw new TargetHeroIsDead("Dead characters cannot cast spells");
+        }
+        Integer potentialPhysicalDamage = this.casuePhysicalDamage();
+        Integer potentialPhysicalDamageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
+        if (potentialPhysicalDamageAfterDefense > 0) {
+            targetCharacter.sufferDamage(potentialPhysicalDamageAfterDefense);
+        }
+    }
 }
