@@ -320,7 +320,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     @Override
     public void usePhysicalAttack(CharacterInstance targetCharacter) {
         if (!this.isAlive()) {
-            throw new TargetHeroIsDead("Dead characters cannot cast spells");
+            throw new TargetHeroIsDead("Dead characters cannot attack");
         }
         Integer potentialPhysicalDamage = this.casuePhysicalDamage();
         Integer potentialPhysicalDamageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
