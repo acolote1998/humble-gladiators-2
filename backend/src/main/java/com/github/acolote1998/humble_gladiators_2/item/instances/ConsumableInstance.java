@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Entity
 @Table(name = "consumable_instance")
 @Slf4j
-public class ConsumableInstance extends AbstractItem implements Usable, Tradeable, Discoverable {
+public class ConsumableInstance extends AbstractItem implements Tradeable, Discoverable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")
     private ConsumableTemplate template;

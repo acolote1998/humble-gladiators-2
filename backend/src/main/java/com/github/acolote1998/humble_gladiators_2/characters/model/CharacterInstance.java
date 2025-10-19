@@ -1,11 +1,9 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.characters.exception.TargetHeroIsDead;
+import com.github.acolote1998.humble_gladiators_2.item.exceptions.NoConsumablesLeft;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Aliveable;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Attacker;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Defendable;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker, Defendable, Aliveable {
+public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker, Defendable, Aliveable, Usable {
 
     private Boolean discovered;
     private Integer tier;
@@ -218,7 +216,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     @Override
     public void sufferDamage(Integer amountOfDamage) {
         if (!this.isAlive()) {
-            throw new TargetHeroIsDead("The target hero cannot receive damage since it is already dead");
+            throw new TargetHeroIsDead("The target character cannot receive damage since it is already dead");
         }
 
         if (amountOfDamage == null || amountOfDamage <= 0) {
@@ -228,6 +226,31 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         int currentHp = this.getStats().getCurrentHp();
         int newHp = Math.max(0, currentHp - amountOfDamage);
         this.getStats().setCurrentHp(newHp);
+    }
+
+    @Override
+    public void useConsumable(ConsumableInstance consumableToUse) {
+        if (!this.isAlive()) {
+            throw new TargetHeroIsDead("The target character cannot use a consumable since it is dead");
+        }
+
+        if (consumableToUse.getQuantity() <= 0) {
+            throw new NoConsumablesLeft("No consumables of this type remain");
+        }
+
+        int restoreHp = consumableToUse.getTemplate().getRestoreHp();
+        int restoreMp = consumableToUse.getTemplate().getRestoreMp();
+
+        int currentHp = this.getStats().getCurrentHp();
+        int currentMp = this.getStats().getCurrentMp();
+
+        int newHp = Math.min(this.getStats().getMaxHp(), currentHp + restoreHp);
+        int newMp = Math.min(this.getStats().getMaxMp(), currentMp + restoreMp);
+
+        this.getStats().setCurrentHp(newHp);
+        this.getStats().setCurrentMp(newMp);
+
+        consumableToUse.setQuantity(consumableToUse.getQuantity() - 1);
     }
 
 }
