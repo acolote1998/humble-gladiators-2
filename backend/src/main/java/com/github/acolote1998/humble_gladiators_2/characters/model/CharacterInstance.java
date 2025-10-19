@@ -1,6 +1,10 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.characters.exception.TargetHeroIsDead;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Aliveable;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Attacker;
+import com.github.acolote1998.humble_gladiators_2.item.interfaces.Defendable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-public class CharacterInstance extends AbstractCharacter implements Discoverable {
+public class CharacterInstance extends AbstractCharacter implements Discoverable, Attacker, Defendable, Aliveable {
 
     private Boolean discovered;
     private Integer tier;
@@ -185,5 +189,45 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         return totalMagicalDamage;
     }
 
+
+    @Override
+    public Integer casuePhysicalDamage() {
+        Integer proposedDamage = 0;
+        Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
+        Integer physicalDamage = this.getPhysicalDamage();
+        proposedDamage += strengthDmgModifier + physicalDamage;
+        return proposedDamage;
+    }
+
+
+    @Override
+    public Integer defendPhysicalDamage(Integer incomingDamage) {
+        Integer totalDamage = 0;
+        if (incomingDamage > this.getPhysicalDamage()) {
+            totalDamage = incomingDamage - this.getPhysicalDamage();
+        }
+        return totalDamage;
+    }
+
+
+    @Override
+    public boolean isAlive() {
+        return this.getStats().getCurrentHp() > 0;
+    }
+
+    @Override
+    public void sufferDamage(Integer amountOfDamage) {
+        if (!this.isAlive()) {
+            throw new TargetHeroIsDead("The target hero cannot receive damage since it is already dead");
+        }
+
+        if (amountOfDamage == null || amountOfDamage <= 0) {
+            return;
+        }
+
+        int currentHp = this.getStats().getCurrentHp();
+        int newHp = Math.max(0, currentHp - amountOfDamage);
+        this.getStats().setCurrentHp(newHp);
+    }
 
 }
