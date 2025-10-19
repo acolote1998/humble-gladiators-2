@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.characters.exception.TargetHeroIsDead;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Aliveable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Attacker;
@@ -208,8 +209,25 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         return totalDamage;
     }
 
+
     @Override
     public boolean isAlive() {
-        return false;
+        return this.getStats().getCurrentHp() > 0;
     }
+
+    @Override
+    public void sufferDamage(Integer amountOfDamage) {
+        if (!this.isAlive()) {
+            throw new TargetHeroIsDead("The target hero cannot receive damage since it is already dead");
+        }
+
+        if (amountOfDamage == null || amountOfDamage <= 0) {
+            return;
+        }
+
+        int currentHp = this.getStats().getCurrentHp();
+        int newHp = Math.max(0, currentHp - amountOfDamage);
+        this.getStats().setCurrentHp(newHp);
+    }
+
 }
