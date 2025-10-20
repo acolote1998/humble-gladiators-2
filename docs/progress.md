@@ -94,4 +94,8 @@ Saturday 18/10
 
 Sunday 19/10
 - Added combat logic methods in CharacterInstance (attack, heal, use spells)
+
+Monday 20/10
+- Logic to create a new battle between two characters
+- Created http folder in backend to be able to test things better
 ```
