@@ -9,3 +9,9 @@ POST http://localhost:8080/api/campaign/1/battle/new
 Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
+
+### Get battle for today
+GET http://localhost:8080/api/campaign/1/battle
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json

@@ -1,8 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
-import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.core.dto.BattleResponseDto;
-import com.github.acolote1998.humble_gladiators_2.core.exception.BattleAlreadyStarted;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +34,14 @@ public class BattleController {
         return ResponseEntity.ok(battleService.isBattleAvailableForToday(campaignId, userId));
     }
 
+    @GetMapping("/{campaignId}/battle")
+    public ResponseEntity<BattleResponseDto> getBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        Battle todaysBattle = battleService.getBattleForTodayByCampaignAndUserId(campaignId, userId);
+        BattleResponseDto dto = BattleResponseDto.fromModel(todaysBattle);
+        return ResponseEntity.ok(dto);
+    }
+
     @PostMapping("/{campaignId}/battle/new")
     public ResponseEntity<BattleResponseDto> createNewDailyBattle(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
@@ -44,8 +51,8 @@ public class BattleController {
     }
 
 
-    @ExceptionHandler(BattleAlreadyStarted.class)
-    public ResponseEntity<String> handleBattleAlreadyStarted(BattleAlreadyStarted ex) {
+    @ExceptionHandler(InvalidBattle.class)
+    public ResponseEntity<String> handleBattleAlreadyStarted(InvalidBattle ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT) // 409 Conflict
                 .body(ex.getMessage());
