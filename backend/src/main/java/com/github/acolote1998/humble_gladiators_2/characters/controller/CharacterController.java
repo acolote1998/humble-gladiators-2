@@ -80,8 +80,5 @@ public class CharacterController {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(DailyEnemyNotFound.class)
-    public ResponseEntity<String> handleDailyEnemyNotFound() {
-        return ResponseEntity.ok("Daily enemy not found");
-    }
+
 }
