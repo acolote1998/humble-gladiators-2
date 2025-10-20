@@ -36,7 +36,7 @@ public class BattleController {
     public ResponseEntity<BattleResponseDto> createNewDailyBattle(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         Battle newBattle = battleService.createNewBattle(campaignId, userId);
-        BattleResponseDto dto = new BattleResponseDto.fromModel(newBattle);
+        BattleResponseDto dto = BattleResponseDto.fromModel(newBattle);
         return ResponseEntity.created(URI.create("/api/campaign/" + campaignId + "/battle/" + newBattle.getId())).body(dto);
     }
 }
