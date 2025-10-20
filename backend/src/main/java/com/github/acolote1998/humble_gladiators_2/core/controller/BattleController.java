@@ -32,10 +32,10 @@ public class BattleController {
         return ResponseEntity.ok(battleService.isBattleAvailableForToday(campaignId, userId));
     }
 
-    @PostMapping("/{campaignId}/battle/new/{enemyId}")
-    public ResponseEntity<BattleResponseDto> checkIfPossibleToStartABattleToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @PathVariable Long enemyId) {
+    @PostMapping("/{campaignId}/battle/new")
+    public ResponseEntity<BattleResponseDto> createNewDailyBattle(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        Battle newBattle = battleService.createNewBattle(campaignId, userId, enemyId);
+        Battle newBattle = battleService.createNewBattle(campaignId, userId);
         BattleResponseDto dto = new BattleResponseDto.fromModel(newBattle);
         return ResponseEntity.created(URI.create("/api/campaign/" + campaignId + "/battle/" + newBattle.getId())).build();
     }
