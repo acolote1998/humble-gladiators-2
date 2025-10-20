@@ -1,8 +1,11 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.BattleResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
+import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +53,28 @@ public class BattleController {
         return ResponseEntity.created(URI.create("/api/campaign/" + campaignId + "/battle/" + newBattle.getId())).body(dto);
     }
 
+    @PostMapping("/{campaignId}/battle/{battleId}/action/attack}")
+    public ResponseEntity<BattleResponseDto.TurnResponseDto> heroAttacks(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable Long campaignId,
+            @PathVariable Long battleId,
+            @RequestBody TurnRequestDto turnRequest) {
+        String userId = jwt.getSubject();
+        Turn newTurn = battleService.performAttack(campaignId, userId, battleId, turnRequest);
+        BattleResponseDto.TurnResponseDto dtoResponse = BattleResponseDto.TurnResponseDto.fromModel(newTurn);
+        return ResponseEntity.ok(dtoResponse);
+    }
+
 
     @ExceptionHandler(InvalidBattle.class)
     public ResponseEntity<String> handleBattleAlreadyStarted(InvalidBattle ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT) // 409 Conflict
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidTurn.class)
+    public ResponseEntity<String> handleInvalidTurn(InvalidTurn ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT) // 409 Conflict
                 .body(ex.getMessage());
