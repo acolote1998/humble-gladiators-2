@@ -178,8 +178,11 @@ public class BattleService {
         } catch (DailyEnemyNotFound e) {
             return false;
         }
-        if (getBattleForTodayByCampaignAndUserId(campaignId, userId) != null) {
+        try {
+            getBattleForTodayByCampaignAndUserId(campaignId, userId);
             return false;
+        } catch (InvalidBattle ex) {
+
         }
         return true;
     }
