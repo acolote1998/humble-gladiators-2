@@ -1,9 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
-import com.github.acolote1998.humble_gladiators_2.core.dto.CardBackResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.dto.BattleResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
-import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
