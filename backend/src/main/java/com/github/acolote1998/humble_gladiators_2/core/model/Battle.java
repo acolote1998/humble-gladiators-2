@@ -48,6 +48,14 @@ public class Battle {
     @JoinColumn(name = "battle_losing_team_id")
     private List<CharacterInstance> losingTeam;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<CharacterInstance> teamOne;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<CharacterInstance> teamTwo;
+
     @ManyToOne
     private CharacterInstance currentCharacterToPlay;
 
