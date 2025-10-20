@@ -34,3 +34,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/java/com/github/acolote1998/humble_gladiators_2/http/http-client.env.json
