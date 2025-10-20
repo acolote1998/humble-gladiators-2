@@ -30,6 +30,7 @@ public class Battle {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "battle_id")
+    @OrderBy("createdAt ASC")
     private List<Turn> turns;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -56,10 +57,11 @@ public class Battle {
     @JoinColumn
     private List<CharacterInstance> teamTwo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CharacterInstance currentCharacterToPlay;
 
     private boolean ongoing;
+    
     @CreationTimestamp
     private LocalDateTime createdAt;
 

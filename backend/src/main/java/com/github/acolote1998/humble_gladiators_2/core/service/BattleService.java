@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -44,7 +45,6 @@ public class BattleService {
         teamTwo.add(enemy);
         List<CharacterInstance> winningTeam = new ArrayList<>();
         List<CharacterInstance> losingTeam = new ArrayList<>();
-        CharacterInstance startingCharacter = whoStartsTheBattle(teamOne, teamTwo);
         Battle newBattle = new Battle();
         newBattle.setCampaign(hero.getCampaign());
         newBattle.setUserId(userId);
@@ -53,10 +53,31 @@ public class BattleService {
         newBattle.setLosingTeam(losingTeam);
         newBattle.setTeamOne(teamOne);
         newBattle.setTeamTwo(teamTwo);
+        CharacterInstance startingCharacter = whosTurnsIsIt(newBattle);
         newBattle.setCurrentCharacterToPlay(startingCharacter);
         newBattle.setOngoing(true);
         newBattle = battleRepository.save(newBattle);
         return newBattle;
+    }
+
+    private CharacterInstance whosTurnsIsIt(Battle battle) {
+        CharacterInstance characterToPlay = null;
+        if (battle.getTurns() == null || battle.getTurns().isEmpty()) {
+            return whoStartsTheBattle(battle.getTeamOne(), battle.getTeamTwo());
+        }
+        if (battle.getTurns().size() == 1) {
+            CharacterInstance lastPerformer = battle.getTurns().getFirst().getPerformingCharacter();
+            if (!battle.getTeamOne().contains(lastPerformer)) {
+                characterToPlay = battle.getTeamOne().getFirst();
+            } else if (!battle.getTeamTwo().contains(lastPerformer)) {
+                characterToPlay = battle.getTeamTwo().getFirst();
+            }
+        }
+        if (battle.getTurns().size() > 1) {
+            Turn previousTurn = battle.getTurns().get(battle.getTurns().size() - 2);
+            characterToPlay = previousTurn.getPerformingCharacter();
+        }
+        return characterToPlay;
     }
 
     private CharacterInstance whoStartsTheBattle(List<CharacterInstance> teamOne, List<CharacterInstance> teamTwo) {
@@ -103,6 +124,12 @@ public class BattleService {
         if (todaysBattle == null) {
             throw new InvalidBattle("Battle for today not found");
         }
-        return battleRepository.findByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
+        CharacterInstance updatedCharacterToPlay = whosTurnsIsIt(todaysBattle);
+        if (!todaysBattle.getCurrentCharacterToPlay().getId().equals(updatedCharacterToPlay.getId())) {
+            todaysBattle.setCurrentCharacterToPlay(updatedCharacterToPlay);
+            battleRepository.save(todaysBattle);
+        }
+
+        return todaysBattle;
     }
 }
