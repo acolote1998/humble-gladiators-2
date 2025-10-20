@@ -1,0 +1,5 @@
+### Check if possible to start a new battle
+GET http://localhost:8080/api/campaign/1/battle/check-availability
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
