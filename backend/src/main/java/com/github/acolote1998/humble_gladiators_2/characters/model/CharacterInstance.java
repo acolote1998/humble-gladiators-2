@@ -372,7 +372,8 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
 
     @Override
-    public void usePhysicalAttack(CharacterInstance targetCharacter) {
+    public Integer usePhysicalAttack(CharacterInstance targetCharacter) {
+        Integer causedDamage = 0;
         if (!this.isAlive()) {
             throw new TargetHeroIsDead("Dead characters cannot attack");
         }
@@ -382,6 +383,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
         if (damageAfterDefense > 0) {
             targetCharacter.sufferDamage(damageAfterDefense);
+            causedDamage = damageAfterDefense;
             log.info("'{}' attacks '{}' with physical attack, dealing {} damage",
                     this.getName(),
                     targetCharacter.getName(),
@@ -391,6 +393,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                     this.getName(),
                     targetCharacter.getName());
         }
+        return causedDamage;
     }
 
 }

@@ -3,10 +3,16 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
+import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
+import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
+import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
+import com.github.acolote1998.humble_gladiators_2.core.model.Action;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.repository.BattleRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -57,7 +62,68 @@ public class BattleService {
         newBattle.setCurrentCharacterToPlay(startingCharacter);
         newBattle.setOngoing(true);
         newBattle = battleRepository.save(newBattle);
+        log.info("Battle '{}' created successfully for campaign '{}'", newBattle.getId(), campaignId);
         return newBattle;
+    }
+
+    @Transactional
+    public Turn performAttack(Long campaignId, String userId, Long battleId, TurnRequestDto turnRequest) {
+        CharacterInstance performerCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
+                turnRequest.performingCharacterId(),
+                campaignId,
+                userId);
+        if (performerCharacter == null) {
+            log.error("ATTACK TURN ATTEMPT -  Performing character is invalid");
+            throw new InvalidTurn("Performing character is invalid");
+        }
+        CharacterInstance targetCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
+                turnRequest.targetCharacterId(),
+                campaignId,
+                userId);
+        if (targetCharacter == null) {
+            log.error("ATTACK TURN ATTEMPT -  Target character is invalid");
+            throw new InvalidTurn("Target character is invalid");
+        }
+        Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
+        if (battle == null) {
+            log.error("ATTACK TURN ATTEMPT -  Desired battle is invalid");
+            throw new InvalidTurn("Desired battle is invalid");
+        }
+        boolean performerInBattle = battle.getTeamOne().contains(performerCharacter) ||
+                battle.getTeamTwo().contains(performerCharacter);
+
+        boolean targetInBattle = battle.getTeamOne().contains(targetCharacter) ||
+                battle.getTeamTwo().contains(targetCharacter);
+
+        if (!performerInBattle || !targetInBattle) {
+            log.error("ATTACK TURN ATTEMPT - At least one of the characters does not belong to this battle");
+            throw new InvalidTurn("At least one of the characters does not belong to this battle");
+        }
+        if (!performerCharacter.getId().equals(whosTurnsIsIt(battle).getId())) {
+            log.error("ATTACK TURN ATTEMPT - The performer cannot attack since it is not their turn");
+            throw new InvalidTurn("Performer cannot attack since it is not their turn");
+        }
+        Integer causedDamage = performerCharacter.usePhysicalAttack(targetCharacter);
+        characterService.saveCharacter(performerCharacter);
+        characterService.saveCharacter(targetCharacter);
+        Action action = new Action();
+        action.setActionType(ActionType.PHYSICAL_ATTACK);
+        action.setStateCaused(StateType.NONE);
+        action.setDamageCaused(causedDamage);
+        action.setHealingCaused(0);
+        Turn newTurn = new Turn();
+        newTurn.setBattle(battle);
+        newTurn.setCampaign(battle.getCampaign());
+        newTurn.setPerformingCharacter(performerCharacter);
+        newTurn.setTargetCharacter(targetCharacter);
+        newTurn.setAction(action);
+        battle.getTurns().add(newTurn);
+        battleRepository.save(battle);
+        return newTurn;
+    }
+
+    public Battle getBattleByIdAndCampaignIdAndUserId(Long battleId, Long campaignId, String userId) {
+        return battleRepository.findByIdAndCampaign_IdAndUserId(battleId, campaignId, userId);
     }
 
     private CharacterInstance whosTurnsIsIt(Battle battle) {
@@ -122,6 +188,7 @@ public class BattleService {
         LocalDate today = LocalDate.now();
         Battle todaysBattle = battleRepository.findByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
         if (todaysBattle == null) {
+            log.error("Campaign '{}' - Battle for today not found", campaignId);
             throw new InvalidBattle("Battle for today not found");
         }
         CharacterInstance updatedCharacterToPlay = whosTurnsIsIt(todaysBattle);

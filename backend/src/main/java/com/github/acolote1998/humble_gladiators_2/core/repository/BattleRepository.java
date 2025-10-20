@@ -19,4 +19,6 @@ public interface BattleRepository extends ListCrudRepository<Battle, Long> {
             @Param("campaignId") Long campaignId,
             @Param("userId") String userId,
             @Param("today") LocalDate today);
+
+    Battle findByIdAndCampaign_IdAndUserId(Long id, Long campaignId, String userId);
 }

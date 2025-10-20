@@ -99,4 +99,5 @@ Monday 20/10
 - Logic to create a new battle between two characters
 - Created http folder in backend to be able to test things better
 - Refined logic to create a new battle
+- Players can physically attack each other inside a battle
 ```

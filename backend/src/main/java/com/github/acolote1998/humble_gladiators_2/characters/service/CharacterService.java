@@ -383,6 +383,10 @@ public class CharacterService {
         return hero != null;
     }
 
+    public CharacterInstance getCharacterByIdAndCampaignIdAndUserId(Long characterId, Long campaignId, String userId) {
+        return characterInstanceRepository.findFirstByIdAndCampaign_IdAndUserId(characterId, campaignId, userId);
+    }
+
     public CharacterInstance saveCharacter(CharacterInstance model) {
         return characterInstanceRepository.save(model);
     }

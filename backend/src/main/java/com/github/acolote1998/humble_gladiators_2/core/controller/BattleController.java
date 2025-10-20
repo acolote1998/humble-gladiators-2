@@ -7,6 +7,7 @@ import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -53,12 +55,12 @@ public class BattleController {
         return ResponseEntity.created(URI.create("/api/campaign/" + campaignId + "/battle/" + newBattle.getId())).body(dto);
     }
 
-    @PostMapping("/{campaignId}/battle/{battleId}/action/attack}")
+    @PostMapping("/{campaignId}/battle/{battleId}/action/attack")
     public ResponseEntity<BattleResponseDto.TurnResponseDto> heroAttacks(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable Long campaignId,
             @PathVariable Long battleId,
-            @RequestBody TurnRequestDto turnRequest) {
+            @RequestBody @Valid TurnRequestDto turnRequest) {
         String userId = jwt.getSubject();
         Turn newTurn = battleService.performAttack(campaignId, userId, battleId, turnRequest);
         BattleResponseDto.TurnResponseDto dtoResponse = BattleResponseDto.TurnResponseDto.fromModel(newTurn);

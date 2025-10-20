@@ -53,4 +53,6 @@ public interface CharacterInstanceRepository extends ListCrudRepository<Characte
             @Param("characterType") String characterType);
 
     CharacterInstance getById(Long id);
+
+    CharacterInstance findFirstByIdAndCampaign_IdAndUserId(Long id, Long campaignId, String userId);
 }
