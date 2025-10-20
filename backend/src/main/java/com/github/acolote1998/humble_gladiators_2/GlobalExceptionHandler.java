@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2;
 
+import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,5 +13,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleHeroHasNotBeenCreated(HeroDoesNotExist ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DailyEnemyNotFound.class)
+    public ResponseEntity<String> handleDailyEnemyNotFound() {
+        return ResponseEntity.ok("Daily enemy not found");
     }
 }
