@@ -1,0 +1,47 @@
+### Get All Character Instances for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/character-instances
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get All Armor Templates for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/armor-templates
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get All Boots Templates for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/boots-templates
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get All Consumable Templates for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/consumable-templates
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get All Helmet Templates for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/helmet-templates
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get All Shield Templates for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/shield-templates
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get All Spell Templates for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/spell-templates
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get All Weapon Templates for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/weapon-templates
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
