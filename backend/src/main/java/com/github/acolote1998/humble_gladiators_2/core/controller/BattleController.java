@@ -1,10 +1,13 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
+import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBoosterAlreadyOpened;
 import com.github.acolote1998.humble_gladiators_2.core.dto.BattleResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.BattleAlreadyStarted;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -38,5 +41,13 @@ public class BattleController {
         Battle newBattle = battleService.createNewBattle(campaignId, userId);
         BattleResponseDto dto = BattleResponseDto.fromModel(newBattle);
         return ResponseEntity.created(URI.create("/api/campaign/" + campaignId + "/battle/" + newBattle.getId())).body(dto);
+    }
+
+
+    @ExceptionHandler(BattleAlreadyStarted.class)
+    public ResponseEntity<String> handleBattleAlreadyStarted(BattleAlreadyStarted ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT) // 409 Conflict
+                .body(ex.getMessage());
     }
 }

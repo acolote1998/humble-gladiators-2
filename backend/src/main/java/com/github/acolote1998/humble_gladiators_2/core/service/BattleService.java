@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
+import com.github.acolote1998.humble_gladiators_2.core.exception.BattleAlreadyStarted;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.repository.BattleRepository;
@@ -31,6 +32,9 @@ public class BattleService {
     }
 
     public Battle createNewBattle(Long campaignId, String userId) {
+        if (battleRepository.findByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, LocalDate.now()) != null) {
+            throw new BattleAlreadyStarted("You already have a battle today. Come back tomorrow");
+        }
         CharacterInstance hero = characterService.getHero(campaignId, userId);
         CharacterInstance enemy = characterService.getDailyEnemy(campaignId, userId);
         List<Turn> emptyTurnList = new ArrayList<>();
@@ -51,6 +55,7 @@ public class BattleService {
         newBattle.setTeamTwo(teamTwo);
         newBattle.setCurrentCharacterToPlay(startingCharacter);
         newBattle.setOngoing(true);
+        newBattle = battleRepository.save(newBattle);
         return newBattle;
     }
 
