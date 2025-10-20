@@ -2,6 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.repository.BattleRepository;
@@ -23,6 +24,10 @@ public class BattleService {
             BattleRepository battleRepository) {
         this.characterService = characterService;
         this.battleRepository = battleRepository;
+    }
+
+    public Battle createNewBattle(Long campaignId, String userId, Long enemyId) {
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
     }
 
     public boolean isBattleAvailableForToday(Long campaignId, String userId) {
