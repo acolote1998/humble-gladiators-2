@@ -1,0 +1,29 @@
+### Equip armor to a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/armor/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Equip boot to a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/boots/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Equip helmet to a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/helmet/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Equip shield to a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/shield/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Equip weapon to a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/weapon/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json

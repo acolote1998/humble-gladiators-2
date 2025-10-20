@@ -1,0 +1,21 @@
+### Create Hero for a campaign (for a user)
+POST http://localhost:8080/api/campaign/1/character-instances/hero
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "heroName": "Aki"
+}
+
+### Get Hero for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/character-instances/hero
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Check if Hero exists for a campaign (for a user)
+GET http://localhost:8080/api/campaign/1/character-instances/hero/check-if-exists
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
