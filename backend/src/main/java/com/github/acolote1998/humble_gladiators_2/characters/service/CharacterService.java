@@ -387,7 +387,7 @@ public class CharacterService {
         return characterInstanceRepository.findFirstByIdAndCampaign_IdAndUserId(characterId, campaignId, userId);
     }
 
-    public boolean doesCharacterExist(CharacterInstance charToCheck) {
+    public boolean isCharacterNotNull(CharacterInstance charToCheck) {
         return charToCheck != null;
     }
 

@@ -67,7 +67,7 @@ public class BattleService {
         return newBattle;
     }
 
-    public boolean doesBattleByIdAndCampaignIdAndUserIdExist(Battle battleToCheck) {
+    public boolean isBattleNotNull(Battle battleToCheck) {
         return battleToCheck != null;
     }
 
@@ -76,24 +76,21 @@ public class BattleService {
                 battleToCheck.getTeamTwo().contains(charToCheck));
     }
 
-    public boolean canStartBattleValidly(
-            Long campaignId,
-            String userId,
-            Long battleId,
+    public boolean canProcessTurnValidly(
             TurnRequestDto turnRequest,
             CharacterInstance performingCharacter,
             CharacterInstance targetCharacter,
             Battle battleToCheck) {
-        if (!characterService.doesCharacterExist(performingCharacter)) {
-            log.error("INVALID '{}' -  Performing character '{} - {}' is invalid", turnRequest.action().name(), performingCharacter.getId(), targetCharacter.getName());
+        if (!characterService.isCharacterNotNull(performingCharacter)) {
+            log.error("INVALID '{}' -  Performing character '{} - {}' is invalid", turnRequest.action().name(), performingCharacter.getId(), performingCharacter.getName());
             return false;
         }
-        if (!characterService.doesCharacterExist(targetCharacter)) {
+        if (!characterService.isCharacterNotNull(targetCharacter)) {
             log.error("INVALID '{}' -  Target character '{} - {}'is invalid", turnRequest.action().name(), targetCharacter.getId(), targetCharacter.getName());
             return false;
         }
-        if (!doesBattleByIdAndCampaignIdAndUserIdExist(battleToCheck)) {
-            log.error("INVALID '{}' -  Battle '{}' is invalid", turnRequest.action().name(), battleId);
+        if (!isBattleNotNull(battleToCheck)) {
+            log.error("INVALID '{}' -  Battle '{}' is invalid", turnRequest.action().name(), battleToCheck.getId());
             return false;
         }
         if (!doesCharacterBelongToBattle(battleToCheck, performingCharacter)) {
@@ -107,8 +104,8 @@ public class BattleService {
         if (!doesCharacterBelongToBattle(battleToCheck, targetCharacter)) {
             log.error("INVALID '{}' -  Character '{} - {}' does not belong to battle '{}'",
                     turnRequest.action().name(),
-                    performingCharacter.getId(),
-                    performingCharacter.getName(),
+                    targetCharacter.getId(),
+                    targetCharacter.getName(),
                     battleToCheck.getId());
             return false;
         }
@@ -134,9 +131,7 @@ public class BattleService {
                 campaignId,
                 userId);
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
-        if (!canStartBattleValidly(campaignId,
-                userId,
-                battleId,
+        if (!canProcessTurnValidly(
                 turnRequest,
                 performerCharacter,
                 targetCharacter,
