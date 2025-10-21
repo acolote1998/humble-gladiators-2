@@ -547,7 +547,12 @@ public class BattleService {
                 updatedBattle.getTurns().add(playNPCTurn(updatedBattle, enemyAsAttacker, heroAsTarget));
             }
         }
-        updatedBattle.setCurrentCharacterToPlay(whosTurnsIsIt(updatedBattle));
+        if (!isBattleActive(updatedBattle)) {
+            updatedBattle.setOngoing(false);
+            updatedBattle.setCurrentCharacterToPlay(null);
+        } else {
+            updatedBattle.setCurrentCharacterToPlay(whosTurnsIsIt(updatedBattle));
+        }
         return battleRepository.save(updatedBattle);
     }
 }
