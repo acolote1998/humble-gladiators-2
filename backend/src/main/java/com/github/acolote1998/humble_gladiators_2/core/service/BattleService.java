@@ -19,6 +19,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,6 +31,9 @@ public class BattleService {
     CharacterService characterService;
 
     BattleRepository battleRepository;
+
+    @Value("${UNLIMITED_BATTLES_ALLOWED}")
+    private boolean UNLIMITED_BATTLES_ALLOWED;
 
     @Autowired
     public BattleService(
@@ -63,8 +67,9 @@ public class BattleService {
         CharacterInstance startingCharacter = whosTurnsIsIt(newBattle);
         newBattle.setCurrentCharacterToPlay(startingCharacter);
         newBattle.setOngoing(true);
+        newBattle = battleRepository.save(newBattle);
         log.info("Battle '{}' created successfully for campaign '{}'", newBattle.getId(), campaignId);
-        return battleRepository.save(newBattle);
+        return newBattle;
     }
 
     public boolean isBattleNotNull(Battle battleToCheck) {
@@ -317,11 +322,13 @@ public class BattleService {
         } catch (DailyEnemyNotFound e) {
             return false;
         }
-        try {
-            getAnyBattleForTodayByCampaignAndUserId(campaignId, userId);
-            return false;
-        } catch (InvalidBattle ex) {
+        if (!UNLIMITED_BATTLES_ALLOWED) {
+            try {
+                getAnyBattleForTodayByCampaignAndUserId(campaignId, userId);
+                return false;
+            } catch (InvalidBattle ex) {
 
+            }
         }
         return true;
     }

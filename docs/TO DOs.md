@@ -1,5 +1,13 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] make sure we cannot start a new battle when there is one ongoing
+- [ ] make sure we cannot open item boosters when there is a battle ongoing
+- [ ] make sure we cannot open character boosters when there is a battle ongoing
+- [ ] make sure we cannot equip items when there is a battle ongoin
+- [ ] make sure we cannot unequip items when there is a battle ongoing
+- [ ] make sure we cannot attack whtn there is NOT abattle ongoing
+- [ ] make sure we cannot use a spell whtn there is NOT abattle ongoing
+- [ ] make sure we cannot use a consumable whtn there is NOT abattle ongoing
 - [ ] check that sometimes when the enemy starts the battle (first turn) they dont play? and I cant play either?
 - [ ] when defeating an enemy, make it possible for them to maybe drop items?
 - [ ] make sure the user cannot open boosters if there is an ongoing battle
