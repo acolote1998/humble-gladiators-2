@@ -294,7 +294,6 @@ public class BattleService {
         List<CharacterInstance> allChars = new ArrayList<>();
         allChars.addAll(teamOne);
         allChars.addAll(teamTwo);
-        Collections.shuffle(allChars);
 
         CharacterInstance fastest = allChars.getFirst();
 
@@ -306,7 +305,6 @@ public class BattleService {
                 fastest = character;
             }
         }
-
         return fastest;
     }
 
