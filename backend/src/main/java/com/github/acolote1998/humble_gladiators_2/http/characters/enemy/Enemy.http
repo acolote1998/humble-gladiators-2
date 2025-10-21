@@ -1,0 +1,5 @@
+### Get daily enemy for a campaign with a userId
+GET http://localhost:8080/api/campaign/1/character-instances/daily-enemy
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json

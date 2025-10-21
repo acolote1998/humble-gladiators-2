@@ -8,6 +8,7 @@ import com.github.acolote1998.humble_gladiators_2.item.dto.*;
 import java.util.List;
 
 public record HeroResponseDto(
+        Long id,
         String name,
         CharacterStatsResponseDto stats,
         CharacterInventoryResponseDto inventory
@@ -47,6 +48,7 @@ public record HeroResponseDto(
 
     public static HeroResponseDto fromModelToDto(CharacterInstance model) {
         return new HeroResponseDto(
+                model.getId(),
                 model.getName(),
                 MapStats(model),
                 mapInventory(model.getInventory())

@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] make height / weight have some sort of influence in the game?
+- [ ] make sure that all old battles that are onGoing=true after the day they have been created are automatically a defeat (user did not complete the battle)
 - [ ] fix bug -> cards have "auras" during booster opening, the should not have the css class?
 - [ ] Write prompt_log flag to be able to LOG the "refined" prompts (and maybe all prompts?) to be able to assess prompt quality and potential improvments
 - [ ] Organice css better. break down index.css into smaller css classes

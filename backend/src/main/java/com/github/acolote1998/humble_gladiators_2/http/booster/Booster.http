@@ -1,0 +1,23 @@
+### Check if can open an item booster for a campaign with a userId
+GET http://localhost:8080/api/campaign/1/items-booster/check-if-available
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Open an item booster for a campaign with a userId
+POST http://localhost:8080/api/campaign/1/items-booster
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Check if can open a character booster for a campaign with a userId
+GET http://localhost:8080/api/campaign/1/character-booster/check-if-available
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Open a character booster for a campaign with a userId
+POST http://localhost:8080/api/campaign/1/character-booster
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json

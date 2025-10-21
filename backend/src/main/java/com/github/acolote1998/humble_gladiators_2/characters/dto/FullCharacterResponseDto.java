@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record FullCharacterResponseDto(
+        Long id,
         HeroResponseDto.CharacterStatsResponseDto stats,
         HeroResponseDto.CharacterInventoryResponseDto inventory,
         CharacterCategory category,
@@ -26,6 +27,7 @@ public record FullCharacterResponseDto(
 
     public static FullCharacterResponseDto fromModelToDto(CharacterInstance character) {
         FullCharacterResponseDto dto = new FullCharacterResponseDto(
+                character.getId(),
                 HeroResponseDto.MapStats(character),
                 HeroResponseDto.mapInventory(character.getInventory()),
                 character.getCategory(),

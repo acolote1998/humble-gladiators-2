@@ -7,5 +7,5 @@ public interface Attacker {
 
     Integer causeMagicalDamage();
 
-    void usePhysicalAttack(CharacterInstance targetCharacter);
+    Integer usePhysicalAttack(CharacterInstance targetCharacter);
 }

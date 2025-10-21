@@ -1,0 +1,43 @@
+### Check campaign creation state
+GET http://localhost:8080/api/game/state
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Check new campaign
+POST http://localhost:8080/api/game/campaign
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "campaignName": "Test Campaign",
+  "theme": {
+    "wantedThemes": [
+      "postnord",
+      "dragons"
+    ],
+    "unwantedThemes": [
+      "football"
+    ]
+  }
+}
+
+### Get all campaigns for a user
+GET http://localhost:8080/api/campaign
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get Campaign by id (for a user)
+GET http://localhost:8080/api/campaign/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get Card Back by Campaign (for a user)
+GET http://localhost:8080/api/campaign/1/card-back
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+

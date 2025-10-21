@@ -12,6 +12,7 @@ export type CreateHeroType = {
 };
 
 export type CharacterInstanceType = {
+  id: number;
   stats: CharacterStatsResponseDto;
   category: CharacterCategoriesEnum;
   characterType: CharacterTypeEnum;
@@ -64,6 +65,7 @@ type CharacterCategoriesEnum =
 type CharacterTypeEnum = "PLAYER" | "NPC" | "SNAPSHOT";
 
 export type HeroResponseDto = {
+  id: number;
   name: string;
   stats: CharacterStatsResponseDto;
   inventory: CharacterInventoryResponseDto;

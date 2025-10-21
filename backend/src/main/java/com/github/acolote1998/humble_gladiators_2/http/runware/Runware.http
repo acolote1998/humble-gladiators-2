@@ -1,0 +1,18 @@
+### Runware Image Generation
+POST https://api.runware.ai/v1/image-inference
+Authorization: Bearer {{RUNWARE_API_KEY}}
+Accept: application/json
+Content-Type: application/json
+
+[
+  {
+    "taskType": "imageInference",
+    "taskUUID": "a770f077-f413-47de-9dac-be0b26a35da6",
+    "positivePrompt": "You are generating  the artwork (no frame, no text, no border, no logo) for a fantasy trading card. Campaign themes: ‘Post Office’, ‘Dragons’. Card Name: ‘Dragon Scale Mailbox’ Description: ‘A mailbox reinforced with dragon scales, ensuring your mail's safety.’ Render a high-quality fantasy illustration with the provided information. Do not include any text, border, card frame, stats, mana symbols, or trading card layout — just the standalone art. Do not generate text anywhere",
+    "width": 768,
+    "height": 576,
+    "model": "runware:101@1",
+    "numberResults": 1,
+    "includeCost": true
+  }
+]

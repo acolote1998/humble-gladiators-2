@@ -73,12 +73,6 @@ public class CharacterController {
         return ResponseEntity.ok(characterService.doesHeroExistForACampaign(campaignId, userId));
     }
 
-    @ExceptionHandler(HeroDoesNotExist.class)
-    public ResponseEntity<String> handleHeroHasNotBeenCreated(HeroDoesNotExist ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ex.getMessage());
-    }
-
     @ExceptionHandler(HeroAlreadyCreated.class)
     public ResponseEntity<String> handleHeroAlreadyCreated(HeroAlreadyCreated ex) {
         return ResponseEntity
@@ -86,8 +80,5 @@ public class CharacterController {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(DailyEnemyNotFound.class)
-    public ResponseEntity<String> handleDailyEnemyNotFound() {
-        return ResponseEntity.ok("Daily enemy not found");
-    }
+
 }

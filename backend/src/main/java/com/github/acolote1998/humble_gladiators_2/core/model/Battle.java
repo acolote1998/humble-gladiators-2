@@ -26,8 +26,11 @@ public class Battle {
     @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
+    private String userId;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "battle_id")
+    @OrderBy("createdAt ASC")
     private List<Turn> turns;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -46,10 +49,19 @@ public class Battle {
     @JoinColumn(name = "battle_losing_team_id")
     private List<CharacterInstance> losingTeam;
 
-    @ManyToOne
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<CharacterInstance> teamOne;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<CharacterInstance> teamTwo;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CharacterInstance currentCharacterToPlay;
 
     private boolean ongoing;
+    
     @CreationTimestamp
     private LocalDateTime createdAt;
 
