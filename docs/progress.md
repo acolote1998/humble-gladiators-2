@@ -100,4 +100,9 @@ Monday 20/10
 - Created http folder in backend to be able to test things better
 - Refined logic to create a new battle
 - Players can physically attack each other inside a battle
+
+Tuesday 21/10
+- Refined a lot the validation logic to be able to have a robust before turn-processing validation
+- Adding logic to check if consumables are valid before using them
+- Adding logic to check if spells are valid before using them
 ```
