@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -66,42 +67,81 @@ public class BattleService {
         return newBattle;
     }
 
+    public boolean doesBattleByIdAndCampaignIdAndUserIdExist(Battle battleToCheck) {
+        return battleToCheck != null;
+    }
+
+    public boolean doesCharacterBelongToBattle(Battle battleToCheck, CharacterInstance charToCheck) {
+        return (battleToCheck.getTeamOne().contains(charToCheck) ||
+                battleToCheck.getTeamTwo().contains(charToCheck));
+    }
+
+    public boolean canStartBattleValidly(
+            Long campaignId,
+            String userId,
+            Long battleId,
+            TurnRequestDto turnRequest,
+            CharacterInstance performingCharacter,
+            CharacterInstance targetCharacter,
+            Battle battleToCheck) {
+        if (!characterService.doesCharacterExist(performingCharacter)) {
+            log.error("INVALID '{}' -  Performing character '{} - {}' is invalid", turnRequest.action().name(), performingCharacter.getId(), targetCharacter.getName());
+            return false;
+        }
+        if (!characterService.doesCharacterExist(targetCharacter)) {
+            log.error("INVALID '{}' -  Target character '{} - {}'is invalid", turnRequest.action().name(), targetCharacter.getId(), targetCharacter.getName());
+            return false;
+        }
+        if (!doesBattleByIdAndCampaignIdAndUserIdExist(battleToCheck)) {
+            log.error("INVALID '{}' -  Battle '{}' is invalid", turnRequest.action().name(), battleId);
+            return false;
+        }
+        if (!doesCharacterBelongToBattle(battleToCheck, performingCharacter)) {
+            log.error("INVALID '{}' -  Character '{} - {}' does not belong to battle '{}'",
+                    turnRequest.action().name(),
+                    performingCharacter.getId(),
+                    performingCharacter.getName(),
+                    battleToCheck.getId());
+            return false;
+        }
+        if (!doesCharacterBelongToBattle(battleToCheck, targetCharacter)) {
+            log.error("INVALID '{}' -  Character '{} - {}' does not belong to battle '{}'",
+                    turnRequest.action().name(),
+                    performingCharacter.getId(),
+                    performingCharacter.getName(),
+                    battleToCheck.getId());
+            return false;
+        }
+        if (!Objects.equals(whosTurnsIsIt(battleToCheck).getId(), performingCharacter.getId())) {
+            log.error("INVALID '{}' -  It is not the character's '{} - {}' turn in battle '{}'",
+                    turnRequest.action().name(),
+                    performingCharacter.getId(),
+                    performingCharacter.getName(),
+                    battleToCheck.getId());
+            return false;
+        }
+        return true;
+    }
+
     @Transactional
     public Turn performAttack(Long campaignId, String userId, Long battleId, TurnRequestDto turnRequest) {
         CharacterInstance performerCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
                 turnRequest.performingCharacterId(),
                 campaignId,
                 userId);
-        if (performerCharacter == null) {
-            log.error("ATTACK TURN ATTEMPT -  Performing character is invalid");
-            throw new InvalidTurn("Performing character is invalid");
-        }
         CharacterInstance targetCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
                 turnRequest.targetCharacterId(),
                 campaignId,
                 userId);
-        if (targetCharacter == null) {
-            log.error("ATTACK TURN ATTEMPT -  Target character is invalid");
-            throw new InvalidTurn("Target character is invalid");
-        }
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
-        if (battle == null) {
-            log.error("ATTACK TURN ATTEMPT -  Desired battle is invalid");
-            throw new InvalidTurn("Desired battle is invalid");
-        }
-        boolean performerInBattle = battle.getTeamOne().contains(performerCharacter) ||
-                battle.getTeamTwo().contains(performerCharacter);
-
-        boolean targetInBattle = battle.getTeamOne().contains(targetCharacter) ||
-                battle.getTeamTwo().contains(targetCharacter);
-
-        if (!performerInBattle || !targetInBattle) {
-            log.error("ATTACK TURN ATTEMPT - At least one of the characters does not belong to this battle");
-            throw new InvalidTurn("At least one of the characters does not belong to this battle");
-        }
-        if (!performerCharacter.getId().equals(whosTurnsIsIt(battle).getId())) {
-            log.error("ATTACK TURN ATTEMPT - The performer cannot attack since it is not their turn");
-            throw new InvalidTurn("Performer cannot attack since it is not their turn");
+        if (!canStartBattleValidly(campaignId,
+                userId,
+                battleId,
+                turnRequest,
+                performerCharacter,
+                targetCharacter,
+                battle)) {
+            throw new InvalidTurn("Cannot process turn. Invalid");
         }
         Integer causedDamage = performerCharacter.usePhysicalAttack(targetCharacter);
         characterService.saveCharacter(performerCharacter);

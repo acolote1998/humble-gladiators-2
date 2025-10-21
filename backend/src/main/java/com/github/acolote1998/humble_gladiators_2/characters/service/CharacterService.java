@@ -387,6 +387,10 @@ public class CharacterService {
         return characterInstanceRepository.findFirstByIdAndCampaign_IdAndUserId(characterId, campaignId, userId);
     }
 
+    public boolean doesCharacterExist(CharacterInstance charToCheck) {
+        return charToCheck != null;
+    }
+
     public CharacterInstance saveCharacter(CharacterInstance model) {
         return characterInstanceRepository.save(model);
     }
