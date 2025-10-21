@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
+import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
+import com.github.acolote1998.humble_gladiators_2.core.enums.NPCActions;
 import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
@@ -12,16 +14,15 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Action;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.repository.BattleRepository;
+import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -340,5 +341,182 @@ public class BattleService {
         }
 
         return todaysBattle;
+    }
+
+    Turn playNPCTurn(Battle battleToPlayAt, CharacterInstance characterToPlay, CharacterInstance characterToTarget) {
+        boolean couldRecoverHp = characterToPlay.getStats().getCurrentHp() < characterToPlay.getStats().getMaxHp();
+        boolean couldRecoverMp = characterToPlay.getStats().getCurrentMp() < characterToPlay.getStats().getMaxMp();
+        boolean couldAttackPhysically = characterToPlay.getPhysicalDamage() > 0;
+        boolean couldCastDamageSpell = false;
+        if (!characterToPlay.getInventory().getSpells().isEmpty()) {
+            for (SpellInstance spell : characterToPlay.getInventory().getSpells()) {
+                if ((spell.getTemplate().getMagicalDamage() > 0
+                        || spell.getTemplate().getPhysicalDamage() > 0)
+                        && spell.getTemplate().getMpCost() <= characterToPlay.getStats().getCurrentMp()) {
+                    couldCastDamageSpell = true;
+                    break;
+                }
+            }
+        }
+        boolean couldCastHealSpell = false;
+        if (!characterToPlay.getInventory().getSpells().isEmpty()) {
+            for (SpellInstance spell : characterToPlay.getInventory().getSpells()) {
+                if ((spell.getTemplate().getRestoreHp() > 0)
+                        && spell.getTemplate().getMpCost() <= characterToPlay.getStats().getCurrentMp()) {
+                    couldCastHealSpell = true;
+                    break;
+                }
+            }
+        }
+        boolean couldRestoreHpWithConsumable = false;
+        if (!characterToPlay.getInventory().getConsumables().isEmpty()) {
+            for (ConsumableInstance consumable : characterToPlay.getInventory().getConsumables()) {
+                if (consumable.getTemplate().getRestoreHp() > 0) {
+                    couldRestoreHpWithConsumable = true;
+                    break;
+                }
+            }
+        }
+        boolean couldRestoreMpWithConsumable = false;
+        if (!characterToPlay.getInventory().getConsumables().isEmpty()) {
+            for (ConsumableInstance consumable : characterToPlay.getInventory().getConsumables()) {
+                if (consumable.getTemplate().getRestoreMp() > 0) {
+                    couldRestoreMpWithConsumable = true;
+                    break;
+                }
+            }
+        }
+        List<NPCActions> possibleActions = new ArrayList<>();
+        if (couldRecoverHp && couldCastHealSpell) {
+            possibleActions.add(NPCActions.SPELL_HEAL);
+        }
+        if (couldRecoverHp && couldRestoreHpWithConsumable) {
+            possibleActions.add(NPCActions.CONSUMABLE_RECOVER_HP);
+        }
+        if (couldRecoverMp && couldRestoreMpWithConsumable) {
+            possibleActions.add(NPCActions.CONSUMABLE_RECOVER_MP);
+        }
+        if (couldAttackPhysically) {
+            possibleActions.add(NPCActions.PHYSICAL_ATTACK);
+        }
+        if (couldCastDamageSpell) {
+            possibleActions.add(NPCActions.SPELL_ATTACK);
+        }
+        if (possibleActions.isEmpty()) {
+            log.warn("CHARACTER '{} - {}' COULD NOT PERFORM ANY ACTION", characterToPlay.getId(), characterToPlay.getName());
+            possibleActions.add(NPCActions.NOTHING);
+        }
+        Collections.shuffle(possibleActions);
+        NPCActions decisionToPerform = possibleActions.getFirst();
+        Turn npcsTurn = new Turn();
+        npcsTurn.setBattle(battleToPlayAt);
+        npcsTurn.setCampaign(characterToPlay.getCampaign());
+        npcsTurn.setPerformingCharacter(characterToPlay);
+        switch (decisionToPerform) {
+            case SPELL_HEAL -> {
+                List<SpellInstance> possibleSpells = new ArrayList<>();
+                for (SpellInstance spell : characterToPlay.getInventory().getSpells()) {
+                    if ((spell.getTemplate().getMpCost() <= characterToPlay.getStats().getCurrentMp())
+                            && spell.getTemplate().getRestoreHp() > 0) {
+                        possibleSpells.add(spell);
+                    }
+                }
+                Collections.shuffle(possibleSpells);
+                SpellInstance spellToCast = possibleSpells.getFirst();
+                Action spellAction = characterToPlay.castSpell(spellToCast.getId(), characterToPlay);
+                npcsTurn.setTargetCharacter(characterToPlay);
+                npcsTurn.setAction(spellAction);
+            }
+            case SPELL_ATTACK -> {
+                List<SpellInstance> possibleSpells = new ArrayList<>();
+                for (SpellInstance spell : characterToPlay.getInventory().getSpells()) {
+                    if ((spell.getTemplate().getMagicalDamage() > 0
+                            || spell.getTemplate().getPhysicalDamage() > 0)
+                            && spell.getTemplate().getMpCost() <= characterToPlay.getStats().getCurrentMp()) {
+                        possibleSpells.add(spell);
+                    }
+                }
+                Collections.shuffle(possibleSpells);
+                SpellInstance spellToCast = possibleSpells.getFirst();
+                Action spellAction = characterToPlay.castSpell(spellToCast.getId(), characterToTarget);
+                npcsTurn.setTargetCharacter(characterToTarget);
+                npcsTurn.setAction(spellAction);
+            }
+            case PHYSICAL_ATTACK -> {
+                Action physicalAttackAction = characterToPlay.usePhysicalAttack(characterToTarget);
+                npcsTurn.setTargetCharacter(characterToTarget);
+                npcsTurn.setAction(physicalAttackAction);
+            }
+            case CONSUMABLE_RECOVER_HP -> {
+                List<ConsumableInstance> possibleConsumables = new ArrayList<>();
+                for (ConsumableInstance consumable : characterToPlay.getInventory().getConsumables()) {
+                    if (consumable.getTemplate().getRestoreHp() > 0) {
+                        possibleConsumables.add(consumable);
+                    }
+                }
+                Collections.shuffle(possibleConsumables);
+                ConsumableInstance consumableToUse = possibleConsumables.getFirst();
+                Action consumableAction = characterToPlay.useConsumable(consumableToUse.getId(), characterToPlay);
+                npcsTurn.setTargetCharacter(characterToPlay);
+                npcsTurn.setAction(consumableAction);
+            }
+            case CONSUMABLE_RECOVER_MP -> {
+                List<ConsumableInstance> possibleConsumables = new ArrayList<>();
+                for (ConsumableInstance consumable : characterToPlay.getInventory().getConsumables()) {
+                    if (consumable.getTemplate().getRestoreMp() > 0) {
+                        possibleConsumables.add(consumable);
+                    }
+                }
+                Collections.shuffle(possibleConsumables);
+                ConsumableInstance consumableToUse = possibleConsumables.getFirst();
+                Action consumableAction = characterToPlay.useConsumable(consumableToUse.getId(), characterToPlay);
+                npcsTurn.setTargetCharacter(characterToPlay);
+                npcsTurn.setAction(consumableAction);
+            }
+            case NOTHING -> {
+                npcsTurn.setTargetCharacter(characterToTarget);
+                Action action = new Action();
+                action.setDamageCaused(0);
+                action.setHealingCaused(0);
+                action.setMpRecoverCaused(0);
+                action.setActionType(ActionType.NOTHING);
+                action.setStateCaused(StateType.NONE);
+                npcsTurn.setAction(action);
+            }
+        }
+        return npcsTurn;
+    }
+
+    private boolean isBattleActive(Battle battleToCheck) {
+        //Do checks here such as
+
+        // battle is still on the same day it was created , if not -> add hero as loser, mark as onGoing false
+
+        // winner list or loser list are still empty -> mark onGoing as false
+
+        // both team one and team two are still alive
+
+        // the "onGoing" is still true????
+        return true;
+    }
+
+    @Transactional
+    public Battle getUpdatedBattleForToday(Battle oldBattle) {
+        Battle updatedBattle = oldBattle;
+        if (!isBattleActive(updatedBattle)) {
+            updatedBattle.setOngoing(false);
+            return battleRepository.save(updatedBattle);
+        }
+        CharacterInstance whosTurnIsIt = whosTurnsIsIt(updatedBattle);
+        if (updatedBattle.getTeamTwo().contains(whosTurnIsIt) && (whosTurnIsIt.getCharacterType() == CharacterType.NPC)) {
+            // If it is the NPC's turn
+            CharacterInstance enemyAsAttacker = whosTurnIsIt;
+            CharacterInstance heroAsTarget = oldBattle.getTeamOne().stream().filter(characterInstance -> characterInstance.getCharacterType() == CharacterType.PLAYER).findFirst().orElse(null);
+            if (heroAsTarget != null && enemyAsAttacker != null) {
+                updatedBattle.getTurns().add(playNPCTurn(updatedBattle, enemyAsAttacker, heroAsTarget));
+            }
+        }
+        updatedBattle.setCurrentCharacterToPlay(whosTurnsIsIt(updatedBattle));
+        return battleRepository.save(updatedBattle);
     }
 }

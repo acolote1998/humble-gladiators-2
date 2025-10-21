@@ -41,7 +41,7 @@ public class BattleController {
     @GetMapping("/{campaignId}/battle")
     public ResponseEntity<BattleResponseDto> getBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        Battle todaysBattle = battleService.getBattleForTodayByCampaignAndUserId(campaignId, userId);
+        Battle todaysBattle = battleService.getUpdatedBattleForToday(battleService.getBattleForTodayByCampaignAndUserId(campaignId, userId));
         BattleResponseDto dto = BattleResponseDto.fromModel(todaysBattle);
         return ResponseEntity.ok(dto);
     }
