@@ -23,7 +23,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "performingCharacterId": 1,
-  "targetCharacterId": 3,
+  "performingCharacterId": 3,
+  "targetCharacterId": 1,
   "action": "PHYSICAL_ATTACK"
 }
