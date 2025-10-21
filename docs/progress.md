@@ -107,4 +107,5 @@ Tuesday 21/10
 - Adding logic to check if spells are valid before using them
 - Adding logic to use consumables in the battle
 - Adding logic tu use spells in the battle
+- Adding NPC auto-play turn logic
 ```
