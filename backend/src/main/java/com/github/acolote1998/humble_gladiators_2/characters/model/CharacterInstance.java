@@ -282,36 +282,36 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     }
 
     @Override
-    public Action useConsumable(Long consumableId) {
-        ConsumableInstance consumableToUse = this
+    public Action useConsumable(Long consumableId, CharacterInstance targetCharacter) {
+        ConsumableInstance consumableToUseFromPerformerCharacterInventory = this
                 .getInventory()
                 .getConsumables()
                 .stream()
                 .filter(consumableInstance -> consumableInstance.getId().equals(consumableId))
                 .findFirst()
                 .orElse(null);
-        if (consumableToUse == null) {
+        if (consumableToUseFromPerformerCharacterInventory == null) {
             throw new InvalidTurn("Request to process consumable is not valid");
         }
 
-        int restoreHp = consumableToUse.getTemplate().getRestoreHp();
-        int restoreMp = consumableToUse.getTemplate().getRestoreMp();
+        int restoreHp = consumableToUseFromPerformerCharacterInventory.getTemplate().getRestoreHp();
+        int restoreMp = consumableToUseFromPerformerCharacterInventory.getTemplate().getRestoreMp();
 
         // Use the existing methods which handle clamping and logging
         if (restoreHp > 0) {
-            this.heal(restoreHp);
+            targetCharacter.heal(restoreHp);
         }
 
         if (restoreMp > 0) {
-            this.recoverMp(restoreMp);
+            targetCharacter.recoverMp(restoreMp);
         }
 
         // Decrement consumable quantity
-        consumableToUse.setQuantity(consumableToUse.getQuantity() - 1);
+        consumableToUseFromPerformerCharacterInventory.setQuantity(consumableToUseFromPerformerCharacterInventory.getQuantity() - 1);
 
         log.info("'{}' used consumable '{}', remaining quantity: {}", this.getName(),
-                consumableToUse.getTemplate().getName(),
-                consumableToUse.getQuantity());
+                consumableToUseFromPerformerCharacterInventory.getTemplate().getName(),
+                consumableToUseFromPerformerCharacterInventory.getQuantity());
         Action actionPerformed = new Action();
         actionPerformed.setActionType(ActionType.CONSUMABLE);
         actionPerformed.setStateCaused(StateType.NONE);

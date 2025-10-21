@@ -219,7 +219,7 @@ public class BattleService {
                 battle)) {
             throw new InvalidTurn("Cannot process turn. Invalid");
         }
-        Action action = performerCharacter.useConsumable(turnRequest.cardToUseId());
+        Action action = performerCharacter.useConsumable(turnRequest.cardToUseId(), targetCharacter);
         characterService.saveCharacter(performerCharacter);
         characterService.saveCharacter(targetCharacter);
         Turn newTurn = new Turn();
