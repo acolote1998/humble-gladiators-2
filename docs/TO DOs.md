@@ -46,9 +46,11 @@
         through gemini
 
 - [ ] Daily Enemy Encounter
-  - [ ] Users can face one enemy per day
+
+  - [x] Users can face one enemy per day
   - [ ] The user opens an enemy booster and the enemy card is drawn from there ahd the battle starts straight
         away.
+
 - [ ] Daily Merchant Encounter
 
   - [ ] Users can meet one merchant per day
@@ -57,7 +59,6 @@
         user opens a new merchant booster
     - [ ] Each merchant offers three random items for sale
 
-- [ ] Discovery system integration
 - [ ] Logic for interface method implementation
 - [ ] Balance formulas
   - [ ] gold reward
@@ -77,10 +78,11 @@
   - [ ] currentExp
   - [ ] expForNextLevel
 - [ ] Inventory management service layer
-- [ ] Equipment system service layer
 - [ ] Combat Logic Service Layer
   - [ ] Turn-based combat flow implementation
-  - [ ] Damage calculation logic
+  - [x] Damage calculation logic
+  - [ ] Hero turns logic
+  - [ ] Npc logic
   - [ ] Battle state management
 - [ ] Replay system / logic
 - [ ] Achievement system

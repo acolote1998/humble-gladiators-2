@@ -105,4 +105,6 @@ Tuesday 21/10
 - Refined a lot the validation logic to be able to have a robust before turn-processing validation
 - Adding logic to check if consumables are valid before using them
 - Adding logic to check if spells are valid before using them
+- Adding logic to use consumables in the battle
+- Adding logic tu use spells in the battle
 ```
