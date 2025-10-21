@@ -391,7 +391,7 @@ public class CharacterService {
         return characterInstanceRepository.save(model);
     }
 
-    public boolean canTheCharacterUseConsumable(CharacterInstance characterToCheck, Long consumableId) {
+    public boolean canTheCharacterUseConsumable(CharacterInstance characterToCheck, Long consumableToCheckId) {
         ConsumableInstance consumableToCheck = characterToCheck
                 .getInventory()
                 .getConsumables()
@@ -399,13 +399,36 @@ public class CharacterService {
                 .filter(
                         consumableInstance -> consumableInstance
                                 .getId()
-                                .equals(consumableId))
+                                .equals(consumableToCheckId))
                 .findFirst()
                 .orElse(null);
         if (consumableToCheck == null) {
             return false;
         }
         if (consumableToCheck.getQuantity() < 1) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canTheCharacterUseSpell(CharacterInstance characterToCheck, Long spellToCheckId) {
+        SpellInstance spellToCheck = characterToCheck
+                .getInventory()
+                .getSpells()
+                .stream()
+                .filter(
+                        spellInstance -> spellInstance
+                                .getId()
+                                .equals(spellToCheckId))
+                .findFirst()
+                .orElse(null);
+        if (spellToCheck == null) {
+            return false;
+        }
+        if (spellToCheck.getQuantity() < 1) {
+            return false;
+        }
+        if (characterToCheck.getStats().getCurrentMp() < spellToCheck.getTemplate().getMpCost()) {
             return false;
         }
         return true;

@@ -120,11 +120,26 @@ public class BattleService {
         if (turnRequest.action().name().equals(ActionType.CONSUMABLE.name())) {
             //If it is trying to use a consumable, we have to make sure it is a valid request
             if (turnRequest.cardToUseId() == null) {
-                log.error("INVALID '{}' -  The intended card to use is null", turnRequest.action().name());
+                log.error("INVALID '{}' -  The intended consumable to use is null", turnRequest.action().name());
                 return false;
             }
             if (!characterService.canTheCharacterUseConsumable(performingCharacter, turnRequest.cardToUseId())) {
-                log.error("INVALID '{}' -  Character '{} - {}' cannot use the card '{}'",
+                log.error("INVALID '{}' -  Character '{} - {}' cannot use the consumable '{}'",
+                        turnRequest.action().name(),
+                        performingCharacter.getId(),
+                        performingCharacter.getName(),
+                        turnRequest.cardToUseId());
+                return false;
+            }
+        }
+        if (turnRequest.action().name().equals(ActionType.SPELL.name())) {
+            //If it is trying to use a spell, we have to make sure it is a valid request
+            if (turnRequest.cardToUseId() == null) {
+                log.error("INVALID '{}' -  The intended spell to use is null", turnRequest.action().name());
+                return false;
+            }
+            if (!characterService.canTheCharacterUseSpell(performingCharacter, turnRequest.cardToUseId())) {
+                log.error("INVALID '{}' -  Character '{} - {}' cannot use the spell '{}'",
                         turnRequest.action().name(),
                         performingCharacter.getId(),
                         performingCharacter.getName(),
