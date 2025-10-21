@@ -425,6 +425,12 @@ public class BattleService {
                 Action spellAction = characterToPlay.castSpell(spellToCast.getId(), characterToPlay);
                 npcsTurn.setTargetCharacter(characterToPlay);
                 npcsTurn.setAction(spellAction);
+                log.info("'ID {} {} used 'ID {} {}' to heal themselves'",
+                        characterToPlay.getId(),
+                        characterToPlay.getName(),
+                        spellToCast.getId(),
+                        spellToCast.getName()
+                );
             }
             case SPELL_ATTACK -> {
                 List<SpellInstance> possibleSpells = new ArrayList<>();
@@ -440,11 +446,21 @@ public class BattleService {
                 Action spellAction = characterToPlay.castSpell(spellToCast.getId(), characterToTarget);
                 npcsTurn.setTargetCharacter(characterToTarget);
                 npcsTurn.setAction(spellAction);
+                log.info("'ID {} {} used 'ID {} {}' to attack'",
+                        characterToPlay.getId(),
+                        characterToPlay.getName(),
+                        spellToCast.getId(),
+                        spellToCast.getName()
+                );
             }
             case PHYSICAL_ATTACK -> {
                 Action physicalAttackAction = characterToPlay.usePhysicalAttack(characterToTarget);
                 npcsTurn.setTargetCharacter(characterToTarget);
                 npcsTurn.setAction(physicalAttackAction);
+                log.info("'ID {} {} performed a physical attack'",
+                        characterToPlay.getId(),
+                        characterToPlay.getName()
+                );
             }
             case CONSUMABLE_RECOVER_HP -> {
                 List<ConsumableInstance> possibleConsumables = new ArrayList<>();
@@ -458,6 +474,12 @@ public class BattleService {
                 Action consumableAction = characterToPlay.useConsumable(consumableToUse.getId(), characterToPlay);
                 npcsTurn.setTargetCharacter(characterToPlay);
                 npcsTurn.setAction(consumableAction);
+                log.info("'ID {} {} used consumable 'ID {} {}' to heal themselves'",
+                        characterToPlay.getId(),
+                        characterToPlay.getName(),
+                        consumableToUse.getId(),
+                        consumableToUse.getName()
+                );
             }
             case CONSUMABLE_RECOVER_MP -> {
                 List<ConsumableInstance> possibleConsumables = new ArrayList<>();
@@ -471,6 +493,12 @@ public class BattleService {
                 Action consumableAction = characterToPlay.useConsumable(consumableToUse.getId(), characterToPlay);
                 npcsTurn.setTargetCharacter(characterToPlay);
                 npcsTurn.setAction(consumableAction);
+                log.info("'ID {} {} used consumable 'ID {} {}' to recover mp'",
+                        characterToPlay.getId(),
+                        characterToPlay.getName(),
+                        consumableToUse.getId(),
+                        consumableToUse.getName()
+                );
             }
             case NOTHING -> {
                 npcsTurn.setTargetCharacter(characterToTarget);
@@ -481,6 +509,10 @@ public class BattleService {
                 action.setActionType(ActionType.NOTHING);
                 action.setStateCaused(StateType.NONE);
                 npcsTurn.setAction(action);
+                log.warn("'ID {} {} did not do anything???'",
+                        characterToPlay.getId(),
+                        characterToPlay.getName()
+                );
             }
         }
         return npcsTurn;
