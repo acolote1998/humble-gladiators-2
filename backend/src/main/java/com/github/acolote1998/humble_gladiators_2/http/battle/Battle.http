@@ -27,3 +27,15 @@ Content-Type: application/json
   "targetCharacterId": 1,
   "action": "PHYSICAL_ATTACK"
 }
+
+### Char ID 3 (Hero for seeded data) casts a consumable on  Char ID 3
+POST http://localhost:8080/api/campaign/1/battle/1/action/consumable
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "performingCharacterId": 3,
+  "targetCharacterId": 3,
+  "action": "CONSUMABLE"
+}
