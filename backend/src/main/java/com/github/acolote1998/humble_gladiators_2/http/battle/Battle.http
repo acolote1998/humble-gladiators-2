@@ -40,3 +40,16 @@ Content-Type: application/json
   "action": "CONSUMABLE",
   "cardToUseId": 2
 }
+
+### Char ID 3 (Hero for seeded data) casts a spell on  Char ID 1
+POST http://localhost:8080/api/campaign/1/battle/1/action/spell
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "performingCharacterId": 3,
+  "targetCharacterId": 1,
+  "action": "SPELL",
+  "cardToUseId": 1
+}
