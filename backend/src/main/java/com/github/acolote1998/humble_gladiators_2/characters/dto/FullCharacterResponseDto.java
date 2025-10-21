@@ -26,6 +26,9 @@ public record FullCharacterResponseDto(
 ) {
 
     public static FullCharacterResponseDto fromModelToDto(CharacterInstance character) {
+        if (character == null) {
+            return null;
+        }
         FullCharacterResponseDto dto = new FullCharacterResponseDto(
                 character.getId(),
                 HeroResponseDto.MapStats(character),

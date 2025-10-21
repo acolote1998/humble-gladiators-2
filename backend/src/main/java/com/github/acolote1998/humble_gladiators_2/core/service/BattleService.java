@@ -40,7 +40,7 @@ public class BattleService {
     }
 
     public Battle createNewBattle(Long campaignId, String userId) {
-        if (battleRepository.findByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, LocalDate.now()) != null) {
+        if (battleRepository.findOnGoingByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, LocalDate.now()) != null) {
             throw new InvalidBattle("You already have a battle today. Come back tomorrow");
         }
         CharacterInstance hero = characterService.getHero(campaignId, userId);
@@ -193,7 +193,7 @@ public class BattleService {
         newTurn.setTargetCharacter(targetCharacter);
         newTurn.setAction(action);
         battle.getTurns().add(newTurn);
-        battleRepository.save(battle);
+        battleRepository.save(findWinnersOrContinueBattle(battle));
         return newTurn;
     }
 
@@ -225,7 +225,7 @@ public class BattleService {
         newTurn.setTargetCharacter(targetCharacter);
         newTurn.setAction(action);
         battle.getTurns().add(newTurn);
-        battleRepository.save(battle);
+        battleRepository.save(findWinnersOrContinueBattle(battle));
         return newTurn;
     }
 
@@ -257,7 +257,7 @@ public class BattleService {
         newTurn.setTargetCharacter(targetCharacter);
         newTurn.setAction(action);
         battle.getTurns().add(newTurn);
-        battleRepository.save(battle);
+        battleRepository.save(findWinnersOrContinueBattle(battle));
         return newTurn;
     }
 
@@ -319,7 +319,7 @@ public class BattleService {
             return false;
         }
         try {
-            getBattleForTodayByCampaignAndUserId(campaignId, userId);
+            getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId);
             return false;
         } catch (InvalidBattle ex) {
 
@@ -327,19 +327,13 @@ public class BattleService {
         return true;
     }
 
-    public Battle getBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
+    public Battle getOnGoingBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
         LocalDate today = LocalDate.now();
-        Battle todaysBattle = battleRepository.findByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
+        Battle todaysBattle = battleRepository.findOnGoingByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
         if (todaysBattle == null) {
             log.error("Campaign '{}' - Battle for today not found", campaignId);
             throw new InvalidBattle("Battle for today not found");
         }
-        CharacterInstance updatedCharacterToPlay = whosTurnsIsIt(todaysBattle);
-        if (!todaysBattle.getCurrentCharacterToPlay().getId().equals(updatedCharacterToPlay.getId())) {
-            todaysBattle.setCurrentCharacterToPlay(updatedCharacterToPlay);
-            battleRepository.save(todaysBattle);
-        }
-
         return todaysBattle;
     }
 
@@ -519,40 +513,88 @@ public class BattleService {
     }
 
     private boolean isBattleActive(Battle battleToCheck) {
-        //Do checks here such as
-
-        // battle is still on the same day it was created , if not -> add hero as loser, mark as onGoing false
-
-        // winner list or loser list are still empty -> mark onGoing as false
-
-        // both team one and team two are still alive
-
-        // the "onGoing" is still true????
+        if (battleToCheck.getCreatedAt().getDayOfYear() != LocalDate.now().getDayOfYear()) {
+            log.warn("The battle '{}' is not a battle of today", battleToCheck.getId());
+            return false;
+        }
+        if (!battleToCheck.getWinningTeam().isEmpty() || !battleToCheck.getLosingTeam().isEmpty()) {
+            log.warn("The battle '{}' already has winners/losers, it should not be active", battleToCheck.getId());
+            return false;
+        }
         return true;
+    }
+
+    public Battle updateBattle(Battle oldBattle) {
+        Battle updatedBattle = oldBattle;
+        if (!isBattleActive(updatedBattle)) {
+            //If not a battle from today, and there are still no winners / losers, we default the victory for the enemy
+            if ((updatedBattle.getCreatedAt().getDayOfYear() != LocalDate.now().getDayOfYear())
+                    && (updatedBattle.getLosingTeam().isEmpty())) {
+                updatedBattle.getLosingTeam().add(updatedBattle.getTeamOne().getFirst());
+            }
+            if ((updatedBattle.getCreatedAt().getDayOfYear() != LocalDate.now().getDayOfYear())
+                    && updatedBattle.getWinningTeam().isEmpty()) {
+                updatedBattle.getWinningTeam().add(updatedBattle.getTeamTwo().getFirst());
+            }
+            if ((updatedBattle.getCreatedAt().getDayOfYear() != LocalDate.now().getDayOfYear())
+                    && updatedBattle.getCurrentCharacterToPlay() != null) {
+                updatedBattle.setCurrentCharacterToPlay(null);
+            }
+            fullyRecoverBothTeams(updatedBattle);
+            updatedBattle.setOngoing(false);
+        } else {
+            CharacterInstance whosTurnIsIt = whosTurnsIsIt(updatedBattle);
+            if (updatedBattle.getTeamTwo().contains(whosTurnIsIt) && (whosTurnIsIt.getCharacterType() == CharacterType.NPC)) {
+                // If it is the NPC's turn
+                CharacterInstance enemyAsAttacker = whosTurnIsIt;
+                CharacterInstance heroAsTarget = oldBattle.getTeamOne().stream().filter(characterInstance -> characterInstance.getCharacterType() == CharacterType.PLAYER).findFirst().orElse(null);
+                if (heroAsTarget != null && enemyAsAttacker != null) {
+                    updatedBattle.getTurns().add(playNPCTurn(updatedBattle, enemyAsAttacker, heroAsTarget));
+                }
+            }
+            updatedBattle = findWinnersOrContinueBattle(updatedBattle);
+        }
+        return battleRepository.save(updatedBattle);
+    }
+
+    public void fullyRecoverBothTeams(Battle battleToCheck) {
+        battleToCheck.getWinningTeam().getFirst().recoverMp(50000);
+        battleToCheck.getWinningTeam().getFirst().heal(50000);
+        battleToCheck.getLosingTeam().getFirst().recoverMp(50000);
+        battleToCheck.getLosingTeam().getFirst().heal(50000);
+        characterService.saveCharacter(battleToCheck.getWinningTeam().getFirst());
+        characterService.saveCharacter(battleToCheck.getLosingTeam().getFirst());
+    }
+
+    public Battle findWinnersOrContinueBattle(Battle battleToCheck) {
+        if (battleToCheck.getWinningTeam().isEmpty()
+                && battleToCheck.getLosingTeam().isEmpty()
+                && (battleToCheck.getTeamOne().getFirst().getStats().getCurrentHp() <= 0 ||
+                battleToCheck.getTeamTwo().getFirst().getStats().getCurrentHp() <= 0)) {
+            battleToCheck.setCurrentCharacterToPlay(null);
+            battleToCheck.setOngoing(false);
+            if (battleToCheck.getTeamOne().getFirst().isAlive() &&
+                    !battleToCheck.getTeamTwo().getFirst().isAlive()) {
+                battleToCheck.getWinningTeam().add(battleToCheck.getTeamOne().getFirst());
+                battleToCheck.getLosingTeam().add(battleToCheck.getTeamTwo().getFirst());
+                log.info("'{} {}' won the battle", battleToCheck.getTeamOne().getFirst().getId(), battleToCheck.getTeamOne().getFirst().getName());
+            }
+            if (!battleToCheck.getTeamOne().getFirst().isAlive() &&
+                    battleToCheck.getTeamTwo().getFirst().isAlive()) {
+                battleToCheck.getWinningTeam().add(battleToCheck.getTeamTwo().getFirst());
+                battleToCheck.getLosingTeam().add(battleToCheck.getTeamOne().getFirst());
+                log.info("'{} {}' won the battle", battleToCheck.getTeamTwo().getFirst().getId(), battleToCheck.getTeamTwo().getFirst().getName());
+            }
+            fullyRecoverBothTeams(battleToCheck);
+        } else {
+            battleToCheck.setCurrentCharacterToPlay(whosTurnsIsIt(battleToCheck));
+        }
+        return battleToCheck;
     }
 
     @Transactional
     public Battle getUpdatedBattleForToday(Battle oldBattle) {
-        Battle updatedBattle = oldBattle;
-        if (!isBattleActive(updatedBattle)) {
-            updatedBattle.setOngoing(false);
-            return battleRepository.save(updatedBattle);
-        }
-        CharacterInstance whosTurnIsIt = whosTurnsIsIt(updatedBattle);
-        if (updatedBattle.getTeamTwo().contains(whosTurnIsIt) && (whosTurnIsIt.getCharacterType() == CharacterType.NPC)) {
-            // If it is the NPC's turn
-            CharacterInstance enemyAsAttacker = whosTurnIsIt;
-            CharacterInstance heroAsTarget = oldBattle.getTeamOne().stream().filter(characterInstance -> characterInstance.getCharacterType() == CharacterType.PLAYER).findFirst().orElse(null);
-            if (heroAsTarget != null && enemyAsAttacker != null) {
-                updatedBattle.getTurns().add(playNPCTurn(updatedBattle, enemyAsAttacker, heroAsTarget));
-            }
-        }
-        if (!isBattleActive(updatedBattle)) {
-            updatedBattle.setOngoing(false);
-            updatedBattle.setCurrentCharacterToPlay(null);
-        } else {
-            updatedBattle.setCurrentCharacterToPlay(whosTurnsIsIt(updatedBattle));
-        }
+        Battle updatedBattle = updateBattle(oldBattle);
         return battleRepository.save(updatedBattle);
     }
 }

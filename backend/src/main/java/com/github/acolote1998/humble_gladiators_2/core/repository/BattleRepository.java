@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.core.repository;
 
-import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
@@ -14,8 +13,9 @@ public interface BattleRepository extends ListCrudRepository<Battle, Long> {
             "WHERE campaign_id = :campaignId " +
             "AND user_id = :userId " +
             "AND DATE(updated_at) = :today " +
+            "AND ongoing = true " +
             "LIMIT 1", nativeQuery = true)
-    Battle findByCampaignIdAndUserIdAndUpdatedAtDate(
+    Battle findOnGoingByCampaignIdAndUserIdAndUpdatedAtDate(
             @Param("campaignId") Long campaignId,
             @Param("userId") String userId,
             @Param("today") LocalDate today);
