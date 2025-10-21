@@ -117,6 +117,21 @@ public class BattleService {
                     battleToCheck.getId());
             return false;
         }
+        if (turnRequest.action().name().equals(ActionType.CONSUMABLE.name())) {
+            //If it is trying to use a consumable, we have to make sure it is a valid request
+            if (turnRequest.cardToUseId() == null) {
+                log.error("INVALID '{}' -  The intended card to use is null", turnRequest.action().name());
+                return false;
+            }
+            if (!characterService.canTheCharacterUseConsumable(performingCharacter, turnRequest.cardToUseId())) {
+                log.error("INVALID '{}' -  Character '{} - {}' cannot use the card '{}'",
+                        turnRequest.action().name(),
+                        performingCharacter.getId(),
+                        performingCharacter.getName(),
+                        turnRequest.cardToUseId());
+                return false;
+            }
+        }
         return true;
     }
 

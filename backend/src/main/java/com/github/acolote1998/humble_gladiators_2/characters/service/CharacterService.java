@@ -12,11 +12,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.repository.Characte
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -393,5 +389,25 @@ public class CharacterService {
 
     public CharacterInstance saveCharacter(CharacterInstance model) {
         return characterInstanceRepository.save(model);
+    }
+
+    public boolean canTheCharacterUseConsumable(CharacterInstance characterToCheck, Long consumableId) {
+        ConsumableInstance consumableToCheck = characterToCheck
+                .getInventory()
+                .getConsumables()
+                .stream()
+                .filter(
+                        consumableInstance -> consumableInstance
+                                .getId()
+                                .equals(consumableId))
+                .findFirst()
+                .orElse(null);
+        if (consumableToCheck == null) {
+            return false;
+        }
+        if (consumableToCheck.getQuantity() < 1) {
+            return false;
+        }
+        return true;
     }
 }
