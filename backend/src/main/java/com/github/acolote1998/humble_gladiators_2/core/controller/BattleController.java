@@ -61,7 +61,7 @@ public class BattleController {
             @PathVariable Long battleId,
             @RequestBody @Valid TurnRequestDto turnRequest) {
         String userId = jwt.getSubject();
-        Turn newTurn = battleService.performAttack(campaignId, userId, battleId, turnRequest);
+        Turn newTurn = battleService.performPhysicalAttack(campaignId, userId, battleId, turnRequest);
         BattleResponseDto.TurnResponseDto dtoResponse = BattleResponseDto.TurnResponseDto.fromModel(newTurn);
         return ResponseEntity.ok(dtoResponse);
     }

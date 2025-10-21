@@ -396,7 +396,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
 
     @Override
-    public Integer usePhysicalAttack(CharacterInstance targetCharacter) {
+    public Action usePhysicalAttack(CharacterInstance targetCharacter) {
         Integer causedDamage = 0;
 
         int potentialPhysicalDamage = this.causePhysicalDamage();
@@ -414,7 +414,13 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                     this.getName(),
                     targetCharacter.getName());
         }
-        return causedDamage;
+        Action actionPerformed = new Action();
+        actionPerformed.setActionType(ActionType.PHYSICAL_ATTACK);
+        actionPerformed.setStateCaused(StateType.NONE);
+        actionPerformed.setDamageCaused(causedDamage);
+        actionPerformed.setHealingCaused(0);
+        actionPerformed.setMpRecoverCaused(0);
+        return actionPerformed;
     }
 
 }

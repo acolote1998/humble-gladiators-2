@@ -165,7 +165,7 @@ public class BattleService {
     }
 
     @Transactional
-    public Turn performAttack(Long campaignId, String userId, Long battleId, TurnRequestDto turnRequest) {
+    public Turn performPhysicalAttack(Long campaignId, String userId, Long battleId, TurnRequestDto turnRequest) {
         CharacterInstance performerCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
                 turnRequest.performingCharacterId(),
                 campaignId,
@@ -182,14 +182,9 @@ public class BattleService {
                 battle)) {
             throw new InvalidTurn("Cannot process turn. Invalid");
         }
-        Integer causedDamage = performerCharacter.usePhysicalAttack(targetCharacter);
+        Action action = performerCharacter.usePhysicalAttack(targetCharacter);
         characterService.saveCharacter(performerCharacter);
         characterService.saveCharacter(targetCharacter);
-        Action action = new Action();
-        action.setActionType(ActionType.PHYSICAL_ATTACK);
-        action.setStateCaused(StateType.NONE);
-        action.setDamageCaused(causedDamage);
-        action.setHealingCaused(0);
         Turn newTurn = new Turn();
         newTurn.setBattle(battle);
         newTurn.setCampaign(battle.getCampaign());
