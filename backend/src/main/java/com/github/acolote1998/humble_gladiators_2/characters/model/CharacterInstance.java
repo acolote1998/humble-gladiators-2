@@ -1,12 +1,9 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
-import com.github.acolote1998.humble_gladiators_2.characters.exception.NoManaLeft;
-import com.github.acolote1998.humble_gladiators_2.characters.exception.TargetHeroIsDead;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
 import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
 import com.github.acolote1998.humble_gladiators_2.core.model.Action;
-import com.github.acolote1998.humble_gladiators_2.item.exceptions.NoConsumablesLeft;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.*;
 import jakarta.persistence.*;
@@ -194,7 +191,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
 
     @Override
-    public Integer casuePhysicalDamage() {
+    public Integer causePhysicalDamage() {
         Integer proposedDamage = 0;
         Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
         Integer physicalDamage = this.getPhysicalDamage();
@@ -330,35 +327,46 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
 
     @Override
-    public void castSpell(SpellInstance spell, CharacterInstance targetCharacter) {
-        int mpCost = spell.getTemplate().getMpCost();
-        if (this.getStats().getCurrentMp() < mpCost) {
-            throw new NoManaLeft("Not enough mana to cast " + spell.getName());
+    public Action castSpell(Long spellId, CharacterInstance targetCharacter) {
+        SpellInstance spellToCastFromPerformerCharacterInventory = this
+                .getInventory()
+                .getSpells()
+                .stream()
+                .filter(spellInstance -> spellInstance.getId().equals(spellId))
+                .findFirst()
+                .orElse(null);
+        if (spellToCastFromPerformerCharacterInventory == null) {
+            throw new InvalidTurn("Request to process spell is not valid");
         }
+        int mpCost = spellToCastFromPerformerCharacterInventory.getTemplate().getMpCost();
 
         // Deduct mana
         this.getStats().setCurrentMp(this.getStats().getCurrentMp() - mpCost);
         log.info("'{}' casts '{}' on '{}', costing {} MP (remaining MP: {})",
                 this.getName(),
-                spell.getName(),
+                spellToCastFromPerformerCharacterInventory.getName(),
                 targetCharacter.getName(),
                 mpCost,
                 this.getStats().getCurrentMp());
 
+        int totalHpRecovered = 0;
+
         // Healing spell
-        if (spell.getTemplate().getRestoreHp() > 0) {
-            int healAmount = spell.getTemplate().getRestoreHp();
+        if (spellToCastFromPerformerCharacterInventory.getTemplate().getRestoreHp() > 0) {
+            int healAmount = spellToCastFromPerformerCharacterInventory.getTemplate().getRestoreHp();
+            totalHpRecovered += healAmount;
             targetCharacter.heal(healAmount);
-            log.info("'{}' heals '{}' for {} HP", targetCharacter.getName(), targetCharacter.getName(), healAmount);
-            return; // Healing spells don't deal damage
+            log.info("'{}' heals '{}' for {} HP", this.getName(), targetCharacter.getName(), healAmount);
         }
 
+        int totalDamageCaused = 0;
+
         // Physical damage
-        if (spell.getTemplate().getPhysicalDamage() > 0) {
-            int potentialPhysicalDamage = this.casuePhysicalDamage() + spell.getTemplate().getPhysicalDamage();
+        if (spellToCastFromPerformerCharacterInventory.getTemplate().getPhysicalDamage() > 0) {
+            int potentialPhysicalDamage = this.causePhysicalDamage() + spellToCastFromPerformerCharacterInventory.getTemplate().getPhysicalDamage();
             int damageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
+            totalDamageCaused += damageAfterDefense;
             if (damageAfterDefense > 0) {
-                targetCharacter.sufferDamage(damageAfterDefense);
                 log.info("'{}' deals {} physical damage to '{}'", this.getName(), damageAfterDefense, targetCharacter.getName());
             } else {
                 log.info("'{}' attacks '{}' with physical spell, but damage was fully blocked", this.getName(), targetCharacter.getName());
@@ -366,16 +374,24 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         }
 
         // Magical damage
-        if (spell.getTemplate().getMagicalDamage() > 0) {
-            int potentialMagicalDamage = this.causeMagicalDamage() + spell.getTemplate().getMagicalDamage();
+        if (spellToCastFromPerformerCharacterInventory.getTemplate().getMagicalDamage() > 0) {
+            int potentialMagicalDamage = this.causeMagicalDamage() + spellToCastFromPerformerCharacterInventory.getTemplate().getMagicalDamage();
             int damageAfterDefense = targetCharacter.defendMagicalDamage(potentialMagicalDamage);
+            totalDamageCaused += damageAfterDefense;
             if (damageAfterDefense > 0) {
-                targetCharacter.sufferDamage(damageAfterDefense);
                 log.info("'{}' deals {} magical damage to '{}'", this.getName(), damageAfterDefense, targetCharacter.getName());
             } else {
                 log.info("'{}' attacks '{}' with magical spell, but damage was fully blocked", this.getName(), targetCharacter.getName());
             }
         }
+        targetCharacter.sufferDamage(totalDamageCaused);
+        Action actionPerformed = new Action();
+        actionPerformed.setActionType(ActionType.SPELL);
+        actionPerformed.setStateCaused(StateType.NONE);
+        actionPerformed.setDamageCaused(totalDamageCaused);
+        actionPerformed.setHealingCaused(totalHpRecovered);
+        actionPerformed.setMpRecoverCaused(0);
+        return actionPerformed;
     }
 
 
@@ -383,7 +399,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     public Integer usePhysicalAttack(CharacterInstance targetCharacter) {
         Integer causedDamage = 0;
 
-        int potentialPhysicalDamage = this.casuePhysicalDamage();
+        int potentialPhysicalDamage = this.causePhysicalDamage();
         int damageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
 
         if (damageAfterDefense > 0) {

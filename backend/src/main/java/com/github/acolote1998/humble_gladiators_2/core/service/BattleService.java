@@ -233,6 +233,39 @@ public class BattleService {
         return newTurn;
     }
 
+    @Transactional
+    public Turn castSpell(Long campaignId, String userId, Long battleId, TurnRequestDto turnRequest) {
+        CharacterInstance performerCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
+                turnRequest.performingCharacterId(),
+                campaignId,
+                userId);
+        CharacterInstance targetCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
+                turnRequest.targetCharacterId(),
+                campaignId,
+                userId);
+        Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
+        if (!canProcessTurnValidly(
+                turnRequest,
+                performerCharacter,
+                targetCharacter,
+                battle)) {
+            throw new InvalidTurn("Cannot process turn. Invalid");
+        }
+        Action action = performerCharacter.castSpell(turnRequest.cardToUseId(), targetCharacter);
+        characterService.saveCharacter(performerCharacter);
+        characterService.saveCharacter(targetCharacter);
+        Turn newTurn = new Turn();
+        newTurn.setBattle(battle);
+        newTurn.setCampaign(battle.getCampaign());
+        newTurn.setPerformingCharacter(performerCharacter);
+        newTurn.setTargetCharacter(targetCharacter);
+        newTurn.setAction(action);
+        battle.getTurns().add(newTurn);
+        battleRepository.save(battle);
+        return newTurn;
+    }
+
+
     public Battle getBattleByIdAndCampaignIdAndUserId(Long battleId, Long campaignId, String userId) {
         return battleRepository.findByIdAndCampaign_IdAndUserId(battleId, campaignId, userId);
     }

@@ -78,6 +78,18 @@ public class BattleController {
         return ResponseEntity.ok(dtoResponse);
     }
 
+    @PostMapping("/{campaignId}/battle/{battleId}/action/spell")
+    public ResponseEntity<BattleResponseDto.TurnResponseDto> characterCastsSpell(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable Long campaignId,
+            @PathVariable Long battleId,
+            @RequestBody @Valid TurnRequestDto turnRequest) {
+        String userId = jwt.getSubject();
+        Turn newTurn = battleService.castSpell(campaignId, userId, battleId, turnRequest);
+        BattleResponseDto.TurnResponseDto dtoResponse = BattleResponseDto.TurnResponseDto.fromModel(newTurn);
+        return ResponseEntity.ok(dtoResponse);
+    }
+
 
     @ExceptionHandler(InvalidBattle.class)
     public ResponseEntity<String> handleBattleAlreadyStarted(InvalidBattle ex) {
