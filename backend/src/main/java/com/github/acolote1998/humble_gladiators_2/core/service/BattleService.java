@@ -82,15 +82,15 @@ public class BattleService {
             CharacterInstance targetCharacter,
             Battle battleToCheck) {
         if (!characterService.isCharacterNotNull(performingCharacter)) {
-            log.error("INVALID '{}' -  Performing character '{} - {}' is invalid", turnRequest.action().name(), performingCharacter.getId(), performingCharacter.getName());
+            log.error("INVALID '{}' -  Performing character is invalid", turnRequest.action().name());
             return false;
         }
         if (!characterService.isCharacterNotNull(targetCharacter)) {
-            log.error("INVALID '{}' -  Target character '{} - {}'is invalid", turnRequest.action().name(), targetCharacter.getId(), targetCharacter.getName());
+            log.error("INVALID '{}' -  Target character is invalid", turnRequest.action().name());
             return false;
         }
         if (!isBattleNotNull(battleToCheck)) {
-            log.error("INVALID '{}' -  Battle '{}' is invalid", turnRequest.action().name(), battleToCheck.getId());
+            log.error("INVALID '{}' -  Battle is invalid", turnRequest.action().name());
             return false;
         }
         if (!doesCharacterBelongToBattle(battleToCheck, performingCharacter)) {

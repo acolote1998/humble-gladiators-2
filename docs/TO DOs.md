@@ -20,15 +20,10 @@
 
 - [ ] impement hero inventory, equippment / removing equippment function
 
-  - [ ] equip / unequip endpoints
-  - [ ] equip / unequip MVI
-
-  - [ ] make that when we open a booster, the character instance gets random items of its tier / rarity assigned to them
-    - [ ] first, unequipp everything they have
-    - [ ] clear their inventory (just in case the user had faced them previously)
-    - [ ] then, draw random items (50% chance of drawing one, per item type)
-    - [ ] add those items to the character inventory
-    - [ ] equip those items to the character instance instantly
+  - [x] equip endpoints
+  - [ ] unequip endpoints
+  - [ ] equip MVI
+  - [ ] unequip MVI
 
 - [ ] Improve AI accuracy for content generation :
   - [ ] Sometimes we are generating a weapon and it generates something that would fit more like an armor, and things like that. Needs to stick to the category better
