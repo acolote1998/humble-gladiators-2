@@ -201,11 +201,24 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     }
 
     @Override
-    public Integer causeMagicalDamage() {
+    public Integer causePhysicalSpellDamage(SpellInstance spellToUse) {
+        Integer proposedDamage = 0;
+        if (spellToUse.getTemplate().getPhysicalDamage() == 0) {
+            return proposedDamage;
+        }
+        Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
+        Integer physicalDamage = spellToUse.getTemplate().getPhysicalDamage();
+        proposedDamage += strengthDmgModifier + physicalDamage;
+        log.info("{} proposes {} physical damage", this.getName(), proposedDamage);
+        return proposedDamage;
+    }
+
+    @Override
+    public Integer causeMagicalDamage(SpellInstance spellToUse) {
         Integer proposedDamage = 0;
         Integer intelligenceModifier = Math.round((float) (this.getStats().getIntelligence() * this.getStats().getLevel()) / 2);
         Integer magicalDamage = this.getMagicalDamage();
-        proposedDamage += intelligenceModifier + magicalDamage;
+        proposedDamage += intelligenceModifier + magicalDamage + spellToUse.getTemplate().getMagicalDamage();
         log.info("'{}' proposes '{}' magical damage", this.getName(), proposedDamage);
         return proposedDamage;
     }
@@ -363,7 +376,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
         // Physical damage
         if (spellToCastFromPerformerCharacterInventory.getTemplate().getPhysicalDamage() > 0) {
-            int potentialPhysicalDamage = this.causePhysicalDamage() + spellToCastFromPerformerCharacterInventory.getTemplate().getPhysicalDamage();
+            int potentialPhysicalDamage = this.causePhysicalSpellDamage(spellToCastFromPerformerCharacterInventory);
             int damageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
             totalDamageCaused += damageAfterDefense;
             if (damageAfterDefense > 0) {
@@ -375,7 +388,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
         // Magical damage
         if (spellToCastFromPerformerCharacterInventory.getTemplate().getMagicalDamage() > 0) {
-            int potentialMagicalDamage = this.causeMagicalDamage() + spellToCastFromPerformerCharacterInventory.getTemplate().getMagicalDamage();
+            int potentialMagicalDamage = this.causeMagicalDamage(spellToCastFromPerformerCharacterInventory);
             int damageAfterDefense = targetCharacter.defendMagicalDamage(potentialMagicalDamage);
             totalDamageCaused += damageAfterDefense;
             if (damageAfterDefense > 0) {
