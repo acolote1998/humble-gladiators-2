@@ -40,8 +40,8 @@ public class BattleService {
     }
 
     public Battle createNewBattle(Long campaignId, String userId) {
-        if (battleRepository.findOnGoingByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, LocalDate.now()) != null) {
-            throw new InvalidBattle("You already have a battle today. Come back tomorrow");
+        if (!isBattleAvailableForToday(campaignId, userId)) {
+            throw new InvalidBattle("It is not possible to start a new battle");
         }
         CharacterInstance hero = characterService.getHero(campaignId, userId);
         CharacterInstance enemy = characterService.getDailyEnemy(campaignId, userId);
@@ -63,9 +63,8 @@ public class BattleService {
         CharacterInstance startingCharacter = whosTurnsIsIt(newBattle);
         newBattle.setCurrentCharacterToPlay(startingCharacter);
         newBattle.setOngoing(true);
-        newBattle = battleRepository.save(newBattle);
         log.info("Battle '{}' created successfully for campaign '{}'", newBattle.getId(), campaignId);
-        return newBattle;
+        return battleRepository.save(newBattle);
     }
 
     public boolean isBattleNotNull(Battle battleToCheck) {
