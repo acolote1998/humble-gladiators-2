@@ -294,17 +294,15 @@ public class BattleService {
         List<CharacterInstance> allChars = new ArrayList<>();
         allChars.addAll(teamOne);
         allChars.addAll(teamTwo);
+        Collections.shuffle(allChars);
 
-        Random random = new Random();
         CharacterInstance fastest = allChars.getFirst();
 
         for (CharacterInstance character : allChars) {
             int speed = character.getStats().getSpeed();
             int currentSpeed = fastest.getStats().getSpeed();
 
-            if (speed > currentSpeed) {
-                fastest = character;
-            } else if (speed == currentSpeed && random.nextInt(1, 3) == 1) {
+            if (speed >= currentSpeed) {
                 fastest = character;
             }
         }
