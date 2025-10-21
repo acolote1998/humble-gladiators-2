@@ -109,7 +109,7 @@ VALUES ('Boots of Swiftness', 'Enchanted boots that enhance movement speed', 4, 
 INSERT INTO consumable_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                                  campaign_id, requirement_id, category, restore_hp, restore_mp, created_at, updated_at)
 VALUES ('Health Potion', 'A red potion that restores health', 1, 1, 26, false, 0, false,
-        'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 5, 'MEDICINE', 0, 0, NOW(), NOW());
+        'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 5, 'MEDICINE', 30, 30, NOW(), NOW());
 
 INSERT INTO consumable_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                                  campaign_id, requirement_id, category, restore_hp, restore_mp, created_at, updated_at)
@@ -160,7 +160,7 @@ INSERT INTO weapon_template (name, description, rarity, tier, value, discovered,
                              campaign_id, requirement_id, category, physical_damage, magical_damage, created_at,
                              updated_at)
 VALUES ('Iron Sword', 'A well-crafted iron sword with a sharp edge', 1, 1, 720, false, 0, false,
-        'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 13, 'SWORD', 100, 0, NOW(), NOW());
+        'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 13, 'SWORD', 30, 0, NOW(), NOW());
 
 INSERT INTO weapon_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                              campaign_id, requirement_id, category, physical_damage, magical_damage, created_at,

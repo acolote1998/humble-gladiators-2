@@ -312,6 +312,13 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         log.info("'{}' used consumable '{}', remaining quantity: {}", this.getName(),
                 consumableToUseFromPerformerCharacterInventory.getTemplate().getName(),
                 consumableToUseFromPerformerCharacterInventory.getQuantity());
+        if (consumableToUseFromPerformerCharacterInventory.getQuantity() == 0) {
+            this.getInventory().getConsumables().remove(consumableToUseFromPerformerCharacterInventory);
+            log.info("'{}' ran out of this consumable '{} - {}', removing card from their inventory",
+                    this.getName(),
+                    consumableToUseFromPerformerCharacterInventory.getId(),
+                    consumableToUseFromPerformerCharacterInventory.getTemplate().getName());
+        }
         Action actionPerformed = new Action();
         actionPerformed.setActionType(ActionType.CONSUMABLE);
         actionPerformed.setStateCaused(StateType.NONE);

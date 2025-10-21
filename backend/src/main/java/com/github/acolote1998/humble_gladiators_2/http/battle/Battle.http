@@ -23,8 +23,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "performingCharacterId": 3,
-  "targetCharacterId": 1,
+  "performingCharacterId": 1,
+  "targetCharacterId": 3,
   "action": "PHYSICAL_ATTACK"
 }
 
@@ -36,6 +36,7 @@ Content-Type: application/json
 
 {
   "performingCharacterId": 3,
-  "targetCharacterId": 3,
-  "action": "CONSUMABLE"
+  "targetCharacterId": 1,
+  "action": "CONSUMABLE",
+  "cardToUseId": 2
 }

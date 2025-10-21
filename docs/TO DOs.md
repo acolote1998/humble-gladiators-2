@@ -1,5 +1,6 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] make sure the user cannot open boosters if there is an ongoing battle
 - [ ] make height / weight have some sort of influence in the game?
 - [ ] make sure that all old battles that are onGoing=true after the day they have been created are automatically a defeat (user did not complete the battle)
 - [ ] fix bug -> cards have "auras" during booster opening, the should not have the css class?
