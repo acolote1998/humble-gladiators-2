@@ -12,6 +12,7 @@ import lombok.Setter;
 public class Action {
     private Integer damageCaused;
     private Integer healingCaused;
+    private Integer mpRecoverCaused;
     private ActionType actionType;
     private StateType stateCaused;
 }

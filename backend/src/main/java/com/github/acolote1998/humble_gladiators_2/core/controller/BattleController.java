@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -56,13 +55,25 @@ public class BattleController {
     }
 
     @PostMapping("/{campaignId}/battle/{battleId}/action/attack")
-    public ResponseEntity<BattleResponseDto.TurnResponseDto> heroAttacks(
+    public ResponseEntity<BattleResponseDto.TurnResponseDto> characterAtttacks(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable Long campaignId,
             @PathVariable Long battleId,
             @RequestBody @Valid TurnRequestDto turnRequest) {
         String userId = jwt.getSubject();
         Turn newTurn = battleService.performAttack(campaignId, userId, battleId, turnRequest);
+        BattleResponseDto.TurnResponseDto dtoResponse = BattleResponseDto.TurnResponseDto.fromModel(newTurn);
+        return ResponseEntity.ok(dtoResponse);
+    }
+
+    @PostMapping("/{campaignId}/battle/{battleId}/action/consumable")
+    public ResponseEntity<BattleResponseDto.TurnResponseDto> characterUsesConsumable(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable Long campaignId,
+            @PathVariable Long battleId,
+            @RequestBody @Valid TurnRequestDto turnRequest) {
+        String userId = jwt.getSubject();
+        Turn newTurn = battleService.useConsumable(campaignId, userId, battleId, turnRequest);
         BattleResponseDto.TurnResponseDto dtoResponse = BattleResponseDto.TurnResponseDto.fromModel(newTurn);
         return ResponseEntity.ok(dtoResponse);
     }

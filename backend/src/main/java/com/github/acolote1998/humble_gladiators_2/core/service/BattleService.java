@@ -93,6 +93,20 @@ public class BattleService {
             log.error("INVALID '{}' -  Battle is invalid", turnRequest.action().name());
             return false;
         }
+        if (!performingCharacter.isAlive()) {
+            log.error("INVALID '{}' - Performing character '{} - {}' is not alive",
+                    turnRequest.action().name(),
+                    performingCharacter.getId(),
+                    performingCharacter.getName());
+            return false;
+        }
+        if (!targetCharacter.isAlive()) {
+            log.error("INVALID '{}' - Target character '{} - {}' is not alive",
+                    turnRequest.action().name(),
+                    targetCharacter.getId(),
+                    targetCharacter.getName());
+            return false;
+        }
         if (!doesCharacterBelongToBattle(battleToCheck, performingCharacter)) {
             log.error("INVALID '{}' -  Character '{} - {}' does not belong to battle '{}'",
                     turnRequest.action().name(),
@@ -176,6 +190,38 @@ public class BattleService {
         action.setStateCaused(StateType.NONE);
         action.setDamageCaused(causedDamage);
         action.setHealingCaused(0);
+        Turn newTurn = new Turn();
+        newTurn.setBattle(battle);
+        newTurn.setCampaign(battle.getCampaign());
+        newTurn.setPerformingCharacter(performerCharacter);
+        newTurn.setTargetCharacter(targetCharacter);
+        newTurn.setAction(action);
+        battle.getTurns().add(newTurn);
+        battleRepository.save(battle);
+        return newTurn;
+    }
+
+    @Transactional
+    public Turn useConsumable(Long campaignId, String userId, Long battleId, TurnRequestDto turnRequest) {
+        CharacterInstance performerCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
+                turnRequest.performingCharacterId(),
+                campaignId,
+                userId);
+        CharacterInstance targetCharacter = characterService.getCharacterByIdAndCampaignIdAndUserId(
+                turnRequest.targetCharacterId(),
+                campaignId,
+                userId);
+        Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
+        if (!canProcessTurnValidly(
+                turnRequest,
+                performerCharacter,
+                targetCharacter,
+                battle)) {
+            throw new InvalidTurn("Cannot process turn. Invalid");
+        }
+        Action action = performerCharacter.useConsumable(turnRequest.cardToUseId());
+        characterService.saveCharacter(performerCharacter);
+        characterService.saveCharacter(targetCharacter);
         Turn newTurn = new Turn();
         newTurn.setBattle(battle);
         newTurn.setCampaign(battle.getCampaign());

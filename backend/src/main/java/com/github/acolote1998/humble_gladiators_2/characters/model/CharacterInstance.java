@@ -2,6 +2,10 @@ package com.github.acolote1998.humble_gladiators_2.characters.model;
 
 import com.github.acolote1998.humble_gladiators_2.characters.exception.NoManaLeft;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.TargetHeroIsDead;
+import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
+import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
+import com.github.acolote1998.humble_gladiators_2.core.model.Action;
 import com.github.acolote1998.humble_gladiators_2.item.exceptions.NoConsumablesLeft;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.*;
@@ -244,9 +248,6 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
     @Override
     public void sufferDamage(Integer amountOfDamage) {
-        if (!this.isAlive()) {
-            throw new TargetHeroIsDead("The target character cannot receive damage since it is already dead");
-        }
 
         if (amountOfDamage == null || amountOfDamage <= 0) {
             return;
@@ -260,9 +261,6 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
     @Override
     public void heal(Integer amountOfHpToHeal) {
-        if (!this.isAlive()) {
-            throw new TargetHeroIsDead("The target character cannot heal since it is already dead");
-        }
         if (amountOfHpToHeal == null || amountOfHpToHeal <= 0) {
             return;
         }
@@ -274,9 +272,6 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
     @Override
     public void recoverMp(Integer amountOfMp) {
-        if (!this.isAlive()) {
-            throw new TargetHeroIsDead("The target character cannot recover MP since it is already dead");
-        }
         if (amountOfMp == null || amountOfMp <= 0) {
             return;
         }
@@ -287,13 +282,16 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     }
 
     @Override
-    public void useConsumable(ConsumableInstance consumableToUse) {
-        if (!this.isAlive()) {
-            throw new TargetHeroIsDead("The target character cannot use a consumable since it is dead");
-        }
-
-        if (consumableToUse.getQuantity() <= 0) {
-            throw new NoConsumablesLeft("No consumables of this type remain");
+    public Action useConsumable(Long consumableId) {
+        ConsumableInstance consumableToUse = this
+                .getInventory()
+                .getConsumables()
+                .stream()
+                .filter(consumableInstance -> consumableInstance.getId().equals(consumableId))
+                .findFirst()
+                .orElse(null);
+        if (consumableToUse == null) {
+            throw new InvalidTurn("Request to process consumable is not valid");
         }
 
         int restoreHp = consumableToUse.getTemplate().getRestoreHp();
@@ -314,15 +312,18 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         log.info("'{}' used consumable '{}', remaining quantity: {}", this.getName(),
                 consumableToUse.getTemplate().getName(),
                 consumableToUse.getQuantity());
+        Action actionPerformed = new Action();
+        actionPerformed.setActionType(ActionType.CONSUMABLE);
+        actionPerformed.setStateCaused(StateType.NONE);
+        actionPerformed.setDamageCaused(0);
+        actionPerformed.setHealingCaused(restoreHp);
+        actionPerformed.setMpRecoverCaused(restoreMp);
+        return actionPerformed;
     }
 
 
     @Override
     public void castSpell(SpellInstance spell, CharacterInstance targetCharacter) {
-        if (!this.isAlive()) {
-            throw new TargetHeroIsDead("Dead characters cannot cast spells");
-        }
-
         int mpCost = spell.getTemplate().getMpCost();
         if (this.getStats().getCurrentMp() < mpCost) {
             throw new NoManaLeft("Not enough mana to cast " + spell.getName());
@@ -374,9 +375,6 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     @Override
     public Integer usePhysicalAttack(CharacterInstance targetCharacter) {
         Integer causedDamage = 0;
-        if (!this.isAlive()) {
-            throw new TargetHeroIsDead("Dead characters cannot attack");
-        }
 
         int potentialPhysicalDamage = this.casuePhysicalDamage();
         int damageAfterDefense = targetCharacter.defendPhysicalDamage(potentialPhysicalDamage);
