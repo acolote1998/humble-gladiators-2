@@ -9,14 +9,12 @@ import com.github.acolote1998.humble_gladiators_2.core.service.RequirementServic
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ConsumableTemplateRepository;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -130,7 +128,7 @@ public class ConsumableService {
         return consumableTemplateRepository.save(consumable);
     }
 
-    private ConsumableInstance instanceFromConsumableTemplate(ConsumableTemplate template, Inventory inventoryItBelongsTo) {
+    public ConsumableInstance instanceFromConsumableTemplate(ConsumableTemplate template, Inventory inventoryItBelongsTo) {
         ConsumableInstance instance = new ConsumableInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -151,5 +149,12 @@ public class ConsumableService {
         List<ConsumableInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromConsumableTemplate(template, inventoryItBelongsTo)));
         return instances;
+    }
+
+    public ConsumableTemplate getRandomConsumableByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
+        List<ConsumableTemplate> consumables = consumableTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity, campaignId, userId);
+        Collections.shuffle(consumables);
+        ConsumableTemplate consumable = consumables.stream().findFirst().orElseThrow();
+        return consumable;
     }
 }

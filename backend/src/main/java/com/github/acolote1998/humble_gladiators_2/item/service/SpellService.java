@@ -9,14 +9,12 @@ import com.github.acolote1998.humble_gladiators_2.core.service.RequirementServic
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.SpellTemplateRepository;
+import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.SpellTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -144,7 +142,7 @@ public class SpellService {
         return spellTemplateRepository.save(spell);
     }
 
-    private SpellInstance instanceFromSpellTemplate(SpellTemplate template, Inventory inventoryItBelongsTo) {
+    public SpellInstance instanceFromSpellTemplate(SpellTemplate template, Inventory inventoryItBelongsTo) {
         SpellInstance instance = new SpellInstance();
         instance.setTemplate(template);
         instance.setDiscovered(true);
@@ -166,5 +164,12 @@ public class SpellService {
         List<SpellInstance> instances = new ArrayList<>();
         templates.forEach(template -> instances.add(instanceFromSpellTemplate(template, inventoryItBelongsTo)));
         return instances;
+    }
+
+    public SpellTemplate getRandomSpellByTierAndRarityAndCampaignAndUserId(Integer tier, Integer rarity, Long campaignId, String userId) {
+        List<SpellTemplate> spells = spellTemplateRepository.findAllByTierAndRarityAndCampaign_IdAndUserId(tier, rarity, campaignId, userId);
+        Collections.shuffle(spells);
+        SpellTemplate spell = spells.stream().findFirst().orElseThrow();
+        return spell;
     }
 }

@@ -409,6 +409,34 @@ public class BoosterService {
                     }
                 }
             }
+            for (int j = 0; j < 3; j++) {
+                // Three chances to generate consumables
+                if (doesCharacterGenerateThisItem()) {
+                    ConsumableTemplate consumableTemplate = consumableService.getRandomConsumableByTierAndRarityAndCampaignAndUserId(
+                            characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
+                    if (consumableTemplate != null) {
+                        ConsumableInstance consumableInstance = consumableService.instanceFromConsumableTemplate(consumableTemplate,
+                                characterInventory);
+                        if (consumableInstance != null) {
+                            characterInventory.getConsumables().add(consumableInstance);
+                        }
+                    }
+                }
+            }
+            for (int j = 0; j < 3; j++) {
+                // Three chances to generate spells
+                if (doesCharacterGenerateThisItem()) {
+                    SpellTemplate spellTemplate = spellService.getRandomSpellByTierAndRarityAndCampaignAndUserId(
+                            characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
+                    if (spellTemplate != null) {
+                        SpellInstance spellInstance = spellService.instanceFromSpellTemplate(spellTemplate,
+                                characterInventory);
+                        if (spellInstance != null) {
+                            characterInventory.getSpells().add(spellInstance);
+                        }
+                    }
+                }
+            }
             if (IMAGE_GENERATION_ACTIVATED && characterInstance.getImgBytes() == null) {
                 // Image for this card does not exist, so we have to generate it
                 byte[] generatedImage = runwareService.generateCharacterInstanceImageToBytes(campaign,

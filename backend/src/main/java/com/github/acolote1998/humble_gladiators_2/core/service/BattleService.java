@@ -403,8 +403,7 @@ public class BattleService {
             possibleActions.add(NPCActions.SPELL_ATTACK);
         }
         if (possibleActions.isEmpty()) {
-            log.warn("CHARACTER '{} - {}' COULD NOT PERFORM ANY ACTION", characterToPlay.getId(), characterToPlay.getName());
-            possibleActions.add(NPCActions.NOTHING);
+            possibleActions.add(NPCActions.PHYSICAL_ATTACK);
         }
         Collections.shuffle(possibleActions);
         NPCActions decisionToPerform = possibleActions.getFirst();
