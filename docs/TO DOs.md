@@ -8,6 +8,7 @@
 - [ ] make sure we cannot attack whtn there is NOT abattle ongoing
 - [ ] make sure we cannot use a spell whtn there is NOT abattle ongoing
 - [ ] make sure we cannot use a consumable whtn there is NOT abattle ongoing
+- [ ] maybe consider making smaller character DTOs for the battle objects? (don't know if this would be a good idea, we would have to consider it)
 - [ ] check that sometimes when the enemy starts the battle (first turn) they dont play? and I cant play either?
 - [ ] when defeating an enemy, make it possible for them to maybe drop items?
 - [ ] make sure the user cannot open boosters if there is an ongoing battle
