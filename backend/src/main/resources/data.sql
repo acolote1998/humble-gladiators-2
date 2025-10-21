@@ -144,10 +144,10 @@ VALUES ('Tower Shield of Fortitude', 'A massive shield providing excellent prote
 
 -- Insert Spell Templates (2)
 INSERT INTO spell_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                            campaign_id, requirement_id, category, physical_damage, magical_damage, restore_hp,
+                            campaign_id, requirement_id, category, physical_damage, magical_damage, restore_hp, mp_cost,
                             created_at, updated_at)
 VALUES ('Fireball', 'A blazing sphere of fire that damages enemies', 1, 1, 720, false, 0, false,
-        'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 11, 'FIRE_SPELL', 0, 1, 0, NOW(), NOW());
+        'user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 11, 'FIRE_SPELL', 35, 35, 10, 20, NOW(), NOW());
 
 INSERT INTO spell_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
                             campaign_id, requirement_id, category, physical_damage, magical_damage, restore_hp,

@@ -362,16 +362,6 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 mpCost,
                 this.getStats().getCurrentMp());
 
-        int totalHpRecovered = 0;
-
-        // Healing spell
-        if (spellToCastFromPerformerCharacterInventory.getTemplate().getRestoreHp() > 0) {
-            int healAmount = spellToCastFromPerformerCharacterInventory.getTemplate().getRestoreHp();
-            totalHpRecovered += healAmount;
-            targetCharacter.heal(healAmount);
-            log.info("'{}' heals '{}' for {} HP", this.getName(), targetCharacter.getName(), healAmount);
-        }
-
         int totalDamageCaused = 0;
 
         // Physical damage
@@ -397,6 +387,17 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
                 log.info("'{}' attacks '{}' with magical spell, but damage was fully blocked", this.getName(), targetCharacter.getName());
             }
         }
+
+        int totalHpRecovered = 0;
+
+        // Healing spell
+        if (spellToCastFromPerformerCharacterInventory.getTemplate().getRestoreHp() > 0) {
+            int healAmount = spellToCastFromPerformerCharacterInventory.getTemplate().getRestoreHp();
+            totalHpRecovered += healAmount;
+            targetCharacter.heal(healAmount);
+            log.info("'{}' heals '{}' for {} HP", this.getName(), targetCharacter.getName(), healAmount);
+        }
+
         targetCharacter.sufferDamage(totalDamageCaused);
         Action actionPerformed = new Action();
         actionPerformed.setActionType(ActionType.SPELL);
