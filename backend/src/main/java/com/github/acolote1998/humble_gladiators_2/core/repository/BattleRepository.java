@@ -20,5 +20,15 @@ public interface BattleRepository extends ListCrudRepository<Battle, Long> {
             @Param("userId") String userId,
             @Param("today") LocalDate today);
 
+    @Query(value = "SELECT * FROM battle " +
+            "WHERE campaign_id = :campaignId " +
+            "AND user_id = :userId " +
+            "AND DATE(updated_at) = :today " +
+            "LIMIT 1", nativeQuery = true)
+    Battle findAnyByCampaignIdAndUserIdAndUpdatedAtDate(
+            @Param("campaignId") Long campaignId,
+            @Param("userId") String userId,
+            @Param("today") LocalDate today);
+
     Battle findByIdAndCampaign_IdAndUserId(Long id, Long campaignId, String userId);
 }

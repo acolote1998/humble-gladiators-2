@@ -68,7 +68,7 @@ INSERT INTO character_instance (user_id, campaign_id, name, description, charact
                                 speed, luck, max_hp, current_hp, max_mp, current_mp, height, weight, level, current_exp,
                                 exp_for_next_level, created_at, updated_at)
 VALUES ('user_33LC7WwFVRN0mkH7ZAfWCbFOBFl', 1, 'Sir Gareth the Bold', 'A brave knight wielding a mighty sword',
-        'NPC', 'HUMANOID', false, 1, 1, 0, 0, 1, 18, 14, 20, 16, 15, 300, 300, 0, 0, 180, 85, 5, 0, 0, NOW(),
+        'NPC', 'HUMANOID', false, 1, 1, 0, 0, 1, 18, 14, 20, 19, 15, 300, 300, 0, 0, 180, 85, 5, 0, 0, NOW(),
         NOW() - INTERVAL '1 day');
 
 INSERT INTO character_instance (user_id, campaign_id, name, description, character_type, category, discovered, tier,

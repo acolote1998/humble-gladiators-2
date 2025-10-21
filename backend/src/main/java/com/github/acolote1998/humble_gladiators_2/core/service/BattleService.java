@@ -319,7 +319,7 @@ public class BattleService {
             return false;
         }
         try {
-            getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId);
+            getAnyBattleForTodayByCampaignAndUserId(campaignId, userId);
             return false;
         } catch (InvalidBattle ex) {
 
@@ -330,6 +330,16 @@ public class BattleService {
     public Battle getOnGoingBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
         LocalDate today = LocalDate.now();
         Battle todaysBattle = battleRepository.findOnGoingByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
+        if (todaysBattle == null) {
+            log.error("Campaign '{}' - Battle for today not found", campaignId);
+            throw new InvalidBattle("Battle for today not found");
+        }
+        return todaysBattle;
+    }
+
+    public Battle getAnyBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
+        LocalDate today = LocalDate.now();
+        Battle todaysBattle = battleRepository.findAnyByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
         if (todaysBattle == null) {
             log.error("Campaign '{}' - Battle for today not found", campaignId);
             throw new InvalidBattle("Battle for today not found");
