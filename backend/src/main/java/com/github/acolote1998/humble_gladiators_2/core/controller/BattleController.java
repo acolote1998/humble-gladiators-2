@@ -7,6 +7,7 @@ import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
+import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,16 @@ public class BattleController {
     @GetMapping("/{campaignId}/battle/check-ongoing")
     public ResponseEntity<Boolean> checkIfThereIsAnOngoingBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        return ResponseEntity.ok(battleService.isThereOngoingBattleForToday(campaignId, userId));
+        return ResponseEntity.ok(battleService.getBattleUtil().isThereOngoingBattleForToday(campaignId, userId));
     }
 
 
     @GetMapping("/{campaignId}/battle")
     public ResponseEntity<BattleResponseDto> getBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        Battle todaysBattle = battleService.getUpdatedBattleForToday(battleService.getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId));
+        Battle todaysBattle = battleService.getUpdatedBattleForToday(
+                battleService.getBattleUtil().
+                        getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId));
         BattleResponseDto dto = BattleResponseDto.fromModel(todaysBattle);
         return ResponseEntity.ok(dto);
     }

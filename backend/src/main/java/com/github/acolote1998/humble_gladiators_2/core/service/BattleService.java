@@ -17,6 +17,7 @@ import com.github.acolote1998.humble_gladiators_2.core.repository.BattleReposito
 import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
 import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +29,12 @@ import java.util.*;
 @Service
 @Slf4j
 public class BattleService {
-    CharacterService characterService;
+    private CharacterService characterService;
 
-    BattleRepository battleRepository;
+    private BattleRepository battleRepository;
+
+    @Getter
+    private BattleUtil battleUtil;
 
     @Value("${UNLIMITED_BATTLES_ALLOWED}")
     private boolean UNLIMITED_BATTLES_ALLOWED;
@@ -38,9 +42,11 @@ public class BattleService {
     @Autowired
     public BattleService(
             CharacterService characterService,
-            BattleRepository battleRepository) {
+            BattleRepository battleRepository,
+            BattleUtil battleUtil) {
         this.characterService = characterService;
         this.battleRepository = battleRepository;
+        this.battleUtil = battleUtil;
     }
 
     public Battle createNewBattle(Long campaignId, String userId) {
@@ -318,7 +324,7 @@ public class BattleService {
         } catch (DailyEnemyNotFound e) {
             return false;
         }
-        if (isThereOngoingBattleForToday(campaignId, userId)) {
+        if (battleUtil.isThereOngoingBattleForToday(campaignId, userId)) {
             return false;
         }
         if (!UNLIMITED_BATTLES_ALLOWED) {
@@ -332,25 +338,6 @@ public class BattleService {
         return true;
     }
 
-    public Battle getOnGoingBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
-        LocalDate today = LocalDate.now();
-        Battle todaysBattle = battleRepository.findOnGoingByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
-        if (todaysBattle == null) {
-            log.error("Campaign '{}' - Battle for today not found", campaignId);
-            throw new InvalidBattle("Battle for today not found");
-        }
-        return todaysBattle;
-    }
-
-    public boolean isThereOngoingBattleForToday(Long campaignId, String userId) {
-        Battle battleToCheck = null;
-        try {
-            battleToCheck = getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId);
-        } catch (InvalidBattle e) {
-            log.info("There is no battle ongoing for today in campaign '{}'", campaignId);
-        }
-        return battleToCheck != null;
-    }
 
     public Battle getAnyBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
         LocalDate today = LocalDate.now();

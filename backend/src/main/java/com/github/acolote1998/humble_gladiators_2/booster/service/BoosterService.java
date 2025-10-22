@@ -12,6 +12,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
+import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
@@ -41,7 +42,7 @@ public class BoosterService {
     private CharacterService characterService;
     private CharacterBoosterRepository characterBoosterRepository;
     private RunwareService runwareService;
-    private BattleService battleService;
+    private BattleUtil battleUtil;
 
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
@@ -64,7 +65,7 @@ public class BoosterService {
                           CharacterService characterService,
                           RunwareService runwareService,
                           CharacterBoosterRepository characterBoosterRepository,
-                          BattleService battleService) {
+                          BattleUtil battleUtil) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -77,7 +78,7 @@ public class BoosterService {
         this.characterService = characterService;
         this.runwareService = runwareService;
         this.characterBoosterRepository = characterBoosterRepository;
-        this.battleService = battleService;
+        this.battleUtil = battleUtil;
     }
 
     public Boolean canOpenAValidItemBooster(Long campaignId, String userId, IntentionTowardsBooster intention) {
@@ -92,7 +93,7 @@ public class BoosterService {
                         campaignId));
                 return false;
             }
-            if (battleService.isThereOngoingBattleForToday(campaignId, userId)) {
+            if (battleUtil.isThereOngoingBattleForToday(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | An ongoing battle was found, cannot open booster", userId,
                         campaignId));
                 return false;
@@ -113,7 +114,7 @@ public class BoosterService {
                         campaignId));
                 return false;
             }
-            if (battleService.isThereOngoingBattleForToday(campaignId, userId)) {
+            if (battleUtil.isThereOngoingBattleForToday(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | An ongoing battle was found, cannot open booster", userId,
                         campaignId));
                 return false;

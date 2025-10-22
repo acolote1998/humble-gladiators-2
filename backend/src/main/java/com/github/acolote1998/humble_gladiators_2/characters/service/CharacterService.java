@@ -13,6 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDt
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidAttemptBattleOngoing;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
+import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import lombok.extern.slf4j.Slf4j;
@@ -27,21 +28,21 @@ import java.util.*;
 public class CharacterService {
     GeminiService geminiService;
     CharacterInstanceRepository characterInstanceRepository;
-    BattleService battleService;
+    BattleUtil battleUtil;
 
     @Value("${SKIP_REQUIREMENTS}")
     private boolean SKIP_REQUIREMENTS;
 
     public CharacterService(GeminiService geminiService,
                             CharacterInstanceRepository characterInstanceRepository,
-                            BattleService battleService) {
+                            BattleUtil battleUtil) {
         this.geminiService = geminiService;
         this.characterInstanceRepository = characterInstanceRepository;
-        this.battleService = battleService;
+        this.battleUtil = battleUtil;
     }
 
     public ArmorInstance equipArmor(CharacterInstance hero, Long armorToEquipId, String userId) {
-        if (battleService.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
             log.warn("Character '{} {}' is trying to equip an armor there is a battle ongoing so they cannot"
                     , hero.getId(), hero.getName());
             throw new InvalidAttemptBattleOngoing("Trying to equip an armor but there is a battle ongoing");
@@ -86,7 +87,7 @@ public class CharacterService {
     }
 
     public BootsInstance equipBoots(CharacterInstance hero, Long bootsToEquipId, String userId) {
-        if (battleService.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
             log.warn("Character '{} {}' is trying to equip boots but there is a battle ongoing so they cannot"
                     , hero.getId(), hero.getName());
             throw new InvalidAttemptBattleOngoing("Trying to equip boots but there is a battle ongoing");
@@ -131,7 +132,7 @@ public class CharacterService {
     }
 
     public HelmetInstance equipHelmet(CharacterInstance hero, Long helmetToEquipId, String userId) {
-        if (battleService.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
             log.warn("Character '{} {}' is trying to equip a helmet but there is a battle ongoing so they cannot"
                     , hero.getId(), hero.getName());
             throw new InvalidAttemptBattleOngoing("Trying to equip a helmet but there is a battle ongoing");
@@ -176,7 +177,7 @@ public class CharacterService {
     }
 
     public ShieldInstance equipShield(CharacterInstance hero, Long shieldToEquipId, String userId) {
-        if (battleService.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
             log.warn("Character '{} {}' is trying to equip a shield but there is a battle ongoing so they cannot"
                     , hero.getId(), hero.getName());
             throw new InvalidAttemptBattleOngoing("Trying to equip a shield but there is a battle ongoing");
@@ -221,7 +222,7 @@ public class CharacterService {
     }
 
     public WeaponInstance equipWeapon(CharacterInstance hero, Long weaponToEquipId, String userId) {
-        if (battleService.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
             log.warn("Character '{} {}' is trying to equip a weapon but there is a battle ongoing so they cannot"
                     , hero.getId(), hero.getName());
             throw new InvalidAttemptBattleOngoing("Trying to equip a weapon but there is a battle ongoing");
