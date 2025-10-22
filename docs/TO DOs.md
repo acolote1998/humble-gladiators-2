@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] move more methods from BattleService to BattleUtil
+- [ ] see if it is worth it to create BoosterUtil? and things like that?
 - [ ] find where in the logic would be good to trigger a
       function like findWinnersOrContinueBattle on loop for
       all battles to make sure we don't have old battles ongoing

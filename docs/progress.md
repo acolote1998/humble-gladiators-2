@@ -116,4 +116,5 @@ Wednesday 22/10
 - Not possible to open an item booster when there is a battle ongoing
 - Make sure we cannot open character boosters when there is a battle ongoing
 - not possible to equip items when there is a battle ongoing
+- verifying all these validations were implemented properly
 ```
