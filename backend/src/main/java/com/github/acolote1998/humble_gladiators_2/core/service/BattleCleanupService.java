@@ -39,10 +39,23 @@ public class BattleCleanupService {
         battleToConsolidate.setOngoing(false);
         if (battleToConsolidate.getCurrentCharacterToPlay() != null)
             battleToConsolidate.setCurrentCharacterToPlay(null);
-        if (battleToConsolidate.getWinningTeam().isEmpty())
-            battleToConsolidate.getWinningTeam().add(battleToConsolidate.getTeamTwo().getFirst());
-        if (battleToConsolidate.getLosingTeam().isEmpty())
-            battleToConsolidate.getLosingTeam().add(battleToConsolidate.getTeamOne().getFirst());
+
+        if (battleToConsolidate.getWinningTeam() != null) {
+            if (battleToConsolidate.getWinningTeam().isEmpty())
+                if (battleToConsolidate.getTeamTwo() != null) {
+                    if (!battleToConsolidate.getTeamTwo().isEmpty()) {
+                        battleToConsolidate.getWinningTeam().add(battleToConsolidate.getTeamTwo().getFirst());
+                    }
+                }
+        }
+        if (battleToConsolidate.getLosingTeam() != null) {
+            if (battleToConsolidate.getLosingTeam().isEmpty())
+                if (battleToConsolidate.getTeamOne() != null) {
+                    if (!battleToConsolidate.getTeamOne().isEmpty()) {
+                        battleToConsolidate.getLosingTeam().add(battleToConsolidate.getTeamOne().getFirst());
+                    }
+                }
+        }
         battleService.fullyRecoverBothTeams(battleToConsolidate);
         battleToConsolidate.getTeamOne().clear();
         battleToConsolidate.getTeamTwo().clear();
