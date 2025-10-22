@@ -118,4 +118,5 @@ Wednesday 22/10
 - not possible to equip items when there is a battle ongoing
 - verifying all these validations were implemented properly
 - adding validation to avoid processing turns with empty teams
+- validation to avoid allowing attacks, spells and consumables when the battle is not valid
 ```
