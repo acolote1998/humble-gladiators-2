@@ -10,17 +10,18 @@ Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
 
+### Get battle for today
+GET http://localhost:8080/api/campaign/1/battle
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
 ### Start a new battle
 POST http://localhost:8080/api/campaign/1/battle/new
 Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
 
-### Get battle for today
-GET http://localhost:8080/api/campaign/1/battle
-Authorization: Bearer {{BEARER_TOKEN}}
-Accept: application/json
-Content-Type: application/json
 
 ### Char ID 3 (Hero for seeded data) attack physically Char ID 1
 POST http://localhost:8080/api/campaign/1/battle/1/action/attack

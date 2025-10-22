@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.booster.service;
 
-import com.github.acolote1998.humble_gladiators_2.booster.enums.IntentionTowardsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.enums.ItemTypesForBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.exception.InvalidBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
@@ -11,7 +10,6 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInst
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
@@ -81,44 +79,40 @@ public class BoosterService {
         this.battleUtil = battleUtil;
     }
 
-    public Boolean canOpenAValidItemBooster(Long campaignId, String userId, IntentionTowardsBooster intention) {
-        if (intention == IntentionTowardsBooster.OPEN_BOOSTER) {
-            if (!userHasDailyItemBoosterAvailable(campaignId, userId)) {
-                log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Already opened one today", userId,
-                        campaignId));
-                return false;
-            }
-            if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
-                log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Hero does not exist", userId,
-                        campaignId));
-                return false;
-            }
-            if (battleUtil.isThereOngoingBattleForToday(campaignId, userId)) {
-                log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | An ongoing battle was found, cannot open booster", userId,
-                        campaignId));
-                return false;
-            }
+    public Boolean canOpenAValidItemBooster(Long campaignId, String userId) {
+        if (!userHasDailyItemBoosterAvailable(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Already opened one today", userId,
+                    campaignId));
+            return false;
+        }
+        if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Hero does not exist", userId,
+                    campaignId));
+            return false;
+        }
+        if (battleUtil.isThereOngoingBattleForToday(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | An ongoing battle was found, cannot open booster", userId,
+                    campaignId));
+            return false;
         }
         return true;
     }
 
-    public Boolean canOpenAValidCharacterBooster(Long campaignId, String userId, IntentionTowardsBooster intention) {
-        if (intention == IntentionTowardsBooster.OPEN_BOOSTER) {
-            if (!userHasDailyCharacterBoosterAvailable(campaignId, userId)) {
-                log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Already opened one today",
-                        userId, campaignId));
-                return false;
-            }
-            if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
-                log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Hero does not exist", userId,
-                        campaignId));
-                return false;
-            }
-            if (battleUtil.isThereOngoingBattleForToday(campaignId, userId)) {
-                log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | An ongoing battle was found, cannot open booster", userId,
-                        campaignId));
-                return false;
-            }
+    public Boolean canOpenAValidCharacterBooster(Long campaignId, String userId) {
+        if (!userHasDailyCharacterBoosterAvailable(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Already opened one today",
+                    userId, campaignId));
+            return false;
+        }
+        if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Hero does not exist", userId,
+                    campaignId));
+            return false;
+        }
+        if (battleUtil.isThereOngoingBattleForToday(campaignId, userId)) {
+            log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | An ongoing battle was found, cannot open booster", userId,
+                    campaignId));
+            return false;
         }
         return true;
     }
@@ -212,7 +206,7 @@ public class BoosterService {
 
     @Transactional
     public ItemsBooster getNewItemsBooster(Long campaignId, String userId) {
-        if (!canOpenAValidItemBooster(campaignId, userId, IntentionTowardsBooster.OPEN_BOOSTER)) {
+        if (!canOpenAValidItemBooster(campaignId, userId)) {
             throw new InvalidBooster("The attempt to open an item booster is not valid");
         }
         Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
@@ -347,7 +341,7 @@ public class BoosterService {
 
     @Transactional
     public CharacterBooster getNewCharacterBooster(Long campaignId, String userId) {
-        if (!canOpenAValidCharacterBooster(campaignId, userId, IntentionTowardsBooster.OPEN_BOOSTER)) {
+        if (!canOpenAValidCharacterBooster(campaignId, userId)) {
             throw new InvalidBooster("The attempt to open an character booster is not valid");
         }
         Campaign campaign = campaignService.getCampaignByIdAndUserId(userId, campaignId);
