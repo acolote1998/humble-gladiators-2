@@ -104,6 +104,14 @@ public class BattleService {
             log.error("INVALID '{}' -  Battle is invalid", turnRequest.action().name());
             return false;
         }
+        if (!battleToCheck.isOngoing()) {
+            log.error("INVALID '{}' -  Battle is not ongoing", turnRequest.action().name());
+            return false;
+        }
+        if (!battleToCheck.getWinningTeam().isEmpty() || !battleToCheck.getLosingTeam().isEmpty()) {
+            log.error("INVALID '{}' -  Battle already has winners or losers", turnRequest.action().name());
+            return false;
+        }
         if (!performingCharacter.isAlive()) {
             log.error("INVALID '{}' - Performing character '{} - {}' is not alive",
                     turnRequest.action().name(),
