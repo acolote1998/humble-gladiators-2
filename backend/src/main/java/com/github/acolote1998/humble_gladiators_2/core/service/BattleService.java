@@ -112,6 +112,10 @@ public class BattleService {
             log.error("INVALID '{}' -  Battle already has winners or losers", turnRequest.action().name());
             return false;
         }
+        if (battleToCheck.getTeamOne().isEmpty() || battleToCheck.getTeamTwo().isEmpty()) {
+            log.error("INVALID '{}' -  Battle is missing members for either team one or two", turnRequest.action().name());
+            return false;
+        }
         if (!performingCharacter.isAlive()) {
             log.error("INVALID '{}' - Performing character '{} - {}' is not alive",
                     turnRequest.action().name(),

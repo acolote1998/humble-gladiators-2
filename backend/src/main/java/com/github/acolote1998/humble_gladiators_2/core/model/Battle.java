@@ -41,12 +41,20 @@ public class Battle {
     @JoinColumn(name = "battle_starting_team_two_id")
     private List<CharacterSnapshot> startingTeamTwo;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "battle_winning_team_id")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "battle_winning_team",
+            joinColumns = @JoinColumn(name = "battle_id"),
+            inverseJoinColumns = @JoinColumn(name = "character_instance_id")
+    )
     private List<CharacterInstance> winningTeam;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "battle_losing_team_id")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "battle_losing_team",
+            joinColumns = @JoinColumn(name = "battle_id"),
+            inverseJoinColumns = @JoinColumn(name = "character_instance_id")
+    )
     private List<CharacterInstance> losingTeam;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -61,7 +69,7 @@ public class Battle {
     private CharacterInstance currentCharacterToPlay;
 
     private boolean ongoing;
-    
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
