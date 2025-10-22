@@ -119,4 +119,5 @@ Wednesday 22/10
 - verifying all these validations were implemented properly
 - adding validation to avoid processing turns with empty teams
 - validation to avoid allowing attacks, spells and consumables when the battle is not valid
+- scheduled job to automatically consolidate old battles that might have been peending from previous days
 ```

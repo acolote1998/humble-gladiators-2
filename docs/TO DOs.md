@@ -1,5 +1,10 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] must improve algorithm in scheduled job that consolidates battles
+  - at the moment, we consolidate ALL old battles. and we save them ALL in the DB again
+  - it would be better if after retrieval from DB, we filter them by battles that need consolidation
+  - versus battles that do not. and we only call consolidateBattle() on the ones that need it, so we avoid
+  - saving to DB battles that did not suffer any change and were fine.
 - [ ] move more methods from BattleService to BattleUtil
 - [ ] see if it is worth it to create BoosterUtil? and things like that?
 - [ ] find where in the logic would be good to trigger a
@@ -9,9 +14,7 @@
 - [ ] maybe consider making smaller character DTOs for the battle objects? (don't know if this would be a good idea, we would have to consider it)
 - [ ] check that sometimes when the enemy starts the battle (first turn) they dont play? and I cant play either?
 - [ ] when defeating an enemy, make it possible for them to maybe drop items?
-- [ ] make sure the user cannot open boosters if there is an ongoing battle
 - [ ] make height / weight have some sort of influence in the game?
-- [ ] make sure that all old battles that are onGoing=true after the day they have been created are automatically a defeat (user did not complete the battle)
 - [ ] fix bug -> cards have "auras" during booster opening, the should not have the css class?
 - [ ] Write prompt_log flag to be able to LOG the "refined" prompts (and maybe all prompts?) to be able to assess prompt quality and potential improvments
 - [ ] Organice css better. break down index.css into smaller css classes
@@ -87,12 +90,12 @@
   - [ ] currentExp
   - [ ] expForNextLevel
 - [ ] Inventory management service layer
-- [ ] Combat Logic Service Layer
-  - [ ] Turn-based combat flow implementation
+- [x] Combat Logic Service Layer
+  - [x] Turn-based combat flow implementation
   - [x] Damage calculation logic
-  - [ ] Hero turns logic
-  - [ ] Npc logic
-  - [ ] Battle state management
+  - [x] Hero turns logic
+  - [x] Npc logic
+  - [x] Battle state management
 - [ ] Replay system / logic
 - [ ] Achievement system
 - [ ] Buying / Selling System
