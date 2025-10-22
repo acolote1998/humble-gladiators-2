@@ -318,6 +318,9 @@ public class BattleService {
         } catch (DailyEnemyNotFound e) {
             return false;
         }
+        if (isThereOngoingBattleForToday(campaignId, userId)) {
+            return false;
+        }
         if (!UNLIMITED_BATTLES_ALLOWED) {
             try {
                 getAnyBattleForTodayByCampaignAndUserId(campaignId, userId);
