@@ -117,4 +117,5 @@ Wednesday 22/10
 - Make sure we cannot open character boosters when there is a battle ongoing
 - not possible to equip items when there is a battle ongoing
 - verifying all these validations were implemented properly
+- adding validation to avoid processing turns with empty teams
 ```

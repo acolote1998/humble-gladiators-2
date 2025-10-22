@@ -112,7 +112,8 @@ public class BattleService {
             log.error("INVALID '{}' -  Battle already has winners or losers", turnRequest.action().name());
             return false;
         }
-        if (battleToCheck.getTeamOne().isEmpty() || battleToCheck.getTeamTwo().isEmpty()) {
+        if ((battleToCheck.getTeamOne() == null || battleToCheck.getTeamOne().isEmpty()) ||
+                (battleToCheck.getTeamTwo() == null || battleToCheck.getTeamTwo().isEmpty())) {
             log.error("INVALID '{}' -  Battle is missing members for either team one or two", turnRequest.action().name());
             return false;
         }
@@ -610,6 +611,8 @@ public class BattleService {
                 log.info("'{} {}' won the battle", battleToCheck.getTeamTwo().getFirst().getId(), battleToCheck.getTeamTwo().getFirst().getName());
             }
             fullyRecoverBothTeams(battleToCheck);
+            battleToCheck.getTeamOne().clear();
+            battleToCheck.getTeamTwo().clear();
         } else {
             battleToCheck.setCurrentCharacterToPlay(whosTurnsIsIt(battleToCheck));
         }
