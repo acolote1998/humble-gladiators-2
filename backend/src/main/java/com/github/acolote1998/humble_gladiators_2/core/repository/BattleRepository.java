@@ -34,6 +34,6 @@ public interface BattleRepository extends ListCrudRepository<Battle, Long> {
 
     Battle findByIdAndCampaign_IdAndUserId(Long id, Long campaignId, String userId);
 
-    @Query("SELECT b FROM Battle b WHERE b.createdAt < :today")
+    @Query("SELECT b FROM Battle b WHERE DATE(b.createdAt) < :today")
     List<Battle> findBattlesBeforeDate(@Param("today") LocalDate today);
 }
