@@ -7,7 +7,6 @@ import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
-import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +64,7 @@ public class BattleController {
     }
 
     @PostMapping("/{campaignId}/battle/{battleId}/action/attack")
-    public ResponseEntity<BattleResponseDto.TurnResponseDto> characterAtttacks(
+    public ResponseEntity<BattleResponseDto.TurnResponseDto> characterAttacks(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable Long campaignId,
             @PathVariable Long battleId,
