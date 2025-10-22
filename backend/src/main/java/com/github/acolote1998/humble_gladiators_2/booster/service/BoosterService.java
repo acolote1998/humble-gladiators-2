@@ -106,14 +106,20 @@ public class BoosterService {
             if (!userHasDailyCharacterBoosterAvailable(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Already opened one today",
                         userId, campaignId));
+                return false;
             }
             if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | Hero does not exist", userId,
                         campaignId));
+                return false;
+            }
+            if (!battleService.isThereOngoingBattleForToday(campaignId, userId)) {
+                log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | An ongoing battle was found, cannot open booster", userId,
+                        campaignId));
+                return false;
             }
         }
-        return (userHasDailyCharacterBoosterAvailable(campaignId, userId) &&
-                characterService.doesHeroExistForACampaign(campaignId, userId));
+        return true;
     }
 
     public Boolean userHasDailyItemBoosterAvailable(Long campaignId, String userId) {
