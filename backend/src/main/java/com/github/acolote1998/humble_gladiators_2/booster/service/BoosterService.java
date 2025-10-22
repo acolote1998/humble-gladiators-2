@@ -11,6 +11,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInst
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
+import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RunwareService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
@@ -40,6 +41,7 @@ public class BoosterService {
     private CharacterService characterService;
     private CharacterBoosterRepository characterBoosterRepository;
     private RunwareService runwareService;
+    private BattleService battleService;
 
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
@@ -61,7 +63,8 @@ public class BoosterService {
                           CampaignService campaignService,
                           CharacterService characterService,
                           RunwareService runwareService,
-                          CharacterBoosterRepository characterBoosterRepository) {
+                          CharacterBoosterRepository characterBoosterRepository,
+                          BattleService battleService) {
         this.armorService = armorService;
         this.bootsService = bootsService;
         this.consumableService = consumableService;
@@ -74,6 +77,7 @@ public class BoosterService {
         this.characterService = characterService;
         this.runwareService = runwareService;
         this.characterBoosterRepository = characterBoosterRepository;
+        this.battleService = battleService;
     }
 
     public Boolean canOpenAValidItemBooster(Long campaignId, String userId, IntentionTowardsBooster intention) {
@@ -81,14 +85,20 @@ public class BoosterService {
             if (!userHasDailyItemBoosterAvailable(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Already opened one today", userId,
                         campaignId));
+                return false;
             }
             if (!characterService.doesHeroExistForACampaign(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | Hero does not exist", userId,
                         campaignId));
+                return false;
+            }
+            if (!battleService.isThereOngoingBattleForToday(campaignId, userId)) {
+                log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | An ongoing battle was found, cannot open booster", userId,
+                        campaignId));
+                return false;
             }
         }
-        return (userHasDailyItemBoosterAvailable(campaignId, userId) &&
-                characterService.doesHeroExistForACampaign(campaignId, userId));
+        return true;
     }
 
     public Boolean canOpenAValidCharacterBooster(Long campaignId, String userId, IntentionTowardsBooster intention) {

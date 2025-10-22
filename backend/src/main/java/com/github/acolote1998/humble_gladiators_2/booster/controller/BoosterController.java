@@ -7,6 +7,7 @@ import com.github.acolote1998.humble_gladiators_2.booster.exception.DailyBooster
 import com.github.acolote1998.humble_gladiators_2.booster.model.CharacterBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.model.ItemsBooster;
 import com.github.acolote1998.humble_gladiators_2.booster.service.BoosterService;
+import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
