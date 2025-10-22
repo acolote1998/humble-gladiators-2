@@ -112,4 +112,6 @@ Tuesday 21/10
 
 Wednesday 22/10
 - Added endpoint to check if there are ongoing battles for today
+- Not possible to start a new battle when there is one ongoing
+- Not possible to open an item booster when there is a battle ongoing
 ```
