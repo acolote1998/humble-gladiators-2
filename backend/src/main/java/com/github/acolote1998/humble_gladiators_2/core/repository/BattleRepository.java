@@ -1,11 +1,13 @@
 package com.github.acolote1998.humble_gladiators_2.core.repository;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface BattleRepository extends ListCrudRepository<Battle, Long> {
 
@@ -31,4 +33,7 @@ public interface BattleRepository extends ListCrudRepository<Battle, Long> {
             @Param("today") LocalDate today);
 
     Battle findByIdAndCampaign_IdAndUserId(Long id, Long campaignId, String userId);
+
+    @Query("SELECT b FROM Battle b WHERE b.createdAt < :today")
+    List<Battle> findBattlesBeforeDate(@Param("today") LocalDate today);
 }
