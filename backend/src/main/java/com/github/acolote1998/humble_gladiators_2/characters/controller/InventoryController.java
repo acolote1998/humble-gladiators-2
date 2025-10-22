@@ -38,50 +38,50 @@ public class InventoryController {
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/armor/{itemId}")
     ResponseEntity<ArmorInstanceResponseDto> equipArmorToHero(@AuthenticationPrincipal Jwt jwt,
-            @PathVariable Long campaignId, @PathVariable Long itemId) {
+                                                              @PathVariable Long campaignId, @PathVariable Long itemId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        ArmorInstance updatedArmor = characterService.equipArmor(hero, itemId);
+        ArmorInstance updatedArmor = characterService.equipArmor(hero, itemId, userId);
         ArmorInstanceResponseDto dto = ArmorInstanceResponseDto.fromModel(updatedArmor);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/boots/{itemId}")
     ResponseEntity<BootsInstanceResponseDto> equipBootsToHero(@AuthenticationPrincipal Jwt jwt,
-            @PathVariable Long campaignId, @PathVariable Long itemId) {
+                                                              @PathVariable Long campaignId, @PathVariable Long itemId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        BootsInstance updatedBoots = characterService.equipBoots(hero, itemId);
+        BootsInstance updatedBoots = characterService.equipBoots(hero, itemId, userId);
         BootsInstanceResponseDto dto = BootsInstanceResponseDto.fromModel(updatedBoots);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/helmet/{itemId}")
     ResponseEntity<HelmetInstanceResponseDto> equipHelmetToHero(@AuthenticationPrincipal Jwt jwt,
-            @PathVariable Long campaignId, @PathVariable Long itemId) {
+                                                                @PathVariable Long campaignId, @PathVariable Long itemId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        HelmetInstance updatedHelmet = characterService.equipHelmet(hero, itemId);
+        HelmetInstance updatedHelmet = characterService.equipHelmet(hero, itemId, userId);
         HelmetInstanceResponseDto dto = HelmetInstanceResponseDto.fromModel(updatedHelmet);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/shield/{itemId}")
     ResponseEntity<ShieldInstanceResponseDto> equipShieldToHero(@AuthenticationPrincipal Jwt jwt,
-            @PathVariable Long campaignId, @PathVariable Long itemId) {
+                                                                @PathVariable Long campaignId, @PathVariable Long itemId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        ShieldInstance updatedShield = characterService.equipShield(hero, itemId);
+        ShieldInstance updatedShield = characterService.equipShield(hero, itemId, userId);
         ShieldInstanceResponseDto dto = ShieldInstanceResponseDto.fromModel(updatedShield);
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/weapon/{itemId}")
     ResponseEntity<WeaponInstanceResponseDto> equipWeaponToHero(@AuthenticationPrincipal Jwt jwt,
-            @PathVariable Long campaignId, @PathVariable Long itemId) {
+                                                                @PathVariable Long campaignId, @PathVariable Long itemId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        WeaponInstance updatedWeapon = characterService.equipWeapon(hero, itemId);
+        WeaponInstance updatedWeapon = characterService.equipWeapon(hero, itemId, userId);
         WeaponInstanceResponseDto dto = WeaponInstanceResponseDto.fromModel(updatedWeapon);
         return ResponseEntity.ok(dto);
     }
