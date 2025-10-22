@@ -1,5 +1,8 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] find where in the logic would be good to trigger a
+      function like findWinnersOrContinueBattle on loop for
+      all battles to make sure we don't have old battles ongoing
 - [ ] make sure we cannot start a new battle when there is one ongoing
 - [ ] make sure we cannot open item boosters when there is a battle ongoing
 - [ ] make sure we cannot open character boosters when there is a battle ongoing

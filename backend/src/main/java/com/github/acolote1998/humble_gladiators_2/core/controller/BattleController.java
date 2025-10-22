@@ -38,6 +38,13 @@ public class BattleController {
         return ResponseEntity.ok(battleService.isBattleAvailableForToday(campaignId, userId));
     }
 
+    @GetMapping("/{campaignId}/battle/check-ongoing")
+    public ResponseEntity<Boolean> checkIfThereIsAnOngoingBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        return ResponseEntity.ok(battleService.isThereOngoingBattleForToday(campaignId, userId));
+    }
+
+
     @GetMapping("/{campaignId}/battle")
     public ResponseEntity<BattleResponseDto> getBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();

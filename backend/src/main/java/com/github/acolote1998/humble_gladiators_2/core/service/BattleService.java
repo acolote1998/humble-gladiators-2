@@ -339,6 +339,16 @@ public class BattleService {
         return todaysBattle;
     }
 
+    public boolean isThereOngoingBattleForToday(Long campaignId, String userId) {
+        Battle battleToCheck = null;
+        try {
+            battleToCheck = getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId);
+        } catch (InvalidBattle e) {
+            log.info("There is no battle ongoing for today in campaign '{}'", campaignId);
+        }
+        return battleToCheck != null;
+    }
+
     public Battle getAnyBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
         LocalDate today = LocalDate.now();
         Battle todaysBattle = battleRepository.findAnyByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);

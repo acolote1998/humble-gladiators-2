@@ -4,6 +4,12 @@ Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
 
+### Check if there is an ongoing battle for today
+GET http://localhost:8080/api/campaign/1/battle/check-ongoing
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
 ### Start a new battle
 POST http://localhost:8080/api/campaign/1/battle/new
 Authorization: Bearer {{BEARER_TOKEN}}
