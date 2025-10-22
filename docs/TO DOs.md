@@ -1,5 +1,11 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] adapt / rethinkg CharacterInstanceCard, this is not including or displaying
+      physicalDefense,
+      magicalDefense,
+      physicalDamage,
+      magicalDamage
+
 - [ ] must improve algorithm in scheduled job that consolidates battles
   - at the moment, we consolidate ALL old battles. and we save them ALL in the DB again
   - it would be better if after retrieval from DB, we filter them by battles that need consolidation
