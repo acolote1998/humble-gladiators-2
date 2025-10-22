@@ -92,7 +92,7 @@ public class BoosterService {
                         campaignId));
                 return false;
             }
-            if (!battleService.isThereOngoingBattleForToday(campaignId, userId)) {
+            if (battleService.isThereOngoingBattleForToday(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | ITEM BOOSTER | An ongoing battle was found, cannot open booster", userId,
                         campaignId));
                 return false;
@@ -113,7 +113,7 @@ public class BoosterService {
                         campaignId));
                 return false;
             }
-            if (!battleService.isThereOngoingBattleForToday(campaignId, userId)) {
+            if (battleService.isThereOngoingBattleForToday(campaignId, userId)) {
                 log.warn(String.format("WARNING - %s - Campaign %s | CHARACTER BOOSTER | An ongoing battle was found, cannot open booster", userId,
                         campaignId));
                 return false;
