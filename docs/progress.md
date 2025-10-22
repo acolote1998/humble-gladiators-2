@@ -109,4 +109,7 @@ Tuesday 21/10
 - Adding logic tu use spells in the battle
 - Adding NPC auto-play turn logic
 - Winning battle logic
+
+Wednesday 22/10
+- Added endpoint to check if there are ongoing battles for today
 ```
