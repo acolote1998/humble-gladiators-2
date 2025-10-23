@@ -1,4 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
+
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -76,11 +77,6 @@ public class SpellService {
             spellTemplate.setTier(dto.tier());
             spellTemplate.setDiscovered(false);
             spellTemplate.setQuantity(0); // templates always start at 0 quantity
-            spellTemplate.setMpCost(
-                    spellTemplate.getTier() *
-                            spellTemplate.getRarity() *
-                            (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
-            );
             spellTemplate.setEquipped(false);
             spellTemplate.setCampaign(campaign);
             spellTemplate.setCategory(SpellCategory.valueOf(dto.category()));
@@ -102,6 +98,11 @@ public class SpellService {
             } else {
                 spellTemplate.setRestoreHp(0);
             }
+            spellTemplate.setMpCost(
+                    spellTemplate.getTier() *
+                            spellTemplate.getRarity() *
+                            (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
+            );
             spellTemplate.setValue(
                     (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage()
                             + spellTemplate.getRestoreHp())
