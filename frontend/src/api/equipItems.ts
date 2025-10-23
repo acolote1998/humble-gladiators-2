@@ -1,14 +1,8 @@
 import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
+import type { EquipItemType } from "../types/equipItemsTypes";
 
-type TypeItemToEquip = "armor" | "boots" | "helmet" | "shield" | "weapon";
-type EquipItemType = {
-  campaignId: number;
-  itemId: number;
-  typeItemToEquip: TypeItemToEquip;
-};
-
-export const equipItems = async (
+export const equipItemsRequest = async (
   itemToEquipRequest: EquipItemType,
   bearerToken: string
 ) => {
