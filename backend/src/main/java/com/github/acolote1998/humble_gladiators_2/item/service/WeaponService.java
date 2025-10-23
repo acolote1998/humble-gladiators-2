@@ -1,5 +1,4 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
-
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -9,7 +8,6 @@ import com.github.acolote1998.humble_gladiators_2.core.service.RequirementServic
 import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.WeaponTemplateRepository;
-import com.github.acolote1998.humble_gladiators_2.item.templates.ArmorTemplate;
 import com.github.acolote1998.humble_gladiators_2.item.templates.WeaponTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

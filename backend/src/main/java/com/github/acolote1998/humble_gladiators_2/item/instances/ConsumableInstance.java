@@ -1,9 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.instances;
-
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Discoverable;
 import com.github.acolote1998.humble_gladiators_2.item.interfaces.Tradeable;
-import com.github.acolote1998.humble_gladiators_2.item.interfaces.Usable;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import com.github.acolote1998.humble_gladiators_2.item.templates.ConsumableTemplate;
 import jakarta.persistence.*;
