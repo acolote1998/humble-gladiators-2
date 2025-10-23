@@ -70,90 +70,104 @@ function RouteComponent() {
                 Inventory
               </h2>
               <div>
-                <details>
-                  <summary>Armors</summary>
-                  <div className="grid grid-cols-3">
-                    {heroData.inventory.armors.map((armor) => (
-                      <ArmorCard
-                        key={armor.name}
-                        {...armor}
-                        renderingFrom="INVENTORY"
-                      />
-                    ))}
-                  </div>
-                </details>
-                <details>
-                  <summary>Boots</summary>
-                  <div className="grid grid-cols-3">
-                    {heroData.inventory.boots.map((boot) => (
-                      <BootsCard
-                        key={boot.name}
-                        {...boot}
-                        renderingFrom="INVENTORY"
-                      />
-                    ))}
-                  </div>
-                </details>
-                <details>
-                  <summary>Consumables</summary>
-                  <div className="grid grid-cols-3">
-                    {heroData.inventory.consumables.map((consumable) => (
-                      <ConsumableCard
-                        key={consumable.name}
-                        {...consumable}
-                        renderingFrom="INVENTORY"
-                      />
-                    ))}
-                  </div>
-                </details>
-                <details>
-                  <summary>Helmets</summary>
-                  <div className="grid grid-cols-3">
-                    {heroData.inventory.helmets.map((helmet) => (
-                      <HelmetCard
-                        key={helmet.name}
-                        {...helmet}
-                        renderingFrom="INVENTORY"
-                      />
-                    ))}
-                  </div>
-                </details>
-                <details>
-                  <summary>Shields</summary>
-                  <div className="grid grid-cols-3">
-                    {heroData.inventory.shields.map((shield) => (
-                      <ShieldTemplateCard
-                        key={shield.name}
-                        {...shield}
-                        renderingFrom="INVENTORY"
-                      />
-                    ))}
-                  </div>
-                </details>
-                <details>
-                  <summary>Spells</summary>
-                  <div className="grid grid-cols-3">
-                    {heroData.inventory.spells.map((spell) => (
-                      <SpellCard
-                        key={spell.name}
-                        {...spell}
-                        renderingFrom="INVENTORY"
-                      />
-                    ))}
-                  </div>
-                </details>
-                <details>
-                  <summary>Weapons</summary>
-                  <div className="grid grid-cols-3">
-                    {heroData.inventory.weapons.map((weapon) => (
-                      <WeaponCard
-                        key={weapon.name}
-                        {...weapon}
-                        renderingFrom="INVENTORY"
-                      />
-                    ))}
-                  </div>
-                </details>
+                {heroData.inventory.armors.length > 0 && (
+                  <details>
+                    <summary>Armors</summary>
+                    <div className="grid grid-cols-3">
+                      {heroData.inventory.armors.map((armor) => (
+                        <ArmorCard
+                          key={armor.name}
+                          {...armor}
+                          renderingFrom="INVENTORY"
+                        />
+                      ))}
+                    </div>
+                  </details>
+                )}
+                {heroData.inventory.boots.length > 0 && (
+                  <details>
+                    <summary>Boots</summary>
+                    <div className="grid grid-cols-3">
+                      {heroData.inventory.boots.map((boot) => (
+                        <BootsCard
+                          key={boot.name}
+                          {...boot}
+                          renderingFrom="INVENTORY"
+                        />
+                      ))}
+                    </div>
+                  </details>
+                )}
+                {heroData.inventory.consumables.length > 0 && (
+                  <details>
+                    <summary>Consumables</summary>
+                    <div className="grid grid-cols-3">
+                      {heroData.inventory.consumables.map((consumable) => (
+                        <ConsumableCard
+                          key={consumable.name}
+                          {...consumable}
+                          renderingFrom="INVENTORY"
+                        />
+                      ))}
+                    </div>
+                  </details>
+                )}
+                {heroData.inventory.helmets.length > 0 && (
+                  <details>
+                    <summary>Helmets</summary>
+                    <div className="grid grid-cols-3">
+                      {heroData.inventory.helmets.map((helmet) => (
+                        <HelmetCard
+                          key={helmet.name}
+                          {...helmet}
+                          renderingFrom="INVENTORY"
+                        />
+                      ))}
+                    </div>
+                  </details>
+                )}
+                {heroData.inventory.shields.length > 0 && (
+                  <details>
+                    <summary>Shields</summary>
+                    <div className="grid grid-cols-3">
+                      {heroData.inventory.shields.map((shield) => (
+                        <ShieldTemplateCard
+                          key={shield.name}
+                          {...shield}
+                          renderingFrom="INVENTORY"
+                        />
+                      ))}
+                    </div>
+                  </details>
+                )}
+                {heroData.inventory.spells.length > 0 && (
+                  <details>
+                    <summary>Spells</summary>
+                    <div className="grid grid-cols-3">
+                      {heroData.inventory.spells.map((spell) => (
+                        <SpellCard
+                          key={spell.name}
+                          {...spell}
+                          renderingFrom="INVENTORY"
+                        />
+                      ))}
+                    </div>
+                  </details>
+                )}
+                {heroData.inventory.weapons.length > 0 && (
+                  <details>
+                    <summary>Weapons</summary>
+                    <div className="grid grid-cols-3">
+                      {heroData.inventory.weapons.map((weapon) => (
+                        <WeaponCard
+                          key={weapon.name}
+                          {...weapon}
+                          renderingFrom="INVENTORY"
+                        />
+                      ))}
+                    </div>
+                  </details>
+                )}
               </div>
             </div>
           </div>
