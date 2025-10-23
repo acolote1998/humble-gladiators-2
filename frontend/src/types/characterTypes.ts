@@ -29,7 +29,7 @@ export type CharacterInstanceType = {
   renderingFrom: RenderingFrom;
 };
 
-export type RenderingFrom = "COMPENDIUM" | "BOOSTER" | "BATTLE";
+export type RenderingFrom = "COMPENDIUM" | "BOOSTER" | "BATTLE" | "INVENTORY";
 
 type CharacterStatsResponseDto = {
   constitution: number;

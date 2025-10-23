@@ -18,7 +18,8 @@ public record SpellInstanceResponseDto(
         SpellCategory category,
         Integer physicalDamage,
         Integer magicalDamage,
-        Integer restoreHp
+        Integer restoreHp,
+        Boolean discovered
 ) {
 
     public static List<SpellInstanceResponseDto> fromInstances(List<SpellInstance> spells) {
@@ -36,7 +37,8 @@ public record SpellInstanceResponseDto(
                         spell.getTemplate().getCategory(),
                         spell.getTemplate().getPhysicalDamage(),
                         spell.getTemplate().getMagicalDamage(),
-                        spell.getTemplate().getRestoreHp()
+                        spell.getTemplate().getRestoreHp(),
+                        spell.getTemplate().getDiscovered()
                 ))
                 .toList();
     }

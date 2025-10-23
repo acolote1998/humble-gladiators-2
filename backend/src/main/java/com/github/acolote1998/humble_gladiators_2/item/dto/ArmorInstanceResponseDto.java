@@ -19,7 +19,8 @@ public record ArmorInstanceResponseDto(
         ArmorCategory category,
         Integer physicalDefense,
         Integer magicalDefense,
-        String imgBase64
+        String imgBase64,
+        Boolean discovered
 ) {
 
     public static ArmorInstanceResponseDto fromModel(ArmorInstance armor) {
@@ -35,7 +36,8 @@ public record ArmorInstanceResponseDto(
                 armor.getTemplate().getCategory(),
                 armor.getTemplate().getPhysicalDefense(),
                 armor.getTemplate().getMagicalDefense(),
-                BytesToBase64.bytesToBase64(armor.getTemplate().getImgBytes())
+                BytesToBase64.bytesToBase64(armor.getTemplate().getImgBytes()),
+                armor.getTemplate().getDiscovered()
         );
     }
 

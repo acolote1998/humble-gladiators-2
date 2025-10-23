@@ -17,7 +17,8 @@ public record ConsumableInstanceResponseDto(
         RequirementResponseDto requirement,
         ConsumablesCategory category,
         Integer restoreHp,
-        Integer restoreMp
+        Integer restoreMp,
+        Boolean discovered
 ) {
 
     public static List<ConsumableInstanceResponseDto> fromInstances(List<ConsumableInstance> consumables) {
@@ -34,7 +35,8 @@ public record ConsumableInstanceResponseDto(
                         RequirementResponseDto.fromRequirement(consumable.getRequirement()),
                         consumable.getTemplate().getCategory(),
                         consumable.getTemplate().getRestoreHp(),
-                        consumable.getTemplate().getRestoreMp()
+                        consumable.getTemplate().getRestoreMp(),
+                        consumable.getTemplate().getDiscovered()
                 ))
                 .toList();
     }
