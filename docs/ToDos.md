@@ -1,4 +1,9 @@
 # TO DOs - Humble Gladiators 2
+- [ ] Fix bug in inventory, when I have a few of the same type (lets say helmets) and I start equipping/unequipping and switching, they start multiplying in the render, but if F5, then it is okay
+
+- [ ] Shield Tier 3 tiene un aura azul?? deberia ser naranja? chequear todos los shield tiers css classes
+
+- [ ] Weapon Tier 3 tiene un aura azul?? deberia ser rojo? chequear todos los weapons tiers css classes
 
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 

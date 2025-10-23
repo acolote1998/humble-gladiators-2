@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.RequirementResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 
@@ -21,7 +22,8 @@ public record SpellInstanceResponseDto(
         Integer physicalDamage,
         Integer magicalDamage,
         Integer restoreHp,
-        Boolean discovered
+        Boolean discovered,
+        String imgBase64
 ) {
 
     public static List<SpellInstanceResponseDto> fromInstances(List<SpellInstance> spells) {
@@ -42,7 +44,8 @@ public record SpellInstanceResponseDto(
                         spell.getTemplate().getPhysicalDamage(),
                         spell.getTemplate().getMagicalDamage(),
                         spell.getTemplate().getRestoreHp(),
-                        spell.getTemplate().getDiscovered()
+                        spell.getTemplate().getDiscovered(),
+                        BytesToBase64.bytesToBase64(spell.getTemplate().getImgBytes())
                 ))
                 .toList();
     }

@@ -24,7 +24,7 @@ export const HelmetCard = ({
           className={[
             // Conditional classes
             renderingFrom == "BOOSTER" ? "rotate-y-180" : "",
-            discovered && renderingFrom != "BOOSTER" ? "cursor-zoom" : "",
+            discovered && renderingFrom != "BOOSTER" ? "hover-zoom" : "",
             discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
             discovered && renderingFrom != "BOOSTER"
               ? tier === 5 && rarity === 5

@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.RequirementResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
 
@@ -20,7 +21,8 @@ public record ConsumableInstanceResponseDto(
         ConsumablesCategory category,
         Integer restoreHp,
         Integer restoreMp,
-        Boolean discovered
+        Boolean discovered,
+        String imgBase64
 ) {
 
     public static List<ConsumableInstanceResponseDto> fromInstances(List<ConsumableInstance> consumables) {
@@ -40,7 +42,8 @@ public record ConsumableInstanceResponseDto(
                         consumable.getTemplate().getCategory(),
                         consumable.getTemplate().getRestoreHp(),
                         consumable.getTemplate().getRestoreMp(),
-                        consumable.getTemplate().getDiscovered()
+                        consumable.getTemplate().getDiscovered(),
+                        BytesToBase64.bytesToBase64(consumable.getTemplate().getImgBytes())
                 ))
                 .toList();
     }

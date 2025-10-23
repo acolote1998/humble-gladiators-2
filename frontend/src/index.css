@@ -150,12 +150,11 @@
   transform: rotate(-45deg) translateY(100%);
 }
 
-.cursor-zoom {
+.hover-zoom {
   transition: transform 0.1s ease;
-  cursor: zoom-in;
 }
 
-.cursor-zoom:hover {
+.hover-zoom:hover {
   transform: scale(1.02);
 }
 
