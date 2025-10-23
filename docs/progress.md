@@ -120,4 +120,8 @@ Wednesday 22/10
 - adding validation to avoid processing turns with empty teams
 - validation to avoid allowing attacks, spells and consumables when the battle is not valid
 - scheduled job to automatically consolidate old battles that might have been peending from previous days
+
+Thursday 23/10
+- Improving physical damage and magical damage display in character cards
+- Changing order of certain stats in character cards
 ```

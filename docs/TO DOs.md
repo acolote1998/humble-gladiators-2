@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] make character response dto misterious if they are not discovered (since the compendium fetches all of them, we have to avoid
+      the user inspecting the network to get data that they have not discovered yet)
 - [ ] fix that when I hover over a card, it has a small zoom in and the magnifier cursor shows instear of the thick hand
 - [ ] adapt / rethinkg CharacterInstanceCard, this is not including or displaying
       physicalDefense,
