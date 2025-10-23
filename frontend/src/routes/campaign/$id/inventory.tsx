@@ -5,7 +5,7 @@ import { ArmorCard } from "../../../components/cards/ArmorCard";
 import { BootsCard } from "../../../components/cards/BootsCard";
 import { ConsumableCard } from "../../../components/cards/ConsumableCard";
 import { HelmetCard } from "../../../components/cards/HelmetCard";
-import { ShieldTemplateCard } from "../../../components/cards/ShieldCard";
+import { ShieldCard } from "../../../components/cards/ShieldCard";
 import { SpellCard } from "../../../components/cards/SpellCard";
 import { WeaponCard } from "../../../components/cards/WeaponCard";
 
@@ -29,7 +29,58 @@ function RouteComponent() {
       ) : (
         heroData && (
           <div className="grid grid-cols-3">
-            <div className="col-span-2"></div>
+            <div className="col-span-2">
+              {heroData.inventory.helmets.map((helmet) => {
+                if (helmet.equipped)
+                  return (
+                    <HelmetCard
+                      key={helmet.name}
+                      {...helmet}
+                      renderingFrom="INVENTORY"
+                    />
+                  );
+              })}
+              {heroData.inventory.armors.map((armor) => {
+                if (armor.equipped)
+                  return (
+                    <ArmorCard
+                      key={armor.name}
+                      {...armor}
+                      renderingFrom="INVENTORY"
+                    />
+                  );
+              })}
+              {heroData.inventory.weapons.map((weapon) => {
+                if (weapon.equipped)
+                  return (
+                    <WeaponCard
+                      key={weapon.name}
+                      {...weapon}
+                      renderingFrom="INVENTORY"
+                    />
+                  );
+              })}
+              {heroData.inventory.shields.map((shield) => {
+                if (shield.equipped)
+                  return (
+                    <ShieldCard
+                      key={shield.name}
+                      {...shield}
+                      renderingFrom="INVENTORY"
+                    />
+                  );
+              })}
+              {heroData.inventory.boots.map((boot) => {
+                if (boot.equipped)
+                  return (
+                    <BootsCard
+                      key={boot.name}
+                      {...boot}
+                      renderingFrom="INVENTORY"
+                    />
+                  );
+              })}
+            </div>
             <div>
               <div>
                 <div>
@@ -135,7 +186,7 @@ function RouteComponent() {
                       <summary>Shields</summary>
                       <div className="grid grid-cols-3">
                         {heroData.inventory.shields.map((shield) => (
-                          <ShieldTemplateCard
+                          <ShieldCard
                             key={shield.name}
                             {...shield}
                             renderingFrom="INVENTORY"

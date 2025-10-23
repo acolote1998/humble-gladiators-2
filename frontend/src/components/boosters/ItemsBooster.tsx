@@ -4,7 +4,7 @@ import { ArmorCard } from "../cards/ArmorCard";
 import { BootsCard } from "../cards/BootsCard";
 import { ConsumableCard } from "../cards/ConsumableCard";
 import { HelmetCard } from "../cards/HelmetCard";
-import { ShieldTemplateCard } from "../cards/ShieldCard";
+import { ShieldCard } from "../cards/ShieldCard";
 import { SpellCard } from "../cards/SpellCard";
 import { WeaponCard } from "../cards/WeaponCard";
 import { useCreateItemBooster } from "../../hooks/useBoosters";
@@ -331,7 +331,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                             </div>
                           )}
                           {cardBack && (
-                            <ShieldTemplateCard
+                            <ShieldCard
                               {...cards.shields[0]}
                               renderingFrom="BOOSTER"
                             />

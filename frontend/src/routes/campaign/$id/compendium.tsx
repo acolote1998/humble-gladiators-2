@@ -13,7 +13,7 @@ import { ArmorCard } from "../../../components/cards/ArmorCard";
 import { BootsCard } from "../../../components/cards/BootsCard";
 import { ConsumableCard } from "../../../components/cards/ConsumableCard";
 import { HelmetCard } from "../../../components/cards/HelmetCard";
-import { ShieldTemplateCard } from "../../../components/cards/ShieldCard";
+import { ShieldCard } from "../../../components/cards/ShieldCard";
 import { SpellCard } from "../../../components/cards/SpellCard";
 import { WeaponCard } from "../../../components/cards/WeaponCard";
 
@@ -144,7 +144,7 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((shield) => (
-              <ShieldTemplateCard
+              <ShieldCard
                 key={shield.name}
                 {...shield}
                 renderingFrom="COMPENDIUM"
