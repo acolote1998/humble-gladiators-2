@@ -1,19 +1,19 @@
-import type { ArmorTemplateType } from "./armorTypes";
-import type { BootsTemplateType } from "./bootsTypes";
+import type { ArmorType } from "./armorTypes";
+import type { BootsType } from "./bootsTypes";
 import type { CharacterInstanceType } from "./characterTypes";
-import type { ConsumableTemplateType } from "./consumablesTypes";
-import type { HelmetTemplateType } from "./helmetTypes";
-import type { ShieldTemplateType } from "./shieldTypes";
-import type { SpellTemplateType } from "./spellTypes";
-import type { WeaponTemplateType } from "./weaponTypes";
+import type { ConsumableType } from "./consumablesTypes";
+import type { HelmetType } from "./helmetTypes";
+import type { ShieldType } from "./shieldTypes";
+import type { SpellType } from "./spellTypes";
+import type { WeaponType } from "./weaponTypes";
 export type ItemBoosterType = {
-  armors: ArmorTemplateType[];
-  boots: BootsTemplateType[];
-  consumables: ConsumableTemplateType[];
-  helmets: HelmetTemplateType[];
-  shields: ShieldTemplateType[];
-  spells: SpellTemplateType[];
-  weapons: WeaponTemplateType[];
+  armors: ArmorType[];
+  boots: BootsType[];
+  consumables: ConsumableType[];
+  helmets: HelmetType[];
+  shields: ShieldType[];
+  spells: SpellType[];
+  weapons: WeaponType[];
 };
 
 export type ItemBoosterInterface = {

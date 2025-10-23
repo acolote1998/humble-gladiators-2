@@ -1,6 +1,4 @@
 package com.github.acolote1998.humble_gladiators_2.core.repository;
-
-import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;

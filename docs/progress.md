@@ -125,4 +125,10 @@ Thursday 23/10
 - Improving physical damage and magical damage display in character cards
 - Changing order of certain stats in character cards
 - Reworking conditional rendering of stats in character card to have different views depending on if we render it from compendium, from a booster or from a battle
+- Refactoring ToDos.md into more structured way
+- Created inventory route
+- Rendered hero stats in inventory route
+- Rendered hero inventory in inventory route
+- Rendered equipped items in inventory route
+- Implemented function to equip items from the inventory route
 ```

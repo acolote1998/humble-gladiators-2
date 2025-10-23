@@ -7,6 +7,8 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import java.util.List;
 
 public record SpellInstanceResponseDto(
+        Long campaignId,
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -18,13 +20,16 @@ public record SpellInstanceResponseDto(
         SpellCategory category,
         Integer physicalDamage,
         Integer magicalDamage,
-        Integer restoreHp
+        Integer restoreHp,
+        Boolean discovered
 ) {
 
     public static List<SpellInstanceResponseDto> fromInstances(List<SpellInstance> spells) {
         if (spells == null) return List.of();
         return spells.stream()
                 .map(spell -> new SpellInstanceResponseDto(
+                        spell.getCampaign().getId(),
+                        spell.getId(),
                         spell.getName(),
                         spell.getDescription(),
                         spell.getRarity(),
@@ -36,7 +41,8 @@ public record SpellInstanceResponseDto(
                         spell.getTemplate().getCategory(),
                         spell.getTemplate().getPhysicalDamage(),
                         spell.getTemplate().getMagicalDamage(),
-                        spell.getTemplate().getRestoreHp()
+                        spell.getTemplate().getRestoreHp(),
+                        spell.getTemplate().getDiscovered()
                 ))
                 .toList();
     }

@@ -16,6 +16,7 @@ public class SecurityConfig {
         http
                 .csrf((crsf -> crsf.disable()))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/campaign/*/character-instances/hero/equip/armor/*").authenticated()
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/game/**").authenticated()
                         .requestMatchers("/api/campaign").authenticated()

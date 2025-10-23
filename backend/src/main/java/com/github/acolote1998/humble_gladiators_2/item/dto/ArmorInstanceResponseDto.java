@@ -8,6 +8,8 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import java.util.List;
 
 public record ArmorInstanceResponseDto(
+        Long campaignId,
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -19,11 +21,14 @@ public record ArmorInstanceResponseDto(
         ArmorCategory category,
         Integer physicalDefense,
         Integer magicalDefense,
-        String imgBase64
+        String imgBase64,
+        Boolean discovered
 ) {
 
     public static ArmorInstanceResponseDto fromModel(ArmorInstance armor) {
         return new ArmorInstanceResponseDto(
+                armor.getCampaign().getId(),
+                armor.getId(),
                 armor.getName(),
                 armor.getDescription(),
                 armor.getRarity(),
@@ -35,7 +40,8 @@ public record ArmorInstanceResponseDto(
                 armor.getTemplate().getCategory(),
                 armor.getTemplate().getPhysicalDefense(),
                 armor.getTemplate().getMagicalDefense(),
-                BytesToBase64.bytesToBase64(armor.getTemplate().getImgBytes())
+                BytesToBase64.bytesToBase64(armor.getTemplate().getImgBytes()),
+                armor.getTemplate().getDiscovered()
         );
     }
 

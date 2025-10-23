@@ -1,10 +1,10 @@
-import type { ArmorCategoriesEnum } from "./armorTypes";
-import type { BootsCategoriesEnum } from "./bootsTypes";
-import type { HelmetCategoriesEnum } from "./helmetTypes";
-import type { ShieldCategoriesEnum } from "./shieldTypes";
-import type { ConsumablesCategoriesEnum } from "./consumablesTypes";
-import type { SpellCategoriesEnum } from "./spellTypes";
-import type { WeaponCategoriesEnum } from "./weaponTypes";
+import type { ArmorType } from "./armorTypes";
+import type { BootsType } from "./bootsTypes";
+import type { ConsumableType } from "./consumablesTypes";
+import type { HelmetType } from "./helmetTypes";
+import type { ShieldType } from "./shieldTypes";
+import type { SpellType } from "./spellTypes";
+import type { WeaponType } from "./weaponTypes";
 
 export type CreateHeroType = {
   heroName: string;
@@ -29,7 +29,7 @@ export type CharacterInstanceType = {
   renderingFrom: RenderingFrom;
 };
 
-type RenderingFrom = "COMPENDIUM" | "BOOSTER" | "BATTLE";
+export type RenderingFrom = "COMPENDIUM" | "BOOSTER" | "BATTLE" | "INVENTORY";
 
 type CharacterStatsResponseDto = {
   constitution: number;
@@ -76,16 +76,16 @@ export type HeroResponseDto = {
 };
 
 type CharacterInventoryResponseDto = {
-  armors: ArmorInstanceResponseDto[];
-  boots: BootsInstanceResponseDto[];
-  consumables: ConsumableInstanceResponseDto[];
-  helmets: HelmetInstanceResponseDto[];
-  shields: ShieldInstanceResponseDto[];
-  spells: SpellInstanceResponseDto[];
-  weapons: WeaponInstanceResponseDto[];
+  armors: ArmorType[];
+  boots: BootsType[];
+  consumables: ConsumableType[];
+  helmets: HelmetType[];
+  shields: ShieldType[];
+  spells: SpellType[];
+  weapons: WeaponType[];
 };
 
-type RequirementResponseDto = {
+export type RequirementResponseDto = {
   requirements: RequirementEntryResponseDto[];
 };
 
@@ -93,112 +93,6 @@ type RequirementEntryResponseDto = {
   requirementType: RequirementEntryTypeEnum;
   operator: RequirementEntryOperatorEnum;
   value: string;
-};
-
-type ConsumableInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: ConsumablesCategoriesEnum;
-  restoreHp: number;
-  imgBase64: string;
-  restoreMp: number;
-};
-
-type SpellInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: SpellCategoriesEnum;
-  restoreHp: number;
-  imgBase64: string;
-  physicalDamage: number;
-  magicalDamage: number;
-};
-
-type WeaponInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: WeaponCategoriesEnum;
-  imgBase64: string;
-  physicalDamage: number;
-  magicalDamage: number;
-};
-
-type ShieldInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: ShieldCategoriesEnum;
-  physicalDefense: number;
-  imgBase64: string;
-  magicalDefense: number;
-};
-
-type BootsInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: BootsCategoriesEnum;
-  physicalDefense: number;
-  imgBase64: string;
-  magicalDefense: number;
-};
-
-type HelmetInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: HelmetCategoriesEnum;
-  imgBase64: string;
-  physicalDefense: number;
-  magicalDefense: number;
-};
-
-type ArmorInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: ArmorCategoriesEnum;
-  physicalDefense: number;
-  magicalDefense: number;
-  imgBase64: string;
 };
 
 type RequirementEntryOperatorEnum =

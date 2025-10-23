@@ -1,4 +1,8 @@
-export type WeaponTemplateType = {
+import type { RequirementResponseDto } from "./characterTypes";
+import type { RenderingFrom } from "./characterTypes";
+
+export type WeaponType = {
+  id: number;
   name: string;
   description: string;
   rarity: number;
@@ -11,7 +15,9 @@ export type WeaponTemplateType = {
   physicalDamage: number;
   imgBase64: string;
   magicalDamage: number;
-  renderingFromBooster?: boolean;
+  renderingFrom: RenderingFrom;
+  quantity?: number;
+  requirement?: RequirementResponseDto;
 };
 
 export type WeaponCategoriesEnum =

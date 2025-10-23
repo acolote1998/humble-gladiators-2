@@ -7,6 +7,8 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInsta
 import java.util.List;
 
 public record ConsumableInstanceResponseDto(
+        Long campaignId,
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -17,13 +19,16 @@ public record ConsumableInstanceResponseDto(
         RequirementResponseDto requirement,
         ConsumablesCategory category,
         Integer restoreHp,
-        Integer restoreMp
+        Integer restoreMp,
+        Boolean discovered
 ) {
 
     public static List<ConsumableInstanceResponseDto> fromInstances(List<ConsumableInstance> consumables) {
         if (consumables == null) return List.of();
         return consumables.stream()
                 .map(consumable -> new ConsumableInstanceResponseDto(
+                        consumable.getCampaign().getId(),
+                        consumable.getId(),
                         consumable.getName(),
                         consumable.getDescription(),
                         consumable.getRarity(),
@@ -34,7 +39,8 @@ public record ConsumableInstanceResponseDto(
                         RequirementResponseDto.fromRequirement(consumable.getRequirement()),
                         consumable.getTemplate().getCategory(),
                         consumable.getTemplate().getRestoreHp(),
-                        consumable.getTemplate().getRestoreMp()
+                        consumable.getTemplate().getRestoreMp(),
+                        consumable.getTemplate().getDiscovered()
                 ))
                 .toList();
     }

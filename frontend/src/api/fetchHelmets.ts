@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
-import type { HelmetTemplateType } from "../types/helmetTypes";
+import type { HelmetType } from "../types/helmetTypes";
 
 export const fetchAllHelmetTemplatesForCampaignByUser = async (
   bearerToken: string,
   campaignId: number
-): Promise<HelmetTemplateType[]> => {
+): Promise<HelmetType[]> => {
   try {
     const response = await axios.get(
       `${BACKEND_URL}/campaign/${campaignId}/helmet-templates`,

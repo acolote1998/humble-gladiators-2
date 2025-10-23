@@ -1,4 +1,7 @@
-export type ShieldTemplateType = {
+import type { RequirementResponseDto } from "./characterTypes";
+import type { RenderingFrom } from "./characterTypes";
+export type ShieldType = {
+  id: number;
   name: string;
   description: string;
   rarity: number;
@@ -11,7 +14,9 @@ export type ShieldTemplateType = {
   physicalDefense: number;
   imgBase64: string;
   magicalDefense: number;
-  renderingFromBooster?: boolean;
+  renderingFrom: RenderingFrom;
+  quantity?: number;
+  requirement?: RequirementResponseDto;
 };
 
 export type ShieldCategoriesEnum =

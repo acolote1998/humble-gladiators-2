@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
-import type { BootsTemplateType } from "../types/bootsTypes";
+import type { BootsType } from "../types/bootsTypes";
 
 export const fetchAllBootsTemplatesForCampaignByUser = async (
   bearerToken: string,
   campaignId: number
-): Promise<BootsTemplateType[]> => {
+): Promise<BootsType[]> => {
   try {
     const response = await axios.get(
       `${BACKEND_URL}/campaign/${campaignId}/boots-templates`,

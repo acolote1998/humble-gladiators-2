@@ -8,14 +8,14 @@ import { useGetAllShieldTemplatesForCampaignByUser } from "../../../hooks/useShi
 import { useGetAllSpellTemplatesForCampaignByUser } from "../../../hooks/useSpells";
 import { useGetAllWeaponTemplatesForCampaignByUser } from "../../../hooks/useWeapons";
 import { useGetCharactersByCampaignAndUser } from "../../../hooks/userCharacters";
-import { CharacterInstanceCard } from "../../../components/cards/CharacterInstanceCard";
-import { ArmorTemplateCard } from "../../../components/cards/ArmorTemplateCard";
-import { BootsTemplateCard } from "../../../components/cards/BootsTemplateCard";
-import { ConsumableTemplateCard } from "../../../components/cards/ConsumableTemplateCard";
-import { HelmetTemplateCard } from "../../../components/cards/HelmetTemplateCard";
-import { ShieldTemplateCard } from "../../../components/cards/ShieldTemplateCard";
-import { SpellTemplateCard } from "../../../components/cards/SpellTemplateCard";
-import { WeaponTemplateCard } from "../../../components/cards/WeaponTemplateCard";
+import { CharacterCard } from "../../../components/cards/CharacterCard";
+import { ArmorCard } from "../../../components/cards/ArmorCard";
+import { BootsCard } from "../../../components/cards/BootsCard";
+import { ConsumableCard } from "../../../components/cards/ConsumableCard";
+import { HelmetCard } from "../../../components/cards/HelmetCard";
+import { ShieldCard } from "../../../components/cards/ShieldCard";
+import { SpellCard } from "../../../components/cards/SpellCard";
+import { WeaponCard } from "../../../components/cards/WeaponCard";
 
 export const Route = createFileRoute("/campaign/$id/compendium")({
   component: RouteComponent,
@@ -57,7 +57,7 @@ function RouteComponent() {
             .map(
               (char) =>
                 char.characterType === "NPC" && (
-                  <CharacterInstanceCard
+                  <CharacterCard
                     key={char.name}
                     {...char}
                     renderingFrom="COMPENDIUM"
@@ -76,7 +76,11 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((armor) => (
-              <ArmorTemplateCard key={armor.name} {...armor} />
+              <ArmorCard
+                key={armor.name}
+                {...armor}
+                renderingFrom="COMPENDIUM"
+              />
             ))}
         </div>
       </details>
@@ -90,7 +94,7 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((boot) => (
-              <BootsTemplateCard key={boot.name} {...boot} />
+              <BootsCard key={boot.name} {...boot} renderingFrom="COMPENDIUM" />
             ))}
         </div>
       </details>
@@ -104,7 +108,11 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((consumable) => (
-              <ConsumableTemplateCard key={consumable.name} {...consumable} />
+              <ConsumableCard
+                key={consumable.name}
+                {...consumable}
+                renderingFrom="COMPENDIUM"
+              />
             ))}
         </div>
       </details>
@@ -118,7 +126,11 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((helmet) => (
-              <HelmetTemplateCard key={helmet.name} {...helmet} />
+              <HelmetCard
+                key={helmet.name}
+                {...helmet}
+                renderingFrom="COMPENDIUM"
+              />
             ))}
         </div>
       </details>
@@ -132,7 +144,11 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((shield) => (
-              <ShieldTemplateCard key={shield.name} {...shield} />
+              <ShieldCard
+                key={shield.name}
+                {...shield}
+                renderingFrom="COMPENDIUM"
+              />
             ))}
         </div>
       </details>
@@ -146,7 +162,11 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((spell) => (
-              <SpellTemplateCard key={spell.name} {...spell} />
+              <SpellCard
+                key={spell.name}
+                {...spell}
+                renderingFrom="COMPENDIUM"
+              />
             ))}
         </div>
       </details>
@@ -160,7 +180,11 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((weapon) => (
-              <WeaponTemplateCard key={weapon.name} {...weapon} />
+              <WeaponCard
+                key={weapon.name}
+                {...weapon}
+                renderingFrom="COMPENDIUM"
+              />
             ))}
         </div>
       </details>
