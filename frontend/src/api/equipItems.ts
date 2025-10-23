@@ -7,15 +7,9 @@ export const equipItemsRequest = async (
   bearerToken: string
 ) => {
   try {
-    const response = await axios.post(
-      `${BACKEND_URL}
-      /campaign
-      /${itemToEquipRequest.campaignId}
-      /character-instances
-      /hero
-      /equip
-      /${itemToEquipRequest.typeItemToEquip}
-      /${itemToEquipRequest.itemId}`,
+    const response = await axios.patch(
+      `${BACKEND_URL}/campaign/${itemToEquipRequest.campaignId}/character-instances/hero/equip/${itemToEquipRequest.typeItemToEquip}/${itemToEquipRequest.itemId}`,
+      {},
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }
