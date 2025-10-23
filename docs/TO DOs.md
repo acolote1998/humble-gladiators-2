@@ -1,5 +1,9 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] at the moment, when we are in the campaign lobby, the checks for if we can open a new booster are quite expensive
+      (we check available boosters, we check if we are not in an ongoing battle and so). It would be good to cache them and make them last
+      at least some minutes so we don't have to keep on doing expensive checks to the DB if we knew that a few minutes ago the user
+      could not open a booster, for example
 - [ ] make character response dto misterious if they are not discovered (since the compendium fetches all of them, we have to avoid
       the user inspecting the network to get data that they have not discovered yet)
 - [ ] fix that when I hover over a card, it has a small zoom in and the magnifier cursor shows instear of the thick hand
