@@ -1,4 +1,6 @@
-export type SpellTemplateType = {
+import type { RequirementResponseDto } from "./characterTypes";
+import type { RenderingFrom } from "./characterTypes";
+export type SpellType = {
   name: string;
   description: string;
   rarity: number;
@@ -13,7 +15,9 @@ export type SpellTemplateType = {
   imgBase64: string;
   restoreHp: number;
   mpCost: number;
-  renderingFromBooster?: boolean;
+  renderingFrom: RenderingFrom;
+  quantity?: number;
+  requirement?: RequirementResponseDto;
 };
 
 export type SpellCategoriesEnum =

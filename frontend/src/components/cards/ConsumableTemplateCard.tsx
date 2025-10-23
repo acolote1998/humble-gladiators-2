@@ -1,4 +1,4 @@
-import type { ConsumableTemplateType } from "../../types/consumablesTypes";
+import type { ConsumableType } from "../../types/consumablesTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const ConsumableTemplateCard = ({
   category,
@@ -11,7 +11,7 @@ export const ConsumableTemplateCard = ({
   restoreMp,
   imgBase64,
   renderingFromBooster,
-}: ConsumableTemplateType) => {
+}: ConsumableType) => {
   //Toggle to see all information of the card
   // discovered = true;
 

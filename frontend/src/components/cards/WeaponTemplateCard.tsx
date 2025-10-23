@@ -1,4 +1,4 @@
-import type { WeaponTemplateType } from "../../types/weaponTypes";
+import type { WeaponType } from "../../types/weaponTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const WeaponTemplateCard = ({
   category,
@@ -11,7 +11,7 @@ export const WeaponTemplateCard = ({
   magicalDamage,
   imgBase64,
   renderingFromBooster,
-}: WeaponTemplateType) => {
+}: WeaponType) => {
   //Toggle to see all information of the card
   // discovered = true;
 

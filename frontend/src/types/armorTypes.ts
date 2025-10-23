@@ -1,4 +1,6 @@
-export type ArmorTemplateType = {
+import type { RequirementResponseDto } from "./characterTypes";
+import type { RenderingFrom } from "./characterTypes";
+export type ArmorType = {
   name: string;
   description: string;
   rarity: number;
@@ -11,7 +13,9 @@ export type ArmorTemplateType = {
   physicalDefense: number;
   magicalDefense: number;
   imgBase64: string;
-  renderingFromBooster?: boolean;
+  renderingFrom: RenderingFrom;
+  quantity?: number;
+  requirement?: RequirementResponseDto;
 };
 
 export type ArmorCategoriesEnum =

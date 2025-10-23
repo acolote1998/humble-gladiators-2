@@ -1,5 +1,11 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Complete hero inventory management system:
+  - [x] Equipment endpoints
+  - [ ] Unequip endpoints
+  - [ ] Equipment management UI
+  - [ ] Unequip management UI
+
 - [ ] Optimize campaign lobby booster availability checks by implementing caching with TTL to reduce expensive database queries (at the moment the check function does a lot of queries to the DB)
 
 - [ ] Ensure character response DTOs obscure undiscovered data to prevent network inspection exploits (in the compendium for example)
@@ -44,12 +50,6 @@
   - [ ] Backend to call Gemini API for structured JSON response: {name:string, wantedThemes:string[], unwantedThemes:string[]}
 
 - [ ] Develop tutorial system to guide players through game mechanics and optimization strategies
-
-- [ ] Complete hero inventory management system:
-  - [x] Equipment endpoints
-  - [ ] Unequip endpoints
-  - [ ] Equipment management UI
-  - [ ] Unequip management UI
 
 - [ ] Enhance AI content generation accuracy:
   - [ ] Improve category adherence for generated items/characters. Needs to stick to the category better (avoid an armor being "Helmet of X" for example)

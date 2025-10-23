@@ -1,4 +1,4 @@
-import type { BootsTemplateType } from "../../types/bootsTypes";
+import type { BootsType } from "../../types/bootsTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const BootsTemplateCard = ({
   category,
@@ -11,7 +11,7 @@ export const BootsTemplateCard = ({
   physicalDefense,
   imgBase64,
   renderingFromBooster,
-}: BootsTemplateType) => {
+}: BootsType) => {
   //Toggle to see all information of the card
   // discovered = true;
 

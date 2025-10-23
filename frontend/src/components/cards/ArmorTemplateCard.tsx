@@ -1,4 +1,4 @@
-import type { ArmorTemplateType } from "../../types/armorTypes";
+import type { ArmorType } from "../../types/armorTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const ArmorTemplateCard = ({
   category,
@@ -11,7 +11,7 @@ export const ArmorTemplateCard = ({
   physicalDefense,
   imgBase64,
   renderingFromBooster,
-}: ArmorTemplateType) => {
+}: ArmorType) => {
   //Toggle to see all information of the card
   // discovered = true;
 

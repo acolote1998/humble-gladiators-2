@@ -1,4 +1,4 @@
-import type { SpellTemplateType } from "../../types/spellTypes";
+import type { SpellType } from "../../types/spellTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const SpellTemplateCard = ({
   category,
@@ -12,7 +12,7 @@ export const SpellTemplateCard = ({
   restoreHp,
   imgBase64,
   renderingFromBooster,
-}: SpellTemplateType) => {
+}: SpellType) => {
   //Toggle to see all information of the card
   // discovered = true;
 

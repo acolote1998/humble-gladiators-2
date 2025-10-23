@@ -1,4 +1,6 @@
-export type HelmetTemplateType = {
+import type { RequirementResponseDto } from "./characterTypes";
+import type { RenderingFrom } from "./characterTypes";
+export type HelmetType = {
   name: string;
   description: string;
   rarity: number;
@@ -11,7 +13,9 @@ export type HelmetTemplateType = {
   physicalDefense: number;
   imgBase64: string;
   magicalDefense: number;
-  renderingFromBooster?: boolean;
+  renderingFrom: RenderingFrom;
+  quantity?: number;
+  requirement?: RequirementResponseDto;
 };
 
 export type HelmetCategoriesEnum =

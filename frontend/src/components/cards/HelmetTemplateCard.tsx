@@ -1,4 +1,4 @@
-import type { HelmetTemplateType } from "../../types/helmetTypes";
+import type { HelmetType } from "../../types/helmetTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const HelmetTemplateCard = ({
   category,
@@ -11,7 +11,7 @@ export const HelmetTemplateCard = ({
   physicalDefense,
   imgBase64,
   renderingFromBooster,
-}: HelmetTemplateType) => {
+}: HelmetType) => {
   //Toggle to see all information of the card
   // discovered = true;
 

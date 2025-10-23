@@ -1,4 +1,4 @@
-import type { ShieldTemplateType } from "../../types/shieldTypes";
+import type { ShieldType } from "../../types/shieldTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const ShieldTemplateCard = ({
   category,
@@ -11,7 +11,7 @@ export const ShieldTemplateCard = ({
   physicalDefense,
   imgBase64,
   renderingFromBooster,
-}: ShieldTemplateType) => {
+}: ShieldType) => {
   //Toggle to see all information of the card
   // discovered = true;
 

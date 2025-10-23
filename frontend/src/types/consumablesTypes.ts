@@ -1,4 +1,7 @@
-export type ConsumableTemplateType = {
+import type { RequirementResponseDto } from "./characterTypes";
+import type { RenderingFrom } from "./characterTypes";
+
+export type ConsumableType = {
   name: string;
   description: string;
   rarity: number;
@@ -11,7 +14,9 @@ export type ConsumableTemplateType = {
   restoreHp: number;
   restoreMp: number;
   imgBase64: string;
-  renderingFromBooster?: boolean;
+  renderingFrom: RenderingFrom;
+  quantity?: number;
+  requirement?: RequirementResponseDto;
 };
 
 export type ConsumablesCategoriesEnum =

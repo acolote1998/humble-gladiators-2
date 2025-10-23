@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BACKEND_URL } from "../util/backendUrl";
-import type { WeaponTemplateType } from "../types/weaponTypes";
+import type { WeaponType } from "../types/weaponTypes";
 
 export const fetchAllWeaponTemplatesForCampaignByUser = async (
   bearerToken: string,
   campaignId: number
-): Promise<WeaponTemplateType[]> => {
+): Promise<WeaponType[]> => {
   try {
     const response = await axios.get(
       `${BACKEND_URL}/campaign/${campaignId}/weapon-templates`,
