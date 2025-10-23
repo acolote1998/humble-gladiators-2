@@ -57,7 +57,11 @@ function RouteComponent() {
             .map(
               (char) =>
                 char.characterType === "NPC" && (
-                  <CharacterInstanceCard key={char.name} {...char} />
+                  <CharacterInstanceCard
+                    key={char.name}
+                    {...char}
+                    renderingFrom="COMPENDIUM"
+                  />
                 )
             )}
         </div>

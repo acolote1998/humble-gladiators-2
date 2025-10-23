@@ -124,4 +124,5 @@ Wednesday 22/10
 Thursday 23/10
 - Improving physical damage and magical damage display in character cards
 - Changing order of certain stats in character cards
+- Reworking conditional rendering of stats in character card to have different views depending on if we render it from compendium, from a booster or from a battle
 ```

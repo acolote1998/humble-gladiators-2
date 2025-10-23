@@ -112,7 +112,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                         {cardBack && (
                           <CharacterInstanceCard
                             {...cards.characters[0]}
-                            renderingFromBooster={true}
+                            renderingFrom="BOOSTER"
                           />
                         )}
                       </div>
