@@ -20,21 +20,16 @@ export const ShieldCard = ({
   return (
     <>
       <div>
-        {" "}
         <div
           className={[
             // Conditional classes
             renderingFrom == "BOOSTER" ? "rotate-y-180" : "",
             discovered && renderingFrom != "BOOSTER" ? "hover-zoom" : "",
-            discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
-            discovered && renderingFrom != "BOOSTER"
-              ? tier === 5 && rarity === 5
-                ? "shield-tier-5-rarity-5"
-                : `shield-tier-${tier}`
-              : "",
-
+            tier === 5 && rarity === 5
+              ? "shield-tier-5-rarity-5"
+              : `shield-tier-${tier}`,
             // Always-applied classes
-            "relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer",
+            `rarity-${rarity} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`,
           ]
             .filter(Boolean) // removes empty strings
             .join(" ")} // join with spaces
