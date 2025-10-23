@@ -133,4 +133,6 @@ Thursday 23/10
 - Implemented function to equip items from the inventory route
 - Fixed visual bug of card auras showing where they should not
 - Fixed visual bug showing auras in non discovered cards in compendium caused by bad logic in ternaries in all card components
+- Fixed visual bug when mapping collections in react due to children sometimes sharing the same key -> it was resulting in duplicates. Solved it by adding the ID to the component in the key
+- Making inventory and compendium item lists in a grid of 5 items instead of 3
 ```
