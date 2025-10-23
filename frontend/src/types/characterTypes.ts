@@ -26,8 +26,10 @@ export type CharacterInstanceType = {
   goldReward: number;
   expReward: number;
   imgBase64: string;
-  renderingFromBooster?: boolean;
+  renderingFrom: RenderingFrom;
 };
+
+type RenderingFrom = "COMPENDIUM" | "BOOSTER" | "BATTLE";
 
 type CharacterStatsResponseDto = {
   constitution: number;

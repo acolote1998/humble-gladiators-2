@@ -9,18 +9,35 @@ export const CharacterInstanceCard = ({
   stats,
   tier,
   imgBase64,
-  renderingFromBooster,
+  renderingFrom,
 }: CharacterInstanceType) => {
   //Toggle to see all information of the card
   //   discovered = true;
+
+  const getPhysicalDamageStat = () => {
+    if (renderingFrom == "COMPENDIUM" || renderingFrom == "BOOSTER") {
+      return stats.strength;
+    } else if (renderingFrom == "BATTLE") {
+      return stats.physicalDamage;
+    }
+  };
+
+  const getMagicalDamageStat = () => {
+    if (renderingFrom == "COMPENDIUM" || renderingFrom == "BOOSTER") {
+      return stats.intelligence;
+    } else if (renderingFrom == "BATTLE") {
+      return stats.magicalDamage;
+    }
+  };
+
   return (
     <div
       className={[
         // Conditional classes
-        renderingFromBooster ? "rotate-y-180" : "",
-        discovered && !renderingFromBooster ? "cursor-zoom" : "",
-        discovered && !renderingFromBooster ? `rarity-${rarity}` : "",
-        discovered && !renderingFromBooster
+        renderingFrom == "BOOSTER" ? "rotate-y-180" : "",
+        discovered && renderingFrom != "BOOSTER" ? "cursor-zoom" : "",
+        discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
+        discovered && renderingFrom != "BOOSTER"
           ? tier === 5 && rarity === 5
             ? "character-tier-5-rarity-5"
             : `character-tier-${tier}`
@@ -36,28 +53,30 @@ export const CharacterInstanceCard = ({
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">
         <div className="absolute left-8.5 w-20">
-          <p>❤️ {discovered || renderingFromBooster ? stats.currentHp : "?"}</p>
+          <p>
+            ❤️{" "}
+            {discovered || renderingFrom == "BOOSTER" ? stats.currentHp : "?"}
+          </p>
         </div>
         <div className="absolute left-26 w-20">
-          <p>🔷 {discovered || renderingFromBooster ? stats.currentMp : "?"}</p>
+          <p>
+            🔷{" "}
+            {discovered || renderingFrom == "BOOSTER" ? stats.currentMp : "?"}
+          </p>
         </div>
         <div className="absolute left-43.5 w-15">
           <p>
             ⚔️{" "}
-            {discovered || renderingFromBooster
-              ? stats.physicalDamage > 0
-                ? stats.physicalDamage
-                : stats.strength
+            {discovered || renderingFrom == "BOOSTER"
+              ? getPhysicalDamageStat()
               : "?"}
           </p>
         </div>
         <div className="absolute left-61 w-20">
           <p>
             🔮{" "}
-            {discovered || renderingFromBooster
-              ? stats.magicalDamage > 0
-                ? stats.magicalDamage
-                : stats.intelligence
+            {discovered || renderingFrom == "BOOSTER"
+              ? getMagicalDamageStat()
               : "?"}
           </p>
         </div>
@@ -78,7 +97,7 @@ export const CharacterInstanceCard = ({
 
       {/* Category & name */}
       <div className="flex flex-col items-center mt-6">
-        {(discovered || renderingFromBooster) && imgBase64 ? (
+        {(discovered || renderingFrom == "BOOSTER") && imgBase64 ? (
           <img
             draggable={false}
             src={`data:image/jpeg;base64,${imgBase64}`}
@@ -94,29 +113,49 @@ export const CharacterInstanceCard = ({
           />
         )}
         <p className="text-lg mt-8 ">
-          {discovered || renderingFromBooster ? name : "?"}
+          {discovered || renderingFrom == "BOOSTER" ? name : "?"}
         </p>
         <p className="text-sm opacity-80 text-center p-1 mt-0.5 px-7">
-          {discovered || renderingFromBooster ? description : "?"}
+          {discovered || renderingFrom == "BOOSTER" ? description : "?"}
         </p>
       </div>
 
       {/* Bottom stats */}
       <div className="grid grid-cols-5 absolute bottom-14.5 text-sm">
         <div className="absolute left-7 w-15">
-          <p>LV. {discovered || renderingFromBooster ? stats.level : "?"}</p>
+          <p>
+            LV. {discovered || renderingFrom == "BOOSTER" ? stats.level : "?"}
+          </p>
         </div>
         <div className="absolute left-21 w-15">
-          <p>⚡ {discovered || renderingFromBooster ? stats.speed : "?"}</p>
+          <p>
+            ⚡ {discovered || renderingFrom == "BOOSTER" ? stats.speed : "?"}
+          </p>
         </div>
         <div className="absolute left-34.5 w-15">
-          <p>🍀 {discovered || renderingFromBooster ? stats.luck : "?"}</p>
+          <p>
+            🍀 {discovered || renderingFrom == "BOOSTER" ? stats.luck : "?"}
+          </p>
         </div>
         <div className="absolute left-48 w-15">
-          <p>🪨 {discovered || renderingFromBooster ? stats.weight : "?"}</p>
+          {renderingFrom == "COMPENDIUM" && !discovered ? (
+            <p>?</p>
+          ) : renderingFrom == "BOOSTER" ||
+            (renderingFrom == "COMPENDIUM" && discovered) ? (
+            <p>🪨 {stats.weight}</p>
+          ) : (
+            renderingFrom == "BATTLE" && <p>❤️ {stats.physicalDefense}</p>
+          )}
         </div>
         <div className="absolute left-62 w-15">
-          <p>📏 {discovered || renderingFromBooster ? stats.height : "?"}</p>
+          {renderingFrom == "COMPENDIUM" && !discovered ? (
+            <p>?</p>
+          ) : renderingFrom == "BOOSTER" ||
+            (renderingFrom == "COMPENDIUM" && discovered) ? (
+            <p>📏 {stats.height}</p>
+          ) : (
+            renderingFrom == "BATTLE" && <p>🔷 {stats.magicalDefense}</p>
+          )}
         </div>
       </div>
     </div>
