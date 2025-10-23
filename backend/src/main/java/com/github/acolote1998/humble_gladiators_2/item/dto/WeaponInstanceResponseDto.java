@@ -8,6 +8,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import java.util.List;
 
 public record WeaponInstanceResponseDto(
+        Long campaignId,
         Long id,
         String name,
         String description,
@@ -25,6 +26,7 @@ public record WeaponInstanceResponseDto(
 
     public static WeaponInstanceResponseDto fromModel(WeaponInstance weapon) {
         return new WeaponInstanceResponseDto(
+                weapon.getCampaign().getId(),
                 weapon.getId(),
                 weapon.getName(),
                 weapon.getDescription(),

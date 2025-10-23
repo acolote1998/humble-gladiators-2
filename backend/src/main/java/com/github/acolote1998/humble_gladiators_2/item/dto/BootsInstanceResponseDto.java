@@ -8,6 +8,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
 import java.util.List;
 
 public record BootsInstanceResponseDto(
+        Long campaignId,
         Long id,
         String name,
         String description,
@@ -25,6 +26,7 @@ public record BootsInstanceResponseDto(
 
     public static BootsInstanceResponseDto fromModel(BootsInstance boots) {
         return new BootsInstanceResponseDto(
+                boots.getCampaign().getId(),
                 boots.getId(),
                 boots.getName(),
                 boots.getDescription(),
