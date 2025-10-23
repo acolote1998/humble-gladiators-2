@@ -1,6 +1,7 @@
 import type { BootsType } from "../../types/bootsTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const BootsCard = ({
+  id,
   category,
   description,
   discovered,

@@ -8,6 +8,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
 import java.util.List;
 
 public record ShieldInstanceResponseDto(
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -24,6 +25,7 @@ public record ShieldInstanceResponseDto(
 
     public static ShieldInstanceResponseDto fromModel(ShieldInstance shield) {
         return new ShieldInstanceResponseDto(
+                shield.getId(),
                 shield.getName(),
                 shield.getDescription(),
                 shield.getRarity(),

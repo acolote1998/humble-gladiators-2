@@ -1,6 +1,7 @@
 import type { RequirementResponseDto } from "./characterTypes";
 import type { RenderingFrom } from "./characterTypes";
 export type ShieldType = {
+  id: number;
   name: string;
   description: string;
   rarity: number;

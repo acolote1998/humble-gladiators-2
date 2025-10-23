@@ -1,6 +1,7 @@
 import type { ShieldType } from "../../types/shieldTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const ShieldCard = ({
+  id,
   category,
   description,
   discovered,

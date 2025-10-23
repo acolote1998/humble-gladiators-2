@@ -7,6 +7,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInsta
 import java.util.List;
 
 public record ConsumableInstanceResponseDto(
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -25,6 +26,7 @@ public record ConsumableInstanceResponseDto(
         if (consumables == null) return List.of();
         return consumables.stream()
                 .map(consumable -> new ConsumableInstanceResponseDto(
+                        consumable.getId(),
                         consumable.getName(),
                         consumable.getDescription(),
                         consumable.getRarity(),

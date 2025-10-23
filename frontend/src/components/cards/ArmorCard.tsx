@@ -1,6 +1,7 @@
 import type { ArmorType } from "../../types/armorTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const ArmorCard = ({
+  id,
   category,
   description,
   discovered,

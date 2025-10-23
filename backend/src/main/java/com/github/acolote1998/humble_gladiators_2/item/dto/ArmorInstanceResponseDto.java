@@ -8,6 +8,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import java.util.List;
 
 public record ArmorInstanceResponseDto(
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -25,6 +26,7 @@ public record ArmorInstanceResponseDto(
 
     public static ArmorInstanceResponseDto fromModel(ArmorInstance armor) {
         return new ArmorInstanceResponseDto(
+                armor.getId(),
                 armor.getName(),
                 armor.getDescription(),
                 armor.getRarity(),

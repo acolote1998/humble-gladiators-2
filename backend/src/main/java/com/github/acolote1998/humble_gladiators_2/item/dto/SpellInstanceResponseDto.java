@@ -7,6 +7,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import java.util.List;
 
 public record SpellInstanceResponseDto(
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -26,6 +27,7 @@ public record SpellInstanceResponseDto(
         if (spells == null) return List.of();
         return spells.stream()
                 .map(spell -> new SpellInstanceResponseDto(
+                        spell.getId(),
                         spell.getName(),
                         spell.getDescription(),
                         spell.getRarity(),

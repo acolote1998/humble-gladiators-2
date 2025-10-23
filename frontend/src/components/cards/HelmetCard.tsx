@@ -1,6 +1,7 @@
 import type { HelmetType } from "../../types/helmetTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const HelmetCard = ({
+  id,
   category,
   description,
   discovered,

@@ -1,6 +1,7 @@
 import type { WeaponType } from "../../types/weaponTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 export const WeaponCard = ({
+  id,
   category,
   description,
   discovered,

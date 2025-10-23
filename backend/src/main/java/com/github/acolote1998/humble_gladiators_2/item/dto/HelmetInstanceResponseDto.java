@@ -8,6 +8,7 @@ import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import java.util.List;
 
 public record HelmetInstanceResponseDto(
+        Long id,
         String name,
         String description,
         Integer rarity,
@@ -24,6 +25,7 @@ public record HelmetInstanceResponseDto(
 
     public static HelmetInstanceResponseDto fromModel(HelmetInstance helmet) {
         return new HelmetInstanceResponseDto(
+                helmet.getId(),
                 helmet.getName(),
                 helmet.getDescription(),
                 helmet.getRarity(),
