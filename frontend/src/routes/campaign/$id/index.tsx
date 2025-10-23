@@ -54,6 +54,14 @@ function RouteComponent() {
                 >
                   Go to the compendium
                 </p>
+                <p
+                  onClick={() => {
+                    navigate({ to: `/campaign/${campaignId}/inventory` });
+                  }}
+                  className="bg-gray-400 p-3 rounded-lg"
+                >
+                  Hero Inventory
+                </p>
               </>
             ) : (
               <p
