@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
+
 - [ ] Complete hero inventory management system:
   - [x] Equipment endpoints
   - [ ] Unequip endpoints
