@@ -25,11 +25,15 @@ export const WeaponCard = ({
             // Conditional classes
             renderingFrom == "BOOSTER" ? "rotate-y-180" : "",
             discovered && renderingFrom != "BOOSTER" ? "hover-zoom" : "",
-            tier === 5 && rarity === 5
+            (discovered || renderingFrom == "BOOSTER") &&
+            tier === 5 &&
+            rarity === 5
               ? "weapon-tier-5-rarity-5"
-              : `weapon-tier-${tier}`,
+              : discovered || renderingFrom == "BOOSTER"
+                ? `weapon-tier-${tier}`
+                : "",
             // Always-applied classes
-            `rarity-${rarity} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`,
+            `${discovered && `rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`,
           ]
             .filter(Boolean) // removes empty strings
             .join(" ")} // join with spaces

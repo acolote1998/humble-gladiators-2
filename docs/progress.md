@@ -132,4 +132,5 @@ Thursday 23/10
 - Rendered equipped items in inventory route
 - Implemented function to equip items from the inventory route
 - Fixed visual bug of card auras showing where they should not
+- Fixed visual bug caused by bad logic in ternaries in all card components
 ```

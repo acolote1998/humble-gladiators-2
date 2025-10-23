@@ -36,7 +36,6 @@
 
 - [ ] Integrate height/weight attributes into game mechanics
 
-
 - [ ] Add prompt_log env var flag to enable logging of refined prompts for quality assessment and improvement
 
 - [ ] Refactor CSS architecture by breaking down index.css into modular stylesheets
