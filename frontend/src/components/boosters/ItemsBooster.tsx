@@ -128,9 +128,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
               {/* Armors */}
               {cards?.armors && cards?.armors?.length > 0 && (
                 <>
-                  <div
-                    className={`${cards.armors[0].tier === 5 && cards.armors[0].rarity === 5 ? "armor-tier-5-rarity-5" : `armor-tier-${cards.armors[0].tier}`} w-fit h-fit`}
-                  >
+                  <div className={`w-fit h-fit`}>
                     <div
                       className="perspective cursor-pointer"
                       onClick={handleFlip}
@@ -172,9 +170,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
               {/* Boots */}
               {cards?.armors?.length === 0 && cards?.boots?.length > 0 && (
                 <>
-                  <div
-                    className={`${cards.boots[0].tier === 5 && cards.boots[0].rarity === 5 ? "boot-tier-5-rarity-5" : `boot-tier-${cards.boots[0].tier}`} w-fit h-fit`}
-                  >
+                  <div className={`w-fit h-fit`}>
                     <div
                       className="perspective cursor-pointer"
                       onClick={handleFlip}
@@ -218,9 +214,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.boots?.length === 0 &&
                 cards?.consumables?.length > 0 && (
                   <>
-                    <div
-                      className={`${cards.consumables[0].tier === 5 && cards.consumables[0].rarity === 5 ? "consumable-tier-5-rarity-5" : `consumable-tier-${cards.consumables[0].tier}`} w-fit h-fit`}
-                    >
+                    <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer"
                         onClick={handleFlip}
@@ -265,9 +259,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.consumables?.length === 0 &&
                 cards?.helmets?.length > 0 && (
                   <>
-                    <div
-                      className={`${cards.helmets[0].tier === 5 && cards.helmets[0].rarity === 5 ? "helmet-tier-5-rarity-5" : `helmet-tier-${cards.helmets[0].tier}`} w-fit h-fit`}
-                    >
+                    <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer"
                         onClick={handleFlip}
@@ -313,9 +305,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.helmets?.length === 0 &&
                 cards?.shields?.length > 0 && (
                   <>
-                    <div
-                      className={`${cards.shields[0].tier === 5 && cards.shields[0].rarity === 5 ? "shield-tier-5-rarity-5" : `shield-tier-${cards.shields[0].tier}`} w-fit h-fit`}
-                    >
+                    <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer"
                         onClick={handleFlip}
@@ -362,9 +352,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.shields?.length === 0 &&
                 cards?.spells?.length > 0 && (
                   <>
-                    <div
-                      className={`${cards.spells[0].tier === 5 && cards.spells[0].rarity === 5 ? "spell-tier-5-rarity-5" : `spell-tier-${cards.spells[0].tier}`} w-fit h-fit`}
-                    >
+                    <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer"
                         onClick={handleFlip}
@@ -412,9 +400,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 cards?.spells?.length === 0 &&
                 cards?.weapons?.length > 0 && (
                   <>
-                    <div
-                      className={`${cards.weapons[0].tier === 5 && cards.weapons[0].rarity === 5 ? "weapon-tier-5-rarity-5" : `weapon-tier-${cards.weapons[0].tier}`} w-fit h-fit`}
-                    >
+                    <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer"
                         onClick={handleFlip}

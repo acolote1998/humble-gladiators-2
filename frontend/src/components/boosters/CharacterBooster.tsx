@@ -92,9 +92,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
               {/* Characters */}
               {cards?.characters && cards?.characters?.length > 0 && (
                 <>
-                  <div
-                    className={`${cards.characters[0].tier === 5 && cards.characters[0].rarity === 5 ? "character-tier-5-rarity-5" : `character-tier-${cards.characters[0].tier}`} w-fit h-fit`}
-                  >
+                  <div className={`w-fit h-fit`}>
                     <div
                       className="perspective cursor-pointer"
                       onClick={handleFlip}

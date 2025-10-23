@@ -29,8 +29,8 @@ export const WeaponCard = ({
             discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
             discovered && renderingFrom != "BOOSTER"
               ? tier === 5 && rarity === 5
-                ? "character-tier-5-rarity-5"
-                : `character-tier-${tier}`
+                ? "weapon-tier-5-rarity-5"
+                : `weapon-tier-${tier}`
               : "",
 
             // Always-applied classes

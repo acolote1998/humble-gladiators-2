@@ -24,8 +24,8 @@ export const ConsumableCard = ({
         discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
         discovered && renderingFrom != "BOOSTER"
           ? tier === 5 && rarity === 5
-            ? "character-tier-5-rarity-5"
-            : `character-tier-${tier}`
+            ? "consumable-tier-5-rarity-5"
+            : `consumable-tier-${tier}`
           : "",
 
         // Always-applied classes

@@ -28,8 +28,8 @@ export const ArmorCard = ({
             discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
             discovered && renderingFrom != "BOOSTER"
               ? tier === 5 && rarity === 5
-                ? "character-tier-5-rarity-5"
-                : `character-tier-${tier}`
+                ? "armor-tier-5-rarity-5"
+                : `armor-tier-${tier}`
               : "",
 
             // Always-applied classes

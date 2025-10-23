@@ -28,8 +28,8 @@ export const BootsCard = ({
             discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
             discovered && renderingFrom != "BOOSTER"
               ? tier === 5 && rarity === 5
-                ? "character-tier-5-rarity-5"
-                : `character-tier-${tier}`
+                ? "boot-tier-5-rarity-5"
+                : `boot-tier-${tier}`
               : "",
 
             // Always-applied classes

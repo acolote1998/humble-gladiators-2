@@ -25,8 +25,8 @@ export const SpellCard = ({
         discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
         discovered && renderingFrom != "BOOSTER"
           ? tier === 5 && rarity === 5
-            ? "character-tier-5-rarity-5"
-            : `character-tier-${tier}`
+            ? "spell-tier-5-rarity-5"
+            : `spell-tier-${tier}`
           : "",
 
         // Always-applied classes

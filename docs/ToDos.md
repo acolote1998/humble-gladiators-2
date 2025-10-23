@@ -1,10 +1,6 @@
 # TO DOs - Humble Gladiators 2
 - [ ] Fix bug in inventory, when I have a few of the same type (lets say helmets) and I start equipping/unequipping and switching, they start multiplying in the render, but if F5, then it is okay
 
-- [ ] Shield Tier 3 tiene un aura azul?? deberia ser naranja? chequear todos los shield tiers css classes
-
-- [ ] Weapon Tier 3 tiene un aura azul?? deberia ser rojo? chequear todos los weapons tiers css classes
-
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
 - [ ] Modify the card components so that if they are rendered from the inventory they look smaller and they show normal size only on hover?
@@ -40,7 +36,6 @@
 
 - [ ] Integrate height/weight attributes into game mechanics
 
-- [ ] Resolve CSS issue where booster cards incorrectly display aura effects during booster opening, or not? we'll see... an option could be that the card shows the aura when static, but not when rotating (so facing back, shows the aura, then when it rotates it stops the aura, and once is facing the player it shows the aura again)
 
 - [ ] Add prompt_log env var flag to enable logging of refined prompts for quality assessment and improvement
 

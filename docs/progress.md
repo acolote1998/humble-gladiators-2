@@ -131,4 +131,5 @@ Thursday 23/10
 - Rendered hero inventory in inventory route
 - Rendered equipped items in inventory route
 - Implemented function to equip items from the inventory route
+- Fixed visual bug of card auras showing where they should not
 ```
