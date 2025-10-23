@@ -37,7 +37,7 @@ function RouteComponent() {
                       if (helmet.equipped)
                         return (
                           <HelmetCard
-                            key={helmet.name}
+                            key={helmet.name + helmet.id + "equipped"}
                             {...helmet}
                             renderingFrom="INVENTORY"
                           />
@@ -49,7 +49,7 @@ function RouteComponent() {
                       if (armor.equipped)
                         return (
                           <ArmorCard
-                            key={armor.name}
+                            key={armor.name + armor.id + "equipped"}
                             {...armor}
                             renderingFrom="INVENTORY"
                           />
@@ -61,7 +61,7 @@ function RouteComponent() {
                       if (weapon.equipped)
                         return (
                           <WeaponCard
-                            key={weapon.name}
+                            key={weapon.name + weapon.id + "equipped"}
                             {...weapon}
                             renderingFrom="INVENTORY"
                           />
@@ -73,7 +73,7 @@ function RouteComponent() {
                       if (shield.equipped)
                         return (
                           <ShieldCard
-                            key={shield.name}
+                            key={shield.name + shield.id + "equipped"}
                             {...shield}
                             renderingFrom="INVENTORY"
                           />
@@ -85,7 +85,7 @@ function RouteComponent() {
                       if (boot.equipped)
                         return (
                           <BootsCard
-                            key={boot.name}
+                            key={boot.name + boot.id + "equipped"}
                             {...boot}
                             renderingFrom="INVENTORY"
                           />
@@ -143,10 +143,10 @@ function RouteComponent() {
                 {heroData.inventory.armors.length > 0 && (
                   <details>
                     <summary>Armors</summary>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-5">
                       {heroData.inventory.armors.map((armor) => (
                         <ArmorCard
-                          key={armor.name}
+                          key={armor.name + armor.id}
                           {...armor}
                           renderingFrom="INVENTORY"
                         />
@@ -157,10 +157,10 @@ function RouteComponent() {
                 {heroData.inventory.boots.length > 0 && (
                   <details>
                     <summary>Boots</summary>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-5">
                       {heroData.inventory.boots.map((boot) => (
                         <BootsCard
-                          key={boot.name}
+                          key={boot.name + boot.id}
                           {...boot}
                           renderingFrom="INVENTORY"
                         />
@@ -171,10 +171,10 @@ function RouteComponent() {
                 {heroData.inventory.consumables.length > 0 && (
                   <details>
                     <summary>Consumables</summary>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-5">
                       {heroData.inventory.consumables.map((consumable) => (
                         <ConsumableCard
-                          key={consumable.name}
+                          key={consumable.name + consumable.id}
                           {...consumable}
                           renderingFrom="INVENTORY"
                         />
@@ -185,10 +185,10 @@ function RouteComponent() {
                 {heroData.inventory.helmets.length > 0 && (
                   <details>
                     <summary>Helmets</summary>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-5">
                       {heroData.inventory.helmets.map((helmet) => (
                         <HelmetCard
-                          key={helmet.name}
+                          key={helmet.name + helmet.id}
                           {...helmet}
                           renderingFrom="INVENTORY"
                         />
@@ -199,10 +199,10 @@ function RouteComponent() {
                 {heroData.inventory.shields.length > 0 && (
                   <details>
                     <summary>Shields</summary>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-5">
                       {heroData.inventory.shields.map((shield) => (
                         <ShieldCard
-                          key={shield.name}
+                          key={shield.name + shield.id}
                           {...shield}
                           renderingFrom="INVENTORY"
                         />
@@ -213,10 +213,10 @@ function RouteComponent() {
                 {heroData.inventory.spells.length > 0 && (
                   <details>
                     <summary>Spells</summary>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-5">
                       {heroData.inventory.spells.map((spell) => (
                         <SpellCard
-                          key={spell.name}
+                          key={spell.name + spell.id}
                           {...spell}
                           renderingFrom="INVENTORY"
                         />
@@ -227,10 +227,10 @@ function RouteComponent() {
                 {heroData.inventory.weapons.length > 0 && (
                   <details>
                     <summary>Weapons</summary>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-5">
                       {heroData.inventory.weapons.map((weapon) => (
                         <WeaponCard
-                          key={weapon.name}
+                          key={weapon.name + weapon.id}
                           {...weapon}
                           renderingFrom="INVENTORY"
                         />

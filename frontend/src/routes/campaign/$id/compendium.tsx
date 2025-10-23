@@ -58,7 +58,7 @@ function RouteComponent() {
               (char) =>
                 char.characterType === "NPC" && (
                   <CharacterCard
-                    key={char.name}
+                    key={char.name + char.id}
                     {...char}
                     renderingFrom="COMPENDIUM"
                   />
@@ -77,7 +77,7 @@ function RouteComponent() {
             })
             .map((armor) => (
               <ArmorCard
-                key={armor.name}
+                key={armor.name + armor.id}
                 {...armor}
                 renderingFrom="COMPENDIUM"
               />
@@ -94,7 +94,11 @@ function RouteComponent() {
               return 0; // both have or both don't → keep order
             })
             .map((boot) => (
-              <BootsCard key={boot.name} {...boot} renderingFrom="COMPENDIUM" />
+              <BootsCard
+                key={boot.name + boot.id}
+                {...boot}
+                renderingFrom="COMPENDIUM"
+              />
             ))}
         </div>
       </details>
@@ -109,7 +113,7 @@ function RouteComponent() {
             })
             .map((consumable) => (
               <ConsumableCard
-                key={consumable.name}
+                key={consumable.name + consumable.id}
                 {...consumable}
                 renderingFrom="COMPENDIUM"
               />
@@ -127,7 +131,7 @@ function RouteComponent() {
             })
             .map((helmet) => (
               <HelmetCard
-                key={helmet.name}
+                key={helmet.name + helmet.id}
                 {...helmet}
                 renderingFrom="COMPENDIUM"
               />
@@ -145,7 +149,7 @@ function RouteComponent() {
             })
             .map((shield) => (
               <ShieldCard
-                key={shield.name}
+                key={shield.name + shield.id}
                 {...shield}
                 renderingFrom="COMPENDIUM"
               />
@@ -163,7 +167,7 @@ function RouteComponent() {
             })
             .map((spell) => (
               <SpellCard
-                key={spell.name}
+                key={spell.name + spell.id}
                 {...spell}
                 renderingFrom="COMPENDIUM"
               />
@@ -181,7 +185,7 @@ function RouteComponent() {
             })
             .map((weapon) => (
               <WeaponCard
-                key={weapon.name}
+                key={weapon.name + weapon.id}
                 {...weapon}
                 renderingFrom="COMPENDIUM"
               />
