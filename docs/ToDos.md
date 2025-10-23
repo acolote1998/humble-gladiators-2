@@ -7,7 +7,7 @@
 - [ ] Complete hero inventory management system:
   - [x] Equipment endpoints
   - [ ] Unequip endpoints
-  - [ ] Equipment management UI
+  - [X] Equipment management UI
   - [ ] Unequip management UI
 
 - [ ] Optimize campaign lobby booster availability checks by implementing caching with TTL to reduce expensive database queries (at the moment the check function does a lot of queries to the DB)
