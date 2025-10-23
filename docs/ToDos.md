@@ -2,6 +2,8 @@
 
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
+- [ ] Modify the card components so that if they are rendered from the inventory they look smaller and they show normal size only on hover?
+
 - [ ] Complete hero inventory management system:
   - [x] Equipment endpoints
   - [ ] Unequip endpoints
