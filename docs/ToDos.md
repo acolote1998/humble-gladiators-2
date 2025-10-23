@@ -1,5 +1,4 @@
 # TO DOs - Humble Gladiators 2
-- [ ] Fix bug in inventory, when I have a few of the same type (lets say helmets) and I start equipping/unequipping and switching, they start multiplying in the render, but if F5, then it is okay
 
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
