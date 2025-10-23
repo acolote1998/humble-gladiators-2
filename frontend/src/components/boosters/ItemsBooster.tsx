@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import type { ItemBoosterType } from "../../types/boosterTypes";
-import { ArmorTemplateCard } from "../cards/ArmorTemplateCard";
-import { BootsTemplateCard } from "../cards/BootsTemplateCard";
-import { ConsumableTemplateCard } from "../cards/ConsumableTemplateCard";
-import { HelmetTemplateCard } from "../cards/HelmetTemplateCard";
-import { ShieldTemplateCard } from "../cards/ShieldTemplateCard";
-import { SpellTemplateCard } from "../cards/SpellTemplateCard";
-import { WeaponTemplateCard } from "../cards/WeaponTemplateCard";
+import { ArmorCard } from "../cards/ArmorCard";
+import { BootsCard } from "../cards/BootsCard";
+import { ConsumableCard } from "../cards/ConsumableCard";
+import { HelmetCard } from "../cards/HelmetCard";
+import { ShieldTemplateCard } from "../cards/ShieldCard";
+import { SpellCard } from "../cards/SpellCard";
+import { WeaponCard } from "../cards/WeaponCard";
 import { useCreateItemBooster } from "../../hooks/useBoosters";
 import type { ItemBoosterInterface } from "../../types/boosterTypes";
 import { useGetItemBoosterAvailability } from "../../hooks/useBoosters";
@@ -146,7 +146,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                           </div>
                         )}
                         {cardBack && (
-                          <ArmorTemplateCard
+                          <ArmorCard
                             {...cards.armors[0]}
                             renderingFrom="BOOSTER"
                           />
@@ -190,7 +190,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                           </div>
                         )}
                         {cardBack && (
-                          <BootsTemplateCard
+                          <BootsCard
                             {...cards.boots[0]}
                             renderingFrom="BOOSTER"
                           />
@@ -236,7 +236,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                             </div>
                           )}
                           {cardBack && (
-                            <ConsumableTemplateCard
+                            <ConsumableCard
                               {...cards.consumables[0]}
                               renderingFrom="BOOSTER"
                             />
@@ -283,7 +283,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                             </div>
                           )}
                           {cardBack && (
-                            <HelmetTemplateCard
+                            <HelmetCard
                               {...cards.helmets[0]}
                               renderingFrom="BOOSTER"
                             />
@@ -380,7 +380,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                             </div>
                           )}
                           {cardBack && (
-                            <SpellTemplateCard
+                            <SpellCard
                               {...cards.spells[0]}
                               renderingFrom="BOOSTER"
                             />
@@ -430,7 +430,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                             </div>
                           )}
                           {cardBack && (
-                            <WeaponTemplateCard
+                            <WeaponCard
                               {...cards.weapons[0]}
                               renderingFrom="BOOSTER"
                             />

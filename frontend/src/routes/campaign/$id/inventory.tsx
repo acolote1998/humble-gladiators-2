@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useParams } from "@tanstack/react-router";
 import { useGetHeroByCampaignAndUser } from "../../../hooks/useCharacters";
-import { ArmorTemplateCard } from "../../../components/cards/ArmorTemplateCard";
-import { BootsTemplateCard } from "../../../components/cards/BootsTemplateCard";
-import { ConsumableTemplateCard } from "../../../components/cards/ConsumableTemplateCard";
-import { HelmetTemplateCard } from "../../../components/cards/HelmetTemplateCard";
-import { ShieldTemplateCard } from "../../../components/cards/ShieldTemplateCard";
-import { SpellTemplateCard } from "../../../components/cards/SpellTemplateCard";
-import { WeaponTemplateCard } from "../../../components/cards/WeaponTemplateCard";
+import { ArmorCard } from "../../../components/cards/ArmorCard";
+import { BootsCard } from "../../../components/cards/BootsCard";
+import { ConsumableCard } from "../../../components/cards/ConsumableCard";
+import { HelmetCard } from "../../../components/cards/HelmetCard";
+import { ShieldTemplateCard } from "../../../components/cards/ShieldCard";
+import { SpellCard } from "../../../components/cards/SpellCard";
+import { WeaponCard } from "../../../components/cards/WeaponCard";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -33,7 +33,7 @@ function RouteComponent() {
               <summary>Armors</summary>
               <div className="grid grid-cols-3">
                 {heroData.inventory.armors.map((armor) => (
-                  <ArmorTemplateCard
+                  <ArmorCard
                     key={armor.name}
                     {...armor}
                     renderingFrom="INVENTORY"
@@ -45,7 +45,7 @@ function RouteComponent() {
               <summary>Boots</summary>
               <div className="grid grid-cols-3">
                 {heroData.inventory.boots.map((boot) => (
-                  <BootsTemplateCard
+                  <BootsCard
                     key={boot.name}
                     {...boot}
                     renderingFrom="INVENTORY"
@@ -57,7 +57,7 @@ function RouteComponent() {
               <summary>Consumables</summary>
               <div className="grid grid-cols-3">
                 {heroData.inventory.consumables.map((consumable) => (
-                  <ConsumableTemplateCard
+                  <ConsumableCard
                     key={consumable.name}
                     {...consumable}
                     renderingFrom="INVENTORY"
@@ -69,7 +69,7 @@ function RouteComponent() {
               <summary>Helmets</summary>
               <div className="grid grid-cols-3">
                 {heroData.inventory.helmets.map((helmet) => (
-                  <HelmetTemplateCard
+                  <HelmetCard
                     key={helmet.name}
                     {...helmet}
                     renderingFrom="INVENTORY"
@@ -93,7 +93,7 @@ function RouteComponent() {
               <summary>Spells</summary>
               <div className="grid grid-cols-3">
                 {heroData.inventory.spells.map((spell) => (
-                  <SpellTemplateCard
+                  <SpellCard
                     key={spell.name}
                     {...spell}
                     renderingFrom="INVENTORY"
@@ -105,7 +105,7 @@ function RouteComponent() {
               <summary>Weapons</summary>
               <div className="grid grid-cols-3">
                 {heroData.inventory.weapons.map((weapon) => (
-                  <WeaponTemplateCard
+                  <WeaponCard
                     key={weapon.name}
                     {...weapon}
                     renderingFrom="INVENTORY"

@@ -1,6 +1,6 @@
-import type { HelmetType } from "../../types/helmetTypes";
+import type { BootsType } from "../../types/bootsTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-export const HelmetTemplateCard = ({
+export const BootsCard = ({
   category,
   description,
   discovered,
@@ -11,7 +11,7 @@ export const HelmetTemplateCard = ({
   physicalDefense,
   imgBase64,
   renderingFrom,
-}: HelmetType) => {
+}: BootsType) => {
   //Toggle to see all information of the card
   // discovered = true;
 
@@ -33,7 +33,7 @@ export const HelmetTemplateCard = ({
       ]
         .filter(Boolean) // removes empty strings
         .join(" ")} // join with spaces
-      style={{ backgroundImage: `url('/templates/helmetCardTemplate.png')` }}
+      style={{ backgroundImage: `url('/templates/bootCardTemplate.png')` }}
     >
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">

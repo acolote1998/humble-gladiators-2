@@ -1,6 +1,6 @@
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-export const CharacterInstanceCard = ({
+export const CharacterCard = ({
   category,
   description,
   discovered,

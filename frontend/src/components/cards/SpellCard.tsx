@@ -1,17 +1,18 @@
-import type { BootsType } from "../../types/bootsTypes";
+import type { SpellType } from "../../types/spellTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-export const BootsTemplateCard = ({
+export const SpellCard = ({
   category,
   description,
   discovered,
   name,
   rarity,
   tier,
-  magicalDefense,
-  physicalDefense,
+  physicalDamage,
+  magicalDamage,
+  restoreHp,
   imgBase64,
   renderingFrom,
-}: BootsType) => {
+}: SpellType) => {
   //Toggle to see all information of the card
   // discovered = true;
 
@@ -33,7 +34,7 @@ export const BootsTemplateCard = ({
       ]
         .filter(Boolean) // removes empty strings
         .join(" ")} // join with spaces
-      style={{ backgroundImage: `url('/templates/bootCardTemplate.png')` }}
+      style={{ backgroundImage: `url('/templates/spellCardTemplate.png')` }}
     >
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">
@@ -93,16 +94,15 @@ export const BootsTemplateCard = ({
       <div className="grid grid-cols-5 absolute bottom-14 text-sm">
         <div className="absolute left-7 w-15">
           <p>
-            🛡️{" "}
-            {discovered || renderingFrom == "BOOSTER" ? physicalDefense : "?"}
+            ⚔️ {discovered || renderingFrom == "BOOSTER" ? physicalDamage : "?"}
           </p>
         </div>
-        {/* <div className="absolute left-23 w-15">
-          <p>❤️ {(discovered || renderingFrom=="BOOSTER") ? restoreHp : "?"}</p>
-        </div> */}
+        <div className="absolute left-24 w-15">
+          <p>❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}</p>
+        </div>
         <div className="absolute left-41.5 w-15">
           <p>
-            ✨ {discovered || renderingFrom == "BOOSTER" ? magicalDefense : "?"}
+            ✨ {discovered || renderingFrom == "BOOSTER" ? magicalDamage : "?"}
           </p>
         </div>
         {/* <div className="absolute left-58.5 w-15">

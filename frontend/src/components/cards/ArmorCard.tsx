@@ -1,17 +1,17 @@
-import type { ConsumableType } from "../../types/consumablesTypes";
+import type { ArmorType } from "../../types/armorTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-export const ConsumableTemplateCard = ({
+export const ArmorCard = ({
   category,
   description,
   discovered,
   name,
   rarity,
   tier,
-  restoreHp,
-  restoreMp,
+  magicalDefense,
+  physicalDefense,
   imgBase64,
   renderingFrom,
-}: ConsumableType) => {
+}: ArmorType) => {
   //Toggle to see all information of the card
   // discovered = true;
 
@@ -33,9 +33,7 @@ export const ConsumableTemplateCard = ({
       ]
         .filter(Boolean) // removes empty strings
         .join(" ")} // join with spaces
-      style={{
-        backgroundImage: `url('/templates/consumableCardTemplate.png')`,
-      }}
+      style={{ backgroundImage: `url('/templates/armorCardTemplate.png')` }}
     >
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">
@@ -93,18 +91,23 @@ export const ConsumableTemplateCard = ({
 
       {/* Bottom stats */}
       <div className="grid grid-cols-5 absolute bottom-14 text-sm">
-        {/* <div className="absolute left-7 w-15">
-          <p>🛡️ {(discovered || renderingFrom=="BOOSTER") ? physicalDefense : "?"}</p>
-        </div> */}
-        <div className="absolute left-24 w-15">
-          <p>❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}</p>
+        <div className="absolute left-7 w-15">
+          <p>
+            🛡️{" "}
+            {discovered || renderingFrom == "BOOSTER" ? physicalDefense : "?"}
+          </p>
         </div>
-        {/* <div className="absolute left-41.5 w-15">
-          <p>✨ {(discovered || renderingFrom=="BOOSTER") ? magicalDefense : "?"}</p>
+        {/* <div className="absolute left-23 w-15">
+          <p>❤️ {(discovered || renderingFrom=="BOOSTER") ? restoreHp : "?"}</p>
         </div> */}
-        <div className="absolute left-59 w-15">
-          <p>🧉 {discovered || renderingFrom == "BOOSTER" ? restoreMp : "?"}</p>
+        <div className="absolute left-41.5 w-15">
+          <p>
+            ✨ {discovered || renderingFrom == "BOOSTER" ? magicalDefense : "?"}
+          </p>
         </div>
+        {/* <div className="absolute left-58.5 w-15">
+          <p>🧉 {(discovered || renderingFrom=="BOOSTER") ? restoreMp : "?"}</p>
+        </div> */}
       </div>
     </div>
   );
