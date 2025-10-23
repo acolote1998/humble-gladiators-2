@@ -148,7 +148,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         {cardBack && (
                           <ArmorTemplateCard
                             {...cards.armors[0]}
-                            renderingFromBooster={true}
+                            renderingFrom="BOOSTER"
                           />
                         )}
                       </div>
@@ -192,7 +192,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         {cardBack && (
                           <BootsTemplateCard
                             {...cards.boots[0]}
-                            renderingFromBooster={true}
+                            renderingFrom="BOOSTER"
                           />
                         )}
                       </div>
@@ -238,7 +238,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                           {cardBack && (
                             <ConsumableTemplateCard
                               {...cards.consumables[0]}
-                              renderingFromBooster={true}
+                              renderingFrom="BOOSTER"
                             />
                           )}
                         </div>
@@ -285,7 +285,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                           {cardBack && (
                             <HelmetTemplateCard
                               {...cards.helmets[0]}
-                              renderingFromBooster={true}
+                              renderingFrom="BOOSTER"
                             />
                           )}
                         </div>
@@ -333,7 +333,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                           {cardBack && (
                             <ShieldTemplateCard
                               {...cards.shields[0]}
-                              renderingFromBooster={true}
+                              renderingFrom="BOOSTER"
                             />
                           )}
                         </div>
@@ -382,7 +382,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                           {cardBack && (
                             <SpellTemplateCard
                               {...cards.spells[0]}
-                              renderingFromBooster={true}
+                              renderingFrom="BOOSTER"
                             />
                           )}
                         </div>
@@ -432,7 +432,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                           {cardBack && (
                             <WeaponTemplateCard
                               {...cards.weapons[0]}
-                              renderingFromBooster={true}
+                              renderingFrom="BOOSTER"
                             />
                           )}
                         </div>

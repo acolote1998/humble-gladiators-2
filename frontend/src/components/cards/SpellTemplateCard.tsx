@@ -11,7 +11,7 @@ export const SpellTemplateCard = ({
   magicalDamage,
   restoreHp,
   imgBase64,
-  renderingFromBooster,
+  renderingFrom,
 }: SpellType) => {
   //Toggle to see all information of the card
   // discovered = true;
@@ -20,10 +20,10 @@ export const SpellTemplateCard = ({
     <div
       className={[
         // Conditional classes
-        renderingFromBooster ? "rotate-y-180" : "",
-        discovered && !renderingFromBooster ? "cursor-zoom" : "",
-        discovered && !renderingFromBooster ? `rarity-${rarity}` : "",
-        discovered && !renderingFromBooster
+        renderingFrom == "BOOSTER" ? "rotate-y-180" : "",
+        discovered && renderingFrom != "BOOSTER" ? "cursor-zoom" : "",
+        discovered && renderingFrom != "BOOSTER" ? `rarity-${rarity}` : "",
+        discovered && renderingFrom != "BOOSTER"
           ? tier === 5 && rarity === 5
             ? "character-tier-5-rarity-5"
             : `character-tier-${tier}`
@@ -39,16 +39,16 @@ export const SpellTemplateCard = ({
       {/* Top stats */}
       <div className="grid grid-cols-4 text-sm mt-3">
         {/* <div className="absolute left-8.5 w-20">
-          <p>❤️ {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
+          <p>❤️ {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-26 w-15">
-          <p>⚔️ {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
+          <p>⚔️ {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-43 w-20">
-          <p>🔷 {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
+          <p>🔷 {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
         </div>
         <div className="absolute left-61 w-20">
-          <p>🔮 {(discovered || renderingFromBooster) ? "pl" : "?"}</p>
+          <p>🔮 {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
         </div> */}
       </div>
 
@@ -67,7 +67,7 @@ export const SpellTemplateCard = ({
 
       {/* Category & name */}
       <div className="flex flex-col items-center mt-6">
-        {(discovered || renderingFromBooster) && imgBase64 ? (
+        {(discovered || renderingFrom == "BOOSTER") && imgBase64 ? (
           <img
             draggable={false}
             src={`data:image/jpeg;base64,${imgBase64}`}
@@ -83,26 +83,30 @@ export const SpellTemplateCard = ({
           />
         )}
         <p className="text-lg mt-8 ">
-          {discovered || renderingFromBooster ? name : "?"}
+          {discovered || renderingFrom == "BOOSTER" ? name : "?"}
         </p>
         <p className="text-sm opacity-80 text-center p-1 mt-0.5 px-7">
-          {discovered || renderingFromBooster ? description : "?"}
+          {discovered || renderingFrom == "BOOSTER" ? description : "?"}
         </p>
       </div>
 
       {/* Bottom stats */}
       <div className="grid grid-cols-5 absolute bottom-14 text-sm">
         <div className="absolute left-7 w-15">
-          <p>⚔️ {discovered || renderingFromBooster ? physicalDamage : "?"}</p>
+          <p>
+            ⚔️ {discovered || renderingFrom == "BOOSTER" ? physicalDamage : "?"}
+          </p>
         </div>
         <div className="absolute left-24 w-15">
-          <p>❤️ {discovered || renderingFromBooster ? restoreHp : "?"}</p>
+          <p>❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}</p>
         </div>
         <div className="absolute left-41.5 w-15">
-          <p>✨ {discovered || renderingFromBooster ? magicalDamage : "?"}</p>
+          <p>
+            ✨ {discovered || renderingFrom == "BOOSTER" ? magicalDamage : "?"}
+          </p>
         </div>
         {/* <div className="absolute left-58.5 w-15">
-          <p>🧉 {(discovered || renderingFromBooster) ? restoreMp : "?"}</p>
+          <p>🧉 {(discovered || renderingFrom=="BOOSTER") ? restoreMp : "?"}</p>
         </div> */}
       </div>
     </div>
