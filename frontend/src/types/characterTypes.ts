@@ -4,6 +4,7 @@ import type { ConsumableType } from "./consumablesTypes";
 import type { HelmetType } from "./helmetTypes";
 import type { ShieldType } from "./shieldTypes";
 import type { SpellType } from "./spellTypes";
+import type { WeaponType } from "./weaponTypes";
 
 export type CreateHeroType = {
   heroName: string;
@@ -81,7 +82,7 @@ type CharacterInventoryResponseDto = {
   helmets: HelmetType[];
   shields: ShieldType[];
   spells: SpellType[];
-  weapons: WeaponInstanceResponseDto[];
+  weapons: WeaponType[];
 };
 
 export type RequirementResponseDto = {
@@ -92,21 +93,6 @@ type RequirementEntryResponseDto = {
   requirementType: RequirementEntryTypeEnum;
   operator: RequirementEntryOperatorEnum;
   value: string;
-};
-
-type WeaponInstanceResponseDto = {
-  name: string;
-  description: string;
-  rarity: number;
-  tier: number;
-  value: number;
-  quantity: number;
-  equipped: boolean;
-  requirement: RequirementResponseDto;
-  category: WeaponCategoriesEnum;
-  imgBase64: string;
-  physicalDamage: number;
-  magicalDamage: number;
 };
 
 type RequirementEntryOperatorEnum =
