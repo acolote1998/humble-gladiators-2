@@ -47,7 +47,7 @@ type CharacterStatsResponseDto = {
   physicalDefense: number;
   magicalDefense: number;
   physicalDamage: number;
-  magicalDagame: number;
+  magicalDamage: number;
 };
 
 type CharacterCategoriesEnum =

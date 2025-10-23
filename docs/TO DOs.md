@@ -1,5 +1,6 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] fix that when I hover over a card, it has a small zoom in and the magnifier cursor shows instear of the thick hand
 - [ ] adapt / rethinkg CharacterInstanceCard, this is not including or displaying
       physicalDefense,
       magicalDefense,

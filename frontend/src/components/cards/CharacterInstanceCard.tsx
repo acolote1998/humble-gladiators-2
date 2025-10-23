@@ -38,15 +38,27 @@ export const CharacterInstanceCard = ({
         <div className="absolute left-8.5 w-20">
           <p>❤️ {discovered || renderingFromBooster ? stats.currentHp : "?"}</p>
         </div>
-        <div className="absolute left-26 w-15">
-          <p>⚔️ {discovered || renderingFromBooster ? stats.strength : "?"}</p>
-        </div>
         <div className="absolute left-43 w-20">
           <p>🔷 {discovered || renderingFromBooster ? stats.currentMp : "?"}</p>
         </div>
+        <div className="absolute left-26 w-15">
+          <p>
+            ⚔️{" "}
+            {discovered || renderingFromBooster
+              ? stats.physicalDamage > 0
+                ? stats.physicalDamage
+                : stats.strength
+              : "?"}
+          </p>
+        </div>
         <div className="absolute left-61 w-20">
           <p>
-            🔮 {discovered || renderingFromBooster ? stats.intelligence : "?"}
+            🔮{" "}
+            {discovered || renderingFromBooster
+              ? stats.magicalDamage > 0
+                ? stats.magicalDamage
+                : stats.intelligence
+              : "?"}
           </p>
         </div>
       </div>
