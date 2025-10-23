@@ -47,7 +47,7 @@ function RouteComponent() {
     <>
       <details>
         <summary>NPCs</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {characterInstancesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -68,7 +68,7 @@ function RouteComponent() {
       </details>
       <details>
         <summary>Armors</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {armorTemplatesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -86,7 +86,7 @@ function RouteComponent() {
       </details>
       <details>
         <summary>Boots</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {bootsTemplatesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -104,7 +104,7 @@ function RouteComponent() {
       </details>
       <details>
         <summary>Consumables</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {consumableTemplatesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -122,7 +122,7 @@ function RouteComponent() {
       </details>
       <details>
         <summary>Helmets</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {helmetTemplatesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -140,7 +140,7 @@ function RouteComponent() {
       </details>
       <details>
         <summary>Shields</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {shieldTemplatesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -158,7 +158,7 @@ function RouteComponent() {
       </details>
       <details>
         <summary>Spells</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {spellTemplatesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -176,7 +176,7 @@ function RouteComponent() {
       </details>
       <details>
         <summary>Weapons</summary>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
           {weaponTemplatesData
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
