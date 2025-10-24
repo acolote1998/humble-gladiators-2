@@ -45,7 +45,7 @@ function RouteComponent() {
             console.log(createdBattle);
           }}
         >
-          Check battle out
+          Check the created battle
         </p>
       )}
     </div>
