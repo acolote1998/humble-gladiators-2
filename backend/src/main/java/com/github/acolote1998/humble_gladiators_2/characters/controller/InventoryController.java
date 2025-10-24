@@ -93,7 +93,7 @@ public class InventoryController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/{campaignId}/character-instances/hero/unequip/shield/{itemId}")
+    @PatchMapping("/{campaignId}/character-instances/hero/equip/shield/{itemId}")
     ResponseEntity<ShieldInstanceResponseDto> equipShieldToHero(@AuthenticationPrincipal Jwt jwt,
                                                                 @PathVariable Long campaignId, @PathVariable Long itemId) {
         String userId = jwt.getSubject();
@@ -103,22 +103,21 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
-    @PatchMapping("/{campaignId}/character-instances/hero/unequip/shield/{itemId}")
-    ResponseEntity<ShieldInstanceResponseDto> unequipShieldToHero(@AuthenticationPrincipal Jwt jwt,
-                                                                  @PathVariable Long campaignId, @PathVariable Long itemId) {
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/shield")
+    ResponseEntity<Void> unequipShieldsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        ShieldInstance updatedShield = characterService.unequipShield(hero, itemId, userId);
-        ShieldInstanceResponseDto dto = ShieldInstanceResponseDto.fromModel(updatedShield);
-        return ResponseEntity.ok(dto);
+        characterService.unequipShields(hero, userId);
+        return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/{campaignId}/character-instances/hero/unequip/weapon/{itemId}")
-    ResponseEntity<WeaponInstanceResponseDto> unequipWeaponToHero(@AuthenticationPrincipal Jwt jwt,
-                                                                  @PathVariable Long campaignId, @PathVariable Long itemId) {
+    @PatchMapping("/{campaignId}/character-instances/hero/equip/weapon/{itemId}")
+    ResponseEntity<WeaponInstanceResponseDto> equipWeaponToHero(@AuthenticationPrincipal Jwt jwt,
+                                                                @PathVariable Long campaignId, @PathVariable Long itemId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        WeaponInstance updatedWeapon = characterService.unequipWeapon(hero, itemId, userId);
+        WeaponInstance updatedWeapon = characterService.equipWeapon(hero, itemId, userId);
         WeaponInstanceResponseDto dto = WeaponInstanceResponseDto.fromModel(updatedWeapon);
         return ResponseEntity.ok(dto);
     }

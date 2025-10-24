@@ -240,6 +240,17 @@ public class CharacterService {
         return shieldToEquip;
     }
 
+    public void unequipShields(CharacterInstance hero, String userId) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+            log.warn("Character '{} {}' is trying to unequip a shield but there is a battle ongoing so they cannot"
+                    , hero.getId(), hero.getName());
+            throw new InvalidAttemptBattleOngoing("Trying to unequip a shield but there is a battle ongoing");
+        }
+        hero.getInventory().getShields().forEach(ShieldInstance::unequip);
+        log.info("Unequipping shields from hero '{}'", hero.getName());
+        saveCharacter(hero);
+    }
+
     public ShieldInstance getEquippedShieldForAHero(CharacterInstance hero) {
         ShieldInstance equippedShield = hero
                 .getInventory()
