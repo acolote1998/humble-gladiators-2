@@ -8,7 +8,7 @@ export const createABattleForTodayForCampaignAndUser = async (
 ): Promise<BattleResponseDto> => {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/campaign/${campaignId}/character-instances/hero`,
+      `${BACKEND_URL}/campaign/${campaignId}/battle/new`,
       {},
       {
         headers: { Authorization: `Bearer ${bearerToken}` },

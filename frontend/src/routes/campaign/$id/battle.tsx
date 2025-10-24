@@ -1,4 +1,7 @@
-import { useGetBattleCreationAvailability } from "../../../hooks/useBattles";
+import {
+  useGetBattleCreationAvailability,
+  useCreateABattleForTodayByCampaignIdAndUser,
+} from "../../../hooks/useBattles";
 import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -8,6 +11,8 @@ export const Route = createFileRoute("/campaign/$id/battle")({
 
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/battle" });
+  const { data: createdBattle, mutate: createBattle } =
+    useCreateABattleForTodayByCampaignIdAndUser();
   const {
     data: isBattleCreationPossible,
     isError: isBattleCreationPossibleError,
@@ -15,16 +20,32 @@ function RouteComponent() {
   } = useGetBattleCreationAvailability(Number(campaignId));
   return (
     <div>
-      {isBattleCreationPossibleLoading ? (
-        <p>Loading...</p>
-      ) : isBattleCreationPossibleError ? (
-        <p>Error checking battle creation availability</p>
-      ) : isBattleCreationPossible ? (
-        <p>Create battle</p>
+      {!createdBattle ? (
+        isBattleCreationPossibleLoading ? (
+          <p>Loading...</p>
+        ) : isBattleCreationPossibleError ? (
+          <p>Error checking battle creation availability</p>
+        ) : isBattleCreationPossible ? (
+          <p
+            onClick={() => {
+              createBattle(Number(campaignId));
+            }}
+          >
+            Create battle
+          </p>
+        ) : (
+          <p>
+            Not possible to create battle, try opening a booster character or
+            come back tomorrow
+          </p>
+        )
       ) : (
-        <p>
-          Not possible to create battle, try opening a booster character or come
-          back tomorrow
+        <p
+          onClick={() => {
+            console.log(createdBattle);
+          }}
+        >
+          Check battle out
         </p>
       )}
     </div>
