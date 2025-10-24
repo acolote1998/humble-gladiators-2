@@ -12,6 +12,7 @@ import java.util.List;
 
 public record BattleResponseDto(
         Long id,
+        Long campaignId,
         List<TurnResponseDto> turns,
         List<FullCharacterResponseDto> startingTeamOne,
         List<FullCharacterResponseDto> startingTeamTwo,
@@ -26,6 +27,7 @@ public record BattleResponseDto(
     public static BattleResponseDto fromModel(Battle model) {
         return new BattleResponseDto(
                 model.getId(),
+                model.getCampaign().getId(),
                 TurnResponseDto.fromModelList(model.getTurns()),
                 null,
                 null,

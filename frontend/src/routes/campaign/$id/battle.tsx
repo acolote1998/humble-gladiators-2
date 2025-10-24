@@ -19,17 +19,12 @@ function RouteComponent() {
     isError: isBattleCreationPossibleError,
     isLoading: isBattleCreationPossibleLoading,
   } = useGetBattleCreationAvailability(Number(campaignId));
-  const {
-    data: activeBattleData,
-    isLoading: isActiveBattleLoading,
-    isError: isActiveBattleError,
-  } = useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
+  const { data: activeBattleData, isLoading: isActiveBattleLoading } =
+    useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
   return (
     <div>
       {isActiveBattleLoading ? (
         <p>Loading battle...</p>
-      ) : isActiveBattleError ? (
-        <p>Error loading battle...</p>
       ) : (
         activeBattleData && (
           <p

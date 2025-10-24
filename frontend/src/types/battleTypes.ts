@@ -1,6 +1,7 @@
 import type { CharacterInstanceType } from "./characterTypes";
 export type BattleResponseDto = {
   id: number;
+  campaignId: number;
   turns: TurnResponseDto[];
   startingTeamOne?: null;
   startingTeamTwo?: null;
