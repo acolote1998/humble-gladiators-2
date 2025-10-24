@@ -62,6 +62,14 @@ function RouteComponent() {
                 >
                   Hero Inventory
                 </p>
+                <p
+                  onClick={() => {
+                    navigate({ to: `/campaign/${campaignId}/battle` });
+                  }}
+                  className="bg-gray-400 p-3 rounded-lg"
+                >
+                  Battles
+                </p>
               </>
             ) : (
               <p
