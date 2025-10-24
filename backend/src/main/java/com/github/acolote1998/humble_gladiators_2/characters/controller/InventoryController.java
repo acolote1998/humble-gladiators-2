@@ -122,6 +122,15 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/weapon")
+    ResponseEntity<Void> unequipWeaponsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        characterService.unequipWeapons(hero, userId);
+        return ResponseEntity.ok().build();
+    }
+
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleItemNotFound(NoSuchElementException ex) {
         return ResponseEntity

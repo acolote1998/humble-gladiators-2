@@ -296,6 +296,17 @@ public class CharacterService {
         return weaponToEquip;
     }
 
+    public void unequipWeapons(CharacterInstance hero, String userId) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+            log.warn("Character '{} {}' is trying to unequip a weapon but there is a battle ongoing so they cannot"
+                    , hero.getId(), hero.getName());
+            throw new InvalidAttemptBattleOngoing("Trying to unequip a weapon but there is a battle ongoing");
+        }
+        hero.getInventory().getWeapons().forEach(WeaponInstance::unequip);
+        log.info("Unequipping weapons from hero '{}'", hero.getName());
+        saveCharacter(hero);
+    }
+
     public WeaponInstance getEquippedWeaponForAHero(CharacterInstance hero) {
         WeaponInstance equippedWeapon = hero
                 .getInventory()
