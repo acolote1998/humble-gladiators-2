@@ -2,7 +2,10 @@ import { useAuth } from "@clerk/clerk-react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBattleCreationPossibility } from "../api/fetchAvailabilities";
 import { useMutation } from "@tanstack/react-query";
-import { createABattleForTodayForCampaignAndUser } from "../api/battles";
+import {
+  createABattleForTodayForCampaignAndUser,
+  getBattleForTodayForCampaignAndUser,
+} from "../api/battles";
 
 export const useGetBattleCreationAvailability = (campaignId: number) => {
   const { getToken } = useAuth();
@@ -31,4 +34,21 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
     },
   });
   return mutation;
+};
+
+export const useGetBattleForTodayByCampaignIdAndUsery = (
+  campaignId: number
+) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["active-battle", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return getBattleForTodayForCampaignAndUser(bearerToken, campaignId);
+    },
+  });
+  return { data, isError, isLoading };
 };
