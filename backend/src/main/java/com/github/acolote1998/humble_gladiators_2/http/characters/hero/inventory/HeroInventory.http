@@ -4,8 +4,20 @@ Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
 
+### Unequip armors from a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/unequip/armor
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
 ### Equip boot to a hero
 PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/boots/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Unequip boots from a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/unequip/boots
 Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
@@ -16,14 +28,32 @@ Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
 
+### Unequip helmets from a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/unequip/helmet
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
 ### Equip shield to a hero
 PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/shield/1
 Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
 
+### Unequip shields from a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/unequip/shield
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
 ### Equip weapon to a hero
 PATCH http://localhost:8080/api/campaign/1/character-instances/hero/equip/weapon/1
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Unequip weapons from a hero
+PATCH http://localhost:8080/api/campaign/1/character-instances/hero/unequip/weapon
 Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json
