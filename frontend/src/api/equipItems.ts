@@ -19,3 +19,21 @@ export const equipItemsRequest = async (
     console.log(error);
   }
 };
+
+export const unequipItemsRequest = async (
+  itemToEquipRequest: EquipItemType,
+  bearerToken: string
+) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/campaign/${itemToEquipRequest.campaignId}/character-instances/hero/unquip/${itemToEquipRequest.typeItemToEquip}`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
