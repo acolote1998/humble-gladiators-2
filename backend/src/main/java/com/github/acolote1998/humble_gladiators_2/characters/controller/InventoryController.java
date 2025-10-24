@@ -20,6 +20,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -46,6 +48,15 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/armor")
+    ResponseEntity<Map<String, Long>> unequipArmorsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                            @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        characterService.unequipArmors(hero, userId);
+        return ResponseEntity.ok(Map.of("campaignId", hero.getCampaign().getId()));
+    }
+
     @PatchMapping("/{campaignId}/character-instances/hero/equip/boots/{itemId}")
     ResponseEntity<BootsInstanceResponseDto> equipBootsToHero(@AuthenticationPrincipal Jwt jwt,
                                                               @PathVariable Long campaignId, @PathVariable Long itemId) {
@@ -54,6 +65,15 @@ public class InventoryController {
         BootsInstance updatedBoots = characterService.equipBoots(hero, itemId, userId);
         BootsInstanceResponseDto dto = BootsInstanceResponseDto.fromModel(updatedBoots);
         return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/boots")
+    ResponseEntity<Map<String, Long>> unequipBootsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                           @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        characterService.unequipBoots(hero, userId);
+        return ResponseEntity.ok(Map.of("campaignId", hero.getCampaign().getId()));
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/helmet/{itemId}")
@@ -66,6 +86,15 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/helmet")
+    ResponseEntity<Map<String, Long>> unequipHelmetsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                             @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        characterService.unequipHelmets(hero, userId);
+        return ResponseEntity.ok(Map.of("campaignId", hero.getCampaign().getId()));
+    }
+
     @PatchMapping("/{campaignId}/character-instances/hero/equip/shield/{itemId}")
     ResponseEntity<ShieldInstanceResponseDto> equipShieldToHero(@AuthenticationPrincipal Jwt jwt,
                                                                 @PathVariable Long campaignId, @PathVariable Long itemId) {
@@ -76,6 +105,15 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/shield")
+    ResponseEntity<Map<String, Long>> unequipShieldsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                             @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        characterService.unequipShields(hero, userId);
+        return ResponseEntity.ok(Map.of("campaignId", hero.getCampaign().getId()));
+    }
+
     @PatchMapping("/{campaignId}/character-instances/hero/equip/weapon/{itemId}")
     ResponseEntity<WeaponInstanceResponseDto> equipWeaponToHero(@AuthenticationPrincipal Jwt jwt,
                                                                 @PathVariable Long campaignId, @PathVariable Long itemId) {
@@ -84,6 +122,15 @@ public class InventoryController {
         WeaponInstance updatedWeapon = characterService.equipWeapon(hero, itemId, userId);
         WeaponInstanceResponseDto dto = WeaponInstanceResponseDto.fromModel(updatedWeapon);
         return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/weapon")
+    ResponseEntity<Map<String, Long>> unequipWeaponsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                             @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        characterService.unequipWeapons(hero, userId);
+        return ResponseEntity.ok(Map.of("campaignId", hero.getCampaign().getId()));
     }
 
     @ExceptionHandler(NoSuchElementException.class)

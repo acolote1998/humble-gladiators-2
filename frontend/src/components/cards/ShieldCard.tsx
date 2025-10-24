@@ -1,6 +1,6 @@
 import type { ShieldType } from "../../types/shieldTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-import { useEquipItems } from "../../hooks/useEquipItems";
+import { useEquipItems, useUnequipItems } from "../../hooks/useEquipItems";
 export const ShieldCard = ({
   id,
   campaignId,
@@ -17,6 +17,7 @@ export const ShieldCard = ({
   equipped,
 }: ShieldType) => {
   const { mutate: equipItem } = useEquipItems();
+  const { mutate: unequipItem } = useUnequipItems();
   return (
     <>
       <div>
@@ -122,7 +123,7 @@ export const ShieldCard = ({
           </div>
         </div>
         <div>
-          {renderingFrom == "INVENTORY" && !equipped && (
+          {renderingFrom == "INVENTORY" && !equipped ? (
             <p
               onClick={() => {
                 equipItem({
@@ -135,6 +136,21 @@ export const ShieldCard = ({
             >
               EQUIP
             </p>
+          ) : (
+            renderingFrom == "INVENTORY" &&
+            equipped && (
+              <p
+                onClick={() => {
+                  unequipItem({
+                    campaignId: campaignId,
+                    typeItemToEquip: "shield",
+                  });
+                }}
+                className="hover:opacity-100 opacity-0 text-center"
+              >
+                UNEQUIP
+              </p>
+            )
           )}
         </div>
       </div>

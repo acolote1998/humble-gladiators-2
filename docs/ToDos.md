@@ -6,7 +6,7 @@
 
 - [ ] Complete hero inventory management system:
   - [x] Equipment endpoints
-  - [ ] Unequip endpoints
+  - [X] Unequip endpoints
   - [X] Equipment management UI
   - [ ] Unequip management UI
 
