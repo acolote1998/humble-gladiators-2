@@ -8,6 +8,7 @@ import CampaignInfo from "../../../components/campaigns/CampaignInfo";
 import { useGetHeroExistence } from "../../../hooks/useCharacters";
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
+import { useGetBattleForTodayByCampaignIdAndUsery } from "../../../hooks/useBattles";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -15,6 +16,9 @@ export const Route = createFileRoute("/campaign/$id/")({
 function RouteComponent() {
   const navigate = useNavigate();
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
+  const { data: isBattleOngoing } = useGetBattleForTodayByCampaignIdAndUsery(
+    Number(campaignId)
+  );
   const {
     data: doesHeroExist,
     isLoading: doesHeroExistLoading,
@@ -43,25 +47,34 @@ function RouteComponent() {
               <p>Error loading hero availability</p>
             ) : doesHeroExist ? (
               <>
-                <ItemsBooster campaignId={campaignId} />
+                {!isBattleOngoing ? (
+                  <>
+                    <p
+                      onClick={() => {
+                        navigate({ to: `/campaign/${campaignId}/compendium` });
+                      }}
+                      className="bg-gray-400 p-3 rounded-lg"
+                    >
+                      Go to the compendium
+                    </p>
+                    <ItemsBooster campaignId={campaignId} />
 
-                <CharacterBooster campaignId={campaignId} />
-                <p
-                  onClick={() => {
-                    navigate({ to: `/campaign/${campaignId}/compendium` });
-                  }}
-                  className="bg-gray-400 p-3 rounded-lg"
-                >
-                  Go to the compendium
-                </p>
-                <p
-                  onClick={() => {
-                    navigate({ to: `/campaign/${campaignId}/inventory` });
-                  }}
-                  className="bg-gray-400 p-3 rounded-lg"
-                >
-                  Hero Inventory
-                </p>
+                    <CharacterBooster campaignId={campaignId} />
+
+                    <p
+                      onClick={() => {
+                        navigate({ to: `/campaign/${campaignId}/inventory` });
+                      }}
+                      className="bg-gray-400 p-3 rounded-lg"
+                    >
+                      Hero Inventory
+                    </p>
+                  </>
+                ) : (
+                  <p className="bg-red-400 p-3 rounded-lg">
+                    You cannot perform actions during an ongoing battle!!!
+                  </p>
+                )}
                 <p
                   onClick={() => {
                     navigate({ to: `/campaign/${campaignId}/battle` });
