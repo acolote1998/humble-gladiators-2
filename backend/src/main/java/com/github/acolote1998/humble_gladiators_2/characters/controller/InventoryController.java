@@ -84,14 +84,13 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
-    @PatchMapping("/{campaignId}/character-instances/hero/unequip/helmet/{itemId}")
-    ResponseEntity<HelmetInstanceResponseDto> unequipHelmetToHero(@AuthenticationPrincipal Jwt jwt,
-                                                                  @PathVariable Long campaignId, @PathVariable Long itemId) {
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/helmet")
+    ResponseEntity<Void> unequipHelmetsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                                @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        HelmetInstance updatedHelmet = characterService.unequipHelmet(hero, itemId, userId);
-        HelmetInstanceResponseDto dto = HelmetInstanceResponseDto.fromModel(updatedHelmet);
-        return ResponseEntity.ok(dto);
+        characterService.unequipHelmets(hero, userId);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/unequip/shield/{itemId}")

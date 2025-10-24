@@ -184,6 +184,17 @@ public class CharacterService {
         return helmetToEquip;
     }
 
+    public void unequipHelmets(CharacterInstance hero, String userId) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+            log.warn("Character '{} {}' is trying to unequip a helmet but there is a battle ongoing so they cannot"
+                    , hero.getId(), hero.getName());
+            throw new InvalidAttemptBattleOngoing("Trying to unequip a helmet but there is a battle ongoing");
+        }
+        hero.getInventory().getHelmets().forEach(HelmetInstance::unequip);
+        log.info("Unequipping helmets from hero '{}'", hero.getName());
+        saveCharacter(hero);
+    }
+
     public HelmetInstance getEquippedHelmetForAHero(CharacterInstance hero) {
         HelmetInstance equippedHelmet = hero
                 .getInventory()
