@@ -128,6 +128,17 @@ public class CharacterService {
         return bootsToEquip;
     }
 
+    public void unequipBoots(CharacterInstance hero, String userId) {
+        if (battleUtil.isThereOngoingBattleForToday(hero.getCampaign().getId(), userId)) {
+            log.warn("Character '{} {}' is trying to unequip an boot but there is a battle ongoing so they cannot"
+                    , hero.getId(), hero.getName());
+            throw new InvalidAttemptBattleOngoing("Trying to unequip an boot but there is a battle ongoing");
+        }
+        hero.getInventory().getBoots().forEach(BootsInstance::unequip);
+        log.info("Unequipping boots from hero '{}'", hero.getName());
+        saveCharacter(hero);
+    }
+
     public BootsInstance getEquippedBootsForAHero(CharacterInstance hero) {
         BootsInstance equippedBoots = hero
                 .getInventory()

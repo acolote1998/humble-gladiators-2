@@ -46,9 +46,9 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
-    @PatchMapping("/{campaignId}/character-instances/hero/unequip/armor/{itemId}")
-    ResponseEntity<Void> unequipArmorToHero(@AuthenticationPrincipal Jwt jwt,
-                                            @PathVariable Long campaignId, @PathVariable Long itemId) {
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/armor")
+    ResponseEntity<Void> unequipArmorsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                               @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
         characterService.unequipArmors(hero, userId);
@@ -65,14 +65,13 @@ public class InventoryController {
         return ResponseEntity.ok(dto);
     }
 
-    @PatchMapping("/{campaignId}/character-instances/hero/unequip/boots/{itemId}")
-    ResponseEntity<BootsInstanceResponseDto> unequipBootsToHero(@AuthenticationPrincipal Jwt jwt,
-                                                                @PathVariable Long campaignId, @PathVariable Long itemId) {
+    @PatchMapping("/{campaignId}/character-instances/hero/unequip/boots")
+    ResponseEntity<Void> unequipBootsFromHero(@AuthenticationPrincipal Jwt jwt,
+                                              @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         CharacterInstance hero = characterService.getHero(campaignId, userId);
-        BootsInstance updatedBoots = characterService.unequipBoots(hero, itemId, userId);
-        BootsInstanceResponseDto dto = BootsInstanceResponseDto.fromModel(updatedBoots);
-        return ResponseEntity.ok(dto);
+        characterService.unequipBoots(hero, userId);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{campaignId}/character-instances/hero/equip/helmet/{itemId}")
