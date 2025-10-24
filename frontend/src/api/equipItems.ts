@@ -21,12 +21,12 @@ export const equipItemsRequest = async (
 };
 
 export const unequipItemsRequest = async (
-  itemToEquipRequest: EquipItemType,
+  itemToUnequipRequest: EquipItemType,
   bearerToken: string
 ) => {
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}/campaign/${itemToEquipRequest.campaignId}/character-instances/hero/unquip/${itemToEquipRequest.typeItemToEquip}`,
+      `${BACKEND_URL}/campaign/${itemToUnequipRequest.campaignId}/character-instances/hero/unquip/${itemToUnequipRequest.typeItemToEquip}`,
       {},
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
