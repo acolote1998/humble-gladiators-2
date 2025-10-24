@@ -1,6 +1,7 @@
 import type { ArmorType } from "../../types/armorTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import { useEquipItems } from "../../hooks/useEquipItems";
+import { useUnequipItems } from "../../hooks/useEquipItems";
 export const ArmorCard = ({
   id,
   campaignId,
@@ -17,6 +18,7 @@ export const ArmorCard = ({
   equipped,
 }: ArmorType) => {
   const { mutate: equipItem } = useEquipItems();
+  const { mutate: unequipItem } = useUnequipItems();
   return (
     <>
       <div>
@@ -120,7 +122,7 @@ export const ArmorCard = ({
           </div>
         </div>
         <div>
-          {renderingFrom == "INVENTORY" && !equipped && (
+          {renderingFrom == "INVENTORY" && !equipped ? (
             <p
               onClick={() => {
                 equipItem({
@@ -133,6 +135,21 @@ export const ArmorCard = ({
             >
               EQUIP
             </p>
+          ) : (
+            renderingFrom == "INVENTORY" &&
+            equipped && (
+              <p
+                onClick={() => {
+                  unequipItem({
+                    campaignId: campaignId,
+                    typeItemToEquip: "armor",
+                  });
+                }}
+                className="hover:opacity-100 opacity-0 text-center"
+              >
+                UNEQUIP
+              </p>
+            )
           )}
         </div>
       </div>

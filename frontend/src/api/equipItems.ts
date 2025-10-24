@@ -26,7 +26,7 @@ export const unequipItemsRequest = async (
 ) => {
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}/campaign/${itemToUnequipRequest.campaignId}/character-instances/hero/unquip/${itemToUnequipRequest.typeItemToEquip}`,
+      `${BACKEND_URL}/campaign/${itemToUnequipRequest.campaignId}/character-instances/hero/unequip/${itemToUnequipRequest.typeItemToEquip}`,
       {},
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
