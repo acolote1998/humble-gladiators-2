@@ -1,22 +1,30 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Battle
+  - [ ] Battle turn processing system
+  - [ ] Able to cast spells
+  - [ ] Able to use consumables
+  - [ ] Able to physically attack
+  - [ ] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
+  
+- [ ] Battle in the future:
+  - [ ] Enable turn processing based on the character snapshot. At the moment we rely on live data of the characters to process a battle, 
+  but that not might be ideal for the future?
+
+  - IDEA: At the moment, we trigger the enemy's turn when we to a getBattle, but we currently have the character's executed turn as a response from either a spell,
+  or a consumable or an attack. So I am thinking to "simulate" a waiting for the enemys turn, it could be that when we have success of an action of the hero, we can render the
+  battle accordingly, with the result of the hero's turn, and probably add a onSuccess in the ation call, wait let's say 2, or 3 seconds? and then invalidate the getBattle,
+  so we would get an updated battle that would trigger the enemy's turn (and render an updated battle with the enemy's turn already applied?)
+
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
 - [ ] Modify the card components so that if they are rendered from the inventory they look smaller and they show normal size only on hover?
-
-- [ ] Complete hero inventory management system:
-  - [x] Equipment endpoints
-  - [X] Unequip endpoints
-  - [X] Equipment management UI
-  - [ ] Unequip management UI
 
 - [ ] Optimize campaign lobby booster availability checks by implementing caching with TTL to reduce expensive database queries (at the moment the check function does a lot of queries to the DB)
 
 - [ ] Ensure character response DTOs obscure undiscovered data to prevent network inspection exploits (in the compendium for example)
 
-- [ ] Fix card hover behavior: replace magnifier cursor with cursor pointer
-
-- [ ] Enhance battle consolidation algorithm in scheduled job:
+- [ ] Improve battle consolidation algorithm in scheduled job:
   - Filter battles needing consolidation before processing
   - Only call consolidateBattle() on relevant battles to avoid unnecessary DB writes
   - Only save consolidated battles, no need to re-save battles that did not change
@@ -24,8 +32,6 @@
 - [ ] Refactor BattleService by moving appropriate methods to BattleUtil
 
 - [ ] Evaluate utility of creating BoosterUtil and similar helper classes for other services
-
-- [ ] Add validation to prevent item unequipping items while having an ongoing battle
 
 - [ ] Investigate/Consider if it is worth it to create optimized character DTOs for battle objects to improve performance (instead of having the full CharacterInstanceDto everywhere)
 
@@ -63,12 +69,6 @@
   - [ ] On booster opening, check the language of the campaign, and then try to get that name and description in that language. if the result is null, we need to send the name and description in english together with campaign data to Gemini, and generate the name and description in the desired language. Then add the translated name and description to the ItemTemplate or CharacterInstance, which will then be saved together with the rest. This way, we always translate on demand on booster opening, instead of generating ALL languages when all the content is created, this way we favour efficency and performance of the app
   - [ ] When sending items and so to the frontend, the server would have to check in which language the campaign is setted, and get those values for the name and description fields. Possibly, we could check if all the fields exist in the language maybe? to avoid sending nulls? and if not, either send them in english or generate the missing through gemini
 
-- [ ] Daily Enemy Encounter system:
-  - [x] Uses can only face one enemy per day
-  - [ ] Create a route /battle where the user will be able to fight a charater instance from a booster opened today.
-    - [ ] validation for if theere is no enemy for today (booster not opened?)
-    - [ ] validation for if there has been a played battle today already? so we inform the user that they gotta come back tomorrow?
-
 - [ ] Daily Merchant Encounter system:
   - [ ] Users can meet one merchant per day
   - [ ] The user opens a merchant booster (basically an item booster but for the merchant) and then three merchant cards are drawn from there.
@@ -84,13 +84,6 @@
   - [ ] HP/MP progression
   - [ ] Height/weight influence in attacks
   - [ ] Level progression and experience requirements
-
-- [x] Combat system implementation:
-  - [x] Turn-based combat flow
-  - [x] Damage calculation engine
-  - [x] Hero turn logic
-  - [x] NPC behavior system
-  - [x] Battle state management
 
 - [ ] Battle replay system
 
