@@ -79,4 +79,23 @@ public class Stats {
         stats.setExpForNextLevel(0); //rework this
         return stats;
     }
+
+    public static Stats cloneStats(Stats statsToClone) {
+        Stats newStats = new Stats();
+        newStats.setConstitution(statsToClone.getConstitution());
+        newStats.setIntelligence(statsToClone.getIntelligence());
+        newStats.setStrength(statsToClone.getStrength());
+        newStats.setSpeed(statsToClone.getSpeed());
+        newStats.setLuck(statsToClone.getLuck());
+        newStats.setMaxMp(statsToClone.getMaxHp());
+        newStats.setCurrentHp(statsToClone.getCurrentHp());
+        newStats.setMaxMp(statsToClone.getMaxMp());
+        newStats.setCurrentMp(statsToClone.getCurrentMp());
+        newStats.setWeight(statsToClone.getWeight());
+        newStats.setHeight(statsToClone.getHeight());
+        newStats.setLevel(statsToClone.getLevel());
+        newStats.setCurrentExp(statsToClone.getCurrentExp());
+        newStats.setExpForNextLevel(statsToClone.getExpForNextLevel());
+        return newStats;
+    }
 }
