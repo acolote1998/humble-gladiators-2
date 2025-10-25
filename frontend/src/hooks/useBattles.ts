@@ -47,7 +47,7 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
   campaignId: number
 ) => {
   const { getToken } = useAuth();
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["active-battle", campaignId],
     queryFn: async () => {
       const bearerToken = await getToken();
@@ -56,6 +56,7 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
       }
       return getBattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
+    enabled: false,
   });
-  return { data, isError, isLoading };
+  return { data, isError, isLoading, refetch };
 };

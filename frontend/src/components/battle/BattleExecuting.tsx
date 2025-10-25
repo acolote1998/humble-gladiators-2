@@ -26,8 +26,18 @@ const BattleExecuting = ({
   };
   return (
     <div>
-      {winningTeam.length > 0 || losingTeam.length > 0 || !onGoing ? (
+      {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
+          {turns.length < 1 && currentCharacterToPlay.id != teamOne[0].id && (
+            <p
+              className="text-lg text-center bg-green-300"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              Start Battle
+            </p>
+          )}
           <div className="flex flex-col items-center">
             <p className="text-2xl">
               Character to play: {currentCharacterToPlay.name}
