@@ -1,8 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2.core.dto;
 
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
-import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterSnapshot;
+import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
 import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Action;
@@ -81,7 +81,7 @@ public record BattleResponseDto(
 
     public record CharacterSnapshotResponseDto(
             String userId,
-            HeroResponseDto.CharacterStatsResponseDto stats,
+            CharacterSnapshotStats stats,
             Long campaignId,
             String imgBase64,
             String name,
@@ -94,7 +94,7 @@ public record BattleResponseDto(
             }
             CharacterSnapshotResponseDto dto = new CharacterSnapshotResponseDto(
                     character.getUserId(),
-                    HeroResponseDto.MapCharSnapshotStats(character),
+                    MapCharSnapshotStats(character),
                     character.getCampaign().getId(),
                     BytesToBase64.bytesToBase64(character.getImgBytes()),
                     character.getName(),
@@ -102,6 +102,23 @@ public record BattleResponseDto(
 
             );
             return dto;
+        }
+
+        public record CharacterSnapshotStats(
+                Integer getMaxHp,
+                Integer getCurrentHp,
+                Integer getMaxMp,
+                Integer getCurrentMp) {
+        }
+
+        public static CharacterSnapshotStats MapCharSnapshotStats(CharacterSnapshot character) {
+            Stats stats = character.getStats();
+            return new CharacterSnapshotStats(
+                    stats.getMaxHp(),
+                    stats.getCurrentHp(),
+                    stats.getMaxMp(),
+                    stats.getCurrentMp()
+            );
         }
 
         public static List<CharacterSnapshotResponseDto> fromListOfCharSnapshotToDto(List<CharacterSnapshot> characterSnapshots) {

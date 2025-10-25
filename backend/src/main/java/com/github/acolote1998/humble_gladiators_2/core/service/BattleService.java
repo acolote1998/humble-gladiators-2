@@ -64,7 +64,7 @@ public class BattleService {
         List<CharacterSnapshot> startingTeamOne = new ArrayList<>();
         startingTeamOne.add(CharacterSnapshot.fromCharacterInstance(hero));
         List<CharacterSnapshot> startingTeamTwo = new ArrayList<>();
-        startingTeamOne.add(CharacterSnapshot.fromCharacterInstance(enemy));
+        startingTeamTwo.add(CharacterSnapshot.fromCharacterInstance(enemy));
         List<CharacterInstance> winningTeam = new ArrayList<>();
         List<CharacterInstance> losingTeam = new ArrayList<>();
         Battle newBattle = new Battle();
