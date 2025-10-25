@@ -138,4 +138,11 @@ Thursday 23/10
 
 Friday 24/10
 - Unequip item endpoints
+- Unequip MVI
+- Battle route creation
+- Fixed visual bugs respegint glowing, auras and css classes of the cards
+
+Saturday 25/10
+- Creation of battle possible
+- Rendering battle content
 ```
