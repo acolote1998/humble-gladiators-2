@@ -1,4 +1,5 @@
 import type { BattleResponseDto } from "../../types/battleTypes";
+import { CharacterCard } from "../cards/CharacterCard";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -12,7 +13,14 @@ const BattleExecuting = ({
   startingTeamOne,
   startingTeamTwo,
 }: BattleResponseDto) => {
-  return <div>BattleExecuting</div>;
+  return (
+    <div>
+      <div className="flex flex-col items-center">
+        <p className="text-2xl">Enemy</p>
+        <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
+      </div>
+    </div>
+  );
 };
 
 export default BattleExecuting;
