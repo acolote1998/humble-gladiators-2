@@ -87,7 +87,6 @@ public record BattleResponseDto(
             String name,
             String description
     ) {
-
         private static CharacterSnapshotResponseDto fromSnapshotToDto(CharacterSnapshot character) {
             if (character == null) {
                 return null;
@@ -102,6 +101,12 @@ public record BattleResponseDto(
 
             );
             return dto;
+        }
+
+        public static List<CharacterSnapshotResponseDto> fromListOfCharSnapshotToDto(List<CharacterSnapshot> characterSnapshots) {
+            List<CharacterSnapshotResponseDto> dtos = new ArrayList<>();
+            characterSnapshots.forEach(characterSnapshot -> dtos.add(fromSnapshotToDto(characterSnapshot)));
+            return dtos;
         }
 
         public record CharacterSnapshotStats(
@@ -119,12 +124,6 @@ public record BattleResponseDto(
                     stats.getMaxMp(),
                     stats.getCurrentMp()
             );
-        }
-
-        public static List<CharacterSnapshotResponseDto> fromListOfCharSnapshotToDto(List<CharacterSnapshot> characterSnapshots) {
-            List<CharacterSnapshotResponseDto> dtos = new ArrayList<>();
-            characterSnapshots.forEach(characterSnapshot -> dtos.add(fromSnapshotToDto(characterSnapshot)));
-            return dtos;
         }
     }
 }
