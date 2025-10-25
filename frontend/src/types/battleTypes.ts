@@ -3,14 +3,30 @@ export type BattleResponseDto = {
   id: number;
   campaignId: number;
   turns: TurnResponseDto[];
-  startingTeamOne?: null;
-  startingTeamTwo?: null;
+  startingTeamOne?: CharacterSnaphotType[];
+  startingTeamTwo?: CharacterSnaphotType[];
   teamOne: CharacterInstanceType[];
   teamTwo: CharacterInstanceType[];
   winningTeam: CharacterInstanceType[];
   losingTeam: CharacterInstanceType[];
   currentCharacterToPlay: CharacterInstanceType;
   onGoing: boolean;
+};
+
+type CharacterSnaphotType = {
+  campaignId: number;
+  description: string;
+  imgBase64: string;
+  name: string;
+  stats: CharacterSnapshotStatsType;
+  userId: string;
+};
+
+type CharacterSnapshotStatsType = {
+  currentHp: number;
+  currentMp: number;
+  maxHp: number;
+  maxMp: number;
 };
 
 export type TurnResponseDto = {

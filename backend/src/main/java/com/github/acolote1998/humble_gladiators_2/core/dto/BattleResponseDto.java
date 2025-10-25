@@ -105,10 +105,10 @@ public record BattleResponseDto(
         }
 
         public record CharacterSnapshotStats(
-                Integer getMaxHp,
-                Integer getCurrentHp,
-                Integer getMaxMp,
-                Integer getCurrentMp) {
+                Integer maxP,
+                Integer currentHp,
+                Integer maxMp,
+                Integer currentMp) {
         }
 
         public static CharacterSnapshotStats MapCharSnapshotStats(CharacterSnapshot character) {
