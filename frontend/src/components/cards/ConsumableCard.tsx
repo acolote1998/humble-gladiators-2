@@ -55,10 +55,10 @@ export const ConsumableCard = ({
       <div className="absolute bottom-51.5 left-0 text-sm">
         <div className="relative h-6">
           {/* container for absolute children; give it a height so top:0 has meaning */}
-          <span className="absolute left-12 top-0 z-20 w-50">
+          <span title="TIER" className="absolute left-12 top-0 z-20 w-50">
             T {calculateTierAndRarityStars(tier)}
           </span>
-          <span className="absolute left-46 top-0 z-10 w-50">
+          <span title="RARITY" className="absolute left-46 top-0 z-10 w-50">
             R {calculateTierAndRarityStars(rarity)}
           </span>
         </div>
@@ -81,10 +81,13 @@ export const ConsumableCard = ({
             className="w-65.5 h-auto"
           />
         )}
-        <p className="text-lg mt-8 ">
+        <p title="NAME" className="text-lg mt-8 ">
           {discovered || renderingFrom == "BOOSTER" ? name : "?"}
         </p>
-        <p className="text-sm opacity-80 text-center p-1 mt-0.5 px-7">
+        <p
+          title="DESCRIPTION"
+          className="text-sm opacity-80 text-center p-1 mt-0.5 px-7"
+        >
           {discovered || renderingFrom == "BOOSTER" ? description : "?"}
         </p>
       </div>
@@ -95,13 +98,17 @@ export const ConsumableCard = ({
           <p>🛡️ {(discovered || renderingFrom=="BOOSTER") ? physicalDefense : "?"}</p>
         </div> */}
         <div className="absolute left-24 w-15">
-          <p>❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}</p>
+          <p title="RESTORE HP">
+            ❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}
+          </p>
         </div>
         {/* <div className="absolute left-41.5 w-15">
           <p>✨ {(discovered || renderingFrom=="BOOSTER") ? magicalDefense : "?"}</p>
         </div> */}
         <div className="absolute left-59 w-15">
-          <p>🧉 {discovered || renderingFrom == "BOOSTER" ? restoreMp : "?"}</p>
+          <p title="RESTORE MP">
+            🧉 {discovered || renderingFrom == "BOOSTER" ? restoreMp : "?"}
+          </p>
         </div>
       </div>
     </div>
