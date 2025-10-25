@@ -4,4 +4,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class CharacterSnapshot extends AbstractCharacter {
+    private Boolean discovered;
+    private Integer tier;
+    private Integer rarity;
 }
