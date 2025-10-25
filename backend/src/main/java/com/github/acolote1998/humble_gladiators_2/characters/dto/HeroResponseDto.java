@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.characters.dto;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterSnapshot;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.item.dto.*;
@@ -50,12 +51,36 @@ public record HeroResponseDto(
         return new HeroResponseDto(
                 model.getId(),
                 model.getName(),
-                MapStats(model),
+                MapCharInstanceStats(model),
                 mapInventory(model.getInventory())
         );
     }
 
-    public static CharacterStatsResponseDto MapStats(CharacterInstance character) {
+    public static CharacterStatsResponseDto MapCharInstanceStats(CharacterInstance character) {
+        Stats stats = character.getStats();
+        return new CharacterStatsResponseDto(
+                stats.getConstitution(),
+                stats.getIntelligence(),
+                stats.getStrength(),
+                stats.getSpeed(),
+                stats.getLuck(),
+                stats.getMaxHp(),
+                stats.getCurrentHp(),
+                stats.getMaxMp(),
+                stats.getCurrentMp(),
+                stats.getHeight(),
+                stats.getWeight(),
+                stats.getLevel(),
+                stats.getCurrentExp(),
+                stats.getExpForNextLevel(),
+                character.getPhysicalDefense(),
+                character.getMagicalDefense(),
+                character.getPhysicalDamage(),
+                character.getMagicalDamage()
+        );
+    }
+
+    public static CharacterStatsResponseDto MapCharSnapshotStats(CharacterSnapshot character) {
         Stats stats = character.getStats();
         return new CharacterStatsResponseDto(
                 stats.getConstitution(),

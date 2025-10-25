@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterSnapshot;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
@@ -60,6 +61,10 @@ public class BattleService {
         teamOne.add(hero);
         List<CharacterInstance> teamTwo = new ArrayList<>();
         teamTwo.add(enemy);
+        List<CharacterSnapshot> startingTeamOne = new ArrayList<>();
+        startingTeamOne.add(CharacterSnapshot.fromCharacterInstance(hero));
+        List<CharacterSnapshot> startingTeamTwo = new ArrayList<>();
+        startingTeamTwo.add(CharacterSnapshot.fromCharacterInstance(enemy));
         List<CharacterInstance> winningTeam = new ArrayList<>();
         List<CharacterInstance> losingTeam = new ArrayList<>();
         Battle newBattle = new Battle();
@@ -70,6 +75,8 @@ public class BattleService {
         newBattle.setLosingTeam(losingTeam);
         newBattle.setTeamOne(teamOne);
         newBattle.setTeamTwo(teamTwo);
+        newBattle.setStartingTeamOne(startingTeamOne);
+        newBattle.setStartingTeamTwo(startingTeamTwo);
         CharacterInstance startingCharacter = whosTurnsIsIt(newBattle);
         newBattle.setCurrentCharacterToPlay(startingCharacter);
         newBattle.setOngoing(true);
