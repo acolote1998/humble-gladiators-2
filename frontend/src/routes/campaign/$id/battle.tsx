@@ -5,6 +5,7 @@ import {
 } from "../../../hooks/useBattles";
 import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
+import BattleExecuting from "../../../components/battle/BattleExecuting";
 
 export const Route = createFileRoute("/campaign/$id/battle")({
   component: RouteComponent,
@@ -26,15 +27,8 @@ function RouteComponent() {
       {isActiveBattleLoading ? (
         <p>Loading battle...</p>
       ) : (
-        activeBattleData && (
-          <p
-            onClick={() => {
-              console.log(activeBattleData);
-            }}
-          >
-            Check the active battle
-          </p>
-        )
+        activeBattleData &&
+        activeBattleData.onGoing && <BattleExecuting {...activeBattleData} />
       )}
       {!activeBattleData &&
         (isBattleCreationPossibleLoading ? (
