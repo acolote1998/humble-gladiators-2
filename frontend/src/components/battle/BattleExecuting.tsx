@@ -1,8 +1,7 @@
 import type { BattleResponseDto } from "../../types/battleTypes";
-import { ArmorCard } from "../cards/ArmorCard";
-import { BootsCard } from "../cards/BootsCard";
 import { CharacterCard } from "../cards/CharacterCard";
 import { ConsumableCard } from "../cards/ConsumableCard";
+import { PunchCard } from "../cards/PunchCard";
 import { SpellCard } from "../cards/SpellCard";
 import { WeaponCard } from "../cards/WeaponCard";
 const BattleExecuting = ({
@@ -18,6 +17,13 @@ const BattleExecuting = ({
   startingTeamOne,
   startingTeamTwo,
 }: BattleResponseDto) => {
+  const isHeroEquippingWeapon = (): boolean => {
+    let doesItHaveEquippedWeapon = false;
+    teamOne[0].inventory.weapons.forEach((w) => {
+      if (w.equipped) doesItHaveEquippedWeapon = true;
+    });
+    return doesItHaveEquippedWeapon;
+  };
   return (
     <div>
       <div className="flex flex-col items-center">
@@ -51,11 +57,15 @@ const BattleExecuting = ({
         <div className="col-span-6 flex flex-col items-center">
           <p className="text-2xl">Hand</p>
           <div className="grid grid-cols-5">
-            {teamOne[0].inventory.weapons.map((card) => {
-              if (card.equipped) {
-                return <WeaponCard {...card} renderingFrom="BATTLE" />;
-              }
-            })}
+            {isHeroEquippingWeapon() ? (
+              teamOne[0].inventory.weapons.map((card) => {
+                if (card.equipped) {
+                  return <WeaponCard {...card} renderingFrom="BATTLE" />;
+                }
+              })
+            ) : (
+              <PunchCard />
+            )}
             {teamOne[0].inventory.spells.map((card) => {
               return <SpellCard {...card} renderingFrom="BATTLE" />;
             })}
