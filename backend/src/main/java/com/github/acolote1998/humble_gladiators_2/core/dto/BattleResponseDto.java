@@ -1,11 +1,14 @@
 package com.github.acolote1998.humble_gladiators_2.core.dto;
 
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
+import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterSnapshot;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
 import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Action;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
+import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +17,8 @@ public record BattleResponseDto(
         Long id,
         Long campaignId,
         List<TurnResponseDto> turns,
-        List<FullCharacterResponseDto> startingTeamOne,
-        List<FullCharacterResponseDto> startingTeamTwo,
+        List<CharacterSnapshotResponseDto> startingTeamOne,
+        List<CharacterSnapshotResponseDto> startingTeamTwo,
         List<FullCharacterResponseDto> teamOne,
         List<FullCharacterResponseDto> teamTwo,
         List<FullCharacterResponseDto> winningTeam,
@@ -29,8 +32,8 @@ public record BattleResponseDto(
                 model.getId(),
                 model.getCampaign().getId(),
                 TurnResponseDto.fromModelList(model.getTurns()),
-                null,
-                null,
+                CharacterSnapshotResponseDto.fromListOfCharSnapshotToDto(model.getStartingTeamOne()),
+                CharacterSnapshotResponseDto.fromListOfCharSnapshotToDto(model.getStartingTeamTwo()),
                 FullCharacterResponseDto.fromListOfCharInstToListOfCharDto(model.getTeamOne()),
                 FullCharacterResponseDto.fromListOfCharInstToListOfCharDto(model.getTeamTwo()),
                 FullCharacterResponseDto.fromListOfCharInstToListOfCharDto(model.getWinningTeam()),
@@ -73,6 +76,38 @@ public record BattleResponseDto(
                         model.getStateCaused()
                 );
             }
+        }
+    }
+
+    public record CharacterSnapshotResponseDto(
+            String userId,
+            HeroResponseDto.CharacterStatsResponseDto stats,
+            Long campaignId,
+            String imgBase64,
+            String name,
+            String description
+    ) {
+
+        private static CharacterSnapshotResponseDto fromSnapshotToDto(CharacterSnapshot character) {
+            if (character == null) {
+                return null;
+            }
+            CharacterSnapshotResponseDto dto = new CharacterSnapshotResponseDto(
+                    character.getUserId(),
+                    HeroResponseDto.MapCharSnapshotStats(character),
+                    character.getCampaign().getId(),
+                    BytesToBase64.bytesToBase64(character.getImgBytes()),
+                    character.getName(),
+                    character.getDescription()
+
+            );
+            return dto;
+        }
+
+        public static List<CharacterSnapshotResponseDto> fromListOfCharSnapshotToDto(List<CharacterSnapshot> characterSnapshots) {
+            List<CharacterSnapshotResponseDto> dtos = new ArrayList<>();
+            characterSnapshots.forEach(characterSnapshot -> dtos.add(fromSnapshotToDto(characterSnapshot)));
+            return dtos;
         }
     }
 }

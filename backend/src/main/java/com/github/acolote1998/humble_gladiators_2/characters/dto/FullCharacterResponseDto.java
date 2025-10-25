@@ -31,7 +31,7 @@ public record FullCharacterResponseDto(
         }
         FullCharacterResponseDto dto = new FullCharacterResponseDto(
                 character.getId(),
-                HeroResponseDto.MapStats(character),
+                HeroResponseDto.MapCharInstanceStats(character),
                 HeroResponseDto.mapInventory(character.getInventory()),
                 character.getCategory(),
                 character.getCharacterType(),
