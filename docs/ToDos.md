@@ -5,10 +5,12 @@
   - [ ] Able to cast spells
   - [ ] Able to use consumables
   - [ ] Able to physically attack
+  - [ ] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
   
 - [ ] Battle in the future:
   - [ ] Enable turn processing based on the character snapshot. At the moment we rely on live data of the characters to process a battle, 
   but that not might be ideal for the future?
+
   - IDEA: At the moment, we trigger the enemy's turn when we to a getBattle, but we currently have the character's executed turn as a response from either a spell,
   or a consumable or an attack. So I am thinking to "simulate" a waiting for the enemys turn, it could be that when we have success of an action of the hero, we can render the
   battle accordingly, with the result of the hero's turn, and probably add a onSuccess in the ation call, wait let's say 2, or 3 seconds? and then invalidate the getBattle,

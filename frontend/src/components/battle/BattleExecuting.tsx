@@ -28,14 +28,25 @@ const BattleExecuting = ({
     <div>
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
-          {turns.length < 1 && currentCharacterToPlay.id != teamOne[0].id && (
+          {turns.length < 1 ? (
+            currentCharacterToPlay.id != teamOne[0].id && (
+              <p
+                className="text-lg text-center bg-green-300"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                Start Battle
+              </p>
+            )
+          ) : (
             <p
               className="text-lg text-center bg-green-300"
               onClick={() => {
                 window.location.reload();
               }}
             >
-              Start Battle
+              You start, cast one of your cards by clicking on it
             </p>
           )}
           <div className="flex flex-col items-center">

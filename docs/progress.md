@@ -145,4 +145,5 @@ Friday 24/10
 Saturday 25/10
 - Creation of battle possible
 - Rendering battle content
+- Battle creation + battle update flow during first turns is there
 ```
