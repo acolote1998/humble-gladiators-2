@@ -152,4 +152,6 @@ Sunday 26/10
 - Implemented hero physical attack in battle
 - Implemented hero consumable in battle
 - Implemented spell in battle
+- Improved API calls and logic from battle component
+- Enhanced battle MVI for card selection
 ```
