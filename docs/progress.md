@@ -155,4 +155,6 @@ Sunday 26/10
 - Improved API calls and logic from battle component
 - Enhanced battle MVI for card selection
 - Rendering turns in the battle
+- Including toasts
+- Improving battle server processing by separating battle updates and npc turn triggering
 ```

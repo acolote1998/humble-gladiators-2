@@ -9,6 +9,7 @@ import type { ActionTypeEnum } from "../../types/battleTypes";
 import { useEffect, useState } from "react";
 import { useTriggerNpcTurnForTodaysBattle } from "../../hooks/useBattles";
 import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -21,12 +22,12 @@ const BattleExecuting = ({
   winningTeam,
   startingTeamOne,
   startingTeamTwo,
-  refetchBattle,
 }: BattleResponseDto) => {
   const [isChoosingTarget, setIsChoosingTarget] = useState<boolean>(false);
   const [chosenTargetId, setChosenTargetId] = useState<number>();
   const [chosenCardAction, setChosenCardAction] = useState<ActionTypeEnum>();
   const [chosenCardId, setChosenCardId] = useState<number>();
+  const queryClient = useQueryClient();
 
   const turnActionToText = (action: ActionTypeEnum) => {
     switch (action) {
@@ -77,10 +78,9 @@ const BattleExecuting = ({
         setChosenTargetId(undefined);
         setChosenCardAction(undefined);
         setChosenCardId(undefined);
-        if (refetchBattle) {
-          console.log("hola?");
-          refetchBattle();
-        }
+        queryClient.invalidateQueries({
+          queryKey: ["active-battle", campaignId],
+        });
       }, 2800);
     }
   }, [
@@ -89,10 +89,10 @@ const BattleExecuting = ({
     chosenCardAction,
     chosenCardId,
     chosenTargetId,
-    refetchBattle,
     teamOne,
     teamTwo,
     triggerActionMutation,
+    queryClient,
   ]);
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 
@@ -119,10 +119,17 @@ const BattleExecuting = ({
     if (isNpcTurnTriggeredSuccessfully) {
       setTimeout(() => {
         eraseNpcTurnTraces();
-        if (refetchBattle) refetchBattle();
+        queryClient.invalidateQueries({
+          queryKey: ["active-battle", campaignId],
+        });
       }, 2500);
     }
-  }, [isNpcTurnTriggeredSuccessfully, refetchBattle, eraseNpcTurnTraces]);
+  }, [
+    isNpcTurnTriggeredSuccessfully,
+    queryClient,
+    campaignId,
+    eraseNpcTurnTraces,
+  ]);
 
   useEffect(() => {
     if (turns.length > 0) {

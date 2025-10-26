@@ -39,6 +39,7 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
       return createABattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
     onSuccess: (data) => {
+      console.log("hello");
       queryClient.invalidateQueries({
         queryKey: ["active-battle", data.campaignId],
       });
@@ -51,7 +52,7 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
   campaignId: number
 ) => {
   const { getToken } = useAuth();
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["active-battle", campaignId],
     queryFn: async () => {
       const bearerToken = await getToken();
@@ -61,7 +62,7 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
       return getBattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
   });
-  return { data, isError, isLoading, refetch };
+  return { data, isError, isLoading };
 };
 
 export const useGetCheckIfThereIsAnOngoingBattleForToday = (

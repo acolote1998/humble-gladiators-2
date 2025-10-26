@@ -7,7 +7,6 @@ import {
 import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import BattleExecuting from "../../../components/battle/BattleExecuting";
-import { useEffect } from "react";
 
 export const Route = createFileRoute("/campaign/$id/battle")({
   component: RouteComponent,
@@ -15,69 +14,33 @@ export const Route = createFileRoute("/campaign/$id/battle")({
 
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/battle" });
-  const {
-    mutate: createBattle,
-    data: createdBattleData,
-    isPending: isBattleCreationPending,
-  } = useCreateABattleForTodayByCampaignIdAndUser();
+  const { mutate: createBattle } =
+    useCreateABattleForTodayByCampaignIdAndUser();
   const {
     data: isBattleCreationPossible,
-    isError: isBattleCreationPossibleError,
     isLoading: isBattleCreationPossibleLoading,
   } = useGetBattleCreationAvailability(Number(campaignId));
-  const {
-    data: activeBattleData,
-    isLoading: isActiveBattleLoading,
-    refetch: fetchCreatedBattlePurposly,
-  } = useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
+  const { data: activeBattleData, isLoading: isActiveBattleLoading } =
+    useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
 
   const { data: isThereOngoingBattleToday } =
     useGetCheckIfThereIsAnOngoingBattleForToday(Number(campaignId));
 
-  useEffect(() => {
-    if (!createdBattleData && !isBattleCreationPending) {
-      fetchCreatedBattlePurposly();
-    }
-  }, [createdBattleData, fetchCreatedBattlePurposly, isBattleCreationPending]);
   return (
     <div>
-      {createdBattleData ? (
-        <BattleExecuting
-          key={createdBattleData.id + createdBattleData.turns.length}
-          {...createdBattleData}
-          refetchBattle={fetchCreatedBattlePurposly}
-        />
-      ) : isThereOngoingBattleToday && isActiveBattleLoading ? (
-        <p>Loading battle...</p>
+      {activeBattleData ? (
+        <BattleExecuting {...activeBattleData} />
+      ) : isBattleCreationPossible ? (
+        <p
+          onClick={() => {
+            createBattle(Number(campaignId));
+          }}
+        >
+          Create battle
+        </p>
       ) : (
-        activeBattleData &&
-        activeBattleData.onGoing && (
-          <BattleExecuting
-            key={activeBattleData.id + activeBattleData.turns.length}
-            {...activeBattleData}
-            refetchBattle={fetchCreatedBattlePurposly}
-          />
-        )
+        <p>Not possible to create battle, open a new character booster...</p>
       )}
-      {!activeBattleData &&
-        (isBattleCreationPossibleLoading ? (
-          <p>Loading battle creation availability...</p>
-        ) : isBattleCreationPossibleError ? (
-          <p>Error checking battle creation availability</p>
-        ) : isBattleCreationPossible && !isBattleCreationPending ? (
-          <p
-            onClick={() => {
-              createBattle(Number(campaignId));
-            }}
-          >
-            Create battle
-          </p>
-        ) : (
-          <p>
-            Not possible to create battle, try opening a booster character or
-            come back tomorrow
-          </p>
-        ))}
     </div>
   );
 }
