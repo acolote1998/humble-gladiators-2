@@ -29,7 +29,7 @@ const BattleExecuting = ({
       if (refetchBattle) refetchBattle();
     }, 2800);
   };
-  const { mutate: castPhysicalAttack } = useCastActionInBattle();
+  const { mutate: triggerAction } = useCastActionInBattle();
   const isHeroEquippingWeapon = (): boolean => {
     let doesItHaveEquippedWeapon = false;
     teamOne[0].inventory.weapons.forEach((w) => {
@@ -113,7 +113,7 @@ const BattleExecuting = ({
                       updateBattleDisplayMessage(
                         `${teamOne[0].name} uses a physical attack on ${teamTwo[0].name}!`
                       );
-                      castPhysicalAttack({
+                      triggerAction({
                         action: "PHYSICAL_ATTACK",
                         campaignId: campaignId,
                         battleId: battleId,
@@ -144,7 +144,28 @@ const BattleExecuting = ({
                     );
                   })
                   .map((card) => {
-                    return <SpellCard {...card} renderingFrom="BATTLE" />;
+                    return (
+                      <div
+                        onClick={() => {
+                          if (currentCharacterToPlay.id == teamOne[0].id) {
+                            //It is the hero's turn, so they can use a spell
+                            updateBattleDisplayMessage(
+                              `${teamOne[0].name} casts ${card.name} on ${teamTwo[0].name}!`
+                            );
+                            triggerAction({
+                              action: "SPELL",
+                              campaignId: campaignId,
+                              battleId: battleId,
+                              performingCharacterId: teamOne[0].id,
+                              targetCharacterId: teamTwo[0].id,
+                              cardToUseId: card.id,
+                            });
+                          }
+                        }}
+                      >
+                        <SpellCard {...card} renderingFrom="BATTLE" />
+                      </div>
+                    );
                   })}
                 {teamOne[0].inventory.consumables.map((card) => {
                   return <ConsumableCard {...card} renderingFrom="BATTLE" />;
