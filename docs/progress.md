@@ -154,4 +154,5 @@ Sunday 26/10
 - Implemented spell in battle
 - Improved API calls and logic from battle component
 - Enhanced battle MVI for card selection
+- Rendering turns in the battle
 ```

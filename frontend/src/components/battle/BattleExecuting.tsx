@@ -132,16 +132,23 @@ const BattleExecuting = ({
               </div>
             </div>
             <div className="absolute rounded-md bg-gray-200 border-gray-400 border-1 mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-scroll">
-              {turns.map((turn, index) => (
-                <p className="my-2 p-1 rounded-md bg-gray-300">
-                  Turn {index + 1} - {turn.performingCharacter.name} performed{" "}
-                  {turn.action.actionType} on {turn.targetCharacter.name}{" "}
-                  {turn.action.damageCaused > 0 &&
-                    `and caused ${turn.action.damageCaused} damage`}
-                  {turn.action.healingCaused > 0 &&
-                    `and healed ${turn.action.healingCaused} heal points`}
-                </p>
-              ))}
+              {turns
+                .slice()
+                .reverse()
+                .map((turn, index) => (
+                  <p
+                    key={turns.length - index}
+                    className="my-2 p-1 rounded-md bg-gray-300"
+                  >
+                    Turn {turns.length - index} -{" "}
+                    {turn.performingCharacter.name} performed{" "}
+                    {turn.action.actionType} on {turn.targetCharacter.name}
+                    {turn.action.damageCaused > 0 &&
+                      ` and caused ${turn.action.damageCaused} damage`}
+                    {turn.action.healingCaused > 0 &&
+                      ` and healed ${turn.action.healingCaused} heal points`}
+                  </p>
+                ))}
             </div>
           </div>
           <div className="grid grid-cols-7">
