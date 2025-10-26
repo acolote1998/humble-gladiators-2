@@ -42,12 +42,20 @@ function RouteComponent() {
   return (
     <div>
       {createdBattleData ? (
-        <BattleExecuting {...createdBattleData} />
+        <BattleExecuting
+          {...createdBattleData}
+          refetchBattle={fetchCreatedBattlePurposly}
+        />
       ) : isThereOngoingBattleToday && isActiveBattleLoading ? (
         <p>Loading battle...</p>
       ) : (
         activeBattleData &&
-        activeBattleData.onGoing && <BattleExecuting {...activeBattleData} />
+        activeBattleData.onGoing && (
+          <BattleExecuting
+            {...activeBattleData}
+            refetchBattle={fetchCreatedBattlePurposly}
+          />
+        )
       )}
       {!activeBattleData &&
         (isBattleCreationPossibleLoading ? (

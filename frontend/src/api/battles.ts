@@ -64,12 +64,13 @@ export const getCheckIfThereIsAnOngoingBattleForToday = async (
 export const castPhysicalAttack = async (
   bearerToken: string,
   campaignId: number,
+  battleId: number,
   turnRequest: TurnRequest
 ): Promise<TurnResponseDto> => {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/campaign/${campaignId}/action/attack`,
-      { turnRequest: turnRequest },
+      `${BACKEND_URL}/campaign/${campaignId}/battle/${battleId}/action/attack`,
+      turnRequest,
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }

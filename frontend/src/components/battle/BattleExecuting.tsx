@@ -4,10 +4,12 @@ import { ConsumableCard } from "../cards/ConsumableCard";
 import { PunchCard } from "../cards/PunchCard";
 import { SpellCard } from "../cards/SpellCard";
 import { WeaponCard } from "../cards/WeaponCard";
+import { useCastPhysicalAttack } from "../../hooks/useBattles";
+import { useState } from "react";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
-  id,
+  id: battleId,
   losingTeam,
   onGoing,
   teamOne,
@@ -16,7 +18,18 @@ const BattleExecuting = ({
   winningTeam,
   startingTeamOne,
   startingTeamTwo,
+  refetchBattle,
 }: BattleResponseDto) => {
+  const [messageOfWhatsHappening, setMessageOfWhatsHappening] =
+    useState<string>("");
+  const updateBattleDisplayMessage = (message: string) => {
+    setMessageOfWhatsHappening(message);
+    setTimeout(() => {
+      setMessageOfWhatsHappening("");
+      if (refetchBattle) refetchBattle();
+    }, 2800);
+  };
+  const { mutate: castPhysicalAttack } = useCastPhysicalAttack();
   const isHeroEquippingWeapon = (): boolean => {
     let doesItHaveEquippedWeapon = false;
     teamOne[0].inventory.weapons.forEach((w) => {
@@ -26,6 +39,11 @@ const BattleExecuting = ({
   };
   return (
     <div>
+      {messageOfWhatsHappening.length > 0 && (
+        <p className="text-lg text-center bg-yellow-300">
+          {messageOfWhatsHappening}
+        </p>
+      )}
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
           {
@@ -88,15 +106,33 @@ const BattleExecuting = ({
             <div className="col-span-6 flex flex-col items-center">
               <p className="text-2xl">Hand</p>
               <div className="grid grid-cols-5">
-                {isHeroEquippingWeapon() ? (
-                  teamOne[0].inventory.weapons.map((card) => {
-                    if (card.equipped) {
-                      return <WeaponCard {...card} renderingFrom="BATTLE" />;
+                <div
+                  onClick={() => {
+                    if (currentCharacterToPlay.id == teamOne[0].id) {
+                      //It is the hero's turn, so they can attack
+                      updateBattleDisplayMessage(
+                        `${teamOne[0].name} uses a physical attack on ${teamTwo[0].name}!`
+                      );
+                      castPhysicalAttack({
+                        action: "PHYSICAL_ATTACK",
+                        campaignId: campaignId,
+                        battleId: battleId,
+                        performingCharacterId: teamOne[0].id,
+                        targetCharacterId: teamTwo[0].id,
+                      });
                     }
-                  })
-                ) : (
-                  <PunchCard />
-                )}
+                  }}
+                >
+                  {isHeroEquippingWeapon() ? (
+                    teamOne[0].inventory.weapons.map((card) => {
+                      if (card.equipped) {
+                        return <WeaponCard {...card} renderingFrom="BATTLE" />;
+                      }
+                    })
+                  ) : (
+                    <PunchCard />
+                  )}
+                </div>
                 {teamOne[0].inventory.spells
                   .filter((spell, index, self) => {
                     return (

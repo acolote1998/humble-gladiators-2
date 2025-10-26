@@ -82,7 +82,6 @@ export const useGetCheckIfThereIsAnOngoingBattleForToday = (
 };
 
 export const useCastPhysicalAttack = () => {
-  const queryClient = useQueryClient();
   const { getToken } = useAuth();
   const mutation = useMutation({
     mutationFn: async (turnRequest: TurnRequest) => {
@@ -93,16 +92,9 @@ export const useCastPhysicalAttack = () => {
       return castPhysicalAttack(
         bearerToken,
         turnRequest.campaignId,
+        turnRequest.battleId,
         turnRequest
       );
-    },
-    onSuccess: (data) => {
-      //Invalidate active battle after 2 seconds to trigger enemy's turn
-      setTimeout(() => {
-        queryClient.invalidateQueries({
-          queryKey: ["active-battle", data.performingCharacter.campaignId],
-        });
-      }, 2000);
     },
   });
   return mutation;
