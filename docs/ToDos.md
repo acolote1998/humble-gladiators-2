@@ -6,7 +6,16 @@
   - [ ] Able to use consumables
   - [ ] Able to physically attack
   - [ ] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
+  - [ ] Implement victory screen in frontend
+  - [ ] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
   
+  - [ ] Battle rewards
+    - [ ] Implement exp reward
+    - [ ] Implement gold reward
+    - [ ] Implement item reward
+
+- [ ] Implement level up system?
+
 - [ ] Battle in the future:
   - [ ] Enable turn processing based on the character snapshot. At the moment we rely on live data of the characters to process a battle, 
   but that not might be ideal for the future?
