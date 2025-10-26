@@ -28,26 +28,28 @@ const BattleExecuting = ({
     <div>
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
-          {turns.length < 1 ? (
-            currentCharacterToPlay.id != teamOne[0].id && (
-              <p
-                className="text-lg text-center bg-green-300"
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                Start Battle
-              </p>
-            )
-          ) : (
+          {
+            // If no one has played, and it is the enemy's turn (enemy is always team two)
+            // then start the battle (it will reload the page which triggers the enemy's
+            // turn if it is their turn.
+            // otherwise, if it is the hero's turn (always team one), then we can just
+            // play a card to start the battle)
+          }
+          {turns.length < 1 && currentCharacterToPlay.id == teamTwo[0].id ? (
             <p
               className="text-lg text-center bg-green-300"
               onClick={() => {
                 window.location.reload();
               }}
             >
-              You start, cast one of your cards by clicking on it
+              Start Battle
             </p>
+          ) : (
+            turns.length < 1 && (
+              <p className="text-lg text-center bg-green-300">
+                You start, cast one of your cards by clicking on it
+              </p>
+            )
           )}
           <div className="flex flex-col items-center">
             <p className="text-2xl">
