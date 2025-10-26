@@ -146,9 +146,13 @@ const BattleExecuting = ({
                   .map((card) => {
                     return (
                       <div
+                        className={`${teamOne[0].stats.currentMp >= card.mpCost ? "opacity-100" : "opacity-50"}`}
                         onClick={() => {
-                          if (currentCharacterToPlay.id == teamOne[0].id) {
-                            //It is the hero's turn, so they can use a spell
+                          if (
+                            currentCharacterToPlay.id == teamOne[0].id &&
+                            teamOne[0].stats.currentMp >= card.mpCost
+                          ) {
+                            //It is the hero's turn, so they can use a spell, and they have enough MP for the card
                             updateBattleDisplayMessage(
                               `${teamOne[0].name} casts ${card.name} on ${teamTwo[0].name}!`
                             );
@@ -168,7 +172,28 @@ const BattleExecuting = ({
                     );
                   })}
                 {teamOne[0].inventory.consumables.map((card) => {
-                  return <ConsumableCard {...card} renderingFrom="BATTLE" />;
+                  return (
+                    <div
+                      onClick={() => {
+                        if (currentCharacterToPlay.id == teamOne[0].id) {
+                          //It is the hero's turn, so they can use a consumable
+                          updateBattleDisplayMessage(
+                            `${teamOne[0].name} uses ${card.name} on ${teamTwo[0].name}!`
+                          );
+                          triggerAction({
+                            action: "CONSUMABLE",
+                            campaignId: campaignId,
+                            battleId: battleId,
+                            performingCharacterId: teamOne[0].id,
+                            targetCharacterId: teamTwo[0].id,
+                            cardToUseId: card.id,
+                          });
+                        }
+                      }}
+                    >
+                      <ConsumableCard {...card} renderingFrom="BATTLE" />
+                    </div>
+                  );
                 })}
               </div>
             </div>
