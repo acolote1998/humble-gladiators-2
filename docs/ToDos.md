@@ -1,7 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
 - [ ] Battle
-  - [ ] Battle turn processing system
+  - [X] Battle turn processing system
   - [X] Able to cast spells
   - [X] Able to use consumables
   - [X] Able to physically attack

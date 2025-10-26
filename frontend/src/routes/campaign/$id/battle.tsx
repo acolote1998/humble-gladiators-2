@@ -1,6 +1,4 @@
 import {
-  useGetBattleCreationAvailability,
-  useCreateABattleForTodayByCampaignIdAndUser,
   useGetBattleForTodayByCampaignIdAndUsery,
   useGetCheckIfThereIsAnOngoingBattleForToday,
 } from "../../../hooks/useBattles";
