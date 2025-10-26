@@ -2,10 +2,10 @@
 
 - [ ] Battle
   - [ ] Battle turn processing system
-  - [ ] Able to cast spells
-  - [ ] Able to use consumables
-  - [ ] Able to physically attack
-  - [ ] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
+  - [X] Able to cast spells
+  - [X] Able to use consumables
+  - [X] Able to physically attack
+  - [X] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
   - [ ] Implement victory screen in frontend
   - [ ] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
   
