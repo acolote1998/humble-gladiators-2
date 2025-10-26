@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   createABattleForTodayForCampaignAndUser,
   getBattleForTodayForCampaignAndUser,
+  getCheckIfThereIsAnOngoingBattleForToday,
 } from "../api/battles";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -59,4 +60,21 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
     enabled: false,
   });
   return { data, isError, isLoading, refetch };
+};
+
+export const useGetCheckIfThereIsAnOngoingBattleForToday = (
+  campaignId: number
+) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["battle-ongoing-check", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return getCheckIfThereIsAnOngoingBattleForToday(bearerToken, campaignId);
+    },
+  });
+  return { data, isError, isLoading };
 };
