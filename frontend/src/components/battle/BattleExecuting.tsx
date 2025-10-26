@@ -185,7 +185,7 @@ const BattleExecuting = ({
                             campaignId: campaignId,
                             battleId: battleId,
                             performingCharacterId: teamOne[0].id,
-                            targetCharacterId: teamTwo[0].id,
+                            targetCharacterId: teamOne[0].id,
                             cardToUseId: card.id,
                           });
                         }
