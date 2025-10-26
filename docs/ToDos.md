@@ -8,6 +8,8 @@
   - [X] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
   - [ ] Implement victory screen in frontend
   - [ ] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
+  - [ ] In the turn model, we return dealed damage, healed amount but not mp recovered? we have to include that, since certain consumables
+  can recover MP
   
   - [ ] Battle rewards
     - [ ] Implement exp reward
