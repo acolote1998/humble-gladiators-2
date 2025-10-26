@@ -35,6 +35,13 @@ export type TurnResponseDto = {
   action: ActionResponseDto;
 };
 
+export type TurnRequest = {
+  performingCharacterId: number;
+  targetCharacterId: number;
+  action: ActionTypeEnum;
+  cardToUseId: number;
+};
+
 export type ActionResponseDto = {
   damageCaused: number;
   healingCaused: number;
