@@ -149,4 +149,5 @@ Saturday 25/10
 
 Sunday 26/10
 - Rendering of battle flow correctly (available / not available / ongoing)
+- Implemented hero physical attack in battle
 ```
