@@ -1,11 +1,12 @@
-import type { BattleResponseDto } from "../../types/battleTypes";
+import type { BattleResponseDto, TurnRequest } from "../../types/battleTypes";
 import { CharacterCard } from "../cards/CharacterCard";
 import { ConsumableCard } from "../cards/ConsumableCard";
 import { PunchCard } from "../cards/PunchCard";
 import { SpellCard } from "../cards/SpellCard";
 import { WeaponCard } from "../cards/WeaponCard";
-import { useCastPhysicalAttack } from "../../hooks/useBattles";
-import { useState } from "react";
+import { useCastActionInBattle } from "../../hooks/useBattles";
+import type { ActionTypeEnum } from "../../types/battleTypes";
+import { useEffect, useState } from "react";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -22,14 +23,62 @@ const BattleExecuting = ({
 }: BattleResponseDto) => {
   const [messageOfWhatsHappening, setMessageOfWhatsHappening] =
     useState<string>("");
-  const updateBattleDisplayMessage = (message: string) => {
-    setMessageOfWhatsHappening(message);
-    setTimeout(() => {
-      setMessageOfWhatsHappening("");
-      if (refetchBattle) refetchBattle();
-    }, 2800);
+  const [isChoosingTarget, setIsChoosingTarget] = useState<boolean>(false);
+  const [chosenTargetId, setChosenTargetId] = useState<number>();
+  const [chosenCardAction, setChosenCardAction] = useState<ActionTypeEnum>();
+  const [chosenCardId, setChosenCardId] = useState<number>();
+
+  const chooseTarget = (targetCharacterId: number) => {
+    if (isChoosingTarget) {
+      setMessageOfWhatsHappening("Target selected");
+      setTimeout(() => {
+        setChosenTargetId(targetCharacterId);
+        setIsChoosingTarget(false);
+        setMessageOfWhatsHappening("");
+      }, 1500);
+    } else {
+      setMessageOfWhatsHappening("You need to choose a card to play first");
+      setTimeout(() => {
+        setMessageOfWhatsHappening("");
+      }, 1500);
+    }
   };
-  const { mutate: castPhysicalAttack } = useCastPhysicalAttack();
+  const { mutate: triggerActionMutation } = useCastActionInBattle();
+
+  useEffect(() => {
+    if (chosenCardAction && chosenTargetId) {
+      setMessageOfWhatsHappening(
+        `${teamOne[0].name} uses a ${chosenCardAction} on character id ${chosenTargetId}!`
+      );
+      triggerActionMutation({
+        action: chosenCardAction,
+        battleId: battleId,
+        campaignId: campaignId,
+        performingCharacterId: teamOne[0].id,
+        targetCharacterId: chosenTargetId,
+        cardToUseId:
+          chosenCardAction != "PHYSICAL_ATTACK" ? chosenCardId : undefined,
+      });
+      setTimeout(() => {
+        setMessageOfWhatsHappening("");
+        setIsChoosingTarget(false);
+        setChosenTargetId(undefined);
+        setChosenCardAction(undefined);
+        setChosenCardId(undefined);
+        if (refetchBattle) refetchBattle();
+      }, 2800);
+    }
+  }, [
+    battleId,
+    campaignId,
+    chosenCardAction,
+    chosenCardId,
+    chosenTargetId,
+    teamOne,
+    triggerActionMutation,
+    refetchBattle,
+  ]);
+
   const isHeroEquippingWeapon = (): boolean => {
     let doesItHaveEquippedWeapon = false;
     teamOne[0].inventory.weapons.forEach((w) => {
@@ -76,10 +125,17 @@ const BattleExecuting = ({
           </div>
           <div className="flex flex-col items-center">
             <p className="text-2xl">Enemy</p>
-            <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
+            <div onClick={() => chooseTarget(teamTwo[0].id)}>
+              <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
+            </div>
           </div>
           <div className="grid grid-cols-7">
-            <div className="flex flex-col items-center">
+            <div
+              className="flex flex-col items-center"
+              onClick={() => {
+                chooseTarget(teamOne[0].id);
+              }}
+            >
               <p className="text-2xl">Hero Stats</p>
               <p className="text-xl">{teamOne[0].name}</p>
               <p>
@@ -107,19 +163,16 @@ const BattleExecuting = ({
               <p className="text-2xl">Hand</p>
               <div className="grid grid-cols-5">
                 <div
+                  className={
+                    `transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50 ` +
+                    `${chosenCardAction == "PHYSICAL_ATTACK" ? " -translate-y-15" : "translate-y-0"}`
+                  }
                   onClick={() => {
                     if (currentCharacterToPlay.id == teamOne[0].id) {
                       //It is the hero's turn, so they can attack
-                      updateBattleDisplayMessage(
-                        `${teamOne[0].name} uses a physical attack on ${teamTwo[0].name}!`
-                      );
-                      castPhysicalAttack({
-                        action: "PHYSICAL_ATTACK",
-                        campaignId: campaignId,
-                        battleId: battleId,
-                        performingCharacterId: teamOne[0].id,
-                        targetCharacterId: teamTwo[0].id,
-                      });
+                      setIsChoosingTarget(true);
+                      setChosenCardAction("PHYSICAL_ATTACK");
+                      setChosenCardId(undefined);
                     }
                   }}
                 >
@@ -144,10 +197,53 @@ const BattleExecuting = ({
                     );
                   })
                   .map((card) => {
-                    return <SpellCard {...card} renderingFrom="BATTLE" />;
+                    return (
+                      <div
+                        className={
+                          `transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
+                          `${teamOne[0].stats.currentMp >= card.mpCost ? "opacity-100 " : "opacity-50 "}` +
+                          `${chosenCardAction == "SPELL" && card.id == chosenCardId ? " -translate-y-15" : "translate-y-0"}`
+                        }
+                        onClick={() => {
+                          if (
+                            currentCharacterToPlay.id == teamOne[0].id &&
+                            teamOne[0].stats.currentMp >= card.mpCost
+                          ) {
+                            //It is the hero's turn, so they can use a spell, and they have enough MP for the card
+                            setIsChoosingTarget(true);
+                            setChosenCardAction("SPELL");
+                            setChosenCardId(card.id);
+                          } else if (teamOne[0].stats.currentMp < card.mpCost) {
+                            setMessageOfWhatsHappening("Not enough mp");
+                            setTimeout(() => {
+                              setMessageOfWhatsHappening("");
+                            }, 1500);
+                          }
+                        }}
+                      >
+                        <SpellCard {...card} renderingFrom="BATTLE" />
+                      </div>
+                    );
                   })}
                 {teamOne[0].inventory.consumables.map((card) => {
-                  return <ConsumableCard {...card} renderingFrom="BATTLE" />;
+                  return (
+                    <div
+                      className={
+                        `transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
+                        `${chosenCardAction == "CONSUMABLE" && card.id == chosenCardId ? "-translate-y-15" : "translate-y-0"}`
+                      }
+                      onClick={() => {
+                        if (currentCharacterToPlay.id == teamOne[0].id) {
+                          //It is the hero's turn, so they can use a consumable
+                          setIsChoosingTarget(true);
+                          setChosenCardAction("CONSUMABLE");
+                          setChosenCardId(card.id);
+                        }
+                      }}
+                    >
+                      <ConsumableCard {...card} renderingFrom="BATTLE" />
+                    </div>
+                  );
                 })}
               </div>
             </div>

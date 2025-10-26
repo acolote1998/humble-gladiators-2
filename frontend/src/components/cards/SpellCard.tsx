@@ -11,6 +11,7 @@ export const SpellCard = ({
   magicalDamage,
   restoreHp,
   imgBase64,
+  mpCost,
   renderingFrom,
 }: SpellType) => {
   //Toggle to see all information of the card
@@ -108,9 +109,11 @@ export const SpellCard = ({
             ✨ {discovered || renderingFrom == "BOOSTER" ? magicalDamage : "?"}
           </p>
         </div>
-        {/* <div className="absolute left-58.5 w-15">
-          <p>🧉 {(discovered || renderingFrom=="BOOSTER") ? restoreMp : "?"}</p>
-        </div> */}
+        <div className="absolute left-58.5 w-15">
+          <p title="MP COST">
+            🧉 {discovered || renderingFrom == "BOOSTER" ? mpCost : "?"}
+          </p>
+        </div>
       </div>
     </div>
   );

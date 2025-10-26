@@ -23,6 +23,7 @@ public record SpellInstanceResponseDto(
         Integer magicalDamage,
         Integer restoreHp,
         Boolean discovered,
+        Integer mpCost,
         String imgBase64
 ) {
 
@@ -45,6 +46,7 @@ public record SpellInstanceResponseDto(
                         spell.getTemplate().getMagicalDamage(),
                         spell.getTemplate().getRestoreHp(),
                         spell.getTemplate().getDiscovered(),
+                        spell.getTemplate().getMpCost(),
                         BytesToBase64.bytesToBase64(spell.getTemplate().getImgBytes())
                 ))
                 .toList();

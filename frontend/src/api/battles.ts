@@ -61,15 +61,27 @@ export const getCheckIfThereIsAnOngoingBattleForToday = async (
   }
 };
 
-export const castPhysicalAttack = async (
+export const castActionInBattle = async (
   bearerToken: string,
   campaignId: number,
   battleId: number,
   turnRequest: TurnRequest
 ): Promise<TurnResponseDto> => {
+  const getActionForUrl = () => {
+    switch (turnRequest.action) {
+      case "SPELL":
+        return "spell";
+      case "PHYSICAL_ATTACK":
+        return "attack";
+      case "CONSUMABLE":
+        return "consumable";
+      case "NOTHING":
+        return "";
+    }
+  };
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/campaign/${campaignId}/battle/${battleId}/action/attack`,
+      `${BACKEND_URL}/campaign/${campaignId}/battle/${battleId}/action/${getActionForUrl()}`,
       turnRequest,
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
