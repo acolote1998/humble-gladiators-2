@@ -42,6 +42,12 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
       queryClient.invalidateQueries({
         queryKey: ["battle-ongoing-check", data.campaignId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["active-battle", data.campaignId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["battle-ongoing-check", data.campaignId],
+      });
     },
   });
   return mutation;
