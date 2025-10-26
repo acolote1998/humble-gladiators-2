@@ -10,8 +10,6 @@
   - [ ] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
   - [ ] In the turn model, we return dealed damage, healed amount but not mp recovered? we have to include that, since certain consumables
   can recover MP
-
-- [ ] Improve NPC logic decision taking (never castin spell? I think MP is 0 probably why)
    
   - [ ] Battle rewards
     - [ ] Implement exp reward
@@ -47,10 +45,6 @@
 - [ ] Evaluate utility of creating BoosterUtil and similar helper classes for other services
 
 - [ ] Investigate/Consider if it is worth it to create optimized character DTOs for battle objects to improve performance (instead of having the full CharacterInstanceDto everywhere)
-
-- [ ] Do we have a bug? Check? Happened once (I think) that the enemy was supposed to play the first turn in battle, but it did not happen, but the player could not act either.
-
-- [ ] Implement item drop system from defeated enemies
 
 - [ ] Integrate height/weight attributes into game mechanics
 
