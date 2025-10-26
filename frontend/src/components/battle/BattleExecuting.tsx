@@ -48,7 +48,7 @@ const BattleExecuting = ({
   useEffect(() => {
     if (chosenCardAction && chosenTargetId) {
       setMessageOfWhatsHappening(
-        `${teamOne[0].name} uses a ${chosenCardAction} on character id ${chosenTargetId}!`
+        `${teamOne[0].name} uses a ${chosenCardAction} on ${teamOne[0].id === chosenTargetId ? teamOne[0].name : teamTwo[0].id === chosenTargetId ? teamTwo[0].name : ""}!`
       );
       triggerActionMutation({
         action: chosenCardAction,
