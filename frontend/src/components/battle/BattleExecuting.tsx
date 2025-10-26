@@ -1,6 +1,5 @@
 import type {
   BattleResponseDto,
-  TurnRequest,
   TurnResponseDto,
 } from "../../types/battleTypes";
 import { CharacterCard } from "../cards/CharacterCard";
