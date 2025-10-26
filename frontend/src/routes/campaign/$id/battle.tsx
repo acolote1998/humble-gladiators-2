@@ -43,6 +43,7 @@ function RouteComponent() {
     <div>
       {createdBattleData ? (
         <BattleExecuting
+          key={createdBattleData.id + createdBattleData.turns.length}
           {...createdBattleData}
           refetchBattle={fetchCreatedBattlePurposly}
         />
@@ -52,6 +53,7 @@ function RouteComponent() {
         activeBattleData &&
         activeBattleData.onGoing && (
           <BattleExecuting
+            key={activeBattleData.id + activeBattleData.turns.length}
             {...activeBattleData}
             refetchBattle={fetchCreatedBattlePurposly}
           />

@@ -24,7 +24,11 @@ createRoot(document.getElementById("root")!).render(
   <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-      <ToastContainer aria-label="notification container" />
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        aria-label="notification container"
+      />
     </QueryClientProvider>
   </ClerkProvider>
 );

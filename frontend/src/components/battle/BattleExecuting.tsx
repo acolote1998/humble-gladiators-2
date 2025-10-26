@@ -1,7 +1,4 @@
-import type {
-  BattleResponseDto,
-  TurnResponseDto,
-} from "../../types/battleTypes";
+import type { BattleResponseDto } from "../../types/battleTypes";
 import { CharacterCard } from "../cards/CharacterCard";
 import { ConsumableCard } from "../cards/ConsumableCard";
 import { PunchCard } from "../cards/PunchCard";
@@ -26,15 +23,13 @@ const BattleExecuting = ({
   startingTeamTwo,
   refetchBattle,
 }: BattleResponseDto) => {
-  const [messageOfWhatsHappening, setMessageOfWhatsHappening] =
-    useState<string>("");
   const [isChoosingTarget, setIsChoosingTarget] = useState<boolean>(false);
   const [chosenTargetId, setChosenTargetId] = useState<number>();
   const [chosenCardAction, setChosenCardAction] = useState<ActionTypeEnum>();
   const [chosenCardId, setChosenCardId] = useState<number>();
 
-  const turnActionToText = (turn: TurnResponseDto) => {
-    switch (turn.action.actionType) {
+  const turnActionToText = (action: ActionTypeEnum) => {
+    switch (action) {
       case "SPELL":
         return "a spell";
       case "PHYSICAL_ATTACK":
@@ -46,17 +41,14 @@ const BattleExecuting = ({
 
   const chooseTarget = (targetCharacterId: number) => {
     if (isChoosingTarget) {
-      setMessageOfWhatsHappening("Target selected");
-      setTimeout(() => {
-        setChosenTargetId(targetCharacterId);
-        setIsChoosingTarget(false);
-        setMessageOfWhatsHappening("");
-      }, 1500);
+      setChosenTargetId(targetCharacterId);
+      setIsChoosingTarget(false);
     } else {
-      setMessageOfWhatsHappening("You need to choose a card to play first");
-      setTimeout(() => {
-        setMessageOfWhatsHappening("");
-      }, 1500);
+      if (currentCharacterToPlay.id == teamOne[0].id) {
+        toast.warn("You need to choose a card to play first");
+      } else {
+        toast.error("It is the enemy's turn");
+      }
     }
   };
   const { mutate: triggerActionMutation } = useCastActionInBattle();
@@ -68,8 +60,8 @@ const BattleExecuting = ({
 
   useEffect(() => {
     if (chosenCardAction && chosenTargetId) {
-      setMessageOfWhatsHappening(
-        `${teamOne[0].name} uses a ${chosenCardAction} on ${teamOne[0].id === chosenTargetId ? teamOne[0].name : teamTwo[0].id === chosenTargetId ? teamTwo[0].name : ""}!`
+      toast.success(
+        `${teamOne[0].name} uses a ${turnActionToText(chosenCardAction)} on ${teamOne[0].id === chosenTargetId ? teamOne[0].name : teamTwo[0].id === chosenTargetId ? teamTwo[0].name : ""}!`
       );
       triggerActionMutation({
         action: chosenCardAction,
@@ -81,12 +73,14 @@ const BattleExecuting = ({
           chosenCardAction != "PHYSICAL_ATTACK" ? chosenCardId : undefined,
       });
       setTimeout(() => {
-        setMessageOfWhatsHappening("");
         setIsChoosingTarget(false);
         setChosenTargetId(undefined);
         setChosenCardAction(undefined);
         setChosenCardId(undefined);
-        if (refetchBattle) refetchBattle();
+        if (refetchBattle) {
+          console.log("hola?");
+          refetchBattle();
+        }
       }, 2800);
     }
   }, [
@@ -95,11 +89,10 @@ const BattleExecuting = ({
     chosenCardAction,
     chosenCardId,
     chosenTargetId,
-    teamOne,
-    triggerActionMutation,
     refetchBattle,
+    teamOne,
     teamTwo,
-    triggerNpcTurn,
+    triggerActionMutation,
   ]);
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 
@@ -107,7 +100,7 @@ const BattleExecuting = ({
     if (isGameStarted || turns.length > 0) {
       if (currentCharacterToPlay.id === teamTwo[0].id)
         setTimeout(() => {
-          setMessageOfWhatsHappening(`${teamTwo[0].name} is thinking his turn`);
+          toast.info(`${teamTwo[0].name} is thinking...`);
         }, 2500);
       setTimeout(() => {
         triggerNpcTurn(Number(campaignId));
@@ -125,13 +118,22 @@ const BattleExecuting = ({
   useEffect(() => {
     if (isNpcTurnTriggeredSuccessfully) {
       setTimeout(() => {
-        console.log("hola?");
         eraseNpcTurnTraces();
-        setMessageOfWhatsHappening("");
         if (refetchBattle) refetchBattle();
       }, 2500);
     }
   }, [isNpcTurnTriggeredSuccessfully, refetchBattle, eraseNpcTurnTraces]);
+
+  useEffect(() => {
+    if (turns.length > 0) {
+      if (turns[turns.length - 1].performingCharacter.id == teamTwo[0].id) {
+        const turn = turns[turns.length - 1];
+        toast.success(
+          `${turn.performingCharacter.name} performed ${turnActionToText(turn.action.actionType)} on ${turn.targetCharacter.name}`
+        );
+      }
+    }
+  }, [turns, teamTwo]);
 
   const isHeroEquippingWeapon = (): boolean => {
     let doesItHaveEquippedWeapon = false;
@@ -142,11 +144,6 @@ const BattleExecuting = ({
   };
   return (
     <div>
-      {messageOfWhatsHappening.length > 0 && (
-        <p className="text-lg text-center bg-yellow-300">
-          {messageOfWhatsHappening}
-        </p>
-      )}
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
           {
@@ -156,7 +153,9 @@ const BattleExecuting = ({
             // otherwise, if it is the hero's turn (always team one), then we can just
             // play a card to start the battle)
           }
-          {turns.length < 1 && currentCharacterToPlay.id == teamTwo[0].id ? (
+          {!isGameStarted &&
+          turns.length < 1 &&
+          currentCharacterToPlay.id == teamTwo[0].id ? (
             <p
               className="text-lg text-center bg-green-300"
               onClick={() => {
@@ -166,6 +165,7 @@ const BattleExecuting = ({
               Start Battle
             </p>
           ) : (
+            !isGameStarted &&
             turns.length < 1 && (
               <p className="text-lg text-center bg-green-300">
                 You start, cast one of your cards by clicking on it
@@ -195,7 +195,8 @@ const BattleExecuting = ({
                   >
                     Turn {turns.length - index} -{" "}
                     {turn.performingCharacter.name} performed{" "}
-                    {turnActionToText(turn)} on {turn.targetCharacter.name}
+                    {turnActionToText(turn.action.actionType)} on{" "}
+                    {turn.targetCharacter.name}
                     {turn.action.damageCaused > 0 &&
                       ` and caused ${turn.action.damageCaused} damage`}
                     {turn.action.healingCaused > 0 &&
@@ -248,6 +249,9 @@ const BattleExecuting = ({
                       setIsChoosingTarget(true);
                       setChosenCardAction("PHYSICAL_ATTACK");
                       setChosenCardId(undefined);
+                      toast.info("Physical Attack selected");
+                    } else {
+                      toast.warn("It is the enemy's turn");
                     }
                   }}
                 >
@@ -288,11 +292,13 @@ const BattleExecuting = ({
                             setIsChoosingTarget(true);
                             setChosenCardAction("SPELL");
                             setChosenCardId(card.id);
+                            toast.info("Spell selected");
+                          } else if (
+                            currentCharacterToPlay.id != teamOne[0].id
+                          ) {
+                            toast.warn("It is the enemy's turn");
                           } else if (teamOne[0].stats.currentMp < card.mpCost) {
-                            setMessageOfWhatsHappening("Not enough mp");
-                            setTimeout(() => {
-                              setMessageOfWhatsHappening("");
-                            }, 1500);
+                            toast.warn("Not enough MP");
                           }
                         }}
                       >
@@ -313,6 +319,9 @@ const BattleExecuting = ({
                           setIsChoosingTarget(true);
                           setChosenCardAction("CONSUMABLE");
                           setChosenCardId(card.id);
+                          toast.info("Consumable selected");
+                        } else {
+                          toast.warn("It is the enemy's turn");
                         }
                       }}
                     >

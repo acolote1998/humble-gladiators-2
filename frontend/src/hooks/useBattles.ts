@@ -60,7 +60,6 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
       }
       return getBattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
-    enabled: false,
   });
   return { data, isError, isLoading, refetch };
 };
