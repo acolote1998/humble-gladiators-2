@@ -448,7 +448,7 @@ public class CharacterService {
 
     public CharacterInstance getDailyEnemy(Long campaignId, String userId) {
         LocalDate today = LocalDate.now();
-        CharacterInstance enemy = characterInstanceRepository.findEnemyByCampaignIdAndUserIdAndUpdatedAtDate(
+        CharacterInstance enemy = characterInstanceRepository.findDiscoveredEnemyByCampaignIdAndUserIdAndCharacterTypeAndUpdatedToday(
                 campaignId,
                 userId,
                 today,

@@ -2,7 +2,6 @@ package com.github.acolote1998.humble_gladiators_2.characters.repository;
 
 import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -44,9 +43,10 @@ public interface CharacterInstanceRepository extends ListCrudRepository<Characte
             "WHERE campaign_id = :campaignId " +
             "AND user_id = :userId " +
             "AND character_type = :characterType " +
+            "AND discovered = TRUE " +
             "AND DATE(updated_at) = :today " +
             "LIMIT 1", nativeQuery = true)
-    CharacterInstance findEnemyByCampaignIdAndUserIdAndUpdatedAtDate(
+    CharacterInstance findDiscoveredEnemyByCampaignIdAndUserIdAndCharacterTypeAndUpdatedToday(
             @Param("campaignId") Long campaignId,
             @Param("userId") String userId,
             @Param("today") LocalDate today,
