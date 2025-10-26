@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBattleCreationPossibility } from "../api/fetchAvailabilities";
 import { useMutation } from "@tanstack/react-query";
 import {
-  castPhysicalAttack,
+  castActionInBattle,
   createABattleForTodayForCampaignAndUser,
   getBattleForTodayForCampaignAndUser,
   getCheckIfThereIsAnOngoingBattleForToday,
@@ -81,7 +81,7 @@ export const useGetCheckIfThereIsAnOngoingBattleForToday = (
   return { data, isError, isLoading };
 };
 
-export const useCastPhysicalAttack = () => {
+export const useCastActionInBattle = () => {
   const { getToken } = useAuth();
   const mutation = useMutation({
     mutationFn: async (turnRequest: TurnRequest) => {
@@ -89,7 +89,7 @@ export const useCastPhysicalAttack = () => {
       if (!bearerToken) {
         throw new Error("No bearer token available");
       }
-      return castPhysicalAttack(
+      return castActionInBattle(
         bearerToken,
         turnRequest.campaignId,
         turnRequest.battleId,

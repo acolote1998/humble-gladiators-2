@@ -4,7 +4,7 @@ import { ConsumableCard } from "../cards/ConsumableCard";
 import { PunchCard } from "../cards/PunchCard";
 import { SpellCard } from "../cards/SpellCard";
 import { WeaponCard } from "../cards/WeaponCard";
-import { useCastPhysicalAttack } from "../../hooks/useBattles";
+import { useCastActionInBattle } from "../../hooks/useBattles";
 import { useState } from "react";
 const BattleExecuting = ({
   campaignId,
@@ -29,7 +29,7 @@ const BattleExecuting = ({
       if (refetchBattle) refetchBattle();
     }, 2800);
   };
-  const { mutate: castPhysicalAttack } = useCastPhysicalAttack();
+  const { mutate: castPhysicalAttack } = useCastActionInBattle();
   const isHeroEquippingWeapon = (): boolean => {
     let doesItHaveEquippedWeapon = false;
     teamOne[0].inventory.weapons.forEach((w) => {
