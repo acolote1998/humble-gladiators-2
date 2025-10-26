@@ -1,4 +1,8 @@
-import type { BattleResponseDto } from "../../types/battleTypes";
+import type {
+  BattleResponseDto,
+  TurnRequest,
+  TurnResponseDto,
+} from "../../types/battleTypes";
 import { CharacterCard } from "../cards/CharacterCard";
 import { ConsumableCard } from "../cards/ConsumableCard";
 import { PunchCard } from "../cards/PunchCard";
@@ -27,6 +31,17 @@ const BattleExecuting = ({
   const [chosenTargetId, setChosenTargetId] = useState<number>();
   const [chosenCardAction, setChosenCardAction] = useState<ActionTypeEnum>();
   const [chosenCardId, setChosenCardId] = useState<number>();
+
+  const turnActionToText = (turn: TurnResponseDto) => {
+    switch (turn.action.actionType) {
+      case "SPELL":
+        return "a spell";
+      case "PHYSICAL_ATTACK":
+        return "a physical attack";
+      case "CONSUMABLE":
+        return "a consumable";
+    }
+  };
 
   const chooseTarget = (targetCharacterId: number) => {
     if (isChoosingTarget) {
@@ -142,7 +157,7 @@ const BattleExecuting = ({
                   >
                     Turn {turns.length - index} -{" "}
                     {turn.performingCharacter.name} performed{" "}
-                    {turn.action.actionType} on {turn.targetCharacter.name}
+                    {turnActionToText(turn)} on {turn.targetCharacter.name}
                     {turn.action.damageCaused > 0 &&
                       ` and caused ${turn.action.damageCaused} damage`}
                     {turn.action.healingCaused > 0 &&
