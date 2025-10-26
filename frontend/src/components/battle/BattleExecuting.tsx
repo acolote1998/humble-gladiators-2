@@ -59,8 +59,11 @@ const BattleExecuting = ({
     }
   };
   const { mutate: triggerActionMutation } = useCastActionInBattle();
-  const { mutate: triggerNpcTurn, isSuccess: isNpcTurnTriggeredSuccessfully } =
-    useTriggerNpcTurnForTodaysBattle();
+  const {
+    mutate: triggerNpcTurn,
+    isSuccess: isNpcTurnTriggeredSuccessfully,
+    reset: eraseNpcTurnTraces,
+  } = useTriggerNpcTurnForTodaysBattle();
 
   useEffect(() => {
     if (chosenCardAction && chosenTargetId) {
@@ -104,25 +107,30 @@ const BattleExecuting = ({
       if (currentCharacterToPlay.id === teamTwo[0].id)
         setTimeout(() => {
           setMessageOfWhatsHappening(`${teamTwo[0].name} is thinking his turn`);
-        }, 4000);
+        }, 2500);
       setTimeout(() => {
         triggerNpcTurn(Number(campaignId));
-
-        setMessageOfWhatsHappening("");
-      }, 8000);
-      setTimeout(() => {
-        if (refetchBattle) refetchBattle();
-      }, 10000);
+      }, 5500);
     }
   }, [
-    campaignId,
     currentCharacterToPlay,
     isGameStarted,
-    refetchBattle,
+    campaignId,
     teamTwo,
     triggerNpcTurn,
     turns,
   ]);
+
+  useEffect(() => {
+    if (isNpcTurnTriggeredSuccessfully) {
+      setTimeout(() => {
+        console.log("hola?");
+        eraseNpcTurnTraces();
+        setMessageOfWhatsHappening("");
+        if (refetchBattle) refetchBattle();
+      }, 2500);
+    }
+  }, [isNpcTurnTriggeredSuccessfully, refetchBattle, eraseNpcTurnTraces]);
 
   const isHeroEquippingWeapon = (): boolean => {
     let doesItHaveEquippedWeapon = false;
