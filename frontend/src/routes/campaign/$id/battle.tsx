@@ -2,6 +2,7 @@ import {
   useGetBattleCreationAvailability,
   useCreateABattleForTodayByCampaignIdAndUser,
   useGetBattleForTodayByCampaignIdAndUsery,
+  useGetCheckIfThereIsAnOngoingBattleForToday,
 } from "../../../hooks/useBattles";
 import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
@@ -30,6 +31,9 @@ function RouteComponent() {
     refetch: fetchCreatedBattlePurposly,
   } = useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
 
+  const { data: isThereOngoingBattleToday } =
+    useGetCheckIfThereIsAnOngoingBattleForToday(Number(campaignId));
+
   useEffect(() => {
     if (!createdBattleData && !isBattleCreationPending) {
       fetchCreatedBattlePurposly();
@@ -38,12 +42,20 @@ function RouteComponent() {
   return (
     <div>
       {createdBattleData ? (
-        <BattleExecuting {...createdBattleData} />
-      ) : !isBattleCreationPossible && isActiveBattleLoading ? (
+        <BattleExecuting
+          {...createdBattleData}
+          refetchBattle={fetchCreatedBattlePurposly}
+        />
+      ) : isThereOngoingBattleToday && isActiveBattleLoading ? (
         <p>Loading battle...</p>
       ) : (
         activeBattleData &&
-        activeBattleData.onGoing && <BattleExecuting {...activeBattleData} />
+        activeBattleData.onGoing && (
+          <BattleExecuting
+            {...activeBattleData}
+            refetchBattle={fetchCreatedBattlePurposly}
+          />
+        )
       )}
       {!activeBattleData &&
         (isBattleCreationPossibleLoading ? (

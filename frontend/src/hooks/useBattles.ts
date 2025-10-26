@@ -3,10 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBattleCreationPossibility } from "../api/fetchAvailabilities";
 import { useMutation } from "@tanstack/react-query";
 import {
+  castPhysicalAttack,
   createABattleForTodayForCampaignAndUser,
   getBattleForTodayForCampaignAndUser,
+  getCheckIfThereIsAnOngoingBattleForToday,
 } from "../api/battles";
 import { useQueryClient } from "@tanstack/react-query";
+import type { TurnRequest } from "../types/battleTypes";
 
 export const useGetBattleCreationAvailability = (campaignId: number) => {
   const { getToken } = useAuth();
@@ -59,4 +62,40 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
     enabled: false,
   });
   return { data, isError, isLoading, refetch };
+};
+
+export const useGetCheckIfThereIsAnOngoingBattleForToday = (
+  campaignId: number
+) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["battle-ongoing-check", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return getCheckIfThereIsAnOngoingBattleForToday(bearerToken, campaignId);
+    },
+  });
+  return { data, isError, isLoading };
+};
+
+export const useCastPhysicalAttack = () => {
+  const { getToken } = useAuth();
+  const mutation = useMutation({
+    mutationFn: async (turnRequest: TurnRequest) => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return castPhysicalAttack(
+        bearerToken,
+        turnRequest.campaignId,
+        turnRequest.battleId,
+        turnRequest
+      );
+    },
+  });
+  return mutation;
 };

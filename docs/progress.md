@@ -146,4 +146,7 @@ Saturday 25/10
 - Creation of battle possible
 - Rendering battle content
 - Battle creation + battle update flow during first turns is there
+
+Sunday 26/10
+- Rendering of battle flow correctly (available / not available / ongoing)
 ```

@@ -11,6 +11,7 @@ export type BattleResponseDto = {
   losingTeam: CharacterInstanceType[];
   currentCharacterToPlay: CharacterInstanceType;
   onGoing: boolean;
+  refetchBattle?: () => void;
 };
 
 type CharacterSnaphotType = {
@@ -33,6 +34,15 @@ export type TurnResponseDto = {
   performingCharacter: CharacterInstanceType;
   targetCharacter: CharacterInstanceType;
   action: ActionResponseDto;
+};
+
+export type TurnRequest = {
+  campaignId: number;
+  battleId: number;
+  performingCharacterId: number;
+  targetCharacterId: number;
+  action: ActionTypeEnum;
+  cardToUseId?: number;
 };
 
 export type ActionResponseDto = {
