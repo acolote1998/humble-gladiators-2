@@ -1,4 +1,4 @@
-import type { BattleResponseDto, TurnRequest } from "../../types/battleTypes";
+import type { BattleResponseDto } from "../../types/battleTypes";
 import { CharacterCard } from "../cards/CharacterCard";
 import { ConsumableCard } from "../cards/ConsumableCard";
 import { PunchCard } from "../cards/PunchCard";
