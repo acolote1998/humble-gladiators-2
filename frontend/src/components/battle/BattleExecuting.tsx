@@ -97,9 +97,19 @@ const BattleExecuting = ({
                 ) : (
                   <PunchCard />
                 )}
-                {teamOne[0].inventory.spells.map((card) => {
-                  return <SpellCard {...card} renderingFrom="BATTLE" />;
-                })}
+                {teamOne[0].inventory.spells
+                  .filter((spell, index, self) => {
+                    return (
+                      index ===
+                      self.findIndex(
+                        (firstOcurrenceSpell) =>
+                          firstOcurrenceSpell.name == spell.name
+                      )
+                    );
+                  })
+                  .map((card) => {
+                    return <SpellCard {...card} renderingFrom="BATTLE" />;
+                  })}
                 {teamOne[0].inventory.consumables.map((card) => {
                   return <ConsumableCard {...card} renderingFrom="BATTLE" />;
                 })}
