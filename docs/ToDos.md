@@ -1,14 +1,18 @@
 # TO DOs - Humble Gladiators 2
 
 - [ ] Battle
-  - [ ] Battle turn processing system
+  - [X] Battle turn processing system
   - [X] Able to cast spells
   - [X] Able to use consumables
   - [X] Able to physically attack
   - [X] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
   - [ ] Implement victory screen in frontend
   - [ ] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
-  
+  - [ ] In the turn model, we return dealed damage, healed amount but not mp recovered? we have to include that, since certain consumables
+  can recover MP
+
+- [ ] Improve NPC logic decision taking (never castin spell? I think MP is 0 probably why)
+   
   - [ ] Battle rewards
     - [ ] Implement exp reward
     - [ ] Implement gold reward

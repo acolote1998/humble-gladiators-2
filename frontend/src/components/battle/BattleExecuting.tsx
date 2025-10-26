@@ -1,4 +1,4 @@
-import type { BattleResponseDto, TurnRequest } from "../../types/battleTypes";
+import type { BattleResponseDto } from "../../types/battleTypes";
 import { CharacterCard } from "../cards/CharacterCard";
 import { ConsumableCard } from "../cards/ConsumableCard";
 import { PunchCard } from "../cards/PunchCard";
@@ -7,6 +7,9 @@ import { WeaponCard } from "../cards/WeaponCard";
 import { useCastActionInBattle } from "../../hooks/useBattles";
 import type { ActionTypeEnum } from "../../types/battleTypes";
 import { useEffect, useState } from "react";
+import { useTriggerNpcTurnForTodaysBattle } from "../../hooks/useBattles";
+import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -17,38 +20,49 @@ const BattleExecuting = ({
   teamTwo,
   turns,
   winningTeam,
-  startingTeamOne,
-  startingTeamTwo,
-  refetchBattle,
+  // startingTeamOne,
+  // startingTeamTwo,
 }: BattleResponseDto) => {
-  const [messageOfWhatsHappening, setMessageOfWhatsHappening] =
-    useState<string>("");
   const [isChoosingTarget, setIsChoosingTarget] = useState<boolean>(false);
   const [chosenTargetId, setChosenTargetId] = useState<number>();
   const [chosenCardAction, setChosenCardAction] = useState<ActionTypeEnum>();
   const [chosenCardId, setChosenCardId] = useState<number>();
+  const queryClient = useQueryClient();
+
+  const turnActionToText = (action: ActionTypeEnum) => {
+    switch (action) {
+      case "SPELL":
+        return "a spell";
+      case "PHYSICAL_ATTACK":
+        return "a physical attack";
+      case "CONSUMABLE":
+        return "a consumable";
+    }
+  };
 
   const chooseTarget = (targetCharacterId: number) => {
     if (isChoosingTarget) {
-      setMessageOfWhatsHappening("Target selected");
-      setTimeout(() => {
-        setChosenTargetId(targetCharacterId);
-        setIsChoosingTarget(false);
-        setMessageOfWhatsHappening("");
-      }, 1500);
+      setChosenTargetId(targetCharacterId);
+      setIsChoosingTarget(false);
     } else {
-      setMessageOfWhatsHappening("You need to choose a card to play first");
-      setTimeout(() => {
-        setMessageOfWhatsHappening("");
-      }, 1500);
+      if (currentCharacterToPlay.id == teamOne[0].id) {
+        toast.warn("You need to choose a card to play first");
+      } else {
+        toast.error("It is the enemy's turn");
+      }
     }
   };
   const { mutate: triggerActionMutation } = useCastActionInBattle();
+  const {
+    mutate: triggerNpcTurn,
+    isSuccess: isNpcTurnTriggeredSuccessfully,
+    reset: eraseNpcTurnTraces,
+  } = useTriggerNpcTurnForTodaysBattle();
 
   useEffect(() => {
     if (chosenCardAction && chosenTargetId) {
-      setMessageOfWhatsHappening(
-        `${teamOne[0].name} uses a ${chosenCardAction} on character id ${chosenTargetId}!`
+      toast.success(
+        `${teamOne[0].name} uses a ${turnActionToText(chosenCardAction)} on ${teamOne[0].id === chosenTargetId ? teamOne[0].name : teamTwo[0].id === chosenTargetId ? teamTwo[0].name : ""}!`
       );
       triggerActionMutation({
         action: chosenCardAction,
@@ -60,12 +74,13 @@ const BattleExecuting = ({
           chosenCardAction != "PHYSICAL_ATTACK" ? chosenCardId : undefined,
       });
       setTimeout(() => {
-        setMessageOfWhatsHappening("");
         setIsChoosingTarget(false);
         setChosenTargetId(undefined);
         setChosenCardAction(undefined);
         setChosenCardId(undefined);
-        if (refetchBattle) refetchBattle();
+        queryClient.invalidateQueries({
+          queryKey: ["active-battle", campaignId],
+        });
       }, 2800);
     }
   }, [
@@ -75,9 +90,57 @@ const BattleExecuting = ({
     chosenCardId,
     chosenTargetId,
     teamOne,
+    teamTwo,
     triggerActionMutation,
-    refetchBattle,
+    queryClient,
   ]);
+  const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isGameStarted || turns.length > 0) {
+      if (currentCharacterToPlay.id === teamTwo[0].id)
+        setTimeout(() => {
+          toast.info(`${teamTwo[0].name} is thinking...`);
+        }, 2500);
+      setTimeout(() => {
+        triggerNpcTurn(Number(campaignId));
+      }, 5500);
+    }
+  }, [
+    currentCharacterToPlay,
+    isGameStarted,
+    campaignId,
+    teamTwo,
+    triggerNpcTurn,
+    turns,
+  ]);
+
+  useEffect(() => {
+    if (isNpcTurnTriggeredSuccessfully) {
+      setTimeout(() => {
+        eraseNpcTurnTraces();
+        queryClient.invalidateQueries({
+          queryKey: ["active-battle", campaignId],
+        });
+      }, 2500);
+    }
+  }, [
+    isNpcTurnTriggeredSuccessfully,
+    queryClient,
+    campaignId,
+    eraseNpcTurnTraces,
+  ]);
+
+  useEffect(() => {
+    if (turns.length > 0) {
+      if (turns[turns.length - 1].performingCharacter.id == teamTwo[0].id) {
+        const turn = turns[turns.length - 1];
+        toast.success(
+          `${turn.performingCharacter.name} performed ${turnActionToText(turn.action.actionType)} on ${turn.targetCharacter.name}`
+        );
+      }
+    }
+  }, [turns, teamTwo]);
 
   const isHeroEquippingWeapon = (): boolean => {
     let doesItHaveEquippedWeapon = false;
@@ -88,11 +151,6 @@ const BattleExecuting = ({
   };
   return (
     <div>
-      {messageOfWhatsHappening.length > 0 && (
-        <p className="text-lg text-center bg-yellow-300">
-          {messageOfWhatsHappening}
-        </p>
-      )}
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
           {
@@ -102,16 +160,19 @@ const BattleExecuting = ({
             // otherwise, if it is the hero's turn (always team one), then we can just
             // play a card to start the battle)
           }
-          {turns.length < 1 && currentCharacterToPlay.id == teamTwo[0].id ? (
+          {!isGameStarted &&
+          turns.length < 1 &&
+          currentCharacterToPlay.id == teamTwo[0].id ? (
             <p
               className="text-lg text-center bg-green-300"
               onClick={() => {
-                window.location.reload();
+                setIsGameStarted(true);
               }}
             >
               Start Battle
             </p>
           ) : (
+            !isGameStarted &&
             turns.length < 1 && (
               <p className="text-lg text-center bg-green-300">
                 You start, cast one of your cards by clicking on it
@@ -123,10 +184,32 @@ const BattleExecuting = ({
               Character to play: {currentCharacterToPlay.name}
             </p>
           </div>
-          <div className="flex flex-col items-center">
-            <p className="text-2xl">Enemy</p>
-            <div onClick={() => chooseTarget(teamTwo[0].id)}>
-              <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
+          <div className="relative">
+            <div className="flex flex-col items-center">
+              <p className="text-2xl">Enemy</p>
+              <div onClick={() => chooseTarget(teamTwo[0].id)}>
+                <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
+              </div>
+            </div>
+            <div className="absolute rounded-md bg-gray-200 border-gray-400 border-1 mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-scroll">
+              {turns
+                .slice()
+                .reverse()
+                .map((turn, index) => (
+                  <p
+                    key={turns.length - index}
+                    className="my-2 p-1 rounded-md bg-gray-300"
+                  >
+                    Turn {turns.length - index} -{" "}
+                    {turn.performingCharacter.name} performed{" "}
+                    {turnActionToText(turn.action.actionType)} on{" "}
+                    {turn.targetCharacter.name}
+                    {turn.action.damageCaused > 0 &&
+                      ` and caused ${turn.action.damageCaused} damage`}
+                    {turn.action.healingCaused > 0 &&
+                      ` and healed ${turn.action.healingCaused} heal points`}
+                  </p>
+                ))}
             </div>
           </div>
           <div className="grid grid-cols-7">
@@ -173,6 +256,9 @@ const BattleExecuting = ({
                       setIsChoosingTarget(true);
                       setChosenCardAction("PHYSICAL_ATTACK");
                       setChosenCardId(undefined);
+                      toast.info("Physical Attack selected");
+                    } else {
+                      toast.warn("It is the enemy's turn");
                     }
                   }}
                 >
@@ -213,11 +299,13 @@ const BattleExecuting = ({
                             setIsChoosingTarget(true);
                             setChosenCardAction("SPELL");
                             setChosenCardId(card.id);
+                            toast.info("Spell selected");
+                          } else if (
+                            currentCharacterToPlay.id != teamOne[0].id
+                          ) {
+                            toast.warn("It is the enemy's turn");
                           } else if (teamOne[0].stats.currentMp < card.mpCost) {
-                            setMessageOfWhatsHappening("Not enough mp");
-                            setTimeout(() => {
-                              setMessageOfWhatsHappening("");
-                            }, 1500);
+                            toast.warn("Not enough MP");
                           }
                         }}
                       >
@@ -238,6 +326,9 @@ const BattleExecuting = ({
                           setIsChoosingTarget(true);
                           setChosenCardAction("CONSUMABLE");
                           setChosenCardId(card.id);
+                          toast.info("Consumable selected");
+                        } else {
+                          toast.warn("It is the enemy's turn");
                         }
                       }}
                     >

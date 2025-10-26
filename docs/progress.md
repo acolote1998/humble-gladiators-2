@@ -154,4 +154,9 @@ Sunday 26/10
 - Implemented spell in battle
 - Improved API calls and logic from battle component
 - Enhanced battle MVI for card selection
+- Rendering turns in the battle
+- Including toasts
+- Improving battle server processing by separating battle updates and npc turn triggering
+- Improving battle frontend processing by a lot, avodigin shady refetches and using propper good practices such as invalidating queries, etc
+- Fixed bug / Improving conditional render of active battle versus battle creation interface
 ```

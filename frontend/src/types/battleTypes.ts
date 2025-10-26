@@ -11,7 +11,6 @@ export type BattleResponseDto = {
   losingTeam: CharacterInstanceType[];
   currentCharacterToPlay: CharacterInstanceType;
   onGoing: boolean;
-  refetchBattle?: () => void;
 };
 
 type CharacterSnaphotType = {

@@ -7,6 +7,7 @@ import {
   createABattleForTodayForCampaignAndUser,
   getBattleForTodayForCampaignAndUser,
   getCheckIfThereIsAnOngoingBattleForToday,
+  triggerNpcTurnForTodaysBattle,
 } from "../api/battles";
 import { useQueryClient } from "@tanstack/react-query";
 import type { TurnRequest } from "../types/battleTypes";
@@ -39,7 +40,7 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["active-battle", data.campaignId],
+        queryKey: ["battle-ongoing-check", data.campaignId],
       });
     },
   });
@@ -50,7 +51,7 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
   campaignId: number
 ) => {
   const { getToken } = useAuth();
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["active-battle", campaignId],
     queryFn: async () => {
       const bearerToken = await getToken();
@@ -59,9 +60,8 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
       }
       return getBattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
-    enabled: false,
   });
-  return { data, isError, isLoading, refetch };
+  return { data, isError, isLoading };
 };
 
 export const useGetCheckIfThereIsAnOngoingBattleForToday = (
@@ -95,6 +95,20 @@ export const useCastActionInBattle = () => {
         turnRequest.battleId,
         turnRequest
       );
+    },
+  });
+  return mutation;
+};
+
+export const useTriggerNpcTurnForTodaysBattle = () => {
+  const { getToken } = useAuth();
+  const mutation = useMutation({
+    mutationFn: async (campaignId: number) => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return triggerNpcTurnForTodaysBattle(bearerToken, campaignId);
     },
   });
   return mutation;

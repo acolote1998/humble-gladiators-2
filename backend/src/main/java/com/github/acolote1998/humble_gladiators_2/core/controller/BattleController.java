@@ -48,11 +48,21 @@ public class BattleController {
     @GetMapping("/{campaignId}/battle")
     public ResponseEntity<BattleResponseDto> getBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        Battle todaysBattle = battleService.getUpdatedBattleForToday(
+        Battle todaysBattle = battleService.getUpdatedBattle(
                 battleService.getBattleUtil().
                         getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId));
         BattleResponseDto dto = BattleResponseDto.fromModel(todaysBattle);
         return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("/{campaignId}/battle/action/trigger-npc-turn")
+    public ResponseEntity<Void> triggerNpcTurnInBattleOfToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        Battle battleToTrigger = battleService.getUpdatedBattle(
+                battleService.getBattleUtil().
+                        getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId));
+        battleService.triggerNpcTurn(battleToTrigger);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/{campaignId}/battle/new")
