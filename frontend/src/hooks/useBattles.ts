@@ -39,9 +39,8 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
       return createABattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
     onSuccess: (data) => {
-      console.log("hello");
       queryClient.invalidateQueries({
-        queryKey: ["active-battle", data.campaignId],
+        queryKey: ["battle-ongoing-check", data.campaignId],
       });
     },
   });

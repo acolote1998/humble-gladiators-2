@@ -157,4 +157,5 @@ Sunday 26/10
 - Rendering turns in the battle
 - Including toasts
 - Improving battle server processing by separating battle updates and npc turn triggering
+- Improving battle frontend processing by a lot, avodigin shady refetches and using propper good practices such as invalidating queries, etc
 ```

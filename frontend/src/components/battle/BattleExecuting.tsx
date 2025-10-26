@@ -20,8 +20,8 @@ const BattleExecuting = ({
   teamTwo,
   turns,
   winningTeam,
-  startingTeamOne,
-  startingTeamTwo,
+  // startingTeamOne,
+  // startingTeamTwo,
 }: BattleResponseDto) => {
   const [isChoosingTarget, setIsChoosingTarget] = useState<boolean>(false);
   const [chosenTargetId, setChosenTargetId] = useState<number>();

@@ -7,6 +7,7 @@ import {
 import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import BattleExecuting from "../../../components/battle/BattleExecuting";
+import BattleCheckAndCreation from "../../../components/battle/BattleCheckAndCreation";
 
 export const Route = createFileRoute("/campaign/$id/battle")({
   component: RouteComponent,
@@ -14,32 +15,29 @@ export const Route = createFileRoute("/campaign/$id/battle")({
 
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/battle" });
-  const { mutate: createBattle } =
-    useCreateABattleForTodayByCampaignIdAndUser();
-  const {
-    data: isBattleCreationPossible,
-    isLoading: isBattleCreationPossibleLoading,
-  } = useGetBattleCreationAvailability(Number(campaignId));
+
   const { data: activeBattleData, isLoading: isActiveBattleLoading } =
     useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
 
-  const { data: isThereOngoingBattleToday } =
-    useGetCheckIfThereIsAnOngoingBattleForToday(Number(campaignId));
+  const {
+    data: isThereOngoingBattleToday,
+    isLoading: isThereOngoingBattleLoading,
+  } = useGetCheckIfThereIsAnOngoingBattleForToday(Number(campaignId));
 
   return (
     <div>
-      {activeBattleData ? (
-        <BattleExecuting {...activeBattleData} />
-      ) : isBattleCreationPossible ? (
-        <p
-          onClick={() => {
-            createBattle(Number(campaignId));
-          }}
-        >
-          Create battle
-        </p>
+      {isThereOngoingBattleLoading ? (
+        <p>Loading...</p>
+      ) : isThereOngoingBattleToday ? (
+        isActiveBattleLoading ? (
+          <p>Loading battle...</p>
+        ) : activeBattleData ? (
+          <BattleExecuting {...activeBattleData} />
+        ) : (
+          <p>Could not load active battle.</p>
+        )
       ) : (
-        <p>Not possible to create battle, open a new character booster...</p>
+        <BattleCheckAndCreation campaignId={Number(campaignId)} />
       )}
     </div>
   );
