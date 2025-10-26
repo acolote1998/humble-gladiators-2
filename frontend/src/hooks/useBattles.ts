@@ -3,11 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBattleCreationPossibility } from "../api/fetchAvailabilities";
 import { useMutation } from "@tanstack/react-query";
 import {
+  castPhysicalAttack,
   createABattleForTodayForCampaignAndUser,
   getBattleForTodayForCampaignAndUser,
   getCheckIfThereIsAnOngoingBattleForToday,
 } from "../api/battles";
 import { useQueryClient } from "@tanstack/react-query";
+import type { TurnRequest } from "../types/battleTypes";
 
 export const useGetBattleCreationAvailability = (campaignId: number) => {
   const { getToken } = useAuth();
@@ -77,4 +79,31 @@ export const useGetCheckIfThereIsAnOngoingBattleForToday = (
     },
   });
   return { data, isError, isLoading };
+};
+
+export const useCastPhysicalAttack = () => {
+  const queryClient = useQueryClient();
+  const { getToken } = useAuth();
+  const mutation = useMutation({
+    mutationFn: async (turnRequest: TurnRequest) => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return castPhysicalAttack(
+        bearerToken,
+        turnRequest.campaignId,
+        turnRequest
+      );
+    },
+    onSuccess: (data) => {
+      //Invalidate active battle after 2 seconds to trigger enemy's turn
+      setTimeout(() => {
+        queryClient.invalidateQueries({
+          queryKey: ["active-battle", data.performingCharacter.campaignId],
+        });
+      }, 2000);
+    },
+  });
+  return mutation;
 };

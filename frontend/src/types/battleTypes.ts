@@ -36,6 +36,7 @@ export type TurnResponseDto = {
 };
 
 export type TurnRequest = {
+  campaignId: number;
   performingCharacterId: number;
   targetCharacterId: number;
   action: ActionTypeEnum;
