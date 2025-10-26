@@ -93,3 +93,22 @@ export const castActionInBattle = async (
     throw error;
   }
 };
+
+export const triggerNpcTurnForTodaysBattle = async (
+  bearerToken: string,
+  campaignId: number
+) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/action/trigger-npc-turn`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

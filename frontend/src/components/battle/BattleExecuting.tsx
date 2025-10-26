@@ -10,6 +10,7 @@ import { WeaponCard } from "../cards/WeaponCard";
 import { useCastActionInBattle } from "../../hooks/useBattles";
 import type { ActionTypeEnum } from "../../types/battleTypes";
 import { useEffect, useState } from "react";
+import { useTriggerNpcTurnForTodaysBattle } from "../../hooks/useBattles";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -58,6 +59,8 @@ const BattleExecuting = ({
     }
   };
   const { mutate: triggerActionMutation } = useCastActionInBattle();
+  const { mutate: triggerNpcTurn, isSuccess: isNpcTurnTriggeredSuccessfully } =
+    useTriggerNpcTurnForTodaysBattle();
 
   useEffect(() => {
     if (chosenCardAction && chosenTargetId) {
@@ -92,6 +95,33 @@ const BattleExecuting = ({
     triggerActionMutation,
     refetchBattle,
     teamTwo,
+    triggerNpcTurn,
+  ]);
+  const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isGameStarted || turns.length > 0) {
+      if (currentCharacterToPlay.id === teamTwo[0].id)
+        setTimeout(() => {
+          setMessageOfWhatsHappening(`${teamTwo[0].name} is thinking his turn`);
+        }, 4000);
+      setTimeout(() => {
+        triggerNpcTurn(Number(campaignId));
+
+        setMessageOfWhatsHappening("");
+      }, 8000);
+      setTimeout(() => {
+        if (refetchBattle) refetchBattle();
+      }, 10000);
+    }
+  }, [
+    campaignId,
+    currentCharacterToPlay,
+    isGameStarted,
+    refetchBattle,
+    teamTwo,
+    triggerNpcTurn,
+    turns,
   ]);
 
   const isHeroEquippingWeapon = (): boolean => {
@@ -121,7 +151,7 @@ const BattleExecuting = ({
             <p
               className="text-lg text-center bg-green-300"
               onClick={() => {
-                window.location.reload();
+                setIsGameStarted(true);
               }}
             >
               Start Battle

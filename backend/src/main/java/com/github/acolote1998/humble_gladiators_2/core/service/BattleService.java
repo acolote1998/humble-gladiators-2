@@ -223,7 +223,7 @@ public class BattleService {
         newTurn.setTargetCharacter(targetCharacter);
         newTurn.setAction(action);
         battle.getTurns().add(newTurn);
-        battleRepository.save(findWinnersOrContinueBattle(battle));
+        battleRepository.save(getUpdatedBattle(battle));
         return newTurn;
     }
 
@@ -255,7 +255,7 @@ public class BattleService {
         newTurn.setTargetCharacter(targetCharacter);
         newTurn.setAction(action);
         battle.getTurns().add(newTurn);
-        battleRepository.save(findWinnersOrContinueBattle(battle));
+        battleRepository.save(getUpdatedBattle(battle));
         return newTurn;
     }
 
@@ -287,7 +287,7 @@ public class BattleService {
         newTurn.setTargetCharacter(targetCharacter);
         newTurn.setAction(action);
         battle.getTurns().add(newTurn);
-        battleRepository.save(findWinnersOrContinueBattle(battle));
+        battleRepository.save(getUpdatedBattle(battle));
         return newTurn;
     }
 
@@ -556,7 +556,8 @@ public class BattleService {
         return true;
     }
 
-    public Battle updateBattle(Battle oldBattle) {
+    @Transactional
+    public Battle getUpdatedBattle(Battle oldBattle) {
         Battle updatedBattle = oldBattle;
         if (!isBattleActive(updatedBattle)) {
             //If not a battle from today, and there are still no winners / losers, we default the victory for the enemy
@@ -575,20 +576,30 @@ public class BattleService {
             fullyRecoverBothTeams(updatedBattle);
             updatedBattle.setOngoing(false);
         } else {
-            CharacterInstance whosTurnIsIt = whosTurnsIsIt(updatedBattle);
-            if (updatedBattle.getTeamTwo().contains(whosTurnIsIt) && (whosTurnIsIt.getCharacterType() == CharacterType.NPC)) {
-                // If it is the NPC's turn
-                CharacterInstance enemyAsAttacker = whosTurnIsIt;
-                CharacterInstance heroAsTarget = oldBattle.getTeamOne().stream().filter(characterInstance -> characterInstance.getCharacterType() == CharacterType.PLAYER).findFirst().orElse(null);
-                if (heroAsTarget != null && enemyAsAttacker != null) {
-                    updatedBattle.getTurns().add(playNPCTurn(updatedBattle, enemyAsAttacker, heroAsTarget));
-                }
-            }
+            CharacterInstance currentCharToPlay = whosTurnsIsIt(updatedBattle);
+            updatedBattle.setCurrentCharacterToPlay(currentCharToPlay);
             updatedBattle = findWinnersOrContinueBattle(updatedBattle);
         }
         return battleRepository.save(updatedBattle);
     }
 
+    @Transactional
+    public Battle triggerNpcTurn(Battle battleToTrigger) {
+        if (isBattleActive(battleToTrigger)) {
+            CharacterInstance whosTurnIsIt = whosTurnsIsIt(battleToTrigger);
+            if (battleToTrigger.getTeamTwo().contains(whosTurnIsIt) && (whosTurnIsIt.getCharacterType() == CharacterType.NPC)) {
+                // If it is the NPC's turn
+                CharacterInstance enemyAsAttacker = whosTurnIsIt;
+                CharacterInstance heroAsTarget = battleToTrigger.getTeamOne().stream().filter(characterInstance -> characterInstance.getCharacterType() == CharacterType.PLAYER).findFirst().orElse(null);
+                if (heroAsTarget != null && enemyAsAttacker != null) {
+                    battleToTrigger.getTurns().add(playNPCTurn(battleToTrigger, enemyAsAttacker, heroAsTarget));
+                }
+            }
+        }
+        return battleRepository.save(getUpdatedBattle(battleToTrigger));
+    }
+
+    @Transactional
     public void fullyRecoverBothTeams(Battle battleToCheck) {
         battleToCheck.getWinningTeam().getFirst().recoverMp(50000);
         battleToCheck.getWinningTeam().getFirst().heal(50000);
@@ -624,11 +635,5 @@ public class BattleService {
             battleToCheck.setCurrentCharacterToPlay(whosTurnsIsIt(battleToCheck));
         }
         return battleToCheck;
-    }
-
-    @Transactional
-    public Battle getUpdatedBattleForToday(Battle oldBattle) {
-        Battle updatedBattle = updateBattle(oldBattle);
-        return battleRepository.save(updatedBattle);
     }
 }
