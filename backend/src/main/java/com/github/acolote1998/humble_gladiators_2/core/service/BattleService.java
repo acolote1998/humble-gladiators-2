@@ -643,7 +643,7 @@ public class BattleService {
     }
 
     @Transactional
-    public RewardsResponseDto assignRewardsAndRestoreHeroes(Battle battleToCheck) {
+    public RewardsResponseDto assignRewardsToBattle(Battle battleToCheck) {
         if (isBattleActive(battleToCheck)) {
             log.warn("Cannot assign rewards to battle {}, still active!", battleToCheck.getId());
             throw new InvalidBattle("Cannot assign rewards - Battle is still active!");
@@ -747,7 +747,8 @@ public class BattleService {
                         possibleWeaponDrop),
                 teamWhoWon
         );
-        fullyRecoverBothTeams(battleToCheck);
+        characterService.saveCharacter(winner);
+        characterService.saveCharacter(loser);
         return rewardsResponseDto;
     }
 }

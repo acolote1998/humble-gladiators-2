@@ -62,7 +62,7 @@ public class BattleController {
         Battle todaysFinishedBattle = battleService.getUpdatedBattle(
                 battleService.getBattleUtil().
                         getFinishedBattleForTodayByCampaignAndUserId(campaignId, userId));
-        RewardsResponseDto dto = battleService.assignRewardsAndRestoreHeroes(todaysFinishedBattle);
+        RewardsResponseDto dto = battleService.assignRewardsToBattle(todaysFinishedBattle);
         return ResponseEntity.ok(dto);
     }
 
