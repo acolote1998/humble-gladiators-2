@@ -105,6 +105,10 @@ public class CharacterSnapshot extends AbstractCharacter {
         charSnapshot.setImgBytes(charToClone.getImgBytes());
         charSnapshot.setName(charToClone.getName());
         charSnapshot.setDescription(charToClone.getDescription());
+        charSnapshot.setMagicalDamage(charToClone.getInventory());
+        charSnapshot.setMagicalDefense(charToClone.getInventory());
+        charSnapshot.setPhysicalDamage(charToClone.getInventory());
+        charSnapshot.setPhysicalDefense(charToClone.getInventory());
         // If I think correctly,
         // the char snapshot does not really need the char instances inventory?
         // We should be able to replicate the battle with the turns and actions
