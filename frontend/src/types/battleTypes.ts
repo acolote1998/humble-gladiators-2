@@ -45,10 +45,24 @@ type CharacterSnaphotType = {
 };
 
 type CharacterSnapshotStatsType = {
-  currentHp: number;
-  currentMp: number;
+  constitution: number;
+  intelligence: number;
+  strength: number;
+  speed: number;
+  luck: number;
   maxHp: number;
+  currentHp: number;
   maxMp: number;
+  currentMp: number;
+  height: number;
+  weight: number;
+  level: number;
+  currentExp: number;
+  expForNextLevel: number;
+  physicalDefense: number;
+  magicalDefense: number;
+  physicalDamage: number;
+  magicalDamage: number;
 };
 
 export type TurnResponseDto = {
