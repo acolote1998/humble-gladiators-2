@@ -1,9 +1,8 @@
-import type { BattleResponseDto } from "../../types/battleTypes";
+import type {
+  BattleResponseDto,
+  TurnResponseDto,
+} from "../../types/battleTypes";
 import { CharacterCard } from "../cards/CharacterCard";
-import { ConsumableCard } from "../cards/ConsumableCard";
-import { PunchCard } from "../cards/PunchCard";
-import { SpellCard } from "../cards/SpellCard";
-import { WeaponCard } from "../cards/WeaponCard";
 import type { ActionTypeEnum } from "../../types/battleTypes";
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import {
@@ -37,14 +36,6 @@ const BattleFinished = ({
     }
   };
 
-  const isHeroEquippingWeapon = (char: CharacterInstanceType): boolean => {
-    let doesItHaveEquippedWeapon = false;
-    char.inventory.weapons.forEach((w) => {
-      if (w.equipped) doesItHaveEquippedWeapon = true;
-    });
-    return doesItHaveEquippedWeapon;
-  };
-
   const getHeroFromWinnersOrLosers = (
     heroReferenceName: string,
     heroReferenceDescription: string
@@ -60,7 +51,6 @@ const BattleFinished = ({
   };
 
   const getSimulatedCharacter = (charToSimulate: CharacterInstanceType) => {
-    const allCharactersOfThisBattle = [...winningTeam, ...losingTeam];
     const allSnapshotsOfThisBattle = [...startingTeamOne, ...startingTeamTwo];
     const foundSnapShotIndex = allSnapshotsOfThisBattle.findIndex((c) => {
       return (
@@ -76,6 +66,31 @@ const BattleFinished = ({
     return simulatedCharacter;
   };
 
+  const simulateTurn = (turn: TurnResponseDto) => {
+    const allCharacters = [simulatedHero, simulatedEnemy];
+    const targetCharacterIndex = allCharacters.findIndex((c) => {
+      return (
+        c.name === turn.targetCharacter.name &&
+        c.description == turn.targetCharacter.description
+      );
+    });
+    const targetCharacter = allCharacters[targetCharacterIndex];
+    targetCharacter.stats.currentHp -= turn.action.damageCaused;
+    if (targetCharacter.stats.currentHp < 1) {
+      targetCharacter.stats.currentHp = 0;
+    }
+    targetCharacter.stats.currentHp += turn.action.healingCaused;
+    if (targetCharacter.stats.currentHp > targetCharacter.stats.maxHp) {
+      targetCharacter.stats.currentHp = targetCharacter.stats.maxHp;
+    }
+  };
+
+  const simulateTurns = (turns: TurnResponseDto[]) => {
+    for (let i = 0; i < turns.length; i++) {
+      simulateTurn(turns[i]);
+    }
+  };
+
   const originalHero = getHeroFromWinnersOrLosers(
     startingTeamOne[0].name,
     startingTeamOne[0].description
@@ -85,8 +100,10 @@ const BattleFinished = ({
     startingTeamTwo[0].description
   );
 
-  const simulatedHero = getSimulatedCharacter(hero);
-  const simulatedEnemy = getSimulatedCharacter(enemy);
+  const simulatedHero = getSimulatedCharacter(originalHero);
+  const simulatedEnemy = getSimulatedCharacter(originalEnemy);
+
+  simulateTurns(turns);
   return (
     <div>
       <>

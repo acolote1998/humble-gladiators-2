@@ -10,6 +10,7 @@
   - [X] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
   - [ ] In the turn model, we return dealed damage, healed amount but not mp recovered? we have to include that, since certain consumables
   can recover MP
+  - [ ] subsequently, in the frontend battle finished we have simulateTurn(), after adding the MP to the turn action in the backedn we weill have to update this function too
   - [X] Implement endpoint /finalize-todays-battle -> this will be the action that applies the healing, rewards, blablabla.
     - [X] We want to call this endpoint from the finished battle screen, so we avoid getting to the finished battle screen with an already
     fully healed hero, fully healed enemy, and we avoid "missing" what happened during the last turn
