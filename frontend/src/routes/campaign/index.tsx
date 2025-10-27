@@ -21,7 +21,7 @@ function CampaignsRoute() {
           className="
           text-6xl
           tracking-tighter
-          font-extrabold
+          font-black
           text-center
           p-6
           rounded-b-2xl
@@ -35,6 +35,30 @@ function CampaignsRoute() {
         </h1>
       </div>
       <SignedIn>
+        <button
+          className="
+          border-gray-400 
+          bg-gray-200 
+            mx-20
+            px-5
+            py-3
+            text-xl
+            rounded-md
+            font-semibold
+            hover:bg-emerald-200
+            hover:tracking-wider
+            cursor-pointer
+            hover:scale-110
+            transition-all
+            ease-in-out
+            duration-800
+            "
+          onClick={() => {
+            navigate({ to: "/campaign/create" });
+          }}
+        >
+          ➕📊 New Campaign
+        </button>
         <div className="p-2">
           <p>Your Campaigns:</p>
           {isLoadingAllCampaigns ? (
@@ -55,14 +79,6 @@ function CampaignsRoute() {
           ) : (
             <p>No campaigns found</p>
           )}
-          <button
-            className="bg-[var(--div-lighter-bg)] p-2 rounded-md"
-            onClick={() => {
-              navigate({ to: "/campaign/create" });
-            }}
-          >
-            Create Campaign
-          </button>
         </div>
       </SignedIn>
     </>
