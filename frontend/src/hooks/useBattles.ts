@@ -100,7 +100,7 @@ export const useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery = (
   campaignId: number
 ) => {
   const { getToken } = useAuth();
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["rewards-finished-battle", campaignId],
     queryFn: async () => {
       const bearerToken = await getToken();
@@ -113,7 +113,7 @@ export const useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery = (
       );
     },
   });
-  return { data, isError, isLoading, refetch };
+  return { data, isError, isLoading };
 };
 
 export const useGetCheckIfThereIsAnOngoingBattleForToday = (

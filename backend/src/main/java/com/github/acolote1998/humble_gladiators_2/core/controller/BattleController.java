@@ -64,6 +64,7 @@ public class BattleController {
                 battleService.getBattleUtil().
                         getFinishedBattleForTodayByCampaignAndUserId(campaignId, userId));
         BattleReward rewards = battleService.getRewardForBattle(todaysFinishedBattle);
+        battleService.fullyRecoverBothTeams(todaysFinishedBattle);
         BattleRewardsResponseDto dto = BattleRewardsResponseDto.fromModel(rewards);
         return ResponseEntity.ok(dto);
     }

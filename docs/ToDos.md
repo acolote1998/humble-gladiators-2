@@ -15,6 +15,8 @@
     - [X] We want to call this endpoint from the finished battle screen, so we avoid getting to the finished battle screen with an already
     fully healed hero, fully healed enemy, and we avoid "missing" what happened during the last turn
     - [X] we have to then maybe remove the winning declaration from the update battle endpoint, so it only triggerss in /finalize-todays-battle or so
+
+ - [ ] implement in character inventory to show battle stats? previous battles? for potential replays as well?
    
   - [X] Battle rewards
     - [X] Implement exp reward
