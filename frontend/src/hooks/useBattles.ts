@@ -9,7 +9,6 @@ import {
   fetchOngoingBattleForTodayForCampaignAndUser,
   fetchRewardsForFinishedBattleOfTodayForCampaignAndUser,
   getCheckIfThereIsAnOngoingBattleForToday,
-  putRecoverCharactersOfTodaysFinishedBattle,
   triggerNpcTurnForTodaysBattle,
 } from "../api/battles";
 import { useQueryClient } from "@tanstack/react-query";
