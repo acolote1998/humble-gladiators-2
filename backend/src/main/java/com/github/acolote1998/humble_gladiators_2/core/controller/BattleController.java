@@ -68,16 +68,7 @@ public class BattleController {
         BattleRewardsResponseDto dto = BattleRewardsResponseDto.fromModel(rewards);
         return ResponseEntity.ok(dto);
     }
-
-    @GetMapping("/{campaignId}/battle/finished")
-    public ResponseEntity<BattleResponseDto> getFinishedBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
-        String userId = jwt.getSubject();
-        Battle todaysFinishedBattle = battleService.getUpdatedBattle(
-                battleService.getBattleUtil().
-                        getFinishedBattleForTodayByCampaignAndUserId(campaignId, userId));
-        BattleResponseDto dto = BattleResponseDto.fromModel(todaysFinishedBattle);
-        return ResponseEntity.ok(dto);
-    }
+    
 
     @GetMapping("/{campaignId}/battle")
     public ResponseEntity<BattleResponseDto> getAnyBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
