@@ -40,6 +40,7 @@ function CampaignsRoute() {
           border-gray-400 
           bg-gray-200 
             mx-20
+            mb-5
             px-5
             py-3
             text-xl
@@ -59,26 +60,51 @@ function CampaignsRoute() {
         >
           ➕📊 New Campaign
         </button>
-        <div className="p-2">
-          <p>Your Campaigns:</p>
-          {isLoadingAllCampaigns ? (
-            <p>Loading campaigns</p>
-          ) : isErrorLoadingAllCampaigns ? (
-            <p>Error loading campaigns</p>
-          ) : allCampaigns && allCampaigns.length > 0 ? (
-            allCampaigns.map((campaign) => (
-              <div
-                key={campaign.id}
-                onClick={() => {
-                  navigate({ to: `/campaign/${campaign.id}` });
-                }}
-              >
-                <CampaignInfo {...campaign} />
-              </div>
-            ))
-          ) : (
-            <p>No campaigns found</p>
-          )}
+        <div
+          className="
+            text-6xl
+          mx-10
+          p-5
+          rounded-2xl
+          border-5
+        border-gray-400 
+        bg-gray-200
+        "
+        >
+          <div className="flex flex-col items-center">
+            <p
+              className="
+            text-3xl
+            rounded-md
+            font-semibold
+            cursor-pointer
+          bg-gray-300
+            px-10
+            py-2
+            mb-5
+            "
+            >
+              Your Campaigns
+            </p>
+            {isLoadingAllCampaigns ? (
+              <p>Loading campaigns</p>
+            ) : isErrorLoadingAllCampaigns ? (
+              <p>Error loading campaigns</p>
+            ) : allCampaigns && allCampaigns.length > 0 ? (
+              allCampaigns.map((campaign) => (
+                <div
+                  key={campaign.id}
+                  onClick={() => {
+                    navigate({ to: `/campaign/${campaign.id}` });
+                  }}
+                >
+                  <CampaignInfo {...campaign} />
+                </div>
+              ))
+            ) : (
+              <p>No campaigns found</p>
+            )}
+          </div>
         </div>
       </SignedIn>
     </>
