@@ -95,44 +95,44 @@ const BattleFinished = ({
                     Gold Reward: {rewardsForBattle?.goldReward}
                   </p>
                   <p className="my-2 p-1 rounded-md bg-gray-300">Item loot:</p>
-                  {rewardsForBattle?.itemLoot.armorLoot.length > 0 &&
-                    rewardsForBattle?.itemLoot.armorLoot.map((i) => (
+                  {rewardsForBattle.armorLoot.length > 0 &&
+                    rewardsForBattle.armorLoot.map((i) => (
                       <p className="my-2 p-1 rounded-md bg-gray-300">
                         {i.name} - T {i.tier} - R {i.rarity}
                       </p>
                     ))}
-                  {rewardsForBattle?.itemLoot.bootsLoot.length > 0 &&
-                    rewardsForBattle?.itemLoot.bootsLoot.map((i) => (
+                  {rewardsForBattle.bootsLoot.length > 0 &&
+                    rewardsForBattle.bootsLoot.map((i) => (
                       <p className="my-2 p-1 rounded-md bg-gray-300">
                         {i.name} - T {i.tier} - R {i.rarity}
                       </p>
                     ))}
-                  {rewardsForBattle?.itemLoot.consumablesLoot.length > 0 &&
-                    rewardsForBattle?.itemLoot.consumablesLoot.map((i) => (
+                  {rewardsForBattle.consumablesLoot.length > 0 &&
+                    rewardsForBattle.consumablesLoot.map((i) => (
                       <p className="my-2 p-1 rounded-md bg-gray-300">
                         {i.name} - T {i.tier} - R {i.rarity}
                       </p>
                     ))}
-                  {rewardsForBattle?.itemLoot.helmetsLoot.length > 0 &&
-                    rewardsForBattle?.itemLoot.helmetsLoot.map((i) => (
+                  {rewardsForBattle.helmetsLoot.length > 0 &&
+                    rewardsForBattle.helmetsLoot.map((i) => (
                       <p className="my-2 p-1 rounded-md bg-gray-300">
                         {i.name} - T {i.tier} - R {i.rarity}
                       </p>
                     ))}
-                  {rewardsForBattle?.itemLoot.shieldsLoot.length > 0 &&
-                    rewardsForBattle?.itemLoot.shieldsLoot.map((i) => (
+                  {rewardsForBattle.shieldsLoot.length > 0 &&
+                    rewardsForBattle.shieldsLoot.map((i) => (
                       <p className="my-2 p-1 rounded-md bg-gray-300">
                         {i.name} - T {i.tier} - R {i.rarity}
                       </p>
                     ))}
-                  {rewardsForBattle?.itemLoot.spellsLoot.length > 0 &&
-                    rewardsForBattle?.itemLoot.spellsLoot.map((i) => (
+                  {rewardsForBattle.spellsLoot.length > 0 &&
+                    rewardsForBattle.spellsLoot.map((i) => (
                       <p className="my-2 p-1 rounded-md bg-gray-300">
                         {i.name} - T {i.tier} - R {i.rarity}
                       </p>
                     ))}
-                  {rewardsForBattle?.itemLoot.weaponsLoot.length > 0 &&
-                    rewardsForBattle?.itemLoot.weaponsLoot.map((i) => (
+                  {rewardsForBattle.weaponsLoot.length > 0 &&
+                    rewardsForBattle.weaponsLoot.map((i) => (
                       <p className="my-2 p-1 rounded-md bg-gray-300">
                         {i.name} - T {i.tier} - R {i.rarity}
                       </p>
