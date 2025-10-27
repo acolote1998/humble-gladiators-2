@@ -6,7 +6,6 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInst
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterSnapshot;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
-import com.github.acolote1998.humble_gladiators_2.core.dto.RewardsResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
 import com.github.acolote1998.humble_gladiators_2.core.enums.BattleResultEnum;
@@ -14,9 +13,7 @@ import com.github.acolote1998.humble_gladiators_2.core.enums.NPCActions;
 import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
-import com.github.acolote1998.humble_gladiators_2.core.model.Action;
-import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
-import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
+import com.github.acolote1998.humble_gladiators_2.core.model.*;
 import com.github.acolote1998.humble_gladiators_2.core.repository.BattleRepository;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import jakarta.transaction.Transactional;
@@ -641,12 +638,12 @@ public class BattleService {
         return battleToCheck;
     }
 
-    @Transactional
-    public RewardsResponseDto assignRewardsToBattle(Battle battleToCheck) {
+    public BattleReward createRewardForBattle(Battle battleToCheck) {
         if (isBattleActive(battleToCheck)) {
             log.warn("Cannot assign rewards to battle {}, still active!", battleToCheck.getId());
             throw new InvalidBattle("Cannot assign rewards - Battle is still active!");
         }
+        log.info("Reward for battle '{}' not found - creating", battleToCheck.getId());
         Random random = new Random();
         CharacterInstance winner = battleToCheck.getWinningTeam().getFirst();
         CharacterInstance loser = battleToCheck.getLosingTeam().getFirst();
@@ -733,21 +730,36 @@ public class BattleService {
             winnerInventory.getSpells().addAll(possibleSpellDrop);
             winnerInventory.getWeapons().addAll(possibleWeaponDrop);
         }
-        RewardsResponseDto rewardsResponseDto = new RewardsResponseDto(
-                expReward,
-                goldReward,
-                RewardsResponseDto.ItemLoot.fromListOfItems(
-                        possibleArmorDrop,
-                        possibleBootsDrop,
-                        possibleConsumablesDrop,
-                        possibleHelmetDrop,
-                        possibleShieldDrop,
-                        possibleSpellDrop,
-                        possibleWeaponDrop),
-                teamWhoWon
-        );
+        BattleReward reward = new BattleReward();
+        reward.setGoldReward(goldReward);
+        reward.setExpReward(expReward);
+        reward.setBattleResult(teamWhoWon);
+        reward.setArmorLoot(possibleArmorDrop);
+        reward.setBootsLoot(possibleBootsDrop);
+        reward.setConsumablesLoot(possibleConsumablesDrop);
+        reward.setHelmetsLoot(possibleHelmetDrop);
+        reward.setShieldsLoot(possibleShieldDrop);
+        reward.setSpellsLoot(possibleSpellDrop);
+        reward.setWeaponsLoot(possibleWeaponDrop);
         characterService.saveCharacter(winner);
         characterService.saveCharacter(loser);
-        return rewardsResponseDto;
+        return reward;
+    }
+
+    @Transactional
+    public BattleReward getRewardForBattle(Battle battleToProcess) {
+        if (isBattleActive(battleToProcess)) {
+            log.warn("Battle '{}' is still active, cannot retrieve its reward!", battleToProcess.getId());
+            throw new InvalidBattle("Battle '" + battleToProcess.getId() + "' is active, cannot retrieve its reward");
+        }
+        BattleReward reward;
+        if (battleToProcess.getReward() == null) {
+            reward = createRewardForBattle(battleToProcess);
+            battleToProcess.setReward(reward);
+            battleRepository.save(battleToProcess);
+        } else {
+            reward = battleToProcess.getReward();
+        }
+        return reward;
     }
 }

@@ -1,11 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.BattleResponseDto;
-import com.github.acolote1998.humble_gladiators_2.core.dto.RewardsResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.dto.BattleRewardsResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
+import com.github.acolote1998.humble_gladiators_2.core.model.BattleReward;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import jakarta.validation.Valid;
@@ -57,12 +58,13 @@ public class BattleController {
     }
 
     @GetMapping("/{campaignId}/battle/get-rewards")
-    public ResponseEntity<RewardsResponseDto> getRewardsForTodaysFinishedBattle(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+    public ResponseEntity<BattleRewardsResponseDto> getRewardsForTodaysFinishedBattle(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         Battle todaysFinishedBattle = battleService.getUpdatedBattle(
                 battleService.getBattleUtil().
                         getFinishedBattleForTodayByCampaignAndUserId(campaignId, userId));
-        RewardsResponseDto dto = battleService.assignRewardsToBattle(todaysFinishedBattle);
+        BattleReward rewards = battleService.getRewardForBattle(todaysFinishedBattle);
+        BattleRewardsResponseDto dto = BattleRewardsResponseDto.fromModel(rewards);
         return ResponseEntity.ok(dto);
     }
 

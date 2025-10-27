@@ -24,6 +24,24 @@ public record ConsumableInstanceResponseDto(
         Boolean discovered,
         String imgBase64
 ) {
+    public static ConsumableInstanceResponseDto fromModel(ConsumableInstance consumable) {
+        return new ConsumableInstanceResponseDto(
+                consumable.getCampaign().getId(),
+                consumable.getId(),
+                consumable.getName(),
+                consumable.getDescription(),
+                consumable.getRarity(),
+                consumable.getTier(),
+                consumable.getValue(),
+                consumable.getQuantity(),
+                consumable.getEquipped(),
+                RequirementResponseDto.fromRequirement(consumable.getRequirement()),
+                consumable.getTemplate().getCategory(),
+                consumable.getTemplate().getRestoreHp(),
+                consumable.getTemplate().getRestoreMp(),
+                consumable.getTemplate().getDiscovered(),
+                BytesToBase64.bytesToBase64(consumable.getTemplate().getImgBytes()));
+    }
 
     public static List<ConsumableInstanceResponseDto> fromInstances(List<ConsumableInstance> consumables) {
         if (consumables == null) return List.of();

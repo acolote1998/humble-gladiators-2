@@ -70,6 +70,9 @@ public class Battle {
 
     private boolean ongoing;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    BattleReward reward;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
