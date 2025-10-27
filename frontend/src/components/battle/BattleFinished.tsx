@@ -59,15 +59,6 @@ const BattleFinished = ({
     return allChars[foundHeroIndex];
   };
 
-  const hero = getHeroFromWinnersOrLosers(
-    startingTeamOne[0].name,
-    startingTeamOne[0].description
-  );
-  const enemy = getHeroFromWinnersOrLosers(
-    startingTeamTwo[0].name,
-    startingTeamTwo[0].description
-  );
-
   const getSimulatedCharacter = (charToSimulate: CharacterInstanceType) => {
     const allCharactersOfThisBattle = [...winningTeam, ...losingTeam];
     const allSnapshotsOfThisBattle = [...startingTeamOne, ...startingTeamTwo];
@@ -84,6 +75,18 @@ const BattleFinished = ({
     };
     return simulatedCharacter;
   };
+
+  const originalHero = getHeroFromWinnersOrLosers(
+    startingTeamOne[0].name,
+    startingTeamOne[0].description
+  );
+  const originalEnemy = getHeroFromWinnersOrLosers(
+    startingTeamTwo[0].name,
+    startingTeamTwo[0].description
+  );
+
+  const simulatedHero = getSimulatedCharacter(hero);
+  const simulatedEnemy = getSimulatedCharacter(enemy);
   return (
     <div>
       <>
@@ -101,9 +104,9 @@ const BattleFinished = ({
                   <p className="my-2 p-1 rounded-md bg-gray-300">
                     Winner:{" "}
                     {rewardsForBattle?.battleResult == "VICTORY_TEAM_ONE"
-                      ? hero.name
+                      ? originalHero.name
                       : rewardsForBattle.battleResult == "VICTORY_TEAM_TWO" &&
-                        enemy.name}
+                        originalEnemy.name}
                   </p>
                   <p className="my-2 p-1 rounded-md bg-gray-300">
                     Exp Reward: {rewardsForBattle?.expReward}
@@ -167,7 +170,7 @@ const BattleFinished = ({
               )
             )}
             <div>
-              <CharacterCard {...enemy} renderingFrom="BATTLE" />
+              <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
             </div>
           </div>
           <div className="absolute rounded-md bg-gray-200 border-gray-400 border mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-scroll">
@@ -193,75 +196,27 @@ const BattleFinished = ({
         <div className="grid grid-cols-7">
           <div className="flex flex-col items-center">
             <p className="text-2xl">Hero Stats</p>
-            <p className="text-xl">{hero.name}</p>
+            <p className="text-xl">{simulatedHero.name}</p>
             <p>
-              HP {hero.stats.currentHp}/{hero.stats.maxHp}
+              HP {simulatedHero.stats.currentHp}/{simulatedHero.stats.maxHp}
             </p>
             <p>
-              MP {hero.stats.currentMp}/{hero.stats.maxMp}
+              MP {simulatedHero.stats.currentMp}/{simulatedHero.stats.maxMp}
             </p>
             <p>
-              XP {hero.stats.currentExp}/{hero.stats.expForNextLevel}
+              XP {simulatedHero.stats.currentExp}/
+              {simulatedHero.stats.expForNextLevel}
             </p>
-            <p>LCK {hero.stats.luck}</p>
-            <p>SPD {hero.stats.speed}</p>
+            <p>LCK {simulatedHero.stats.luck}</p>
+            <p>SPD {simulatedHero.stats.speed}</p>
             <p>
-              P. DMG {hero.stats.physicalDamage} / P. DEF{" "}
-              {hero.stats.physicalDefense}
+              P. DMG {simulatedHero.stats.physicalDamage} / P. DEF{" "}
+              {simulatedHero.stats.physicalDefense}
             </p>
             <p>
-              M. DMG {hero.stats.magicalDamage} / M. DEF{" "}
-              {hero.stats.magicalDefense}
+              M. DMG {simulatedHero.stats.magicalDamage} / M. DEF{" "}
+              {simulatedHero.stats.magicalDefense}
             </p>
-          </div>
-          <div className="col-span-6 flex flex-col items-center">
-            <p className="text-2xl">Hand</p>
-            <div className="grid grid-cols-5">
-              <div
-                className={`transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50 `}
-              >
-                {isHeroEquippingWeapon(hero) ? (
-                  hero.inventory.weapons.map((card) => {
-                    if (card.equipped) {
-                      return <WeaponCard {...card} renderingFrom="BATTLE" />;
-                    }
-                  })
-                ) : (
-                  <PunchCard />
-                )}
-              </div>
-              {hero.inventory.spells
-                .filter((spell, index, self) => {
-                  return (
-                    index ===
-                    self.findIndex(
-                      (firstOcurrenceSpell) =>
-                        firstOcurrenceSpell.name == spell.name
-                    )
-                  );
-                })
-                .map((card) => {
-                  return (
-                    <div
-                      className={
-                        `transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
-                        `${startingTeamOne[0].stats.currentMp >= card.mpCost ? "opacity-100 " : "opacity-50 "}`
-                      }
-                    >
-                      <SpellCard {...card} renderingFrom="BATTLE" />
-                    </div>
-                  );
-                })}
-              {hero.inventory.consumables.map((card) => {
-                return (
-                  <div
-                    className={`transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  `}
-                  >
-                    <ConsumableCard {...card} renderingFrom="BATTLE" />
-                  </div>
-                );
-              })}
-            </div>
           </div>
         </div>
       </>
