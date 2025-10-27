@@ -172,7 +172,6 @@ const BattleFinished = ({
                   <p
                     className="my-2 p-1 rounded-md bg-red-400 text-center"
                     onClick={() => {
-                      recoverHeroes(Number(campaignId));
                       navigate({ to: `/campaign/${campaignId}` });
                     }}
                   >
