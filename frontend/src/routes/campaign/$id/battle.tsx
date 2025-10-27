@@ -1,8 +1,4 @@
-import {
-  useGetOngoingBattleForTodayByCampaignIdAndUsery,
-  useGetCheckIfThereIsAnOngoingBattleForToday,
-  useGetFinishedBattleForTodayByCampaignIdAndUsery,
-} from "../../../hooks/useBattles";
+import { useGetBattleForTodayByCampaignIdAndUsery } from "../../../hooks/useBattles";
 import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import BattleExecuting from "../../../components/battle/BattleExecuting";
@@ -16,31 +12,19 @@ export const Route = createFileRoute("/campaign/$id/battle")({
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/battle" });
 
-  const { data: activeBattleData, isLoading: isActiveBattleLoading } =
-    useGetOngoingBattleForTodayByCampaignIdAndUsery(Number(campaignId));
-
-  const {
-    data: isThereOngoingBattleToday,
-    isLoading: isThereOngoingBattleLoading,
-  } = useGetCheckIfThereIsAnOngoingBattleForToday(Number(campaignId));
-
-  const { data: finishedBattleData, isLoading: isLoadingFinishedBattleData } =
-    useGetFinishedBattleForTodayByCampaignIdAndUsery(Number(campaignId));
+  const { data: battleForTodayData, isLoading: loadingBattleForToday } =
+    useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
   return (
     <div>
-      {isLoadingFinishedBattleData ? (
+      {loadingBattleForToday ? (
         <p>Loading...</p>
-      ) : finishedBattleData ? (
-        <BattleFinished {...finishedBattleData} />
-      ) : isThereOngoingBattleLoading ? (
-        <p>Loading...</p>
-      ) : isThereOngoingBattleToday ? (
-        isActiveBattleLoading ? (
-          <p>Loading battle...</p>
-        ) : activeBattleData ? (
-          <BattleExecuting {...activeBattleData} />
+      ) : battleForTodayData ? (
+        battleForTodayData.onGoing ? (
+          <BattleExecuting {...battleForTodayData} />
         ) : (
-          <p>Could not load active battle.</p>
+          !battleForTodayData.onGoing && (
+            <BattleFinished {...battleForTodayData} />
+          )
         )
       ) : (
         <BattleCheckAndCreation campaignId={Number(campaignId)} />

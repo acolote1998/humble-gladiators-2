@@ -26,31 +26,13 @@ export const createABattleForTodayForCampaignAndUser = async (
   }
 };
 
-export const fetchOngoingBattleForTodayForCampaignAndUser = async (
+export const fetchBattleForTodayForCampaignAndUser = async (
   bearerToken: string,
   campaignId: number
 ): Promise<BattleResponseDto> => {
   try {
     const response = await axios.get(
-      `${BACKEND_URL}/campaign/${campaignId}/battle/ongoing`,
-      {
-        headers: { Authorization: `Bearer ${bearerToken}` },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const fetchFinishedBattleForTodayForCampaignAndUser = async (
-  bearerToken: string,
-  campaignId: number
-): Promise<BattleResponseDto> => {
-  try {
-    const response = await axios.get(
-      `${BACKEND_URL}/campaign/${campaignId}/battle/finished`,
+      `${BACKEND_URL}/campaign/${campaignId}/battle`,
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }
@@ -69,24 +51,6 @@ export const fetchRewardsForFinishedBattleOfTodayForCampaignAndUser = async (
   try {
     const response = await axios.get(
       `${BACKEND_URL}/campaign/${campaignId}/battle/get-rewards`,
-      {
-        headers: { Authorization: `Bearer ${bearerToken}` },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const getCheckIfThereIsAnOngoingBattleForToday = async (
-  bearerToken: string,
-  campaignId: number
-): Promise<boolean> => {
-  try {
-    const response = await axios.get(
-      `${BACKEND_URL}/campaign/${campaignId}/battle/check-ongoing`,
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }

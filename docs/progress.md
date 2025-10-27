@@ -167,4 +167,5 @@ Monday 27/10
 - Implementing battle reward endpoints, frontend implementation and idempotency
 - Implementing finished battle turn processing based on character snapshot
 - Improved character snapshot architecture
+- Simplifying battle retrieval by only having one endpoint and the conditionally rendering it as finished or not in the frontend
 ```

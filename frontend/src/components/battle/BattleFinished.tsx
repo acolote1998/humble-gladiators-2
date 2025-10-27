@@ -70,13 +70,14 @@ const BattleFinished = ({
       );
     });
     const targetCharacter = allCharacters[targetCharacterIndex];
-    targetCharacter.stats.currentHp -= turn.action.damageCaused;
-    if (targetCharacter.stats.currentHp < 1) {
-      targetCharacter.stats.currentHp = 0;
-    }
+
     targetCharacter.stats.currentHp += turn.action.healingCaused;
     if (targetCharacter.stats.currentHp > targetCharacter.stats.maxHp) {
       targetCharacter.stats.currentHp = targetCharacter.stats.maxHp;
+    }
+    targetCharacter.stats.currentHp -= turn.action.damageCaused;
+    if (targetCharacter.stats.currentHp < 1) {
+      targetCharacter.stats.currentHp = 0;
     }
   };
 

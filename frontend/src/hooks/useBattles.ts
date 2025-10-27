@@ -5,10 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import {
   castActionInBattle,
   createABattleForTodayForCampaignAndUser,
-  fetchFinishedBattleForTodayForCampaignAndUser,
-  fetchOngoingBattleForTodayForCampaignAndUser,
+  fetchBattleForTodayForCampaignAndUser,
   fetchRewardsForFinishedBattleOfTodayForCampaignAndUser,
-  getCheckIfThereIsAnOngoingBattleForToday,
   triggerNpcTurnForTodaysBattle,
 } from "../api/battles";
 import { useQueryClient } from "@tanstack/react-query";
@@ -45,7 +43,7 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
         queryKey: ["battle-ongoing-check", data.campaignId],
       });
       queryClient.invalidateQueries({
-        queryKey: ["active-battle", data.campaignId],
+        queryKey: ["todays-battle", data.campaignId],
       });
       queryClient.invalidateQueries({
         queryKey: ["battle-ongoing-check", data.campaignId],
@@ -55,41 +53,18 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
   return mutation;
 };
 
-export const useGetOngoingBattleForTodayByCampaignIdAndUsery = (
+export const useGetBattleForTodayByCampaignIdAndUsery = (
   campaignId: number
 ) => {
   const { getToken } = useAuth();
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["active-battle", campaignId],
+    queryKey: ["todays-battle", campaignId],
     queryFn: async () => {
       const bearerToken = await getToken();
       if (!bearerToken) {
         throw new Error("No bearer token available");
       }
-      return fetchOngoingBattleForTodayForCampaignAndUser(
-        bearerToken,
-        campaignId
-      );
-    },
-  });
-  return { data, isError, isLoading };
-};
-
-export const useGetFinishedBattleForTodayByCampaignIdAndUsery = (
-  campaignId: number
-) => {
-  const { getToken } = useAuth();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["finished-battle", campaignId],
-    queryFn: async () => {
-      const bearerToken = await getToken();
-      if (!bearerToken) {
-        throw new Error("No bearer token available");
-      }
-      return fetchFinishedBattleForTodayForCampaignAndUser(
-        bearerToken,
-        campaignId
-      );
+      return fetchBattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
   });
   return { data, isError, isLoading };
@@ -110,23 +85,6 @@ export const useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery = (
         bearerToken,
         campaignId
       );
-    },
-  });
-  return { data, isError, isLoading };
-};
-
-export const useGetCheckIfThereIsAnOngoingBattleForToday = (
-  campaignId: number
-) => {
-  const { getToken } = useAuth();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["battle-ongoing-check", campaignId],
-    queryFn: async () => {
-      const bearerToken = await getToken();
-      if (!bearerToken) {
-        throw new Error("No bearer token available");
-      }
-      return getCheckIfThereIsAnOngoingBattleForToday(bearerToken, campaignId);
     },
   });
   return { data, isError, isLoading };

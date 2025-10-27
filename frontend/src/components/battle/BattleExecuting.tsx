@@ -79,7 +79,7 @@ const BattleExecuting = ({
         setChosenCardAction(undefined);
         setChosenCardId(undefined);
         queryClient.invalidateQueries({
-          queryKey: ["active-battle", campaignId],
+          queryKey: ["todays-battle", campaignId],
         });
       }, 2800);
     }
@@ -120,7 +120,7 @@ const BattleExecuting = ({
       setTimeout(() => {
         eraseNpcTurnTraces();
         queryClient.invalidateQueries({
-          queryKey: ["active-battle", campaignId],
+          queryKey: ["todays-battle", campaignId],
         });
       }, 2500);
     }
