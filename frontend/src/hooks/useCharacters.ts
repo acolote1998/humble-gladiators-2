@@ -49,8 +49,8 @@ export const useCreateHero = () => {
       }
       return createHeroForACampaignPost(heroToCreateVariables, bearerToken);
     },
-    onSuccess: () => {
-      navigate({ reloadDocument: true });
+    onSuccess: (data) => {
+      navigate({ to: `/campaign/${data.campaignId}` });
     },
   });
   return mutation;

@@ -2,11 +2,6 @@
 
 - [ ] figure out a way to be able to play more than one battle per day? at the moment once we play one, we always retrieve the same one in the front end, which is intended, that's fine, but if I wanna test more than one?
 
-- [ ] Battle
-  - [ ] In the turn model, we return dealed damage, healed amount but not mp recovered? we have to include that, since certain consumables
-  can recover MP
-  - [ ] subsequently, in the frontend battle finished we have simulateTurn(), after adding the MP to the turn action in the backedn we weill have to update this function too
-
  - [ ] implement in character inventory route to show battle stats? previous battles? for potential replays as well?
    
   - [ ] Implement some sort of "check intention" and log conditionally based on that. At the moment we are logging a lot of shit in console when an availability happens, and this happens ALL the time? -> check with chat gpt

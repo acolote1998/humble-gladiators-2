@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -42,13 +43,13 @@ public class CharacterController {
     }
 
     @PostMapping("/{campaignId}/character-instances/hero")
-    ResponseEntity<HeroResponseDto> createHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @RequestBody CreateHeroRequestDto dtoRequest) {
+    ResponseEntity<Map<String, Long>> createHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId, @RequestBody CreateHeroRequestDto dtoRequest) {
         String userId = jwt.getSubject();
         CharacterInstance model = characterService.createHero(campaignService.getCampaignByIdAndUserId(userId, campaignId), userId, dtoRequest);
-        HeroResponseDto dto = HeroResponseDto.fromModelToDto(model);
-        return (ResponseEntity<HeroResponseDto>) ResponseEntity
+        FullCharacterResponseDto dto = FullCharacterResponseDto.fromModelToDto(model);
+        return ResponseEntity
                 .created(URI.create("/api/campaign/character-instances/hero"))
-                .body(dto);
+                .body(Map.of("campaignId", model.getCampaign().getId()));
     }
 
     @GetMapping("/{campaignId}/character-instances/hero")
