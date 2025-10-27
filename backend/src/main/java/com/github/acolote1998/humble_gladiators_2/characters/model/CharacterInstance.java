@@ -367,7 +367,6 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         int mpCost = spellToCastFromPerformerCharacterInventory.getTemplate().getMpCost();
 
         // Deduct mana
-        this.getStats().setCurrentMp(this.getStats().getCurrentMp() - mpCost);
         log.info("'{}' casts '{}' on '{}', costing {} MP (remaining MP: {})",
                 this.getName(),
                 spellToCastFromPerformerCharacterInventory.getName(),
@@ -412,6 +411,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         }
 
         targetCharacter.sufferDamage(totalDamageCaused);
+        this.consumeMp(mpCost);
         Action actionPerformed = new Action();
         actionPerformed.setActionType(ActionType.SPELL);
         actionPerformed.setStateCaused(StateType.NONE);
