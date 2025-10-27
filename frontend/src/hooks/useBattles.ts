@@ -6,6 +6,7 @@ import {
   castActionInBattle,
   createABattleForTodayForCampaignAndUser,
   fetchBattleForTodayForCampaignAndUser,
+  fetchIsBattleOngoingForCampaignAndUser,
   fetchRewardsForFinishedBattleOfTodayForCampaignAndUser,
   triggerNpcTurnForTodaysBattle,
 } from "../api/battles";
@@ -85,6 +86,21 @@ export const useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery = (
         bearerToken,
         campaignId
       );
+    },
+  });
+  return { data, isError, isLoading };
+};
+
+export const useGetIsBattleOngoing = (campaignId: number) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["battle-ongoing-check", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return fetchIsBattleOngoingForCampaignAndUser(bearerToken, campaignId);
     },
   });
   return { data, isError, isLoading };

@@ -26,6 +26,24 @@ export const createABattleForTodayForCampaignAndUser = async (
   }
 };
 
+export const fetchIsBattleOngoingForCampaignAndUser = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<boolean> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/check-ongoing`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const fetchBattleForTodayForCampaignAndUser = async (
   bearerToken: string,
   campaignId: number
