@@ -4,6 +4,7 @@ import type {
   BattleResponseDto,
   TurnResponseDto,
   TurnRequest,
+  BattleRewardsResponseDto,
 } from "../types/battleTypes";
 
 export const createABattleForTodayForCampaignAndUser = async (
@@ -25,7 +26,25 @@ export const createABattleForTodayForCampaignAndUser = async (
   }
 };
 
-export const getBattleForTodayForCampaignAndUser = async (
+export const fetchIsBattleOngoingForCampaignAndUser = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<boolean> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/check-ongoing`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const fetchBattleForTodayForCampaignAndUser = async (
   bearerToken: string,
   campaignId: number
 ): Promise<BattleResponseDto> => {
@@ -43,13 +62,13 @@ export const getBattleForTodayForCampaignAndUser = async (
   }
 };
 
-export const getCheckIfThereIsAnOngoingBattleForToday = async (
+export const fetchRewardsForFinishedBattleOfTodayForCampaignAndUser = async (
   bearerToken: string,
   campaignId: number
-): Promise<boolean> => {
+): Promise<BattleRewardsResponseDto> => {
   try {
     const response = await axios.get(
-      `${BACKEND_URL}/campaign/${campaignId}/battle/check-ongoing`,
+      `${BACKEND_URL}/campaign/${campaignId}/battle/get-rewards`,
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }

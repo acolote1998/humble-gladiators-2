@@ -28,6 +28,16 @@ public class BattleUtil {
         return todaysBattle;
     }
 
+    public Battle getFinishedBattleForTodayByCampaignAndUserId(Long campaignId, String userId) {
+        LocalDate today = LocalDate.now();
+        Battle todaysBattle = battleRepository.findFinishedByCampaignIdAndUserIdAndUpdatedAtDate(campaignId, userId, today);
+        if (todaysBattle == null) {
+            log.error("Campaign '{}' - Battle finished for today not found", campaignId);
+            throw new InvalidBattle("Battle finished for today not found");
+        }
+        return todaysBattle;
+    }
+
     public boolean isThereOngoingBattleForToday(Long campaignId, String userId) {
         Battle battleToCheck = null;
         try {

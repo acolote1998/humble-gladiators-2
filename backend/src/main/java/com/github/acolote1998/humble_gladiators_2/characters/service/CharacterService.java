@@ -429,6 +429,8 @@ public class CharacterService {
         model.setUserId(userId);
         model.setCampaign(campaign);
         model.setName(dto.heroName());
+        model.setGoldReward(0);
+        model.setExpReward(0);
         model.setInventory(InventoryService.createBlankInventory());
         model.setStats(Stats.createRandomInitialStats());
         model.setCharacterType(CharacterType.PLAYER);
@@ -448,7 +450,7 @@ public class CharacterService {
 
     public CharacterInstance getDailyEnemy(Long campaignId, String userId) {
         LocalDate today = LocalDate.now();
-        CharacterInstance enemy = characterInstanceRepository.findEnemyByCampaignIdAndUserIdAndUpdatedAtDate(
+        CharacterInstance enemy = characterInstanceRepository.findDiscoveredEnemyByCampaignIdAndUserIdAndCharacterTypeAndUpdatedToday(
                 campaignId,
                 userId,
                 today,

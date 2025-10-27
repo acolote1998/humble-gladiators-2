@@ -8,7 +8,7 @@ import CampaignInfo from "../../../components/campaigns/CampaignInfo";
 import { useGetHeroExistence } from "../../../hooks/useCharacters";
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
-import { useGetBattleForTodayByCampaignIdAndUsery } from "../../../hooks/useBattles";
+import { useGetIsBattleOngoing } from "../../../hooks/useBattles";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -16,9 +16,6 @@ export const Route = createFileRoute("/campaign/$id/")({
 function RouteComponent() {
   const navigate = useNavigate();
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
-  const { data: isBattleOngoing } = useGetBattleForTodayByCampaignIdAndUsery(
-    Number(campaignId)
-  );
   const {
     data: doesHeroExist,
     isLoading: doesHeroExistLoading,
@@ -30,6 +27,9 @@ function RouteComponent() {
     isError: isCampaignError,
     isLoading: isCampaignLoading,
   } = useGetCampaignByIdForAUser(Number(campaignId));
+
+  const { data: isBattleOngoing, isLoading: isBattleOngoingLoading } =
+    useGetIsBattleOngoing(Number(campaignId));
 
   return (
     <>
@@ -47,7 +47,9 @@ function RouteComponent() {
               <p>Error loading hero availability</p>
             ) : doesHeroExist ? (
               <>
-                {!isBattleOngoing ? (
+                {isBattleOngoingLoading ? (
+                  <p>Loading...</p>
+                ) : !isBattleOngoing ? (
                   <>
                     <p
                       onClick={() => {
@@ -86,7 +88,7 @@ function RouteComponent() {
               </>
             ) : (
               <p
-                className="p-2 bg-green-300 w-fit rounded-md m-2 border-1 border-green-500"
+                className="p-2 bg-green-300 w-fit rounded-md m-2 border border-green-500"
                 onClick={() => {
                   navigate({ to: `/campaign/${campaignId}/createHero` });
                 }}

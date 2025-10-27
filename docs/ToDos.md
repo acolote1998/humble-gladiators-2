@@ -1,33 +1,19 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] figure out a way to be able to play more than one battle per day? at the moment once we play one, we always retrieve the same one in the front end, which is intended, that's fine, but if I wanna test more than one?
+
 - [ ] Battle
-  - [X] Battle turn processing system
-  - [X] Able to cast spells
-  - [X] Able to use consumables
-  - [X] Able to physically attack
-  - [X] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
-  - [ ] Implement victory screen in frontend
-  - [ ] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
   - [ ] In the turn model, we return dealed damage, healed amount but not mp recovered? we have to include that, since certain consumables
   can recover MP
+  - [ ] subsequently, in the frontend battle finished we have simulateTurn(), after adding the MP to the turn action in the backedn we weill have to update this function too
 
-- [ ] Improve NPC logic decision taking (never castin spell? I think MP is 0 probably why)
+ - [ ] implement in character inventory route to show battle stats? previous battles? for potential replays as well?
    
-  - [ ] Battle rewards
-    - [ ] Implement exp reward
-    - [ ] Implement gold reward
-    - [ ] Implement item reward
+  - [ ] Implement some sort of "check intention" and log conditionally based on that. At the moment we are logging a lot of shit in console when an availability happens, and this happens ALL the time? -> check with chat gpt
+
+  - [ ] check which logs are worth it, right now for when any character performs any action we print like 4 or 5 logs... maybe just print the final one? or don't print if they succeed? only the negative one that could give u feedback in a potential runtime excepption?
 
 - [ ] Implement level up system?
-
-- [ ] Battle in the future:
-  - [ ] Enable turn processing based on the character snapshot. At the moment we rely on live data of the characters to process a battle, 
-  but that not might be ideal for the future?
-
-  - IDEA: At the moment, we trigger the enemy's turn when we to a getBattle, but we currently have the character's executed turn as a response from either a spell,
-  or a consumable or an attack. So I am thinking to "simulate" a waiting for the enemys turn, it could be that when we have success of an action of the hero, we can render the
-  battle accordingly, with the result of the hero's turn, and probably add a onSuccess in the ation call, wait let's say 2, or 3 seconds? and then invalidate the getBattle,
-  so we would get an updated battle that would trigger the enemy's turn (and render an updated battle with the enemy's turn already applied?)
 
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
@@ -47,10 +33,6 @@
 - [ ] Evaluate utility of creating BoosterUtil and similar helper classes for other services
 
 - [ ] Investigate/Consider if it is worth it to create optimized character DTOs for battle objects to improve performance (instead of having the full CharacterInstanceDto everywhere)
-
-- [ ] Do we have a bug? Check? Happened once (I think) that the enemy was supposed to play the first turn in battle, but it did not happen, but the player could not act either.
-
-- [ ] Implement item drop system from defeated enemies
 
 - [ ] Integrate height/weight attributes into game mechanics
 

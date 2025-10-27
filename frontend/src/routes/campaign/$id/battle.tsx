@@ -1,11 +1,9 @@
-import {
-  useGetBattleForTodayByCampaignIdAndUsery,
-  useGetCheckIfThereIsAnOngoingBattleForToday,
-} from "../../../hooks/useBattles";
+import { useGetBattleForTodayByCampaignIdAndUsery } from "../../../hooks/useBattles";
 import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import BattleExecuting from "../../../components/battle/BattleExecuting";
 import BattleCheckAndCreation from "../../../components/battle/BattleCheckAndCreation";
+import BattleFinished from "../../../components/battle/BattleFinished";
 
 export const Route = createFileRoute("/campaign/$id/battle")({
   component: RouteComponent,
@@ -14,25 +12,19 @@ export const Route = createFileRoute("/campaign/$id/battle")({
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/battle" });
 
-  const { data: activeBattleData, isLoading: isActiveBattleLoading } =
+  const { data: battleForTodayData, isLoading: loadingBattleForToday } =
     useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
-
-  const {
-    data: isThereOngoingBattleToday,
-    isLoading: isThereOngoingBattleLoading,
-  } = useGetCheckIfThereIsAnOngoingBattleForToday(Number(campaignId));
-
   return (
     <div>
-      {isThereOngoingBattleLoading ? (
+      {loadingBattleForToday ? (
         <p>Loading...</p>
-      ) : isThereOngoingBattleToday ? (
-        isActiveBattleLoading ? (
-          <p>Loading battle...</p>
-        ) : activeBattleData ? (
-          <BattleExecuting {...activeBattleData} />
+      ) : battleForTodayData ? (
+        battleForTodayData.onGoing ? (
+          <BattleExecuting {...battleForTodayData} />
         ) : (
-          <p>Could not load active battle.</p>
+          !battleForTodayData.onGoing && (
+            <BattleFinished {...battleForTodayData} />
+          )
         )
       ) : (
         <BattleCheckAndCreation campaignId={Number(campaignId)} />

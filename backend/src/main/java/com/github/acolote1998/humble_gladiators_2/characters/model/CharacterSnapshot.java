@@ -14,34 +14,36 @@ public class CharacterSnapshot extends AbstractCharacter {
     private Boolean discovered;
     private Integer tier;
     private Integer rarity;
+    private Integer physicalDefense;
+    private Integer magicalDefense;
+    private Integer physicalDamage;
+    private Integer magicalDamage;
 
-    public Integer getPhysicalDefense() {
+    public void setPhysicalDefense(Inventory inventoryToProcess) {
         Integer totalPhysicalDefense = 0;
-        Inventory characterInventory = this.getInventory();
-        ArmorInstance equippedArmor = characterInventory.getArmors().stream().filter(ArmorInstance::getEquipped).findFirst().orElse(null);
+        ArmorInstance equippedArmor = inventoryToProcess.getArmors().stream().filter(ArmorInstance::getEquipped).findFirst().orElse(null);
         if (equippedArmor != null) {
             totalPhysicalDefense += equippedArmor.getTemplate().getPhysicalDefense();
         }
-        BootsInstance equippedBoots = characterInventory.getBoots().stream().filter(BootsInstance::getEquipped).findFirst().orElse(null);
+        BootsInstance equippedBoots = inventoryToProcess.getBoots().stream().filter(BootsInstance::getEquipped).findFirst().orElse(null);
         if (equippedBoots != null) {
             totalPhysicalDefense += equippedBoots.getTemplate().getPhysicalDefense();
         }
-        HelmetInstance equippedHelmet = characterInventory.getHelmets().stream().filter(HelmetInstance::getEquipped).findFirst().orElse(null);
+        HelmetInstance equippedHelmet = inventoryToProcess.getHelmets().stream().filter(HelmetInstance::getEquipped).findFirst().orElse(null);
         if (equippedHelmet != null) {
             totalPhysicalDefense += equippedHelmet.getTemplate().getPhysicalDefense();
         }
-        ShieldInstance equippedShield = characterInventory.getShields().stream().filter(ShieldInstance::getEquipped).findFirst().orElse(null);
+        ShieldInstance equippedShield = inventoryToProcess.getShields().stream().filter(ShieldInstance::getEquipped).findFirst().orElse(null);
         if (equippedShield != null) {
             totalPhysicalDefense += equippedShield.getTemplate().getPhysicalDefense();
         }
-        return totalPhysicalDefense;
+        this.physicalDefense = totalPhysicalDefense;
     }
 
-    public Integer getMagicalDefense() {
+    public void setMagicalDefense(Inventory inventoryToProcess) {
         Integer totalMagicalDefense = 0;
-        Inventory characterInventory = this.getInventory();
 
-        ArmorInstance equippedArmor = characterInventory.getArmors().stream()
+        ArmorInstance equippedArmor = inventoryToProcess.getArmors().stream()
                 .filter(ArmorInstance::getEquipped)
                 .findFirst()
                 .orElse(null);
@@ -49,7 +51,7 @@ public class CharacterSnapshot extends AbstractCharacter {
             totalMagicalDefense += equippedArmor.getTemplate().getMagicalDefense();
         }
 
-        BootsInstance equippedBoots = characterInventory.getBoots().stream()
+        BootsInstance equippedBoots = inventoryToProcess.getBoots().stream()
                 .filter(BootsInstance::getEquipped)
                 .findFirst()
                 .orElse(null);
@@ -57,7 +59,7 @@ public class CharacterSnapshot extends AbstractCharacter {
             totalMagicalDefense += equippedBoots.getTemplate().getMagicalDefense();
         }
 
-        HelmetInstance equippedHelmet = characterInventory.getHelmets().stream()
+        HelmetInstance equippedHelmet = inventoryToProcess.getHelmets().stream()
                 .filter(HelmetInstance::getEquipped)
                 .findFirst()
                 .orElse(null);
@@ -65,7 +67,7 @@ public class CharacterSnapshot extends AbstractCharacter {
             totalMagicalDefense += equippedHelmet.getTemplate().getMagicalDefense();
         }
 
-        ShieldInstance equippedShield = characterInventory.getShields().stream()
+        ShieldInstance equippedShield = inventoryToProcess.getShields().stream()
                 .filter(ShieldInstance::getEquipped)
                 .findFirst()
                 .orElse(null);
@@ -73,27 +75,25 @@ public class CharacterSnapshot extends AbstractCharacter {
             totalMagicalDefense += equippedShield.getTemplate().getMagicalDefense();
         }
 
-        return totalMagicalDefense;
+        this.magicalDefense = totalMagicalDefense;
     }
 
-    public Integer getPhysicalDamage() {
+    public void setPhysicalDamage(Inventory inventoryToProcess) {
         Integer totalPhysicalDamage = 0;
-        Inventory characterInventory = this.getInventory();
-        WeaponInstance equippedWeapon = characterInventory.getWeapons().stream().filter(WeaponInstance::getEquipped).findFirst().orElse(null);
+        WeaponInstance equippedWeapon = inventoryToProcess.getWeapons().stream().filter(WeaponInstance::getEquipped).findFirst().orElse(null);
         if (equippedWeapon != null) {
             totalPhysicalDamage += equippedWeapon.getTemplate().getPhysicalDamage();
         }
-        return totalPhysicalDamage;
+        this.physicalDamage = totalPhysicalDamage;
     }
 
-    public Integer getMagicalDamage() {
+    public void setMagicalDamage(Inventory inventoryToProcess) {
         Integer totalMagicalDamage = 0;
-        Inventory characterInventory = this.getInventory();
-        WeaponInstance equippedWeapon = characterInventory.getWeapons().stream().filter(WeaponInstance::getEquipped).findFirst().orElse(null);
+        WeaponInstance equippedWeapon = inventoryToProcess.getWeapons().stream().filter(WeaponInstance::getEquipped).findFirst().orElse(null);
         if (equippedWeapon != null) {
             totalMagicalDamage += equippedWeapon.getTemplate().getMagicalDamage();
         }
-        return totalMagicalDamage;
+        this.magicalDamage = totalMagicalDamage;
     }
 
 
@@ -105,6 +105,10 @@ public class CharacterSnapshot extends AbstractCharacter {
         charSnapshot.setImgBytes(charToClone.getImgBytes());
         charSnapshot.setName(charToClone.getName());
         charSnapshot.setDescription(charToClone.getDescription());
+        charSnapshot.setMagicalDamage(charToClone.getInventory());
+        charSnapshot.setMagicalDefense(charToClone.getInventory());
+        charSnapshot.setPhysicalDamage(charToClone.getInventory());
+        charSnapshot.setPhysicalDefense(charToClone.getInventory());
         // If I think correctly,
         // the char snapshot does not really need the char instances inventory?
         // We should be able to replicate the battle with the turns and actions

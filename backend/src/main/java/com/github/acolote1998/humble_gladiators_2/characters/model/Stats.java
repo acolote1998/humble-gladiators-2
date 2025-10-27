@@ -87,7 +87,7 @@ public class Stats {
         newStats.setStrength(statsToClone.getStrength());
         newStats.setSpeed(statsToClone.getSpeed());
         newStats.setLuck(statsToClone.getLuck());
-        newStats.setMaxMp(statsToClone.getMaxHp());
+        newStats.setMaxHp(statsToClone.getMaxHp());
         newStats.setCurrentHp(statsToClone.getCurrentHp());
         newStats.setMaxMp(statsToClone.getMaxMp());
         newStats.setCurrentMp(statsToClone.getCurrentMp());

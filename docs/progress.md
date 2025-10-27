@@ -159,4 +159,14 @@ Sunday 26/10
 - Improving battle server processing by separating battle updates and npc turn triggering
 - Improving battle frontend processing by a lot, avodigin shady refetches and using propper good practices such as invalidating queries, etc
 - Fixed bug / Improving conditional render of active battle versus battle creation interface
+
+Monday 27/10
+- Implementing endpoint for obtaining a finished battle for today
+- Implementing endpoint for obtaining rewards for a battle
+- Implementing endpoints for healing characters of a finished battle
+- Implementing battle reward endpoints, frontend implementation and idempotency
+- Implementing finished battle turn processing based on character snapshot
+- Improved character snapshot architecture
+- Simplifying battle retrieval by only having one endpoint and the conditionally rendering it as finished or not in the frontend
+- Battle system working properly
 ```

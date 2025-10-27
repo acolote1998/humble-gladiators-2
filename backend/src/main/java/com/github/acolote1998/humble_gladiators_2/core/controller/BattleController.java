@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.BattleResponseDto;
+import com.github.acolote1998.humble_gladiators_2.core.dto.BattleRewardsResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
+import com.github.acolote1998.humble_gladiators_2.core.model.BattleReward;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import jakarta.validation.Valid;
@@ -45,12 +47,35 @@ public class BattleController {
     }
 
 
-    @GetMapping("/{campaignId}/battle")
-    public ResponseEntity<BattleResponseDto> getBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+    @GetMapping("/{campaignId}/battle/ongoing")
+    public ResponseEntity<BattleResponseDto> getOnGoingBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        Battle todaysBattle = battleService.getUpdatedBattle(
+        Battle todaysOngoingBattle = battleService.getUpdatedBattle(
                 battleService.getBattleUtil().
                         getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId));
+        BattleResponseDto dto = BattleResponseDto.fromModel(todaysOngoingBattle);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{campaignId}/battle/get-rewards")
+    public ResponseEntity<BattleRewardsResponseDto> getRewardsForTodaysFinishedBattle(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        Battle todaysFinishedBattle = battleService.getUpdatedBattle(
+                battleService.getBattleUtil().
+                        getFinishedBattleForTodayByCampaignAndUserId(campaignId, userId));
+        BattleReward rewards = battleService.getRewardForBattle(todaysFinishedBattle);
+        battleService.fullyRecoverBothTeams(todaysFinishedBattle);
+        BattleRewardsResponseDto dto = BattleRewardsResponseDto.fromModel(rewards);
+        return ResponseEntity.ok(dto);
+    }
+    
+
+    @GetMapping("/{campaignId}/battle")
+    public ResponseEntity<BattleResponseDto> getAnyBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        Battle todaysBattle = battleService.getUpdatedBattle(
+                battleService.
+                        getAnyBattleForTodayByCampaignAndUserId(campaignId, userId));
         BattleResponseDto dto = BattleResponseDto.fromModel(todaysBattle);
         return ResponseEntity.ok(dto);
     }

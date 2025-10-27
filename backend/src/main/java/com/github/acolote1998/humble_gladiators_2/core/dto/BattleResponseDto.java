@@ -110,19 +110,48 @@ public record BattleResponseDto(
         }
 
         public record CharacterSnapshotStats(
-                Integer maxP,
+                Integer constitution,
+                Integer intelligence,
+                Integer strength,
+                Integer speed,
+                Integer luck,
+                Integer maxHp,
                 Integer currentHp,
                 Integer maxMp,
-                Integer currentMp) {
+                Integer currentMp,
+                Integer height,
+                Integer weight,
+                Integer level,
+                Integer currentExp,
+                Integer expForNextLevel,
+                Integer physicalDefense,
+                Integer magicalDefense,
+                Integer physicalDamage,
+                Integer magicalDamage
+        ) {
         }
 
         public static CharacterSnapshotStats MapCharSnapshotStats(CharacterSnapshot character) {
             Stats stats = character.getStats();
             return new CharacterSnapshotStats(
+                    stats.getConstitution(),
+                    stats.getIntelligence(),
+                    stats.getStrength(),
+                    stats.getSpeed(),
+                    stats.getLuck(),
                     stats.getMaxHp(),
                     stats.getCurrentHp(),
                     stats.getMaxMp(),
-                    stats.getCurrentMp()
+                    stats.getCurrentMp(),
+                    stats.getHeight(),
+                    stats.getWeight(),
+                    stats.getLevel(),
+                    stats.getCurrentExp(),
+                    stats.getExpForNextLevel(),
+                    character.getPhysicalDefense(),
+                    character.getMagicalDefense(),
+                    character.getPhysicalDamage(),
+                    character.getMagicalDamage()
             );
         }
     }
