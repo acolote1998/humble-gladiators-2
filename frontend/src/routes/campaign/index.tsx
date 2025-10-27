@@ -62,7 +62,6 @@ function CampaignsRoute() {
         </button>
         <div
           className="
-            text-6xl
           mx-10
           p-5
           rounded-2xl
@@ -87,7 +86,7 @@ function CampaignsRoute() {
               Your Campaigns
             </p>
             {isLoadingAllCampaigns ? (
-              <p>Loading campaigns</p>
+              <p className="loader" />
             ) : isErrorLoadingAllCampaigns ? (
               <p>Error loading campaigns</p>
             ) : allCampaigns && allCampaigns.length > 0 ? (

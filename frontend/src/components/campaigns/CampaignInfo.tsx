@@ -1,55 +1,109 @@
 import type { CampaignDto } from "../../types/campaignTypes";
-const CampaignInfo = ({ name, theme }: CampaignDto) => {
+const CampaignInfo = ({
+  name,
+  theme,
+  coverImgBase64,
+  cardBackImgBase64,
+}: CampaignDto) => {
   return (
-    <div
-      className="
-      flex
-      flex-col
-    bg-blue-300
-      p-3
-      rounded-lg
-      border-1
-      border-blue-600
-      text-lg
-      w-fit
-    "
-    >
-      <p
+    <>
+      <div
         className="
-      bg-blue-400
-      p-2
-      rounded-md
-      "
+        flex
+        justify-center
+        gap-5
+        bg-gray-300
+        border
+        border-gray-400
+        p-6
+        rounded-lg
+        hover:scale-102
+        transition-all
+        duration-500
+      hover:bg-yellow-200
+      hover:border-yellow-400
+        cursor-pointer
+        w-280
+        h-72
+        "
       >
-        {name}
-      </p>
-      <p>Wanted themes:</p>
-      <div className="flex gap-2">
-        {theme.wantedThemes.map((theme, index) => {
-          return (
-            <p
-              className="rounded-md bg-gray-200 w-fit p-0.5 font-light"
-              key={index}
-            >
-              {theme}
-            </p>
-          );
-        })}
+        <div
+          className="
+          flex
+          flex-col
+          items-center
+        bg-gray-200
+          p-3
+          rounded-lg
+          border
+          border-gray-400
+          text-lg
+          w-123
+          "
+        >
+          <p
+            className="
+            text-center
+            font-semibold
+            text-2xl
+            mb-2
+            "
+          >
+            {name}
+          </p>
+          <div className="grid grid-cols-2 gap-6 text-center h-43 w-full">
+            <div className="bg-gray-300 px-2 py-1 rounded-lg">
+              <p className="text-xl">Wanted Themes</p>
+              <div className="flex flex-col items-center gap-1 overflow-y-auto h-36">
+                {theme.wantedThemes.map((theme, index) => {
+                  return (
+                    <p
+                      className="bg-gray-200 text-md tracking-tighter p-1 rounded-lg"
+                      key={index}
+                    >
+                      {theme}
+                    </p>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="bg-gray-300 px-2 py-1 rounded-lg">
+              <p className="text-xl">Unwanted Themes</p>
+              <div className="flex flex-col items-center gap-1 overflow-y-auto h-36">
+                {theme.unwantedThemes.map((theme, index) => {
+                  return (
+                    <p
+                      className="bg-gray-200 text-md tracking-tighter p-1 rounded-lg"
+                      key={index}
+                    >
+                      {theme}
+                    </p>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          {coverImgBase64 && (
+            <img
+              draggable={false}
+              className="h-60 rounded-md"
+              src={`data:image/jpeg;base64,${coverImgBase64}`}
+            />
+          )}
+        </div>
+        <div>
+          {cardBackImgBase64 && (
+            <img
+              draggable={false}
+              className="h-60 rounded-md"
+              src={`data:image/jpeg;base64,${cardBackImgBase64}`}
+            />
+          )}
+        </div>
       </div>
-      <p>Unwanted themes:</p>
-      <div className="flex gap-2">
-        {theme.unwantedThemes.map((theme, index) => {
-          return (
-            <p
-              className="rounded-md bg-gray-200 w-fit p-0.5 font-light"
-              key={index}
-            >
-              {theme}
-            </p>
-          );
-        })}
-      </div>
-    </div>
+    </>
   );
 };
 
