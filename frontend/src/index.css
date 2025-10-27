@@ -4,6 +4,11 @@
   --text-for-bg: white;
   --div-bg: gray;
   --div-lighter-bg: lightgray;
+  --site-bg: darkgray;
+}
+
+body {
+  background-color: var(--site-bg);
 }
 
 .perspective {
