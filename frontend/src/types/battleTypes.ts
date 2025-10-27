@@ -83,6 +83,8 @@ export type TurnRequest = {
 export type ActionResponseDto = {
   damageCaused: number;
   healingCaused: number;
+  mpRecoverCaused: number;
+  mpUsage: number;
   actionType: ActionTypeEnum;
   stateCaused: StateTypeEnum;
 };

@@ -348,6 +348,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         actionPerformed.setDamageCaused(0);
         actionPerformed.setHealingCaused(restoreHp);
         actionPerformed.setMpRecoverCaused(restoreMp);
+        actionPerformed.setMpUsage(0);
         return actionPerformed;
     }
 
