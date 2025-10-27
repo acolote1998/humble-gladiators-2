@@ -4,6 +4,7 @@ import type {
   BattleResponseDto,
   TurnResponseDto,
   TurnRequest,
+  BattleRewardsResponseDto,
 } from "../types/battleTypes";
 
 export const createABattleForTodayForCampaignAndUser = async (
@@ -50,6 +51,24 @@ export const fetchFinishedBattleForTodayForCampaignAndUser = async (
   try {
     const response = await axios.get(
       `${BACKEND_URL}/campaign/${campaignId}/battle/finished`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const fetchRewardsForFinishedBattleOfTodayForCampaignAndUser = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<BattleRewardsResponseDto> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/get-rewards`,
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }

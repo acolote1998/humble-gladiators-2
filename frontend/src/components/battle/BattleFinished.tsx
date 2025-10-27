@@ -6,13 +6,19 @@ import { SpellCard } from "../cards/SpellCard";
 import { WeaponCard } from "../cards/WeaponCard";
 import type { ActionTypeEnum } from "../../types/battleTypes";
 import type { CharacterInstanceType } from "../../types/characterTypes";
+import { useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery } from "../../hooks/useBattles";
 const BattleFinished = ({
+  campaignId,
   losingTeam,
   turns,
   winningTeam,
   startingTeamOne,
   startingTeamTwo,
 }: BattleResponseDto) => {
+  const { data: rewardsForBattle, isLoading: loadingRewards } =
+    useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery(
+      Number(campaignId)
+    );
   const turnActionToText = (action: ActionTypeEnum) => {
     switch (action) {
       case "SPELL":
@@ -60,6 +66,79 @@ const BattleFinished = ({
         <div className="relative">
           <div className="flex flex-col items-center">
             <p className="text-2xl">Enemy</p>
+            {loadingRewards ? (
+              <p>Loading...</p>
+            ) : (
+              rewardsForBattle && (
+                <div className="absolute rounded-md bg-gray-200 border-gray-400 border mx-5 top-20 px-5 left-0 w-150 h-110 overflow-y-scroll">
+                  <p className="my-2 p-1 rounded-md bg-gray-500 text-xl text-center text-white">
+                    Battle Finished
+                  </p>
+                  <p className="my-2 p-1 rounded-md bg-gray-300">
+                    Winner:{" "}
+                    {rewardsForBattle?.battleResult == "VICTORY_TEAM_ONE"
+                      ? hero.name
+                      : rewardsForBattle.battleResult == "VICTORY_TEAM_TWO" &&
+                        enemy.name}
+                  </p>
+                  <p className="my-2 p-1 rounded-md bg-gray-300">
+                    Exp Reward: {rewardsForBattle?.expReward}
+                  </p>
+                  <p className="my-2 p-1 rounded-md bg-gray-300">
+                    Gold Reward: {rewardsForBattle?.goldReward}
+                  </p>
+                  <p className="my-2 p-1 rounded-md bg-gray-300">Item loot:</p>
+                  {rewardsForBattle?.itemLoot.armorLoot.length > 0 &&
+                    rewardsForBattle?.itemLoot.armorLoot.map((i) => (
+                      <p className="my-2 p-1 rounded-md bg-gray-300">
+                        {i.name} - T {i.tier} - R {i.rarity}
+                      </p>
+                    ))}
+                  {rewardsForBattle?.itemLoot.bootsLoot.length > 0 &&
+                    rewardsForBattle?.itemLoot.bootsLoot.map((i) => (
+                      <p className="my-2 p-1 rounded-md bg-gray-300">
+                        {i.name} - T {i.tier} - R {i.rarity}
+                      </p>
+                    ))}
+                  {rewardsForBattle?.itemLoot.consumablesLoot.length > 0 &&
+                    rewardsForBattle?.itemLoot.consumablesLoot.map((i) => (
+                      <p className="my-2 p-1 rounded-md bg-gray-300">
+                        {i.name} - T {i.tier} - R {i.rarity}
+                      </p>
+                    ))}
+                  {rewardsForBattle?.itemLoot.helmetsLoot.length > 0 &&
+                    rewardsForBattle?.itemLoot.helmetsLoot.map((i) => (
+                      <p className="my-2 p-1 rounded-md bg-gray-300">
+                        {i.name} - T {i.tier} - R {i.rarity}
+                      </p>
+                    ))}
+                  {rewardsForBattle?.itemLoot.shieldsLoot.length > 0 &&
+                    rewardsForBattle?.itemLoot.shieldsLoot.map((i) => (
+                      <p className="my-2 p-1 rounded-md bg-gray-300">
+                        {i.name} - T {i.tier} - R {i.rarity}
+                      </p>
+                    ))}
+                  {rewardsForBattle?.itemLoot.spellsLoot.length > 0 &&
+                    rewardsForBattle?.itemLoot.spellsLoot.map((i) => (
+                      <p className="my-2 p-1 rounded-md bg-gray-300">
+                        {i.name} - T {i.tier} - R {i.rarity}
+                      </p>
+                    ))}
+                  {rewardsForBattle?.itemLoot.weaponsLoot.length > 0 &&
+                    rewardsForBattle?.itemLoot.weaponsLoot.map((i) => (
+                      <p className="my-2 p-1 rounded-md bg-gray-300">
+                        {i.name} - T {i.tier} - R {i.rarity}
+                      </p>
+                    ))}
+                  <p
+                    className="my-2 p-1 rounded-md bg-red-400 text-center"
+                    onClick={() => {}}
+                  >
+                    Close Battle
+                  </p>
+                </div>
+              )
+            )}
             <div>
               <CharacterCard {...enemy} renderingFrom="BATTLE" />
             </div>

@@ -1,4 +1,11 @@
+import type { ArmorType } from "./armorTypes";
+import type { BootsType } from "./bootsTypes";
 import type { CharacterInstanceType } from "./characterTypes";
+import type { ConsumableType } from "./consumablesTypes";
+import type { HelmetType } from "./helmetTypes";
+import type { ShieldType } from "./shieldTypes";
+import type { SpellType } from "./spellTypes";
+import type { WeaponType } from "./weaponTypes";
 export type BattleResponseDto = {
   id: number;
   campaignId: number;
@@ -11,6 +18,25 @@ export type BattleResponseDto = {
   losingTeam: CharacterInstanceType[];
   currentCharacterToPlay: CharacterInstanceType;
   onGoing: boolean;
+};
+
+export type BattleRewardsResponseDto = {
+  expReward: number;
+  goldReward: number;
+  itemLoot: ItemLootResponseDto;
+  battleResult: BattleResultEnumDto;
+};
+
+type BattleResultEnumDto = "NONE" | "VICTORY_TEAM_ONE" | "VICTORY_TEAM_TWO";
+
+type ItemLootResponseDto = {
+  armorLoot: ArmorType[];
+  bootsLoot: BootsType[];
+  consumablesLoot: ConsumableType[];
+  helmetsLoot: HelmetType[];
+  shieldsLoot: ShieldType[];
+  spellsLoot: SpellType[];
+  weaponsLoot: WeaponType[];
 };
 
 type CharacterSnaphotType = {
