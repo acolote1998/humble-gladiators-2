@@ -21,6 +21,9 @@
     - [X] Implement item reward
     - [X] make reward getting idempotent -> maybe save the rewards in the battle? and do someting like if battle.getReward is empty -> asiggn new reward, otherwises return the existing rewawrd data?
 
+  - [ ] Implement some sort of "check intention" and log conditionally based on that. At the moment we are logging a lot of shit in console when an availability happens, and this happens ALL the time? -> check with chat gpt
+  - [ ] check which logs are worth it, right now for when any character performs any action we print like 4 or 5 logs... maybe just print the final one? or don't print if they succeed? only the negative one that could give u feedback in a potential runtime excepption?
+
   - [ ] In the BattleFinished, we should show the end stats based on a calculation of startingTeamOne (or team two) + all the turns that happened, we should not show the characters with their "alive" instances stats, since that can change over time, or they could recover MP. it is not good future proof wise
   - [ ] If we do that, then maybe it is better to call the heal characters endpoint automatically, not as a manual trigger of "close battle"
 
