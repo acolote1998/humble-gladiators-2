@@ -62,6 +62,42 @@ export const fetchBattleForTodayForCampaignAndUser = async (
   }
 };
 
+export const fetchWonBattlesForHeroForCampaignAndUser = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<BattleResponseDto[]> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/won`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const fetchLostBattlesForHeroForCampaignAndUser = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<BattleResponseDto[]> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/lost`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const fetchRewardsForFinishedBattleOfTodayForCampaignAndUser = async (
   bearerToken: string,
   campaignId: number

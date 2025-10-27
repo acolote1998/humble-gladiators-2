@@ -170,4 +170,6 @@ Monday 27/10
 - Simplifying battle retrieval by only having one endpoint and the conditionally rendering it as finished or not in the frontend
 - Battle system working properly
 - Simplifying character types -> deleting hero types and using only character instance types instead
+- Endpoints for getting lost and won battles for the hero
+- Implementation of lost and won battles for the hero in inventory
 ```

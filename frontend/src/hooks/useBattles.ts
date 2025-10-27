@@ -7,7 +7,9 @@ import {
   createABattleForTodayForCampaignAndUser,
   fetchBattleForTodayForCampaignAndUser,
   fetchIsBattleOngoingForCampaignAndUser,
+  fetchLostBattlesForHeroForCampaignAndUser,
   fetchRewardsForFinishedBattleOfTodayForCampaignAndUser,
+  fetchWonBattlesForHeroForCampaignAndUser,
   triggerNpcTurnForTodaysBattle,
 } from "../api/battles";
 import { useQueryClient } from "@tanstack/react-query";
@@ -66,6 +68,40 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
         throw new Error("No bearer token available");
       }
       return fetchBattleForTodayForCampaignAndUser(bearerToken, campaignId);
+    },
+  });
+  return { data, isError, isLoading };
+};
+
+export const useGetWonBattlesForHeroForCampaignIdAndUsery = (
+  campaignId: number
+) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["won-battles", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return fetchWonBattlesForHeroForCampaignAndUser(bearerToken, campaignId);
+    },
+  });
+  return { data, isError, isLoading };
+};
+
+export const useGetLostBattlesForHeroForCampaignIdAndUsery = (
+  campaignId: number
+) => {
+  const { getToken } = useAuth();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["lost-battles", campaignId],
+    queryFn: async () => {
+      const bearerToken = await getToken();
+      if (!bearerToken) {
+        throw new Error("No bearer token available");
+      }
+      return fetchLostBattlesForHeroForCampaignAndUser(bearerToken, campaignId);
     },
   });
   return { data, isError, isLoading };

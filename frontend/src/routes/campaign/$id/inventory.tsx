@@ -8,6 +8,8 @@ import { HelmetCard } from "../../../components/cards/HelmetCard";
 import { ShieldCard } from "../../../components/cards/ShieldCard";
 import { SpellCard } from "../../../components/cards/SpellCard";
 import { WeaponCard } from "../../../components/cards/WeaponCard";
+import { useGetWonBattlesForHeroForCampaignIdAndUsery } from "../../../hooks/useBattles";
+import { useGetLostBattlesForHeroForCampaignIdAndUsery } from "../../../hooks/useBattles";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -20,6 +22,11 @@ function RouteComponent() {
     isLoading: isLoadingHero,
     isError: isErrorHero,
   } = useGetHeroByCampaignAndUser(Number(campaignId));
+  const { data: wonBattles, isLoading: isLoadingWonBattles } =
+    useGetWonBattlesForHeroForCampaignIdAndUsery(Number(campaignId));
+  const { data: lostBattles, isLoading: isLoadingLostBattles } =
+    useGetLostBattlesForHeroForCampaignIdAndUsery(Number(campaignId));
+
   return (
     <>
       {isLoadingHero ? (
@@ -126,6 +133,20 @@ function RouteComponent() {
                       <p>LCK - {heroData.stats.luck}</p>
                       <p>WGT - {heroData.stats.height}</p>
                       <p>HGT - {heroData.stats.weight}</p>
+                      {isLoadingWonBattles ? (
+                        <p>...</p>
+                      ) : wonBattles ? (
+                        <p>Won battles - {wonBattles.length}</p>
+                      ) : (
+                        <p>Won battles - 0</p>
+                      )}
+                      {isLoadingLostBattles ? (
+                        <p>...</p>
+                      ) : lostBattles ? (
+                        <p>Lost battles - {lostBattles.length}</p>
+                      ) : (
+                        <p>Lost battles - 0</p>
+                      )}
                       {/* <p>
                   EXP - {heroData.stats.currentExp}/
                   {heroData.stats.expForNextLevel}
