@@ -164,4 +164,5 @@ Monday 27/10
 - Implementing endpoint for obtaining a finished battle for today
 - Implementing endpoint for obtaining rewards for a battle
 - Implementing endpoints for healing characters of a finished battle
+- Implementing battle reward endpoints, frontend implementation and idempotency
 ```

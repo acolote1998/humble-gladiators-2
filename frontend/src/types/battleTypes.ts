@@ -23,13 +23,6 @@ export type BattleResponseDto = {
 export type BattleRewardsResponseDto = {
   expReward: number;
   goldReward: number;
-  itemLoot: ItemLootResponseDto;
-  battleResult: BattleResultEnumDto;
-};
-
-type BattleResultEnumDto = "NONE" | "VICTORY_TEAM_ONE" | "VICTORY_TEAM_TWO";
-
-type ItemLootResponseDto = {
   armorLoot: ArmorType[];
   bootsLoot: BootsType[];
   consumablesLoot: ConsumableType[];
@@ -37,7 +30,10 @@ type ItemLootResponseDto = {
   shieldsLoot: ShieldType[];
   spellsLoot: SpellType[];
   weaponsLoot: WeaponType[];
+  battleResult: BattleResultEnumDto;
 };
+
+type BattleResultEnumDto = "NONE" | "VICTORY_TEAM_ONE" | "VICTORY_TEAM_TWO";
 
 type CharacterSnaphotType = {
   campaignId: number;

@@ -19,6 +19,7 @@
     - [X] Implement exp reward
     - [X] Implement gold reward
     - [X] Implement item reward
+    - [ ] make reward getting idempotent -> maybe save the rewards in the battle? and do someting like if battle.getReward is empty -> asiggn new reward, otherwises return the existing rewawrd data?
 
 
 - [ ] Implement level up system?
