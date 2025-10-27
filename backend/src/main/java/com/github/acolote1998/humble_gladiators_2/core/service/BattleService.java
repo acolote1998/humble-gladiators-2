@@ -4,9 +4,12 @@ import com.github.acolote1998.humble_gladiators_2.characters.enums.CharacterType
 import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterSnapshot;
+import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
+import com.github.acolote1998.humble_gladiators_2.core.dto.RewardsResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
+import com.github.acolote1998.humble_gladiators_2.core.enums.BattleResultEnum;
 import com.github.acolote1998.humble_gladiators_2.core.enums.NPCActions;
 import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidBattle;
@@ -15,8 +18,7 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Action;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import com.github.acolote1998.humble_gladiators_2.core.model.Turn;
 import com.github.acolote1998.humble_gladiators_2.core.repository.BattleRepository;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
+import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -553,6 +555,10 @@ public class BattleService {
             log.warn("The battle '{}' already has winners/losers, it should not be active", battleToCheck.getId());
             return false;
         }
+        if (!battleToCheck.isOngoing()) {
+            log.warn("The battle '{}' is not ongoing!", battleToCheck.getId());
+            return false;
+        }
         return true;
     }
 
@@ -628,12 +634,120 @@ public class BattleService {
                 battleToCheck.getLosingTeam().add(battleToCheck.getTeamOne().getFirst());
                 log.info("'{} {}' won the battle", battleToCheck.getTeamTwo().getFirst().getId(), battleToCheck.getTeamTwo().getFirst().getName());
             }
-            fullyRecoverBothTeams(battleToCheck);
             battleToCheck.getTeamOne().clear();
             battleToCheck.getTeamTwo().clear();
         } else {
             battleToCheck.setCurrentCharacterToPlay(whosTurnsIsIt(battleToCheck));
         }
         return battleToCheck;
+    }
+
+    @Transactional
+    public RewardsResponseDto assignRewardsAndRestoreHeroes(Battle battleToCheck) {
+        if (isBattleActive(battleToCheck)) {
+            log.warn("Cannot assign rewards to battle {}, still active!", battleToCheck.getId());
+            throw new InvalidBattle("Cannot assign rewards - Battle is still active!");
+        }
+        Random random = new Random();
+        CharacterInstance winner = battleToCheck.getWinningTeam().getFirst();
+        CharacterInstance loser = battleToCheck.getLosingTeam().getFirst();
+        int goldReward = loser.getGoldReward();
+        int expReward = loser.getExpReward();
+        List<ArmorInstance> possibleArmorDrop = new ArrayList<>();
+        List<BootsInstance> possibleBootsDrop = new ArrayList<>();
+        List<ConsumableInstance> possibleConsumablesDrop = new ArrayList<>();
+        List<HelmetInstance> possibleHelmetDrop = new ArrayList<>();
+        List<ShieldInstance> possibleShieldDrop = new ArrayList<>();
+        List<SpellInstance> possibleSpellDrop = new ArrayList<>();
+        List<WeaponInstance> possibleWeaponDrop = new ArrayList<>();
+        BattleResultEnum teamWhoWon = BattleResultEnum.NONE;
+        if (battleToCheck.getStartingTeamOne().getFirst().getName().equals(battleToCheck.getWinningTeam().getFirst().getName())) {
+            teamWhoWon = BattleResultEnum.VICTORY_TEAM_ONE;
+        } else if (battleToCheck.getStartingTeamTwo().getFirst().getName().equals(battleToCheck.getWinningTeam().getFirst().getName())) {
+            teamWhoWon = BattleResultEnum.VICTORY_TEAM_TWO;
+        }
+        if (winner.getCharacterType().equals(CharacterType.PLAYER)) {
+            if (random.nextInt(1, 101) >= 10) {
+                if (!loser.getInventory().getArmors().isEmpty()) {
+                    Collections.shuffle(loser.getInventory().getArmors());
+                    ArmorInstance dropped = loser.getInventory().getArmors().getFirst();
+                    possibleArmorDrop.add(dropped);
+                    loser.getInventory().getArmors().remove(dropped);
+                }
+            }
+            if (random.nextInt(1, 101) >= 10) {
+                if (!loser.getInventory().getBoots().isEmpty()) {
+                    Collections.shuffle(loser.getInventory().getBoots());
+                    BootsInstance dropped = loser.getInventory().getBoots().getFirst();
+                    possibleBootsDrop.add(dropped);
+                    loser.getInventory().getBoots().remove(dropped);
+                }
+            }
+            if (random.nextInt(1, 101) >= 10) {
+                if (!loser.getInventory().getConsumables().isEmpty()) {
+                    Collections.shuffle(loser.getInventory().getConsumables());
+                    ConsumableInstance dropped = loser.getInventory().getConsumables().getFirst();
+                    possibleConsumablesDrop.add(dropped);
+                    loser.getInventory().getConsumables().remove(dropped);
+                }
+            }
+            if (random.nextInt(1, 101) >= 10) {
+                if (!loser.getInventory().getHelmets().isEmpty()) {
+                    Collections.shuffle(loser.getInventory().getHelmets());
+                    HelmetInstance dropped = loser.getInventory().getHelmets().getFirst();
+                    possibleHelmetDrop.add(dropped);
+                    loser.getInventory().getHelmets().remove(dropped);
+                }
+            }
+            if (random.nextInt(1, 101) >= 10) {
+                if (!loser.getInventory().getShields().isEmpty()) {
+                    Collections.shuffle(loser.getInventory().getShields());
+                    ShieldInstance dropped = loser.getInventory().getShields().getFirst();
+                    possibleShieldDrop.add(dropped);
+                    loser.getInventory().getShields().remove(dropped);
+                }
+            }
+            if (random.nextInt(1, 101) >= 10) {
+                if (!loser.getInventory().getSpells().isEmpty()) {
+                    Collections.shuffle(loser.getInventory().getSpells());
+                    SpellInstance dropped = loser.getInventory().getSpells().getFirst();
+                    possibleSpellDrop.add(dropped);
+                    loser.getInventory().getSpells().remove(dropped);
+                }
+            }
+            if (random.nextInt(1, 101) >= 10) {
+                if (!loser.getInventory().getWeapons().isEmpty()) {
+                    Collections.shuffle(loser.getInventory().getWeapons());
+                    WeaponInstance dropped = loser.getInventory().getWeapons().getFirst();
+                    possibleWeaponDrop.add(dropped);
+                    loser.getInventory().getWeapons().remove(dropped);
+                }
+            }
+            winner.getStats().setCurrentExp(winner.getStats().getCurrentExp() + expReward);
+            Inventory winnerInventory = winner.getInventory();
+            winnerInventory.setGold(winnerInventory.getGold() + goldReward);
+            winnerInventory.getArmors().addAll(possibleArmorDrop);
+            winnerInventory.getBoots().addAll(possibleBootsDrop);
+            winnerInventory.getConsumables().addAll(possibleConsumablesDrop);
+            winnerInventory.getHelmets().addAll(possibleHelmetDrop);
+            winnerInventory.getShields().addAll(possibleShieldDrop);
+            winnerInventory.getSpells().addAll(possibleSpellDrop);
+            winnerInventory.getWeapons().addAll(possibleWeaponDrop);
+        }
+        RewardsResponseDto rewardsResponseDto = new RewardsResponseDto(
+                expReward,
+                goldReward,
+                RewardsResponseDto.ItemLoot.fromListOfItems(
+                        possibleArmorDrop,
+                        possibleBootsDrop,
+                        possibleConsumablesDrop,
+                        possibleHelmetDrop,
+                        possibleShieldDrop,
+                        possibleSpellDrop,
+                        possibleWeaponDrop),
+                teamWhoWon
+        );
+        fullyRecoverBothTeams(battleToCheck);
+        return rewardsResponseDto;
     }
 }
