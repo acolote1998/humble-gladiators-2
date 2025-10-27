@@ -19,7 +19,9 @@
     - [X] Implement exp reward
     - [X] Implement gold reward
     - [X] Implement item reward
-    - [ ] make reward getting idempotent -> maybe save the rewards in the battle? and do someting like if battle.getReward is empty -> asiggn new reward, otherwises return the existing rewawrd data?
+    - [X] make reward getting idempotent -> maybe save the rewards in the battle? and do someting like if battle.getReward is empty -> asiggn new reward, otherwises return the existing rewawrd data?
+
+  - [ ] In the BattleFinished, we should show the end stats based on a calculation of startingTeamOne (or team two) + all the turns that happened, we should not show the characters with their "alive" instances stats, since that can change over time, or they could recover MP. it is not good future proof wise
 
 
 - [ ] Implement level up system?
