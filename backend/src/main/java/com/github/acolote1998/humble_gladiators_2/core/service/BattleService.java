@@ -579,7 +579,6 @@ public class BattleService {
                     && updatedBattle.getCurrentCharacterToPlay() != null) {
                 updatedBattle.setCurrentCharacterToPlay(null);
             }
-            fullyRecoverBothTeams(updatedBattle);
             updatedBattle.setOngoing(false);
         } else {
             CharacterInstance currentCharToPlay = whosTurnsIsIt(updatedBattle);

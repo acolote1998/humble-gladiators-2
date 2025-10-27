@@ -6,7 +6,11 @@ import { SpellCard } from "../cards/SpellCard";
 import { WeaponCard } from "../cards/WeaponCard";
 import type { ActionTypeEnum } from "../../types/battleTypes";
 import type { CharacterInstanceType } from "../../types/characterTypes";
-import { useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery } from "../../hooks/useBattles";
+import {
+  useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery,
+  useRecoverCharactersAfterFinishedTodaysBattle,
+} from "../../hooks/useBattles";
+import { useNavigate } from "@tanstack/react-router";
 const BattleFinished = ({
   campaignId,
   losingTeam,
@@ -19,6 +23,9 @@ const BattleFinished = ({
     useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery(
       Number(campaignId)
     );
+  const { mutate: recoverHeroes } =
+    useRecoverCharactersAfterFinishedTodaysBattle();
+  const navigate = useNavigate();
   const turnActionToText = (action: ActionTypeEnum) => {
     switch (action) {
       case "SPELL":
@@ -132,7 +139,10 @@ const BattleFinished = ({
                     ))}
                   <p
                     className="my-2 p-1 rounded-md bg-red-400 text-center"
-                    onClick={() => {}}
+                    onClick={() => {
+                      recoverHeroes(Number(campaignId));
+                      navigate({ to: `/campaign/${campaignId}` });
+                    }}
                   >
                     Close Battle
                   </p>

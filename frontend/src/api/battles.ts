@@ -149,3 +149,22 @@ export const triggerNpcTurnForTodaysBattle = async (
     throw error;
   }
 };
+
+export const putRecoverCharactersOfTodaysFinishedBattle = async (
+  bearerToken: string,
+  campaignId: number
+) => {
+  try {
+    const response = await axios.put(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/recover-characters`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
