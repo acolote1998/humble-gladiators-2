@@ -270,6 +270,19 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     }
 
     @Override
+    public void consumeMp(Integer amountOfMp) {
+
+        if (amountOfMp == null || amountOfMp <= 0) {
+            return;
+        }
+
+        int currentMp = this.getStats().getCurrentMp();
+        int newMp = Math.max(0, currentMp - amountOfMp);
+        log.info("'{}' consumed '{}' mp, they now have '{}' mp", this.getName(), amountOfMp, newMp);
+        this.getStats().setCurrentMp(newMp);
+    }
+
+    @Override
     public void heal(Integer amountOfHpToHeal) {
         if (amountOfHpToHeal == null || amountOfHpToHeal <= 0) {
             return;
@@ -404,6 +417,7 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         actionPerformed.setStateCaused(StateType.NONE);
         actionPerformed.setDamageCaused(totalDamageCaused);
         actionPerformed.setHealingCaused(totalHpRecovered);
+        actionPerformed.setMpUsage(mpCost);
         actionPerformed.setMpRecoverCaused(0);
         return actionPerformed;
     }

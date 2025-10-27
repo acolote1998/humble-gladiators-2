@@ -5,4 +5,6 @@ import com.github.acolote1998.humble_gladiators_2.core.model.Action;
 
 public interface Castable {
     Action castSpell(Long spellId, CharacterInstance targetCharacter);
+
+    void consumeMp(Integer mpToConsume);
 }
