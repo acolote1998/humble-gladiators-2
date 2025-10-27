@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -68,7 +69,7 @@ public class BattleController {
         BattleRewardsResponseDto dto = BattleRewardsResponseDto.fromModel(rewards);
         return ResponseEntity.ok(dto);
     }
-    
+
 
     @GetMapping("/{campaignId}/battle")
     public ResponseEntity<BattleResponseDto> getAnyBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
@@ -77,6 +78,22 @@ public class BattleController {
                 battleService.
                         getAnyBattleForTodayByCampaignAndUserId(campaignId, userId));
         BattleResponseDto dto = BattleResponseDto.fromModel(todaysBattle);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{campaignId}/battle/won")
+    public ResponseEntity<List<BattleResponseDto>> getAllWonBattlesForAHero(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        List<Battle> wonBattles = battleService.getAllWonBattlesForCampaignHero(campaignId, userId);
+        List<BattleResponseDto> dto = BattleResponseDto.fromList(wonBattles);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{campaignId}/battle/lost")
+    public ResponseEntity<List<BattleResponseDto>> getAllLostBattlesForAHero(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        List<Battle> lostBattles = battleService.getAllLostBattlesForACharacter(campaignId, userId);
+        List<BattleResponseDto> dto = BattleResponseDto.fromList(lostBattles);
         return ResponseEntity.ok(dto);
     }
 

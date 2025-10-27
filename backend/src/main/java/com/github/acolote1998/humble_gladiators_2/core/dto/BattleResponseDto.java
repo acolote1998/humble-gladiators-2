@@ -43,6 +43,12 @@ public record BattleResponseDto(
         );
     }
 
+    public static List<BattleResponseDto> fromList(List<Battle> battles) {
+        List<BattleResponseDto> dto = new ArrayList<>();
+        battles.forEach(battle -> dto.add(fromModel(battle)));
+        return dto;
+    }
+
     public record TurnResponseDto(
             FullCharacterResponseDto performingCharacter,
             FullCharacterResponseDto targetCharacter,

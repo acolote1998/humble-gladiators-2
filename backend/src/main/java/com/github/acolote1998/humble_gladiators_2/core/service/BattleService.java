@@ -638,6 +638,18 @@ public class BattleService {
         return battleToCheck;
     }
 
+    public List<Battle> getAllWonBattlesForCampaignHero(Long campaignId, String userId) {
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        List<Battle> allWonBattles = battleRepository.findAllByWinningTeamContains(List.of(hero));
+        return allWonBattles;
+    }
+
+    public List<Battle> getAllLostBattlesForACharacter(Long campaignId, String userId) {
+        CharacterInstance hero = characterService.getHero(campaignId, userId);
+        List<Battle> allWonBattles = battleRepository.findAllByLosingTeamContains(List.of(hero));
+        return allWonBattles;
+    }
+
     public BattleReward createRewardForBattle(Battle battleToCheck) {
         if (isBattleActive(battleToCheck)) {
             log.warn("Cannot assign rewards to battle {}, still active!", battleToCheck.getId());

@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.core.repository;
 
+import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.core.model.Battle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
@@ -46,4 +47,8 @@ public interface BattleRepository extends ListCrudRepository<Battle, Long> {
 
     @Query("SELECT b FROM Battle b WHERE DATE(b.createdAt) < :today")
     List<Battle> findBattlesBeforeDate(@Param("today") LocalDate today);
+
+    List<Battle> findAllByWinningTeamContains(List<CharacterInstance> winningTeam);
+
+    List<Battle> findAllByLosingTeamContains(List<CharacterInstance> losingTeam);
 }

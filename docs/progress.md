@@ -169,4 +169,5 @@ Monday 27/10
 - Improved character snapshot architecture
 - Simplifying battle retrieval by only having one endpoint and the conditionally rendering it as finished or not in the frontend
 - Battle system working properly
+- Simplifying character types -> deleting hero types and using only character instance types instead
 ```
