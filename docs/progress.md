@@ -168,4 +168,5 @@ Monday 27/10
 - Implementing finished battle turn processing based on character snapshot
 - Improved character snapshot architecture
 - Simplifying battle retrieval by only having one endpoint and the conditionally rendering it as finished or not in the frontend
+- Battle system working properly
 ```

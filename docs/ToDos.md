@@ -1,46 +1,19 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] figure out a way to be able to play more than one battle per day? at the moment once we play one, we always retrieve the same one in the front end, which is intended, that's fine, but if I wanna test more than one?
+
 - [ ] Battle
-  - [X] Battle turn processing system
-  - [X] Able to cast spells
-  - [X] Able to use consumables
-  - [X] Able to physically attack
-  - [X] Only render one card of each spell.. since the spells don't get "wasted", it makes no sense that we have copies of them on hand
-  - [X] Implement victory screen in frontend
-  - [X] Implmentent something like getFinishedBattleForToday maybe? so we can use that as the finished screen
   - [ ] In the turn model, we return dealed damage, healed amount but not mp recovered? we have to include that, since certain consumables
   can recover MP
   - [ ] subsequently, in the frontend battle finished we have simulateTurn(), after adding the MP to the turn action in the backedn we weill have to update this function too
-  - [X] Implement endpoint /finalize-todays-battle -> this will be the action that applies the healing, rewards, blablabla.
-    - [X] We want to call this endpoint from the finished battle screen, so we avoid getting to the finished battle screen with an already
-    fully healed hero, fully healed enemy, and we avoid "missing" what happened during the last turn
-    - [X] we have to then maybe remove the winning declaration from the update battle endpoint, so it only triggerss in /finalize-todays-battle or so
 
- - [ ] implement in character inventory to show battle stats? previous battles? for potential replays as well?
+ - [ ] implement in character inventory route to show battle stats? previous battles? for potential replays as well?
    
-  - [X] Battle rewards
-    - [X] Implement exp reward
-    - [X] Implement gold reward
-    - [X] Implement item reward
-    - [X] make reward getting idempotent -> maybe save the rewards in the battle? and do someting like if battle.getReward is empty -> asiggn new reward, otherwises return the existing rewawrd data?
-
   - [ ] Implement some sort of "check intention" and log conditionally based on that. At the moment we are logging a lot of shit in console when an availability happens, and this happens ALL the time? -> check with chat gpt
+
   - [ ] check which logs are worth it, right now for when any character performs any action we print like 4 or 5 logs... maybe just print the final one? or don't print if they succeed? only the negative one that could give u feedback in a potential runtime excepption?
 
-  - [ ] In the BattleFinished, we should show the end stats based on a calculation of startingTeamOne (or team two) + all the turns that happened, we should not show the characters with their "alive" instances stats, since that can change over time, or they could recover MP. it is not good future proof wise
-  - [ ] If we do that, then maybe it is better to call the heal characters endpoint automatically, not as a manual trigger of "close battle"
-
-
 - [ ] Implement level up system?
-
-- [ ] Battle in the future:
-  - [ ] Enable turn processing based on the character snapshot. At the moment we rely on live data of the characters to process a battle, 
-  but that not might be ideal for the future?
-
-  - IDEA: At the moment, we trigger the enemy's turn when we to a getBattle, but we currently have the character's executed turn as a response from either a spell,
-  or a consumable or an attack. So I am thinking to "simulate" a waiting for the enemys turn, it could be that when we have success of an action of the hero, we can render the
-  battle accordingly, with the result of the hero's turn, and probably add a onSuccess in the ation call, wait let's say 2, or 3 seconds? and then invalidate the getBattle,
-  so we would get an updated battle that would trigger the enemy's turn (and render an updated battle with the enemy's turn already applied?)
 
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
