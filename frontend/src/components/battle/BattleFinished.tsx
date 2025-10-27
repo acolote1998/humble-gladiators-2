@@ -67,6 +67,23 @@ const BattleFinished = ({
     startingTeamTwo[0].name,
     startingTeamTwo[0].description
   );
+
+  const getSimulatedCharacter = (charToSimulate: CharacterInstanceType) => {
+    const allCharactersOfThisBattle = [...winningTeam, ...losingTeam];
+    const allSnapshotsOfThisBattle = [...startingTeamOne, ...startingTeamTwo];
+    const foundSnapShotIndex = allSnapshotsOfThisBattle.findIndex((c) => {
+      return (
+        c.name === charToSimulate.name &&
+        c.description === charToSimulate.description
+      );
+    });
+    const snapShotCharacter = allSnapshotsOfThisBattle[foundSnapShotIndex];
+    const simulatedCharacter: CharacterInstanceType = {
+      ...charToSimulate,
+      stats: { ...snapShotCharacter.stats },
+    };
+    return simulatedCharacter;
+  };
   return (
     <div>
       <>
