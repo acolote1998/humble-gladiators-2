@@ -71,13 +71,32 @@ const BattleFinished = ({
     });
     const targetCharacter = allCharacters[targetCharacterIndex];
 
+    const performerCharacterIndex = allCharacters.findIndex((c) => {
+      return (
+        c.name === turn.performingCharacter.name &&
+        c.description == turn.performingCharacter.description
+      );
+    });
+    const performingCharacter = allCharacters[performerCharacterIndex];
+
     targetCharacter.stats.currentHp += turn.action.healingCaused;
     if (targetCharacter.stats.currentHp > targetCharacter.stats.maxHp) {
       targetCharacter.stats.currentHp = targetCharacter.stats.maxHp;
     }
+
     targetCharacter.stats.currentHp -= turn.action.damageCaused;
     if (targetCharacter.stats.currentHp < 1) {
       targetCharacter.stats.currentHp = 0;
+    }
+
+    performingCharacter.stats.currentMp -= turn.action.mpUsage;
+    if (performingCharacter.stats.currentMp < 1) {
+      performingCharacter.stats.currentMp = 0;
+    }
+
+    performingCharacter.stats.currentMp += turn.action.mpRecoverCaused;
+    if (targetCharacter.stats.currentMp > targetCharacter.stats.maxMp) {
+      targetCharacter.stats.currentMp = targetCharacter.stats.maxMp;
     }
   };
 
