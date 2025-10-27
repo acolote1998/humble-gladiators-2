@@ -50,7 +50,7 @@ function RouteComponent() {
             p-2
             m-2
             rounded-lg
-            border-1
+            border
             border-emerald-400
             flex
             flex-col
@@ -68,7 +68,7 @@ function RouteComponent() {
               }}
             />
             <button
-              className="bg-emerald-300 p-2 rounded-md border-1 border-emerald-500"
+              className="bg-emerald-300 p-2 rounded-md border border-emerald-500"
               onClick={() => {
                 createHero({
                   campaignId: Number(campaignId),

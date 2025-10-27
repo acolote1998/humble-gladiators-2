@@ -2,10 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.characters.controller;
 
 import com.github.acolote1998.humble_gladiators_2.characters.dto.CreateHeroRequestDto;
 import com.github.acolote1998.humble_gladiators_2.characters.dto.FullCharacterResponseDto;
-import com.github.acolote1998.humble_gladiators_2.characters.dto.HeroResponseDto;
-import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlreadyCreated;
-import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
@@ -53,10 +50,10 @@ public class CharacterController {
     }
 
     @GetMapping("/{campaignId}/character-instances/hero")
-    ResponseEntity<HeroResponseDto> getHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+    ResponseEntity<FullCharacterResponseDto> getHeroForACampaign(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
         CharacterInstance heroModel = characterService.getHero(campaignId, userId);
-        HeroResponseDto dto = HeroResponseDto.fromModelToDto(heroModel);
+        FullCharacterResponseDto dto = FullCharacterResponseDto.fromModelToDto(heroModel);
         return ResponseEntity.ok(dto);
     }
 

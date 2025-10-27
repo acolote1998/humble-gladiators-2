@@ -68,13 +68,6 @@ type CharacterCategoriesEnum =
 
 type CharacterTypeEnum = "PLAYER" | "NPC" | "SNAPSHOT";
 
-export type HeroResponseDto = {
-  id: number;
-  name: string;
-  stats: CharacterStatsResponseDto;
-  inventory: CharacterInventoryResponseDto;
-};
-
 type CharacterInventoryResponseDto = {
   armors: ArmorType[];
   boots: BootsType[];
