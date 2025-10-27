@@ -5,10 +5,7 @@ import type {
 import { CharacterCard } from "../cards/CharacterCard";
 import type { ActionTypeEnum } from "../../types/battleTypes";
 import type { CharacterInstanceType } from "../../types/characterTypes";
-import {
-  useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery,
-  useRecoverCharactersAfterFinishedTodaysBattle,
-} from "../../hooks/useBattles";
+import { useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery } from "../../hooks/useBattles";
 import { useNavigate } from "@tanstack/react-router";
 const BattleFinished = ({
   campaignId,
@@ -22,8 +19,6 @@ const BattleFinished = ({
     useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery(
       Number(campaignId)
     );
-  const { mutate: recoverHeroes } =
-    useRecoverCharactersAfterFinishedTodaysBattle();
   const navigate = useNavigate();
   const turnActionToText = (action: ActionTypeEnum) => {
     switch (action) {

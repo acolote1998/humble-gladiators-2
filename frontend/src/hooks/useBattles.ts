@@ -152,23 +152,6 @@ export const useCastActionInBattle = () => {
   return mutation;
 };
 
-export const useRecoverCharactersAfterFinishedTodaysBattle = () => {
-  const { getToken } = useAuth();
-  const mutation = useMutation({
-    mutationFn: async (campaignId: number) => {
-      const bearerToken = await getToken();
-      if (!bearerToken) {
-        throw new Error("No bearer token available");
-      }
-      return putRecoverCharactersOfTodaysFinishedBattle(
-        bearerToken,
-        campaignId
-      );
-    },
-  });
-  return mutation;
-};
-
 export const useTriggerNpcTurnForTodaysBattle = () => {
   const { getToken } = useAuth();
   const mutation = useMutation({
