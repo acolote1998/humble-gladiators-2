@@ -3,8 +3,8 @@ export type BattleResponseDto = {
   id: number;
   campaignId: number;
   turns: TurnResponseDto[];
-  startingTeamOne?: CharacterSnaphotType[];
-  startingTeamTwo?: CharacterSnaphotType[];
+  startingTeamOne: CharacterSnaphotType[];
+  startingTeamTwo: CharacterSnaphotType[];
   teamOne: CharacterInstanceType[];
   teamTwo: CharacterInstanceType[];
   winningTeam: CharacterInstanceType[];

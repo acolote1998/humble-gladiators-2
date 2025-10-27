@@ -8,7 +8,7 @@ import CampaignInfo from "../../../components/campaigns/CampaignInfo";
 import { useGetHeroExistence } from "../../../hooks/useCharacters";
 import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
 import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
-import { useGetBattleForTodayByCampaignIdAndUsery } from "../../../hooks/useBattles";
+import { useGetOngoingBattleForTodayByCampaignIdAndUsery } from "../../../hooks/useBattles";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -16,9 +16,8 @@ export const Route = createFileRoute("/campaign/$id/")({
 function RouteComponent() {
   const navigate = useNavigate();
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
-  const { data: isBattleOngoing } = useGetBattleForTodayByCampaignIdAndUsery(
-    Number(campaignId)
-  );
+  const { data: isBattleOngoing } =
+    useGetOngoingBattleForTodayByCampaignIdAndUsery(Number(campaignId));
   const {
     data: doesHeroExist,
     isLoading: doesHeroExistLoading,

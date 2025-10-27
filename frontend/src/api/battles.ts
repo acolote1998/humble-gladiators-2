@@ -25,13 +25,31 @@ export const createABattleForTodayForCampaignAndUser = async (
   }
 };
 
-export const getBattleForTodayForCampaignAndUser = async (
+export const fetchOngoingBattleForTodayForCampaignAndUser = async (
   bearerToken: string,
   campaignId: number
 ): Promise<BattleResponseDto> => {
   try {
     const response = await axios.get(
-      `${BACKEND_URL}/campaign/${campaignId}/battle`,
+      `${BACKEND_URL}/campaign/${campaignId}/battle/ongoing`,
+      {
+        headers: { Authorization: `Bearer ${bearerToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const fetchFinishedBattleForTodayForCampaignAndUser = async (
+  bearerToken: string,
+  campaignId: number
+): Promise<BattleResponseDto> => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/campaign/${campaignId}/battle/finished`,
       {
         headers: { Authorization: `Bearer ${bearerToken}` },
       }

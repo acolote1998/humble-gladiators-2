@@ -11,7 +11,13 @@ Accept: application/json
 Content-Type: application/json
 
 ### Get battle for today
-GET http://localhost:8080/api/campaign/1/battle
+GET http://localhost:8080/api/campaign/1/battle/ongoing
+Authorization: Bearer {{BEARER_TOKEN}}
+Accept: application/json
+Content-Type: application/json
+
+### Get finished for today
+GET http://localhost:8080/api/campaign/1/battle/finished
 Authorization: Bearer {{BEARER_TOKEN}}
 Accept: application/json
 Content-Type: application/json

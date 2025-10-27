@@ -191,7 +191,7 @@ const BattleExecuting = ({
                 <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
               </div>
             </div>
-            <div className="absolute rounded-md bg-gray-200 border-gray-400 border-1 mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-scroll">
+            <div className="absolute rounded-md bg-gray-200 border-gray-400 border mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-scroll">
               {turns
                 .slice()
                 .reverse()

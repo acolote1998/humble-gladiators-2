@@ -45,13 +45,23 @@ public class BattleController {
     }
 
 
-    @GetMapping("/{campaignId}/battle")
-    public ResponseEntity<BattleResponseDto> getBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+    @GetMapping("/{campaignId}/battle/ongoing")
+    public ResponseEntity<BattleResponseDto> getOnGoingBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
-        Battle todaysBattle = battleService.getUpdatedBattle(
+        Battle todaysOngoingBattle = battleService.getUpdatedBattle(
                 battleService.getBattleUtil().
                         getOnGoingBattleForTodayByCampaignAndUserId(campaignId, userId));
-        BattleResponseDto dto = BattleResponseDto.fromModel(todaysBattle);
+        BattleResponseDto dto = BattleResponseDto.fromModel(todaysOngoingBattle);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{campaignId}/battle/finished")
+    public ResponseEntity<BattleResponseDto> getFinishedBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        Battle todaysFinishedBattle = battleService.getUpdatedBattle(
+                battleService.getBattleUtil().
+                        getFinishedBattleForTodayByCampaignAndUserId(campaignId, userId));
+        BattleResponseDto dto = BattleResponseDto.fromModel(todaysFinishedBattle);
         return ResponseEntity.ok(dto);
     }
 

@@ -159,4 +159,7 @@ Sunday 26/10
 - Improving battle server processing by separating battle updates and npc turn triggering
 - Improving battle frontend processing by a lot, avodigin shady refetches and using propper good practices such as invalidating queries, etc
 - Fixed bug / Improving conditional render of active battle versus battle creation interface
+
+Monday 27/10
+- Implementing endpoint for obtaining a finished battle for today
 ```
