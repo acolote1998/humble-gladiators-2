@@ -208,6 +208,10 @@ const BattleExecuting = ({
                       ` and caused ${turn.action.damageCaused} damage`}
                     {turn.action.healingCaused > 0 &&
                       ` and healed ${turn.action.healingCaused} heal points`}
+                    {turn.action.mpUsage > 0 &&
+                      ` and used ${turn.action.mpUsage} mp`}
+                    {turn.action.mpRecoverCaused > 0 &&
+                      ` and recovered ${turn.action.mpRecoverCaused} mp`}
                   </p>
                 ))}
             </div>

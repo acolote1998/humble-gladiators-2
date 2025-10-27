@@ -66,6 +66,7 @@ public record BattleResponseDto(
                 Integer damageCaused,
                 Integer healingCaused,
                 Integer mpRecoverCaused,
+                Integer mpUsage,
                 ActionType actionType,
                 StateType stateCaused
         ) {
@@ -74,6 +75,7 @@ public record BattleResponseDto(
                         model.getDamageCaused(),
                         model.getHealingCaused(),
                         model.getMpRecoverCaused(),
+                        model.getMpUsage(),
                         model.getActionType(),
                         model.getStateCaused()
                 );
