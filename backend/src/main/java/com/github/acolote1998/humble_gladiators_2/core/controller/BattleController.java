@@ -66,6 +66,16 @@ public class BattleController {
         return ResponseEntity.ok(dto);
     }
 
+    @PutMapping("/{campaignId}/battle/recover-characters")
+    public ResponseEntity<Void> recoverCharactersForTodaysFinishedBattle(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
+        String userId = jwt.getSubject();
+        Battle todaysFinishedBattle = battleService.getUpdatedBattle(
+                battleService.getBattleUtil().
+                        getFinishedBattleForTodayByCampaignAndUserId(campaignId, userId));
+        battleService.fullyRecoverBothTeams(todaysFinishedBattle);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/{campaignId}/battle/finished")
     public ResponseEntity<BattleResponseDto> getFinishedBattleForToday(@AuthenticationPrincipal Jwt jwt, @PathVariable Long campaignId) {
         String userId = jwt.getSubject();
