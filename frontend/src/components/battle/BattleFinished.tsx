@@ -5,7 +5,6 @@ import type {
 import { CharacterCard } from "../cards/CharacterCard";
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery } from "../../hooks/useBattles";
-import { useNavigate } from "@tanstack/react-router";
 import TurnTable from "./TurnTable";
 import HeroStats from "./HeroStats";
 import RewardsTable from "./RewardsTable";
@@ -21,7 +20,6 @@ const BattleFinished = ({
     useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery(
       Number(campaignId)
     );
-  const navigate = useNavigate();
 
   const getHeroFromWinnersOrLosers = (
     heroReferenceName: string,
