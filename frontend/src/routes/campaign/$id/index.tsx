@@ -55,8 +55,6 @@ function RouteComponent() {
                 </p>
                 <ItemsBooster campaignId={campaignId} />
 
-                <CharacterBooster campaignId={campaignId} />
-
                 <p
                   onClick={() => {
                     navigate({ to: `/campaign/${campaignId}/inventory` });
