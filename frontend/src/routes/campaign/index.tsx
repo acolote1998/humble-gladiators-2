@@ -90,18 +90,22 @@ function CampaignsRoute() {
             ) : isErrorLoadingAllCampaigns ? (
               <p>Error loading campaigns</p>
             ) : allCampaigns && allCampaigns.length > 0 ? (
-              allCampaigns.map((campaign) => (
-                <div
-                  key={campaign.id}
-                  onClick={() => {
-                    navigate({ to: `/campaign/${campaign.id}` });
-                  }}
-                >
-                  <CampaignInfo {...campaign} />
-                </div>
-              ))
+              <div className="flex flex-col gap-5">
+                {allCampaigns.map((campaign) => {
+                  return (
+                    <div
+                      key={campaign.id}
+                      onClick={() => {
+                        navigate({ to: `/campaign/${campaign.id}` });
+                      }}
+                    >
+                      <CampaignInfo {...campaign} />
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
-              <p>No campaigns found</p>
+              <p>No campaigns found. Create your first one!</p>
             )}
           </div>
         </div>

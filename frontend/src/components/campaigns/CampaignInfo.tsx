@@ -23,7 +23,7 @@ const CampaignInfo = ({
       hover:bg-yellow-200
       hover:border-yellow-400
         cursor-pointer
-        w-280
+        w-270
         h-72
         "
       >
@@ -38,7 +38,7 @@ const CampaignInfo = ({
           border
           border-gray-400
           text-lg
-          w-123
+          w-113
           "
         >
           <p
