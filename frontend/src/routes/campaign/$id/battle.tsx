@@ -16,7 +16,16 @@ function RouteComponent() {
   const { data: battleForTodayData, isLoading: loadingBattleForToday } =
     useGetBattleForTodayByCampaignIdAndUsery(Number(campaignId));
   return (
-    <div>
+    <div
+      className="
+          mx-5
+          p-5
+          rounded-b-2xl
+          border-3
+        border-gray-400 
+        bg-gray-200
+        "
+    >
       {loadingBattleForToday ? (
         <Loader />
       ) : battleForTodayData ? (
