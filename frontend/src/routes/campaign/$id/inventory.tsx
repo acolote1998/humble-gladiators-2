@@ -30,7 +30,7 @@ function RouteComponent() {
   return (
     <>
       {isLoadingHero ? (
-        <p>Loading hero...</p>
+        <p className="loader" />
       ) : isErrorHero ? (
         <p>Error loading hero</p>
       ) : (

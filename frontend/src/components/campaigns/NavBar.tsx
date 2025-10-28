@@ -1,11 +1,13 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useRouterState } from "@tanstack/react-router";
+import { useGetHeroExistence } from "../../hooks/useCharacters";
 const NavBar = () => {
   const navigate = useNavigate();
   const { location } = useRouterState();
   const segments = location.pathname.split("/");
   const campaignIndex = segments.indexOf("campaign");
   const campaignId = campaignIndex !== -1 ? segments[campaignIndex + 1] : null;
+  const { data: isHeroExisting } = useGetHeroExistence(Number(campaignId));
   return (
     <div
       className="mx-5
@@ -40,7 +42,9 @@ const NavBar = () => {
             cursor-pointer
             "
         onClick={() => {
-          navigate({ to: `/campaign/${campaignId}/compendium` });
+          if (!isHeroExisting) {
+            navigate({ to: `/campaign/${campaignId}` });
+          } else navigate({ to: `/campaign/${campaignId}/compendium` });
         }}
       >
         Compendium
@@ -64,7 +68,9 @@ const NavBar = () => {
             cursor-pointer
             "
         onClick={() => {
-          navigate({ to: `/campaign/${campaignId}/boosters/item` });
+          if (!isHeroExisting) {
+            navigate({ to: `/campaign/${campaignId}` });
+          } else navigate({ to: `/campaign/${campaignId}/boosters/item` });
         }}
       >
         Item Boosters
@@ -88,7 +94,9 @@ const NavBar = () => {
             cursor-pointer
             "
         onClick={() => {
-          navigate({ to: `/campaign/${campaignId}/boosters/character` });
+          if (!isHeroExisting) {
+            navigate({ to: `/campaign/${campaignId}` });
+          } else navigate({ to: `/campaign/${campaignId}/boosters/character` });
         }}
       >
         Character Boosters
@@ -112,7 +120,9 @@ const NavBar = () => {
             cursor-pointer
             "
         onClick={() => {
-          navigate({ to: `/campaign/${campaignId}/inventory` });
+          if (!isHeroExisting) {
+            navigate({ to: `/campaign/${campaignId}` });
+          } else navigate({ to: `/campaign/${campaignId}/inventory` });
         }}
       >
         Inventory
@@ -136,7 +146,9 @@ const NavBar = () => {
             cursor-pointer
             "
         onClick={() => {
-          navigate({ to: `/campaign/${campaignId}/battle` });
+          if (!isHeroExisting) {
+            navigate({ to: `/campaign/${campaignId}` });
+          } else navigate({ to: `/campaign/${campaignId}/battle` });
         }}
       >
         Battles
