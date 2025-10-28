@@ -8,6 +8,7 @@ import { useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery } from "../..
 import { useNavigate } from "@tanstack/react-router";
 import TurnTable from "./TurnTable";
 import HeroStats from "./HeroStats";
+import RewardsTable from "./RewardsTable";
 const BattleFinished = ({
   campaignId,
   losingTeam,
@@ -120,75 +121,11 @@ const BattleFinished = ({
               <p>Loading...</p>
             ) : (
               rewardsForBattle && (
-                <div className="absolute rounded-md bg-gray-200 border-gray-400 border mx-5 top-20 px-5 left-0 w-150 h-110 overflow-y-scroll">
-                  <p className="my-2 p-1 rounded-md bg-gray-500 text-xl text-center text-white">
-                    Battle Finished
-                  </p>
-                  <p className="my-2 p-1 rounded-md bg-gray-300">
-                    Winner:{" "}
-                    {rewardsForBattle?.battleResult == "VICTORY_TEAM_ONE"
-                      ? originalHero.name
-                      : rewardsForBattle.battleResult == "VICTORY_TEAM_TWO" &&
-                        originalEnemy.name}
-                  </p>
-                  <p className="my-2 p-1 rounded-md bg-gray-300">
-                    Exp Reward: {rewardsForBattle?.expReward}
-                  </p>
-                  <p className="my-2 p-1 rounded-md bg-gray-300">
-                    Gold Reward: {rewardsForBattle?.goldReward}
-                  </p>
-                  <p className="my-2 p-1 rounded-md bg-gray-300">Item loot:</p>
-                  {rewardsForBattle.armorLoot.length > 0 &&
-                    rewardsForBattle.armorLoot.map((i) => (
-                      <p className="my-2 p-1 rounded-md bg-gray-300">
-                        {i.name} - T {i.tier} - R {i.rarity}
-                      </p>
-                    ))}
-                  {rewardsForBattle.bootsLoot.length > 0 &&
-                    rewardsForBattle.bootsLoot.map((i) => (
-                      <p className="my-2 p-1 rounded-md bg-gray-300">
-                        {i.name} - T {i.tier} - R {i.rarity}
-                      </p>
-                    ))}
-                  {rewardsForBattle.consumablesLoot.length > 0 &&
-                    rewardsForBattle.consumablesLoot.map((i) => (
-                      <p className="my-2 p-1 rounded-md bg-gray-300">
-                        {i.name} - T {i.tier} - R {i.rarity}
-                      </p>
-                    ))}
-                  {rewardsForBattle.helmetsLoot.length > 0 &&
-                    rewardsForBattle.helmetsLoot.map((i) => (
-                      <p className="my-2 p-1 rounded-md bg-gray-300">
-                        {i.name} - T {i.tier} - R {i.rarity}
-                      </p>
-                    ))}
-                  {rewardsForBattle.shieldsLoot.length > 0 &&
-                    rewardsForBattle.shieldsLoot.map((i) => (
-                      <p className="my-2 p-1 rounded-md bg-gray-300">
-                        {i.name} - T {i.tier} - R {i.rarity}
-                      </p>
-                    ))}
-                  {rewardsForBattle.spellsLoot.length > 0 &&
-                    rewardsForBattle.spellsLoot.map((i) => (
-                      <p className="my-2 p-1 rounded-md bg-gray-300">
-                        {i.name} - T {i.tier} - R {i.rarity}
-                      </p>
-                    ))}
-                  {rewardsForBattle.weaponsLoot.length > 0 &&
-                    rewardsForBattle.weaponsLoot.map((i) => (
-                      <p className="my-2 p-1 rounded-md bg-gray-300">
-                        {i.name} - T {i.tier} - R {i.rarity}
-                      </p>
-                    ))}
-                  <p
-                    className="my-2 p-1 rounded-md bg-red-400 text-center"
-                    onClick={() => {
-                      navigate({ to: `/campaign/${campaignId}` });
-                    }}
-                  >
-                    Close Battle
-                  </p>
-                </div>
+                <RewardsTable
+                  characterOneName={originalHero.name}
+                  characterTwoName={originalEnemy.name}
+                  rewardsForBattle={rewardsForBattle}
+                />
               )
             )}
             <div>
