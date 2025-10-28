@@ -11,7 +11,16 @@ function RouteComponent() {
   });
 
   return (
-    <div>
+    <div
+      className="
+          mx-5
+          p-5
+          rounded-b-2xl
+          border-3
+        border-gray-400 
+        bg-gray-200
+        "
+    >
       <CharacterBooster campaignId={Number(campaignId)} />
     </div>
   );
