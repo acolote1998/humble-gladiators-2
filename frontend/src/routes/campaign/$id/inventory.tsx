@@ -36,7 +36,16 @@ function RouteComponent() {
         <p>Error loading hero</p>
       ) : (
         heroData && (
-          <div>
+          <div
+            className="
+          mx-5
+          p-5
+          rounded-b-2xl
+          border-3
+        border-gray-400 
+        bg-gray-200
+        "
+          >
             <div className="grid grid-cols-9">
               <div className="col-span-8">
                 <div className="grid grid-cols-5">
