@@ -4,9 +4,6 @@ import {
   useParams,
 } from "@tanstack/react-router";
 import { useGetHeroExistence } from "../../../hooks/useCharacters";
-import { CharacterBooster } from "../../../components/boosters/CharacterBooster";
-import { ItemsBooster } from "../../../components/boosters/ItemsBooster";
-import { useGetIsBattleOngoing } from "../../../hooks/useBattles";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -19,9 +16,6 @@ function RouteComponent() {
     isLoading: doesHeroExistLoading,
     isError: doesHeroExistError,
   } = useGetHeroExistence(Number(campaignId));
-
-  const { data: isBattleOngoing, isLoading: isBattleOngoingLoading } =
-    useGetIsBattleOngoing(Number(campaignId));
 
   return (
     <>
@@ -39,54 +33,37 @@ function RouteComponent() {
           <p>Loading hero availability</p>
         ) : doesHeroExistError ? (
           <p>Error loading hero availability</p>
-        ) : doesHeroExist ? (
-          <>
-            {isBattleOngoingLoading ? (
-              <p>Loading...</p>
-            ) : !isBattleOngoing ? (
-              <>
-                <p
-                  onClick={() => {
-                    navigate({ to: `/campaign/${campaignId}/compendium` });
-                  }}
-                  className="bg-gray-400 p-3 rounded-lg"
-                >
-                  Go to the compendium
-                </p>
-                <ItemsBooster campaignId={campaignId} />
-
-                <p
-                  onClick={() => {
-                    navigate({ to: `/campaign/${campaignId}/inventory` });
-                  }}
-                  className="bg-gray-400 p-3 rounded-lg"
-                >
-                  Hero Inventory
-                </p>
-              </>
-            ) : (
-              <p className="bg-red-400 p-3 rounded-lg">
-                You cannot perform actions during an ongoing battle!!!
-              </p>
-            )}
-            <p
-              onClick={() => {
-                navigate({ to: `/campaign/${campaignId}/battle` });
-              }}
-              className="bg-gray-400 p-3 rounded-lg"
-            >
-              Battles
-            </p>
-          </>
         ) : (
-          <p
-            className="p-2 bg-green-300 w-fit rounded-md m-2 border border-green-500"
-            onClick={() => {
-              navigate({ to: `/campaign/${campaignId}/createHero` });
-            }}
-          >
-            Click here to create your hero
-          </p>
+          !doesHeroExist && (
+            <div className="flex justify-center">
+              <button
+                className="
+          border-gray-400 
+          bg-gray-500 
+          text-white
+            m-20
+            px-5
+            py-5
+            text-xl
+            rounded-md
+            font-semibold
+            hover:text-black
+            hover:bg-emerald-200
+            hover:tracking-wider
+            cursor-pointer
+            hover:scale-110
+            transition-all
+            ease-in-out
+            duration-800
+            "
+                onClick={() => {
+                  navigate({ to: `/campaign/${campaignId}/createHero` });
+                }}
+              >
+                ⚔️ Forge Your Hero 🛡️
+              </button>
+            </div>
+          )
         )}
       </div>
     </>
