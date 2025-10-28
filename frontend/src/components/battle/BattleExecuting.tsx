@@ -11,6 +11,7 @@ import { useTriggerNpcTurnForTodaysBattle } from "../../hooks/useBattles";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import TurnTable from "./TurnTable";
+import HeroStats from "./HeroStats";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -201,28 +202,7 @@ const BattleExecuting = ({
                 chooseTarget(teamOne[0].id);
               }}
             >
-              <p className="text-2xl">Hero Stats</p>
-              <p className="text-xl">{teamOne[0].name}</p>
-              <p>
-                HP {teamOne[0].stats.currentHp}/{teamOne[0].stats.maxHp}
-              </p>
-              <p>
-                MP {teamOne[0].stats.currentMp}/{teamOne[0].stats.maxMp}
-              </p>
-              <p>
-                XP {teamOne[0].stats.currentExp}/
-                {teamOne[0].stats.expForNextLevel}
-              </p>
-              <p>LCK {teamOne[0].stats.luck}</p>
-              <p>SPD {teamOne[0].stats.speed}</p>
-              <p>
-                P. DMG {teamOne[0].stats.physicalDamage} / P. DEF{" "}
-                {teamOne[0].stats.physicalDefense}
-              </p>
-              <p>
-                M. DMG {teamOne[0].stats.magicalDamage} / M. DEF{" "}
-                {teamOne[0].stats.magicalDefense}
-              </p>
+              <HeroStats character={teamOne[0]} />
             </div>
             <div className="col-span-6 flex flex-col items-center">
               <p className="text-2xl">Hand</p>

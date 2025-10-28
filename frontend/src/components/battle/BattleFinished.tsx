@@ -7,6 +7,7 @@ import type { CharacterInstanceType } from "../../types/characterTypes";
 import { useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery } from "../../hooks/useBattles";
 import { useNavigate } from "@tanstack/react-router";
 import TurnTable from "./TurnTable";
+import HeroStats from "./HeroStats";
 const BattleFinished = ({
   campaignId,
   losingTeam,
@@ -198,28 +199,7 @@ const BattleFinished = ({
         </div>
         <div className="grid grid-cols-7">
           <div className="flex flex-col items-center">
-            <p className="text-2xl">Hero Stats</p>
-            <p className="text-xl">{simulatedHero.name}</p>
-            <p>
-              HP {simulatedHero.stats.currentHp}/{simulatedHero.stats.maxHp}
-            </p>
-            <p>
-              MP {simulatedHero.stats.currentMp}/{simulatedHero.stats.maxMp}
-            </p>
-            <p>
-              XP {simulatedHero.stats.currentExp}/
-              {simulatedHero.stats.expForNextLevel}
-            </p>
-            <p>LCK {simulatedHero.stats.luck}</p>
-            <p>SPD {simulatedHero.stats.speed}</p>
-            <p>
-              P. DMG {simulatedHero.stats.physicalDamage} / P. DEF{" "}
-              {simulatedHero.stats.physicalDefense}
-            </p>
-            <p>
-              M. DMG {simulatedHero.stats.magicalDamage} / M. DEF{" "}
-              {simulatedHero.stats.magicalDefense}
-            </p>
+            <HeroStats character={simulatedHero} />
           </div>
         </div>
       </>

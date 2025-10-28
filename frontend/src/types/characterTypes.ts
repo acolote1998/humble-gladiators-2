@@ -31,7 +31,7 @@ export type CharacterInstanceType = {
 
 export type RenderingFrom = "COMPENDIUM" | "BOOSTER" | "BATTLE" | "INVENTORY";
 
-type CharacterStatsResponseDto = {
+export type CharacterStatsResponseDto = {
   constitution: number;
   intelligence: number;
   strength: number;
