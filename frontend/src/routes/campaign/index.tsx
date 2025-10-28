@@ -93,12 +93,7 @@ function CampaignsRoute() {
               <div className="flex flex-col gap-5">
                 {allCampaigns.map((campaign) => {
                   return (
-                    <div
-                      key={campaign.id}
-                      onClick={() => {
-                        navigate({ to: `/campaign/${campaign.id}` });
-                      }}
-                    >
+                    <div key={campaign.id}>
                       <CampaignInfo {...campaign} />
                     </div>
                   );
