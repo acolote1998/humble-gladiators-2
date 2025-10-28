@@ -16,6 +16,9 @@ const TurnTable = ({ turns }: TurnTableTypes) => {
   };
   return (
     <div className="absolute rounded-md bg-gray-200 border-gray-400 border mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-scroll">
+      <h2 className="text-center p-2 mt-2 text-xl bg-gray-500 rounded-md text-white">
+        Turns
+      </h2>
       {turns
         .slice()
         .reverse()
