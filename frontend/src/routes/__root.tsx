@@ -1,4 +1,9 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  Link,
+  Outlet,
+  useRouterState,
+} from "@tanstack/react-router";
 import {
   SignInButton,
   SignOutButton,
@@ -8,11 +13,13 @@ import {
 import GetInfinityToken from "../components/GetInfinityToken";
 import NavBar from "../components/campaigns/NavBar";
 
-const RootLayout = () => (
-  <>
-    <div className="flex items-center justify-center">
-      <h1
-        className="
+const RootLayout = () => {
+  const { location } = useRouterState();
+  return (
+    <>
+      <div className="flex items-center justify-center">
+        <h1
+          className="
           text-6xl
           tracking-tighter
           font-black
@@ -24,23 +31,24 @@ const RootLayout = () => (
           border-b-5
         border-gray-400 
         bg-gray-200"
-      >
-        Humble Gladiators 2
-      </h1>
-    </div>
-    <NavBar />
-    <div className="absolute top-0 right-0 bg-gray-200 rounded-bl-lg border-gray-400 border p-2 flex gap-2">
-      <Link to="/campaign">Campaigns</Link>
-      <SignedIn>
-        {/* <GetInfinityToken /> */}
-        <SignOutButton />
-      </SignedIn>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-    </div>
-    <Outlet />
-  </>
-);
+        >
+          Humble Gladiators 2
+        </h1>
+      </div>
+      {location.pathname !== "/campaign" && <NavBar />}
+      <div className="absolute top-0 right-0 bg-gray-200 rounded-bl-lg border-gray-400 border p-2 flex gap-2">
+        <Link to="/campaign">Campaigns</Link>
+        <SignedIn>
+          {/* <GetInfinityToken /> */}
+          <SignOutButton />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+      </div>
+      <Outlet />
+    </>
+  );
+};
 
 export const Route = createRootRoute({ component: RootLayout });
