@@ -1,5 +1,6 @@
 import { useGetBattleCreationAvailability } from "../../hooks/useBattles";
 import { useCreateABattleForTodayByCampaignIdAndUser } from "../../hooks/useBattles";
+import { Loader } from "../Loader";
 type BattleCreationComponentType = { campaignId: number };
 const BattleCheckAndCreation = ({
   campaignId,
@@ -13,9 +14,7 @@ const BattleCheckAndCreation = ({
   return (
     <div>
       {isBattleCreationPossibleLoading ? (
-        <div className="pt-15  pb-10 text-center items-center justify-center flex">
-          <p className="loader scale-300" />
-        </div>
+        <Loader />
       ) : isBattleCreationPossible ? (
         <p onClick={() => createBattle(Number(campaignId))}>Create battle</p>
       ) : (

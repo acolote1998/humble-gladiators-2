@@ -7,6 +7,7 @@ import { useGetCharacterBoosterAvailability } from "../../hooks/useBoosters";
 import { useQueryClient } from "@tanstack/react-query";
 import { CardBack } from "../cards/CardBack";
 import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
+import { Loader } from "../Loader";
 
 export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
   const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
@@ -64,7 +65,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
     <>
       <div>
         {isBoosterAvailableLoading ? (
-          <p>Loading booster availability</p>
+          <Loader />
         ) : isBoosterAvailableError ? (
           <p>Error loading booster availability</p>
         ) : isBoosterAvailable && !dataFromCharacterBooster ? (
@@ -84,7 +85,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
         {dataFromBoosterLoading ? (
           <div className="flex gap-5">
             <p>Opening booster</p>
-            <p className="loader"></p>
+            <Loader />
           </div>
         ) : (
           dataFromCharacterBooster && (

@@ -1,4 +1,5 @@
 import type { CampaignCreationStateType } from "../../types/campaignTypes";
+import { Loader } from "../Loader";
 
 type ProgressBarPercentType = {
   creationState: CampaignCreationStateType | undefined;
@@ -155,7 +156,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         <p className="text-white text-sm font-medium">
           {getPercentAndStateFormat().state}{" "}
         </p>
-        <p className="loader"></p>
+        <Loader />
       </div>
     </div>
   );

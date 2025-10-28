@@ -9,6 +9,7 @@ import {
 } from "../../../hooks/useCharacters";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Loader } from "../../../components/Loader";
 
 export const Route = createFileRoute("/campaign/$id/createHero")({
   component: RouteComponent,
@@ -48,7 +49,7 @@ function RouteComponent() {
         bg-gray-200"
     >
       {heroLoading ? (
-        <p className="loader scale-300" />
+        <Loader />
       ) : isHeroNotFound ? (
         <>
           <div className="flex justify-center my-10">

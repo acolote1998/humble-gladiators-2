@@ -10,6 +10,7 @@ import { SpellCard } from "../../../components/cards/SpellCard";
 import { WeaponCard } from "../../../components/cards/WeaponCard";
 import { useGetWonBattlesForHeroForCampaignIdAndUsery } from "../../../hooks/useBattles";
 import { useGetLostBattlesForHeroForCampaignIdAndUsery } from "../../../hooks/useBattles";
+import { Loader } from "../../../components/Loader";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -30,7 +31,7 @@ function RouteComponent() {
   return (
     <>
       {isLoadingHero ? (
-        <p className="loader" />
+        <Loader />
       ) : isErrorHero ? (
         <p>Error loading hero</p>
       ) : (

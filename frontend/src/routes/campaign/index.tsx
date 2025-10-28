@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { SignedIn } from "@clerk/clerk-react";
 import { useGetAllCampaignsForAUser } from "../../hooks/useCampaigns";
 import CampaignInfo from "../../components/campaigns/CampaignInfo";
+import { Loader } from "../../components/Loader";
 export const Route = createFileRoute("/campaign/")({
   component: CampaignsRoute,
 });
@@ -70,7 +71,7 @@ function CampaignsRoute() {
               Your Campaigns
             </p>
             {isLoadingAllCampaigns ? (
-              <p className="loader scale-400 m-20" />
+              <Loader />
             ) : isErrorLoadingAllCampaigns ? (
               <p>Error loading campaigns</p>
             ) : allCampaigns && allCampaigns.length > 0 ? (
