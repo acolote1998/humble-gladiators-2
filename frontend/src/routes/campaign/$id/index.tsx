@@ -26,7 +26,9 @@ function RouteComponent() {
         "
       >
         {doesHeroExistLoading ? (
-          <p>Loading hero availability</p>
+          <div className="pt-15  pb-10 text-center items-center justify-center flex">
+            <p className="loader scale-300" />
+          </div>
         ) : doesHeroExistError ? (
           <p>Error loading hero availability</p>
         ) : (

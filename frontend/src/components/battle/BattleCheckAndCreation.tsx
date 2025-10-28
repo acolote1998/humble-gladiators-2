@@ -13,7 +13,9 @@ const BattleCheckAndCreation = ({
   return (
     <div>
       {isBattleCreationPossibleLoading ? (
-        <p>Loading...</p>
+        <div className="pt-15  pb-10 text-center items-center justify-center flex">
+          <p className="loader scale-300" />
+        </div>
       ) : isBattleCreationPossible ? (
         <p onClick={() => createBattle(Number(campaignId))}>Create battle</p>
       ) : (
