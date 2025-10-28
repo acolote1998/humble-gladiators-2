@@ -172,4 +172,8 @@ Monday 27/10
 - Simplifying character types -> deleting hero types and using only character instance types instead
 - Endpoints for getting lost and won battles for the hero
 - Implementation of lost and won battles for the hero in inventory
+
+Tuesday 28/10
+
+- Improved various user interfaces
 ```
