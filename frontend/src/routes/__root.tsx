@@ -6,6 +6,7 @@ import {
   SignedOut,
 } from "@clerk/clerk-react";
 import GetInfinityToken from "../components/GetInfinityToken";
+import NavBar from "../components/campaigns/NavBar";
 
 const RootLayout = () => (
   <>
@@ -27,6 +28,7 @@ const RootLayout = () => (
         Humble Gladiators 2
       </h1>
     </div>
+    <NavBar />
     <div className="absolute top-0 right-0 bg-gray-200 rounded-bl-lg border-gray-400 border p-2 flex gap-2">
       <Link to="/campaign">Campaigns</Link>
       <SignedIn>

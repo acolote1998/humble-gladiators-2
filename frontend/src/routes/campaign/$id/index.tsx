@@ -25,7 +25,16 @@ function RouteComponent() {
 
   return (
     <>
-      <>
+      <div
+        className="
+          mx-5
+          pb-5
+          rounded-b-2xl
+          border-3
+        border-gray-400 
+        bg-gray-200
+        "
+      >
         {doesHeroExistLoading ? (
           <p>Loading hero availability</p>
         ) : doesHeroExistError ? (
@@ -81,7 +90,7 @@ function RouteComponent() {
             Click here to create your hero
           </p>
         )}
-      </>
+      </div>
     </>
   );
 }

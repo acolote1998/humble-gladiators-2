@@ -1,0 +1,148 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useRouterState } from "@tanstack/react-router";
+const NavBar = () => {
+  const navigate = useNavigate();
+  const { location } = useRouterState();
+  const segments = location.pathname.split("/");
+  const campaignIndex = segments.indexOf("campaign");
+  const campaignId = campaignIndex !== -1 ? segments[campaignIndex + 1] : null;
+  return (
+    <div
+      className="mx-5
+          rounded-b-2xl
+          border-b-3
+          border-x-3
+        border-gray-300 
+        bg-gray-300
+          m-1
+          grid
+          grid-cols-5
+          gap-0.5
+          justify-evenly
+        "
+    >
+      <button
+        className="
+            bg-gray-400
+            p-4
+            w-full
+            h-16
+            text-white
+            rounded-b-xl
+            text-lg
+            font-semibold
+            hover:text-xl
+            hover:font-bold
+            hover:bg-gray-700
+            hover:text-green-200
+            transition-all
+            duration-200
+            cursor-pointer
+            "
+        onClick={() => {
+          navigate({ to: `/campaign/${campaignId}/compendium` });
+        }}
+      >
+        Compendium
+      </button>
+      <button
+        className="
+            bg-gray-400
+            p-4
+            w-full
+            h-16
+            text-white
+            rounded-b-xl
+            text-lg
+            font-semibold
+            hover:text-xl
+            hover:font-bold
+            hover:bg-gray-700
+            hover:text-green-200
+            transition-all
+            duration-200
+            cursor-pointer
+            "
+        onClick={() => {
+          navigate({ to: `/campaign/${campaignId}/boosters/item` });
+        }}
+      >
+        Item Boosters
+      </button>
+      <button
+        className="
+            bg-gray-400
+            p-4
+            w-full
+            h-16
+            text-white
+            rounded-b-xl
+            text-lg
+            font-semibold
+            hover:text-xl
+            hover:font-bold
+            hover:bg-gray-700
+            hover:text-green-200
+            transition-all
+            duration-200
+            cursor-pointer
+            "
+        onClick={() => {
+          navigate({ to: `/campaign/${campaignId}/boosters/character` });
+        }}
+      >
+        Character Boosters
+      </button>
+      <button
+        className="
+            bg-gray-400
+            p-4
+            w-full
+            h-16
+            text-white
+            rounded-b-xl
+            text-lg
+            font-semibold
+            hover:text-xl
+            hover:font-bold
+            hover:bg-gray-700
+            hover:text-green-200
+            transition-all
+            duration-200
+            cursor-pointer
+            "
+        onClick={() => {
+          navigate({ to: `/campaign/${campaignId}/inventory` });
+        }}
+      >
+        Inventory
+      </button>
+      <button
+        className="
+            bg-gray-400
+            p-4
+            w-full
+            h-16
+            text-white
+            rounded-b-xl
+            text-lg
+            font-semibold
+            hover:text-xl
+            hover:font-bold
+            hover:bg-gray-700
+            hover:text-green-200
+            transition-all
+            duration-200
+            cursor-pointer
+            "
+        onClick={() => {
+          navigate({ to: `/campaign/${campaignId}/battle` });
+        }}
+      >
+        Battles
+      </button>
+    </div>
+  );
+};
+
+export default NavBar;
