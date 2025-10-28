@@ -12,7 +12,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <ItemsBooster campaignId={campaignId} />
+      <ItemsBooster campaignId={Number(campaignId)} />
     </div>
   );
 }

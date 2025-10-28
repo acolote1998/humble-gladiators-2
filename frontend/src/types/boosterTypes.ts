@@ -17,7 +17,7 @@ export type ItemBoosterType = {
 };
 
 export type ItemBoosterInterface = {
-  campaignId: string;
+  campaignId: number;
 };
 
 export type CharacterBoosterType = {
@@ -25,5 +25,5 @@ export type CharacterBoosterType = {
 };
 
 export type CharacterBoosterInterface = {
-  campaignId: string;
+  campaignId: number;
 };
