@@ -2,6 +2,7 @@ import {
   createRootRoute,
   Link,
   Outlet,
+  useNavigate,
   useRouterState,
 } from "@tanstack/react-router";
 import {
@@ -15,9 +16,15 @@ import NavBar from "../components/campaigns/NavBar";
 
 const RootLayout = () => {
   const { location } = useRouterState();
+  const navigate = useNavigate();
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div
+        className="flex items-center justify-center cursor-pointer"
+        onClick={() => {
+          navigate({ to: "/" });
+        }}
+      >
         <h1
           className="
           text-6xl
@@ -35,7 +42,9 @@ const RootLayout = () => {
           Humble Gladiators 2
         </h1>
       </div>
-      {location.pathname !== "/campaign" && <NavBar />}
+      {location.pathname !== "/campaign" && location.pathname !== "/" && (
+        <NavBar />
+      )}
       <div className="absolute top-0 right-0 bg-gray-200 rounded-bl-lg border-gray-400 border p-2 flex gap-2">
         <Link to="/campaign">Campaigns</Link>
         <SignedIn>
