@@ -197,7 +197,6 @@ const BattleExecuting = ({
           </div>
           <div className="grid grid-cols-7">
             <div
-              className="flex flex-col items-center"
               onClick={() => {
                 chooseTarget(teamOne[0].id);
               }}

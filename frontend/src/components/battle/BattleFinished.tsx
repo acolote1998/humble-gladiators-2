@@ -133,9 +133,7 @@ const BattleFinished = ({
           <TurnTable turns={turns} />
         </div>
         <div className="grid grid-cols-7">
-          <div className="flex flex-col items-center">
-            <HeroStats character={simulatedHero} />
-          </div>
+          <HeroStats character={simulatedHero} />
         </div>
       </>
     </div>
