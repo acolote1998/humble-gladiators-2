@@ -1,13 +1,15 @@
 import { useNavigate } from "@tanstack/react-router";
 type CreateHeroButtonType = { campaignId: number };
-export const CreateHeroButton = ({ campaignId }: CreateHeroButtonType) => {
+export const RedirectCreateHeroButton = ({
+  campaignId,
+}: CreateHeroButtonType) => {
   const navigate = useNavigate();
   return (
     <div className="flex justify-center">
       <button
         className="
-          border-gray-400 
-          bg-gray-500 
+          border-gray-500 
+          bg-gray-400 
           text-white
             m-20
             px-5

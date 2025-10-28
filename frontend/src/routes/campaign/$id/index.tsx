@@ -1,6 +1,6 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useGetHeroExistence } from "../../../hooks/useCharacters";
-import { CreateHeroButton } from "../../../components/campaigns/CreateHeroButton";
+import { RedirectCreateHeroButton } from "../../../components/campaigns/RedirectCreateHeroButton";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -32,7 +32,9 @@ function RouteComponent() {
         ) : doesHeroExistError ? (
           <p>Error loading hero availability</p>
         ) : (
-          !doesHeroExist && <CreateHeroButton campaignId={Number(campaignId)} />
+          !doesHeroExist && (
+            <RedirectCreateHeroButton campaignId={Number(campaignId)} />
+          )
         )}
       </div>
     </>
