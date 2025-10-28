@@ -86,7 +86,7 @@ function CampaignsRoute() {
               Your Campaigns
             </p>
             {isLoadingAllCampaigns ? (
-              <p className="loader" />
+              <p className="loader scale-400 m-20" />
             ) : isErrorLoadingAllCampaigns ? (
               <p>Error loading campaigns</p>
             ) : allCampaigns && allCampaigns.length > 0 ? (
