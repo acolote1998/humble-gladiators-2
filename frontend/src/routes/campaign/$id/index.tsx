@@ -99,10 +99,26 @@ function RouteComponent() {
       }
       return 0;
     };
+    const calculateDiscoveredHelmetsPercent = () => {
+      if (helmetTemplatesData) {
+        const total = helmetTemplatesData.length;
+        const discovered = helmetTemplatesData.filter((h) => {
+          return h.discovered;
+        }).length;
+        return calculatePercentOfDiscovery(total, discovered);
+      }
+      return 0;
+    };
     setPercentDiscoveredArmors(calculateDiscoveredArmorsPercent());
     setPercentDiscoveredBoots(calculateDiscoveredBootsPercent());
     setPercentDiscoveredConsumables(calculateDiscoveredConsumablesPercent());
-  }, [armorTemplatesData, bootsTemplatesData, consumableTemplatesData]);
+    setPercentDiscoveredHelmets(calculateDiscoveredHelmetsPercent());
+  }, [
+    armorTemplatesData,
+    bootsTemplatesData,
+    consumableTemplatesData,
+    helmetTemplatesData,
+  ]);
 
   return (
     <>
@@ -152,6 +168,10 @@ function RouteComponent() {
                       <DiscoveredItemInfo
                         itemName="Consumables"
                         percentDiscovered={percentDiscoveredConsumables}
+                      />
+                      <DiscoveredItemInfo
+                        itemName="Helmets"
+                        percentDiscovered={percentDiscoveredHelmets}
                       />
                     </div>
                   </fieldset>
