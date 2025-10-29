@@ -204,7 +204,9 @@ function RouteComponent() {
                     {campaignData.name}
                   </h1>
                   <fieldset className="border p-4 rounded-lg border-gray-400">
-                    <legend className="text-xl px-2">Campaign Stats</legend>
+                    <legend className="text-xl font-black tracking-wide px-2">
+                      Campaign Stats
+                    </legend>
                     <div className="grid grid-cols-10 items-center gap-4">
                       <DiscoveredItemInfo
                         itemName="Armors"
