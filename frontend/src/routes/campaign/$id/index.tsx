@@ -119,17 +119,55 @@ function RouteComponent() {
       }
       return 0;
     };
+    const calculateDiscoveredWeaponsPercent = () => {
+      if (weaponTemplatesData) {
+        const total = weaponTemplatesData.length;
+        const discovered = weaponTemplatesData.filter((w) => {
+          return w.discovered;
+        }).length;
+        return calculatePercentOfDiscovery(total, discovered);
+      }
+      return 0;
+    };
+    const calculateDiscoveredSpellsPercent = () => {
+      if (spellTemplatesData) {
+        const total = spellTemplatesData.length;
+        const discovered = spellTemplatesData.filter((s) => {
+          return s.discovered;
+        }).length;
+        return calculatePercentOfDiscovery(total, discovered);
+      }
+      return 0;
+    };
+    const calculateDiscoveredCharactersPercent = () => {
+      if (characterInstancesData) {
+        const total = characterInstancesData.filter((c) => {
+          return c.characterType === "NPC";
+        }).length;
+        const discovered = characterInstancesData.filter((c) => {
+          return c.discovered;
+        }).length;
+        return calculatePercentOfDiscovery(total, discovered);
+      }
+      return 0;
+    };
     setPercentDiscoveredArmors(calculateDiscoveredArmorsPercent());
     setPercentDiscoveredBoots(calculateDiscoveredBootsPercent());
     setPercentDiscoveredConsumables(calculateDiscoveredConsumablesPercent());
     setPercentDiscoveredHelmets(calculateDiscoveredHelmetsPercent());
     setPercentDiscoveredShields(calculateDiscoveredShieldsPercent());
+    setPercentDiscoveredWeapons(calculateDiscoveredWeaponsPercent());
+    setPercentDiscoveredSpells(calculateDiscoveredSpellsPercent());
+    setPercentDiscoveredCharacters(calculateDiscoveredCharactersPercent());
   }, [
     armorTemplatesData,
     bootsTemplatesData,
     consumableTemplatesData,
     helmetTemplatesData,
     shieldTemplatesData,
+    weaponTemplatesData,
+    spellTemplatesData,
+    characterInstancesData,
   ]);
 
   return (
@@ -188,6 +226,18 @@ function RouteComponent() {
                       <DiscoveredItemInfo
                         itemName="Shields"
                         percentDiscovered={percentDiscoveredShields}
+                      />
+                      <DiscoveredItemInfo
+                        itemName="Weapons"
+                        percentDiscovered={percentDiscoveredWeapons}
+                      />
+                      <DiscoveredItemInfo
+                        itemName="Spells"
+                        percentDiscovered={percentDiscoveredSpells}
+                      />
+                      <DiscoveredItemInfo
+                        itemName="Characters"
+                        percentDiscovered={percentDiscoveredCharacters}
                       />
                     </div>
                   </fieldset>
