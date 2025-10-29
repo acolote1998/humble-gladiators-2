@@ -13,6 +13,13 @@ import { useGetAllWeaponTemplatesForCampaignByUser } from "../../../hooks/useWea
 import { useGetCharactersByCampaignAndUser } from "../../../hooks/userCharacters";
 import { useEffect, useState } from "react";
 import { DiscoveredItemInfo } from "../../../components/campaigns/DiscoveredItemInfo";
+import type { ArmorType } from "../../../types/armorTypes";
+import type { BootsType } from "../../../types/bootsTypes";
+import type { ConsumableType } from "../../../types/consumablesTypes";
+import type { HelmetType } from "../../../types/helmetTypes";
+import type { WeaponType } from "../../../types/weaponTypes";
+import type { SpellType } from "../../../types/spellTypes";
+import type { ShieldType } from "../../../types/shieldTypes";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -69,75 +76,21 @@ function RouteComponent() {
   };
 
   useEffect(() => {
-    const calculateDiscoveredArmorsPercent = () => {
-      if (armorTemplatesData) {
-        const total = armorTemplatesData?.length;
-        const discovered = armorTemplatesData?.filter((a) => {
-          return a.discovered;
-        }).length;
-        return calculatePercentOfDiscovery(total, discovered);
-      }
-      return 0;
-    };
-    const calculateDiscoveredBootsPercent = () => {
-      if (bootsTemplatesData) {
-        const total = bootsTemplatesData?.length;
-        const discovered = bootsTemplatesData?.filter((b) => {
-          return b.discovered;
-        }).length;
-        return calculatePercentOfDiscovery(total, discovered);
-      }
-      return 0;
-    };
-    const calculateDiscoveredConsumablesPercent = () => {
-      if (consumableTemplatesData) {
-        const total = consumableTemplatesData.length;
-        const discovered = consumableTemplatesData.filter((c) => {
-          return c.discovered;
-        }).length;
-        return calculatePercentOfDiscovery(total, discovered);
-      }
-      return 0;
-    };
-    const calculateDiscoveredHelmetsPercent = () => {
-      if (helmetTemplatesData) {
-        const total = helmetTemplatesData.length;
-        const discovered = helmetTemplatesData.filter((h) => {
-          return h.discovered;
-        }).length;
-        return calculatePercentOfDiscovery(total, discovered);
-      }
-      return 0;
-    };
-    const calculateDiscoveredShieldsPercent = () => {
-      if (shieldTemplatesData) {
-        const total = shieldTemplatesData.length;
-        const discovered = shieldTemplatesData.filter((s) => {
-          return s.discovered;
-        }).length;
-        return calculatePercentOfDiscovery(total, discovered);
-      }
-      return 0;
-    };
-    const calculateDiscoveredWeaponsPercent = () => {
-      if (weaponTemplatesData) {
-        const total = weaponTemplatesData.length;
-        const discovered = weaponTemplatesData.filter((w) => {
-          return w.discovered;
-        }).length;
-        return calculatePercentOfDiscovery(total, discovered);
-      }
-      return 0;
-    };
-    const calculateDiscoveredSpellsPercent = () => {
-      if (spellTemplatesData) {
-        const total = spellTemplatesData.length;
-        const discovered = spellTemplatesData.filter((s) => {
-          return s.discovered;
-        }).length;
-        return calculatePercentOfDiscovery(total, discovered);
-      }
-      return 0;
+    const calculateDiscoveredItemsPercent = (
+      items:
+        | ArmorType[]
+        | BootsType[]
+        | ConsumableType[]
+        | HelmetType[]
+        | ShieldType[]
+        | SpellType[]
+        | WeaponType[]
+    ) => {
+      const total = items.length;
+      const discovered = items.filter((s) => {
+        return s.discovered;
+      }).length;
+      return calculatePercentOfDiscovery(total, discovered);
     };
     const calculateDiscoveredCharactersPercent = () => {
       if (characterInstancesData) {
@@ -151,14 +104,36 @@ function RouteComponent() {
       }
       return 0;
     };
-    setPercentDiscoveredArmors(calculateDiscoveredArmorsPercent());
-    setPercentDiscoveredBoots(calculateDiscoveredBootsPercent());
-    setPercentDiscoveredConsumables(calculateDiscoveredConsumablesPercent());
-    setPercentDiscoveredHelmets(calculateDiscoveredHelmetsPercent());
-    setPercentDiscoveredShields(calculateDiscoveredShieldsPercent());
-    setPercentDiscoveredWeapons(calculateDiscoveredWeaponsPercent());
-    setPercentDiscoveredSpells(calculateDiscoveredSpellsPercent());
-    setPercentDiscoveredCharacters(calculateDiscoveredCharactersPercent());
+    if (armorTemplatesData)
+      setPercentDiscoveredArmors(
+        calculateDiscoveredItemsPercent(armorTemplatesData)
+      );
+    if (bootsTemplatesData)
+      setPercentDiscoveredBoots(
+        calculateDiscoveredItemsPercent(bootsTemplatesData)
+      );
+    if (consumableTemplatesData)
+      setPercentDiscoveredConsumables(
+        calculateDiscoveredItemsPercent(consumableTemplatesData)
+      );
+    if (helmetTemplatesData)
+      setPercentDiscoveredHelmets(
+        calculateDiscoveredItemsPercent(helmetTemplatesData)
+      );
+    if (shieldTemplatesData)
+      setPercentDiscoveredShields(
+        calculateDiscoveredItemsPercent(shieldTemplatesData)
+      );
+    if (weaponTemplatesData)
+      setPercentDiscoveredWeapons(
+        calculateDiscoveredItemsPercent(weaponTemplatesData)
+      );
+    if (spellTemplatesData)
+      setPercentDiscoveredSpells(
+        calculateDiscoveredItemsPercent(spellTemplatesData)
+      );
+    if (characterInstancesData)
+      setPercentDiscoveredCharacters(calculateDiscoveredCharactersPercent());
   }, [
     armorTemplatesData,
     bootsTemplatesData,
@@ -209,35 +184,35 @@ function RouteComponent() {
                     <div className="grid grid-cols-10 items-center gap-4">
                       <DiscoveredItemInfo
                         itemName="Armors"
-                        percentDiscovered={percentDiscoveredArmors}
+                        percentAchieved={percentDiscoveredArmors}
                       />
                       <DiscoveredItemInfo
                         itemName="Boots"
-                        percentDiscovered={percentDiscoveredBoots}
+                        percentAchieved={percentDiscoveredBoots}
                       />
                       <DiscoveredItemInfo
                         itemName="Consumables"
-                        percentDiscovered={percentDiscoveredConsumables}
+                        percentAchieved={percentDiscoveredConsumables}
                       />
                       <DiscoveredItemInfo
                         itemName="Helmets"
-                        percentDiscovered={percentDiscoveredHelmets}
+                        percentAchieved={percentDiscoveredHelmets}
                       />
                       <DiscoveredItemInfo
                         itemName="Shields"
-                        percentDiscovered={percentDiscoveredShields}
+                        percentAchieved={percentDiscoveredShields}
                       />
                       <DiscoveredItemInfo
                         itemName="Weapons"
-                        percentDiscovered={percentDiscoveredWeapons}
+                        percentAchieved={percentDiscoveredWeapons}
                       />
                       <DiscoveredItemInfo
                         itemName="Spells"
-                        percentDiscovered={percentDiscoveredSpells}
+                        percentAchieved={percentDiscoveredSpells}
                       />
                       <DiscoveredItemInfo
                         itemName="Characters"
-                        percentDiscovered={percentDiscoveredCharacters}
+                        percentAchieved={percentDiscoveredCharacters}
                       />
                     </div>
                   </fieldset>
