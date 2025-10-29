@@ -20,6 +20,10 @@ import type { HelmetType } from "../../../types/helmetTypes";
 import type { WeaponType } from "../../../types/weaponTypes";
 import type { SpellType } from "../../../types/spellTypes";
 import type { ShieldType } from "../../../types/shieldTypes";
+import {
+  useGetLostBattlesForHeroForCampaignIdAndUsery,
+  useGetWonBattlesForHeroForCampaignIdAndUsery,
+} from "../../../hooks/useBattles";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -41,7 +45,14 @@ function RouteComponent() {
     useState<number>(0);
   const [percentDiscoveredSpells, setPercentDiscoveredSpells] =
     useState<number>(0);
+  const [winratePercent, setWinratePercent] = useState<number>(0);
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
+  const { data: wonBattles } = useGetWonBattlesForHeroForCampaignIdAndUsery(
+    Number(campaignId)
+  );
+  const { data: lostBattles } = useGetLostBattlesForHeroForCampaignIdAndUsery(
+    Number(campaignId)
+  );
   const {
     data: doesHeroExist,
     isLoading: doesHeroExistLoading,
@@ -71,7 +82,7 @@ function RouteComponent() {
   const { data: weaponTemplatesData } =
     useGetAllWeaponTemplatesForCampaignByUser(Number(campaignId));
 
-  const calculatePercentOfDiscovery = (total: number, discovered: number) => {
+  const calculatePercentOfAchievement = (total: number, discovered: number) => {
     return Math.round((discovered * 100) / total);
   };
 
@@ -90,7 +101,7 @@ function RouteComponent() {
       const discovered = items.filter((s) => {
         return s.discovered;
       }).length;
-      return calculatePercentOfDiscovery(total, discovered);
+      return calculatePercentOfAchievement(total, discovered);
     };
     const calculateDiscoveredCharactersPercent = () => {
       if (characterInstancesData) {
@@ -100,9 +111,15 @@ function RouteComponent() {
         const discovered = characterInstancesData.filter((c) => {
           return c.discovered;
         }).length;
-        return calculatePercentOfDiscovery(total, discovered);
+        return calculatePercentOfAchievement(total, discovered);
       }
       return 0;
+    };
+    const calculateWinrate = (wonBattles: number, lostBattles: number) => {
+      return calculatePercentOfAchievement(
+        wonBattles + lostBattles,
+        wonBattles
+      );
     };
     if (armorTemplatesData)
       setPercentDiscoveredArmors(
@@ -134,6 +151,11 @@ function RouteComponent() {
       );
     if (characterInstancesData)
       setPercentDiscoveredCharacters(calculateDiscoveredCharactersPercent());
+    if (wonBattles && lostBattles) {
+      setWinratePercent(
+        calculateWinrate(wonBattles.length, lostBattles.length)
+      );
+    }
   }, [
     armorTemplatesData,
     bootsTemplatesData,
@@ -143,6 +165,8 @@ function RouteComponent() {
     weaponTemplatesData,
     spellTemplatesData,
     characterInstancesData,
+    wonBattles,
+    lostBattles,
   ]);
 
   return (
@@ -213,6 +237,10 @@ function RouteComponent() {
                       <DiscoveredItemInfo
                         itemName="Characters"
                         percentAchieved={percentDiscoveredCharacters}
+                      />
+                      <DiscoveredItemInfo
+                        itemName="Win Rate"
+                        percentAchieved={winratePercent}
                       />
                     </div>
                   </fieldset>

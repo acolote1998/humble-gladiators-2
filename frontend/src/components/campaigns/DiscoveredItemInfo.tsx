@@ -14,7 +14,11 @@ export const DiscoveredItemInfo = ({
           className={`transition-all duration-500 rounded-md border-blue-500 border absolute bg-blue-300 top-0 left-0 h-full flex items-center justify-center`}
           style={{ width: `${percentDiscovered}%` }}
         >
-          <p className="text-center font-black text-lg">{percentDiscovered}%</p>
+          {percentDiscovered > 0 && (
+            <p className="text-center font-black text-lg">
+              {percentDiscovered}%
+            </p>
+          )}
         </div>
       </div>
     </>
