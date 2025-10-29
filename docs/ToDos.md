@@ -14,8 +14,6 @@
 
 - [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
-- [ ] Modify the card components so that if they are rendered from the inventory they look smaller and they show normal size only on hover?
-
 - [ ] Optimize campaign lobby booster availability checks by implementing caching with TTL to reduce expensive database queries (at the moment the check function does a lot of queries to the DB)
 
 - [ ] Ensure character response DTOs obscure undiscovered data to prevent network inspection exploits (in the compendium for example)
@@ -71,7 +69,6 @@
 - [ ] Game balance tuning:
   - [ ] Gold reward formulas
   - [ ] Experience reward formulas
-  - [ ] Item drop feature?
   - [ ] Attribute scaling (CON, INT, DEX, STR, SPD, LUCK)
   - [ ] HP/MP progression
   - [ ] Height/weight influence in attacks
