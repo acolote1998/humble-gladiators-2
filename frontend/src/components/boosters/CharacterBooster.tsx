@@ -17,11 +17,8 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
     if (!flipped) setFlipped(true);
   };
   const queryClient = useQueryClient();
-  const {
-    data: isBoosterAvailable,
-    isLoading: isBoosterAvailableLoading,
-    isError: isBoosterAvailableError,
-  } = useGetCharacterBoosterAvailability(Number(campaignId));
+  const { data: isBoosterAvailable, isLoading: isBoosterAvailableLoading } =
+    useGetCharacterBoosterAvailability(Number(campaignId));
   const [cards, setCards] = useState<CharacterBoosterType>();
   const isLastCard = () => {
     if (cards) return cards?.characters?.length === 1;
