@@ -12,27 +12,28 @@ import { useGetAllSpellTemplatesForCampaignByUser } from "../../../hooks/useSpel
 import { useGetAllWeaponTemplatesForCampaignByUser } from "../../../hooks/useWeapons";
 import { useGetCharactersByCampaignAndUser } from "../../../hooks/userCharacters";
 import { useEffect, useState } from "react";
+import { DiscoveredItemInfo } from "../../../components/campaigns/DiscoveredItemInfo";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const [percentDiscoveredCharacters, setPercentDiscoveredCharacters] =
-    useState<number>();
+    useState<number>(0);
   const [percentDiscoveredArmors, setPercentDiscoveredArmors] =
-    useState<number>();
+    useState<number>(0);
   const [percentDiscoveredBoots, setPercentDiscoveredBoots] =
-    useState<number>();
+    useState<number>(0);
   const [percentDiscoveredConsumables, setPercentDiscoveredConsumables] =
-    useState<number>();
+    useState<number>(0);
   const [percentDiscoveredHelmets, setPercentDiscoveredHelmets] =
-    useState<number>();
+    useState<number>(0);
   const [percentDiscoveredShields, setPercentDiscoveredShields] =
-    useState<number>();
+    useState<number>(0);
   const [percentDiscoveredWeapons, setPercentDiscoveredWeapons] =
-    useState<number>();
+    useState<number>(0);
   const [percentDiscoveredSpells, setPercentDiscoveredSpells] =
-    useState<number>();
+    useState<number>(0);
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
   const {
     data: doesHeroExist,
@@ -76,9 +77,21 @@ function RouteComponent() {
         }).length;
         return calculatePercentOfDiscovery(total, discovered);
       }
+      return 0;
+    };
+    const calculateDiscoveredBootsPercent = () => {
+      if (bootsTemplatesData) {
+        const total = bootsTemplatesData?.length;
+        const discovered = bootsTemplatesData?.filter((a) => {
+          return a.discovered;
+        }).length;
+        return calculatePercentOfDiscovery(total, discovered);
+      }
+      return 0;
     };
     setPercentDiscoveredArmors(calculateDiscoveredArmorsPercent());
-  }, [armorTemplatesData]);
+    setPercentDiscoveredBoots(calculateDiscoveredBootsPercent());
+  }, [armorTemplatesData, bootsTemplatesData]);
 
   return (
     <>
@@ -116,18 +129,15 @@ function RouteComponent() {
                   </h1>
                   <fieldset className="border p-4 rounded-lg border-gray-400">
                     <legend className="text-xl px-2">Campaign Stats</legend>
-                    <div className="grid grid-cols-10 items-center">
-                      <p className="col-span-1 text-lg font-semibold">Armors</p>
-                      <div className="col-span-9 relative bg-yellow-100 border-yellow-600 border rounded-md h-10">
-                        <div
-                          className={`transition-all duration-500 rounded-md border-blue-500 border absolute bg-blue-300 top-0 left-0 h-full flex items-center justify-center`}
-                          style={{ width: `${percentDiscoveredArmors}%` }}
-                        >
-                          <p className="text-center font-black text-lg">
-                            {percentDiscoveredArmors}%
-                          </p>
-                        </div>
-                      </div>
+                    <div className="grid grid-cols-10 items-center gap-4">
+                      <DiscoveredItemInfo
+                        itemName="Armors"
+                        percentDiscovered={percentDiscoveredArmors}
+                      />
+                      <DiscoveredItemInfo
+                        itemName="Boots"
+                        percentDiscovered={percentDiscoveredBoots}
+                      />
                     </div>
                   </fieldset>
                 </div>
