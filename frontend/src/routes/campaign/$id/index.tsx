@@ -200,7 +200,7 @@ function RouteComponent() {
               weaponTemplatesData &&
               spellTemplatesData ? (
                 <div className="col-span-2">
-                  <h1 className="text-4xl text-center font-bold tracking-wide py-3">
+                  <h1 className="text-4xl text-center font-bold tracking-wide py-6">
                     {campaignData.name}
                   </h1>
                   <fieldset className="border p-4 rounded-lg border-gray-400">
