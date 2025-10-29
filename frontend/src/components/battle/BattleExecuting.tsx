@@ -151,6 +151,32 @@ const BattleExecuting = ({
     });
     return doesItHaveEquippedWeapon;
   };
+
+  const getUniqueSpells = () => {
+    return teamOne[0].inventory.spells.filter((spell, index, self) => {
+      return (
+        index ===
+        self.findIndex(
+          (firstOccurrenceSpell) => firstOccurrenceSpell.name === spell.name
+        )
+      );
+    });
+  };
+
+  const getUniqueConsumables = () => {
+    return teamOne[0].inventory.consumables.filter(
+      (consumable, index, self) => {
+        return (
+          index ===
+          self.findIndex(
+            (firstOccurrenceConsumable) =>
+              firstOccurrenceConsumable.name === consumable.name
+          )
+        );
+      }
+    );
+  };
+
   return (
     <div>
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
@@ -205,10 +231,10 @@ const BattleExecuting = ({
             </div>
             <div className="col-span-6 flex flex-col items-center">
               <p className="text-2xl">Hand</p>
-              <div className="grid grid-cols-5">
+              <div className={`grid grid-cols-5`}>
                 <div
                   className={
-                    `transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50 ` +
+                    `scale-85 hover:scale-100 transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50 ` +
                     `${chosenCardAction == "PHYSICAL_ATTACK" ? " -translate-y-15" : "translate-y-0"}`
                   }
                   onClick={() => {
@@ -233,52 +259,40 @@ const BattleExecuting = ({
                     <PunchCard />
                   )}
                 </div>
-                {teamOne[0].inventory.spells
-                  .filter((spell, index, self) => {
-                    return (
-                      index ===
-                      self.findIndex(
-                        (firstOcurrenceSpell) =>
-                          firstOcurrenceSpell.name == spell.name
-                      )
-                    );
-                  })
-                  .map((card) => {
-                    return (
-                      <div
-                        className={
-                          `transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
-                          `${teamOne[0].stats.currentMp >= card.mpCost ? "opacity-100 " : "opacity-50 "}` +
-                          `${chosenCardAction == "SPELL" && card.id == chosenCardId ? " -translate-y-15" : "translate-y-0"}`
-                        }
-                        onClick={() => {
-                          if (
-                            currentCharacterToPlay.id == teamOne[0].id &&
-                            teamOne[0].stats.currentMp >= card.mpCost
-                          ) {
-                            //It is the hero's turn, so they can use a spell, and they have enough MP for the card
-                            setIsChoosingTarget(true);
-                            setChosenCardAction("SPELL");
-                            setChosenCardId(card.id);
-                            toast.info("Spell selected");
-                          } else if (
-                            currentCharacterToPlay.id != teamOne[0].id
-                          ) {
-                            toast.warn("It is the enemy's turn");
-                          } else if (teamOne[0].stats.currentMp < card.mpCost) {
-                            toast.warn("Not enough MP");
-                          }
-                        }}
-                      >
-                        <SpellCard {...card} renderingFrom="BATTLE" />
-                      </div>
-                    );
-                  })}
-                {teamOne[0].inventory.consumables.map((card) => {
+                {getUniqueSpells().map((card) => {
                   return (
                     <div
                       className={
-                        `transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
+                        `scale-85 hover:scale-100 transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
+                        `${teamOne[0].stats.currentMp >= card.mpCost ? "opacity-100 " : "opacity-50 "}` +
+                        `${chosenCardAction == "SPELL" && card.id == chosenCardId ? " -translate-y-15" : "translate-y-0"}`
+                      }
+                      onClick={() => {
+                        if (
+                          currentCharacterToPlay.id == teamOne[0].id &&
+                          teamOne[0].stats.currentMp >= card.mpCost
+                        ) {
+                          //It is the hero's turn, so they can use a spell, and they have enough MP for the card
+                          setIsChoosingTarget(true);
+                          setChosenCardAction("SPELL");
+                          setChosenCardId(card.id);
+                          toast.info("Spell selected");
+                        } else if (currentCharacterToPlay.id != teamOne[0].id) {
+                          toast.warn("It is the enemy's turn");
+                        } else if (teamOne[0].stats.currentMp < card.mpCost) {
+                          toast.warn("Not enough MP");
+                        }
+                      }}
+                    >
+                      <SpellCard {...card} renderingFrom="BATTLE" />
+                    </div>
+                  );
+                })}
+                {getUniqueConsumables().map((card) => {
+                  return (
+                    <div
+                      className={
+                        `scale-85 hover:scale-100 transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
                         `${chosenCardAction == "CONSUMABLE" && card.id == chosenCardId ? "-translate-y-15" : "translate-y-0"}`
                       }
                       onClick={() => {
