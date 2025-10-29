@@ -86,15 +86,14 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
             )}
           </div>
         ) : (
-          <div className="text-lg font-semibold text-center flex items-center justify-center">
-            It is not possible to open a character booster right now.
-          </div>
+          !dataFromCharacterBooster && (
+            <div className="text-lg font-semibold text-center flex items-center justify-center">
+              It is not possible to open a character booster right now.
+            </div>
+          )
         )}
         {dataFromBoosterLoading ? (
-          <div className="flex gap-5">
-            <p>Opening booster</p>
-            <Loader />
-          </div>
+          <Loader />
         ) : (
           dataFromCharacterBooster && (
             <div>
@@ -103,7 +102,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                       onClick={handleFlip}
                     >
                       <div

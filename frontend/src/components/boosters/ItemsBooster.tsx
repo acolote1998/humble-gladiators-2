@@ -118,9 +118,11 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
             )}
           </div>
         ) : (
-          <div className="text-lg font-semibold text-center flex items-center justify-center">
-            It is not possible to open an item booster right now.
-          </div>
+          !dataFromItemBooster && (
+            <div className="text-lg font-semibold text-center flex items-center justify-center">
+              It is not possible to open an item booster right now.
+            </div>
+          )
         )}
 
         {dataFromBoosterLoading ? (
@@ -133,7 +135,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                       onClick={handleFlip}
                     >
                       <div
@@ -175,7 +177,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                       onClick={handleFlip}
                     >
                       <div
@@ -219,7 +221,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                         onClick={handleFlip}
                       >
                         <div
@@ -264,7 +266,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                         onClick={handleFlip}
                       >
                         <div
@@ -310,7 +312,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                         onClick={handleFlip}
                       >
                         <div
@@ -357,7 +359,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                         onClick={handleFlip}
                       >
                         <div
@@ -405,7 +407,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
                         onClick={handleFlip}
                       >
                         <div
