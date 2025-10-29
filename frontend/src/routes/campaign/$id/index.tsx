@@ -82,8 +82,18 @@ function RouteComponent() {
     const calculateDiscoveredBootsPercent = () => {
       if (bootsTemplatesData) {
         const total = bootsTemplatesData?.length;
-        const discovered = bootsTemplatesData?.filter((a) => {
-          return a.discovered;
+        const discovered = bootsTemplatesData?.filter((b) => {
+          return b.discovered;
+        }).length;
+        return calculatePercentOfDiscovery(total, discovered);
+      }
+      return 0;
+    };
+    const calculateDiscoveredConsumablesPercent = () => {
+      if (consumableTemplatesData) {
+        const total = consumableTemplatesData.length;
+        const discovered = consumableTemplatesData.filter((c) => {
+          return c.discovered;
         }).length;
         return calculatePercentOfDiscovery(total, discovered);
       }
@@ -91,7 +101,8 @@ function RouteComponent() {
     };
     setPercentDiscoveredArmors(calculateDiscoveredArmorsPercent());
     setPercentDiscoveredBoots(calculateDiscoveredBootsPercent());
-  }, [armorTemplatesData, bootsTemplatesData]);
+    setPercentDiscoveredConsumables(calculateDiscoveredConsumablesPercent());
+  }, [armorTemplatesData, bootsTemplatesData, consumableTemplatesData]);
 
   return (
     <>
@@ -137,6 +148,10 @@ function RouteComponent() {
                       <DiscoveredItemInfo
                         itemName="Boots"
                         percentDiscovered={percentDiscoveredBoots}
+                      />
+                      <DiscoveredItemInfo
+                        itemName="Consumables"
+                        percentDiscovered={percentDiscoveredConsumables}
                       />
                     </div>
                   </fieldset>
