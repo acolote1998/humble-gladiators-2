@@ -10,11 +10,8 @@ export const Route = createFileRoute("/campaign/$id/")({
 
 function RouteComponent() {
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
-  const {
-    data: doesHeroExist,
-    isLoading: doesHeroExistLoading,
-    isError: doesHeroExistError,
-  } = useGetHeroExistence(Number(campaignId));
+  const { data: doesHeroExist, isLoading: doesHeroExistLoading } =
+    useGetHeroExistence(Number(campaignId));
   const { data: campaignData, isLoading: isCampaignLoading } =
     useGetCampaignByIdForAUser(Number(campaignId));
 
@@ -41,20 +38,20 @@ function RouteComponent() {
                 src={`data:image/jpeg;base64,${campaignData.coverImgBase64}`}
               />
               <div className="col-span-2">
-                <h1 className="text-4xl text-center font-bold tracking-wide py-6">
-                  {campaignData.name}
-                </h1>
-                <CampaignStats />
+                {doesHeroExistLoading ? (
+                  <Loader />
+                ) : doesHeroExist ? (
+                  <>
+                    <h1 className="text-4xl text-center font-bold tracking-wide py-6">
+                      {campaignData.name}
+                    </h1>
+                    <CampaignStats />
+                  </>
+                ) : (
+                  <RedirectCreateHeroButton campaignId={Number(campaignId)} />
+                )}
               </div>
             </div>
-          )
-        )}
-        {doesHeroExistError ? (
-          <p>Error loading hero availability</p>
-        ) : (
-          !doesHeroExistLoading &&
-          !doesHeroExist && (
-            <RedirectCreateHeroButton campaignId={Number(campaignId)} />
           )
         )}
       </div>

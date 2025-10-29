@@ -11,7 +11,6 @@ export const RedirectCreateHeroButton = ({
           border-gray-500 
           bg-gray-400 
           text-white
-            m-20
             px-5
             py-5
             text-xl
