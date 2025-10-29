@@ -5,8 +5,6 @@
 - [ ] make sure that the enemys don't discover the cards when they open a booster, otherwise they kinda complete our compendium when we face them?
 
 - [ ] figure out a way to be able to play more than one battle per day? at the moment once we play one, we always retrieve the same one in the front end, which is intended, that's fine, but if I wanna test more than one?
-
- - [ ] implement in character inventory route to show battle stats? previous battles? for potential replays as well?
    
   - [ ] Implement some sort of "check intention" and log conditionally based on that. At the moment we are logging a lot of shit in console when an availability happens, and this happens ALL the time? -> check with chat gpt
 

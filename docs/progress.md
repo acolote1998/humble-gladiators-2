@@ -176,4 +176,8 @@ Monday 27/10
 Tuesday 28/10
 
 - Improved various user interfaces
+
+Wednesday 29/10
+
+- Improving interfaces
 ```
