@@ -19,6 +19,7 @@ function RouteComponent() {
           border-3
         border-gray-400 
         bg-gray-200
+        h-170
         "
     >
       <ItemsBooster campaignId={Number(campaignId)} />

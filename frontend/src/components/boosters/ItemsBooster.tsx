@@ -14,6 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { CardBack } from "../cards/CardBack";
 import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
 import { Loader } from "../Loader";
+import BoosterToOpenPlaceholder from "./BoosterToOpenPlaceholder";
 
 export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
   const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
@@ -22,11 +23,8 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
     if (!flipped) setFlipped(true);
   };
   const queryClient = useQueryClient();
-  const {
-    data: isBoosterAvailable,
-    isLoading: isBoosterAvailableLoading,
-    isError: isBoosterAvailableError,
-  } = useGetItemBoosterAvailability(Number(campaignId));
+  const { data: isBoosterAvailable, isLoading: isBoosterAvailableLoading } =
+    useGetItemBoosterAvailability(Number(campaignId));
   const {
     mutate: createItemBoosterMutation,
     data: dataFromItemBooster,
@@ -101,17 +99,24 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
       <div>
         {isBoosterAvailableLoading ? (
           <Loader />
-        ) : isBoosterAvailableError ? (
-          <p>Error loading booster availability</p>
         ) : isBoosterAvailable && !dataFromItemBooster ? (
-          <p
+          <div
             onClick={() => {
-              createItemBoosterMutation(Number(campaignId));
+              setTimeout(() => {
+                createItemBoosterMutation(Number(campaignId));
+              }, 1200);
             }}
-            className="bg-gray-400 p-3 rounded-lg"
           >
-            Open Item Booster
-          </p>
+            <h3 className="absolute text-4xl font-semibold text-center bottom-20 left-[46vw]">
+              Open Booster
+            </h3>
+            {cardBack && (
+              <BoosterToOpenPlaceholder
+                typeOfBooster="ITEM"
+                cardBackImage={cardBack.cardBackImgBase64}
+              />
+            )}
+          </div>
         ) : (
           <div className="text-lg font-semibold text-center flex items-center justify-center">
             It is not possible to open an item booster right now.
