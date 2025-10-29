@@ -78,9 +78,9 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
             Open Character Booster
           </p>
         ) : (
-          <p className="bg-gray-500 p-3 rounded-lg cursor-not-allowed">
-            Come back tomorrow for a new character booster!
-          </p>
+          <div className="text-lg font-semibold text-center flex items-center justify-center">
+            It is not possible to open a character booster right now.
+          </div>
         )}
         {dataFromBoosterLoading ? (
           <div className="flex gap-5">

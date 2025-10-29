@@ -113,9 +113,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
             Open Item Booster
           </p>
         ) : (
-          <p className="bg-gray-500 p-3 rounded-lg cursor-not-allowed">
-            Come back tomorrow for a new item booster!
-          </p>
+          <div className="text-lg font-semibold text-center flex items-center justify-center">
+            It is not possible to open an item booster right now.
+          </div>
         )}
 
         {dataFromBoosterLoading ? (
