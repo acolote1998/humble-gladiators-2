@@ -38,9 +38,9 @@ function RouteComponent() {
         <Loader />
       ) : isErrorHero ? (
         <p>Error loading hero</p>
-      ) : heroData && isBattleOngoingCheckLoading ? (
+      ) : isBattleOngoingCheckLoading ? (
         <Loader />
-      ) : !isBattleOngoing ? (
+      ) : !isBattleOngoing && heroData ? (
         <div
           className="
           mx-5
