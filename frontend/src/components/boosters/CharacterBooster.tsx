@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { CardBack } from "../cards/CardBack";
 import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
 import { Loader } from "../Loader";
+import BoosterToOpenPlaceholder from "./BoosterToOpenPlaceholder";
 
 export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
   const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
@@ -66,17 +67,24 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
       <div>
         {isBoosterAvailableLoading ? (
           <Loader />
-        ) : isBoosterAvailableError ? (
-          <p>Error loading booster availability</p>
         ) : isBoosterAvailable && !dataFromCharacterBooster ? (
-          <p
+          <div
             onClick={() => {
-              createCharacterBoosterMutation(Number(campaignId));
+              setTimeout(() => {
+                createCharacterBoosterMutation(Number(campaignId));
+              }, 1200);
             }}
-            className="bg-gray-400 p-3 rounded-lg"
           >
-            Open Character Booster
-          </p>
+            <h3 className="absolute text-4xl font-semibold text-center bottom-20 left-[46vw]">
+              Open Booster
+            </h3>
+            {cardBack && (
+              <BoosterToOpenPlaceholder
+                typeOfBooster="CHARACTER"
+                cardBackImage={cardBack.cardBackImgBase64}
+              />
+            )}
+          </div>
         ) : (
           <div className="text-lg font-semibold text-center flex items-center justify-center">
             It is not possible to open a character booster right now.
