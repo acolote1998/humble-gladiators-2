@@ -3,7 +3,6 @@ import {
   Link,
   Outlet,
   useRouterState,
-  useMatchRoute,
 } from "@tanstack/react-router";
 import {
   SignInButton,
