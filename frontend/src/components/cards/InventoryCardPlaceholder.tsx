@@ -19,7 +19,7 @@ const InventoryCardPlaceholder = ({ type }: InventoryCardPlaceholderType) => {
   };
   return (
     <div
-      className={` relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`}
+      className={`opacity-50 scale-90 relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`}
       style={{
         backgroundImage: `url('/templates/${typeToImagePath()}.png')`,
       }}
