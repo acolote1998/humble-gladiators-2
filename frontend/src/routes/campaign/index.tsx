@@ -78,7 +78,10 @@ function CampaignsRoute() {
               <div className="flex flex-col gap-5">
                 {allCampaigns.map((campaign) => {
                   return (
-                    <div key={campaign.id}>
+                    <div
+                      key={campaign.id}
+                      data-testid={`test-${campaign.name}`}
+                    >
                       <CampaignInfo {...campaign} />
                     </div>
                   );

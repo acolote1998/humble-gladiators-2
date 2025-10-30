@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../util/backendUrl";
+import { BACKEND_URL } from "../util/urls";
 import type { ArmorType } from "../types/armorTypes";
 export const fetchAllArmorTemplatesForCampaignByUser = async (
   bearerToken: string,

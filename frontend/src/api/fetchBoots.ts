@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../util/backendUrl";
+import { BACKEND_URL } from "../util/urls";
 import type { BootsType } from "../types/bootsTypes";
 
 export const fetchAllBootsTemplatesForCampaignByUser = async (

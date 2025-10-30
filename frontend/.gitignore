@@ -26,3 +26,13 @@ dist-ssr
 src/routeTree.gen.ts
 
 .env
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+storageState.json
+/tests/e2e/results
+/tests/e2e/results/*
