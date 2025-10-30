@@ -80,107 +80,99 @@ function RouteComponent() {
         bg-gray-200
         "
         >
-          <div className="grid grid-cols-10">
-            <div className="col-span-9">
-              <div className="grid grid-cols-5">
-                <div className="col-span-1">
-                  {equippedHelmet ? (
-                    <HelmetCard
-                      key={equippedHelmet.name + equippedHelmet.id + "equipped"}
-                      {...(equippedHelmet as HelmetType)}
-                      renderingFrom="INVENTORY"
-                    />
-                  ) : (
-                    <InventoryCardPlaceholder type="HELMET" />
-                  )}
-                </div>
-                <div className="col-span-1">
-                  {equippedArmor ? (
-                    <ArmorCard
-                      key={equippedArmor.name + equippedArmor.id + "equipped"}
-                      {...(equippedArmor as ArmorType)}
-                      renderingFrom="INVENTORY"
-                    />
-                  ) : (
-                    <InventoryCardPlaceholder type="ARMOR" />
-                  )}
-                </div>
-                <div className="col-span-1">
-                  {equippedWeapon ? (
-                    <WeaponCard
-                      key={equippedWeapon.name + equippedWeapon.id + "equipped"}
-                      {...(equippedWeapon as WeaponType)}
-                      renderingFrom="INVENTORY"
-                    />
-                  ) : (
-                    <InventoryCardPlaceholder type="WEAPON" />
-                  )}
-                </div>
-                <div className="col-span-1">
-                  {equippedShield ? (
-                    <ShieldCard
-                      key={equippedShield.name + equippedShield.id + "equipped"}
-                      {...(equippedShield as ShieldType)}
-                      renderingFrom="INVENTORY"
-                    />
-                  ) : (
-                    <InventoryCardPlaceholder type="SHIELD" />
-                  )}
-                </div>
-                <div className="col-span-1">
-                  {equippedBoots ? (
-                    <BootsCard
-                      key={equippedBoots.name + equippedBoots.id + "equipped"}
-                      {...(equippedBoots as BootsType)}
-                      renderingFrom="INVENTORY"
-                    />
-                  ) : (
-                    <InventoryCardPlaceholder type="BOOTS" />
-                  )}
-                </div>
-              </div>
+          <div>
+            <h2 className="text-2xl my-2 font-semibold bg-gray-300 text-center p-2">
+              {heroData.name}
+            </h2>
+          </div>
+          <div className="flex justify-evenly">
+            <div>
+              {equippedHelmet ? (
+                <HelmetCard
+                  key={equippedHelmet.name + equippedHelmet.id + "equipped"}
+                  {...(equippedHelmet as HelmetType)}
+                  renderingFrom="INVENTORY"
+                />
+              ) : (
+                <InventoryCardPlaceholder type="HELMET" />
+              )}
             </div>
             <div>
-              <div>
-                <div>
-                  <h2 className="text-2xl my-2 font-semibold bg-gray-300 text-center p-2">
-                    {heroData.name}
-                  </h2>
-                  <div className="flex items-center justify-center gap-20">
-                    <p>
-                      HP - {heroData.stats.currentHp}/{heroData.stats.maxHp}
-                    </p>
-                    <p>
-                      MP - {heroData.stats.currentMp}/{heroData.stats.maxMp}
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl my-2 font-semibold bg-gray-300 text-center p-2">
-                    Stats
-                  </h2>
-                  <div className="grid grid-cols-2 text-center">
-                    <p>P. DMG - {heroData.stats.physicalDamage}</p>
-                    <p>M. DMG - {heroData.stats.magicalDamage}</p>
-                    <p>P. DEF - {heroData.stats.physicalDefense}</p>
-                    <p>M. DEF - {heroData.stats.magicalDefense}</p>
-                    <p>LVL - {heroData.stats.level}</p>
-                    <p>STR - {heroData.stats.strength}</p>
-                    <p>CON - {heroData.stats.constitution}</p>
-                    <p>INT - {heroData.stats.intelligence}</p>
-                    <p>SPD - {heroData.stats.speed}</p>
-                    <p>LCK - {heroData.stats.luck}</p>
-                    <p>WGT - {heroData.stats.height}</p>
-                    <p>HGT - {heroData.stats.weight}</p>
-                    {/* <p>
+              {equippedArmor ? (
+                <ArmorCard
+                  key={equippedArmor.name + equippedArmor.id + "equipped"}
+                  {...(equippedArmor as ArmorType)}
+                  renderingFrom="INVENTORY"
+                />
+              ) : (
+                <InventoryCardPlaceholder type="ARMOR" />
+              )}
+            </div>
+            <div>
+              {equippedWeapon ? (
+                <WeaponCard
+                  key={equippedWeapon.name + equippedWeapon.id + "equipped"}
+                  {...(equippedWeapon as WeaponType)}
+                  renderingFrom="INVENTORY"
+                />
+              ) : (
+                <InventoryCardPlaceholder type="WEAPON" />
+              )}
+            </div>
+            <div>
+              {equippedShield ? (
+                <ShieldCard
+                  key={equippedShield.name + equippedShield.id + "equipped"}
+                  {...(equippedShield as ShieldType)}
+                  renderingFrom="INVENTORY"
+                />
+              ) : (
+                <InventoryCardPlaceholder type="SHIELD" />
+              )}
+            </div>
+            <div>
+              {equippedBoots ? (
+                <BootsCard
+                  key={equippedBoots.name + equippedBoots.id + "equipped"}
+                  {...(equippedBoots as BootsType)}
+                  renderingFrom="INVENTORY"
+                />
+              ) : (
+                <InventoryCardPlaceholder type="BOOTS" />
+              )}
+            </div>
+          </div>
+          <div>
+            <div>
+              <h2 className="text-xl my-2 font-semibold bg-gray-300 text-center p-2">
+                Stats
+              </h2>
+              <div className="grid grid-cols-7 text-center">
+                <p>
+                  HP - {heroData.stats.currentHp}/{heroData.stats.maxHp}
+                </p>
+                <p>
+                  MP - {heroData.stats.currentMp}/{heroData.stats.maxMp}
+                </p>
+                <p>P. DMG - {heroData.stats.physicalDamage}</p>
+                <p>M. DMG - {heroData.stats.magicalDamage}</p>
+                <p>P. DEF - {heroData.stats.physicalDefense}</p>
+                <p>M. DEF - {heroData.stats.magicalDefense}</p>
+                <p>LVL - {heroData.stats.level}</p>
+                <p>STR - {heroData.stats.strength}</p>
+                <p>CON - {heroData.stats.constitution}</p>
+                <p>INT - {heroData.stats.intelligence}</p>
+                <p>SPD - {heroData.stats.speed}</p>
+                <p>LCK - {heroData.stats.luck}</p>
+                <p>WGT - {heroData.stats.height}</p>
+                <p>HGT - {heroData.stats.weight}</p>
+                {/* <p>
                   EXP - {heroData.stats.currentExp}/
                   {heroData.stats.expForNextLevel}
                 </p> */}
-                  </div>
-                </div>
               </div>
             </div>
-          </div>{" "}
+          </div>
           <div>
             <h2 className="text-xl my-2 font-semibold bg-gray-300 text-center p-2">
               Inventory
