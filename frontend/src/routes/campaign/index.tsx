@@ -53,6 +53,7 @@ function CampaignsRoute() {
           border-5
         border-gray-400 
         bg-gray-200
+        min-h-60
         "
         >
           <div className="flex flex-col items-center">
