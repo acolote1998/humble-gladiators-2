@@ -79,6 +79,7 @@ function RouteComponent() {
         border-gray-400 
         bg-gray-200
         "
+          id="inventory-start"
         >
           <div>
             <h2 className="text-2xl my-2 font-semibold bg-gray-300 text-center p-2">

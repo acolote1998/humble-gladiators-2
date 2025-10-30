@@ -51,6 +51,13 @@ export const useCreateABattleForTodayByCampaignIdAndUser = () => {
       queryClient.invalidateQueries({
         queryKey: ["battle-ongoing-check", data.campaignId],
       });
+      //We wait a bit for the battle UI to render, and then we scroll for it to be in the top of the screen
+      setTimeout(() => {
+        const battleDiv = document.getElementById("battle-start");
+        if (battleDiv) {
+          battleDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 500);
     },
   });
   return mutation;

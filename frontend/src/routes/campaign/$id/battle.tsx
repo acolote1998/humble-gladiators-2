@@ -25,6 +25,7 @@ function RouteComponent() {
         border-gray-400 
         bg-gray-200
         "
+      id="battle-start"
     >
       {loadingBattleForToday ? (
         <Loader />

@@ -122,7 +122,10 @@ const NavBar = () => {
         onClick={() => {
           if (!isHeroExisting) {
             navigate({ to: `/campaign/${campaignId}` });
-          } else navigate({ to: `/campaign/${campaignId}/inventory` });
+          } else
+            navigate({
+              to: `/campaign/${campaignId}/inventory#inventory-start`,
+            });
         }}
       >
         Inventory
@@ -148,7 +151,8 @@ const NavBar = () => {
         onClick={() => {
           if (!isHeroExisting) {
             navigate({ to: `/campaign/${campaignId}` });
-          } else navigate({ to: `/campaign/${campaignId}/battle` });
+          } else
+            navigate({ to: `/campaign/${campaignId}/battle#battle-start` });
         }}
       >
         Battles
