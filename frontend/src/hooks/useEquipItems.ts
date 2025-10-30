@@ -19,6 +19,13 @@ export const useEquipItems = () => {
       queryClient.invalidateQueries({
         queryKey: ["hero-character", data.campaignId],
       });
+      //We wait a bit for the UI to render, and then we scroll for it to be in the top of the screen
+      setTimeout(() => {
+        const invDiv = document.getElementById("inventory-start");
+        if (invDiv) {
+          invDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
     },
   });
   return mutation;
@@ -39,6 +46,13 @@ export const useUnequipItems = () => {
       queryClient.invalidateQueries({
         queryKey: ["hero-character", data.campaignId],
       });
+      //We wait a bit for the UI to render, and then we scroll for it to be in the top of the screen
+      setTimeout(() => {
+        const invDiv = document.getElementById("inventory-start");
+        if (invDiv) {
+          invDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
     },
   });
   return mutation;
