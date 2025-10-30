@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../util/backendUrl";
+import { BACKEND_URL } from "../util/urls";
 import type { CreateCampaignType } from "../types/campaignTypes";
 
 export const createCampaignPost = async (

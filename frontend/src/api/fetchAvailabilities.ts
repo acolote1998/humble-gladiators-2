@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../util/backendUrl";
+import { BACKEND_URL } from "../util/urls";
 
 export const fetchCharacterBoosterAvailability = async (
   bearerToken: string,

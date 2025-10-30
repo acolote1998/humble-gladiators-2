@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../util/backendUrl";
+import { BACKEND_URL } from "../util/urls";
 import type { SpellType } from "../types/spellTypes";
 
 export const fetchAllSpellTemplatesForCampaignByUser = async (

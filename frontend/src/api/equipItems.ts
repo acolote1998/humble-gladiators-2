@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL } from "../util/backendUrl";
+import { BACKEND_URL } from "../util/urls";
 import type { EquipItemType } from "../types/equipItemsTypes";
 
 export const equipItemsRequest = async (
