@@ -8,11 +8,11 @@
    
   - [ ] Implement some sort of "check intention" and log conditionally based on that. At the moment we are logging a lot of shit in console when an availability happens, and this happens ALL the time? -> check with chat gpt
 
+  - [ ] make the turn action from backend respond with which card name was used so we can display in frontend, otherwise right now we do like 'used a "spell"' instead of 'used "fireball"' which sounds better
+
   - [ ] check which logs are worth it, right now for when any character performs any action we print like 4 or 5 logs... maybe just print the final one? or don't print if they succeed? only the negative one that could give u feedback in a potential runtime excepption?
 
 - [ ] Implement level up system?
-
-- [ ] Make placeholders in inventory for the slots when the user does not have any certain type of item
 
 - [ ] Optimize campaign lobby booster availability checks by implementing caching with TTL to reduce expensive database queries (at the moment the check function does a lot of queries to the DB)
 
