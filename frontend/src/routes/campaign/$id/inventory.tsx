@@ -10,6 +10,12 @@ import { SpellCard } from "../../../components/cards/SpellCard";
 import { WeaponCard } from "../../../components/cards/WeaponCard";
 import { useGetIsBattleOngoing } from "../../../hooks/useBattles";
 import { Loader } from "../../../components/Loader";
+import type { HelmetType } from "../../../types/helmetTypes";
+import type { ArmorType } from "../../../types/armorTypes";
+import type { ShieldType } from "../../../types/shieldTypes";
+import type { WeaponType } from "../../../types/weaponTypes";
+import type { BootsType } from "../../../types/bootsTypes";
+import InventoryCardPlaceholder from "../../../components/cards/InventoryCardPlaceholder";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -24,6 +30,37 @@ function RouteComponent() {
   } = useGetHeroByCampaignAndUser(Number(campaignId));
   const { data: isBattleOngoing, isLoading: isBattleOngoingCheckLoading } =
     useGetIsBattleOngoing(Number(campaignId));
+  const getEquippedItem = (
+    item: HelmetType[] | ArmorType[] | ShieldType[] | WeaponType[] | BootsType[]
+  ) => {
+    let equippedItem = undefined;
+    if (heroData) {
+      equippedItem = item.filter((i) => {
+        return i.equipped;
+      })[0];
+    }
+    return equippedItem;
+  };
+  const getEquippedHelmet = () => {
+    if (heroData) return getEquippedItem(heroData.inventory.helmets);
+  };
+  const equippedHelmet = getEquippedHelmet();
+  const getEquippedArmor = () => {
+    if (heroData) return getEquippedItem(heroData.inventory.armors);
+  };
+  const equippedArmor = getEquippedArmor();
+  const getEquippedShield = () => {
+    if (heroData) return getEquippedItem(heroData.inventory.shields);
+  };
+  const equippedShield = getEquippedShield();
+  const getEquippedWeapon = () => {
+    if (heroData) return getEquippedItem(heroData.inventory.weapons);
+  };
+  const equippedWeapon = getEquippedWeapon();
+  const getEquippedBoots = () => {
+    if (heroData) return getEquippedItem(heroData.inventory.boots);
+  };
+  const equippedBoots = getEquippedBoots();
   return (
     <>
       {isLoadingHero ? (
@@ -43,68 +80,63 @@ function RouteComponent() {
         bg-gray-200
         "
         >
-          <div className="grid grid-cols-9">
-            <div className="col-span-8">
+          <div className="grid grid-cols-10">
+            <div className="col-span-9">
               <div className="grid grid-cols-5">
                 <div className="col-span-1">
-                  {heroData.inventory.helmets.map((helmet) => {
-                    if (helmet.equipped)
-                      return (
-                        <HelmetCard
-                          key={helmet.name + helmet.id + "equipped"}
-                          {...helmet}
-                          renderingFrom="INVENTORY"
-                        />
-                      );
-                  })}
+                  {equippedHelmet ? (
+                    <HelmetCard
+                      key={equippedHelmet.name + equippedHelmet.id + "equipped"}
+                      {...(equippedHelmet as HelmetType)}
+                      renderingFrom="INVENTORY"
+                    />
+                  ) : (
+                    <InventoryCardPlaceholder type="HELMET" />
+                  )}
                 </div>
                 <div className="col-span-1">
-                  {heroData.inventory.armors.map((armor) => {
-                    if (armor.equipped)
-                      return (
-                        <ArmorCard
-                          key={armor.name + armor.id + "equipped"}
-                          {...armor}
-                          renderingFrom="INVENTORY"
-                        />
-                      );
-                  })}
+                  {equippedArmor ? (
+                    <ArmorCard
+                      key={equippedArmor.name + equippedArmor.id + "equipped"}
+                      {...(equippedArmor as ArmorType)}
+                      renderingFrom="INVENTORY"
+                    />
+                  ) : (
+                    <InventoryCardPlaceholder type="ARMOR" />
+                  )}
                 </div>
                 <div className="col-span-1">
-                  {heroData.inventory.weapons.map((weapon) => {
-                    if (weapon.equipped)
-                      return (
-                        <WeaponCard
-                          key={weapon.name + weapon.id + "equipped"}
-                          {...weapon}
-                          renderingFrom="INVENTORY"
-                        />
-                      );
-                  })}
+                  {equippedWeapon ? (
+                    <WeaponCard
+                      key={equippedWeapon.name + equippedWeapon.id + "equipped"}
+                      {...(equippedWeapon as WeaponType)}
+                      renderingFrom="INVENTORY"
+                    />
+                  ) : (
+                    <InventoryCardPlaceholder type="WEAPON" />
+                  )}
                 </div>
                 <div className="col-span-1">
-                  {heroData.inventory.shields.map((shield) => {
-                    if (shield.equipped)
-                      return (
-                        <ShieldCard
-                          key={shield.name + shield.id + "equipped"}
-                          {...shield}
-                          renderingFrom="INVENTORY"
-                        />
-                      );
-                  })}
+                  {equippedShield ? (
+                    <ShieldCard
+                      key={equippedShield.name + equippedShield.id + "equipped"}
+                      {...(equippedShield as ShieldType)}
+                      renderingFrom="INVENTORY"
+                    />
+                  ) : (
+                    <InventoryCardPlaceholder type="SHIELD" />
+                  )}
                 </div>
                 <div className="col-span-1">
-                  {heroData.inventory.boots.map((boot) => {
-                    if (boot.equipped)
-                      return (
-                        <BootsCard
-                          key={boot.name + boot.id + "equipped"}
-                          {...boot}
-                          renderingFrom="INVENTORY"
-                        />
-                      );
-                  })}
+                  {equippedBoots ? (
+                    <BootsCard
+                      key={equippedBoots.name + equippedBoots.id + "equipped"}
+                      {...(equippedBoots as BootsType)}
+                      renderingFrom="INVENTORY"
+                    />
+                  ) : (
+                    <InventoryCardPlaceholder type="BOOTS" />
+                  )}
                 </div>
               </div>
             </div>
