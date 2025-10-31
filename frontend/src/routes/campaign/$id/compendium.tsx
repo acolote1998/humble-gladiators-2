@@ -16,6 +16,14 @@ import { HelmetCard } from "../../../components/cards/HelmetCard";
 import { ShieldCard } from "../../../components/cards/ShieldCard";
 import { SpellCard } from "../../../components/cards/SpellCard";
 import { WeaponCard } from "../../../components/cards/WeaponCard";
+import { NpcIcon } from "../../../components/icons/typeofcards/NpcIcon";
+import { ArmorIcon } from "../../../components/icons/typeofcards/ArmorIcon";
+import { BootIcon } from "../../../components/icons/typeofcards/BootIcon";
+import { ConsumableIcon } from "../../../components/icons/typeofcards/ConsumableIcon";
+import { HelmetIcon } from "../../../components/icons/typeofcards/HelmetIcon";
+import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
+import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
+import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
 
 export const Route = createFileRoute("/campaign/$id/compendium")({
   component: RouteComponent,
@@ -56,7 +64,12 @@ function RouteComponent() {
         "
       >
         <details>
-          <summary>NPCs</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <NpcIcon width={32} />
+              <p className="text-2xl">NPC's</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {characterInstancesData
               ?.sort((a, b) => {
@@ -77,7 +90,12 @@ function RouteComponent() {
           </div>
         </details>
         <details>
-          <summary>Armors</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <ArmorIcon width={32} />
+              <p className="text-2xl">Armors</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {armorTemplatesData
               ?.sort((a, b) => {
@@ -95,7 +113,12 @@ function RouteComponent() {
           </div>
         </details>
         <details>
-          <summary>Boots</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <BootIcon width={32} />
+              <p className="text-2xl">Boots</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {bootsTemplatesData
               ?.sort((a, b) => {
@@ -113,7 +136,12 @@ function RouteComponent() {
           </div>
         </details>
         <details>
-          <summary>Consumables</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <ConsumableIcon width={32} />
+              <p className="text-2xl">Consumables</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {consumableTemplatesData
               ?.sort((a, b) => {
@@ -131,7 +159,12 @@ function RouteComponent() {
           </div>
         </details>
         <details>
-          <summary>Helmets</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <HelmetIcon width={32} />
+              <p className="text-2xl">Helmets</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {helmetTemplatesData
               ?.sort((a, b) => {
@@ -149,7 +182,12 @@ function RouteComponent() {
           </div>
         </details>
         <details>
-          <summary>Shields</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <ShieldIcon width={32} />
+              <p className="text-2xl">Shields</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {shieldTemplatesData
               ?.sort((a, b) => {
@@ -167,7 +205,12 @@ function RouteComponent() {
           </div>
         </details>
         <details>
-          <summary>Spells</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <SpellIcon width={32} />
+              <p className="text-2xl">Spells</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {spellTemplatesData
               ?.sort((a, b) => {
@@ -185,7 +228,12 @@ function RouteComponent() {
           </div>
         </details>
         <details>
-          <summary>Weapons</summary>
+          <summary>
+            <div className="flex justify-start gap-3">
+              <WeaponIcon width={32} />
+              <p className="text-2xl">Weapons</p>
+            </div>
+          </summary>
           <div className="grid grid-cols-5">
             {weaponTemplatesData
               ?.sort((a, b) => {

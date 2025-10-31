@@ -41,7 +41,7 @@ test.describe("Campaign Flow", () => {
     await page.getByText(/campaigns/i).click();
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-compendium").click();
-    await page.getByText(/npcs/i).click();
+    await page.getByText(/npc's/i).click();
     await page.getByText(/armors/i).click();
     await page.getByText(/boots/i).click();
     await page.getByText(/consumables/i).click();
