@@ -3,14 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const FRONTEND_URL = process.env.FRONTEND_URL!;
-test("navigating to campaigns shows the test campaign", async ({ page }) => {
-  await page.goto(FRONTEND_URL);
-  await page.getByText(/campaigns/i).click();
-  const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
-  await expect(testCampaign).toBeVisible();
-});
 
-test.only("creating hero in test campaign", async ({ page }) => {
+test.beforeAll("creating hero in test campaign", async ({ page }) => {
   await page.goto(FRONTEND_URL);
   await page.getByText(/campaigns/i).click();
   const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
@@ -30,4 +24,11 @@ test.only("creating hero in test campaign", async ({ page }) => {
   await expect(page.getByText(/characters/i)).toBeVisible();
   await expect(page.getByText(/win rate/i)).toBeVisible();
   await expect(page.getByText(/forge your hero/i)).toBeHidden();
+});
+
+test("navigating to campaigns shows the test campaign", async ({ page }) => {
+  await page.goto(FRONTEND_URL);
+  await page.getByText(/campaigns/i).click();
+  const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
+  await expect(testCampaign).toBeVisible();
 });
