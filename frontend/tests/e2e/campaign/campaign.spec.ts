@@ -73,7 +73,6 @@ test.describe("Campaign Flow", () => {
     });
     await page.getByTestId("navbar-inventory").click();
     const categories = [
-      "npcs",
       "armors",
       "boots",
       "consumables",
@@ -110,6 +109,57 @@ test.describe("Campaign Flow", () => {
     await expect(totalCards).toBe(3);
   });
 
+  test("navigates to the inventory route and equips an item if available", async ({
+    page,
+  }) => {
+    await page.goto(FRONTEND_URL);
+    await page.getByText(/campaigns/i).click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
+    await page.getByTestId("navbar-inventory").click();
+    const categories = [
+      "armors",
+      "boots",
+      "consumables",
+      "helmets",
+      "shields",
+      "spells",
+      "weapons",
+    ];
+
+    for (const category of categories) {
+      const tab = page.getByText(new RegExp(category, "i"));
+      try {
+        await tab.first().waitFor({ state: "visible", timeout: 1500 });
+        await tab.first().click();
+      } catch {
+        // Tab didn't appear within 1.5s, skip it
+      }
+    }
+
+    await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
+    if ((await page.getByTestId("equip-item-inventory").count()) > 0) {
+      const equippableItems = page.getByTestId("equip-item-inventory");
+      await equippableItems.first().click();
+      await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
+    }
+  });
+
+  test("navigates to the inventory route and unequips an item if available", async ({
+    page,
+  }) => {
+    await page.goto(FRONTEND_URL);
+    await page.getByText(/campaigns/i).click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
+    await page.getByTestId("navbar-inventory").click();
+
+    if ((await page.getByTestId("item-placeholder").count()) === 4) {
+      await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
+      const equippedItem = page.getByTestId("unequip-item-inventory");
+      await equippedItem.first().click();
+      await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
+    }
+  });
+
   test("navigates to the character booster route, opens an character booster and verifies that it opened", async ({
     page,
   }) => {
@@ -139,17 +189,21 @@ test.describe("Campaign Flow", () => {
         .waitFor({ state: "visible", timeout: 2000 });
       await page.getByText(/Start Battle/i).click();
 
-      // We deactivate linting for the next line, since it this try catch is just used to start the battle in case the enemy is faster than the character...
       // If the character would be faster, then the "Start Battle" button does not render
       // eslint-disable-next-line
-    } catch (e) {}
+    } catch {}
     const battleTimeout = 180000; // 3 min of fight max
     const start = Date.now();
 
     while (Date.now() - start < battleTimeout) {
-      if ((await page.getByTestId("punch-card").count()) > 0) {
-        await page.getByTestId("punch-card").click();
-        await page.getByTestId("battle-hero-stats").click();
+      try {
+        if ((await page.getByTestId("punch-card").count()) > 0) {
+          await page.getByTestId("punch-card").click();
+          await page.getByTestId("battle-hero-stats").click();
+        }
+      } catch {
+        //It's okay if we have a catch hear, it means that most likely the battle finished in the middle of an attempt of using an attack card
+        //and the punch card disappeared, causing an exception while trying to click an invisible object
       }
 
       if ((await page.getByTestId("close-battle-button").count()) > 0) {

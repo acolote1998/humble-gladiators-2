@@ -2,6 +2,8 @@ import type { ArmorType } from "../../types/armorTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import { useEquipItems } from "../../hooks/useEquipItems";
 import { useUnequipItems } from "../../hooks/useEquipItems";
+import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
+import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
 export const ArmorCard = ({
   id,
   campaignId,
@@ -133,7 +135,7 @@ export const ArmorCard = ({
               }}
               className="hover:opacity-100 opacity-0 text-center"
             >
-              EQUIP
+              <EquipItemComponent />
             </p>
           ) : (
             renderingFrom == "INVENTORY" &&
@@ -147,7 +149,7 @@ export const ArmorCard = ({
                 }}
                 className="hover:opacity-100 opacity-0 text-center"
               >
-                UNEQUIP
+                <UnequipItemComponent />
               </p>
             )
           )}
