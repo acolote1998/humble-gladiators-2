@@ -86,7 +86,10 @@ const RewardsTable = ({
             {i.name} - T {i.tier} - R {i.rarity}
           </p>
         ))}
-      <div className="flex justify-center cursor-pointer">
+      <div
+        className="flex justify-center cursor-pointer"
+        data-testid="close-battle-button"
+      >
         <p
           className="my-2 p-1 rounded-md bg-yellow-200 border-yellow-500 border text-center w-fit"
           onClick={() => {

@@ -123,4 +123,46 @@ test.describe("Campaign Flow", () => {
       timeout: 300_00,
     });
   });
+
+  test("navigates to the battle route and fights and finishes a battle", async ({
+    page,
+  }) => {
+    await page.goto(FRONTEND_URL);
+    await page.getByText(/campaigns/i).click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
+    await page.getByTestId("navbar-battles").click();
+    await expect(page.getByTestId("create-battle-button")).toBeVisible();
+    await page.getByTestId("create-battle-button").click();
+    try {
+      await page
+        .getByText(/Start Battle/i)
+        .waitFor({ state: "visible", timeout: 2000 });
+      await page.getByText(/Start Battle/i).click();
+
+      // We deactivate linting for the next line, since it this try catch is just used to start the battle in case the enemy is faster than the character...
+      // If the character would be faster, then the "Start Battle" button does not render
+      // eslint-disable-next-line
+    } catch (e) {}
+    const battleTimeout = 180000; // 3 min of fight max
+    const start = Date.now();
+
+    while (Date.now() - start < battleTimeout) {
+      if ((await page.getByTestId("punch-card").count()) > 0) {
+        await page.getByTestId("punch-card").click();
+        await page.getByTestId("battle-hero-stats").click();
+      }
+
+      if ((await page.getByTestId("close-battle-button").count()) > 0) {
+        await page.getByTestId("close-battle-button").click();
+        break;
+      }
+      // Wait a bit before checking again
+      await page.waitForTimeout(500);
+    }
+
+    expect(Date.now() - start).toBeLessThan(battleTimeout);
+
+    // After battle is finished, we should get redirected to the campaign page
+    await expect(page).toHaveURL(`${FRONTEND_URL}campaign/1`);
+  });
 });

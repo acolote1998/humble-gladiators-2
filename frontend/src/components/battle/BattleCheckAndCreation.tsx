@@ -17,6 +17,7 @@ const BattleCheckAndCreation = ({
         <Loader />
       ) : isBattleCreationPossible ? (
         <p
+          data-testid="create-battle-button"
           className="
               bg-gray-400
               text-white

@@ -188,24 +188,27 @@ const BattleExecuting = ({
             // otherwise, if it is the hero's turn (always team one), then we can just
             // play a card to start the battle)
           }
-          {!isGameStarted &&
-          turns.length < 1 &&
-          currentCharacterToPlay.id == teamTwo[0].id ? (
-            <p
-              className="text-lg text-center bg-green-300"
-              onClick={() => {
-                setIsGameStarted(true);
-              }}
-            >
-              Start Battle
-            </p>
-          ) : (
-            !isGameStarted &&
-            turns.length < 1 && (
-              <p className="text-lg text-center bg-green-300">
-                You start, cast one of your cards by clicking on it
-              </p>
-            )
+          {!isGameStarted && turns.length < 1 && (
+            <div>
+              {currentCharacterToPlay.id == teamTwo[0].id ? (
+                <p
+                  data-testid="start-battle-trigger"
+                  className="text-lg text-center bg-green-300"
+                  onClick={() => {
+                    setIsGameStarted(true);
+                  }}
+                >
+                  Start Battle
+                </p>
+              ) : (
+                !isGameStarted &&
+                turns.length < 1 && (
+                  <p className="text-lg text-center bg-green-300">
+                    You start, cast one of your cards by clicking on it
+                  </p>
+                )
+              )}
+            </div>
           )}
           <div className="flex flex-col items-center">
             <p className="text-2xl">

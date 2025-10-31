@@ -2,6 +2,7 @@ export const PunchCard = () => {
   return (
     <>
       <div
+        data-testid="punch-card"
         className={`hover-zoom relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`}
         style={{
           backgroundImage: `url('/templates/punchCardTemplate.png')`,
