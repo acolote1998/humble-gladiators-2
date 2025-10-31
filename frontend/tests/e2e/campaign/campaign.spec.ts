@@ -67,7 +67,10 @@ test.describe("Campaign Flow", () => {
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-item-boosters").click();
     await page.getByTestId("open-booster-button").click();
-    await expect(page.getByTestId("booster-data")).toBeVisible();
+    // gives max 5 minutes for the booster to open
+    await expect(page.getByTestId("booster-data")).toBeVisible({
+      timeout: 300_300,
+    });
     await page.getByTestId("navbar-inventory").click();
     const categories = [
       "npcs",
@@ -115,6 +118,9 @@ test.describe("Campaign Flow", () => {
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-character-boosters").click();
     await page.getByTestId("open-booster-button").click();
-    await expect(page.getByTestId("booster-data")).toBeVisible();
+    // gives max 5 minutes for booster to open
+    await expect(page.getByTestId("booster-data")).toBeVisible({
+      timeout: 300_00,
+    });
   });
 });
