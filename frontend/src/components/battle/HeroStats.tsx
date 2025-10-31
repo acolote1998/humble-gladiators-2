@@ -5,7 +5,10 @@ type HeroStatsType = {
 const HeroStats = ({ character }: HeroStatsType) => {
   return (
     <>
-      <div className="flex flex-col items-center rounded-md bg-gray-200 border-gray-400 border">
+      <div
+        data-testid="battle-hero-stats"
+        className="flex flex-col items-center rounded-md bg-gray-200 border-gray-400 border"
+      >
         <p className="text-2xl">Hero Stats</p>
         <p className="text-xl">{character.name}</p>
         <p>

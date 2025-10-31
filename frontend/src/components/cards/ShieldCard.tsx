@@ -1,6 +1,8 @@
 import type { ShieldType } from "../../types/shieldTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import { useEquipItems, useUnequipItems } from "../../hooks/useEquipItems";
+import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
+import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
 export const ShieldCard = ({
   id,
   campaignId,
@@ -20,7 +22,7 @@ export const ShieldCard = ({
   const { mutate: unequipItem } = useUnequipItems();
   return (
     <>
-      <div>
+      <div data-testid="shield-card">
         <div
           className={[
             // Conditional classes
@@ -137,7 +139,7 @@ export const ShieldCard = ({
               }}
               className="hover:opacity-100 opacity-0 text-center"
             >
-              EQUIP
+              <EquipItemComponent />
             </p>
           ) : (
             renderingFrom == "INVENTORY" &&
@@ -151,7 +153,7 @@ export const ShieldCard = ({
                 }}
                 className="hover:opacity-100 opacity-0 text-center"
               >
-                UNEQUIP
+                <UnequipItemComponent />
               </p>
             )
           )}

@@ -1,6 +1,8 @@
 import type { WeaponType } from "../../types/weaponTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import { useEquipItems, useUnequipItems } from "../../hooks/useEquipItems";
+import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
+import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
 export const WeaponCard = ({
   id,
   campaignId,
@@ -20,7 +22,7 @@ export const WeaponCard = ({
   const { mutate: unequipItem } = useUnequipItems();
   return (
     <>
-      <div>
+      <div data-testid="weapon-card">
         <div
           className={[
             // Conditional classes
@@ -135,7 +137,7 @@ export const WeaponCard = ({
               }}
               className="hover:opacity-100 opacity-0 text-center"
             >
-              EQUIP
+              <EquipItemComponent />
             </p>
           ) : (
             renderingFrom == "INVENTORY" &&
@@ -149,7 +151,7 @@ export const WeaponCard = ({
                 }}
                 className="hover:opacity-100 opacity-0 text-center"
               >
-                UNEQUIP
+                <UnequipItemComponent />
               </p>
             )
           )}

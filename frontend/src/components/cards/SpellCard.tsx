@@ -19,6 +19,7 @@ export const SpellCard = ({
 
   return (
     <div
+      data-testid="spell-card"
       className={[
         // Conditional classes
         renderingFrom == "BOOSTER" ? "rotate-y-180" : "",

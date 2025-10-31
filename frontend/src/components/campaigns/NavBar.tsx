@@ -24,6 +24,7 @@ const NavBar = () => {
         "
     >
       <button
+        data-testid="navbar-compendium"
         className="
             bg-gray-400
             p-4
@@ -50,6 +51,7 @@ const NavBar = () => {
         Compendium
       </button>
       <button
+        data-testid="navbar-item-boosters"
         className="
             bg-gray-400
             p-4
@@ -76,6 +78,7 @@ const NavBar = () => {
         Item Boosters
       </button>
       <button
+        data-testid="navbar-character-boosters"
         className="
             bg-gray-400
             p-4
@@ -102,6 +105,7 @@ const NavBar = () => {
         Character Boosters
       </button>
       <button
+        data-testid="navbar-inventory"
         className="
             bg-gray-400
             p-4
@@ -131,6 +135,7 @@ const NavBar = () => {
         Inventory
       </button>
       <button
+        data-testid="navbar-battles"
         className="
             bg-gray-400
             p-4

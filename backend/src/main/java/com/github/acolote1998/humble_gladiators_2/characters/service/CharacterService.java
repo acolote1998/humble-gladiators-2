@@ -12,7 +12,6 @@ import com.github.acolote1998.humble_gladiators_2.characters.repository.Characte
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidAttemptBattleOngoing;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.service.BattleService;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
