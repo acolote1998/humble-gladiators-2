@@ -66,6 +66,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
           <Loader />
         ) : isBoosterAvailable && !dataFromCharacterBooster ? (
           <div
+            data-testid="open-booster-button"
             onClick={() => {
               setTimeout(() => {
                 createCharacterBoosterMutation(Number(campaignId));
@@ -93,7 +94,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
           <Loader />
         ) : (
           dataFromCharacterBooster && (
-            <div>
+            <div data-testid="booster-data">
               {/* Characters */}
               {cards?.characters && cards?.characters?.length > 0 && (
                 <>

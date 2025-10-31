@@ -59,7 +59,7 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByTestId("weapon-card")).toHaveCount(2);
   });
 
-  test("navigates to the item booster, opens an item booster and verifies that the correct amount of cards are in the inventory", async ({
+  test("navigates to the item booster route, opens an item booster and verifies that the correct amount of cards are in the inventory", async ({
     page,
   }) => {
     await page.goto(FRONTEND_URL);
@@ -105,5 +105,16 @@ test.describe("Campaign Flow", () => {
       totalCards += await page.getByTestId(`${card}-card`).count();
     }
     await expect(totalCards).toBe(3);
+  });
+
+  test("navigates to the character booster route, opens an character booster and verifies that it opened", async ({
+    page,
+  }) => {
+    await page.goto(FRONTEND_URL);
+    await page.getByText(/campaigns/i).click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
+    await page.getByTestId("navbar-character-boosters").click();
+    await page.getByTestId("open-booster-button").click();
+    await expect(page.getByTestId("booster-data")).toBeVisible();
   });
 });
