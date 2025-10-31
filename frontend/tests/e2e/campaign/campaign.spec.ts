@@ -200,18 +200,26 @@ test.describe("Campaign Flow", () => {
         if ((await page.getByTestId("punch-card").count()) > 0) {
           await page.getByTestId("punch-card").click();
           await page.getByTestId("battle-hero-stats").click();
+          // Wait a bit before checking again
+          await page.waitForTimeout(500);
+          continue;
         }
       } catch {
-        //It's okay if we have a catch hear, it means that most likely the battle finished in the middle of an attempt of using an attack card
+        //It's okay if we have a catch here, it means that most likely the battle finished in the middle of an attempt of using an attack card
         //and the punch card disappeared, causing an exception while trying to click an invisible object
       }
 
-      if ((await page.getByTestId("close-battle-button").count()) > 0) {
-        await page.getByTestId("close-battle-button").click();
-        break;
+      try {
+        if ((await page.getByTestId("close-battle-button").count()) > 0) {
+          await page.getByTestId("close-battle-button").click();
+          // Wait a bit before finishing loop
+          await page.waitForTimeout(500);
+          break;
+        }
+      } catch {
+        //It's okay if we have a catch here, it means that most likely the battle finished and we navigated away from this logic, so there is an error
+        //by trying to click on something that is not longer rendered
       }
-      // Wait a bit before checking again
-      await page.waitForTimeout(500);
     }
 
     expect(Date.now() - start).toBeLessThan(battleTimeout);
