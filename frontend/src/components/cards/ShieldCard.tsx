@@ -20,7 +20,7 @@ export const ShieldCard = ({
   const { mutate: unequipItem } = useUnequipItems();
   return (
     <>
-      <div>
+      <div data-testid="shield-card">
         <div
           className={[
             // Conditional classes

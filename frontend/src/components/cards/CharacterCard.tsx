@@ -32,6 +32,7 @@ export const CharacterCard = ({
 
   return (
     <div
+      data-testid="character-card"
       className={[
         // Conditional classes
         renderingFrom == "BOOSTER" ? "rotate-y-180" : "",

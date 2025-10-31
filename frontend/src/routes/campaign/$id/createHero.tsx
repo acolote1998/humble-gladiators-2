@@ -17,6 +17,8 @@ export const Route = createFileRoute("/campaign/$id/createHero")({
 
 function RouteComponent() {
   const [heroName, setHeroName] = useState<string>("");
+  const [createHeroButtonDisabled, setCreateHeroButtonDisabled] =
+    useState<boolean>(false);
   const { mutate: createHero } = useCreateHero();
   const navigate = useNavigate();
   const { id: campaignId } = useParams({ from: "/campaign/$id/createHero" });
@@ -53,7 +55,9 @@ function RouteComponent() {
       ) : isHeroNotFound ? (
         <>
           <div className="flex justify-center my-10">
-            <div className="bg-gray-300 flex flex-col text-center px-10 py-5 rounded-lg border border-gray-400 gap-5 w-150">
+            <div
+              className={`bg-gray-300 flex flex-col text-center px-10 py-5 rounded-lg border border-gray-400 gap-5 w-150`}
+            >
               <h2 className="text-3xl font-semibold">Hero Creation</h2>
               <p className="text-lg font-light italic">Type your hero's name</p>
               <input
@@ -65,7 +69,10 @@ function RouteComponent() {
                 }}
               />
               <button
-                className="
+                data-testid="hero-creation-button"
+                disabled={createHeroButtonDisabled}
+                className={`
+                ${createHeroButtonDisabled ? "opacity-60 cursor-progress" : "opacity-100 cursor-pointer"}
               border-gray-500 
               bg-gray-400 
               text-white
@@ -79,13 +86,13 @@ function RouteComponent() {
                 hover:text-black
                 hover:bg-emerald-200
                 hover:tracking-wider
-                cursor-pointer
                 hover:scale-110
                 transition-all
                 ease-in-out
                 duration-800
-                "
+                `}
                 onClick={() => {
+                  setCreateHeroButtonDisabled(true);
                   createHero({
                     campaignId: Number(campaignId),
                     heroName: heroName,

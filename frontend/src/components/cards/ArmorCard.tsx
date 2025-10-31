@@ -21,7 +21,7 @@ export const ArmorCard = ({
   const { mutate: unequipItem } = useUnequipItems();
   return (
     <>
-      <div>
+      <div data-testid="armor-card">
         <div
           className={[
             // Conditional classes

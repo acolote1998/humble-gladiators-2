@@ -5,7 +5,7 @@ export const RedirectCreateHeroButton = ({
 }: CreateHeroButtonType) => {
   const navigate = useNavigate();
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center" data-testid="navigate-to-create-hero">
       <button
         className="
           border-gray-500 
