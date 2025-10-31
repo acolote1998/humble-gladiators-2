@@ -58,12 +58,52 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByTestId("spell-card")).toHaveCount(2);
     await expect(page.getByTestId("weapon-card")).toHaveCount(2);
   });
-  // test("navigates to the item booster, opens an item booster and verifies the cards are in the inventory", async ({
-  //   page,
-  // }) => {
-  //   await page.goto(FRONTEND_URL);
-  //   await page.getByText(/campaigns/i).click();
-  //   const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
-  //   await testCampaign.click();
-  // });
+
+  test("navigates to the item booster, opens an item booster and verifies that the correct amount of cards are in the inventory", async ({
+    page,
+  }) => {
+    await page.goto(FRONTEND_URL);
+    await page.getByText(/campaigns/i).click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
+    await page.getByTestId("navbar-item-boosters").click();
+    await page.getByTestId("open-booster-button").click();
+    await expect(page.getByTestId("booster-data")).toBeVisible();
+    await page.getByTestId("navbar-inventory").click();
+    const categories = [
+      "npcs",
+      "armors",
+      "boots",
+      "consumables",
+      "helmets",
+      "shields",
+      "spells",
+      "weapons",
+    ];
+
+    for (const category of categories) {
+      const tab = page.getByText(new RegExp(category, "i"));
+      try {
+        await tab.first().waitFor({ state: "visible", timeout: 1500 });
+        await tab.first().click();
+      } catch {
+        // Tab didn't appear within 1.5s, skip it
+      }
+    }
+
+    const cardType = [
+      "armor",
+      "boots",
+      "consumable",
+      "helmet",
+      "shield",
+      "spell",
+      "weapon",
+    ];
+
+    let totalCards = 0;
+    for (const card of cardType) {
+      totalCards += await page.getByTestId(`${card}-card`).count();
+    }
+    await expect(totalCards).toBe(3);
+  });
 });

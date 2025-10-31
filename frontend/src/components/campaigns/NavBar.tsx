@@ -105,6 +105,7 @@ const NavBar = () => {
         Character Boosters
       </button>
       <button
+        data-testid="navbar-inventory"
         className="
             bg-gray-400
             p-4
