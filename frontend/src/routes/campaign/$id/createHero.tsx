@@ -58,6 +58,7 @@ function RouteComponent() {
               <p className="text-lg font-light italic">Type your hero's name</p>
               <input
                 className="bg-white p-1 rounded-md text-center text-lg"
+                data-testid="hero-name-input"
                 type="text"
                 onChange={(e) => {
                   setHeroName(e.target.value);

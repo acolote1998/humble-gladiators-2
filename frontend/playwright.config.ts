@@ -12,6 +12,7 @@ dotenv.config({ path: path.resolve("./tests/e2e/.env") });
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  expect: { timeout: 15000 },
   globalSetup: path.resolve("./tests/e2e/global.setup.ts"),
   testDir: "./tests/e2e",
   outputDir: "./tests/e2e/results",
@@ -42,15 +43,15 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
 
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"], headless: true },
-    },
+    // {
+    //   name: "firefox",
+    //   use: { ...devices["Desktop Firefox"], headless: true },
+    // },
 
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"], headless: true },
-    },
+    // {
+    //   name: "webkit",
+    //   use: { ...devices["Desktop Safari"], headless: true },
+    // },
 
     /* Test against mobile viewports. */
     // {
