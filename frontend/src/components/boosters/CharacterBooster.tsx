@@ -9,6 +9,7 @@ import { CardBack } from "../cards/CardBack";
 import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
 import { Loader } from "../Loader";
 import BoosterToOpenPlaceholder from "./BoosterToOpenPlaceholder";
+import { SandClockIcon } from "../icons/errors/SandClockIcon";
 
 export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
   const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
@@ -85,8 +86,9 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
           </div>
         ) : (
           !dataFromCharacterBooster && (
-            <div className="text-lg font-semibold text-center flex items-center justify-center">
-              It is not possible to open a character booster right now.
+            <div className="text-lg font-semibold text-center flex items-center justify-center gap-4">
+              <p>It is not possible to open a character booster right now.</p>
+              <SandClockIcon width={28} />
             </div>
           )
         )}
