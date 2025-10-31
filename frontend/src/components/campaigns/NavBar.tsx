@@ -1,11 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useRouterState } from "@tanstack/react-router";
 import { useGetHeroExistence } from "../../hooks/useCharacters";
-import { CompendiumIcon } from "../icons/CompendiumIcon";
-import { ItemBoosterIcon } from "../icons/ItemBoosterIcon";
-import { EnemyBoosterIcon } from "../icons/EnemyBoosterIcon";
-import { InventoryIcon } from "../icons/InventoryIcon";
-import { BattleIcon } from "../icons/BattleIcon";
+import { CompendiumIcon } from "../icons/navbar/CompendiumIcon";
+import { ItemBoosterIcon } from "../icons/navbar/ItemBoosterIcon";
+import { EnemyBoosterIcon } from "../icons/navbar/EnemyBoosterIcon";
+import { InventoryIcon } from "../icons/navbar/InventoryIcon";
+import { BattleIcon } from "../icons/navbar/BattleIcon";
 const NavBar = () => {
   const navigate = useNavigate();
   const { location } = useRouterState();
