@@ -7,14 +7,11 @@ test.describe.configure({ mode: "serial" });
 
 test.describe("Campaign Flow", () => {
   test.beforeAll("creating hero in test campaign", async ({ browser }) => {
-    console.log("CALLED!!!!");
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
-    const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
-    await expect(testCampaign).toBeVisible();
-    await testCampaign.click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navigate-to-create-hero").click();
     await page.getByTestId("hero-name-input").fill("Aki Test!");
     await page.getByTestId("hero-creation-button").click();
@@ -34,8 +31,7 @@ test.describe("Campaign Flow", () => {
   test("navigating to campaigns shows the test campaign", async ({ page }) => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
-    const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
-    await expect(testCampaign).toBeVisible();
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible();
   });
 
   test("navigating to compendium and verifying that all cards are created", async ({
@@ -43,9 +39,7 @@ test.describe("Campaign Flow", () => {
   }) => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
-    const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
-    await expect(testCampaign).toBeVisible();
-    await testCampaign.click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-compendium").click();
     await page.getByText(/npcs/i).click();
     await page.getByText(/armors/i).click();
@@ -64,4 +58,12 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByTestId("spell-card")).toHaveCount(2);
     await expect(page.getByTestId("weapon-card")).toHaveCount(2);
   });
+  // test("navigates to the item booster, opens an item booster and verifies the cards are in the inventory", async ({
+  //   page,
+  // }) => {
+  //   await page.goto(FRONTEND_URL);
+  //   await page.getByText(/campaigns/i).click();
+  //   const testCampaign = page.getByTestId(/test-Medieval Adventure/i);
+  //   await testCampaign.click();
+  // });
 });
