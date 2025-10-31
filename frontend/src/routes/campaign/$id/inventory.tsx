@@ -16,6 +16,13 @@ import type { ShieldType } from "../../../types/shieldTypes";
 import type { WeaponType } from "../../../types/weaponTypes";
 import type { BootsType } from "../../../types/bootsTypes";
 import InventoryCardPlaceholder from "../../../components/cards/InventoryCardPlaceholder";
+import { ArmorIcon } from "../../../components/icons/typeofcards/ArmorIcon";
+import { BootIcon } from "../../../components/icons/typeofcards/BootIcon";
+import { ConsumableIcon } from "../../../components/icons/typeofcards/ConsumableIcon";
+import { HelmetIcon } from "../../../components/icons/typeofcards/HelmetIcon";
+import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
+import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
+import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -181,7 +188,12 @@ function RouteComponent() {
             <div>
               {heroData.inventory.armors.length > 0 && (
                 <details>
-                  <summary>Armors</summary>
+                  <summary>
+                    <div className="flex justify-start gap-3">
+                      <ArmorIcon width={32} />
+                      <p className="text-2xl">Armors</p>
+                    </div>
+                  </summary>
                   <div className="grid grid-cols-5">
                     {heroData.inventory.armors.map((armor) => (
                       <ArmorCard
@@ -195,7 +207,12 @@ function RouteComponent() {
               )}
               {heroData.inventory.boots.length > 0 && (
                 <details>
-                  <summary>Boots</summary>
+                  <summary>
+                    <div className="flex justify-start gap-3">
+                      <BootIcon width={32} />
+                      <p className="text-2xl">Boots</p>
+                    </div>
+                  </summary>
                   <div className="grid grid-cols-5">
                     {heroData.inventory.boots.map((boot) => (
                       <BootsCard
@@ -209,7 +226,12 @@ function RouteComponent() {
               )}
               {heroData.inventory.consumables.length > 0 && (
                 <details>
-                  <summary>Consumables</summary>
+                  <summary>
+                    <div className="flex justify-start gap-3">
+                      <ConsumableIcon width={32} />
+                      <p className="text-2xl">Consumables</p>
+                    </div>
+                  </summary>
                   <div className="grid grid-cols-5">
                     {heroData.inventory.consumables.map((consumable) => (
                       <ConsumableCard
@@ -223,7 +245,12 @@ function RouteComponent() {
               )}
               {heroData.inventory.helmets.length > 0 && (
                 <details>
-                  <summary>Helmets</summary>
+                  <summary>
+                    <div className="flex justify-start gap-3">
+                      <HelmetIcon width={32} />
+                      <p className="text-2xl">Helmets</p>
+                    </div>
+                  </summary>
                   <div className="grid grid-cols-5">
                     {heroData.inventory.helmets.map((helmet) => (
                       <HelmetCard
@@ -237,7 +264,12 @@ function RouteComponent() {
               )}
               {heroData.inventory.shields.length > 0 && (
                 <details>
-                  <summary>Shields</summary>
+                  <summary>
+                    <div className="flex justify-start gap-3">
+                      <ShieldIcon width={32} />
+                      <p className="text-2xl">Shields</p>
+                    </div>
+                  </summary>
                   <div className="grid grid-cols-5">
                     {heroData.inventory.shields.map((shield) => (
                       <ShieldCard
@@ -251,7 +283,12 @@ function RouteComponent() {
               )}
               {heroData.inventory.spells.length > 0 && (
                 <details>
-                  <summary>Spells</summary>
+                  <summary>
+                    <div className="flex justify-start gap-3">
+                      <SpellIcon width={32} />
+                      <p className="text-2xl">Spells</p>
+                    </div>
+                  </summary>
                   <div className="grid grid-cols-5">
                     {heroData.inventory.spells.map((spell) => (
                       <SpellCard
@@ -265,7 +302,12 @@ function RouteComponent() {
               )}
               {heroData.inventory.weapons.length > 0 && (
                 <details>
-                  <summary>Weapons</summary>
+                  <summary>
+                    <div className="flex justify-start gap-3">
+                      <WeaponIcon width={32} />
+                      <p className="text-2xl">Weapons</p>
+                    </div>
+                  </summary>
                   <div className="grid grid-cols-5">
                     {heroData.inventory.weapons.map((weapon) => (
                       <WeaponCard
