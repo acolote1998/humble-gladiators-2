@@ -1,5 +1,6 @@
 import { useGetBattleCreationAvailability } from "../../hooks/useBattles";
 import { useCreateABattleForTodayByCampaignIdAndUser } from "../../hooks/useBattles";
+import { SandClockIcon } from "../icons/errors/SandClockIcon";
 import { Loader } from "../Loader";
 type BattleCreationComponentType = { campaignId: number };
 const BattleCheckAndCreation = ({
@@ -42,7 +43,10 @@ const BattleCheckAndCreation = ({
           Click here to start a battle!
         </p>
       ) : (
-        <p>It is not possible to create a battle at the moment</p>
+        <div className="text-lg font-semibold text-center flex items-center justify-center gap-4">
+          <p>It is not possible create a battle at the moment.</p>
+          <SandClockIcon width={28} />
+        </div>
       )}
     </div>
   );

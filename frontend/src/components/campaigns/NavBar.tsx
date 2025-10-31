@@ -1,6 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useRouterState } from "@tanstack/react-router";
 import { useGetHeroExistence } from "../../hooks/useCharacters";
+import { CompendiumIcon } from "../icons/navbar/CompendiumIcon";
+import { ItemBoosterIcon } from "../icons/navbar/ItemBoosterIcon";
+import { EnemyBoosterIcon } from "../icons/navbar/EnemyBoosterIcon";
+import { InventoryIcon } from "../icons/navbar/InventoryIcon";
+import { BattleIcon } from "../icons/navbar/BattleIcon";
 const NavBar = () => {
   const navigate = useNavigate();
   const { location } = useRouterState();
@@ -32,7 +37,7 @@ const NavBar = () => {
             h-16
             text-white
             rounded-b-xl
-            text-lg
+            text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -48,7 +53,9 @@ const NavBar = () => {
           } else navigate({ to: `/campaign/${campaignId}/compendium` });
         }}
       >
-        Compendium
+        <div className="flex items-center justify-center gap-4">
+          <p>Compendium</p> <CompendiumIcon width={38} />
+        </div>
       </button>
       <button
         data-testid="navbar-item-boosters"
@@ -59,7 +66,7 @@ const NavBar = () => {
             h-16
             text-white
             rounded-b-xl
-            text-lg
+            text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -75,7 +82,10 @@ const NavBar = () => {
           } else navigate({ to: `/campaign/${campaignId}/boosters/item` });
         }}
       >
-        Item Boosters
+        <div className="flex items-center justify-center gap-4">
+          <p>Item Boosters</p>
+          <ItemBoosterIcon width={38} />
+        </div>
       </button>
       <button
         data-testid="navbar-character-boosters"
@@ -86,7 +96,7 @@ const NavBar = () => {
             h-16
             text-white
             rounded-b-xl
-            text-lg
+            text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -102,7 +112,10 @@ const NavBar = () => {
           } else navigate({ to: `/campaign/${campaignId}/boosters/character` });
         }}
       >
-        Character Boosters
+        <div className="flex items-center justify-center gap-4">
+          <p>Character Boosters</p>
+          <EnemyBoosterIcon width={38} />
+        </div>
       </button>
       <button
         data-testid="navbar-inventory"
@@ -113,7 +126,7 @@ const NavBar = () => {
             h-16
             text-white
             rounded-b-xl
-            text-lg
+            text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -132,7 +145,10 @@ const NavBar = () => {
             });
         }}
       >
-        Inventory
+        <div className="flex items-center justify-center gap-4">
+          <p>Inventory</p>
+          <InventoryIcon width={38} />
+        </div>
       </button>
       <button
         data-testid="navbar-battles"
@@ -143,7 +159,7 @@ const NavBar = () => {
             h-16
             text-white
             rounded-b-xl
-            text-lg
+            text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -160,7 +176,10 @@ const NavBar = () => {
             navigate({ to: `/campaign/${campaignId}/battle#battle-start` });
         }}
       >
-        Battles
+        <div className="flex items-center justify-center gap-4">
+          <p>Battles</p>
+          <BattleIcon width={38} />
+        </div>
       </button>
     </div>
   );
