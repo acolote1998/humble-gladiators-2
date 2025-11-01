@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] fix bug!! when we win something (loot) from an enemy, the cards show in our inventory as not discovered!! full of quesiton marks!
+
 - [ ] create index page localhost.com/ that showcases what humble gladiators is -> we could render some card components with high rarity and so and showcase different contents of different campaigns and so
 
 - [ ] make sure that the enemys don't discover the cards when they open a booster, otherwise they kinda complete our compendium when we face them?
