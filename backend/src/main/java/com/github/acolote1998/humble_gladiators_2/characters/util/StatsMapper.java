@@ -22,8 +22,8 @@ public class StatsMapper {
     @Value("${CONSTITUTION_HP_MODIFIER}")
     private Integer CONSTITUTION_HP_MODIFIER;
 
-    @Value("${CONSTITUTION_MP_MODIFIER}")
-    private Integer CONSTITUTION_MP_MODIFIER;
+    @Value("${INTELLIGENCE_MP_MODIFIER}")
+    private Integer INTELLIGENCE_MP_MODIFIER;
 
     private Integer getRandomStat() {
         Random randomNumber = new Random();
@@ -45,11 +45,11 @@ public class StatsMapper {
     }
 
     private Integer calculateMp(Integer intelligence) {
-        if (CONSTITUTION_MP_MODIFIER == null) {
+        if (INTELLIGENCE_MP_MODIFIER == null) {
             log.error("CRITICAL - not valid intelligence/mp modifier in configuration. Using 10 as default value");
             return intelligence * 10;
         }
-        return intelligence * CONSTITUTION_MP_MODIFIER;
+        return intelligence * INTELLIGENCE_MP_MODIFIER;
     }
 
     public Stats mapStatsFromCharacterFromGeminiDto(CharacterFromGeminiDto dto) {
