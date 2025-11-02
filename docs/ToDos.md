@@ -1,10 +1,14 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] fix bug! if the cards name is too long, it overflows!
+- [ ] extract formulas to env variables:
+  - [ ] doesCharacterGenerateThisItem -> chances of an npc equipping an item when drawn from a booster
+  - [ ] all stat calculation formulas
+  - [ ] exp formulas
+  - [ ] gold formulas
+  - [ ] chances of getting a higher tier or rarity when drawn from booster (check where these rates % are calculated)
+  - [ ] chances of dropping an item from an enemy when it is defeated
 
 - [ ] create index page localhost.com/ that showcases what humble gladiators is -> we could render some card components with high rarity and so and showcase different contents of different campaigns and so
-
-- [ ] make sure that the enemys don't discover the cards when they open a booster, otherwise they kinda complete our compendium when we face them?
 
 - [ ] figure out a way to be able to play more than one battle per day? at the moment once we play one, we always retrieve the same one in the front end, which is intended, that's fine, but if I wanna test more than one?
    
