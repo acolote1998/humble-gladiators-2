@@ -336,7 +336,7 @@ public class BoosterService {
 
     public Boolean doesCharacterGenerateThisItem() {
         Random randomChance = new Random();
-        return randomChance.nextInt(1, 101) >= 51;
+        return randomChance.nextInt(1, 101) <= 20;
     }
 
     @Transactional
