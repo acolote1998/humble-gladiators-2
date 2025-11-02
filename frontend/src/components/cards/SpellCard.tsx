@@ -82,9 +82,14 @@ export const SpellCard = ({
             className="w-65.5 h-auto"
           />
         )}
-        <p title="NAME" className="text-lg mt-8 ">
-          {discovered || renderingFrom == "BOOSTER" ? name : "?"}
-        </p>
+        <div className="w-67.75 overflow-x-hidden">
+          <p
+            title="NAME"
+            className={`text-lg mt-8 text-center ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
+          >
+            {discovered || renderingFrom == "BOOSTER" ? name : "?"}
+          </p>
+        </div>
         <p
           title="DESCRIPTION"
           className="text-sm opacity-80 text-center p-1 mt-0.5 px-7"
