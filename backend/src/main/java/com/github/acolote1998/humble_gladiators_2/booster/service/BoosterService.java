@@ -82,6 +82,12 @@ public class BoosterService {
     @Value("${CARD_TIER_FIVE_CHANCE}")
     private Integer CARD_TIER_FIVE_CHANCE;
 
+    @Value("${AMOUNT_OF_CARDS_PER_ITEM_BOOSTER}")
+    private Integer AMOUNT_OF_CARDS_PER_ITEM_BOOSTER;
+
+    @Value("${AMOUNT_OF_CARDS_PER_CHARACTER_BOOSTER}")
+    private Integer AMOUNT_OF_CARDS_PER_CHARACTER_BOOSTER;
+
     public BoosterService(ArmorService armorService,
                           BootsService bootsService,
                           ConsumableService consumableService,
@@ -259,7 +265,7 @@ public class BoosterService {
         List<WeaponTemplate> weaponTemplates = new ArrayList<>();
 
         // Gets three items
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < AMOUNT_OF_CARDS_PER_ITEM_BOOSTER; i++) {
             switch (getRandomItemType()) {
                 case ARMORS -> {
                     ArmorTemplate armorTemplate = armorService.getRandomArmorTemplateForItemBooster(campaignId, userId,
@@ -388,7 +394,7 @@ public class BoosterService {
         List<CharacterInstance> characterInstances = new ArrayList<>();
 
         // Gets one character
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < AMOUNT_OF_CARDS_PER_CHARACTER_BOOSTER; i++) {
             CharacterInstance characterInstance = characterService.getRandomCharacterInstanceForCharacterBooster(
                     campaignId, userId, getCalculatedRarity(), getCalculatedTier());
             Inventory characterInventory = characterInstance.getInventory();

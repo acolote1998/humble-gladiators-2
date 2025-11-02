@@ -1,5 +1,9 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] rework formulas for item stats (example createTwentyFiveNewArmorTemplates in ArmorService)
+
+- [ ] improve the 'NEW!" message when we discover a new card in a booster
+
 - [ ] rework stat formulas when it comes to the influence that tiers and rarities have, together with their multipliers
 
 - [ ] make luck have some effect in the game?
