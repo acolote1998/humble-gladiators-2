@@ -2,6 +2,8 @@
 
 - [ ] rework stat formulas when it comes to the influence that tiers and rarities have, together with their multipliers
 
+- [ ] make luck have some effect in the game?
+
 - [ ] create index page localhost.com/ that showcases what humble gladiators is -> we could render some card components with high rarity and so and showcase different contents of different campaigns and so
 
 - [ ] figure out a way to be able to play more than one battle per day? at the moment once we play one, we always retrieve the same one in the front end, which is intended, that's fine, but if I wanna test more than one?
