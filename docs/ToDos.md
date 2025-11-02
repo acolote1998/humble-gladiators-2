@@ -1,12 +1,6 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] extract formulas to env variables:
-  - [x] doesCharacterGenerateThisItem -> chances of an npc equipping an item when drawn from a booster
-  - [ ] all stat calculation formulas
-  - [ ] exp formulas
-  - [ ] gold formulas
-  - [x] chances of getting a higher tier or rarity when drawn from booster (check where these rates % are calculated)
-  - [x] chances of dropping an item from an enemy when it is defeated
+- [ ] rework stat formulas when it comes to the influence that tiers and rarities have, together with their multipliers
 
 - [ ] create index page localhost.com/ that showcases what humble gladiators is -> we could render some card components with high rarity and so and showcase different contents of different campaigns and so
 

@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.characters.util.StatsMapper;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -100,7 +101,7 @@ public class CharacterSnapshot extends AbstractCharacter {
     public static CharacterSnapshot fromCharacterInstance(CharacterInstance charToClone) {
         CharacterSnapshot charSnapshot = new CharacterSnapshot();
         charSnapshot.setUserId(charToClone.getUserId());
-        charSnapshot.setStats(Stats.cloneStats(charToClone.getStats()));
+        charSnapshot.setStats(StatsMapper.CloneStats(charToClone.getStats()));
         charSnapshot.setCampaign(charToClone.getCampaign());
         charSnapshot.setImgBytes(charToClone.getImgBytes());
         charSnapshot.setName(charToClone.getName());

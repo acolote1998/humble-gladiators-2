@@ -7,8 +7,8 @@ import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroAlrea
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
-import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.characters.repository.CharacterInstanceRepository;
+import com.github.acolote1998.humble_gladiators_2.characters.util.StatsMapper;
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidAttemptBattleOngoing;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -28,16 +28,19 @@ public class CharacterService {
     GeminiService geminiService;
     CharacterInstanceRepository characterInstanceRepository;
     BattleUtil battleUtil;
+    StatsMapper statsMapper;
 
     @Value("${SKIP_REQUIREMENTS}")
     private boolean SKIP_REQUIREMENTS;
 
     public CharacterService(GeminiService geminiService,
                             CharacterInstanceRepository characterInstanceRepository,
-                            BattleUtil battleUtil) {
+                            BattleUtil battleUtil,
+                            StatsMapper statsMapper) {
         this.geminiService = geminiService;
         this.characterInstanceRepository = characterInstanceRepository;
         this.battleUtil = battleUtil;
+        this.statsMapper = statsMapper;
     }
 
     public ArmorInstance equipArmor(CharacterInstance hero, Long armorToEquipId, String userId) {
@@ -377,11 +380,10 @@ public class CharacterService {
         List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsOfDesiredTier(campaign,
                 existingCharactersForContext, tier);
         List<CharacterInstance> savedCharacterInstances = new ArrayList<>();
-
         generatedDtos.forEach(characterFromGeminiDto -> {
             CharacterInstance characterInstance = new CharacterInstance();
             characterInstance.setUserId(campaign.getUserId());
-            characterInstance.setStats(Stats.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
+            characterInstance.setStats(statsMapper.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
             characterInstance.setCharacterType(characterFromGeminiDto.characterType());
             characterInstance.setCategory(characterFromGeminiDto.category());
             characterInstance.setName(characterFromGeminiDto.name());
@@ -431,7 +433,7 @@ public class CharacterService {
         model.setGoldReward(0);
         model.setExpReward(0);
         model.setInventory(InventoryService.createBlankInventory());
-        model.setStats(Stats.createRandomInitialStats());
+        model.setStats(statsMapper.createRandomInitialStats());
         model.setCharacterType(CharacterType.PLAYER);
         log.info(String.format("Hero Created - Campaign %s - %s", campaign.getId(), userId));
         return characterInstanceRepository.save(model);
