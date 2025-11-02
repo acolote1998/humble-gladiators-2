@@ -675,7 +675,7 @@ public class BattleService {
             teamWhoWon = BattleResultEnum.VICTORY_TEAM_TWO;
         }
         if (winner.getCharacterType().equals(CharacterType.PLAYER)) {
-            if (random.nextInt(1, 101) >= 10) {
+            if (random.nextInt(1, 101) <= 10) {
                 if (!loser.getInventory().getArmors().isEmpty()) {
                     Collections.shuffle(loser.getInventory().getArmors());
                     ArmorInstance dropped = loser.getInventory().getArmors().getFirst();
@@ -685,7 +685,7 @@ public class BattleService {
                     loser.getInventory().getArmors().remove(dropped);
                 }
             }
-            if (random.nextInt(1, 101) >= 10) {
+            if (random.nextInt(1, 101) <= 10) {
                 if (!loser.getInventory().getBoots().isEmpty()) {
                     Collections.shuffle(loser.getInventory().getBoots());
                     BootsInstance dropped = loser.getInventory().getBoots().getFirst();
@@ -695,7 +695,7 @@ public class BattleService {
                     loser.getInventory().getBoots().remove(dropped);
                 }
             }
-            if (random.nextInt(1, 101) >= 10) {
+            if (random.nextInt(1, 101) <= 10) {
                 if (!loser.getInventory().getConsumables().isEmpty()) {
                     Collections.shuffle(loser.getInventory().getConsumables());
                     ConsumableInstance dropped = loser.getInventory().getConsumables().getFirst();
@@ -705,7 +705,7 @@ public class BattleService {
                     loser.getInventory().getConsumables().remove(dropped);
                 }
             }
-            if (random.nextInt(1, 101) >= 10) {
+            if (random.nextInt(1, 101) <= 10) {
                 if (!loser.getInventory().getHelmets().isEmpty()) {
                     Collections.shuffle(loser.getInventory().getHelmets());
                     HelmetInstance dropped = loser.getInventory().getHelmets().getFirst();
@@ -715,7 +715,7 @@ public class BattleService {
                     loser.getInventory().getHelmets().remove(dropped);
                 }
             }
-            if (random.nextInt(1, 101) >= 10) {
+            if (random.nextInt(1, 101) <= 10) {
                 if (!loser.getInventory().getShields().isEmpty()) {
                     Collections.shuffle(loser.getInventory().getShields());
                     ShieldInstance dropped = loser.getInventory().getShields().getFirst();
@@ -725,7 +725,7 @@ public class BattleService {
                     loser.getInventory().getShields().remove(dropped);
                 }
             }
-            if (random.nextInt(1, 101) >= 10) {
+            if (random.nextInt(1, 101) <= 10) {
                 if (!loser.getInventory().getSpells().isEmpty()) {
                     Collections.shuffle(loser.getInventory().getSpells());
                     SpellInstance dropped = loser.getInventory().getSpells().getFirst();
@@ -735,7 +735,7 @@ public class BattleService {
                     loser.getInventory().getSpells().remove(dropped);
                 }
             }
-            if (random.nextInt(1, 101) >= 10) {
+            if (random.nextInt(1, 101) <= 10) {
                 if (!loser.getInventory().getWeapons().isEmpty()) {
                     Collections.shuffle(loser.getInventory().getWeapons());
                     WeaponInstance dropped = loser.getInventory().getWeapons().getFirst();
