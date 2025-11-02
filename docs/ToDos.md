@@ -1,7 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
 - [ ] extract formulas to env variables:
-  - [ ] doesCharacterGenerateThisItem -> chances of an npc equipping an item when drawn from a booster
+  - [X] doesCharacterGenerateThisItem -> chances of an npc equipping an item when drawn from a booster
   - [ ] all stat calculation formulas
   - [ ] exp formulas
   - [ ] gold formulas

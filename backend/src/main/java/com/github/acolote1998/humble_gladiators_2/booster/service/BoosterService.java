@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.naming.ConfigurationException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -45,14 +46,41 @@ public class BoosterService {
     @Value("${UNLIMITED_BOOSTERS_ALLOWED}")
     private boolean UNLIMITED_BOOSTERS_ALLOWED;
 
-    @Value("${REAL_RARITY_AND_TIER_RATE}")
-    private boolean REAL_RARITY_AND_TIER_RATE;
-
     @Value("${GENERATE_IMAGES}")
     private boolean IMAGE_GENERATION_ACTIVATED;
 
     @Value("${NPC_ITEM_GENERATION_CHANCE}")
     private Integer NPC_ITEM_GENERATION_CHANCE;
+
+    @Value("${CARD_RARITY_ONE_CHANCE}")
+    private Integer CARD_RARITY_ONE_CHANCE;
+
+    @Value("${CARD_RARITY_TWO_CHANCE}")
+    private Integer CARD_RARITY_TWO_CHANCE;
+
+    @Value("${CARD_RARITY_THREE_CHANCE}")
+    private Integer CARD_RARITY_THREE_CHANCE;
+
+    @Value("${CARD_RARITY_FOUR_CHANCE}")
+    private Integer CARD_RARITY_FOUR_CHANCE;
+
+    @Value("${CARD_RARITY_FIVE_CHANCE}")
+    private Integer CARD_RARITY_FIVE_CHANCE;
+
+    @Value("${CARD_TIER_ONE_CHANCE}")
+    private Integer CARD_TIER_ONE_CHANCE;
+
+    @Value("${CARD_TIER_TWO_CHANCE}")
+    private Integer CARD_TIER_TWO_CHANCE;
+
+    @Value("${CARD_TIER_THREE_CHANCE}")
+    private Integer CARD_TIER_THREE_CHANCE;
+
+    @Value("${CARD_TIER_FOUR_CHANCE}")
+    private Integer CARD_TIER_FOUR_CHANCE;
+
+    @Value("${CARD_TIER_FIVE_CHANCE}")
+    private Integer CARD_TIER_FIVE_CHANCE;
 
     public BoosterService(ArmorService armorService,
                           BootsService bootsService,
@@ -148,60 +176,68 @@ public class BoosterService {
     }
 
     public Integer getCalculatedTier() {
-        if (!REAL_RARITY_AND_TIER_RATE) {
-            return 1;
-        }
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer tier = 0;
-        // Tier 1 – 52%
-        // Tier 2 – 32%
-        // Tier 3 – 8%
-        // Tier 4 – 5%
-        // Tier 5 – 3%
-        if (chance <= 52) {
+        int cumulative1 = CARD_TIER_ONE_CHANCE;
+        int cumulative2 = cumulative1 + CARD_TIER_TWO_CHANCE;
+        int cumulative3 = cumulative2 + CARD_TIER_THREE_CHANCE;
+        int cumulative4 = cumulative3 + CARD_TIER_FOUR_CHANCE;
+        if ((
+                CARD_TIER_ONE_CHANCE
+                        + CARD_TIER_TWO_CHANCE
+                        + CARD_TIER_THREE_CHANCE
+                        + CARD_TIER_FOUR_CHANCE
+                        + CARD_TIER_FIVE_CHANCE) != 100
+        ) {
+            //If running without proper drop rate configuration, the default tier is 1
+            log.error("CRITICAL! - THE SERVER IS RUNNING WITHOUT VALID TIER CONFIGURATION! CHECK ENV VARS");
+            return 1;
+        }
+
+        if (chance <= cumulative1) {
             tier = 1;
-        }
-        if (chance > 52 && chance <= 84) {
+        } else if (chance <= cumulative2) {
             tier = 2;
-        }
-        if (chance > 84 && chance <= 92) {
+        } else if (chance <= cumulative3) {
             tier = 3;
-        }
-        if (chance > 92 && chance <= 97) {
+        } else if (chance <= cumulative4) {
             tier = 4;
-        }
-        if (chance > 97 && chance <= 100) {
+        } else {
             tier = 5;
         }
         return tier;
     }
 
     public Integer getCalculatedRarity() {
-        if (!REAL_RARITY_AND_TIER_RATE) {
-            return 1;
-        }
         Random random = new Random();
         Integer chance = random.nextInt(1, 101);
         Integer rarity = 0;
-        // Rarity 1 – 52%
-        // Rarity 2 – 32%
-        // Rarity 3 – 8%
-        // Rarity 4 – 5%
-        // Rarity 5 – 3%
-        if (chance <= 52) {
+        int cumulative1 = CARD_RARITY_ONE_CHANCE;
+        int cumulative2 = cumulative1 + CARD_RARITY_TWO_CHANCE;
+        int cumulative3 = cumulative2 + CARD_RARITY_THREE_CHANCE;
+        int cumulative4 = cumulative3 + CARD_RARITY_FOUR_CHANCE;
+        if ((
+                CARD_RARITY_ONE_CHANCE
+                        + CARD_RARITY_TWO_CHANCE
+                        + CARD_RARITY_THREE_CHANCE
+                        + CARD_RARITY_FOUR_CHANCE
+                        + CARD_RARITY_FIVE_CHANCE) != 100
+        ) {
+            //If running without proper drop rate configuration, the default rarity is 1
+            log.error("CRITICAL! - THE SERVER IS RUNNING WITHOUT VALID RARITY CONFIGURATION! CHECK ENV VARS");
+            return 1;
+        }
+
+        if (chance <= cumulative1) {
             rarity = 1;
-        }
-        if (chance > 52 && chance <= 84) {
+        } else if (chance <= cumulative2) {
             rarity = 2;
-        }
-        if (chance > 84 && chance <= 92) {
+        } else if (chance <= cumulative3) {
             rarity = 3;
-        }
-        if (chance > 92 && chance <= 97) {
+        } else if (chance <= cumulative4) {
             rarity = 4;
-        }
-        if (chance > 97 && chance <= 100) {
+        } else {
             rarity = 5;
         }
         return rarity;
