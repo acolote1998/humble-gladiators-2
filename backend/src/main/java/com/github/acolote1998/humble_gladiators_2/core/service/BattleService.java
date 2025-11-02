@@ -680,6 +680,7 @@ public class BattleService {
                     Collections.shuffle(loser.getInventory().getArmors());
                     ArmorInstance dropped = loser.getInventory().getArmors().getFirst();
                     dropped.setEquipped(false);
+                    dropped.setDiscovered(true);
                     possibleArmorDrop.add(dropped);
                     loser.getInventory().getArmors().remove(dropped);
                 }
@@ -689,6 +690,7 @@ public class BattleService {
                     Collections.shuffle(loser.getInventory().getBoots());
                     BootsInstance dropped = loser.getInventory().getBoots().getFirst();
                     dropped.setEquipped(false);
+                    dropped.setDiscovered(true);
                     possibleBootsDrop.add(dropped);
                     loser.getInventory().getBoots().remove(dropped);
                 }
@@ -698,6 +700,7 @@ public class BattleService {
                     Collections.shuffle(loser.getInventory().getConsumables());
                     ConsumableInstance dropped = loser.getInventory().getConsumables().getFirst();
                     dropped.setEquipped(false);
+                    dropped.setDiscovered(true);
                     possibleConsumablesDrop.add(dropped);
                     loser.getInventory().getConsumables().remove(dropped);
                 }
@@ -707,6 +710,7 @@ public class BattleService {
                     Collections.shuffle(loser.getInventory().getHelmets());
                     HelmetInstance dropped = loser.getInventory().getHelmets().getFirst();
                     dropped.setEquipped(false);
+                    dropped.setDiscovered(true);
                     possibleHelmetDrop.add(dropped);
                     loser.getInventory().getHelmets().remove(dropped);
                 }
@@ -716,6 +720,7 @@ public class BattleService {
                     Collections.shuffle(loser.getInventory().getShields());
                     ShieldInstance dropped = loser.getInventory().getShields().getFirst();
                     dropped.setEquipped(false);
+                    dropped.setDiscovered(true);
                     possibleShieldDrop.add(dropped);
                     loser.getInventory().getShields().remove(dropped);
                 }
@@ -725,6 +730,7 @@ public class BattleService {
                     Collections.shuffle(loser.getInventory().getSpells());
                     SpellInstance dropped = loser.getInventory().getSpells().getFirst();
                     dropped.setEquipped(false);
+                    dropped.setDiscovered(true);
                     possibleSpellDrop.add(dropped);
                     loser.getInventory().getSpells().remove(dropped);
                 }
@@ -734,6 +740,7 @@ public class BattleService {
                     Collections.shuffle(loser.getInventory().getWeapons());
                     WeaponInstance dropped = loser.getInventory().getWeapons().getFirst();
                     dropped.setEquipped(false);
+                    dropped.setDiscovered(true);
                     possibleWeaponDrop.add(dropped);
                     loser.getInventory().getWeapons().remove(dropped);
                 }

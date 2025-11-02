@@ -1,6 +1,6 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] fix bug!! when we win something (loot) from an enemy, the cards show in our inventory as not discovered!! full of quesiton marks!
+- [ ] fix bug! if the cards name is too long, it overflows!
 
 - [ ] create index page localhost.com/ that showcases what humble gladiators is -> we could render some card components with high rarity and so and showcase different contents of different campaigns and so
 
