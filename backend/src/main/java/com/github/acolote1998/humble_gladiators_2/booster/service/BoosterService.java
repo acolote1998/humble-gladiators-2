@@ -51,6 +51,9 @@ public class BoosterService {
     @Value("${GENERATE_IMAGES}")
     private boolean IMAGE_GENERATION_ACTIVATED;
 
+    @Value("${NPC_ITEM_GENERATION_CHANCE}")
+    private Integer NPC_ITEM_GENERATION_CHANCE;
+
     public BoosterService(ArmorService armorService,
                           BootsService bootsService,
                           ConsumableService consumableService,
@@ -336,7 +339,7 @@ public class BoosterService {
 
     public Boolean doesCharacterGenerateThisItem() {
         Random randomChance = new Random();
-        return randomChance.nextInt(1, 101) <= 20;
+        return randomChance.nextInt(1, 101) <= NPC_ITEM_GENERATION_CHANCE;
     }
 
     @Transactional
