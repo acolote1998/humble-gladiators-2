@@ -639,8 +639,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 armorTemplate.getName(),
                 armorTemplate.getDescription(),
-                TierToContext(armorTemplate.getTier()),
-                RarityToContext(armorTemplate.getRarity()),
+                TierToCardImageContext(armorTemplate.getTier()),
+                RarityToCardImageContext(armorTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);
@@ -676,8 +676,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 characterInstance.getName(),
                 characterInstance.getDescription(),
-                TierToContext(characterInstance.getTier()),
-                RarityToContext(characterInstance.getRarity()),
+                TierToCardImageContext(characterInstance.getTier()),
+                RarityToCardImageContext(characterInstance.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);
@@ -687,6 +687,53 @@ public class GeminiService {
         }
         return cleanResponseToJson(geminiAnswer);
     }
+
+    public String getPositiveBattleBackgroundPromptForRuneware(
+            Campaign campaign,
+            CharacterInstance characterInstance) {
+        log.info("Generating prompt for runeware to create a battle background image");
+        String geminiAnswer = "";
+        String promptForGemini = String.format(
+                """
+                        You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
+                        For generating the prompt, use this context:
+                        You are generating a detailed *battle background scene* for an RPG card battle.
+                        
+                        - The illustration is **not the character itself**, but the **environment or battlefield** where the character would be fought.
+                        - The battle scene must reflect the **essence, aura, and thematic tone** of the character:
+                          "%s"
+                        - Character description for thematic reference: "%s"
+                        - Campaign theme and mood: %s
+                        - The environment should visually express the same energy, danger, or majesty the character embodies.
+                        - Style: cinematic fantasy environment, rich atmosphere, lighting, and depth.
+                        - The image should feel like a location that appears *right before combat begins*.
+                        - No text, no UI elements, no characters visible — focus purely on the environment.
+                        - The illustration is strictly the environment or battlefield — never the character.
+                        - The character must NOT be shown, implied, or represented in any way (no silhouettes, statues, armor, reflections, or shadows resembling them).
+                        - Focus entirely on the location and atmosphere as if the viewer arrived moments before the battle.
+                        - No black bands, borders, frames, vignettes, or cinematic bars — the artwork must fill the entire image area.
+                        
+                        Include specific environmental features inspired by the character and campaign setting, such as terrain, weather, architecture, lighting, or mystical elements.
+                        - Details needed: %s
+                        - Details needed: %s
+                        
+                        %s
+                        """,
+                characterInstance.getName(),
+                characterInstance.getDescription(),
+                campaign.getTheme().getWantedThemes().toString(),
+                TierToCardBackgroundImageContext(characterInstance.getTier()),
+                RarityToCardBackgroundImageContext(characterInstance.getRarity()),
+                GetCardImageGenerationGeneralRules());
+        try {
+            geminiAnswer = callGemini(promptForGemini);
+            log.info("Prompt for Runeware (battle background) is ready");
+        } catch (InterruptedException e) {
+            log.error("Error generating prompt for runeware battle background" + e.getMessage());
+        }
+        return cleanResponseToJson(geminiAnswer);
+    }
+
 
     public String getPositiveBootsPromptForRuneware(
             Campaign campaign,
@@ -713,8 +760,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 bootsTemplate.getName(),
                 bootsTemplate.getDescription(),
-                TierToContext(bootsTemplate.getTier()),
-                RarityToContext(bootsTemplate.getRarity()),
+                TierToCardImageContext(bootsTemplate.getTier()),
+                RarityToCardImageContext(bootsTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);
@@ -750,8 +797,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 consumableTemplate.getName(),
                 consumableTemplate.getDescription(),
-                TierToContext(consumableTemplate.getTier()),
-                RarityToContext(consumableTemplate.getRarity()),
+                TierToCardImageContext(consumableTemplate.getTier()),
+                RarityToCardImageContext(consumableTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);
@@ -787,8 +834,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 helmetTemplate.getName(),
                 helmetTemplate.getDescription(),
-                TierToContext(helmetTemplate.getTier()),
-                RarityToContext(helmetTemplate.getRarity()),
+                TierToCardImageContext(helmetTemplate.getTier()),
+                RarityToCardImageContext(helmetTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);
@@ -824,8 +871,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 shieldTemplate.getName(),
                 shieldTemplate.getDescription(),
-                TierToContext(shieldTemplate.getTier()),
-                RarityToContext(shieldTemplate.getRarity()),
+                TierToCardImageContext(shieldTemplate.getTier()),
+                RarityToCardImageContext(shieldTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);
@@ -863,8 +910,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 spellTemplate.getName(),
                 spellTemplate.getDescription(),
-                TierToContext(spellTemplate.getTier()),
-                RarityToContext(spellTemplate.getRarity()),
+                TierToCardImageContext(spellTemplate.getTier()),
+                RarityToCardImageContext(spellTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);
@@ -902,8 +949,8 @@ public class GeminiService {
                 campaign.getTheme().getWantedThemes().toString(),
                 weaponTemplate.getName(),
                 weaponTemplate.getDescription(),
-                TierToContext(weaponTemplate.getTier()),
-                RarityToContext(weaponTemplate.getRarity()),
+                TierToCardImageContext(weaponTemplate.getTier()),
+                RarityToCardImageContext(weaponTemplate.getRarity()),
                 GetCardImageGenerationGeneralRules());
         try {
             geminiAnswer = callGemini(promptForGemini);

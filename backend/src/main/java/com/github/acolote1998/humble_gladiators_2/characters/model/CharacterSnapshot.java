@@ -104,6 +104,7 @@ public class CharacterSnapshot extends AbstractCharacter {
         charSnapshot.setStats(StatsMapper.CloneStats(charToClone.getStats()));
         charSnapshot.setCampaign(charToClone.getCampaign());
         charSnapshot.setImgBytes(charToClone.getImgBytes());
+        charSnapshot.setBackgroundImgBytes(charToClone.getBackgroundImgBytes());
         charSnapshot.setName(charToClone.getName());
         charSnapshot.setDescription(charToClone.getDescription());
         charSnapshot.setMagicalDamage(charToClone.getInventory());

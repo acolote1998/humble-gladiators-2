@@ -25,7 +25,8 @@ public record FullCharacterResponseDto(
         Integer tier,
         Integer goldReward,
         Integer expReward,
-        String imgBase64
+        String imgBase64,
+        String backgroundImgBase64
 ) {
     public record CharacterStatsResponseDto(
             int constitution,
@@ -115,7 +116,8 @@ public record FullCharacterResponseDto(
                 character.getTier(),
                 character.getGoldReward(),
                 character.getExpReward(),
-                BytesToBase64.bytesToBase64(character.getImgBytes())
+                BytesToBase64.bytesToBase64(character.getImgBytes()),
+                BytesToBase64.bytesToBase64(character.getBackgroundImgBytes())
         );
         return dto;
     }

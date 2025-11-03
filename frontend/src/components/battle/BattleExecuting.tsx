@@ -178,7 +178,14 @@ const BattleExecuting = ({
   };
 
   return (
-    <div>
+    <div className="relative">
+      {teamTwo[0].backgroundImgBase64 && (
+        <img
+          draggable={false}
+          src={`data:image/jpeg;base64,${teamTwo[0].backgroundImgBase64}`}
+          className="absolute"
+        />
+      )}
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
           {
@@ -189,7 +196,7 @@ const BattleExecuting = ({
             // play a card to start the battle)
           }
           {!isGameStarted && turns.length < 1 && (
-            <div>
+            <div className="relative">
               {currentCharacterToPlay.id == teamTwo[0].id ? (
                 <p
                   data-testid="start-battle-trigger"
@@ -210,14 +217,16 @@ const BattleExecuting = ({
               )}
             </div>
           )}
-          <div className="flex flex-col items-center">
-            <p className="text-2xl">
+          <div className="flex justify-center">
+            <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
               Character to play: {currentCharacterToPlay.name}
             </p>
           </div>
           <div className="relative">
             <div className="flex flex-col items-center">
-              <p className="text-2xl">Enemy</p>
+              <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
+                Enemy
+              </p>
               <div onClick={() => chooseTarget(teamTwo[0].id)}>
                 <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
               </div>
@@ -232,8 +241,8 @@ const BattleExecuting = ({
             >
               <HeroStats character={teamOne[0]} />
             </div>
-            <div className="col-span-6 flex flex-col items-center">
-              <p className="text-2xl">Hand</p>
+            <div className="col-span-6 flex flex-col items-center border-gray-400 rounded-md bg-gray-300 relative">
+              <p className="relative  rounded-xl p-1 text-2xl">Hand</p>
               <div className={`grid grid-cols-5`}>
                 <div
                   className={

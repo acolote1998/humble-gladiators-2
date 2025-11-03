@@ -48,6 +48,9 @@ public class RunwareService {
     private final Integer campaignCardBackImageWidth = 1024;
     private final Integer campaignCardBackImageHeight = 1408;
 
+    private final Integer cardBackgroundImageWidth = 1856;
+    private final Integer cardBackgroundImageHeight = 640;
+
     @Autowired
     public RunwareService(GeminiService geminiService) {
         this.geminiService = geminiService;
@@ -318,6 +321,34 @@ public class RunwareService {
             }
         } else {
             log.error("Error generating card image");
+            return null;
+        }
+    }
+
+    public byte[] generateCharacterInstanceBackgroundImageToBytes(Campaign campaign, CharacterInstance characterInstance) {
+        log.info(String.format("Attempt to generate image for %s - %s", characterInstance.getName(), CharacterInstance.class));
+
+        String positivePrompt = geminiService.getPositiveBattleBackgroundPromptForRuneware(campaign, characterInstance);
+        String negativePrompt = BuildNegativePromptForRunware(campaign.getTheme().getUnwantedThemes().toString());
+
+        ResponseEntity<RunwareImageGenResponse> response = sendRequestToImageGenerator(
+                positivePrompt,
+                negativePrompt,
+                cardBackgroundImageWidth,
+                cardBackgroundImageHeight);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String imgUrl = response.getBody().data().getFirst().imageURL();
+            try {
+                byte[] imgBytes = imgUrlToBytes(imgUrl);
+                return imgBytes;
+            } catch (Exception e) {
+                log.error("Could not convert background img url to bytes - " + e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            log.error("Error generating background card image");
             return null;
         }
     }

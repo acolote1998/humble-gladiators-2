@@ -2,7 +2,7 @@ package com.github.acolote1998.humble_gladiators_2.core.util;
 
 public class PromptAider {
 
-    public static String RarityToContext(Integer rarity) {
+    public static String RarityToCardImageContext(Integer rarity) {
         if (rarity == null) return "";
         return switch (rarity) {
             case 1 -> "Common rarity — ordinary and widely found, simple or unremarkable in nature.";
@@ -15,7 +15,24 @@ public class PromptAider {
         };
     }
 
-    public static String TierToContext(Integer tier) {
+    public static String RarityToCardBackgroundImageContext(Integer rarity) {
+        if (rarity == null) return "";
+        return switch (rarity) {
+            case 1 -> "A simple and grounded environment, modest in appearance and lacking notable energy or grandeur.";
+            case 2 ->
+                    "A slightly distinctive setting, showing hints of subtle power, color variation, or gentle atmosphere shifts.";
+            case 3 ->
+                    "An environment that feels charged with presence or meaning. The surroundings show balance, harmony, or faint traces of extraordinary energy.";
+            case 4 ->
+                    "A striking and intense environment filled with dramatic contrast, vivid lighting, and an unmistakable sense of power or wonder.";
+            case 5 ->
+                    "An awe-inspiring, transcendent environment that radiates immense power, majesty, and timeless significance. The atmosphere feels almost divine or cosmic in scale.";
+            default -> "";
+        };
+    }
+
+
+    public static String TierToCardImageContext(Integer tier) {
         if (tier == null) return "";
         return switch (tier) {
             case 1 ->
@@ -30,6 +47,24 @@ public class PromptAider {
             default -> "";
         };
     }
+
+    public static String TierToCardBackgroundImageContext(Integer tier) {
+        if (tier == null) return "";
+        return switch (tier) {
+            case 1 ->
+                    "A small, calm, and contained scene with limited motion or energy. The environment feels localized and stable.";
+            case 2 ->
+                    "A scene of moderate scale and complexity. The environment begins to show layered depth, subtle motion, or a growing sense of tension.";
+            case 3 ->
+                    "A dynamic and engaging environment with visible contrast, motion, or evolving atmosphere that suggests rising conflict or importance.";
+            case 4 ->
+                    "A grand, intense environment filled with kinetic energy, vast space, and emotionally charged atmosphere. The viewer feels awe and anticipation.";
+            case 5 ->
+                    "An overwhelming and monumental environment of epic magnitude. The space feels boundless, luminous, and alive with elemental or cosmic intensity.";
+            default -> "";
+        };
+    }
+
 
     public static String GetCardImageGenerationGeneralRules() {
         return """

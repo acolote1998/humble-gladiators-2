@@ -7,9 +7,11 @@ const HeroStats = ({ character }: HeroStatsType) => {
     <>
       <div
         data-testid="battle-hero-stats"
-        className="flex flex-col items-center rounded-md bg-gray-200 border-gray-400 border"
+        className="flex flex-col items-center rounded-md bg-gray-300 border-gray-400 border relative"
       >
-        <p className="text-2xl">Hero Stats</p>
+        <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
+          Hero Stats
+        </p>
         <p className="text-xl">{character.name}</p>
         <p>
           HP {character.stats.currentHp}/{character.stats.maxHp}
