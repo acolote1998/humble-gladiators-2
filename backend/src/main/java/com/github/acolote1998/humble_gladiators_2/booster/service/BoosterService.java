@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.naming.ConfigurationException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -498,6 +497,12 @@ public class BoosterService {
                 byte[] generatedImage = runwareService.generateCharacterInstanceImageToBytes(campaign,
                         characterInstance);
                 characterInstance.setImgBytes(generatedImage);
+            }
+            if (IMAGE_GENERATION_ACTIVATED && characterInstance.getBackgroundImgBytes() == null) {
+                // Background image for this card does not exist, so we have to generate it
+                byte[] generatedImage = runwareService.generateCharacterInstanceBackgroundImageToBytes(campaign,
+                        characterInstance);
+                characterInstance.setBackgroundImgBytes(generatedImage);
             }
             characterService.saveCharacter(characterInstance);
             characterInstances.add(characterInstance);
