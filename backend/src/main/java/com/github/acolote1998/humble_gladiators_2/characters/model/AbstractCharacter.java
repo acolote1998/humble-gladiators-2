@@ -37,6 +37,10 @@ public abstract class AbstractCharacter {
     @JdbcTypeCode(SqlTypes.BINARY)
     byte[] imgBytes;
 
+    @Lob
+    @JdbcTypeCode(SqlTypes.BINARY)
+    byte[] backgroundImgBytes;
+
     private String name;
     private String description;
 
