@@ -94,6 +94,7 @@ public record BattleResponseDto(
             CharacterSnapshotStats stats,
             Long campaignId,
             String imgBase64,
+            String backgroundImgBase64,
             String name,
             String description
     ) {
@@ -106,6 +107,7 @@ public record BattleResponseDto(
                     MapCharSnapshotStats(character),
                     character.getCampaign().getId(),
                     BytesToBase64.bytesToBase64(character.getImgBytes()),
+                    BytesToBase64.bytesToBase64(character.getBackgroundImgBytes()),
                     character.getName(),
                     character.getDescription()
 
