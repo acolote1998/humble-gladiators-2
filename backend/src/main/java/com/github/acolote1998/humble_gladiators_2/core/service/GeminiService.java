@@ -688,6 +688,45 @@ public class GeminiService {
         return cleanResponseToJson(geminiAnswer);
     }
 
+    public String getPositiveBattleBackgroundPromptForRuneware(
+            Campaign campaign,
+            CharacterInstance characterInstance) {
+        log.info("Generating prompt for runeware to create a battle background image");
+        String geminiAnswer = "";
+        String promptForGemini = String.format(
+                """
+                        You have to generate a prompt that will be sent to an AI that will generate high-quality fantasy artwork for a trading card game.
+                        For generating the prompt, use this context:
+                        You are generating a detailed *battle background scene* for an RPG card battle.
+                        
+                        - The illustration is **not the character itself**, but the **environment or battlefield** where the character would be fought.
+                        - The battle scene must reflect the **essence, aura, and thematic tone** of the character:
+                          "%s"
+                        - Character description for thematic reference: "%s"
+                        - Campaign theme and mood: %s
+                        - The environment should visually express the same energy, danger, or majesty the character embodies.
+                        - Style: cinematic fantasy environment, rich atmosphere, lighting, and depth.
+                        - The image should feel like a location that appears *right before combat begins*.
+                        - No text, no UI elements, no characters visible — focus purely on the environment.
+                        
+                        Include specific environmental features inspired by the character and campaign setting, such as terrain, weather, architecture, lighting, or mystical elements.
+                        
+                        %s
+                        """,
+                characterInstance.getName(),
+                characterInstance.getDescription(),
+                campaign.getTheme().getWantedThemes().toString(),
+                GetCardImageGenerationGeneralRules());
+        try {
+            geminiAnswer = callGemini(promptForGemini);
+            log.info("Prompt for Runeware (battle background) is ready");
+        } catch (InterruptedException e) {
+            log.error("Error generating prompt for runeware battle background" + e.getMessage());
+        }
+        return cleanResponseToJson(geminiAnswer);
+    }
+
+
     public String getPositiveBootsPromptForRuneware(
             Campaign campaign,
             BootsTemplate bootsTemplate) {
