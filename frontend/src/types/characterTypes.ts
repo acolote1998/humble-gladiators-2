@@ -26,6 +26,7 @@ export type CharacterInstanceType = {
   goldReward: number;
   expReward: number;
   imgBase64: string;
+  backgroundImgBase64: string;
   renderingFrom: RenderingFrom;
 };
 
