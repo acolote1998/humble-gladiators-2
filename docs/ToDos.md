@@ -45,8 +45,6 @@
 
 - [ ] Add booster env var flag for tier 4+ and rarity 4+ content only for test purposes
 
-- [ ] Make CharacterInstance have also a field called battleScenarioImage that generates when the character is opened ina booster. This provides unique battle scenarios for each character instance with custom background images
-
 - [ ] Improve campaign creation UI by replacing comma-separated theme inputs with dedicated controls
 
 - [ ] Create endpoint for generating random campaign ideas:
