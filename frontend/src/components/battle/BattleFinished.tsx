@@ -8,6 +8,7 @@ import { useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery } from "../..
 import TurnTable from "./TurnTable";
 import HeroStats from "./HeroStats";
 import RewardsTable from "./RewardsTable";
+import { Loader } from "../Loader";
 const BattleFinished = ({
   campaignId,
   losingTeam,
@@ -120,10 +121,12 @@ const BattleFinished = ({
               className="absolute"
             />
           )}
-          <div className="flex flex-col items-center">
-            <p className="text-2xl">Enemy</p>
+          <div className="flex flex-col items-center relative">
+            <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
+              Enemy
+            </p>
             {loadingRewards ? (
-              <p>Loading...</p>
+              <Loader />
             ) : (
               rewardsForBattle && (
                 <RewardsTable
