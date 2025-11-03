@@ -179,11 +179,13 @@ const BattleExecuting = ({
 
   return (
     <div className="relative">
-      <img
-        draggable={false}
-        src={`data:image/jpeg;base64,${teamTwo[0].backgroundImgBase64}`}
-        className="absolute"
-      />
+      {teamTwo[0].backgroundImgBase64 && (
+        <img
+          draggable={false}
+          src={`data:image/jpeg;base64,${teamTwo[0].backgroundImgBase64}`}
+          className="absolute"
+        />
+      )}
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
         <>
           {
@@ -194,7 +196,7 @@ const BattleExecuting = ({
             // play a card to start the battle)
           }
           {!isGameStarted && turns.length < 1 && (
-            <div>
+            <div className="relative">
               {currentCharacterToPlay.id == teamTwo[0].id ? (
                 <p
                   data-testid="start-battle-trigger"

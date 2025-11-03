@@ -113,11 +113,13 @@ const BattleFinished = ({
     <div>
       <>
         <div className="relative">
-          <img
-            draggable={false}
-            src={`data:image/jpeg;base64,${originalEnemy.backgroundImgBase64}`}
-            className="absolute"
-          />
+          {originalEnemy.backgroundImgBase64 && (
+            <img
+              draggable={false}
+              src={`data:image/jpeg;base64,${originalEnemy.backgroundImgBase64}`}
+              className="absolute"
+            />
+          )}
           <div className="flex flex-col items-center">
             <p className="text-2xl">Enemy</p>
             {loadingRewards ? (
