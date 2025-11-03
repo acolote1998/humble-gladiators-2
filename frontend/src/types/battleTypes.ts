@@ -39,6 +39,7 @@ type CharacterSnaphotType = {
   campaignId: number;
   description: string;
   imgBase64: string;
+  backgroundImgBase64: string;
   name: string;
   stats: CharacterSnapshotStatsType;
   userId: string;

@@ -711,7 +711,7 @@ public class GeminiService {
                         - The illustration is strictly the environment or battlefield — never the character.
                         - The character must NOT be shown, implied, or represented in any way (no silhouettes, statues, armor, reflections, or shadows resembling them).
                         - Focus entirely on the location and atmosphere as if the viewer arrived moments before the battle.
-                        
+                        - No black bands, borders, frames, vignettes, or cinematic bars — the artwork must fill the entire image area.
                         
                         Include specific environmental features inspired by the character and campaign setting, such as terrain, weather, architecture, lighting, or mystical elements.
                         - Details needed: %s
