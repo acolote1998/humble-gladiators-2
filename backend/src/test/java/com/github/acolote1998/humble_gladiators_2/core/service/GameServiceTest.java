@@ -73,12 +73,13 @@ class GameServiceTest {
         ReflectionTestUtils.setField(gameService, "GENERATE_SHIELDS", false);
         ReflectionTestUtils.setField(gameService, "GENERATE_SPELLS", false);
         ReflectionTestUtils.setField(gameService, "GENERATE_WEAPONS", false);
+        ReflectionTestUtils.setField(gameService, "GAME_CREATION_STATE_INTERVAL", 0);
 
         campaign = new Campaign();
         campaign.setId(CAMPAIGN_ID);
         campaign.setUserId(USER_ID);
         campaign.setName("Test Campaign");
-        
+
         Theme theme = new Theme();
         theme.setWantedThemes(List.of("fantasy"));
         theme.setUnwantedThemes(Collections.emptyList());
@@ -124,13 +125,13 @@ class GameServiceTest {
     @Test
     void startGame_ShouldCreateCampaign() throws InterruptedException {
         // Arrange
-        GameCreationDtoRequest.ThemeDtoRequest themeRequest = 
+        GameCreationDtoRequest.ThemeDtoRequest themeRequest =
                 new GameCreationDtoRequest.ThemeDtoRequest(
                         List.of("fantasy"),
                         Collections.emptyList()
                 );
         GameCreationDtoRequest request = new GameCreationDtoRequest("New Campaign", themeRequest);
-        
+
         when(campaignService.createCampaign(request, USER_ID)).thenReturn(campaign);
         when(campaignService.save(any(Campaign.class))).thenReturn(campaign);
 
