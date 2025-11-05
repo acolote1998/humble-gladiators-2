@@ -48,7 +48,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void getTier5BootsContextForCampaignCover_ShouldReturnContextMap() {
+    void getTier5BootsContextForCampaignCover_returnsContextMap() {
         // Arrange
         BootsTemplate boots = new BootsTemplate();
         boots.setName("Tier 5 Boots");
@@ -66,7 +66,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void getShortAIGeneratedReport_ShouldReturnSortedReport() {
+    void getShortAIGeneratedReport_returnsSortedReport() {
         // Arrange
         BootsTemplate boots1 = new BootsTemplate();
         boots1.setTier(5);
@@ -86,7 +86,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void getAllBootsTemplatesForACampaignAndUser_ShouldReturnList() {
+    void getAllBootsTemplatesForACampaignAndUser_returnsList() {
         // Arrange
         List<BootsTemplate> boots = Collections.emptyList();
         when(bootsTemplateRepository.findAllByUserIdAndCampaign_Id(USER_ID, CAMPAIGN_ID)).thenReturn(boots);
@@ -99,7 +99,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void getRandomBootTemplateForItemBooster_ShouldReturnBoots() {
+    void getRandomBootTemplateForItemBooster_returnsBoots() {
         // Arrange
         BootsTemplate boots = new BootsTemplate();
         when(bootsTemplateRepository.findRandomByCampaignAndRarityAndTier(
@@ -113,7 +113,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void saveBoots_ShouldSaveAndReturnBoots() {
+    void saveBoots_savesAndReturnsBoots() {
         // Arrange
         BootsTemplate boots = new BootsTemplate();
         when(bootsTemplateRepository.save(boots)).thenReturn(boots);
@@ -127,7 +127,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void instanceFromBootsTemplate_ShouldCreateInstance() {
+    void instanceFromBootsTemplate_createsInstance() {
         // Arrange
         BootsTemplate template = new BootsTemplate();
         template.setName("Test Boots");
@@ -160,7 +160,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void instancesFromBootsTemplates_ShouldCreateMultipleInstances() {
+    void instancesFromBootsTemplates_createsMultipleInstances() {
         // Arrange
         BootsTemplate template1 = new BootsTemplate();
         template1.setCampaign(campaign);
@@ -181,7 +181,7 @@ class BootsServiceTest {
     }
 
     @Test
-    void getRandomBootsByTierAndRarityAndCampaignAndUserId_ShouldReturnBoots() {
+    void getRandomBootsByTierAndRarityAndCampaignAndUserId_returnsBoots() {
         // Arrange
         BootsTemplate boots = new BootsTemplate();
         List<BootsTemplate> bootsList = List.of(boots);
