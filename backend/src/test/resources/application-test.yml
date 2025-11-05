@@ -1,17 +1,30 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/humble-gladiators-2-test-db
+    username: testdbusername
+    password: testdbusername
+    hikari:
+      idle-timeout: 30000 # min is 30 sec
+      max-lifetime: 60000 # min is 60 sec
+      keepalive-time: 0 # don't keep them alive if they're idle
+      maximum-pool-size: 10 #
+      minimum-idle: 0 # this one's kind of important
+      leak-detection-threshold: 60001 # just for debugging, you don't really need it
+      data-source-properties:
+        prepareThreshold: 0 # disable prepared statement caching
+
   jpa:
     hibernate:
       ddl-auto: create-drop
     show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: false
   sql:
     init:
-      mode: always
+      mode: never
 
 # Booster Configuration
 UNLIMITED_BOOSTERS_ALLOWED: false
@@ -50,3 +63,4 @@ MINIMUM_STAT_VALUE: 14
 MAXIMUM_STAT_VALUE: 20
 CONSTITUTION_HP_MODIFIER: 5
 INTELLIGENCE_MP_MODIFIER: 10
+

@@ -1,16 +1,30 @@
 services:
-  db:
+  live-db:
     image: postgres:16
-    container_name: humble-gladiators-2-postgres-db
+    container_name: humble-gladiators-2-postgres-live-db
     restart: always
     environment:
       POSTGRES_USER: aki
       POSTGRES_PASSWORD: akipassword
-      POSTGRES_DB: humble-gladiators-2-db
+      POSTGRES_DB: humble-gladiators-2-live-db
     ports:
       - "5432:5432"
     volumes:
-      - humble-gladiators-2-db-data:/var/lib/postgresql/data
+      - humble-gladiators-2-live-db-data:/var/lib/postgresql/data
+
+  test-db:
+    image: postgres:16
+    container_name: humble-gladiators-2-postgres-test-db
+    restart: always
+    environment:
+      POSTGRES_USER: testdbusername
+      POSTGRES_PASSWORD: testdbusername
+      POSTGRES_DB: humble-gladiators-2-test-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - humble-gladiators-2-test-db-data:/var/lib/postgresql/data
 
 volumes:
-  humble-gladiators-2-db-data:
+  humble-gladiators-2-live-db-data:
+  humble-gladiators-2-test-db-data:
