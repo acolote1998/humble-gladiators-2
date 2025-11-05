@@ -48,7 +48,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void getTier5ArmorsContextForCampaignCover_ShouldReturnContextMap() {
+    void getTier5ArmorsContextForCampaignCover_returnsContextMap() {
         // Arrange
         ArmorTemplate armor = new ArmorTemplate();
         armor.setName("Tier 5 Armor");
@@ -66,7 +66,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void getShortAIGeneratedReport_ShouldReturnSortedReport() {
+    void getShortAIGeneratedReport_returnsSortedReport() {
         // Arrange
         ArmorTemplate armor1 = new ArmorTemplate();
         armor1.setTier(5);
@@ -92,7 +92,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void getAllArmorTemplatesForACampaignAndUser_ShouldReturnList() {
+    void getAllArmorTemplatesForACampaignAndUser_returnsList() {
         // Arrange
         List<ArmorTemplate> armors = Collections.emptyList();
         when(armorTemplateRepository.findAllByUserIdAndCampaign_Id(USER_ID, CAMPAIGN_ID)).thenReturn(armors);
@@ -105,7 +105,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void getRandomArmorTemplateForItemBooster_ShouldReturnArmor() {
+    void getRandomArmorTemplateForItemBooster_returnsArmor() {
         // Arrange
         ArmorTemplate armor = new ArmorTemplate();
         when(armorTemplateRepository.findRandomByCampaignAndRarityAndTier(
@@ -119,7 +119,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void saveArmor_ShouldSaveAndReturnArmor() {
+    void saveArmor_savesAndReturnsArmor() {
         // Arrange
         ArmorTemplate armor = new ArmorTemplate();
         when(armorTemplateRepository.save(armor)).thenReturn(armor);
@@ -133,7 +133,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void instanceFromArmorTemplate_ShouldCreateInstance() {
+    void instanceFromArmorTemplate_createsInstance() {
         // Arrange
         ArmorTemplate template = new ArmorTemplate();
         template.setName("Test Armor");
@@ -166,7 +166,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void instancesFromArmorTemplates_ShouldCreateMultipleInstances() {
+    void instancesFromArmorTemplates_createsMultipleInstances() {
         // Arrange
         ArmorTemplate template1 = new ArmorTemplate();
         template1.setCampaign(campaign);
@@ -187,7 +187,7 @@ class ArmorServiceTest {
     }
 
     @Test
-    void getRandomArmorByTierAndRarityAndCampaignAndUserId_ShouldReturnArmor() {
+    void getRandomArmorByTierAndRarityAndCampaignAndUserId_returnsArmor() {
         // Arrange
         ArmorTemplate armor = new ArmorTemplate();
         List<ArmorTemplate> armors = List.of(armor);
