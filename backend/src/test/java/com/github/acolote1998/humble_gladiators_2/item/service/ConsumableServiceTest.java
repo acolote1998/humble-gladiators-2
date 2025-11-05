@@ -48,7 +48,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void getTier5ConsumablesContextForCampaignCover_ShouldReturnContextMap() {
+    void getTier5ConsumablesContextForCampaignCover_returnsContextMap() {
         // Arrange
         ConsumableTemplate consumable = new ConsumableTemplate();
         consumable.setName("Tier 5 Consumable");
@@ -66,7 +66,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void getShortAIGeneratedReport_ShouldReturnSortedReport() {
+    void getShortAIGeneratedReport_returnsSortedReport() {
         // Arrange
         ConsumableTemplate consumable1 = new ConsumableTemplate();
         consumable1.setTier(5);
@@ -86,7 +86,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void getAllConsumableTemplatesForACampaignAndUser_ShouldReturnList() {
+    void getAllConsumableTemplatesForACampaignAndUser_returnsList() {
         // Arrange
         List<ConsumableTemplate> consumables = Collections.emptyList();
         when(consumableTemplateRepository.findAllByUserIdAndCampaign_Id(USER_ID, CAMPAIGN_ID)).thenReturn(consumables);
@@ -99,7 +99,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void getRandomConsumableTemplateForItemBooster_ShouldReturnConsumable() {
+    void getRandomConsumableTemplateForItemBooster_returnsConsumable() {
         // Arrange
         ConsumableTemplate consumable = new ConsumableTemplate();
         when(consumableTemplateRepository.findRandomByCampaignAndRarityAndTier(
@@ -113,7 +113,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void saveConsumable_ShouldSaveAndReturnConsumable() {
+    void saveConsumable_savesAndReturnsConsumable() {
         // Arrange
         ConsumableTemplate consumable = new ConsumableTemplate();
         when(consumableTemplateRepository.save(consumable)).thenReturn(consumable);
@@ -127,7 +127,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void instanceFromConsumableTemplate_ShouldCreateInstance() {
+    void instanceFromConsumableTemplate_createsInstance() {
         // Arrange
         ConsumableTemplate template = new ConsumableTemplate();
         template.setName("Test Consumable");
@@ -160,7 +160,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void instancesFromConsumableTemplates_ShouldCreateMultipleInstances() {
+    void instancesFromConsumableTemplates_createsMultipleInstances() {
         // Arrange
         ConsumableTemplate template1 = new ConsumableTemplate();
         template1.setCampaign(campaign);
@@ -181,7 +181,7 @@ class ConsumableServiceTest {
     }
 
     @Test
-    void getRandomConsumableByTierAndRarityAndCampaignAndUserId_ShouldReturnConsumable() {
+    void getRandomConsumableByTierAndRarityAndCampaignAndUserId_returnsConsumable() {
         // Arrange
         ConsumableTemplate consumable = new ConsumableTemplate();
         List<ConsumableTemplate> consumables = List.of(consumable);
