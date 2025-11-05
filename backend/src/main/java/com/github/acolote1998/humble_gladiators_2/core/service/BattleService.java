@@ -97,8 +97,13 @@ public class BattleService {
     }
 
     public boolean doesCharacterBelongToBattle(Battle battleToCheck, CharacterInstance charToCheck) {
-        return (battleToCheck.getTeamOne().contains(charToCheck) ||
-                battleToCheck.getTeamTwo().contains(charToCheck));
+        // Compare by ID instead of object reference, since entities loaded from DB are different instances
+        Long charId = charToCheck.getId();
+        boolean inTeamOne = battleToCheck.getTeamOne().stream()
+                .anyMatch(character -> character.getId().equals(charId));
+        boolean inTeamTwo = battleToCheck.getTeamTwo().stream()
+                .anyMatch(character -> character.getId().equals(charId));
+        return inTeamOne || inTeamTwo;
     }
 
     public boolean canProcessTurnValidly(
@@ -310,9 +315,14 @@ public class BattleService {
         }
         if (battle.getTurns().size() == 1) {
             CharacterInstance lastPerformer = battle.getTurns().getFirst().getPerformingCharacter();
-            if (!battle.getTeamOne().contains(lastPerformer)) {
+            Long lastPerformerId = lastPerformer.getId();
+            // Compare by ID instead of object reference to avoid persistence context issues
+            boolean inTeamOne = battle.getTeamOne().stream()
+                    .anyMatch(character -> character.getId().equals(lastPerformerId));
+            if (!inTeamOne) {
                 characterToPlay = battle.getTeamOne().getFirst();
-            } else if (!battle.getTeamTwo().contains(lastPerformer)) {
+            } else {
+                // If in team one, next turn should be team two
                 characterToPlay = battle.getTeamTwo().getFirst();
             }
         }
