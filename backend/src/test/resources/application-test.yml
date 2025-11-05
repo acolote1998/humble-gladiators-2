@@ -50,6 +50,19 @@ GENERATE_IMAGES: true
 GENERATE_CAMPAIGN_COVER: true
 GENERATE_CAMPAIGN_CARD_BACK: true
 GENERATE_ALL: true
+GENERATE_NPCS: true
+GENERATE_ARMORS: true
+GENERATE_BOOTS: true
+GENERATE_CONSUMABLES: true
+GENERATE_HELMETS: true
+GENERATE_SHIELDS: true
+GENERATE_SPELLS: true
+GENERATE_WEAPONS: true
+
+# External Service URLs (dummy values for tests)
+RUNWARE_IMG_GEN_URL: http://localhost:8080/test-runware
+RUNWARE_API_KEY: test-api-key
+GEMINI_API_KEY: test-gemini-api-key
 
 # Balance Configuration
 NPC_ITEM_GENERATION_CHANCE: 20
