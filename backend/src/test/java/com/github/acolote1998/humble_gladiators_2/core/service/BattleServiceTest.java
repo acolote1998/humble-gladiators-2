@@ -89,7 +89,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void doesCharacterDropThisItem_ShouldReturnBoolean() {
+    void doesCharacterDropThisItem_returnsRandomBooleanValue() {
         // Act
         Boolean result = battleService.doesCharacterDropThisItem();
 
@@ -99,7 +99,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void isBattleNotNull_WhenBattleIsNotNull_ShouldReturnTrue() {
+    void isBattleNotNull_returnsTrue_whenBattleIsNotNull() {
         // Act
         boolean result = battleService.isBattleNotNull(battle);
 
@@ -108,7 +108,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void isBattleNotNull_WhenBattleIsNull_ShouldReturnFalse() {
+    void isBattleNotNull_returnsFalse_whenBattleIsNull() {
         // Act
         boolean result = battleService.isBattleNotNull(null);
 
@@ -117,7 +117,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void isBattleAvailableForToday_WhenAllConditionsMet_ShouldReturnTrue() {
+    void isBattleAvailableForToday_returnsTrue_whenAllConditionsMet() {
         // Arrange
         when(characterService.doesHeroExistForACampaign(CAMPAIGN_ID, USER_ID)).thenReturn(true);
         when(characterService.getDailyEnemy(CAMPAIGN_ID, USER_ID)).thenReturn(enemy);
@@ -131,7 +131,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void isBattleAvailableForToday_WhenHeroDoesNotExist_ShouldReturnFalse() {
+    void isBattleAvailableForToday_returnsFalse_whenHeroDoesNotExist() {
         // Arrange
         when(characterService.doesHeroExistForACampaign(CAMPAIGN_ID, USER_ID)).thenReturn(false);
 
@@ -143,7 +143,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void isBattleAvailableForToday_WhenDailyEnemyNotFound_ShouldReturnFalse() {
+    void isBattleAvailableForToday_returnsFalse_whenDailyEnemyNotFound() {
         // Arrange
         when(characterService.doesHeroExistForACampaign(CAMPAIGN_ID, USER_ID)).thenReturn(true);
         when(characterService.getDailyEnemy(CAMPAIGN_ID, USER_ID)).thenThrow(new DailyEnemyNotFound("No enemy"));
@@ -156,7 +156,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void isBattleAvailableForToday_WhenBattleOngoing_ShouldReturnFalse() {
+    void isBattleAvailableForToday_returnsFalse_whenBattleOngoing() {
         // Arrange
         when(characterService.doesHeroExistForACampaign(CAMPAIGN_ID, USER_ID)).thenReturn(true);
         when(characterService.getDailyEnemy(CAMPAIGN_ID, USER_ID)).thenReturn(enemy);
@@ -170,7 +170,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void getAnyBattleForTodayByCampaignAndUserId_WhenBattleExists_ShouldReturnBattle() {
+    void getAnyBattleForTodayByCampaignAndUserId_returnsBattle_whenBattleExists() {
         // Arrange
         when(battleRepository.findAnyByCampaignIdAndUserIdAndUpdatedAtDate(
                 eq(CAMPAIGN_ID), eq(USER_ID), any(LocalDate.class))).thenReturn(battle);
@@ -183,7 +183,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void getAnyBattleForTodayByCampaignAndUserId_WhenBattleDoesNotExist_ShouldThrowInvalidBattle() {
+    void getAnyBattleForTodayByCampaignAndUserId_throwsInvalidBattle_whenBattleDoesNotExist() {
         // Arrange
         when(battleRepository.findAnyByCampaignIdAndUserIdAndUpdatedAtDate(
                 eq(CAMPAIGN_ID), eq(USER_ID), any(LocalDate.class))).thenReturn(null);
@@ -195,7 +195,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void getAllWonBattlesForCampaignHero_ShouldReturnListOfBattles() {
+    void getAllWonBattlesForCampaignHero_returnsListOfBattles() {
         // Arrange
         List<Battle> wonBattles = List.of(battle);
         when(characterService.getHero(CAMPAIGN_ID, USER_ID)).thenReturn(hero);
@@ -209,7 +209,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void getAllLostBattlesForACharacter_ShouldReturnListOfBattles() {
+    void getAllLostBattlesForACharacter_returnsListOfBattles() {
         // Arrange
         List<Battle> lostBattles = List.of(battle);
         when(characterService.getHero(CAMPAIGN_ID, USER_ID)).thenReturn(hero);
@@ -223,7 +223,7 @@ class BattleServiceTest {
     }
 
     @Test
-    void getUpdatedBattle_ShouldReturnBattle() {
+    void getUpdatedBattle_returnsBattle() {
         // Arrange
         // Set up Stats and Inventory for characters to avoid null pointer exceptions
         Stats heroStats = new Stats();
