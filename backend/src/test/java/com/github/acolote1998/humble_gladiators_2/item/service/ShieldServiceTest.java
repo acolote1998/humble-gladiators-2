@@ -48,7 +48,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void getTier5ShieldsContextForCampaignCover_ShouldReturnContextMap() {
+    void getTier5ShieldsContextForCampaignCover_returnsContextMap() {
         // Arrange
         ShieldTemplate shield = new ShieldTemplate();
         shield.setName("Tier 5 Shield");
@@ -66,7 +66,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void getShortAIGeneratedReport_ShouldReturnSortedReport() {
+    void getShortAIGeneratedReport_returnsSortedReport() {
         // Arrange
         ShieldTemplate shield1 = new ShieldTemplate();
         shield1.setTier(5);
@@ -86,7 +86,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void getAllShieldTemplatesForACampaignAndUser_ShouldReturnList() {
+    void getAllShieldTemplatesForACampaignAndUser_returnsList() {
         // Arrange
         List<ShieldTemplate> shields = Collections.emptyList();
         when(shieldTemplateRepository.findAllByUserIdAndCampaign_Id(USER_ID, CAMPAIGN_ID)).thenReturn(shields);
@@ -99,7 +99,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void getRandomShieldTemplateForItemBooster_ShouldReturnShield() {
+    void getRandomShieldTemplateForItemBooster_returnsShield() {
         // Arrange
         ShieldTemplate shield = new ShieldTemplate();
         when(shieldTemplateRepository.findRandomByCampaignAndRarityAndTier(
@@ -113,7 +113,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void saveShield_ShouldSaveAndReturnShield() {
+    void saveShield_savesAndReturnsShield() {
         // Arrange
         ShieldTemplate shield = new ShieldTemplate();
         when(shieldTemplateRepository.save(shield)).thenReturn(shield);
@@ -127,7 +127,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void instanceFromShieldTemplate_ShouldCreateInstance() {
+    void instanceFromShieldTemplate_createsInstance() {
         // Arrange
         ShieldTemplate template = new ShieldTemplate();
         template.setName("Test Shield");
@@ -160,7 +160,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void instancesFromShieldTemplates_ShouldCreateMultipleInstances() {
+    void instancesFromShieldTemplates_createsMultipleInstances() {
         // Arrange
         ShieldTemplate template1 = new ShieldTemplate();
         template1.setCampaign(campaign);
@@ -181,7 +181,7 @@ class ShieldServiceTest {
     }
 
     @Test
-    void getRandomShieldByTierAndRarityAndCampaignAndUserId_ShouldReturnShield() {
+    void getRandomShieldByTierAndRarityAndCampaignAndUserId_returnsShield() {
         // Arrange
         ShieldTemplate shield = new ShieldTemplate();
         List<ShieldTemplate> shields = List.of(shield);
