@@ -62,60 +62,60 @@ public class HelmetTemplate extends AbstractItem {
         }
 
         if (helmet.getName() == null || helmet.getName().isBlank()) {
-            log.warn("{} has invalid name", helmet);
+            log.warn("HelmetTemplate validation failed - name is null or blank. Name: '{}'", helmet.getName());
             return false;
         }
 
         if (helmet.getDescription() == null || helmet.getDescription().isBlank()) {
-            log.warn("{} has invalid description", helmet);
+            log.warn("HelmetTemplate validation failed - description is null or blank. Description: '{}'", helmet.getDescription());
             return false;
         }
 
         if (helmet.getRarity() == null || helmet.getRarity() < 1 || helmet.getRarity() > 5) {
-            log.warn("{} has invalid rarity (expected 1–5)", helmet);
+            log.warn("HelmetTemplate validation failed - rarity is invalid. Expected: 1-5, Got: {}", helmet.getRarity());
             return false;
         }
 
         if (helmet.getTier() == null || helmet.getTier() < 1 || helmet.getTier() > 5) {
-            log.warn("{} has invalid tier (expected 1-5)", helmet);
+            log.warn("HelmetTemplate validation failed - tier is invalid. Expected: 1-5, Got: {}", helmet.getTier());
             return false;
         }
 
         if (helmet.getValue() == null || helmet.getValue() < 0) {
-            log.warn("{} has invalid value", helmet);
+            log.warn("HelmetTemplate validation failed - value is invalid. Expected: >= 0, Got: {}", helmet.getValue());
             return false;
         }
 
         if (helmet.getQuantity() == null || helmet.getQuantity() < 0 || helmet.getQuantity() > 1) {
-            log.warn("{} has invalid quantity", helmet);
+            log.warn("HelmetTemplate validation failed - quantity is invalid. Expected: 0-1, Got: {}", helmet.getQuantity());
             return false;
         }
 
         if (helmet.getUserId() == null || helmet.getUserId().isBlank()) {
-            log.warn("{} has invalid userId", helmet);
+            log.warn("HelmetTemplate validation failed - userId is null or blank. UserId: '{}'", helmet.getUserId());
             return false;
         }
 
         if (helmet.getCampaign() == null) {
-            log.warn("{} has no campaign assigned", helmet);
+            log.warn("HelmetTemplate validation failed - campaign is null");
             return false;
         }
 
         if (!Requirement.isValidRequirement(helmet.getRequirement())) {
-            log.warn("{} has invalid requirement", helmet);
+            log.warn("HelmetTemplate validation failed - requirement is invalid. Requirement: {}", helmet.getRequirement());
             return false;
         }
 
         if (helmet.getPhysicalDefense() == null || helmet.getPhysicalDefense() < 0) {
-            log.warn("{} has invalid physical defense", helmet);
+            log.warn("HelmetTemplate validation failed - physicalDefense is invalid. Expected: >= 0, Got: {}", helmet.getPhysicalDefense());
             return false;
         }
         if (helmet.getMagicalDefense() == null || helmet.getMagicalDefense() < 0) {
-            log.warn("{} has invalid magical defense", helmet);
+            log.warn("HelmetTemplate validation failed - magicalDefense is invalid. Expected: >= 0, Got: {}", helmet.getMagicalDefense());
             return false;
         }
         if (helmet.getPhysicalDefense() == 0 && helmet.getMagicalDefense() == 0) {
-            log.warn("{} has 0 in both physical and magical defense", helmet);
+            log.warn("HelmetTemplate validation failed - both physicalDefense and magicalDefense are 0. PhysicalDefense: {}, MagicalDefense: {}", helmet.getPhysicalDefense(), helmet.getMagicalDefense());
             return false;
         }
         return true;
