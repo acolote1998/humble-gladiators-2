@@ -315,9 +315,14 @@ public class BattleService {
         }
         if (battle.getTurns().size() == 1) {
             CharacterInstance lastPerformer = battle.getTurns().getFirst().getPerformingCharacter();
-            if (!battle.getTeamOne().contains(lastPerformer)) {
+            Long lastPerformerId = lastPerformer.getId();
+            // Compare by ID instead of object reference to avoid persistence context issues
+            boolean inTeamOne = battle.getTeamOne().stream()
+                    .anyMatch(character -> character.getId().equals(lastPerformerId));
+            if (!inTeamOne) {
                 characterToPlay = battle.getTeamOne().getFirst();
-            } else if (!battle.getTeamTwo().contains(lastPerformer)) {
+            } else {
+                // If in team one, next turn should be team two
                 characterToPlay = battle.getTeamTwo().getFirst();
             }
         }
