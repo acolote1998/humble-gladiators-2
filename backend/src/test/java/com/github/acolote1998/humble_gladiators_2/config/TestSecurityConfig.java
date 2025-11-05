@@ -1,9 +1,10 @@
 package com.github.acolote1998.humble_gladiators_2.config;
 
+import org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 
@@ -14,12 +15,12 @@ import java.time.Instant;
  * This allows Spring Security Test's jwt() method to work without requiring a real OAuth2 issuer.
  * 
  * This configuration is only in the test source folder, so it won't be loaded in production.
- * The @Order(-1) and @Primary ensure this decoder is used instead of any auto-configured one.
- * By always providing a decoder, we prevent OAuth2ResourceServerAutoConfiguration from trying
- * to create one from issuer-uri (which would fail in CI without CLERK_ISSUER_URL).
+ * Import this class in @WebMvcTest tests that need OAuth2 support:
+ * @Import(TestSecurityConfig.class)
+ * 
+ * The @Primary ensures this decoder is used instead of any auto-configured one.
  */
-@Configuration
-@Order(-1)
+@TestConfiguration
 public class TestSecurityConfig {
 
     @Bean

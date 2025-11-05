@@ -74,3 +74,11 @@ RUNWARE_IMG_GEN_URL: http://localhost:8080/test-runware
 RUNWARE_API_KEY: test-api-key
 GEMINI_API_KEY: test-gemini-api-key
 
+# OAuth2 Configuration (dummy values for tests)
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://test-issuer.example.com
+
