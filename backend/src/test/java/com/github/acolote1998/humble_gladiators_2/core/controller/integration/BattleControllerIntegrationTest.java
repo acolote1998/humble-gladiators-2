@@ -158,7 +158,7 @@ class BattleControllerIntegrationTest {
         
         // Determine target: if performer is in team one, target is first in team two, and vice versa
         boolean performerInTeamOne = battle.getTeamOne().stream()
-                .anyMatch(char -> char.getId().equals(performingCharacter.getId()));
+                .anyMatch(character -> character.getId().equals(performingCharacter.getId()));
         if (performerInTeamOne) {
             targetCharacter = battle.getTeamTwo().getFirst();
         } else {
