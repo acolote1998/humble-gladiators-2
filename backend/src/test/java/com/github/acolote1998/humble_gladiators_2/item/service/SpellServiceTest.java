@@ -48,7 +48,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void getTier5SpellsContextForCampaignCover_ShouldReturnContextMap() {
+    void getTier5SpellsContextForCampaignCover_returnsContextMap() {
         // Arrange
         SpellTemplate spell = new SpellTemplate();
         spell.setName("Tier 5 Spell");
@@ -66,7 +66,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void getShortAIGeneratedReport_ShouldReturnSortedReport() {
+    void getShortAIGeneratedReport_returnsSortedReport() {
         // Arrange
         SpellTemplate spell1 = new SpellTemplate();
         spell1.setTier(5);
@@ -86,7 +86,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void getAllSpellTemplatesForACampaignAndUser_ShouldReturnList() {
+    void getAllSpellTemplatesForACampaignAndUser_returnsList() {
         // Arrange
         List<SpellTemplate> spells = Collections.emptyList();
         when(spellTemplateRepository.findAllByUserIdAndCampaign_Id(USER_ID, CAMPAIGN_ID)).thenReturn(spells);
@@ -99,7 +99,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void getRandomSpellTemplateForItemBooster_ShouldReturnSpell() {
+    void getRandomSpellTemplateForItemBooster_returnsSpell() {
         // Arrange
         SpellTemplate spell = new SpellTemplate();
         when(spellTemplateRepository.findRandomByCampaignAndRarityAndTier(
@@ -113,7 +113,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void saveSpell_ShouldSaveAndReturnSpell() {
+    void saveSpell_savesAndReturnsSpell() {
         // Arrange
         SpellTemplate spell = new SpellTemplate();
         when(spellTemplateRepository.save(spell)).thenReturn(spell);
@@ -127,7 +127,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void instanceFromSpellTemplate_ShouldCreateInstance() {
+    void instanceFromSpellTemplate_createsInstance() {
         // Arrange
         SpellTemplate template = new SpellTemplate();
         template.setName("Test Spell");
@@ -160,7 +160,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void instancesFromSpellTemplates_ShouldCreateMultipleInstances() {
+    void instancesFromSpellTemplates_createsMultipleInstances() {
         // Arrange
         SpellTemplate template1 = new SpellTemplate();
         template1.setCampaign(campaign);
@@ -181,7 +181,7 @@ class SpellServiceTest {
     }
 
     @Test
-    void getRandomSpellByTierAndRarityAndCampaignAndUserId_ShouldReturnSpell() {
+    void getRandomSpellByTierAndRarityAndCampaignAndUserId_returnsSpell() {
         // Arrange
         SpellTemplate spell = new SpellTemplate();
         List<SpellTemplate> spells = List.of(spell);
