@@ -13,12 +13,6 @@ spring:
     init:
       mode: always
 
-# JPA Configuration
-JPA_DDL_AUTO: create-drop
-JPA_SHOW_SQL: false
-DEFER_DATASOURCE_INITIALIZATION: true
-SQL_INIT_MODE: always
-
 # Booster Configuration
 UNLIMITED_BOOSTERS_ALLOWED: false
 
@@ -56,4 +50,3 @@ MINIMUM_STAT_VALUE: 14
 MAXIMUM_STAT_VALUE: 20
 CONSTITUTION_HP_MODIFIER: 5
 INTELLIGENCE_MP_MODIFIER: 10
-
