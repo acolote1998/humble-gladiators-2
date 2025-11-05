@@ -59,60 +59,60 @@ public class ArmorTemplate extends AbstractItem {
         }
 
         if (armor.getName() == null || armor.getName().isBlank()) {
-            log.warn("{} has invalid name", armor);
+            log.warn("ArmorTemplate validation failed - name is null or blank. Name: '{}'", armor.getName());
             return false;
         }
 
         if (armor.getDescription() == null || armor.getDescription().isBlank()) {
-            log.warn("{} has invalid description", armor);
+            log.warn("ArmorTemplate validation failed - description is null or blank. Description: '{}'", armor.getDescription());
             return false;
         }
 
         if (armor.getRarity() == null || armor.getRarity() < 1 || armor.getRarity() > 5) {
-            log.warn("{} has invalid rarity (expected 1–5)", armor);
+            log.warn("ArmorTemplate validation failed - rarity is invalid. Expected: 1-5, Got: {}", armor.getRarity());
             return false;
         }
 
         if (armor.getTier() == null || armor.getTier() < 1 || armor.getTier() > 5) {
-            log.warn("{} has invalid tier (expected 1-5)", armor);
+            log.warn("ArmorTemplate validation failed - tier is invalid. Expected: 1-5, Got: {}", armor.getTier());
             return false;
         }
 
         if (armor.getValue() == null || armor.getValue() < 0) {
-            log.warn("{} has invalid value", armor);
+            log.warn("ArmorTemplate validation failed - value is invalid. Expected: >= 0, Got: {}", armor.getValue());
             return false;
         }
 
         if (armor.getQuantity() == null || armor.getQuantity() < 0 || armor.getQuantity() > 1) {
-            log.warn("{} has invalid quantity", armor);
+            log.warn("ArmorTemplate validation failed - quantity is invalid. Expected: 0-1, Got: {}", armor.getQuantity());
             return false;
         }
 
         if (armor.getUserId() == null || armor.getUserId().isBlank()) {
-            log.warn("{} has invalid userId", armor);
+            log.warn("ArmorTemplate validation failed - userId is null or blank. UserId: '{}'", armor.getUserId());
             return false;
         }
 
         if (armor.getCampaign() == null) {
-            log.warn("{} has no campaign assigned", armor);
+            log.warn("ArmorTemplate validation failed - campaign is null");
             return false;
         }
 
         if (!Requirement.isValidRequirement(armor.getRequirement())) {
-            log.warn("{} has invalid requirement", armor);
+            log.warn("ArmorTemplate validation failed - requirement is invalid. Requirement: {}", armor.getRequirement());
             return false;
         }
 
         if (armor.getPhysicalDefense() == null || armor.getPhysicalDefense() < 0) {
-            log.warn("{} has invalid physical defense", armor);
+            log.warn("ArmorTemplate validation failed - physicalDefense is invalid. Expected: >= 0, Got: {}", armor.getPhysicalDefense());
             return false;
         }
         if (armor.getMagicalDefense() == null || armor.getMagicalDefense() < 0) {
-            log.warn("{} has invalid magical defense", armor);
+            log.warn("ArmorTemplate validation failed - magicalDefense is invalid. Expected: >= 0, Got: {}", armor.getMagicalDefense());
             return false;
         }
         if (armor.getPhysicalDefense() == 0 && armor.getMagicalDefense() == 0) {
-            log.warn("{} has 0 in both physical and magical defense", armor);
+            log.warn("ArmorTemplate validation failed - both physicalDefense and magicalDefense are 0. PhysicalDefense: {}, MagicalDefense: {}", armor.getPhysicalDefense(), armor.getMagicalDefense());
             return false;
         }
         return true;
