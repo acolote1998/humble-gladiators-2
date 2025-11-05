@@ -62,60 +62,60 @@ public class ShieldTemplate extends AbstractItem {
         }
 
         if (shield.getName() == null || shield.getName().isBlank()) {
-            log.warn("{} has invalid name", shield);
+            log.warn("ShieldTemplate validation failed - name is null or blank. Name: '{}'", shield.getName());
             return false;
         }
 
         if (shield.getDescription() == null || shield.getDescription().isBlank()) {
-            log.warn("{} has invalid description", shield);
+            log.warn("ShieldTemplate validation failed - description is null or blank. Description: '{}'", shield.getDescription());
             return false;
         }
 
         if (shield.getRarity() == null || shield.getRarity() < 1 || shield.getRarity() > 5) {
-            log.warn("{} has invalid rarity (expected 1–5)", shield);
+            log.warn("ShieldTemplate validation failed - rarity is invalid. Expected: 1-5, Got: {}", shield.getRarity());
             return false;
         }
 
         if (shield.getTier() == null || shield.getTier() < 1 || shield.getTier() > 5) {
-            log.warn("{} has invalid tier (expected 1-5)", shield);
+            log.warn("ShieldTemplate validation failed - tier is invalid. Expected: 1-5, Got: {}", shield.getTier());
             return false;
         }
 
         if (shield.getValue() == null || shield.getValue() < 0) {
-            log.warn("{} has invalid value", shield);
+            log.warn("ShieldTemplate validation failed - value is invalid. Expected: >= 0, Got: {}", shield.getValue());
             return false;
         }
 
         if (shield.getQuantity() == null || shield.getQuantity() < 0 || shield.getQuantity() > 1) {
-            log.warn("{} has invalid quantity", shield);
+            log.warn("ShieldTemplate validation failed - quantity is invalid. Expected: 0-1, Got: {}", shield.getQuantity());
             return false;
         }
 
         if (shield.getUserId() == null || shield.getUserId().isBlank()) {
-            log.warn("{} has invalid userId", shield);
+            log.warn("ShieldTemplate validation failed - userId is null or blank. UserId: '{}'", shield.getUserId());
             return false;
         }
 
         if (shield.getCampaign() == null) {
-            log.warn("{} has no campaign assigned", shield);
+            log.warn("ShieldTemplate validation failed - campaign is null");
             return false;
         }
 
         if (!Requirement.isValidRequirement(shield.getRequirement())) {
-            log.warn("{} has invalid requirement", shield);
+            log.warn("ShieldTemplate validation failed - requirement is invalid. Requirement: {}", shield.getRequirement());
             return false;
         }
 
         if (shield.getPhysicalDefense() == null || shield.getPhysicalDefense() < 0) {
-            log.warn("{} has invalid physical defense", shield);
+            log.warn("ShieldTemplate validation failed - physicalDefense is invalid. Expected: >= 0, Got: {}", shield.getPhysicalDefense());
             return false;
         }
         if (shield.getMagicalDefense() == null || shield.getMagicalDefense() < 0) {
-            log.warn("{} has invalid magical defense", shield);
+            log.warn("ShieldTemplate validation failed - magicalDefense is invalid. Expected: >= 0, Got: {}", shield.getMagicalDefense());
             return false;
         }
         if (shield.getPhysicalDefense() == 0 && shield.getMagicalDefense() == 0) {
-            log.warn("{} has 0 in both physical and magical defense", shield);
+            log.warn("ShieldTemplate validation failed - both physicalDefense and magicalDefense are 0. PhysicalDefense: {}, MagicalDefense: {}", shield.getPhysicalDefense(), shield.getMagicalDefense());
             return false;
         }
         return true;
