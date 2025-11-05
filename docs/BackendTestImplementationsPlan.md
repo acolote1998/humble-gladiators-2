@@ -114,18 +114,7 @@ Integration tests verify that multiple components work together correctly. Unlik
 
 **Database Configuration:**
 - Use **H2 in-memory database** for all integration tests (fast and isolated)   
-- Configure in `src/test/resources/application-test.properties`:
-  ```properties
-  spring.datasource.url=jdbc:h2:mem:testdb
-  spring.datasource.driverClassName=org.h2.Driver
-  spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-  spring.jpa.hibernate.ddl-auto=create-drop
-  spring.jpa.show-sql=true
-  spring.jpa.properties.hibernate.format_sql=true
-  logging.level.org.hibernate.SQL=DEBUG
-  logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
-  ```
-  Note: SQL logging enabled to detect N+1 query problems and lazy loading issues
+- Test profile config is provided in `src/test/resources/application-test.yml` (already in repo). Activate with `@ActiveProfiles("test")`.
 - Ensure H2 dependency is in `pom.xml` test scope:
   ```xml
   <dependency>
@@ -134,7 +123,13 @@ Integration tests verify that multiple components work together correctly. Unlik
       <scope>test</scope>
   </dependency>
   ```
-- Use `@ActiveProfiles("test")` on test classes to activate test profile
+- The `application-test.yml` sets:
+  - `spring.datasource.url=jdbc:h2:mem:testdb`
+  - `spring.jpa.hibernate.ddl-auto=create-drop`
+  - `spring.jpa.show-sql=false`
+  - `spring.sql.init.mode=always`
+  - Project feature flags for boosters, battles, inventory, content generation, balance, rarities/tiers, and stat modifiers
+  - With this file, tests do not require a `.env`
 
 **External API Mocking:**
 - Use `@MockBean` for GeminiService and RunwareService
@@ -509,8 +504,7 @@ Integration tests should follow the same package-by-package order as Phase 1:
 
 1. **Database Connection:**
    - Ensure H2 is in classpath: `com.h2database:h2` (test scope)
-   - Create `src/test/resources/application-test.properties` with H2 configuration                                                                              
-   - Use `@ActiveProfiles("test")` on all integration test classes
+   - Use `src/test/resources/application-test.yml` (already provided) with `@ActiveProfiles("test")`
    - H2 database will be created fresh for each test run (in-memory)
 
 2. **Transaction Rollback:**

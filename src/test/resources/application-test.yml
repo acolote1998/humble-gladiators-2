@@ -1,0 +1,59 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+
+# JPA Configuration
+JPA_DDL_AUTO: create-drop
+JPA_SHOW_SQL: false
+DEFER_DATASOURCE_INITIALIZATION: true
+SQL_INIT_MODE: always
+
+# Booster Configuration
+UNLIMITED_BOOSTERS_ALLOWED: false
+
+# Battle Configuration
+UNLIMITED_BATTLES_ALLOWED: false
+
+# Inventory Configuration
+SKIP_REQUIREMENTS: true
+
+# Content Generation Configuration
+GENERATE_IMAGES: true
+GENERATE_CAMPAIGN_COVER: true
+GENERATE_CAMPAIGN_CARD_BACK: true
+GENERATE_ALL: true
+
+# Balance Configuration
+NPC_ITEM_GENERATION_CHANCE: 20
+NPC_ITEM_DROP_CHANCE: 10
+AMOUNT_OF_CARDS_PER_CHARACTER_BOOSTER: 1
+AMOUNT_OF_CARDS_PER_ITEM_BOOSTER: 3
+
+# Test Rarities && Tiers
+CARD_RARITY_ONE_CHANCE: 100
+CARD_RARITY_TWO_CHANCE: 0
+CARD_RARITY_THREE_CHANCE: 0
+CARD_RARITY_FOUR_CHANCE: 0
+CARD_RARITY_FIVE_CHANCE: 0
+CARD_TIER_ONE_CHANCE: 100
+CARD_TIER_TWO_CHANCE: 0
+CARD_TIER_THREE_CHANCE: 0
+CARD_TIER_FOUR_CHANCE: 0
+CARD_TIER_FIVE_CHANCE: 0
+
+MINIMUM_STAT_VALUE: 14
+MAXIMUM_STAT_VALUE: 20
+CONSTITUTION_HP_MODIFIER: 5
+INTELLIGENCE_MP_MODIFIER: 10
+
