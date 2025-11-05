@@ -89,3 +89,13 @@
 - [ ] Comprehensive testing and documentation
 
 - [ ] Deployment and monitoring infrastructure
+
+## Critical Design Issues Identified from Test Implementation
+
+- [ ] **@CreatedDate/@UpdateTimestamp Testability Limitation**: Entities with `@CreatedDate` and `@UpdateTimestamp` cannot have timestamps controlled for testing scenarios. Tests must use native SQL queries to set `created_at` timestamps (see `BattleCleanupServiceIntegrationTest.createBattleForDateAndCampaign()`). This prevents clean testing of time-based logic (cleanup services, date-based queries, etc.). Consider using `@PrePersist`/`@PreUpdate` callbacks that can be overridden in tests, or provide a `Clock` bean for time control.
+
+- [ ] **Battle Creation Restrictiveness**: `BattleService.isBattleAvailableForToday()` prevents multiple battles per campaign per day (even finished ones). The logic checks `getAnyBattleForTodayByCampaignAndUserId()` which finds ANY battle (ongoing or finished) for today. This is too restrictive for testing scenarios and forces tests to create separate campaigns for each battle. Consider if the rule should only check for ongoing battles, not all battles. Or provide a test-friendly way to bypass this check in test environments.
+
+- [ ] **Tight Coupling Between Content Generation and Validation**: Tests require extensive, detailed mocking of `GeminiService` with very specific validation requirements (exact gold/exp formulas, category enums, flag values). Mock data must match internal validation logic exactly or services retry infinitely. Changes to validation require updating multiple test mocks across `GameServiceIntegrationTest`, `GameControllerIntegrationTest`, and `CharacterServiceIntegrationTest`. Consider extracting validation into a separate, testable component. Or provide a test mode that bypasses validation for integration tests.
+
+- [ ] **BattleCleanupService Consolidation Logic Edge Cases**: The `consolidateBattle()` method calls `fullyRecoverBothTeams()` which expects winning/losing teams to have at least one character. If teams are empty, it throws `NoSuchElementException`. The consolidation logic tries to populate winning/losing teams from teamOne/teamTwo, but fails if those are also empty. This could cause scheduled job failures in production. Add null/empty checks in `consolidateBattle()` before calling `fullyRecoverBothTeams()`, or make `fullyRecoverBothTeams()` handle empty teams gracefully.
