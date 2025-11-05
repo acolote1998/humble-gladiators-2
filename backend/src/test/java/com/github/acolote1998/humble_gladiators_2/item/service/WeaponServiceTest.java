@@ -48,7 +48,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void getTier5WeaponsContextForCampaignCover_ShouldReturnContextMap() {
+    void getTier5WeaponsContextForCampaignCover_returnsContextMap() {
         // Arrange
         WeaponTemplate weapon = new WeaponTemplate();
         weapon.setName("Tier 5 Weapon");
@@ -66,7 +66,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void getShortAIGeneratedReport_ShouldReturnSortedReport() {
+    void getShortAIGeneratedReport_returnsSortedReport() {
         // Arrange
         WeaponTemplate weapon1 = new WeaponTemplate();
         weapon1.setTier(5);
@@ -86,7 +86,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void getAllWeaponTemplatesForACampaignAndUser_ShouldReturnList() {
+    void getAllWeaponTemplatesForACampaignAndUser_returnsList() {
         // Arrange
         List<WeaponTemplate> weapons = Collections.emptyList();
         when(weaponTemplateRepository.findAllByUserIdAndCampaign_Id(USER_ID, CAMPAIGN_ID)).thenReturn(weapons);
@@ -99,7 +99,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void getRandomWeaponTemplateForItemBooster_ShouldReturnWeapon() {
+    void getRandomWeaponTemplateForItemBooster_returnsWeapon() {
         // Arrange
         WeaponTemplate weapon = new WeaponTemplate();
         when(weaponTemplateRepository.findRandomByCampaignAndRarityAndTier(
@@ -113,7 +113,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void saveWeapon_ShouldSaveAndReturnWeapon() {
+    void saveWeapon_savesAndReturnsWeapon() {
         // Arrange
         WeaponTemplate weapon = new WeaponTemplate();
         when(weaponTemplateRepository.save(weapon)).thenReturn(weapon);
@@ -127,7 +127,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void instanceFromWeaponTemplate_ShouldCreateInstance() {
+    void instanceFromWeaponTemplate_createsInstance() {
         // Arrange
         WeaponTemplate template = new WeaponTemplate();
         template.setName("Test Weapon");
@@ -160,7 +160,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void instancesFromWeaponTemplates_ShouldCreateMultipleInstances() {
+    void instancesFromWeaponTemplates_createsMultipleInstances() {
         // Arrange
         WeaponTemplate template1 = new WeaponTemplate();
         template1.setCampaign(campaign);
@@ -181,7 +181,7 @@ class WeaponServiceTest {
     }
 
     @Test
-    void getRandomWeaponByTierAndRarityAndCampaignAndUserId_ShouldReturnWeapon() {
+    void getRandomWeaponByTierAndRarityAndCampaignAndUserId_returnsWeapon() {
         // Arrange
         WeaponTemplate weapon = new WeaponTemplate();
         List<WeaponTemplate> weapons = List.of(weapon);
