@@ -49,47 +49,47 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
         }
 
         if (character.getName() == null || character.getName().isBlank()) {
-            log.warn("{} has invalid name", character);
+            log.warn("CharacterInstance validation failed - name is null or blank. Name: '{}'", character.getName());
             return false;
         }
 
         if (character.getDescription() == null || character.getDescription().isBlank()) {
-            log.warn("{} has invalid description", character);
+            log.warn("CharacterInstance validation failed - description is null or blank. Description: '{}'", character.getDescription());
             return false;
         }
 
         if (character.getRarity() == null || character.getRarity() < 1 || character.getRarity() > 5) {
-            log.warn("{} has invalid rarity (expected 1–5)", character);
+            log.warn("CharacterInstance validation failed - rarity is invalid. Expected: 1-5, Got: {}", character.getRarity());
             return false;
         }
 
         if (character.getTier() == null || character.getTier() < 1 || character.getTier() > 5) {
-            log.warn("{} has invalid tier (expected 1-5)", character);
+            log.warn("CharacterInstance validation failed - tier is invalid. Expected: 1-5, Got: {}", character.getTier());
             return false;
         }
 
         if (character.getUserId() == null || character.getUserId().isBlank()) {
-            log.warn("{} has invalid userId", character);
+            log.warn("CharacterInstance validation failed - userId is null or blank. UserId: '{}'", character.getUserId());
             return false;
         }
 
         if (character.getCampaign() == null) {
-            log.warn("{} has no campaign assigned", character);
+            log.warn("CharacterInstance validation failed - campaign is null");
             return false;
         }
 
         if (character.getStats() == null) {
-            log.warn("{} has no stats assigned", character);
+            log.warn("CharacterInstance validation failed - stats is null");
             return false;
         }
 
         if (character.getGoldReward() == null || character.getGoldReward() < 0) {
-            log.warn("{} has invalid gold reward", character);
+            log.warn("CharacterInstance validation failed - goldReward is invalid. Expected: >= 0, Got: {}", character.getGoldReward());
             return false;
         }
 
         if (character.getExpReward() == null || character.getExpReward() < 0) {
-            log.warn("{} has invalid exp reward", character);
+            log.warn("CharacterInstance validation failed - expReward is invalid. Expected: >= 0, Got: {}", character.getExpReward());
             return false;
         }
 
@@ -98,10 +98,16 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
     public static boolean areValidCharacters(List<CharacterInstance> characters, Integer expectedAmount) {
         if (characters.size() != expectedAmount) {
+            log.warn("CharacterInstance validation failed - list size mismatch. Expected: {}, Got: {}", expectedAmount, characters.size());
             return false;
         }
-        for (CharacterInstance character : characters) {
+        for (int i = 0; i < characters.size(); i++) {
+            CharacterInstance character = characters.get(i);
             if (!CharacterInstance.isValidCharacter(character)) {
+                log.warn("CharacterInstance validation failed - character at index {} failed validation. Name: '{}', Tier: {}, Rarity: {}", 
+                        i, character != null ? character.getName() : "null", 
+                        character != null ? character.getTier() : "null", 
+                        character != null ? character.getRarity() : "null");
                 return false;
             }
         }
