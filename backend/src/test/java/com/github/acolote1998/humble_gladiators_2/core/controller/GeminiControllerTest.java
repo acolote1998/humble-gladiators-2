@@ -1,10 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
-import com.github.acolote1998.humble_gladiators_2.config.TestSecurityConfig;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -15,8 +13,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = GeminiController.class, excludeAutoConfiguration = OAuth2ResourceServerAutoConfiguration.class)
-@Import({com.github.acolote1998.humble_gladiators_2.SecurityConfig.class, TestSecurityConfig.class})
+@WebMvcTest(controllers = GeminiController.class)
+@Import(com.github.acolote1998.humble_gladiators_2.SecurityConfig.class)
 class GeminiControllerTest {
 
     @Autowired

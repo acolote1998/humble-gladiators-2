@@ -5,11 +5,8 @@ import com.github.acolote1998.humble_gladiators_2.item.service.BootsService;
 import com.github.acolote1998.humble_gladiators_2.item.templates.BootsTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.github.acolote1998.humble_gladiators_2.config.TestSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -25,8 +22,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = BootsTemplateController.class, excludeAutoConfiguration = OAuth2ResourceServerAutoConfiguration.class)
-@Import(TestSecurityConfig.class)
+@WebMvcTest(BootsTemplateController.class)
 class BootsTemplateControllerTest {
 
     @Autowired
