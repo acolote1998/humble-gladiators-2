@@ -24,6 +24,11 @@ services:
       - "5433:5432"
     volumes:
       - humble-gladiators-2-test-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testdbusername -d humble-gladiators-2-test-db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   humble-gladiators-2-live-db-data:

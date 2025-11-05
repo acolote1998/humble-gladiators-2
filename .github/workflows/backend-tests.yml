@@ -21,6 +21,13 @@ jobs:
         run: docker compose up -d
         working-directory: backend
 
+      - name: Wait for database to be ready
+        run: |
+          echo "Waiting for database to be ready..."
+          timeout 60 bash -c 'until docker exec humble-gladiators-2-postgres-test-db pg_isready -U testdbusername -d humble-gladiators-2-test-db > /dev/null 2>&1; do sleep 2; done'
+          echo "Database is ready!"
+        working-directory: backend
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
