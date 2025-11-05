@@ -48,7 +48,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void getTier5HelmetsContextForCampaignCover_ShouldReturnContextMap() {
+    void getTier5HelmetsContextForCampaignCover_returnsContextMap() {
         // Arrange
         HelmetTemplate helmet = new HelmetTemplate();
         helmet.setName("Tier 5 Helmet");
@@ -66,7 +66,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void getShortAIGeneratedReport_ShouldReturnSortedReport() {
+    void getShortAIGeneratedReport_returnsSortedReport() {
         // Arrange
         HelmetTemplate helmet1 = new HelmetTemplate();
         helmet1.setTier(5);
@@ -86,7 +86,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void getAllHelmetTemplatesForACampaignAndUser_ShouldReturnList() {
+    void getAllHelmetTemplatesForACampaignAndUser_returnsList() {
         // Arrange
         List<HelmetTemplate> helmets = Collections.emptyList();
         when(helmetTemplateRepository.findAllByUserIdAndCampaign_Id(USER_ID, CAMPAIGN_ID)).thenReturn(helmets);
@@ -99,7 +99,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void getRandomHelmetTemplateForItemBooster_ShouldReturnHelmet() {
+    void getRandomHelmetTemplateForItemBooster_returnsHelmet() {
         // Arrange
         HelmetTemplate helmet = new HelmetTemplate();
         when(helmetTemplateRepository.findRandomByCampaignAndRarityAndTier(
@@ -113,7 +113,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void saveHelmet_ShouldSaveAndReturnHelmet() {
+    void saveHelmet_savesAndReturnsHelmet() {
         // Arrange
         HelmetTemplate helmet = new HelmetTemplate();
         when(helmetTemplateRepository.save(helmet)).thenReturn(helmet);
@@ -127,7 +127,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void instanceFromHelmetTemplate_ShouldCreateInstance() {
+    void instanceFromHelmetTemplate_createsInstance() {
         // Arrange
         HelmetTemplate template = new HelmetTemplate();
         template.setName("Test Helmet");
@@ -160,7 +160,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void instancesFromHelmetTemplates_ShouldCreateMultipleInstances() {
+    void instancesFromHelmetTemplates_createsMultipleInstances() {
         // Arrange
         HelmetTemplate template1 = new HelmetTemplate();
         template1.setCampaign(campaign);
@@ -181,7 +181,7 @@ class HelmetServiceTest {
     }
 
     @Test
-    void getRandomHelmetByTierAndRarityAndCampaignAndUserId_ShouldReturnHelmet() {
+    void getRandomHelmetByTierAndRarityAndCampaignAndUserId_returnsHelmet() {
         // Arrange
         HelmetTemplate helmet = new HelmetTemplate();
         List<HelmetTemplate> helmets = List.of(helmet);
