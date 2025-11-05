@@ -60,60 +60,60 @@ public class WeaponTemplate extends AbstractItem {
         }
 
         if (weapon.getName() == null || weapon.getName().isBlank()) {
-            log.warn("{} has invalid name", weapon);
+            log.warn("WeaponTemplate validation failed - name is null or blank. Name: '{}'", weapon.getName());
             return false;
         }
 
         if (weapon.getDescription() == null || weapon.getDescription().isBlank()) {
-            log.warn("{} has invalid description", weapon);
+            log.warn("WeaponTemplate validation failed - description is null or blank. Description: '{}'", weapon.getDescription());
             return false;
         }
 
         if (weapon.getRarity() == null || weapon.getRarity() < 1 || weapon.getRarity() > 5) {
-            log.warn("{} has invalid rarity (expected 1–5)", weapon);
+            log.warn("WeaponTemplate validation failed - rarity is invalid. Expected: 1-5, Got: {}", weapon.getRarity());
             return false;
         }
 
         if (weapon.getTier() == null || weapon.getTier() < 1 || weapon.getTier() > 5) {
-            log.warn("{} has invalid tier (expected 1-5)", weapon);
+            log.warn("WeaponTemplate validation failed - tier is invalid. Expected: 1-5, Got: {}", weapon.getTier());
             return false;
         }
 
         if (weapon.getValue() == null || weapon.getValue() < 0) {
-            log.warn("{} has invalid value", weapon);
+            log.warn("WeaponTemplate validation failed - value is invalid. Expected: >= 0, Got: {}", weapon.getValue());
             return false;
         }
 
         if (weapon.getQuantity() == null || weapon.getQuantity() < 0 || weapon.getQuantity() > 1) {
-            log.warn("{} has invalid quantity", weapon);
+            log.warn("WeaponTemplate validation failed - quantity is invalid. Expected: 0-1, Got: {}", weapon.getQuantity());
             return false;
         }
 
         if (weapon.getUserId() == null || weapon.getUserId().isBlank()) {
-            log.warn("{} has invalid userId", weapon);
+            log.warn("WeaponTemplate validation failed - userId is null or blank. UserId: '{}'", weapon.getUserId());
             return false;
         }
 
         if (weapon.getCampaign() == null) {
-            log.warn("{} has no campaign assigned", weapon);
+            log.warn("WeaponTemplate validation failed - campaign is null");
             return false;
         }
 
         if (!Requirement.isValidRequirement(weapon.getRequirement())) {
-            log.warn("{} has invalid requirement", weapon);
+            log.warn("WeaponTemplate validation failed - requirement is invalid. Requirement: {}", weapon.getRequirement());
             return false;
         }
 
         if (weapon.getPhysicalDamage() == null || weapon.getPhysicalDamage() < 0) {
-            log.warn("{} has invalid physical damage", weapon);
+            log.warn("WeaponTemplate validation failed - physicalDamage is invalid. Expected: >= 0, Got: {}", weapon.getPhysicalDamage());
             return false;
         }
         if (weapon.getMagicalDamage() == null || weapon.getMagicalDamage() < 0) {
-            log.warn("{} has invalid magical damage", weapon);
+            log.warn("WeaponTemplate validation failed - magicalDamage is invalid. Expected: >= 0, Got: {}", weapon.getMagicalDamage());
             return false;
         }
         if (weapon.getPhysicalDamage() == 0 && weapon.getMagicalDamage() == 0) {
-            log.warn("{} has 0 in both physical and magical damage", weapon);
+            log.warn("WeaponTemplate validation failed - both physicalDamage and magicalDamage are 0. PhysicalDamage: {}, MagicalDamage: {}", weapon.getPhysicalDamage(), weapon.getMagicalDamage());
             return false;
         }
         return true;

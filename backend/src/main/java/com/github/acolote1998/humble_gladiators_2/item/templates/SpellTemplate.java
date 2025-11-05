@@ -66,69 +66,69 @@ public class SpellTemplate extends AbstractItem {
         }
 
         if (spell.getName() == null || spell.getName().isBlank()) {
-            log.warn("{} has invalid name", spell);
+            log.warn("SpellTemplate validation failed - name is null or blank. Name: '{}'", spell.getName());
             return false;
         }
 
         if (spell.getDescription() == null || spell.getDescription().isBlank()) {
-            log.warn("{} has invalid description", spell);
+            log.warn("SpellTemplate validation failed - description is null or blank. Description: '{}'", spell.getDescription());
             return false;
         }
 
         if (spell.getRarity() == null || spell.getRarity() < 1 || spell.getRarity() > 5) {
-            log.warn("{} has invalid rarity (expected 1–5)", spell);
+            log.warn("SpellTemplate validation failed - rarity is invalid. Expected: 1-5, Got: {}", spell.getRarity());
             return false;
         }
 
         if (spell.getTier() == null || spell.getTier() < 1 || spell.getTier() > 5) {
-            log.warn("{} has invalid tier (expected 1-5)", spell);
+            log.warn("SpellTemplate validation failed - tier is invalid. Expected: 1-5, Got: {}", spell.getTier());
             return false;
         }
 
         if (spell.getValue() == null || spell.getValue() < 0) {
-            log.warn("{} has invalid value", spell);
+            log.warn("SpellTemplate validation failed - value is invalid. Expected: >= 0, Got: {}", spell.getValue());
             return false;
         }
 
         if (spell.getQuantity() == null || spell.getQuantity() < 0 || spell.getQuantity() > 1) {
-            log.warn("{} has invalid quantity", spell);
+            log.warn("SpellTemplate validation failed - quantity is invalid. Expected: 0-1, Got: {}", spell.getQuantity());
             return false;
         }
 
         if (spell.getUserId() == null || spell.getUserId().isBlank()) {
-            log.warn("{} has invalid userId", spell);
+            log.warn("SpellTemplate validation failed - userId is null or blank. UserId: '{}'", spell.getUserId());
             return false;
         }
 
         if (spell.getCampaign() == null) {
-            log.warn("{} has no campaign assigned", spell);
+            log.warn("SpellTemplate validation failed - campaign is null");
             return false;
         }
 
         if (!Requirement.isValidRequirement(spell.getRequirement())) {
-            log.warn("{} has invalid requirement", spell);
+            log.warn("SpellTemplate validation failed - requirement is invalid. Requirement: {}", spell.getRequirement());
             return false;
         }
 
         if (spell.getPhysicalDamage() == null || spell.getPhysicalDamage() < 0) {
-            log.warn("{} has invalid physical damage", spell);
+            log.warn("SpellTemplate validation failed - physicalDamage is invalid. Expected: >= 0, Got: {}", spell.getPhysicalDamage());
             return false;
         }
         if (spell.getMagicalDamage() == null || spell.getMagicalDamage() < 0) {
-            log.warn("{} has invalid magical damage", spell);
+            log.warn("SpellTemplate validation failed - magicalDamage is invalid. Expected: >= 0, Got: {}", spell.getMagicalDamage());
             return false;
         }
         if (spell.getRestoreHp() == null || spell.getRestoreHp() < 0) {
-            log.warn("{} has invalid restore HP", spell);
+            log.warn("SpellTemplate validation failed - restoreHp is invalid. Expected: >= 0, Got: {}", spell.getRestoreHp());
             return false;
         }
         if (spell.getPhysicalDamage() == 0 && spell.getMagicalDamage() == 0 && spell.getRestoreHp() == 0) {
-            log.warn("{} has 0 in all combat effects (physical damage, magical damage, and restore HP)", spell);
+            log.warn("SpellTemplate validation failed - all combat effects are 0. PhysicalDamage: {}, MagicalDamage: {}, RestoreHp: {}", spell.getPhysicalDamage(), spell.getMagicalDamage(), spell.getRestoreHp());
             return false;
         }
         // Healing spells cannot deal damage
         if (spell.getRestoreHp() > 0 && (spell.getPhysicalDamage() > 0 || spell.getMagicalDamage() > 0)) {
-            log.warn("{} is a healing spell but also deals damage", spell);
+            log.warn("SpellTemplate validation failed - healing spell also deals damage. RestoreHp: {}, PhysicalDamage: {}, MagicalDamage: {}", spell.getRestoreHp(), spell.getPhysicalDamage(), spell.getMagicalDamage());
             return false;
         }
         return true;

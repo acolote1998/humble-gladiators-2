@@ -1,0 +1,68 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/humble-gladiators-2-test-db
+    username: testdbusername
+    password: testdbusername
+    hikari:
+      idle-timeout: 30000 # min is 30 sec
+      max-lifetime: 60000 # min is 60 sec
+      keepalive-time: 0 # don't keep them alive if they're idle
+      maximum-pool-size: 10 #
+      minimum-idle: 0 # this one's kind of important
+      leak-detection-threshold: 60001 # just for debugging, you don't really need it
+      data-source-properties:
+        prepareThreshold: 0 # disable prepared statement caching
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: false
+  sql:
+    init:
+      mode: never
+
+GAME_CREATION_STATE_INTERVAL: 0
+
+# Booster Configuration
+UNLIMITED_BOOSTERS_ALLOWED: false
+
+# Battle Configuration
+UNLIMITED_BATTLES_ALLOWED: false
+
+# Inventory Configuration
+SKIP_REQUIREMENTS: true
+
+# Content Generation Configuration
+GENERATE_IMAGES: true
+GENERATE_CAMPAIGN_COVER: true
+GENERATE_CAMPAIGN_CARD_BACK: true
+GENERATE_ALL: true
+
+# Balance Configuration
+NPC_ITEM_GENERATION_CHANCE: 20
+NPC_ITEM_DROP_CHANCE: 10
+AMOUNT_OF_CARDS_PER_CHARACTER_BOOSTER: 1
+AMOUNT_OF_CARDS_PER_ITEM_BOOSTER: 3
+
+# Test Rarities && Tiers
+CARD_RARITY_ONE_CHANCE: 100
+CARD_RARITY_TWO_CHANCE: 0
+CARD_RARITY_THREE_CHANCE: 0
+CARD_RARITY_FOUR_CHANCE: 0
+CARD_RARITY_FIVE_CHANCE: 0
+CARD_TIER_ONE_CHANCE: 100
+CARD_TIER_TWO_CHANCE: 0
+CARD_TIER_THREE_CHANCE: 0
+CARD_TIER_FOUR_CHANCE: 0
+CARD_TIER_FIVE_CHANCE: 0
+
+MINIMUM_STAT_VALUE: 14
+MAXIMUM_STAT_VALUE: 20
+CONSTITUTION_HP_MODIFIER: 5
+INTELLIGENCE_MP_MODIFIER: 10
+
