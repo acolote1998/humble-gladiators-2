@@ -27,6 +27,11 @@ jobs:
           distribution: "temurin"
           java-version: "21"
 
+      - name: Install Maven
+        run: |
+          curl -fsSL https://get.maven.net/download.cgi | sh
+          export PATH=$PATH:/root/.m2/bin
+
       - name: Run Maven test
         run: mvn test
 
