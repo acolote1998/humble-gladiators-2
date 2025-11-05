@@ -100,9 +100,9 @@ public class BattleService {
         // Compare by ID instead of object reference, since entities loaded from DB are different instances
         Long charId = charToCheck.getId();
         boolean inTeamOne = battleToCheck.getTeamOne().stream()
-                .anyMatch(char -> char.getId().equals(charId));
+                .anyMatch(character -> character.getId().equals(charId));
         boolean inTeamTwo = battleToCheck.getTeamTwo().stream()
-                .anyMatch(char -> char.getId().equals(charId));
+                .anyMatch(character -> character.getId().equals(charId));
         return inTeamOne || inTeamTwo;
     }
 
