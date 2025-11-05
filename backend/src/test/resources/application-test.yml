@@ -73,8 +73,3 @@ MINIMUM_STAT_VALUE: 14
 MAXIMUM_STAT_VALUE: 20
 CONSTITUTION_HP_MODIFIER: 5
 INTELLIGENCE_MP_MODIFIER: 10
-
-# External Service URLs (dummy values for tests)
-RUNWARE_IMG_GEN_URL: http://localhost:8080/test-runware
-RUNWARE_API_KEY: test-api-key
-GEMINI_API_KEY: test-gemini-api-key

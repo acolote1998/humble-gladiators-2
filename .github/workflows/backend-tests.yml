@@ -45,10 +45,10 @@ jobs:
       - name: Run Maven test
         run: mvn test --batch-mode
         env:
-          CLERK_ISSUER_URL: https://test-issuer.example.com
-          RUNWARE_IMG_GEN_URL: http://localhost:8080/test-runware
-          RUNWARE_API_KEY: test-api-key
-          GEMINI_API_KEY: test-gemini-api-key
+          CLERK_ISSUER_URL: ${{ vars.CLERK_ISSUER_URL }}
+          RUNWARE_IMG_GEN_URL: ${{ vars.RUNWARE_IMG_GEN_URL }}
+          RUNWARE_API_KEY: ${{ vars.RUNWARE_API_KEY }}
+          GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
 
       - name: Stop and clean up containers
         if: always()
