@@ -148,9 +148,26 @@ class BattleControllerIntegrationTest {
     void characterAttacks_performsTurnAndReturnsTurnResponse() throws Exception {
         Battle battle = battleService.createNewBattle(campaignUserA.getId(), "userA");
         
+        // Reload battle to get the actual current state with teams loaded
+        battle = battleService.getBattleByIdAndCampaignIdAndUserId(battle.getId(), campaignUserA.getId(), "userA");
+        
+        // Determine who should actually play based on battle logic (fastest character)
+        // The battle determines who starts based on speed, so we need to check who the current character is
+        CharacterInstance performingCharacter = battle.getCurrentCharacterToPlay();
+        CharacterInstance targetCharacter;
+        
+        // Determine target: if performer is in team one, target is first in team two, and vice versa
+        boolean performerInTeamOne = battle.getTeamOne().stream()
+                .anyMatch(char -> char.getId().equals(performingCharacter.getId()));
+        if (performerInTeamOne) {
+            targetCharacter = battle.getTeamTwo().getFirst();
+        } else {
+            targetCharacter = battle.getTeamOne().getFirst();
+        }
+        
         TurnRequestDto turnRequest = new TurnRequestDto(
-                heroUserA.getId(),
-                enemyUserA.getId(),
+                performingCharacter.getId(),
+                targetCharacter.getId(),
                 ActionType.PHYSICAL_ATTACK,
                 null
         );
@@ -167,8 +184,8 @@ class BattleControllerIntegrationTest {
                 .andExpect(jsonPath("$.targetCharacter").exists())
                 .andExpect(jsonPath("$.action").exists())
                 .andExpect(jsonPath("$.action.actionType").value("PHYSICAL_ATTACK"))
-                .andExpect(jsonPath("$.performingCharacter.id").value(heroUserA.getId()))
-                .andExpect(jsonPath("$.targetCharacter.id").value(enemyUserA.getId()));
+                .andExpect(jsonPath("$.performingCharacter.id").value(performingCharacter.getId()))
+                .andExpect(jsonPath("$.targetCharacter.id").value(targetCharacter.getId()));
     }
 
     @Test
