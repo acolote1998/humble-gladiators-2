@@ -674,7 +674,6 @@ public class BattleService {
             throw new InvalidBattle("Cannot assign rewards - Battle is still active!");
         }
         log.info("Reward for battle '{}' not found - creating", battleToCheck.getId());
-        Random random = new Random();
         CharacterInstance winner = battleToCheck.getWinningTeam().getFirst();
         CharacterInstance loser = battleToCheck.getLosingTeam().getFirst();
         int goldReward = loser.getGoldReward();
