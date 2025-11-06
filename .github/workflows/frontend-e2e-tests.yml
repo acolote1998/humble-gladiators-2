@@ -120,7 +120,7 @@ jobs:
       - name: Start React app
         run: |
           cd frontend
-          nohup npm start &
+          nohup npm run dev &
           npx wait-on http://localhost:5173  # waits until React is ready
 
       # ----------- TESTS -----------
