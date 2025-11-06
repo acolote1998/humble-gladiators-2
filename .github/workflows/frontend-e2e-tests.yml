@@ -118,6 +118,9 @@ jobs:
           npm ci
 
       - name: Start React app
+        env:
+          VITE_BACKEND_URL: http://localhost:8080/api
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
         run: |
           cd frontend
           nohup npm run dev &
