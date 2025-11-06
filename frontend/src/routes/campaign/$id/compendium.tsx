@@ -24,6 +24,7 @@ import { HelmetIcon } from "../../../components/icons/typeofcards/HelmetIcon";
 import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
 import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
 import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/campaign/$id/compendium")({
   component: RouteComponent,
@@ -63,14 +64,45 @@ function RouteComponent() {
         bg-gray-200
         "
       >
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
+        <Tabs>
+          <TabsList className="bg-gray-300 flex items-center w-full">
+            <TabsTrigger value="npcs" className="flex justify-center gap-3">
               <NpcIcon width={32} />
               <p className="text-2xl">NPC's</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+            </TabsTrigger>
+            <TabsTrigger value="armors" className="flex justify-center gap-3">
+              <ArmorIcon width={32} />
+              <p className="text-2xl">Armors</p>
+            </TabsTrigger>
+            <TabsTrigger value="boots" className="flex justify-center gap-3">
+              <BootIcon width={32} />
+              <p className="text-2xl">Boots</p>
+            </TabsTrigger>
+            <TabsTrigger
+              value="consumables"
+              className="flex justify-center gap-3"
+            >
+              <ConsumableIcon width={32} />
+              <p className="text-2xl">Consumables</p>
+            </TabsTrigger>
+            <TabsTrigger value="helmets" className="flex justify-center gap-3">
+              <HelmetIcon width={32} />
+              <p className="text-2xl">Helmets</p>
+            </TabsTrigger>
+            <TabsTrigger value="shields" className="flex justify-center gap-3">
+              <ShieldIcon width={32} />
+              <p className="text-2xl">Shields</p>
+            </TabsTrigger>
+            <TabsTrigger value="spells" className="flex justify-center gap-3">
+              <SpellIcon width={32} />
+              <p className="text-2xl">Spells</p>
+            </TabsTrigger>
+            <TabsTrigger value="weapons" className="flex justify-center gap-3">
+              <WeaponIcon width={32} />
+              <p className="text-2xl">Weapons</p>
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="npcs" className="grid grid-cols-5">
             {characterInstancesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -87,16 +119,8 @@ function RouteComponent() {
                     />
                   )
               )}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <ArmorIcon width={32} />
-              <p className="text-2xl">Armors</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+          </TabsContent>
+          <TabsContent value="armors" className="grid grid-cols-5">
             {armorTemplatesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -110,16 +134,8 @@ function RouteComponent() {
                   renderingFrom="COMPENDIUM"
                 />
               ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <BootIcon width={32} />
-              <p className="text-2xl">Boots</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+          </TabsContent>
+          <TabsContent value="boots" className="grid grid-cols-5">
             {bootsTemplatesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -133,16 +149,8 @@ function RouteComponent() {
                   renderingFrom="COMPENDIUM"
                 />
               ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <ConsumableIcon width={32} />
-              <p className="text-2xl">Consumables</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+          </TabsContent>
+          <TabsContent value="consumables" className="grid grid-cols-5">
             {consumableTemplatesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -156,16 +164,8 @@ function RouteComponent() {
                   renderingFrom="COMPENDIUM"
                 />
               ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <HelmetIcon width={32} />
-              <p className="text-2xl">Helmets</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+          </TabsContent>
+          <TabsContent value="helmets" className="grid grid-cols-5">
             {helmetTemplatesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -179,16 +179,8 @@ function RouteComponent() {
                   renderingFrom="COMPENDIUM"
                 />
               ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <ShieldIcon width={32} />
-              <p className="text-2xl">Shields</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+          </TabsContent>
+          <TabsContent value="shields" className="grid grid-cols-5">
             {shieldTemplatesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -202,16 +194,8 @@ function RouteComponent() {
                   renderingFrom="COMPENDIUM"
                 />
               ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <SpellIcon width={32} />
-              <p className="text-2xl">Spells</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+          </TabsContent>
+          <TabsContent value="spells" className="grid grid-cols-5">
             {spellTemplatesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -225,16 +209,8 @@ function RouteComponent() {
                   renderingFrom="COMPENDIUM"
                 />
               ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <WeaponIcon width={32} />
-              <p className="text-2xl">Weapons</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
+          </TabsContent>
+          <TabsContent value="weapons" className="grid grid-cols-5">
             {weaponTemplatesData
               ?.sort((a, b) => {
                 if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -248,8 +224,8 @@ function RouteComponent() {
                   renderingFrom="COMPENDIUM"
                 />
               ))}
-          </div>
-        </details>
+          </TabsContent>
+        </Tabs>
       </div>
     </>
   );

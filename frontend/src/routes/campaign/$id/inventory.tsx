@@ -23,6 +23,7 @@ import { HelmetIcon } from "../../../components/icons/typeofcards/HelmetIcon";
 import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
 import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
 import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -181,20 +182,85 @@ function RouteComponent() {
               </div>
             </div>
           </div>
-          <div>
-            <h2 className="text-xl my-2 font-semibold bg-gray-300 text-center p-2">
-              Inventory
-            </h2>
+          {(heroData.inventory.armors.length > 0 ||
+            heroData.inventory.boots.length > 0 ||
+            heroData.inventory.consumables.length > 0 ||
+            heroData.inventory.helmets.length > 0 ||
+            heroData.inventory.shields.length > 0 ||
+            heroData.inventory.spells.length > 0 ||
+            heroData.inventory.weapons.length > 0) && (
             <div>
-              {heroData.inventory.armors.length > 0 && (
-                <details>
-                  <summary>
-                    <div className="flex justify-start gap-3">
+              <h2 className="text-xl my-2 font-semibold bg-gray-300 text-center p-2">
+                Inventory
+              </h2>
+              <Tabs>
+                <TabsList className="bg-gray-300 flex items-center w-full">
+                  {heroData.inventory.armors.length > 0 && (
+                    <TabsTrigger
+                      value="armors"
+                      className="flex justify-center gap-3"
+                    >
                       <ArmorIcon width={32} />
                       <p className="text-2xl">Armors</p>
-                    </div>
-                  </summary>
-                  <div className="grid grid-cols-5">
+                    </TabsTrigger>
+                  )}
+                  {heroData.inventory.boots.length > 0 && (
+                    <TabsTrigger
+                      value="boots"
+                      className="flex justify-center gap-3"
+                    >
+                      <BootIcon width={32} />
+                      <p className="text-2xl">Boots</p>
+                    </TabsTrigger>
+                  )}
+                  {heroData.inventory.consumables.length > 0 && (
+                    <TabsTrigger
+                      value="consumables"
+                      className="flex justify-center gap-3"
+                    >
+                      <ConsumableIcon width={32} />
+                      <p className="text-2xl">Consumables</p>
+                    </TabsTrigger>
+                  )}
+                  {heroData.inventory.helmets.length > 0 && (
+                    <TabsTrigger
+                      value="helmets"
+                      className="flex justify-center gap-3"
+                    >
+                      <HelmetIcon width={32} />
+                      <p className="text-2xl">Helmets</p>
+                    </TabsTrigger>
+                  )}
+                  {heroData.inventory.shields.length > 0 && (
+                    <TabsTrigger
+                      value="shields"
+                      className="flex justify-center gap-3"
+                    >
+                      <ShieldIcon width={32} />
+                      <p className="text-2xl">Shields</p>
+                    </TabsTrigger>
+                  )}
+                  {heroData.inventory.spells.length > 0 && (
+                    <TabsTrigger
+                      value="spells"
+                      className="flex justify-center gap-3"
+                    >
+                      <SpellIcon width={32} />
+                      <p className="text-2xl">Spells</p>
+                    </TabsTrigger>
+                  )}
+                  {heroData.inventory.weapons.length > 0 && (
+                    <TabsTrigger
+                      value="weapons"
+                      className="flex justify-center gap-3"
+                    >
+                      <WeaponIcon width={32} />
+                      <p className="text-2xl">Weapons</p>
+                    </TabsTrigger>
+                  )}
+                </TabsList>
+                {heroData.inventory.armors.length > 0 && (
+                  <TabsContent value="armors" className="grid grid-cols-5">
                     {heroData.inventory.armors.map((armor) => (
                       <ArmorCard
                         key={armor.name + armor.id}
@@ -202,18 +268,10 @@ function RouteComponent() {
                         renderingFrom="INVENTORY"
                       />
                     ))}
-                  </div>
-                </details>
-              )}
-              {heroData.inventory.boots.length > 0 && (
-                <details>
-                  <summary>
-                    <div className="flex justify-start gap-3">
-                      <BootIcon width={32} />
-                      <p className="text-2xl">Boots</p>
-                    </div>
-                  </summary>
-                  <div className="grid grid-cols-5">
+                  </TabsContent>
+                )}
+                {heroData.inventory.boots.length > 0 && (
+                  <TabsContent value="boots" className="grid grid-cols-5">
                     {heroData.inventory.boots.map((boot) => (
                       <BootsCard
                         key={boot.name + boot.id}
@@ -221,18 +279,10 @@ function RouteComponent() {
                         renderingFrom="INVENTORY"
                       />
                     ))}
-                  </div>
-                </details>
-              )}
-              {heroData.inventory.consumables.length > 0 && (
-                <details>
-                  <summary>
-                    <div className="flex justify-start gap-3">
-                      <ConsumableIcon width={32} />
-                      <p className="text-2xl">Consumables</p>
-                    </div>
-                  </summary>
-                  <div className="grid grid-cols-5">
+                  </TabsContent>
+                )}
+                {heroData.inventory.consumables.length > 0 && (
+                  <TabsContent value="consumables" className="grid grid-cols-5">
                     {heroData.inventory.consumables.map((consumable) => (
                       <ConsumableCard
                         key={consumable.name + consumable.id}
@@ -240,18 +290,10 @@ function RouteComponent() {
                         renderingFrom="INVENTORY"
                       />
                     ))}
-                  </div>
-                </details>
-              )}
-              {heroData.inventory.helmets.length > 0 && (
-                <details>
-                  <summary>
-                    <div className="flex justify-start gap-3">
-                      <HelmetIcon width={32} />
-                      <p className="text-2xl">Helmets</p>
-                    </div>
-                  </summary>
-                  <div className="grid grid-cols-5">
+                  </TabsContent>
+                )}
+                {heroData.inventory.helmets.length > 0 && (
+                  <TabsContent value="helmets" className="grid grid-cols-5">
                     {heroData.inventory.helmets.map((helmet) => (
                       <HelmetCard
                         key={helmet.name + helmet.id}
@@ -259,18 +301,10 @@ function RouteComponent() {
                         renderingFrom="INVENTORY"
                       />
                     ))}
-                  </div>
-                </details>
-              )}
-              {heroData.inventory.shields.length > 0 && (
-                <details>
-                  <summary>
-                    <div className="flex justify-start gap-3">
-                      <ShieldIcon width={32} />
-                      <p className="text-2xl">Shields</p>
-                    </div>
-                  </summary>
-                  <div className="grid grid-cols-5">
+                  </TabsContent>
+                )}
+                {heroData.inventory.shields.length > 0 && (
+                  <TabsContent value="shields" className="grid grid-cols-5">
                     {heroData.inventory.shields.map((shield) => (
                       <ShieldCard
                         key={shield.name + shield.id}
@@ -278,18 +312,10 @@ function RouteComponent() {
                         renderingFrom="INVENTORY"
                       />
                     ))}
-                  </div>
-                </details>
-              )}
-              {heroData.inventory.spells.length > 0 && (
-                <details>
-                  <summary>
-                    <div className="flex justify-start gap-3">
-                      <SpellIcon width={32} />
-                      <p className="text-2xl">Spells</p>
-                    </div>
-                  </summary>
-                  <div className="grid grid-cols-5">
+                  </TabsContent>
+                )}
+                {heroData.inventory.spells.length > 0 && (
+                  <TabsContent value="spells" className="grid grid-cols-5">
                     {heroData.inventory.spells.map((spell) => (
                       <SpellCard
                         key={spell.name + spell.id}
@@ -297,18 +323,10 @@ function RouteComponent() {
                         renderingFrom="INVENTORY"
                       />
                     ))}
-                  </div>
-                </details>
-              )}
-              {heroData.inventory.weapons.length > 0 && (
-                <details>
-                  <summary>
-                    <div className="flex justify-start gap-3">
-                      <WeaponIcon width={32} />
-                      <p className="text-2xl">Weapons</p>
-                    </div>
-                  </summary>
-                  <div className="grid grid-cols-5">
+                  </TabsContent>
+                )}
+                {heroData.inventory.weapons.length > 0 && (
+                  <TabsContent value="weapons" className="grid grid-cols-5">
                     {heroData.inventory.weapons.map((weapon) => (
                       <WeaponCard
                         key={weapon.name + weapon.id}
@@ -316,11 +334,11 @@ function RouteComponent() {
                         renderingFrom="INVENTORY"
                       />
                     ))}
-                  </div>
-                </details>
-              )}
+                  </TabsContent>
+                )}
+              </Tabs>
             </div>
-          </div>
+          )}
         </div>
       ) : (
         <div
