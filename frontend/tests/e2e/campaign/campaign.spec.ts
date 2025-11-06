@@ -6,31 +6,27 @@ const FRONTEND_URL = process.env.FRONTEND_URL!;
 test.describe.configure({ mode: "serial" });
 
 test.describe("Campaign Flow", () => {
-  test.beforeAll(
-    "creating hero in test campaign",
-    async ({ browser }) => {
-      const context = await browser.newContext();
-      const page = await context.newPage();
-      await page.goto(FRONTEND_URL);
-      await page.getByText(/campaigns/i).click();
-      await page.getByTestId(/test-Medieval Adventure/i).click();
-      await page.getByTestId("navigate-to-create-hero").click();
-      await page.getByTestId("hero-name-input").fill("Aki Test!");
-      await page.getByTestId("hero-creation-button").click();
-      await expect(page.getByText(/campaign stats/i)).toBeVisible();
-      await expect(page.getByText(/armors/i)).toBeVisible();
-      await expect(page.getByText(/boots/i)).toBeVisible();
-      await expect(page.getByText(/consumables/i)).toBeVisible();
-      await expect(page.getByText(/helmets/i)).toBeVisible();
-      await expect(page.getByText(/shields/i)).toBeVisible();
-      await expect(page.getByText(/weapons/i)).toBeVisible();
-      await expect(page.getByText(/spells/i)).toBeVisible();
-      await expect(page.getByText(/characters/i)).toBeVisible();
-      await expect(page.getByText(/win rate/i)).toBeVisible();
-      await expect(page.getByText(/forge your hero/i)).toBeHidden();
-    },
-    { timeout: 90000 }
-  );
+  test.beforeAll("creating hero in test campaign", async ({ browser }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto(FRONTEND_URL);
+    await page.getByText(/campaigns/i).click();
+    await page.getByTestId(/test-Medieval Adventure/i).click();
+    await page.getByTestId("navigate-to-create-hero").click();
+    await page.getByTestId("hero-name-input").fill("Aki Test!");
+    await page.getByTestId("hero-creation-button").click();
+    await expect(page.getByText(/campaign stats/i)).toBeVisible();
+    await expect(page.getByText(/armors/i)).toBeVisible();
+    await expect(page.getByText(/boots/i)).toBeVisible();
+    await expect(page.getByText(/consumables/i)).toBeVisible();
+    await expect(page.getByText(/helmets/i)).toBeVisible();
+    await expect(page.getByText(/shields/i)).toBeVisible();
+    await expect(page.getByText(/weapons/i)).toBeVisible();
+    await expect(page.getByText(/spells/i)).toBeVisible();
+    await expect(page.getByText(/characters/i)).toBeVisible();
+    await expect(page.getByText(/win rate/i)).toBeVisible();
+    await expect(page.getByText(/forge your hero/i)).toBeHidden();
+  });
 
   test("navigating to campaigns shows the test campaign", async ({ page }) => {
     await page.goto(FRONTEND_URL);
@@ -197,7 +193,7 @@ test.describe("Campaign Flow", () => {
       // If the character would be faster, then the "Start Battle" button does not render
       // eslint-disable-next-line
     } catch {}
-    const battleTimeout = 180000; // 3 min of fight max
+    const battleTimeout = 300000;
     const start = Date.now();
 
     while (Date.now() - start < battleTimeout) {

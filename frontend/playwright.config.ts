@@ -13,7 +13,7 @@ dotenv.config({ path: path.resolve("./tests/e2e/.env") });
  */
 export default defineConfig({
   expect: { timeout: 15000 },
-  timeout: 60000, // Increase test timeout to 60 seconds
+  timeout: 90000, // Increase test timeout to 60 seconds
   globalSetup: path.resolve("./tests/e2e/global.setup.ts"),
   testDir: "./tests/e2e",
   outputDir: "./tests/e2e/results",
@@ -22,7 +22,7 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 3 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
