@@ -24,6 +24,7 @@ import { HelmetIcon } from "../../../components/icons/typeofcards/HelmetIcon";
 import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
 import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
 import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 export const Route = createFileRoute("/campaign/$id/compendium")({
   component: RouteComponent,
@@ -63,193 +64,197 @@ function RouteComponent() {
         bg-gray-200
         "
       >
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <NpcIcon width={32} />
-              <p className="text-2xl">NPC's</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {characterInstancesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map(
-                (char) =>
-                  char.characterType === "NPC" && (
-                    <CharacterCard
-                      key={char.name + char.id}
-                      {...char}
+        <Tabs>
+          <TabsList>
+            <TabsTrigger value="npcs">
+              <div className="flex justify-start gap-3">
+                <NpcIcon width={32} />
+                <p className="text-2xl">NPC's</p>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="armors">
+              <div className="flex justify-start gap-3">
+                <ArmorIcon width={32} />
+                <p className="text-2xl">Armors</p>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="boots">
+              <div className="flex justify-start gap-3">
+                <BootIcon width={32} />
+                <p className="text-2xl">Boots</p>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="consumables">
+              <div className="flex justify-start gap-3">
+                <ConsumableIcon width={32} />
+                <p className="text-2xl">Consumables</p>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="helmets">
+              <div className="flex justify-start gap-3">
+                <HelmetIcon width={32} />
+                <p className="text-2xl">Helmets</p>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="shields">
+              <div className="flex justify-start gap-3">
+                <ShieldIcon width={32} />
+                <p className="text-2xl">Shields</p>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="spells">
+              <div className="flex justify-start gap-3">
+                <SpellIcon width={32} />
+                <p className="text-2xl">Spells</p>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="weapons">
+              <div className="flex justify-start gap-3">
+                <WeaponIcon width={32} />
+                <p className="text-2xl">Weapons</p>
+              </div>
+            </TabsTrigger>
+            <TabsContent value="npcs">
+              <div className="grid grid-cols-5">
+                {characterInstancesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map(
+                    (char) =>
+                      char.characterType === "NPC" && (
+                        <CharacterCard
+                          key={char.name + char.id}
+                          {...char}
+                          renderingFrom="COMPENDIUM"
+                        />
+                      )
+                  )}
+              </div>
+            </TabsContent>
+            <TabsContent value="armors">
+              <div className="grid grid-cols-5">
+                {armorTemplatesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map((armor) => (
+                    <ArmorCard
+                      key={armor.name + armor.id}
+                      {...armor}
                       renderingFrom="COMPENDIUM"
                     />
-                  )
-              )}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <ArmorIcon width={32} />
-              <p className="text-2xl">Armors</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {armorTemplatesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map((armor) => (
-                <ArmorCard
-                  key={armor.name + armor.id}
-                  {...armor}
-                  renderingFrom="COMPENDIUM"
-                />
-              ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <BootIcon width={32} />
-              <p className="text-2xl">Boots</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {bootsTemplatesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map((boot) => (
-                <BootsCard
-                  key={boot.name + boot.id}
-                  {...boot}
-                  renderingFrom="COMPENDIUM"
-                />
-              ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <ConsumableIcon width={32} />
-              <p className="text-2xl">Consumables</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {consumableTemplatesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map((consumable) => (
-                <ConsumableCard
-                  key={consumable.name + consumable.id}
-                  {...consumable}
-                  renderingFrom="COMPENDIUM"
-                />
-              ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <HelmetIcon width={32} />
-              <p className="text-2xl">Helmets</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {helmetTemplatesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map((helmet) => (
-                <HelmetCard
-                  key={helmet.name + helmet.id}
-                  {...helmet}
-                  renderingFrom="COMPENDIUM"
-                />
-              ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <ShieldIcon width={32} />
-              <p className="text-2xl">Shields</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {shieldTemplatesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map((shield) => (
-                <ShieldCard
-                  key={shield.name + shield.id}
-                  {...shield}
-                  renderingFrom="COMPENDIUM"
-                />
-              ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <SpellIcon width={32} />
-              <p className="text-2xl">Spells</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {spellTemplatesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map((spell) => (
-                <SpellCard
-                  key={spell.name + spell.id}
-                  {...spell}
-                  renderingFrom="COMPENDIUM"
-                />
-              ))}
-          </div>
-        </details>
-        <details>
-          <summary>
-            <div className="flex justify-start gap-3">
-              <WeaponIcon width={32} />
-              <p className="text-2xl">Weapons</p>
-            </div>
-          </summary>
-          <div className="grid grid-cols-5">
-            {weaponTemplatesData
-              ?.sort((a, b) => {
-                if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-                if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-                return 0; // both have or both don't → keep order
-              })
-              .map((weapon) => (
-                <WeaponCard
-                  key={weapon.name + weapon.id}
-                  {...weapon}
-                  renderingFrom="COMPENDIUM"
-                />
-              ))}
-          </div>
-        </details>
+                  ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="boots">
+              <div className="grid grid-cols-5">
+                {bootsTemplatesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map((boot) => (
+                    <BootsCard
+                      key={boot.name + boot.id}
+                      {...boot}
+                      renderingFrom="COMPENDIUM"
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="consumables">
+              <div className="grid grid-cols-5">
+                {consumableTemplatesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map((consumable) => (
+                    <ConsumableCard
+                      key={consumable.name + consumable.id}
+                      {...consumable}
+                      renderingFrom="COMPENDIUM"
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="helmets">
+              <div className="grid grid-cols-5">
+                {helmetTemplatesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map((helmet) => (
+                    <HelmetCard
+                      key={helmet.name + helmet.id}
+                      {...helmet}
+                      renderingFrom="COMPENDIUM"
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="shields">
+              <div className="grid grid-cols-5">
+                {shieldTemplatesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map((shield) => (
+                    <ShieldCard
+                      key={shield.name + shield.id}
+                      {...shield}
+                      renderingFrom="COMPENDIUM"
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="spells">
+              <div className="grid grid-cols-5">
+                {spellTemplatesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map((spell) => (
+                    <SpellCard
+                      key={spell.name + spell.id}
+                      {...spell}
+                      renderingFrom="COMPENDIUM"
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="weapons">
+              <div className="grid grid-cols-5">
+                {weaponTemplatesData
+                  ?.sort((a, b) => {
+                    if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
+                    if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
+                    return 0; // both have or both don't → keep order
+                  })
+                  .map((weapon) => (
+                    <WeaponCard
+                      key={weapon.name + weapon.id}
+                      {...weapon}
+                      renderingFrom="COMPENDIUM"
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+          </TabsList>
+        </Tabs>
       </div>
     </>
   );

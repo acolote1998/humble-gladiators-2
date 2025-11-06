@@ -6,27 +6,31 @@ const FRONTEND_URL = process.env.FRONTEND_URL!;
 test.describe.configure({ mode: "serial" });
 
 test.describe("Campaign Flow", () => {
-  test.beforeAll("creating hero in test campaign", async ({ browser }) => {
-    const context = await browser.newContext();
-    const page = await context.newPage();
-    await page.goto(FRONTEND_URL);
-    await page.getByText(/campaigns/i).click();
-    await page.getByTestId(/test-Medieval Adventure/i).click();
-    await page.getByTestId("navigate-to-create-hero").click();
-    await page.getByTestId("hero-name-input").fill("Aki Test!");
-    await page.getByTestId("hero-creation-button").click();
-    await expect(page.getByText(/campaign stats/i)).toBeVisible();
-    await expect(page.getByText(/armors/i)).toBeVisible();
-    await expect(page.getByText(/boots/i)).toBeVisible();
-    await expect(page.getByText(/consumables/i)).toBeVisible();
-    await expect(page.getByText(/helmets/i)).toBeVisible();
-    await expect(page.getByText(/shields/i)).toBeVisible();
-    await expect(page.getByText(/weapons/i)).toBeVisible();
-    await expect(page.getByText(/spells/i)).toBeVisible();
-    await expect(page.getByText(/characters/i)).toBeVisible();
-    await expect(page.getByText(/win rate/i)).toBeVisible();
-    await expect(page.getByText(/forge your hero/i)).toBeHidden();
-  }, { timeout: 60000 }); // Increase beforeAll timeout to 60 seconds
+  test.beforeAll(
+    "creating hero in test campaign",
+    async ({ browser }) => {
+      const context = await browser.newContext();
+      const page = await context.newPage();
+      await page.goto(FRONTEND_URL);
+      await page.getByText(/campaigns/i).click();
+      await page.getByTestId(/test-Medieval Adventure/i).click();
+      await page.getByTestId("navigate-to-create-hero").click();
+      await page.getByTestId("hero-name-input").fill("Aki Test!");
+      await page.getByTestId("hero-creation-button").click();
+      await expect(page.getByText(/campaign stats/i)).toBeVisible();
+      await expect(page.getByText(/armors/i)).toBeVisible();
+      await expect(page.getByText(/boots/i)).toBeVisible();
+      await expect(page.getByText(/consumables/i)).toBeVisible();
+      await expect(page.getByText(/helmets/i)).toBeVisible();
+      await expect(page.getByText(/shields/i)).toBeVisible();
+      await expect(page.getByText(/weapons/i)).toBeVisible();
+      await expect(page.getByText(/spells/i)).toBeVisible();
+      await expect(page.getByText(/characters/i)).toBeVisible();
+      await expect(page.getByText(/win rate/i)).toBeVisible();
+      await expect(page.getByText(/forge your hero/i)).toBeHidden();
+    },
+    { timeout: 60000 }
+  ); // Increase beforeAll timeout to 60 seconds
 
   test("navigating to campaigns shows the test campaign", async ({ page }) => {
     await page.goto(FRONTEND_URL);
@@ -42,20 +46,20 @@ test.describe("Campaign Flow", () => {
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-compendium").click();
     await page.getByText(/npc's/i).click();
-    await page.getByText(/armors/i).click();
-    await page.getByText(/boots/i).click();
-    await page.getByText(/consumables/i).click();
-    await page.getByText(/helmets/i).click();
-    await page.getByText(/shields/i).click();
-    await page.getByText(/spells/i).click();
-    await page.getByText(/weapons/i).click();
     await expect(page.getByTestId("character-card")).toHaveCount(2);
+    await page.getByText(/armors/i).click();
     await expect(page.getByTestId("armor-card")).toHaveCount(2);
+    await page.getByText(/boots/i).click();
     await expect(page.getByTestId("boots-card")).toHaveCount(2);
+    await page.getByText(/consumables/i).click();
     await expect(page.getByTestId("consumable-card")).toHaveCount(2);
+    await page.getByText(/helmets/i).click();
     await expect(page.getByTestId("helmet-card")).toHaveCount(2);
+    await page.getByText(/shields/i).click();
     await expect(page.getByTestId("shield-card")).toHaveCount(2);
+    await page.getByText(/spells/i).click();
     await expect(page.getByTestId("spell-card")).toHaveCount(2);
+    await page.getByText(/weapons/i).click();
     await expect(page.getByTestId("weapon-card")).toHaveCount(2);
   });
 
