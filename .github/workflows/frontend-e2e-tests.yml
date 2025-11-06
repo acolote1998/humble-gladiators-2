@@ -50,7 +50,7 @@ jobs:
       - name: Build Spring Boot backend
         run: |
           cd backend
-          ./mvnw clean package -DskipTests
+          ./mvnw clean package --batch-mode -DskipTests
 
       - name: Run Spring Boot backend
         env:
