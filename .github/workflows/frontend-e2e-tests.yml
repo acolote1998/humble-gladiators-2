@@ -72,17 +72,17 @@ jobs:
           UNLIMITED_BATTLES_ALLOWED: false
           SKIP_REQUIREMENTS: true
           GENERATE_IMAGES: false
-          # GENERATE_CAMPAIGN_COVER: false
-          # GENERATE_CAMPAIGN_CARD_BACK: false
+          GENERATE_CAMPAIGN_COVER: false
+          GENERATE_CAMPAIGN_CARD_BACK: false
           GENERATE_ALL: false
-          # GENERATE_NPCS: true
-          # GENERATE_ARMORS: true
-          # GENERATE_BOOTS: true
-          # GENERATE_CONSUMABLES: true
-          # GENERATE_HELMETS: true
-          # GENERATE_SHIELDS: true
-          # GENERATE_SPELLS: true
-          # GENERATE_WEAPONS: true
+          GENERATE_NPCS: true
+          GENERATE_ARMORS: true
+          GENERATE_BOOTS: true
+          GENERATE_CONSUMABLES: true
+          GENERATE_HELMETS: true
+          GENERATE_SHIELDS: true
+          GENERATE_SPELLS: true
+          GENERATE_WEAPONS: true
           NPC_ITEM_GENERATION_CHANCE: 20
           NPC_ITEM_DROP_CHANCE: 10
           CARD_RARITY_ONE_CHANCE: 100
