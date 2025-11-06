@@ -102,7 +102,20 @@ jobs:
         run: |
           cd backend
           nohup java -jar target/*.jar &
-          sleep 20  # wait for backend to start
+
+      - name: Wait for backend to be ready
+        run: |
+          echo "Waiting for backend to be ready..."
+          for i in {1..60}; do
+            if curl -f http://localhost:8080/api/public/health 2>/dev/null; then
+              echo "Backend is ready!"
+              exit 0
+            fi
+            echo "Attempt $i: Backend not ready yet, waiting..."
+            sleep 2
+          done
+          echo "Backend failed to start within timeout"
+          exit 1
 
       # ----------- FRONTEND (React) -----------
       - name: Set up Node.js

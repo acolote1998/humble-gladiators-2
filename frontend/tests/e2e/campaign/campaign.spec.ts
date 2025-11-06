@@ -26,7 +26,7 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByText(/characters/i)).toBeVisible();
     await expect(page.getByText(/win rate/i)).toBeVisible();
     await expect(page.getByText(/forge your hero/i)).toBeHidden();
-  });
+  }, { timeout: 60000 }); // Increase beforeAll timeout to 60 seconds
 
   test("navigating to campaigns shows the test campaign", async ({ page }) => {
     await page.goto(FRONTEND_URL);

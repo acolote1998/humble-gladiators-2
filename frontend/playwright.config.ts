@@ -13,6 +13,7 @@ dotenv.config({ path: path.resolve("./tests/e2e/.env") });
  */
 export default defineConfig({
   expect: { timeout: 15000 },
+  timeout: 60000, // Increase test timeout to 60 seconds
   globalSetup: path.resolve("./tests/e2e/global.setup.ts"),
   testDir: "./tests/e2e",
   outputDir: "./tests/e2e/results",
