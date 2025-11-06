@@ -118,7 +118,7 @@ jobs:
       - name: Start React app
         env:
           VITE_BACKEND_URL: http://localhost:8080/api
-          VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
           FRONTEND_URL: http://localhost:5173/
           E2E_CLERK_USER_USERNAME: testuser@humblegladiators2.com
           E2E_CLERK_USER_PASSWORD: testuser@humblegladiators2.com
