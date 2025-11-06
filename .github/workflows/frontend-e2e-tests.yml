@@ -1,0 +1,144 @@
+name: Frontend E2E Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ----------- DB CONTAINERSS (Docker) -----------
+      - name: Run Test DB DockerContainer
+        run: docker compose up -d
+        working-directory: backend
+
+      - name: Wait for database to be ready
+        run: |
+          echo "Waiting for database to be ready..."
+          timeout 60 bash -c 'until docker exec humble-gladiators-2-postgres-test-db pg_isready -U testdbusername -d humble-gladiators-2-test-db > /dev/null 2>&1; do sleep 2; done'
+          echo "Database is ready!"
+        working-directory: backend
+      # ----------- BACKEND (Spring Boot) -----------
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          cache: maven
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Make Maven wrapper executable
+        run: chmod +x mvnw
+        working-directory: backend
+
+      - name: Build Spring Boot backend
+        run: |
+          cd backend
+          ./mvnw clean package --batch-mode -DskipTests
+
+      - name: Run Spring Boot backend
+        env:
+          CLERK_ISSUER_URL: ${{ vars.CLERK_ISSUER_URL }}
+          JDBC_DATABASE_URL: jdbc:postgresql://localhost:5433/humble-gladiators-2-test-db
+          JDBC_DATABASE_USERNAME: testdbusername
+          JDBC_DATABASE_PASSWORD: testdbusername
+          JPA_DDL_AUTO: create-drop
+          JPA_SHOW_SQL: false
+          DEFER_DATASOURCE_INITIALIZATION: true
+          SQL_INIT_MODE: always
+          APP_BASE_URL: http://localhost:8080
+          SERVER_PORT: 8080
+          RUNWARE_IMG_GEN_URL: ${{ vars.RUNWARE_IMG_GEN_URL }}
+          RUNWARE_API_KEY: ${{ vars.RUNWARE_API_KEY }}
+          GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
+          GAME_CREATION_STATE_INTERVAL: 0
+          UNLIMITED_BOOSTERS_ALLOWED: false
+          UNLIMITED_BATTLES_ALLOWED: false
+          SKIP_REQUIREMENTS: true
+          GENERATE_IMAGES: false
+          GENERATE_CAMPAIGN_COVER: false
+          GENERATE_CAMPAIGN_CARD_BACK: false
+          GENERATE_ALL: false
+          GENERATE_NPCS: true
+          GENERATE_ARMORS: true
+          GENERATE_BOOTS: true
+          GENERATE_CONSUMABLES: true
+          GENERATE_HELMETS: true
+          GENERATE_SHIELDS: true
+          GENERATE_SPELLS: true
+          GENERATE_WEAPONS: true
+          NPC_ITEM_GENERATION_CHANCE: 20
+          NPC_ITEM_DROP_CHANCE: 10
+          CARD_RARITY_ONE_CHANCE: 100
+          CARD_RARITY_TWO_CHANCE: 0
+          CARD_RARITY_THREE_CHANCE: 0
+          CARD_RARITY_FOUR_CHANCE: 0
+          CARD_RARITY_FIVE_CHANCE: 0
+          CARD_TIER_ONE_CHANCE: 100
+          CARD_TIER_TWO_CHANCE: 0
+          CARD_TIER_THREE_CHANCE: 0
+          CARD_TIER_FOUR_CHANCE: 0
+          CARD_TIER_FIVE_CHANCE: 0
+          AMOUNT_OF_CARDS_PER_ITEM_BOOSTER: 3
+          AMOUNT_OF_CARDS_PER_CHARACTER_BOOSTER: 1
+          MINIMUM_STAT_VALUE: 14
+          MAXIMUM_STAT_VALUE: 20
+          CONSTITUTION_HP_MODIFIER: 5
+          INTELLIGENCE_MP_MODIFIER: 10
+        run: |
+          cd backend
+          nohup java -jar target/*.jar &
+          sleep 20  # wait for backend to start
+
+      # ----------- FRONTEND (React) -----------
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Start React app
+        env:
+          VITE_BACKEND_URL: http://localhost:8080/api
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
+          FRONTEND_URL=http://localhost:5173/
+          E2E_CLERK_USER_USERNAME=testuser@humblegladiators2.com
+          E2E_CLERK_USER_PASSWORD=testuser@humblegladiators2.com
+          CLERK_PUBLISHABLE_KEY=${{ vars.CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY=${{ vars.CLERK_SECRET_KEY }}
+          CLERK_FRONTEND_API_URL=${{ vars.CLERK_FRONTEND_API_URL }}
+        run: |
+          cd frontend
+          nohup npm run dev &
+          npx wait-on http://localhost:5173  # waits until React is ready
+
+      # ----------- TESTS -----------
+      - name: Run frontend tests
+        run: |
+          cd frontend
+          npm run e2e-test
+
+      - name: Stop and clean up containers
+        if: always()
+        run: docker compose down
+        working-directory: backend

@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "e2e-test": "playwright test",
+    "e2e-test:ui": "playwright test --ui"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.49.0",
