@@ -124,6 +124,12 @@ jobs:
           nohup npm run dev &
           npx wait-on http://localhost:5173  # waits until React is ready
 
+      # -------- PREPARING PLAYWRIGHT --------
+      - name: Prepare Playwright Browsers
+        run: |
+          cd frontend
+          npx playwright install
+
       # ----------- TESTS -----------
       - name: Run frontend tests
         env:
