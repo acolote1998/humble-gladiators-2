@@ -4,28 +4,28 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --page-container-bg: #f0f7f0;
-  --page-container-bg-darker: #d4e8d4;
-  --page-container-bg-darkerer: #7cb084;
-  --page-container-bg-darkest: #2d5937;
-  --page-container-border: #a8c9a8;
+  --page-container-bg: #ede7f6;
+  --page-container-bg-darker: #d1c4e9;
+  --page-container-bg-darkerer: #9575cd;
+  --page-container-bg-darkest: #673ab7;
+  --page-container-border: #b39ddb;
   --light-text: #ffffff;
-  --dark-text: #1a2a1a;
-  --site-bg: #c4dbc4;
+  --dark-text: #1a0033;
+  --site-bg: #e1d6f0;
 
-  --action-positive-bg: #7de2a4;
+  --action-positive-bg: #ff9100;
   --action-positive-foreground: var(--dark-text);
-  --battle-victory-bg: var(--action-positive-bg);
-  --battle-victory-foreground: var(--action-positive-foreground);
-  --battle-defeat-bg: #f28f7a;
+  --battle-victory-bg: #00e676;
+  --battle-victory-foreground: var(--dark-text);
+  --battle-defeat-bg: #ff1744;
   --battle-defeat-foreground: var(--light-text);
   --creation-color: var(--action-positive-bg);
   --unavailable-color: var(--battle-defeat-bg);
-  --unavailable-color-border: #c74a36;
-  --highlight-color: #fff89a;
-  --highlight-color-border: #c7b600;
-  --information-color: #9ed5ff;
-  --information-color-border: #1e65a9;
+  --unavailable-color-border: #d50000;
+  --highlight-color: #ffeb3b;
+  --highlight-color-border: #fbc02d;
+  --information-color: #651fff;
+  --information-color-border: #3d00e0;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
