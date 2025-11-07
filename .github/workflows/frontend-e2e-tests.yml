@@ -147,6 +147,7 @@ jobs:
       - name: Run frontend tests
         env:
           FRONTEND_URL: http://localhost:5173/
+          BACKEND_URL: http://localhost:8080/api
           E2E_CLERK_USER_USERNAME: testuser@humblegladiators2.com
           E2E_CLERK_USER_PASSWORD: testuser@humblegladiators2.com
           CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
