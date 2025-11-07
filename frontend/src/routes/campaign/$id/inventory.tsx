@@ -16,14 +16,6 @@ import type { ShieldType } from "../../../types/shieldTypes";
 import type { WeaponType } from "../../../types/weaponTypes";
 import type { BootsType } from "../../../types/bootsTypes";
 import InventoryCardPlaceholder from "../../../components/cards/InventoryCardPlaceholder";
-import { ArmorIcon } from "../../../components/icons/typeofcards/ArmorIcon";
-import { BootIcon } from "../../../components/icons/typeofcards/BootIcon";
-import { ConsumableIcon } from "../../../components/icons/typeofcards/ConsumableIcon";
-import { HelmetIcon } from "../../../components/icons/typeofcards/HelmetIcon";
-import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
-import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
-import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageContainer } from "@/components/ui/PageContainer";
 import CardsDisplayer from "@/components/ui/CardsDisplayer";
 
