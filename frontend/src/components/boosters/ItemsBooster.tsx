@@ -100,7 +100,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
       <div>
         {isBoosterAvailableLoading ? (
           <Loader />
-        ) : isBoosterAvailable && !dataFromItemBooster ? (
+        ) : isBoosterAvailable &&
+          !dataFromItemBooster &&
+          !dataFromBoosterLoading ? (
           <div
             data-testid="open-booster-button"
             onClick={() => {
@@ -120,7 +122,8 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
             )}
           </div>
         ) : (
-          !dataFromItemBooster && (
+          !dataFromItemBooster &&
+          !dataFromBoosterLoading && (
             <div className="text-lg font-semibold text-center flex items-center justify-center gap-4">
               <p>It is not possible to open an item booster right now.</p>
               <SandClockIcon width={28} />

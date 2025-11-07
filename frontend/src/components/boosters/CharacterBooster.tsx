@@ -65,7 +65,9 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
       <div>
         {isBoosterAvailableLoading ? (
           <Loader />
-        ) : isBoosterAvailable && !dataFromCharacterBooster ? (
+        ) : isBoosterAvailable &&
+          !dataFromCharacterBooster &&
+          !dataFromBoosterLoading ? (
           <div
             className="h-166"
             data-testid="open-booster-button"
@@ -86,7 +88,8 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
             )}
           </div>
         ) : (
-          !dataFromCharacterBooster && (
+          !dataFromCharacterBooster &&
+          !dataFromBoosterLoading && (
             <div className="text-lg font-semibold text-center flex items-center justify-center gap-4">
               <p>It is not possible to open a character booster right now.</p>
               <SandClockIcon width={28} />
