@@ -17,7 +17,7 @@ export const RedirectCreateHeroButton = ({
             rounded-md
             font-semibold
             hover:text-[var(--dark-text)]
-            hover:bg-[var(--creation-color)] 
+            hover:bg-[var(--action-positive-bg)] 
             hover:tracking-wider
             cursor-pointer
             hover:scale-110

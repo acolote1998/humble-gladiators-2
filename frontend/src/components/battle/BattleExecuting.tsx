@@ -200,7 +200,7 @@ const BattleExecuting = ({
               {currentCharacterToPlay.id == teamTwo[0].id ? (
                 <p
                   data-testid="start-battle-trigger"
-                  className="text-lg text-center bg-[var(--creation-color)]"
+                  className="text-lg text-center bg-[var(--action-positive-bg)] text-[var(--action-positive-foreground)]"
                   onClick={() => {
                     setIsGameStarted(true);
                   }}
@@ -210,7 +210,7 @@ const BattleExecuting = ({
               ) : (
                 !isGameStarted &&
                 turns.length < 1 && (
-                  <p className="text-lg text-center bg-[var(--creation-color)]">
+                  <p className="text-lg text-center bg-[var(--action-positive-bg)] text-[var(--action-positive-foreground)]">
                     You start, cast one of your cards by clicking on it
                   </p>
                 )

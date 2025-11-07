@@ -22,7 +22,11 @@ const RewardsTable = ({
         Battle Finished
       </p>
       <p
-        className={`my-2 p-1 rounded-md ${heroHasWon() ? "bg-[var(--creation-color)]" : "bg-[var(--unavailable-color)]"}  text-xl text-center text-[var(--light-text)]`}
+        className={`my-2 p-1 rounded-md ${
+          heroHasWon()
+            ? "bg-[var(--battle-victory-bg)] text-[var(--battle-victory-foreground)]"
+            : "bg-[var(--battle-defeat-bg)] text-[var(--battle-defeat-foreground)]"
+        }  text-xl text-center`}
       >
         {heroHasWon() ? "Victory" : "Defeat"}
       </p>

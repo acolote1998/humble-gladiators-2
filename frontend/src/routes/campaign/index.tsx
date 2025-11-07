@@ -32,7 +32,7 @@ function CampaignsRoute() {
             text-xl
             rounded-md
             font-semibold
-            hover:bg-[var(--creation-color)] 
+            hover:bg-[var(--action-positive-bg)] 
             hover:tracking-wider
             cursor-pointer
             hover:scale-110

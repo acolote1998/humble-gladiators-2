@@ -13,8 +13,14 @@
   --dark-text: #0a1316;
   --site-bg: #b1d0da;
 
-  --creation-color: #7af2d1;
-  --unavailable-color: #f59aa0;
+  --action-positive-bg: #7af2d1;
+  --action-positive-foreground: var(--dark-text);
+  --battle-victory-bg: var(--action-positive-bg);
+  --battle-victory-foreground: var(--action-positive-foreground);
+  --battle-defeat-bg: #f59aa0;
+  --battle-defeat-foreground: var(--light-text);
+  --creation-color: var(--action-positive-bg);
+  --unavailable-color: var(--battle-defeat-bg);
   --unavailable-color-border: #c73642;
   --highlight-color: #fff89a;
   --highlight-color-border: #c7b600;

@@ -108,7 +108,7 @@ const CreateCampaign = () => {
             className={`px-6 py-3 text-lg font-semibold rounded-md border border-(--page-container-bg-darkerer) bg-(--page-container-border) text-(--light-text) transition-all ease-in-out duration-300 ${
               isCreatingCampaign || isCreatePending
                 ? "opacity-70 cursor-progress"
-                : "hover:text-(--dark-text) hover:bg-[var(--creation-color)]  hover:scale-105 cursor-pointer"
+                : "hover:bg-[var(--action-positive-bg)] hover:text-[var(--action-positive-foreground)] hover:scale-105 cursor-pointer"
             }`}
           >
             {isCreatingCampaign || isCreatePending
