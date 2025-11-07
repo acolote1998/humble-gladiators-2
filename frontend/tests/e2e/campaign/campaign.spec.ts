@@ -14,9 +14,13 @@ test.describe("Campaign Flow", () => {
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load by checking for "Your Campaigns" text
     // This ensures navigation completed and the component is rendering
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
     // Wait for the campaign element to be visible (this ensures the API call has completed)
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navigate-to-create-hero").click();
     await page.getByTestId("hero-name-input").fill("Aki Test!");
@@ -38,8 +42,12 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
   });
 
   test("navigating to compendium and verifying that all cards are created", async ({
@@ -48,8 +56,12 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-compendium").click();
     await page.getByText(/npc's/i).click();
@@ -76,8 +88,12 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-item-boosters").click();
     await page.getByTestId("open-booster-button").click();
@@ -86,40 +102,30 @@ test.describe("Campaign Flow", () => {
       timeout: 300_300,
     });
     await page.getByTestId("navbar-inventory").click();
+
     const categories = [
-      "armors",
-      "boots",
-      "consumables",
-      "helmets",
-      "shields",
-      "spells",
-      "weapons",
+      { tab: "armors", card: "armor" },
+      { tab: "boots", card: "boots" },
+      { tab: "consumables", card: "consumable" },
+      { tab: "helmets", card: "helmet" },
+      { tab: "shields", card: "shield" },
+      { tab: "spells", card: "spell" },
+      { tab: "weapons", card: "weapon" },
     ];
 
-    for (const category of categories) {
-      const tab = page.getByText(new RegExp(category, "i"));
+    let totalCards = 0;
+
+    for (const { tab, card } of categories) {
+      const tabElement = page.getByText(new RegExp(tab, "i"));
       try {
-        await tab.first().waitFor({ state: "visible", timeout: 1500 });
-        await tab.first().click();
+        await tabElement.first().waitFor({ state: "visible", timeout: 1500 });
+        await tabElement.first().click();
+        totalCards += await page.getByTestId(`${card}-card`).count();
       } catch {
         // Tab didn't appear within 1.5s, skip it
       }
     }
 
-    const cardType = [
-      "armor",
-      "boots",
-      "consumable",
-      "helmet",
-      "shield",
-      "spell",
-      "weapon",
-    ];
-
-    let totalCards = 0;
-    for (const card of cardType) {
-      totalCards += await page.getByTestId(`${card}-card`).count();
-    }
     await expect(totalCards).toBe(3);
   });
 
@@ -129,8 +135,12 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-inventory").click();
     const categories = [
@@ -167,8 +177,12 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-inventory").click();
 
@@ -186,8 +200,12 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-character-boosters").click();
     await page.getByTestId("open-booster-button").click();
@@ -204,8 +222,12 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     await page.getByText(/campaigns/i).click();
     // Wait for the campaigns page to load
-    await expect(page.getByText(/your campaigns/i)).toBeVisible({ timeout: 30000 });
-    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({ timeout: 60000 });
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
     await page.getByTestId(/test-Medieval Adventure/i).click();
     await page.getByTestId("navbar-battles").click();
     await expect(page.getByTestId("create-battle-button")).toBeVisible();
