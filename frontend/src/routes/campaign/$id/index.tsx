@@ -24,7 +24,10 @@ function RouteComponent() {
         ) : (
           campaignData &&
           campaignData.coverImgBase64 && (
-            <div className="grid grid-cols-5 p-5 justify-items-center place-items-center">
+            <div
+              className="grid grid-cols-5 p-5 justify-items-center place-items-center"
+              id="campaign"
+            >
               <img
                 draggable={false}
                 className="h-[74vh] rounded-md border-2 col-span-3"

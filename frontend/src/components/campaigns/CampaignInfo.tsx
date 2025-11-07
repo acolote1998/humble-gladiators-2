@@ -30,7 +30,7 @@ const CampaignInfo = ({
         `}
         onClick={() => {
           if (campaignCreationState == "GAME_CREATED")
-            navigate({ to: `/campaign/${campaignId}` });
+            navigate({ to: `/campaign/${campaignId}#campaign` });
         }}
       >
         {campaignCreationState == "GAME_CREATED" &&
