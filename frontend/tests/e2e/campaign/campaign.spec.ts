@@ -1,9 +1,37 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import dotenv from "dotenv";
 dotenv.config();
 
 const FRONTEND_URL = process.env.FRONTEND_URL!;
+const E2E_CLERK_USER_USERNAME = process.env.E2E_CLERK_USER_USERNAME!;
+const E2E_CLERK_USER_PASSWORD = process.env.E2E_CLERK_USER_PASSWORD!;
 test.describe.configure({ mode: "serial" });
+
+async function ensureAuthenticated(page: Page) {
+  console.log("Ensuring Clerk session");
+  const signOutButton = page.getByRole("button", { name: /sign out/i });
+
+  try {
+    await signOutButton.waitFor({ state: "visible", timeout: 10000 });
+    console.log("Existing Clerk session detected");
+    return;
+  } catch {
+    console.log("No active Clerk session detected, performing login");
+  }
+
+  await page.getByText(/sign in/i).click();
+  await page
+    .getByPlaceholder("Enter your email address")
+    .fill(E2E_CLERK_USER_USERNAME);
+  await page.getByRole("button", { name: "Continue" }).click();
+  await page
+    .getByPlaceholder("Enter your password")
+    .fill(E2E_CLERK_USER_PASSWORD);
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await signOutButton.waitFor({ state: "visible", timeout: 30000 });
+  console.log("Clerk authentication ready (fallback login)");
+}
 
 test.describe("Campaign Flow", () => {
   test.beforeAll("creating hero in test campaign", async ({ browser }) => {
@@ -15,17 +43,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     // Wait for the campaigns page to load by checking for "Your Campaigns" text
     // This ensures navigation completed and the component is rendering
@@ -95,6 +127,7 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByText(/win rate/i)).toBeVisible();
     await expect(page.getByText(/forge your hero/i)).toBeHidden();
     console.log("Hero created successfully, beforeAll complete");
+    await context.close();
     console.log("\\\\\\ FINISHED \\\\\\");
   });
 
@@ -106,17 +139,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
@@ -140,17 +177,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
@@ -209,17 +250,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
@@ -287,17 +332,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
@@ -309,9 +358,14 @@ test.describe("Campaign Flow", () => {
     console.log("Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
     console.log("Waiting for navigation to campaign detail page");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Navigating to inventory");
     await page.getByTestId("navbar-inventory").click();
@@ -377,17 +431,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
@@ -399,9 +457,14 @@ test.describe("Campaign Flow", () => {
     console.log("Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
     console.log("Waiting for navigation to campaign detail page");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Navigating to inventory");
     await page.getByTestId("navbar-inventory").click();
@@ -446,17 +509,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
@@ -489,17 +556,21 @@ test.describe("Campaign Flow", () => {
     await page.goto(FRONTEND_URL);
     console.log("Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for Clerk authentication to initialize");
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
-      timeout: 30000,
-    });
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
     console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
     console.log("Waiting for navigation to campaigns route");
-    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
-      timeout: 30000,
-    });
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
     await page.waitForLoadState("networkidle");
     console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
