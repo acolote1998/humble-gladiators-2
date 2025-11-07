@@ -13,7 +13,20 @@ test.describe("Campaign Flow", () => {
     const page = await context.newPage();
     console.log("Starting beforeAll: navigating to campaigns page");
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
     // Wait for the campaigns page to load by checking for "Your Campaigns" text
     // This ensures navigation completed and the component is rendering
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
@@ -91,9 +104,21 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigating to campaigns shows the test campaign"
     );
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
     console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    // Wait for the campaigns page to load
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
@@ -113,8 +138,21 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigating to compendium and verifying that all cards are created"
     );
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    // Wait for the campaigns page to load
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
@@ -169,8 +207,21 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the item booster route, opens an item booster and verifies that the correct amount of cards are in the inventory"
     );
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    // Wait for the campaigns page to load
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
@@ -234,8 +285,21 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the inventory route and equips an item if available"
     );
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    // Wait for the campaigns page to load
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
@@ -244,8 +308,21 @@ test.describe("Campaign Flow", () => {
     });
     console.log("Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
+    console.log("Waiting for navigation to campaign detail page");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
     console.log("Navigating to inventory");
     await page.getByTestId("navbar-inventory").click();
+    console.log("Waiting for navigation to inventory route");
+    await expect(page.getByText(/Aki Test!/i)).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for hero data to load");
+    await expect(page.getByText("Aki Test!")).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Hero data loaded, inventory page ready");
     const categories = [
       "armors",
       "boots",
@@ -298,8 +375,21 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the inventory route and unequips an item if available"
     );
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    // Wait for the campaigns page to load
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
@@ -308,8 +398,21 @@ test.describe("Campaign Flow", () => {
     });
     console.log("Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
+    console.log("Waiting for navigation to campaign detail page");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
     console.log("Navigating to inventory");
     await page.getByTestId("navbar-inventory").click();
+    console.log("Waiting for navigation to inventory route");
+    await expect(page.getByText(/Aki Test!/i)).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for hero data to load");
+    await expect(page.getByText("Aki Test!")).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Hero data loaded, inventory page ready");
 
     const placeholderCount = await page.getByTestId("item-placeholder").count();
     console.log(`Current item placeholder count: ${placeholderCount}`);
@@ -341,8 +444,21 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the character booster route, opens an character booster and verifies that it opened"
     );
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    // Wait for the campaigns page to load
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
@@ -371,8 +487,21 @@ test.describe("Campaign Flow", () => {
     test.setTimeout(240000); // this test has 4 minutes for completion
     console.log("Starting battle test: navigating to campaigns");
     await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for Clerk authentication to initialize");
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    // Wait for the campaigns page to load
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(new RegExp(`${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`), {
+      timeout: 30000,
+    });
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
