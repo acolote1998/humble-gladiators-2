@@ -2,6 +2,15 @@
 
 This document describes the current color tokens defined in `frontend/src/index.css`, how they map onto UI elements, and guidance for generating new palettes. All tokens listed here belong to the existing light theme. Names that contain `dark` or `darker` (for example `--page-container-bg-darkest`, `--page-container-bg-darkerer`, `--dark-text`) refer to lighter/darker tints within this palette and are **not** related to a night theme.
 
+## Product Context
+
+Humble Gladiators 2 is a turn-based card game for tabletop-style adventures. Players:
+- Create and theme campaigns with custom lore and booster packs.
+- Forge heroes, equip gear, and manage inventories.
+- Fight daily battles, earn rewards, and unlock items through card-based boosters.
+
+The UI mixes “campaign management” surfaces (lists of quests, stats, forms) with dynamic combat visuals and collectible-card motifs. Themes should balance readability for dense data tables with flashes of heroic, fantastical energy suitable for gladiator battles and mystical boosters.
+
 ## Surface & Structural Tokens
 
 | Variable | Default | Primary Usage |
@@ -96,10 +105,42 @@ Generate hex colors for the Humble Gladiators 2 UI.
 - Supply an energetic accent for --action-positive-bg with sufficient contrast for dark text.
 - Give a distinct caution tone for --battle-defeat-bg that still supports white text.
 - Keep information tones in a lighter sky-blue family.
-Return a table mapping each CSS variable to a hex value.
+Return the updated values using the “Expected Output Format” shown below (a plain code block listing each variable on its own line).
 ```
 
 The model can then output replacements for the tokens listed in this document while respecting structural relationships.
+
+### Expected Output Format
+
+Always respond with a fenced code block (` ``` `) containing one line per variable in the following order. Values may be hex codes or `var(...)` references as appropriate. The snippet below shows **only the required ordering and syntax**—treat every value in it as a placeholder. When producing a new theme, you **must replace every placeholder value with colors that fit the requested aesthetic** (you may use `var(...)` references only when you intentionally link tokens).
+
+Example format (placeholders to be replaced):
+```
+  --page-container-bg: #e8f3f8;
+  --page-container-bg-darker: #cbe0eb;
+  --page-container-bg-darkerer: #6c9cb0;
+  --page-container-bg-darkest: #2b4c59;
+  --page-container-border: #98c2d1;
+  --light-text: #ffffff;
+  --dark-text: #0a1316;
+  --site-bg: #b1d0da;
+
+  --action-positive-bg: #7af2d1;
+  --action-positive-foreground: var(--dark-text);
+  --battle-victory-bg: var(--action-positive-bg);
+  --battle-victory-foreground: var(--action-positive-foreground);
+  --battle-defeat-bg: #f59aa0;
+  --battle-defeat-foreground: var(--light-text);
+  --creation-color: var(--action-positive-bg);
+  --unavailable-color: var(--battle-defeat-bg);
+  --unavailable-color-border: #c73642;
+  --highlight-color: #fff89a;
+  --highlight-color-border: #c7b600;
+  --information-color: #9ed5ff;
+  --information-color-border: #1e65a9;
+```
+
+If the theme calls for reusing another token (e.g., `--battle-victory-bg: var(--action-positive-bg);`), declare it explicitly; otherwise provide a fresh hex value. Any response that simply echoes the placeholders above should be considered incorrect.
 
 ---
 
