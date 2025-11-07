@@ -16,9 +16,9 @@ const __dirname = path.dirname(__filename);
 const storagePath = path.join(__dirname, "storageState.json");
 
 export default async function globalSetup() {
-  console.log("////START////");
+  console.log("🚀 ////START////");
   // Health check: Verify backend is ready before starting tests
-  console.log("Performing health check on backend...");
+  console.log("🩺 Performing health check on backend...");
 
   const healthCheckUrl = BACKEND_URL + "/public/health";
 
@@ -29,7 +29,7 @@ export default async function globalSetup() {
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`Health check attempt ${attempt}/${maxRetries}...`);
+      console.log(`🔁 Health check attempt ${attempt}/${maxRetries}...`);
       const response = await fetch(healthCheckUrl, {
         method: "GET",
         headers: {
@@ -41,18 +41,18 @@ export default async function globalSetup() {
         throw new Error(`Health check failed with status ${response.status}`);
       }
 
-      console.log("Backend health check passed");
+      console.log("✅ Backend health check passed");
       lastError = null;
       break;
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       console.error(
-        `Health check attempt ${attempt}/${maxRetries} failed:`,
+        `❌ Health check attempt ${attempt}/${maxRetries} failed:`,
         lastError.message
       );
 
       if (attempt < maxRetries) {
-        console.log(`Retrying in ${retryDelay / 1000} seconds...`);
+        console.log(`⏳ Retrying in ${retryDelay / 1000} seconds...`);
         await new Promise((resolve) => setTimeout(resolve, retryDelay));
       }
     }
@@ -89,5 +89,5 @@ export default async function globalSetup() {
   // Save authenticated storage state
   await page.context().storageState({ path: storagePath });
   await browser.close();
-  console.log("\\\\\\ FINISHED \\\\\\");
+  console.log("🏁 \\\\\\ FINISHED \\\\\\");
 }
