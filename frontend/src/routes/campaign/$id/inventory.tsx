@@ -72,7 +72,7 @@ function RouteComponent() {
       ) : !isBattleOngoing && heroData ? (
         <>
           <div>
-            <h2 className="text-2xl my-2 font-semibold bg-gray-300 text-center p-2">
+            <h2 className="text-2xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
               {heroData.name}
             </h2>
           </div>
@@ -135,7 +135,7 @@ function RouteComponent() {
           </div>
           <div>
             <div>
-              <h2 className="text-xl my-2 font-semibold bg-gray-300 text-center p-2">
+              <h2 className="text-xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
                 Stats
               </h2>
               <div className="grid grid-cols-7 text-center">
@@ -172,7 +172,7 @@ function RouteComponent() {
             heroData.inventory.spells.length > 0 ||
             heroData.inventory.weapons.length > 0) && (
             <div>
-              <h2 className="text-xl my-2 font-semibold bg-gray-300 text-center p-2">
+              <h2 className="text-xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
                 Inventory
               </h2>
               <CardsDisplayer

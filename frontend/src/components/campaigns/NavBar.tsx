@@ -19,8 +19,8 @@ const NavBar = () => {
           rounded-b-2xl
           border-b-3
           border-x-3
-        border-gray-300 
-        bg-gray-300
+        border-[var(--page-container-bg-darker)] 
+        bg-[var(--page-container-bg-darker)]
           m-1
           grid
           grid-cols-5
@@ -31,17 +31,17 @@ const NavBar = () => {
       <button
         data-testid="navbar-compendium"
         className="
-            bg-gray-400
+            bg-[var(--page-container-border)]
             p-4
             w-full
             h-16
-            text-white
+            text-[var(--light-text)]
             rounded-b-xl
             text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
-            hover:bg-gray-700
+            hover:bg-[var(--page-container-bg-darkest)]
             hover:text-green-200
             transition-all
             duration-200
@@ -60,17 +60,17 @@ const NavBar = () => {
       <button
         data-testid="navbar-item-boosters"
         className="
-            bg-gray-400
+            bg-[var(--page-container-border)]
             p-4
             w-full
             h-16
-            text-white
+            text-[var(--light-text)]
             rounded-b-xl
             text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
-            hover:bg-gray-700
+            hover:bg-[var(--page-container-bg-darkest)]
             hover:text-green-200
             transition-all
             duration-200
@@ -90,17 +90,17 @@ const NavBar = () => {
       <button
         data-testid="navbar-character-boosters"
         className="
-            bg-gray-400
+            bg-[var(--page-container-border)]
             p-4
             w-full
             h-16
-            text-white
+            text-[var(--light-text)]
             rounded-b-xl
             text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
-            hover:bg-gray-700
+            hover:bg-[var(--page-container-bg-darkest)]
             hover:text-green-200
             transition-all
             duration-200
@@ -120,17 +120,17 @@ const NavBar = () => {
       <button
         data-testid="navbar-inventory"
         className="
-            bg-gray-400
+            bg-[var(--page-container-border)]
             p-4
             w-full
             h-16
-            text-white
+            text-[var(--light-text)]
             rounded-b-xl
             text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
-            hover:bg-gray-700
+            hover:bg-[var(--page-container-bg-darkest)]
             hover:text-green-200
             transition-all
             duration-200
@@ -153,17 +153,17 @@ const NavBar = () => {
       <button
         data-testid="navbar-battles"
         className="
-            bg-gray-400
+            bg-[var(--page-container-border)]
             p-4
             w-full
             h-16
-            text-white
+            text-[var(--light-text)]
             rounded-b-xl
             text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
-            hover:bg-gray-700
+            hover:bg-[var(--page-container-bg-darkest)]
             hover:text-green-200
             transition-all
             duration-200

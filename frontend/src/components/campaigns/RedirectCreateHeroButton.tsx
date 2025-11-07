@@ -8,15 +8,15 @@ export const RedirectCreateHeroButton = ({
     <div className="flex justify-center" data-testid="navigate-to-create-hero">
       <button
         className="
-          border-gray-500 
-          bg-gray-400 
-          text-white
+          border-[var(--page-container-bg-darkerer)] 
+          bg-[var(--page-container-border)] 
+          text-[var(--light-text)]
             px-5
             py-5
             text-xl
             rounded-md
             font-semibold
-            hover:text-black
+            hover:text-[var(--dark-text)]
             hover:bg-emerald-200
             hover:tracking-wider
             cursor-pointer

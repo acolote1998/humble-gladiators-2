@@ -4,9 +4,13 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --text-for-bg: white;
-  --div-bg: gray;
-  --div-lighter-bg: lightgray;
+  --page-container-bg: #e5e7eb;
+  --page-container-bg-darker: #d1d5dc;
+  --page-container-bg-darkerer: #6a7282;
+  --page-container-bg-darkest: #364153;
+  --page-container-border: #99a1af;
+  --light-text: #ffffff;
+  --dark-text: black;
   --site-bg: darkgray;
   --radius: 0.625rem;
   --background: oklch(1 0 0);

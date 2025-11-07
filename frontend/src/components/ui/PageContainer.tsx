@@ -22,8 +22,8 @@ export const PageContainer = ({
           p-5
           rounded-2xl
           border-5
-        border-gray-400 
-        bg-gray-200
+        border-[var(--page-container-border)] 
+        bg-[var(--page-container-bg)]
         ${h ? `h-${h}` : ""}
         ${minH ? `min-h-${minH}` : ""}
         `}

@@ -7,9 +7,9 @@ const HeroStats = ({ character }: HeroStatsType) => {
     <>
       <div
         data-testid="battle-hero-stats"
-        className="flex flex-col items-center rounded-md bg-gray-300 border-gray-400 border relative"
+        className="flex flex-col items-center rounded-md bg-[var(--page-container-bg-darker)] border-[var(--page-container-border)] border relative"
       >
-        <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
+        <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
           Hero Stats
         </p>
         <p className="text-xl">{character.name}</p>

@@ -166,7 +166,7 @@ const CampaignStats = () => {
     characterInstancesData &&
     wonBattles &&
     lostBattles ? (
-    <fieldset className="border p-4 rounded-lg border-gray-400">
+    <fieldset className="border p-4 rounded-lg border-[var(--page-container-border)]">
       <legend className="text-xl font-black tracking-wide px-2">
         Campaign Stats
       </legend>
