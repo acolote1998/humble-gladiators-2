@@ -218,13 +218,13 @@ const BattleExecuting = ({
             </div>
           )}
           <div className="flex justify-center">
-            <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
+            <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
               Character to play: {currentCharacterToPlay.name}
             </p>
           </div>
           <div className="relative">
             <div className="flex flex-col items-center">
-              <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
+              <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
                 Enemy
               </p>
               <div onClick={() => chooseTarget(teamTwo[0].id)}>
@@ -241,7 +241,7 @@ const BattleExecuting = ({
             >
               <HeroStats character={teamOne[0]} />
             </div>
-            <div className="col-span-6 flex flex-col items-center border-gray-400 rounded-md bg-gray-300 relative">
+            <div className="col-span-6 flex flex-col items-center border-[var(--page-container-border)] rounded-md bg-[var(--page-container-bg-darker)] relative">
               <p className="relative  rounded-xl p-1 text-2xl">Hand</p>
               <div className={`grid grid-cols-5`}>
                 <div

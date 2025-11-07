@@ -122,7 +122,7 @@ const BattleFinished = ({
             />
           )}
           <div className="flex flex-col items-center relative">
-            <p className="relative bg-gray-300 rounded-xl p-1 text-2xl">
+            <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
               Enemy
             </p>
             {loadingRewards ? (

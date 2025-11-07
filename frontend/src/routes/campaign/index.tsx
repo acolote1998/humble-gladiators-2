@@ -22,8 +22,8 @@ function CampaignsRoute() {
         <button
           className="
             absolute
-          border-gray-500 
-          bg-gray-300 
+          border-[var(--page-container-bg-darkerer)] 
+          bg-[var(--page-container-bg-darker)] 
             top-60
             left-25
             mb-5
@@ -54,7 +54,7 @@ function CampaignsRoute() {
             rounded-md
             font-semibold
             cursor-pointer
-          bg-gray-300
+          bg-[var(--page-container-bg-darker)]
             px-10
             py-2
             mb-5

@@ -16,9 +16,9 @@ const CampaignInfo = ({
         flex
         justify-center
         gap-5
-        bg-gray-300
+        bg-[var(--page-container-bg-darker)]
         border
-        border-gray-400
+        border-[var(--page-container-border)]
         p-6
         rounded-lg
         hover:scale-102
@@ -42,11 +42,11 @@ const CampaignInfo = ({
           flex
           flex-col
           items-center
-        bg-gray-200
+        bg-[var(--page-container-bg)]
           p-3
           rounded-lg
           border
-          border-gray-400
+          border-[var(--page-container-border)]
           text-lg
           w-113
           "
@@ -62,13 +62,13 @@ const CampaignInfo = ({
                 {name}
               </p>
               <div className="grid grid-cols-2 gap-6 text-center h-43 w-full">
-                <div className="bg-gray-300 px-2 py-1 rounded-lg">
+                <div className="bg-[var(--page-container-bg-darker)] px-2 py-1 rounded-lg">
                   <p className="text-xl">Wanted Themes</p>
                   <div className="flex flex-col items-center gap-1 overflow-y-auto h-36">
                     {theme.wantedThemes.map((theme, index) => {
                       return (
                         <p
-                          className="bg-gray-200 text-md tracking-tighter p-1 rounded-lg"
+                          className="bg-[var(--page-container-bg)] text-md tracking-tighter p-1 rounded-lg"
                           key={index}
                         >
                           {theme}
@@ -77,13 +77,13 @@ const CampaignInfo = ({
                     })}
                   </div>
                 </div>
-                <div className="bg-gray-300 px-2 py-1 rounded-lg">
+                <div className="bg-[var(--page-container-bg-darker)] px-2 py-1 rounded-lg">
                   <p className="text-xl">Unwanted Themes</p>
                   <div className="flex flex-col items-center gap-1 overflow-y-auto h-36">
                     {theme.unwantedThemes.map((theme, index) => {
                       return (
                         <p
-                          className="bg-gray-200 text-md tracking-tighter p-1 rounded-lg"
+                          className="bg-[var(--page-container-bg)] text-md tracking-tighter p-1 rounded-lg"
                           key={index}
                         >
                           {theme}

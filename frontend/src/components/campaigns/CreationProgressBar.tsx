@@ -147,16 +147,18 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
   };
 
   return (
-    <div className="w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700 relative overflow-hidden">
+    <div className="w-full h-6 bg-[var(--page-container-bg-darkerer)] rounded-full relative overflow-hidden">
       <div
-        className="transition-width ease-in-out duration-1000 h-6 bg-blue-600 rounded-full dark:bg-blue-500"
+        className="transition-width ease-in-out duration-1000 h-6 bg-blue-600 rounded-full"
         style={{ width: getPercentAndStateFormat().percent }}
       ></div>
       <div className="absolute inset-0 flex items-center justify-center">
-        <p className="text-white text-sm font-medium">
+        <p className="text-[var(--light-text)] text-sm font-medium">
           {getPercentAndStateFormat().state}{" "}
         </p>
-        <Loader />
+        <div className="scale-30">
+          <Loader />
+        </div>
       </div>
     </div>
   );

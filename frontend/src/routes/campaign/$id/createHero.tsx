@@ -50,7 +50,7 @@ function RouteComponent() {
         <>
           <div className="flex justify-center my-10">
             <div
-              className={`bg-gray-300 flex flex-col text-center px-10 py-5 rounded-lg border border-gray-400 gap-5 w-150`}
+              className={`bg-[var(--page-container-bg-darker)] flex flex-col text-center px-10 py-5 rounded-lg border border-[var(--page-container-border)] gap-5 w-150`}
             >
               <h2 className="text-3xl font-semibold">Hero Creation</h2>
               <p className="text-lg font-light italic">Type your hero's name</p>
@@ -67,9 +67,9 @@ function RouteComponent() {
                 disabled={createHeroButtonDisabled}
                 className={`
                 ${createHeroButtonDisabled ? "opacity-60 cursor-progress" : "opacity-100 cursor-pointer"}
-              border-gray-500 
-              bg-gray-400 
-              text-white
+              border-[var(--page-container-bg-darkerer)] 
+              bg-[var(--page-container-border)] 
+              text-[var(--light-text)]
                 mx-10
                 my-5
                 px-5
@@ -77,7 +77,7 @@ function RouteComponent() {
                 text-xl
                 rounded-md
                 font-semibold
-                hover:text-black
+                hover:text-[var(--dark-text)]
                 hover:bg-emerald-200
                 hover:tracking-wider
                 hover:scale-110

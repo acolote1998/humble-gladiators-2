@@ -50,7 +50,7 @@ const CardsDisplayer = ({
 }: CardsDisplayerType) => {
   return (
     <Tabs>
-      <TabsList className="bg-gray-300 flex items-center w-full">
+      <TabsList className="bg-[var(--page-container-bg-darker)] flex items-center w-full">
         {characters && characters.length > 0 && (
           <TabsTrigger value="npcs" className="flex justify-center gap-3">
             <NpcIcon width={32} />

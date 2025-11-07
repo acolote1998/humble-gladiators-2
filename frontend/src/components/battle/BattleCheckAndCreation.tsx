@@ -20,8 +20,8 @@ const BattleCheckAndCreation = ({
         <p
           data-testid="create-battle-button"
           className="
-              bg-gray-400
-              text-white
+              bg-[var(--page-container-border)]
+              text-[var(--light-text)]
                 mx-10
                 my-5
                 px-5
@@ -29,7 +29,7 @@ const BattleCheckAndCreation = ({
                 text-xl
                 rounded-md
                 font-semibold
-                hover:text-black
+                hover:text-[var(--dark-text)]
                 hover:bg-emerald-200
                 hover:tracking-wider
                 cursor-pointer
