@@ -67,6 +67,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
           <Loader />
         ) : isBoosterAvailable && !dataFromCharacterBooster ? (
           <div
+            className="h-166"
             data-testid="open-booster-button"
             onClick={() => {
               setTimeout(() => {

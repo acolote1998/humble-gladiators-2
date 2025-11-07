@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { Loader } from "../../../components/Loader";
+import { PageContainer } from "@/components/ui/PageContainer";
 
 export const Route = createFileRoute("/campaign/$id/createHero")({
   component: RouteComponent,
@@ -42,14 +43,7 @@ function RouteComponent() {
   }, [heroData, campaignId, navigate]);
 
   return (
-    <div
-      className="
-          mx-5
-          rounded-b-2xl
-          border-3
-        border-gray-400 
-        bg-gray-200"
-    >
+    <PageContainer>
       {heroLoading ? (
         <Loader />
       ) : isHeroNotFound ? (
@@ -107,6 +101,6 @@ function RouteComponent() {
       ) : heroError ? (
         <p>Error loading hero. Please try again.</p>
       ) : null}
-    </div>
+    </PageContainer>
   );
 }

@@ -4,6 +4,7 @@ import { SignedIn } from "@clerk/clerk-react";
 import { useGetAllCampaignsForAUser } from "../../hooks/useCampaigns";
 import CampaignInfo from "../../components/campaigns/CampaignInfo";
 import { Loader } from "../../components/Loader";
+import { PageContainer } from "@/components/ui/PageContainer";
 export const Route = createFileRoute("/campaign/")({
   component: CampaignsRoute,
 });
@@ -45,17 +46,7 @@ function CampaignsRoute() {
         >
           ➕📊 New Campaign
         </button>
-        <div
-          className="
-          mx-10
-          p-5
-          rounded-2xl
-          border-5
-        border-gray-400 
-        bg-gray-200
-        min-h-60
-        "
-        >
+        <PageContainer minH="60" h="5">
           <div className="flex flex-col items-center">
             <p
               className="
@@ -92,7 +83,7 @@ function CampaignsRoute() {
               <p>No campaigns found. Create your first one!</p>
             )}
           </div>
-        </div>
+        </PageContainer>
       </SignedIn>
     </>
   );

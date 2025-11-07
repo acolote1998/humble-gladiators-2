@@ -1,4 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
+import { PageContainer } from "./ui/PageContainer";
 const Logo = () => {
   const navigate = useNavigate();
   return (
@@ -8,22 +9,18 @@ const Logo = () => {
         navigate({ to: "/" });
       }}
     >
-      <h1
-        className="
+      <PageContainer>
+        <h1
+          className="
           text-6xl
           tracking-tighter
           font-black
           text-center
-          p-6
-          rounded-b-2xl
-          border-l-5
-          border-r-5
-          border-b-5
-        border-gray-400 
-        bg-gray-200"
-      >
-        Humble Gladiators 2
-      </h1>
+"
+        >
+          Humble Gladiators 2
+        </h1>
+      </PageContainer>
     </div>
   );
 };
