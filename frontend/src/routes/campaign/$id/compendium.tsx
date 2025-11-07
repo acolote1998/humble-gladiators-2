@@ -25,6 +25,7 @@ import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
 import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
 import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageContainer } from "@/components/ui/PageContainer";
 
 export const Route = createFileRoute("/campaign/$id/compendium")({
   component: RouteComponent,
@@ -54,16 +55,7 @@ function RouteComponent() {
     useGetAllWeaponTemplatesForCampaignByUser(Number(campaignId));
   return (
     <>
-      <div
-        className="
-          mx-5
-          p-5
-          rounded-b-2xl
-          border-3
-        border-gray-400 
-        bg-gray-200
-        "
-      >
+      <PageContainer>
         <Tabs>
           <TabsList className="bg-gray-300 flex items-center w-full">
             <TabsTrigger value="npcs" className="flex justify-center gap-3">
@@ -226,7 +218,7 @@ function RouteComponent() {
               ))}
           </TabsContent>
         </Tabs>
-      </div>
+      </PageContainer>
     </>
   );
 }

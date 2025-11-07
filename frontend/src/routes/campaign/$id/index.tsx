@@ -4,6 +4,7 @@ import { RedirectCreateHeroButton } from "../../../components/campaigns/Redirect
 import { Loader } from "../../../components/Loader";
 import { useGetCampaignByIdForAUser } from "../../../hooks/useCampaigns";
 import CampaignStats from "../../../components/campaigns/CampaignStats";
+import { PageContainer } from "@/components/ui/PageContainer";
 export const Route = createFileRoute("/campaign/$id/")({
   component: RouteComponent,
 });
@@ -17,15 +18,7 @@ function RouteComponent() {
 
   return (
     <>
-      <div
-        className="
-          mx-5
-          rounded-b-2xl
-          border-3
-        border-gray-400 
-        bg-gray-200
-        "
-      >
+      <PageContainer>
         {doesHeroExistLoading || isCampaignLoading ? (
           <Loader />
         ) : (
@@ -54,7 +47,7 @@ function RouteComponent() {
             </div>
           )
         )}
-      </div>
+      </PageContainer>
     </>
   );
 }

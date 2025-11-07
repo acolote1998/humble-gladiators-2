@@ -24,6 +24,7 @@ import { ShieldIcon } from "../../../components/icons/typeofcards/ShieldIcon";
 import { SpellIcon } from "../../../components/icons/typeofcards/SpellIcon";
 import { WeaponIcon } from "../../../components/icons/typeofcards/WeaponIcon";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageContainer } from "@/components/ui/PageContainer";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -70,7 +71,7 @@ function RouteComponent() {
   };
   const equippedBoots = getEquippedBoots();
   return (
-    <>
+    <PageContainer id="inventory-start">
       {isLoadingHero ? (
         <Loader />
       ) : isErrorHero ? (
@@ -78,17 +79,7 @@ function RouteComponent() {
       ) : isBattleOngoingCheckLoading ? (
         <Loader />
       ) : !isBattleOngoing && heroData ? (
-        <div
-          className="
-          mx-5
-          p-5
-          rounded-b-2xl
-          border-3
-        border-gray-400 
-        bg-gray-200
-        "
-          id="inventory-start"
-        >
+        <>
           <div>
             <h2 className="text-2xl my-2 font-semibold bg-gray-300 text-center p-2">
               {heroData.name}
@@ -339,23 +330,12 @@ function RouteComponent() {
               </Tabs>
             </div>
           )}
-        </div>
+        </>
       ) : (
-        <div
-          className="
-          mx-5
-          p-5
-          rounded-b-2xl
-          border-3
-        border-gray-400 
-        bg-gray-200
-        "
-        >
-          <div className="text-lg font-semibold text-center flex items-center justify-center">
-            It is not possible to use the inventory during an ongoing battle.
-          </div>
+        <div className="text-lg font-semibold text-center flex items-center justify-center">
+          It is not possible to use the inventory during an ongoing battle.
         </div>
       )}
-    </>
+    </PageContainer>
   );
 }

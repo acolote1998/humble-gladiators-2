@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useParams } from "@tanstack/react-router";
 import { CharacterBooster } from "../../../../components/boosters/CharacterBooster";
+import { PageContainer } from "@/components/ui/PageContainer";
 export const Route = createFileRoute("/campaign/$id/boosters/character")({
   component: RouteComponent,
 });
@@ -11,18 +12,8 @@ function RouteComponent() {
   });
 
   return (
-    <div
-      className="
-          mx-5
-          p-5
-          rounded-b-2xl
-          border-3
-        border-gray-400 
-        bg-gray-200
-        h-170
-        "
-    >
+    <PageContainer h="165">
       <CharacterBooster campaignId={Number(campaignId)} />
-    </div>
+    </PageContainer>
   );
 }
