@@ -42,7 +42,7 @@ const NavBar = () => {
             hover:text-xl
             hover:font-bold
             hover:bg-[var(--page-container-bg-darkest)]
-            hover:text-green-200
+            hover:text-[var(--creation-color)]
             transition-all
             duration-200
             cursor-pointer
@@ -71,7 +71,7 @@ const NavBar = () => {
             hover:text-xl
             hover:font-bold
             hover:bg-[var(--page-container-bg-darkest)]
-            hover:text-green-200
+            hover:text-[var(--creation-color)]
             transition-all
             duration-200
             cursor-pointer
@@ -101,7 +101,7 @@ const NavBar = () => {
             hover:text-xl
             hover:font-bold
             hover:bg-[var(--page-container-bg-darkest)]
-            hover:text-green-200
+            hover:text-[var(--creation-color)]
             transition-all
             duration-200
             cursor-pointer
@@ -131,7 +131,7 @@ const NavBar = () => {
             hover:text-xl
             hover:font-bold
             hover:bg-[var(--page-container-bg-darkest)]
-            hover:text-green-200
+            hover:text-[var(--creation-color)]
             transition-all
             duration-200
             cursor-pointer
@@ -164,7 +164,7 @@ const NavBar = () => {
             hover:text-xl
             hover:font-bold
             hover:bg-[var(--page-container-bg-darkest)]
-            hover:text-green-200
+            hover:text-[var(--creation-color)]
             transition-all
             duration-200
             cursor-pointer

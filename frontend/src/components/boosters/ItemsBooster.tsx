@@ -168,7 +168,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                       cards.armors.shift();
                       updateRemainingCards();
                     }}
-                    className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                   >
                     {textNextOrClose()}
                   </p>
@@ -210,7 +210,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                       cards.boots.shift();
                       updateRemainingCards();
                     }}
-                    className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                   >
                     {textNextOrClose()}
                   </p>
@@ -254,7 +254,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         cards.consumables.shift();
                         updateRemainingCards();
                       }}
-                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                     >
                       {textNextOrClose()}
                     </p>
@@ -299,7 +299,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         cards.helmets.shift();
                         updateRemainingCards();
                       }}
-                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                     >
                       {textNextOrClose()}
                     </p>
@@ -345,7 +345,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         cards.shields.shift();
                         updateRemainingCards();
                       }}
-                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                     >
                       {textNextOrClose()}
                     </p>
@@ -392,7 +392,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         cards.spells.shift();
                         updateRemainingCards();
                       }}
-                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                     >
                       {textNextOrClose()}
                     </p>
@@ -440,7 +440,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         cards.weapons.shift();
                         updateRemainingCards();
                       }}
-                      className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                     >
                       {textNextOrClose()}
                     </p>

@@ -30,7 +30,7 @@ const BattleCheckAndCreation = ({
                 rounded-md
                 font-semibold
                 hover:text-[var(--dark-text)]
-                hover:bg-emerald-200
+                hover:bg-[var(--creation-color)] 
                 hover:tracking-wider
                 cursor-pointer
                 hover:scale-110

@@ -149,7 +149,7 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
   return (
     <div className="w-full h-6 bg-[var(--page-container-bg-darkerer)] rounded-full relative overflow-hidden">
       <div
-        className="transition-width ease-in-out duration-1000 h-6 bg-blue-600 rounded-full"
+        className="transition-width ease-in-out duration-1000 h-6 bg-[var(--information-color-border)] rounded-full"
         style={{ width: getPercentAndStateFormat().percent }}
       ></div>
       <div className="absolute inset-0 flex items-center justify-center">

@@ -4,14 +4,23 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --page-container-bg: #e5e7eb;
-  --page-container-bg-darker: #d1d5dc;
-  --page-container-bg-darkerer: #6a7282;
-  --page-container-bg-darkest: #364153;
-  --page-container-border: #99a1af;
+  --page-container-bg: #e8f3f8;
+  --page-container-bg-darker: #cbe0eb;
+  --page-container-bg-darkerer: #6c9cb0;
+  --page-container-bg-darkest: #2b4c59;
+  --page-container-border: #98c2d1;
   --light-text: #ffffff;
-  --dark-text: black;
-  --site-bg: darkgray;
+  --dark-text: #0a1316;
+  --site-bg: #b1d0da;
+
+  --creation-color: #7af2d1;
+  --unavailable-color: #f59aa0;
+  --unavailable-color-border: #c73642;
+  --highlight-color: #fff89a;
+  --highlight-color-border: #c7b600;
+  --information-color: #9ed5ff;
+  --information-color-border: #1e65a9;
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.13 0.028 261.692);

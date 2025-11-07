@@ -24,7 +24,7 @@ const CampaignInfo = ({
         hover:scale-102
         transition-all
         duration-500
-        ${campaignCreationState == "GAME_CREATED" ? "hover:bg-yellow-200 hover:border-yellow-400 cursor-pointer" : "hover:bg-red-100 hover:border-red-200 cursor-wait"}
+        ${campaignCreationState == "GAME_CREATED" ? "hover:bg-[var(--highlight-color)] hover:border-[var(--highlight-color-border)] cursor-pointer" : "hover:bg-[var(--unavailable-color)] hover:border-[var(--unavailable-color-border)] cursor-wait"}
         w-270
         h-72
         `}

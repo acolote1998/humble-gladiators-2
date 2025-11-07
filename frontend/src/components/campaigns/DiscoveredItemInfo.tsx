@@ -9,9 +9,9 @@ export const DiscoveredItemInfo = ({
   return (
     <>
       <p className="col-span-2 text-lg text-center font-semibold">{itemName}</p>
-      <div className="col-span-8 relative bg-yellow-100 border-yellow-600 border rounded-md h-10">
+      <div className="col-span-8 relative bg-[var(--highlight-color)] border-[var(--highlight-color-border)] border rounded-md h-10">
         <div
-          className={`transition-all duration-500 rounded-md border-blue-500 border absolute bg-blue-300 top-0 left-0 h-full flex items-center justify-center`}
+          className={`transition-all duration-500 rounded-md border-[var(--information-color-border)] border absolute bg-[var(--information-color)] top-0 left-0 h-full flex items-center justify-center`}
           style={{ width: `${percentDiscovered}%` }}
         >
           {percentDiscovered > 0 && (

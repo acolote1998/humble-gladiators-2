@@ -22,7 +22,7 @@ const RewardsTable = ({
         Battle Finished
       </p>
       <p
-        className={`my-2 p-1 rounded-md ${heroHasWon() ? "bg-green-400" : "bg-red-400"}  text-xl text-center text-[var(--light-text)]`}
+        className={`my-2 p-1 rounded-md ${heroHasWon() ? "bg-[var(--creation-color)]" : "bg-[var(--unavailable-color)]"}  text-xl text-center text-[var(--light-text)]`}
       >
         {heroHasWon() ? "Victory" : "Defeat"}
       </p>
@@ -41,7 +41,9 @@ const RewardsTable = ({
           <p className="my-2 p-1 rounded-md bg-[var(--page-container-bg-darker)]">
             Gold Reward: {rewardsForBattle?.goldReward}
           </p>
-          <p className="my-2 p-1 rounded-md bg-[var(--page-container-bg-darker)]">Item loot:</p>
+          <p className="my-2 p-1 rounded-md bg-[var(--page-container-bg-darker)]">
+            Item loot:
+          </p>
         </>
       )}
       {rewardsForBattle.armorLoot.length > 0 &&
@@ -91,7 +93,7 @@ const RewardsTable = ({
         data-testid="close-battle-button"
       >
         <p
-          className="my-2 p-1 rounded-md bg-yellow-200 border-yellow-500 border text-center w-fit"
+          className="my-2 p-1 rounded-md bg-[var(--highlight-color)] border-[var(--highlight-color-border)] border text-center w-fit"
           onClick={() => {
             navigate({ to: `/campaign/${campaignId}` });
           }}

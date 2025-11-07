@@ -78,7 +78,7 @@ function RouteComponent() {
                 rounded-md
                 font-semibold
                 hover:text-[var(--dark-text)]
-                hover:bg-emerald-200
+                hover:bg-[var(--creation-color)] 
                 hover:tracking-wider
                 hover:scale-110
                 transition-all

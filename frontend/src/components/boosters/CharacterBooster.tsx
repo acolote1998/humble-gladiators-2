@@ -133,7 +133,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                       cards.characters.shift();
                       updateRemainingCards();
                     }}
-                    className="cursor-pointer bg-blue-200 text-center p-2 m-2 rounded-xl"
+                    className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
                   >
                     {textNextOrClose()}
                   </p>
