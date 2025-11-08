@@ -3,16 +3,8 @@ package com.github.acolote1998.humble_gladiators_2.characters.controller;
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInstance;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.service.CampaignService;
-import com.github.acolote1998.humble_gladiators_2.item.dto.ArmorInstanceResponseDto;
-import com.github.acolote1998.humble_gladiators_2.item.dto.BootsInstanceResponseDto;
-import com.github.acolote1998.humble_gladiators_2.item.dto.HelmetInstanceResponseDto;
-import com.github.acolote1998.humble_gladiators_2.item.dto.ShieldInstanceResponseDto;
-import com.github.acolote1998.humble_gladiators_2.item.dto.WeaponInstanceResponseDto;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
-import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
+import com.github.acolote1998.humble_gladiators_2.item.dto.*;
+import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +12,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 

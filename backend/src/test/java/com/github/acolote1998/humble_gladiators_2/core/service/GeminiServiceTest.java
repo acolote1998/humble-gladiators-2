@@ -1,7 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,11 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Field;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class GeminiServiceTest {
