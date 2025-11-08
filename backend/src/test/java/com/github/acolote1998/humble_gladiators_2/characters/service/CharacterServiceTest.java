@@ -11,6 +11,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
 import com.github.acolote1998.humble_gladiators_2.characters.repository.CharacterInstanceRepository;
 import com.github.acolote1998.humble_gladiators_2.characters.util.StatsMapper;
+import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidAttemptBattleOngoing;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
@@ -666,6 +667,50 @@ class CharacterServiceTest {
         // Assert
         assertNotNull(result);
         assertTrue(result.containsKey("Tier 5 NPC"));
+    }
+
+    @Test
+    void createTenNPCsOfDesiredTier_retriesWhenEnumInvalid() {
+        // Arrange
+        when(characterInstanceRepository.findAll()).thenReturn(List.of());
+        when(statsMapper.mapStatsFromCharacterFromGeminiDto(any())).thenReturn(new Stats());
+        CharacterFromGeminiDto invalidDto = createCharacterDto("Invalid NPC", null);
+        List<CharacterFromGeminiDto> validDtos = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            validDtos.add(createCharacterDto("Valid NPC " + i, CharacterCategory.HUMANOID));
+        }
+
+        when(geminiService.generateTenNpcsOfDesiredTier(eq(campaign), anyList(), eq(2)))
+                .thenReturn(List.of(invalidDto))
+                .thenReturn(validDtos);
+        when(characterInstanceRepository.saveAll(anyList())).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        List<CharacterInstance> result = characterService.createTenNPCsOfDesiredTier(campaign, 2);
+
+        // Assert
+        assertEquals(10, result.size());
+        verify(geminiService, times(2)).generateTenNpcsOfDesiredTier(eq(campaign), anyList(), eq(2));
+        verify(characterInstanceRepository).saveAll(anyList());
+    }
+
+    private CharacterFromGeminiDto createCharacterDto(String name, CharacterCategory category) {
+        CharacterFromGeminiDto.StatsFromGemini statsFromGemini = new CharacterFromGeminiDto.StatsFromGemini(
+                10, 10, 10, 10, 10, 100, 100, 100, 100, 180, 80, 5, 0, 10
+        );
+        return new CharacterFromGeminiDto(
+                statsFromGemini,
+                CharacterType.NPC,
+                category,
+                name,
+                "Description",
+                false,
+                CAMPAIGN_ID,
+                1,
+                1,
+                0,
+                0
+        );
     }
 }
 
