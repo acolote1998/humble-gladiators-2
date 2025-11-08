@@ -19,13 +19,13 @@ function CampaignsRoute() {
   return (
     <>
       <SignedIn>
-        <button
-          className="
-            absolute
+        <PageContainer minH="60" h="5">
+          <div className="flex flex-col items-center">
+            <div className="grid grid-cols-3 justify-items-center w-full">
+              <button
+                className="
           border-[var(--page-container-bg-darkerer)] 
           bg-[var(--page-container-bg-darker)] 
-            top-60
-            left-25
             mb-5
             px-5
             py-3
@@ -40,16 +40,14 @@ function CampaignsRoute() {
             ease-in-out
             duration-800
             "
-          onClick={() => {
-            navigate({ to: "/campaign/create" });
-          }}
-        >
-          ➕📊 New Campaign
-        </button>
-        <PageContainer minH="60" h="5">
-          <div className="flex flex-col items-center">
-            <p
-              className="
+                onClick={() => {
+                  navigate({ to: "/campaign/create" });
+                }}
+              >
+                ➕📊 New Campaign
+              </button>
+              <p
+                className="
             text-3xl
             rounded-md
             font-semibold
@@ -59,9 +57,10 @@ function CampaignsRoute() {
             py-2
             mb-5
             "
-            >
-              Your Campaigns
-            </p>
+              >
+                Your Campaigns
+              </p>
+            </div>
             {isLoadingAllCampaigns ? (
               <Loader />
             ) : isErrorLoadingAllCampaigns ? (
