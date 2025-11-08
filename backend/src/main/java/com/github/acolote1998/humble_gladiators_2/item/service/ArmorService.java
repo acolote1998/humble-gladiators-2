@@ -2,10 +2,12 @@ package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ArmorTemplateRepository;
@@ -68,35 +70,40 @@ public class ArmorService {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveArmors(campaign);
         List<ArmorTemplate> savedArmorTemplates = new ArrayList<>();
 
-        generatedDtos.forEach(dto -> {
-            ArmorTemplate armorTemplate = new ArmorTemplate();
-            armorTemplate.setName(dto.name());
-            armorTemplate.setDescription(dto.description());
-            armorTemplate.setUserId(campaign.getUserId());
-            armorTemplate.setRarity(dto.rarity());
-            armorTemplate.setTier(dto.tier());
-            armorTemplate.setDiscovered(false); //templates always start with discovered = false
-            armorTemplate.setQuantity(0); // templates always start at 0 quantity
-            armorTemplate.setEquipped(false); //templates always start with equipped = false
-            armorTemplate.setCampaign(campaign);
-            armorTemplate.setCategory(ArmorCategory.valueOf(dto.category()));
-            if (dto.physicalDefense() == 1) {
-                armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2 * dto.rarity() * 2.5)));
-            } else {
-                armorTemplate.setPhysicalDefense(0);
-            }
-            if (dto.magicalDefense() == 1) {
-                armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.2 * dto.rarity() * 1.5)));
-            } else {
-                armorTemplate.setMagicalDefense(0);
-            }
-            armorTemplate.setValue(
-                    (armorTemplate.getMagicalDefense() + armorTemplate.getPhysicalDefense())
-                            * armorTemplate.getTier()
-                            * armorTemplate.getRarity());
-            armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedArmorTemplates.add(armorTemplate);
-        });
+        try {
+            generatedDtos.forEach(dto -> {
+                ArmorTemplate armorTemplate = new ArmorTemplate();
+                armorTemplate.setName(dto.name());
+                armorTemplate.setDescription(dto.description());
+                armorTemplate.setUserId(campaign.getUserId());
+                armorTemplate.setRarity(dto.rarity());
+                armorTemplate.setTier(dto.tier());
+                armorTemplate.setDiscovered(false); //templates always start with discovered = false
+                armorTemplate.setQuantity(0); // templates always start at 0 quantity
+                armorTemplate.setEquipped(false); //templates always start with equipped = false
+                armorTemplate.setCampaign(campaign);
+                armorTemplate.setCategory(GeminiEnumParser.parseEnum(ArmorCategory.class, dto.category(), "ArmorTemplate", dto.name()));
+                if (dto.physicalDefense() == 1) {
+                    armorTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2 * dto.rarity() * 2.5)));
+                } else {
+                    armorTemplate.setPhysicalDefense(0);
+                }
+                if (dto.magicalDefense() == 1) {
+                    armorTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.2 * dto.rarity() * 1.5)));
+                } else {
+                    armorTemplate.setMagicalDefense(0);
+                }
+                armorTemplate.setValue(
+                        (armorTemplate.getMagicalDefense() + armorTemplate.getPhysicalDefense())
+                                * armorTemplate.getTier()
+                                * armorTemplate.getRarity());
+                armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
+                savedArmorTemplates.add(armorTemplate);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated armors not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
+            return createTwentyFiveNewArmorTemplates(campaign);
+        }
 
         if (!ArmorTemplate.areValidArmors(savedArmorTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated armors not valid -> Generating again", campaign.getId()));

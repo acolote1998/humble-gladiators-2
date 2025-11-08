@@ -11,6 +11,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.repository.Characte
 import com.github.acolote1998.humble_gladiators_2.characters.util.StatsMapper;
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidAttemptBattleOngoing;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
@@ -380,26 +381,33 @@ public class CharacterService {
         List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsOfDesiredTier(campaign,
                 existingCharactersForContext, tier);
         List<CharacterInstance> savedCharacterInstances = new ArrayList<>();
-        generatedDtos.forEach(characterFromGeminiDto -> {
-            CharacterInstance characterInstance = new CharacterInstance();
-            characterInstance.setUserId(campaign.getUserId());
-            characterInstance.setStats(statsMapper.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
-            characterInstance.setCharacterType(characterFromGeminiDto.characterType());
-            characterInstance.setCategory(characterFromGeminiDto.category());
-            characterInstance.setName(characterFromGeminiDto.name());
-            characterInstance.setDescription(characterFromGeminiDto.description());
-            characterInstance.setDiscovered(false);
-            characterInstance.setCampaign(campaign);
-            characterInstance.setRarity(characterFromGeminiDto.rarity());
-            characterInstance.setTier(characterFromGeminiDto.tier());
-            characterInstance.setGoldReward(characterFromGeminiDto.stats().level() * 10
-                    * characterFromGeminiDto.rarity() * characterFromGeminiDto.tier());
-            characterInstance.setExpReward(characterFromGeminiDto.stats().level() * 20 * characterFromGeminiDto.rarity()
-                    * characterFromGeminiDto.tier());
-            Inventory inventory = InventoryService.createBlankInventory();
-            characterInstance.setInventory(inventory);
-            savedCharacterInstances.add(characterInstance);
-        });
+        try {
+            generatedDtos.forEach(characterFromGeminiDto -> {
+                validateCharacterEnums(characterFromGeminiDto);
+                CharacterInstance characterInstance = new CharacterInstance();
+                characterInstance.setUserId(campaign.getUserId());
+                characterInstance.setStats(statsMapper.mapStatsFromCharacterFromGeminiDto(characterFromGeminiDto));
+                characterInstance.setCharacterType(characterFromGeminiDto.characterType());
+                characterInstance.setCategory(characterFromGeminiDto.category());
+                characterInstance.setName(characterFromGeminiDto.name());
+                characterInstance.setDescription(characterFromGeminiDto.description());
+                characterInstance.setDiscovered(false);
+                characterInstance.setCampaign(campaign);
+                characterInstance.setRarity(characterFromGeminiDto.rarity());
+                characterInstance.setTier(characterFromGeminiDto.tier());
+                characterInstance.setGoldReward(characterFromGeminiDto.stats().level() * 10
+                        * characterFromGeminiDto.rarity() * characterFromGeminiDto.tier());
+                characterInstance.setExpReward(characterFromGeminiDto.stats().level() * 20 * characterFromGeminiDto.rarity()
+                        * characterFromGeminiDto.tier());
+                Inventory inventory = InventoryService.createBlankInventory();
+                characterInstance.setInventory(inventory);
+                savedCharacterInstances.add(characterInstance);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated characters not valid (enum mismatch) -> Generating again",
+                    campaign.getId()), ex);
+            return createTenNPCsOfDesiredTier(campaign, tier);
+        }
 
         if (!CharacterInstance.areValidCharacters(savedCharacterInstances, 10)) {
             log.warn(String.format("Campaign %s - Generated characters not valid -> Generating again",
@@ -410,6 +418,15 @@ public class CharacterService {
         characterInstanceRepository.saveAll(savedCharacterInstances);
         log.info(savedCharacterInstances.size() + " characters tier " + tier + " successfully created and persisted");
         return savedCharacterInstances;
+    }
+
+    private void validateCharacterEnums(CharacterFromGeminiDto characterFromGeminiDto) {
+        if (characterFromGeminiDto.characterType() == null) {
+            throw new InvalidGeminiEnumException(String.format("Invalid CharacterType generated for character '%s'", characterFromGeminiDto.name()));
+        }
+        if (characterFromGeminiDto.category() == null) {
+            throw new InvalidGeminiEnumException(String.format("Invalid CharacterCategory generated for character '%s'", characterFromGeminiDto.name()));
+        }
     }
 
     public List<CharacterInstance> getAllCharacterInstancesForACampaignAndUser(String userId, Long campaignId) {

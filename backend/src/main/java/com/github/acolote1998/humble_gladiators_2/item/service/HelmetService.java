@@ -2,10 +2,12 @@ package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.HelmetCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.HelmetInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.HelmetTemplateRepository;
@@ -68,35 +70,40 @@ public class HelmetService {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveHelmets(campaign);
         List<HelmetTemplate> savedHelmetsTemplates = new ArrayList<>();
 
-        generatedDtos.forEach(dto -> {
-            HelmetTemplate helmetTemplate = new HelmetTemplate();
-            helmetTemplate.setName(dto.name());
-            helmetTemplate.setDescription(dto.description());
-            helmetTemplate.setUserId(campaign.getUserId());
-            helmetTemplate.setRarity(dto.rarity());
-            helmetTemplate.setTier(dto.tier());
-            helmetTemplate.setDiscovered(false);
-            helmetTemplate.setQuantity(0); // templates always start at 0 quantity
-            helmetTemplate.setEquipped(false);
-            helmetTemplate.setCampaign(campaign);
-            helmetTemplate.setCategory(HelmetCategory.valueOf(dto.category()));
-            if (dto.physicalDefense() == 1) {
-                helmetTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
-            } else {
-                helmetTemplate.setPhysicalDefense(0);
-            }
-            if (dto.magicalDefense() == 1) {
-                helmetTemplate.setMagicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            } else {
-                helmetTemplate.setMagicalDefense(0);
-            }
-            helmetTemplate.setValue(
-                    (helmetTemplate.getMagicalDefense() + helmetTemplate.getPhysicalDefense())
-                            * helmetTemplate.getTier()
-                            * helmetTemplate.getRarity());
-            helmetTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedHelmetsTemplates.add(helmetTemplate);
-        });
+        try {
+            generatedDtos.forEach(dto -> {
+                HelmetTemplate helmetTemplate = new HelmetTemplate();
+                helmetTemplate.setName(dto.name());
+                helmetTemplate.setDescription(dto.description());
+                helmetTemplate.setUserId(campaign.getUserId());
+                helmetTemplate.setRarity(dto.rarity());
+                helmetTemplate.setTier(dto.tier());
+                helmetTemplate.setDiscovered(false);
+                helmetTemplate.setQuantity(0); // templates always start at 0 quantity
+                helmetTemplate.setEquipped(false);
+                helmetTemplate.setCampaign(campaign);
+                helmetTemplate.setCategory(GeminiEnumParser.parseEnum(HelmetCategory.class, dto.category(), "HelmetTemplate", dto.name()));
+                if (dto.physicalDefense() == 1) {
+                    helmetTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
+                } else {
+                    helmetTemplate.setPhysicalDefense(0);
+                }
+                if (dto.magicalDefense() == 1) {
+                    helmetTemplate.setMagicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                } else {
+                    helmetTemplate.setMagicalDefense(0);
+                }
+                helmetTemplate.setValue(
+                        (helmetTemplate.getMagicalDefense() + helmetTemplate.getPhysicalDefense())
+                                * helmetTemplate.getTier()
+                                * helmetTemplate.getRarity());
+                helmetTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
+                savedHelmetsTemplates.add(helmetTemplate);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated helmets not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
+            return createTwentyFiveNewHelmetsTemplates(campaign);
+        }
 
         if (!HelmetTemplate.areValidHelmets(savedHelmetsTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated helmets not valid -> Generating again", campaign.getId()));

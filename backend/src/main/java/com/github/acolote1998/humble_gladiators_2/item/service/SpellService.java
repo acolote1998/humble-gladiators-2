@@ -2,10 +2,12 @@ package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.SpellTemplateRepository;
@@ -68,49 +70,54 @@ public class SpellService {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveSpells(campaign);
         List<SpellTemplate> savedSpellTemplates = new ArrayList<>();
 
-        generatedDtos.forEach(dto -> {
-            SpellTemplate spellTemplate = new SpellTemplate();
-            spellTemplate.setName(dto.name());
-            spellTemplate.setDescription(dto.description());
-            spellTemplate.setUserId(campaign.getUserId());
-            spellTemplate.setRarity(dto.rarity());
-            spellTemplate.setTier(dto.tier());
-            spellTemplate.setDiscovered(false);
-            spellTemplate.setQuantity(0); // templates always start at 0 quantity
-            spellTemplate.setEquipped(false);
-            spellTemplate.setCampaign(campaign);
-            spellTemplate.setCategory(SpellCategory.valueOf(dto.category()));
-            if (dto.physicalDamage() == 1) {
-                spellTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            } else {
-                spellTemplate.setPhysicalDamage(0);
-            }
-            if (dto.magicalDamage() == 1) {
-                spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            } else {
-                spellTemplate.setMagicalDamage(0);
-            }
-            if (dto.restoreHp() == 1) {
-                spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-                spellTemplate.setMagicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
-                spellTemplate.setPhysicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid
-                // bugs
-            } else {
-                spellTemplate.setRestoreHp(0);
-            }
-            spellTemplate.setMpCost(
-                    spellTemplate.getTier() *
-                            spellTemplate.getRarity() *
-                            (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
-            );
-            spellTemplate.setValue(
-                    (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage()
-                            + spellTemplate.getRestoreHp())
-                            * spellTemplate.getTier()
-                            * spellTemplate.getRarity());
-            spellTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedSpellTemplates.add(spellTemplate);
-        });
+        try {
+            generatedDtos.forEach(dto -> {
+                SpellTemplate spellTemplate = new SpellTemplate();
+                spellTemplate.setName(dto.name());
+                spellTemplate.setDescription(dto.description());
+                spellTemplate.setUserId(campaign.getUserId());
+                spellTemplate.setRarity(dto.rarity());
+                spellTemplate.setTier(dto.tier());
+                spellTemplate.setDiscovered(false);
+                spellTemplate.setQuantity(0); // templates always start at 0 quantity
+                spellTemplate.setEquipped(false);
+                spellTemplate.setCampaign(campaign);
+                spellTemplate.setCategory(GeminiEnumParser.parseEnum(SpellCategory.class, dto.category(), "SpellTemplate", dto.name()));
+                if (dto.physicalDamage() == 1) {
+                    spellTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                } else {
+                    spellTemplate.setPhysicalDamage(0);
+                }
+                if (dto.magicalDamage() == 1) {
+                    spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                } else {
+                    spellTemplate.setMagicalDamage(0);
+                }
+                if (dto.restoreHp() == 1) {
+                    spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                    spellTemplate.setMagicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
+                    spellTemplate.setPhysicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid
+                    // bugs
+                } else {
+                    spellTemplate.setRestoreHp(0);
+                }
+                spellTemplate.setMpCost(
+                        spellTemplate.getTier() *
+                                spellTemplate.getRarity() *
+                                (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
+                );
+                spellTemplate.setValue(
+                        (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage()
+                                + spellTemplate.getRestoreHp())
+                                * spellTemplate.getTier()
+                                * spellTemplate.getRarity());
+                spellTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
+                savedSpellTemplates.add(spellTemplate);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated spells not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
+            return createTwentyFiveNewSpellTemplates(campaign);
+        }
 
         if (!SpellTemplate.areValidSpells(savedSpellTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated spells not valid -> Generating again", campaign.getId()));
