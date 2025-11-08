@@ -10,12 +10,19 @@ import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
 import { Loader } from "../Loader";
 import BoosterToOpenPlaceholder from "./BoosterToOpenPlaceholder";
 import { SandClockIcon } from "../icons/errors/SandClockIcon";
+import { NewCardInformer } from "./NewCardInformer";
+import ProcessCardButton from "./ProcessCardButton";
 
 export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
   const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
-  const [flipped, setFlipped] = useState(false);
+  const [flipped, setFlipped] = useState<boolean>(false);
+  const [processingCard, setProcessingCard] = useState<boolean>(false);
   const handleFlip = () => {
-    if (!flipped) setFlipped(true);
+    if (flipped) {
+      setFlipped(false);
+    } else {
+      if (!flipped) setFlipped(true);
+    }
   };
   const queryClient = useQueryClient();
   const { data: isBoosterAvailable, isLoading: isBoosterAvailableLoading } =
@@ -48,16 +55,30 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
       });
   }, [dataFromCharacterBooster]);
   const updateRemainingCards = () => {
-    if (cards)
-      setCards({
-        characters: [...cards.characters],
-      });
-    if (isBoosterEmpty() && cleanCharacterBooster) {
-      cleanCharacterBooster();
-      setFlipped(false);
-      queryClient.invalidateQueries({
-        queryKey: ["character-booster-availability"],
-      });
+    if (!processingCard) {
+      setProcessingCard(true);
+      if (flipped) {
+        handleFlip();
+      } else {
+        setFlipped(true);
+        setTimeout(() => {
+          setFlipped(false);
+        }, 850);
+      }
+      setTimeout(() => {
+        cards?.characters.shift();
+        if (cards)
+          setCards({
+            characters: [...cards.characters],
+          });
+        if (isBoosterEmpty() && cleanCharacterBooster) {
+          cleanCharacterBooster();
+          queryClient.invalidateQueries({
+            queryKey: ["character-booster-availability"],
+          });
+        }
+        setProcessingCard(false);
+      }, 1500);
     }
   };
   return (
@@ -107,7 +128,9 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                   <div className={`w-fit h-fit`}>
                     <div
                       className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                      onClick={handleFlip}
+                      onClick={() => {
+                        if (!processingCard) handleFlip();
+                      }}
                     >
                       <div
                         className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -128,18 +151,12 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                       </div>
                     </div>
                   </div>
-                  {!cards.characters[0].discovered && (
-                    <p className="bg-amber-300">NEW!</p>
-                  )}
-                  <p
-                    onClick={() => {
-                      cards.characters.shift();
-                      updateRemainingCards();
-                    }}
-                    className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                  >
-                    {textNextOrClose()}
-                  </p>
+                  {!cards.characters[0].discovered && <NewCardInformer />}
+                  <ProcessCardButton
+                    buttonText={textNextOrClose()}
+                    isBeingProcessed={processingCard}
+                    onClickCallback={() => updateRemainingCards()}
+                  />
                 </>
               )}
             </div>
