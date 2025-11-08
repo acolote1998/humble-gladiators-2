@@ -50,7 +50,7 @@ export const useCreateHero = () => {
       return createHeroForACampaignPost(heroToCreateVariables, bearerToken);
     },
     onSuccess: (data) => {
-      navigate({ to: `/campaign/${data.campaignId}` });
+      navigate({ to: `/campaign/${data.campaignId}#campaign` });
     },
   });
   return mutation;

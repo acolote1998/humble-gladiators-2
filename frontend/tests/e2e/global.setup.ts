@@ -89,5 +89,5 @@ export default async function globalSetup() {
   // Save authenticated storage state
   await page.context().storageState({ path: storagePath });
   await browser.close();
-  console.log("🏁 \\\\\\ FINISHED \\\\\\");
+  console.log("✅ Global Setup Finished");
 }

@@ -163,8 +163,85 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Test campaign found and visible - test complete");
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
+    console.log("✅ Test campaign found and visible - test complete");
+  });
+
+  test("navigating to campaign in the navbar shows the test campaign", async ({
+    page,
+  }) => {
+    console.log("🚀 ////START////");
+    console.log(
+      "Starting test: navigating to campaign in the navbar shows the test campaign"
+    );
+    await page.goto(FRONTEND_URL);
+    console.log("Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    console.log("Clerk authentication ready");
+    console.log("Navigating to campaigns page");
+    await page.getByText(/campaigns/i).click();
+    console.log("Waiting for navigation to campaigns route");
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
+    await page.waitForLoadState("networkidle");
+    console.log("Waiting for campaigns page to load");
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
+    console.log("Test campaign loaded");
+    await page.getByTestId(/test-Medieval Adventure/i).click();
+    console.log("Accessed the campaign");
+
+    await page.getByTestId("navbar-compendium").click();
+    console.log(
+      "Navigating to compendium just to get away of campaign to be able to test the navbar"
+    );
+
+    await page.getByTestId("navbar-campaign").click();
+    console.log("Navigating to campaign page through navbar");
+    await expect(page.getByText(/Campaign Stats/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Armors/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Boots/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Consumables/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Helmets/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Shields/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Weapons/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Spells/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Characters/i)).toBeVisible({
+      timeout: 30000,
+    });
+    await expect(page.getByText(/Win Rate/i)).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("All stats rendered correctly");
+    console.log("✅ Test campaign page correct - test complete");
   });
 
   test("navigating to compendium and verifying that all cards are created", async ({
@@ -236,8 +313,7 @@ test.describe("Campaign Flow", () => {
     await page.getByText(/weapons/i).click();
     await expect(page.getByTestId("weapon-card")).toHaveCount(2);
     console.log("Found 2 weapon cards");
-    console.log("All card categories verified - test complete");
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
+    console.log("✅ All card categories verified - test complete");
   });
 
   test("navigates to the item booster route, opens an item booster and verifies that the correct amount of cards are in the inventory", async ({
@@ -318,8 +394,7 @@ test.describe("Campaign Flow", () => {
 
     console.log(`Total cards found in inventory: ${totalCards}`);
     await expect(totalCards).toBe(3);
-    console.log("🏁 Verified total cards count is 3 - test complete");
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
+    console.log("✅ Verified total cards count is 3 - test complete");
   });
 
   test("navigates to the inventory route and equips an item if available", async ({
@@ -414,11 +489,10 @@ test.describe("Campaign Flow", () => {
         "Item equipped, verifying updated placeholder count (should be 4)"
       );
       await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
-      console.log("🏁 Item successfully equipped - test complete");
+      console.log("✅ Item successfully equipped - test complete");
     } else {
-      console.log("No equippable items found - test complete");
+      console.log("✅ No equippable items found - test complete");
     }
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
   });
 
   test("navigates to the inventory route and unequips an item if available", async ({
@@ -490,13 +564,12 @@ test.describe("Campaign Flow", () => {
         "Item unequipped, verifying updated placeholder count (should be 5)"
       );
       await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
-      console.log("🏁 Item successfully unequipped - test complete");
+      console.log("✅ Item successfully unequipped - test complete");
     } else {
       console.log(
-        `No item equipped (placeholder count is ${placeholderCount}, expected 4) - test complete`
+        `✅ No item equipped (placeholder count is ${placeholderCount}, expected 4) - test complete`
       );
     }
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
   });
 
   test("navigates to the character booster route, opens an character booster and verifies that it opened", async ({
@@ -543,8 +616,7 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByTestId("booster-data")).toBeVisible({
       timeout: 300_00,
     });
-    console.log("🎉 Character booster opened successfully - test complete");
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
+    console.log("✅ Character booster opened successfully - test complete");
   });
 
   test("navigates to the battle route and fights and finishes a battle", async ({
@@ -697,7 +769,6 @@ test.describe("Campaign Flow", () => {
     await expect(page).toHaveURL(`${FRONTEND_URL}campaign/1`, {
       timeout: 10000,
     });
-    console.log("🏆 Battle test complete");
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
+    console.log("✅ Battle test complete");
   });
 });

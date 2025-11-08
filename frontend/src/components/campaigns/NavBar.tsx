@@ -6,6 +6,7 @@ import { ItemBoosterIcon } from "../icons/navbar/ItemBoosterIcon";
 import { EnemyBoosterIcon } from "../icons/navbar/EnemyBoosterIcon";
 import { InventoryIcon } from "../icons/navbar/InventoryIcon";
 import { BattleIcon } from "../icons/navbar/BattleIcon";
+import { CampaignIcon } from "../icons/navbar/CampaignIcon";
 const NavBar = () => {
   const navigate = useNavigate();
   const { location } = useRouterState();
@@ -23,11 +24,38 @@ const NavBar = () => {
         bg-[var(--page-container-bg-darker)]
           m-1
           grid
-          grid-cols-5
+          grid-cols-6
           gap-0.5
           justify-evenly
         "
     >
+      <button
+        data-testid="navbar-campaign"
+        className="
+            bg-[var(--page-container-border)]
+            p-4
+            w-full
+            h-16
+            text-[var(--light-text)]
+            rounded-b-xl
+            text-2xl
+            font-semibold
+            hover:text-xl
+            hover:font-bold
+            hover:bg-[var(--page-container-bg-darkest)]
+            hover:text-[var(--action-positive-bg)]
+            transition-all
+            duration-200
+            cursor-pointer
+            "
+        onClick={() => {
+          navigate({ to: `/campaign/${campaignId}#campaign` });
+        }}
+      >
+        <div className="flex items-center justify-center gap-4">
+          <p>Campaign</p> <CampaignIcon width={38} />
+        </div>
+      </button>
       <button
         data-testid="navbar-compendium"
         className="
