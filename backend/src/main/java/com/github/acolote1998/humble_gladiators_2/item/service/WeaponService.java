@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.WeaponTemplateRepository;
@@ -67,35 +69,40 @@ public class WeaponService {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveWeapons(campaign);
         List<WeaponTemplate> savedWeaponTemplates = new ArrayList<>();
 
-        generatedDtos.forEach(dto -> {
-            WeaponTemplate weaponTemplate = new WeaponTemplate();
-            weaponTemplate.setName(dto.name());
-            weaponTemplate.setDescription(dto.description());
-            weaponTemplate.setUserId(campaign.getUserId());
-            weaponTemplate.setRarity(dto.rarity());
-            weaponTemplate.setTier(dto.tier());
-            weaponTemplate.setDiscovered(false);
-            weaponTemplate.setQuantity(0); // templates always start at 0 quantity
-            weaponTemplate.setEquipped(false);
-            weaponTemplate.setCampaign(campaign);
-            weaponTemplate.setCategory(WeaponCategory.valueOf(dto.category()));
-            if (dto.physicalDamage() == 1) {
-                weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            } else {
-                weaponTemplate.setPhysicalDamage(0);
-            }
-            if (dto.magicalDamage() == 1) {
-                weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            } else {
-                weaponTemplate.setMagicalDamage(0);
-            }
-            weaponTemplate.setValue(
-                    (weaponTemplate.getMagicalDamage() + weaponTemplate.getPhysicalDamage())
-                            * weaponTemplate.getTier()
-                            * weaponTemplate.getRarity());
-            weaponTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedWeaponTemplates.add(weaponTemplate);
-        });
+        try {
+            generatedDtos.forEach(dto -> {
+                WeaponTemplate weaponTemplate = new WeaponTemplate();
+                weaponTemplate.setName(dto.name());
+                weaponTemplate.setDescription(dto.description());
+                weaponTemplate.setUserId(campaign.getUserId());
+                weaponTemplate.setRarity(dto.rarity());
+                weaponTemplate.setTier(dto.tier());
+                weaponTemplate.setDiscovered(false);
+                weaponTemplate.setQuantity(0); // templates always start at 0 quantity
+                weaponTemplate.setEquipped(false);
+                weaponTemplate.setCampaign(campaign);
+                weaponTemplate.setCategory(GeminiEnumParser.parseEnum(WeaponCategory.class, dto.category(), "WeaponTemplate", dto.name()));
+                if (dto.physicalDamage() == 1) {
+                    weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                } else {
+                    weaponTemplate.setPhysicalDamage(0);
+                }
+                if (dto.magicalDamage() == 1) {
+                    weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                } else {
+                    weaponTemplate.setMagicalDamage(0);
+                }
+                weaponTemplate.setValue(
+                        (weaponTemplate.getMagicalDamage() + weaponTemplate.getPhysicalDamage())
+                                * weaponTemplate.getTier()
+                                * weaponTemplate.getRarity());
+                weaponTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
+                savedWeaponTemplates.add(weaponTemplate);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated weapons not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
+            return createTwentyFiveNewWeaponTemplates(campaign);
+        }
 
         if (!WeaponTemplate.areValidWeapons(savedWeaponTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated weapons not valid -> Generating again", campaign.getId()));

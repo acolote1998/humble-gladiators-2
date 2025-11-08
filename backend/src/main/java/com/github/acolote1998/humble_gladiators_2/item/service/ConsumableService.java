@@ -1,10 +1,12 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ConsumableTemplateRepository;
@@ -67,35 +69,40 @@ public class ConsumableService {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveConsumables(campaign);
         List<ConsumableTemplate> savedConsumableTemplates = new ArrayList<>();
 
-        generatedDtos.forEach(dto -> {
-            ConsumableTemplate consumableTemplate = new ConsumableTemplate();
-            consumableTemplate.setName(dto.name());
-            consumableTemplate.setDescription(dto.description());
-            consumableTemplate.setUserId(campaign.getUserId());
-            consumableTemplate.setRarity(dto.rarity());
-            consumableTemplate.setTier(dto.tier());
-            consumableTemplate.setDiscovered(false);
-            consumableTemplate.setQuantity(0); // templates always start at 0 quantity
-            consumableTemplate.setEquipped(false);
-            consumableTemplate.setCampaign(campaign);
-            consumableTemplate.setCategory(ConsumablesCategory.valueOf(dto.category()));
-            if (dto.restoreHp() == 1) {
-                consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 1.5)));
-            } else {
-                consumableTemplate.setRestoreHp(0);
-            }
-            if (dto.restoreMp() == 1) {
-                consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * 2 * dto.rarity() * 4)));
-            } else {
-                consumableTemplate.setRestoreMp(0);
-            }
-            consumableTemplate.setValue(
-                    (consumableTemplate.getRestoreHp() + consumableTemplate.getRestoreMp())
-                            * consumableTemplate.getTier()
-                            * consumableTemplate.getRarity());
-            consumableTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedConsumableTemplates.add(consumableTemplate);
-        });
+        try {
+            generatedDtos.forEach(dto -> {
+                ConsumableTemplate consumableTemplate = new ConsumableTemplate();
+                consumableTemplate.setName(dto.name());
+                consumableTemplate.setDescription(dto.description());
+                consumableTemplate.setUserId(campaign.getUserId());
+                consumableTemplate.setRarity(dto.rarity());
+                consumableTemplate.setTier(dto.tier());
+                consumableTemplate.setDiscovered(false);
+                consumableTemplate.setQuantity(0); // templates always start at 0 quantity
+                consumableTemplate.setEquipped(false);
+                consumableTemplate.setCampaign(campaign);
+                consumableTemplate.setCategory(GeminiEnumParser.parseEnum(ConsumablesCategory.class, dto.category(), "ConsumableTemplate", dto.name()));
+                if (dto.restoreHp() == 1) {
+                    consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 1.5)));
+                } else {
+                    consumableTemplate.setRestoreHp(0);
+                }
+                if (dto.restoreMp() == 1) {
+                    consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * 2 * dto.rarity() * 4)));
+                } else {
+                    consumableTemplate.setRestoreMp(0);
+                }
+                consumableTemplate.setValue(
+                        (consumableTemplate.getRestoreHp() + consumableTemplate.getRestoreMp())
+                                * consumableTemplate.getTier()
+                                * consumableTemplate.getRarity());
+                consumableTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
+                savedConsumableTemplates.add(consumableTemplate);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated consumables not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
+            return createTwentyFiveNewConsumableTemplates(campaign);
+        }
 
         if (!ConsumableTemplate.areValidConsumables(savedConsumableTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated consumables not valid -> Generating again", campaign.getId()));
