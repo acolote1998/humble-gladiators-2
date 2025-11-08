@@ -455,18 +455,16 @@ test.describe("Campaign Flow", () => {
       timeout: 30000,
     });
     console.log("     Hero data loaded, inventory page ready");
-    const categories = [
+    const equippableCategories = [
       "armors",
       "boots",
-      "consumables",
       "helmets",
       "shields",
-      "spells",
       "weapons",
     ];
 
     console.log("     Checking each category tab");
-    for (const category of categories) {
+    for (const category of equippableCategories) {
       const tab = page.getByText(new RegExp(category, "i"));
       try {
         await tab.first().waitFor({ state: "visible", timeout: 1500 });
@@ -484,12 +482,12 @@ test.describe("Campaign Flow", () => {
       .count();
     if (equippableCount > 0) {
       console.log(
-        `Found ${equippableCount} equippable item(s), equipping first item`
+        `     Found ${equippableCount} equippable item(s), equipping first item`
       );
       const equippableItems = page.getByTestId("equip-item-inventory");
       await equippableItems.first().click();
       console.log(
-        "Item equipped, verifying updated placeholder count (should be 4)"
+        "     Item equipped, verifying updated placeholder count (should be 4)"
       );
       await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
       console.log("✅ Item successfully equipped - test complete");
