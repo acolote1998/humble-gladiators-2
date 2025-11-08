@@ -456,11 +456,11 @@ test.describe("Campaign Flow", () => {
     });
     console.log("     Hero data loaded, inventory page ready");
     const equippableCategories = [
-      "armors",
-      "boots",
-      "helmets",
-      "shields",
-      "weapons",
+      { tab: "armors", card: "armor" },
+      { tab: "boots", card: "boots" },
+      { tab: "helmets", card: "helmet" },
+      { tab: "shields", card: "shield" },
+      { tab: "weapons", card: "weapon" },
     ];
 
     console.log("     Verifying item placeholders count (should be 5)");
@@ -468,21 +468,21 @@ test.describe("Campaign Flow", () => {
 
     console.log("     Checking each category tab for equippable items");
     let equipped = false;
-    for (const category of equippableCategories) {
-      const tab = page.getByText(new RegExp(category, "i"));
+    for (const { tab: tabName, card } of equippableCategories) {
+      const tab = page.getByText(new RegExp(tabName, "i"));
       try {
         await tab.first().waitFor({ state: "visible", timeout: 1500 });
         await tab.first().click();
         await page.waitForTimeout(200);
       } catch {
-        console.log(`     Skipping ${category} category (tab not visible)`);
+        console.log(`     Skipping ${tabName} category (tab not visible)`);
         continue;
       }
 
-      const cardLocator = page.getByTestId(`${category}-card`);
+      const cardLocator = page.getByTestId(`${card}-card`);
       const cardsInTab = await cardLocator.count();
       if (cardsInTab === 0) {
-        console.log(`     No cards found in ${category} category`);
+        console.log(`     No cards found in ${tabName} category`);
         continue;
       }
 
@@ -494,7 +494,7 @@ test.describe("Campaign Flow", () => {
         }
 
         console.log(
-          `     Equipping item from ${category} category (card #${index + 1})`
+          `     Equipping item from ${tabName} category (card #${index + 1})`
         );
         await equipButton.first().click();
         equipped = true;
@@ -575,11 +575,11 @@ test.describe("Campaign Flow", () => {
     console.log("     Hero data loaded, inventory page ready");
 
     const equippableCategories = [
-      "armors",
-      "boots",
-      "helmets",
-      "shields",
-      "weapons",
+      { tab: "armors", card: "armor" },
+      { tab: "boots", card: "boots" },
+      { tab: "helmets", card: "helmet" },
+      { tab: "shields", card: "shield" },
+      { tab: "weapons", card: "weapon" },
     ];
 
     const placeholderCount = await page.getByTestId("item-placeholder").count();
@@ -591,18 +591,18 @@ test.describe("Campaign Flow", () => {
       await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
 
       let unequipped = false;
-      for (const category of equippableCategories) {
-        const tab = page.getByText(new RegExp(category, "i"));
+      for (const { tab: tabName, card } of equippableCategories) {
+        const tab = page.getByText(new RegExp(tabName, "i"));
         try {
           await tab.first().waitFor({ state: "visible", timeout: 1500 });
           await tab.first().click();
           await page.waitForTimeout(200);
         } catch {
-          console.log(`     Skipping ${category} category (tab not visible)`);
+          console.log(`     Skipping ${tabName} category (tab not visible)`);
           continue;
         }
 
-        const cardLocator = page.getByTestId(`${category}-card`);
+        const cardLocator = page.getByTestId(`${card}-card`);
         const cardsInTab = await cardLocator.count();
         if (cardsInTab === 0) {
           continue;
@@ -616,7 +616,7 @@ test.describe("Campaign Flow", () => {
           }
 
           console.log(
-            `     Unequipping item from ${category} category (card #${index + 1})`
+            `     Unequipping item from ${tabName} category (card #${index + 1})`
           );
           await unequipButton.first().click();
           unequipped = true;
