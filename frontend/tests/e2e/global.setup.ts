@@ -16,9 +16,9 @@ const __dirname = path.dirname(__filename);
 const storagePath = path.join(__dirname, "storageState.json");
 
 export default async function globalSetup() {
-  console.log("🚀 ////START////");
+  console.log("🚀 GLOBAL SETUP");
   // Health check: Verify backend is ready before starting tests
-  console.log("🩺 Performing health check on backend...");
+  console.log("     🩺 Performing health check on backend...");
 
   const healthCheckUrl = BACKEND_URL + "/public/health";
 
@@ -41,7 +41,7 @@ export default async function globalSetup() {
         throw new Error(`Health check failed with status ${response.status}`);
       }
 
-      console.log("✅ Backend health check passed");
+      console.log("     ✅ Backend health check passed");
       lastError = null;
       break;
     } catch (error) {

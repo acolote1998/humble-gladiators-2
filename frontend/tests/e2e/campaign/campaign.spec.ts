@@ -8,15 +8,17 @@ const E2E_CLERK_USER_PASSWORD = process.env.E2E_CLERK_USER_PASSWORD!;
 test.describe.configure({ mode: "serial" });
 
 async function ensureAuthenticated(page: Page) {
-  console.log("🔐 Ensuring Clerk session");
+  console.log("     🔐 Ensuring Clerk session");
   const signOutButton = page.getByRole("button", { name: /sign out/i });
 
   try {
     await signOutButton.waitFor({ state: "visible", timeout: 10000 });
-    console.log("✅ Existing Clerk session detected");
+    console.log("     ✅ Existing Clerk session detected");
     return;
   } catch {
-    console.log("🔑 No active Clerk session detected, performing login");
+    console.log(
+      "          🔑 No active Clerk session detected, performing login"
+    );
   }
 
   await page.getByText(/sign in/i).click();
@@ -30,7 +32,7 @@ async function ensureAuthenticated(page: Page) {
   await page.getByRole("button", { name: "Continue" }).click();
 
   await signOutButton.waitFor({ state: "visible", timeout: 30000 });
-  console.log("✅ Clerk authentication ready (fallback login)");
+  console.log("     ✅ Clerk authentication ready (fallback login)");
 }
 
 test.describe("Campaign Flow", () => {
@@ -39,17 +41,17 @@ test.describe("Campaign Flow", () => {
     test.setTimeout(120000); // Increase timeout for beforeAll hook to 2 minutes
     const context = await browser.newContext();
     const page = await context.newPage();
-    console.log("Starting beforeAll: navigating to campaigns page");
+    console.log("     Starting beforeAll: navigating to campaigns page");
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -64,16 +66,16 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
-    console.log("Campaigns page loaded");
+    console.log("     Campaigns page loaded");
     // Wait for the campaign element to be visible (this ensures the API call has completed)
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Test campaign found, clicking on it");
+    console.log("     Test campaign found, clicking on it");
     await page.getByTestId(/test-Medieval Adventure/i).click();
 
     // Wait for navigation to campaign page
-    console.log("Waiting for navigation to campaign page");
+    console.log("     Waiting for navigation to campaign page");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`
@@ -82,11 +84,11 @@ test.describe("Campaign Flow", () => {
         timeout: 30000,
       }
     );
-    console.log("Navigated to campaign page");
+    console.log("     Navigated to campaign page");
 
     // Wait for campaign data to load - check for campaign cover image or campaign name
     // The campaign page shows cover image when data is loaded
-    console.log("Waiting for campaign data to load");
+    console.log("     Waiting for campaign data to load");
     await page.waitForLoadState("networkidle");
     // Wait for either the campaign cover image or campaign name to appear
     await Promise.race([
@@ -99,18 +101,18 @@ test.describe("Campaign Flow", () => {
         .waitFor({ state: "visible", timeout: 30000 })
         .catch(() => null),
     ]);
-    console.log("Campaign data loaded");
+    console.log("     Campaign data loaded");
 
     // Wait for hero existence check to complete and navigate-to-create-hero button to be visible
-    console.log("Waiting for hero existence check and create hero button");
+    console.log("     Waiting for hero existence check and create hero button");
     await expect(page.getByTestId("navigate-to-create-hero")).toBeVisible({
       timeout: 30000,
     });
-    console.log("Create hero button is visible, clicking it");
+    console.log("     Create hero button is visible, clicking it");
     await page.getByTestId("navigate-to-create-hero").click();
-    console.log("On hero creation page, filling hero name");
+    console.log("     On hero creation page, filling hero name");
     await page.getByTestId("hero-name-input").fill("Aki Test!");
-    console.log("Clicking hero creation button");
+    console.log("     Clicking hero creation button");
     await page.getByTestId("hero-creation-button").click();
     console.log(
       "Waiting for hero creation to complete and campaign stats to appear"
@@ -136,15 +138,15 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigating to campaigns shows the test campaign"
     );
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -154,11 +156,11 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
-    console.log("Campaigns page loaded");
+    console.log("     Campaigns page loaded");
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
@@ -173,15 +175,15 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigating to campaign in the navbar shows the test campaign"
     );
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -191,16 +193,16 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Test campaign loaded");
+    console.log("     Test campaign loaded");
     await page.getByTestId(/test-Medieval Adventure/i).click();
-    console.log("Accessed the campaign");
+    console.log("     Accessed the campaign");
 
     await page.getByTestId("navbar-compendium").click();
     console.log(
@@ -208,7 +210,7 @@ test.describe("Campaign Flow", () => {
     );
 
     await page.getByTestId("navbar-campaign").click();
-    console.log("Navigating to campaign page through navbar");
+    console.log("     Navigating to campaign page through navbar");
     await expect(page.getByText(/Campaign Stats/i)).toBeVisible({
       timeout: 30000,
     });
@@ -239,7 +241,7 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByText(/Win Rate/i)).toBeVisible({
       timeout: 30000,
     });
-    console.log("All stats rendered correctly");
+    console.log("     All stats rendered correctly");
     console.log("✅ Test campaign page correct - test complete");
   });
 
@@ -251,15 +253,15 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigating to compendium and verifying that all cards are created"
     );
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -269,49 +271,49 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Clicking on test campaign");
+    console.log("     Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
-    console.log("Navigating to compendium");
+    console.log("     Navigating to compendium");
     await page.getByTestId("navbar-compendium").click();
-    console.log("Checking NPCs category");
+    console.log("     Checking NPCs category");
     await page.getByText(/npc's/i).click();
     await expect(page.getByTestId("character-card")).toHaveCount(2);
-    console.log("Found 2 character cards");
-    console.log("Checking armors category");
+    console.log("     Found 2 character cards");
+    console.log("     Checking armors category");
     await page.getByText(/armors/i).click();
     await expect(page.getByTestId("armor-card")).toHaveCount(2);
-    console.log("Found 2 armor cards");
-    console.log("Checking boots category");
+    console.log("     Found 2 armor cards");
+    console.log("     Checking boots category");
     await page.getByText(/boots/i).click();
     await expect(page.getByTestId("boots-card")).toHaveCount(2);
-    console.log("Found 2 boots cards");
-    console.log("Checking consumables category");
+    console.log("     Found 2 boots cards");
+    console.log("     Checking consumables category");
     await page.getByText(/consumables/i).click();
     await expect(page.getByTestId("consumable-card")).toHaveCount(2);
-    console.log("Found 2 consumable cards");
-    console.log("Checking helmets category");
+    console.log("     Found 2 consumable cards");
+    console.log("     Checking helmets category");
     await page.getByText(/helmets/i).click();
     await expect(page.getByTestId("helmet-card")).toHaveCount(2);
-    console.log("Found 2 helmet cards");
-    console.log("Checking shields category");
+    console.log("     Found 2 helmet cards");
+    console.log("     Checking shields category");
     await page.getByText(/shields/i).click();
     await expect(page.getByTestId("shield-card")).toHaveCount(2);
-    console.log("Found 2 shield cards");
-    console.log("Checking spells category");
+    console.log("     Found 2 shield cards");
+    console.log("     Checking spells category");
     await page.getByText(/spells/i).click();
     await expect(page.getByTestId("spell-card")).toHaveCount(2);
-    console.log("Found 2 spell cards");
-    console.log("Checking weapons category");
+    console.log("     Found 2 spell cards");
+    console.log("     Checking weapons category");
     await page.getByText(/weapons/i).click();
     await expect(page.getByTestId("weapon-card")).toHaveCount(2);
-    console.log("Found 2 weapon cards");
+    console.log("     Found 2 weapon cards");
     console.log("✅ All card categories verified - test complete");
   });
 
@@ -323,15 +325,15 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the item booster route, opens an item booster and verifies that the correct amount of cards are in the inventory"
     );
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -341,26 +343,26 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Clicking on test campaign");
+    console.log("     Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
-    console.log("Navigating to item boosters");
+    console.log("     Navigating to item boosters");
     await page.getByTestId("navbar-item-boosters").click();
-    console.log("Opening item booster");
+    console.log("     Opening item booster");
     await page.getByTestId("open-booster-button").click();
     // gives max 5 minutes for the booster to open
-    console.log("Waiting for booster to open (max 5 minutes)");
+    console.log("     Waiting for booster to open (max 5 minutes)");
     await expect(page.getByTestId("booster-data")).toBeVisible({
       timeout: 300_300,
     });
-    console.log("🎉 Booster opened successfully");
-    console.log("Navigating to inventory");
+    console.log("     🎉 Booster opened successfully");
+    console.log("     Navigating to inventory");
     await page.getByTestId("navbar-inventory").click();
 
     const categories = [
@@ -404,15 +406,15 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the inventory route and equips an item if available"
     );
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -422,16 +424,16 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Clicking on test campaign");
+    console.log("     Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
-    console.log("Waiting for navigation to campaign detail page");
+    console.log("     Waiting for navigation to campaign detail page");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`
@@ -441,16 +443,16 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Navigating to inventory");
+    console.log("     Navigating to inventory");
     await page.getByTestId("navbar-inventory").click();
-    console.log("Waiting for navigation to inventory route");
+    console.log("     Waiting for navigation to inventory route");
     await expect(page.getByText(/Aki Test!/i)).toBeVisible();
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for hero data to load");
+    console.log("     Waiting for hero data to load");
     await expect(page.getByText("Aki Test!")).toBeVisible({
       timeout: 30000,
     });
-    console.log("Hero data loaded, inventory page ready");
+    console.log("     Hero data loaded, inventory page ready");
     const categories = [
       "armors",
       "boots",
@@ -461,7 +463,7 @@ test.describe("Campaign Flow", () => {
       "weapons",
     ];
 
-    console.log("Checking each category tab");
+    console.log("     Checking each category tab");
     for (const category of categories) {
       const tab = page.getByText(new RegExp(category, "i"));
       try {
@@ -473,7 +475,7 @@ test.describe("Campaign Flow", () => {
       }
     }
 
-    console.log("Verifying item placeholders count (should be 5)");
+    console.log("     Verifying item placeholders count (should be 5)");
     await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
     const equippableCount = await page
       .getByTestId("equip-item-inventory")
@@ -502,15 +504,15 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the inventory route and unequips an item if available"
     );
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -520,16 +522,16 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Clicking on test campaign");
+    console.log("     Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
-    console.log("Waiting for navigation to campaign detail page");
+    console.log("     Waiting for navigation to campaign detail page");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign/\\d+`
@@ -539,16 +541,16 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Navigating to inventory");
+    console.log("     Navigating to inventory");
     await page.getByTestId("navbar-inventory").click();
-    console.log("Waiting for navigation to inventory route");
+    console.log("     Waiting for navigation to inventory route");
     await expect(page.getByText(/Aki Test!/i)).toBeVisible();
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for hero data to load");
+    console.log("     Waiting for hero data to load");
     await expect(page.getByText("Aki Test!")).toBeVisible({
       timeout: 30000,
     });
-    console.log("Hero data loaded, inventory page ready");
+    console.log("     Hero data loaded, inventory page ready");
 
     const placeholderCount = await page.getByTestId("item-placeholder").count();
     console.log(`Current item placeholder count: ${placeholderCount}`);
@@ -579,15 +581,15 @@ test.describe("Campaign Flow", () => {
       "Starting test: navigates to the character booster route, opens an character booster and verifies that it opened"
     );
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -597,21 +599,21 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Clicking on test campaign");
+    console.log("     Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
-    console.log("Navigating to character boosters");
+    console.log("     Navigating to character boosters");
     await page.getByTestId("navbar-character-boosters").click();
-    console.log("Opening character booster");
+    console.log("     Opening character booster");
     await page.getByTestId("open-booster-button").click();
     // gives max 5 minutes for booster to open
-    console.log("Waiting for booster to open (max 5 minutes)");
+    console.log("     Waiting for booster to open (max 5 minutes)");
     await expect(page.getByTestId("booster-data")).toBeVisible({
       timeout: 300_00,
     });
@@ -623,17 +625,17 @@ test.describe("Campaign Flow", () => {
   }) => {
     console.log("🚀 ////START////");
     test.setTimeout(240000); // this test has 4 minutes for completion
-    console.log("Starting battle test: navigating to campaigns");
+    console.log("     Starting battle test: navigating to campaigns");
     await page.goto(FRONTEND_URL);
-    console.log("Waiting for page to fully load");
+    console.log("     Waiting for page to fully load");
     await page.waitForLoadState("networkidle");
-    console.log("Ensuring Clerk authentication");
+    console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
     await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
-    console.log("Clerk authentication ready");
-    console.log("Navigating to campaigns page");
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
-    console.log("Waiting for navigation to campaigns route");
+    console.log("     Waiting for navigation to campaigns route");
     await page.waitForURL(
       new RegExp(
         `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
@@ -643,52 +645,52 @@ test.describe("Campaign Flow", () => {
       }
     );
     await page.waitForLoadState("networkidle");
-    console.log("Waiting for campaigns page to load");
+    console.log("     Waiting for campaigns page to load");
     await expect(page.getByText(/your campaigns/i)).toBeVisible({
       timeout: 30000,
     });
     await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
       timeout: 60000,
     });
-    console.log("Clicking on test campaign");
+    console.log("     Clicking on test campaign");
     await page.getByTestId(/test-Medieval Adventure/i).click();
-    console.log("Navigating to battles");
+    console.log("     Navigating to battles");
     await page.getByTestId("navbar-battles").click();
-    console.log("Waiting for battle creation button to load");
+    console.log("     Waiting for battle creation button to load");
     await page.waitForLoadState("networkidle");
     await expect(page.getByTestId("create-battle-button")).toBeVisible();
-    console.log("Creating battle");
+    console.log("     Creating battle");
     await page.getByTestId("create-battle-button").click();
 
     // Wait for battle page to load
-    console.log("Waiting for battle page to load");
+    console.log("     Waiting for battle page to load");
     await page.waitForLoadState("networkidle");
 
     // Wait for "Character to play" text to confirm battle state loaded
-    console.log("Waiting for battle state to load");
+    console.log("     Waiting for battle state to load");
     await expect(page.getByText(/Character to play:/i)).toBeVisible({
       timeout: 30000,
     });
-    console.log("Battle state loaded");
+    console.log("     Battle state loaded");
 
     // Check for and click "Start Battle" button if enemy starts first
     const startBattleButton = page.getByTestId("start-battle-trigger");
     const startBattleCount = await startBattleButton.count();
     if (startBattleCount > 0) {
-      console.log("Enemy starts first, clicking Start Battle button");
+      console.log("     Enemy starts first, clicking Start Battle button");
       await startBattleButton.click();
       // Wait for battle to actually start after clicking
       await page.waitForTimeout(2000);
-      console.log("Battle started");
+      console.log("     Battle started");
     } else {
-      console.log("Hero starts first, battle already in progress");
+      console.log("     Hero starts first, battle already in progress");
     }
 
     const battleTimeout = 300000;
     const start = Date.now();
     let actionCount = 0;
 
-    console.log("Entering battle loop");
+    console.log("     Entering battle loop");
     while (Date.now() - start < battleTimeout) {
       // Check if battle is finished first
       try {
@@ -696,7 +698,7 @@ test.describe("Campaign Flow", () => {
           .getByTestId("close-battle-button")
           .count();
         if (closeButtonCount > 0) {
-          console.log("Battle finished! Clicking close button");
+          console.log("     Battle finished! Clicking close button");
           await page.getByTestId("close-battle-button").click();
           // Wait a bit before finishing loop
           await page.waitForTimeout(1000);
@@ -740,7 +742,9 @@ test.describe("Campaign Flow", () => {
             .getByTestId("close-battle-button")
             .count();
           if (closeButtonCount > 0) {
-            console.log("Battle finished during action, clicking close button");
+            console.log(
+              "     Battle finished during action, clicking close button"
+            );
             await page.getByTestId("close-battle-button").click();
             await page.waitForTimeout(1000);
             break;
@@ -753,7 +757,7 @@ test.describe("Campaign Flow", () => {
       // Wait between loop iterations to allow for NPC turns
       // If it's enemy's turn, NPC turn takes 5.5s trigger + 2.5s refresh = 8s
       // We'll wait a bit longer to be safe
-      console.log("Waiting for potential NPC turn (9-10 seconds)");
+      console.log("     Waiting for potential NPC turn (9-10 seconds)");
       await page.waitForTimeout(9500);
     }
 
@@ -764,7 +768,7 @@ test.describe("Campaign Flow", () => {
     expect(elapsed).toBeLessThan(battleTimeout);
 
     // After battle is finished, we should get redirected to the campaign page
-    console.log("Waiting for redirect to campaign page");
+    console.log("     Waiting for redirect to campaign page");
     await expect(page).toHaveURL(`${FRONTEND_URL}campaign/1`, {
       timeout: 10000,
     });
