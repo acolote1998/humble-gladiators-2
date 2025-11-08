@@ -16,12 +16,26 @@ import { useGetCardBackForCampaign } from "../../hooks/useCampaigns";
 import { Loader } from "../Loader";
 import BoosterToOpenPlaceholder from "./BoosterToOpenPlaceholder";
 import { SandClockIcon } from "../icons/errors/SandClockIcon";
+import type { ArmorType } from "@/types/armorTypes";
+import type { BootsType } from "@/types/bootsTypes";
+import type { ConsumableType } from "@/types/consumablesTypes";
+import type { HelmetType } from "@/types/helmetTypes";
+import type { ShieldType } from "@/types/shieldTypes";
+import type { SpellType } from "@/types/spellTypes";
+import type { WeaponType } from "@/types/weaponTypes";
+import ProcessCardButton from "./ProcessCardButton";
+import { NewCardInformer } from "./NewCardInformer";
 
 export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
   const { data: cardBack } = useGetCardBackForCampaign(Number(campaignId));
-  const [flipped, setFlipped] = useState(false);
+  const [flipped, setFlipped] = useState<boolean>(false);
+  const [processingCard, setProcessingCard] = useState<boolean>(false);
   const handleFlip = () => {
-    if (!flipped) setFlipped(true);
+    if (flipped) {
+      setFlipped(false);
+    } else {
+      if (!flipped) setFlipped(true);
+    }
   };
   const queryClient = useQueryClient();
   const { data: isBoosterAvailable, isLoading: isBoosterAvailableLoading } =
@@ -76,24 +90,48 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
         weapons: [...dataFromItemBooster.weapons],
       });
   }, [dataFromItemBooster]);
-  const updateRemainingCards = () => {
-    if (cards)
-      setCards({
-        armors: [...cards.armors],
-        boots: [...cards.boots],
-        consumables: [...cards.consumables],
-        helmets: [...cards.helmets],
-        shields: [...cards.shields],
-        spells: [...cards.spells],
-        weapons: [...cards.weapons],
-      });
-    if (isBoosterEmpty() && cleanItemBooster) {
-      cleanItemBooster();
-      queryClient.invalidateQueries({
-        queryKey: ["items-booster-availability"],
-      });
+  const updateRemainingCards = (
+    cardsToUpdate:
+      | ArmorType[]
+      | BootsType[]
+      | ConsumableType[]
+      | HelmetType[]
+      | HelmetType[]
+      | ShieldType[]
+      | SpellType[]
+      | WeaponType[]
+  ) => {
+    if (!processingCard) {
+      setProcessingCard(true);
+      if (flipped) {
+        handleFlip();
+      } else {
+        setFlipped(true);
+        setTimeout(() => {
+          setFlipped(false);
+        }, 850);
+      }
+      setTimeout(() => {
+        cardsToUpdate.shift();
+        if (cards)
+          setCards({
+            armors: [...cards.armors],
+            boots: [...cards.boots],
+            consumables: [...cards.consumables],
+            helmets: [...cards.helmets],
+            shields: [...cards.shields],
+            spells: [...cards.spells],
+            weapons: [...cards.weapons],
+          });
+        if (isBoosterEmpty() && cleanItemBooster) {
+          cleanItemBooster();
+          queryClient.invalidateQueries({
+            queryKey: ["items-booster-availability"],
+          });
+        }
+        setProcessingCard(false);
+      }, 1500);
     }
-    setFlipped(false);
   };
   return (
     <>
@@ -142,7 +180,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <div className={`w-fit h-fit`}>
                     <div
                       className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                      onClick={handleFlip}
+                      onClick={() => {
+                        if (!processingCard) handleFlip();
+                      }}
                     >
                       <div
                         className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -163,18 +203,12 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                       </div>
                     </div>
                   </div>
-                  {!cards.armors[0].discovered && (
-                    <p className="bg-amber-300">NEW!</p>
-                  )}
-                  <p
-                    onClick={() => {
-                      cards.armors.shift();
-                      updateRemainingCards();
-                    }}
-                    className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                  >
-                    {textNextOrClose()}
-                  </p>
+                  {!cards.armors[0].discovered && <NewCardInformer />}
+                  <ProcessCardButton
+                    buttonText={textNextOrClose()}
+                    isBeingProcessed={processingCard}
+                    onClickCallback={() => updateRemainingCards(cards.armors)}
+                  />
                 </>
               )}
 
@@ -184,7 +218,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <div className={`w-fit h-fit`}>
                     <div
                       className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                      onClick={handleFlip}
+                      onClick={() => {
+                        if (!processingCard) handleFlip();
+                      }}
                     >
                       <div
                         className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -205,18 +241,12 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                       </div>
                     </div>
                   </div>
-                  {!cards.boots[0].discovered && (
-                    <p className="bg-amber-300">NEW!</p>
-                  )}
-                  <p
-                    onClick={() => {
-                      cards.boots.shift();
-                      updateRemainingCards();
-                    }}
-                    className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                  >
-                    {textNextOrClose()}
-                  </p>
+                  {!cards.boots[0].discovered && <NewCardInformer />}
+                  <ProcessCardButton
+                    buttonText={textNextOrClose()}
+                    isBeingProcessed={processingCard}
+                    onClickCallback={() => updateRemainingCards(cards.boots)}
+                  />
                 </>
               )}
 
@@ -228,7 +258,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                        onClick={handleFlip}
+                        onClick={() => {
+                          if (!processingCard) handleFlip();
+                        }}
                       >
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -249,18 +281,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         </div>
                       </div>
                     </div>
-                    {!cards.consumables[0].discovered && (
-                      <p className="bg-amber-300">NEW!</p>
-                    )}
-                    <p
-                      onClick={() => {
-                        cards.consumables.shift();
-                        updateRemainingCards();
-                      }}
-                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                    >
-                      {textNextOrClose()}
-                    </p>
+                    {!cards.consumables[0].discovered && <NewCardInformer />}
+                    <ProcessCardButton
+                      buttonText={textNextOrClose()}
+                      isBeingProcessed={processingCard}
+                      onClickCallback={() =>
+                        updateRemainingCards(cards.consumables)
+                      }
+                    />
                   </>
                 )}
 
@@ -273,7 +301,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                        onClick={handleFlip}
+                        onClick={() => {
+                          if (!processingCard) handleFlip();
+                        }}
                       >
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -294,18 +324,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         </div>
                       </div>
                     </div>
-                    {!cards.helmets[0].discovered && (
-                      <p className="bg-amber-300">NEW!</p>
-                    )}
-                    <p
-                      onClick={() => {
-                        cards.helmets.shift();
-                        updateRemainingCards();
-                      }}
-                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                    >
-                      {textNextOrClose()}
-                    </p>
+                    {!cards.helmets[0].discovered && <NewCardInformer />}
+                    <ProcessCardButton
+                      buttonText={textNextOrClose()}
+                      isBeingProcessed={processingCard}
+                      onClickCallback={() =>
+                        updateRemainingCards(cards.helmets)
+                      }
+                    />
                   </>
                 )}
 
@@ -319,7 +345,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                        onClick={handleFlip}
+                        onClick={() => {
+                          if (!processingCard) handleFlip();
+                        }}
                       >
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -340,18 +368,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         </div>
                       </div>
                     </div>
-                    {!cards.shields[0].discovered && (
-                      <p className="bg-amber-300">NEW!</p>
-                    )}
-                    <p
-                      onClick={() => {
-                        cards.shields.shift();
-                        updateRemainingCards();
-                      }}
-                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                    >
-                      {textNextOrClose()}
-                    </p>
+                    {!cards.shields[0].discovered && <NewCardInformer />}
+                    <ProcessCardButton
+                      buttonText={textNextOrClose()}
+                      isBeingProcessed={processingCard}
+                      onClickCallback={() =>
+                        updateRemainingCards(cards.shields)
+                      }
+                    />
                   </>
                 )}
 
@@ -366,7 +390,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                        onClick={handleFlip}
+                        onClick={() => {
+                          if (!processingCard) handleFlip();
+                        }}
                       >
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -387,18 +413,12 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         </div>
                       </div>
                     </div>
-                    {!cards.spells[0].discovered && (
-                      <p className="bg-amber-300">NEW!</p>
-                    )}
-                    <p
-                      onClick={() => {
-                        cards.spells.shift();
-                        updateRemainingCards();
-                      }}
-                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                    >
-                      {textNextOrClose()}
-                    </p>
+                    {!cards.spells[0].discovered && <NewCardInformer />}
+                    <ProcessCardButton
+                      buttonText={textNextOrClose()}
+                      isBeingProcessed={processingCard}
+                      onClickCallback={() => updateRemainingCards(cards.spells)}
+                    />
                   </>
                 )}
 
@@ -414,7 +434,9 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     <div className={`w-fit h-fit`}>
                       <div
                         className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
-                        onClick={handleFlip}
+                        onClick={() => {
+                          if (!processingCard) handleFlip();
+                        }}
                       >
                         <div
                           className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${flipped ? "rotate-y-180" : ""}`}
@@ -435,18 +457,14 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                         </div>
                       </div>
                     </div>
-                    {!cards.weapons[0].discovered && (
-                      <p className="bg-amber-300">NEW!</p>
-                    )}
-                    <p
-                      onClick={() => {
-                        cards.weapons.shift();
-                        updateRemainingCards();
-                      }}
-                      className="cursor-pointer bg-[var(--information-color)] text-center p-2 m-2 rounded-xl"
-                    >
-                      {textNextOrClose()}
-                    </p>
+                    {!cards.weapons[0].discovered && <NewCardInformer />}
+                    <ProcessCardButton
+                      buttonText={textNextOrClose()}
+                      isBeingProcessed={processingCard}
+                      onClickCallback={() =>
+                        updateRemainingCards(cards.weapons)
+                      }
+                    />
                   </>
                 )}
             </div>
