@@ -11,6 +11,5 @@ test("has correct title", async ({ page }) => {
   await page.goto(FRONTEND_URL);
   console.log("Checking page title");
   await expect(page).toHaveTitle(/Humble Gladiators 2/);
-  console.log("🏁 Title verification complete - test complete");
-  console.log("🏁 \\\\\\ FINISHED \\\\\\");
+  console.log("✅ Title verification complete - test complete");
 });
