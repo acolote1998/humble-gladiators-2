@@ -115,7 +115,7 @@ test.describe("Campaign Flow", () => {
     console.log("     Clicking hero creation button");
     await page.getByTestId("hero-creation-button").click();
     console.log(
-      "Waiting for hero creation to complete and campaign stats to appear"
+      "     Waiting for hero creation to complete and campaign stats to appear"
     );
     await expect(page.getByText(/campaign stats/i)).toBeVisible();
     await expect(page.getByText(/armors/i)).toBeVisible();
@@ -206,7 +206,7 @@ test.describe("Campaign Flow", () => {
 
     await page.getByTestId("navbar-compendium").click();
     console.log(
-      "Navigating to compendium just to get away of campaign to be able to test the navbar"
+      "     Navigating to compendium just to get away of campaign to be able to test the navbar"
     );
 
     await page.getByTestId("navbar-campaign").click();
@@ -385,15 +385,17 @@ test.describe("Campaign Flow", () => {
         const cardCount = await page.getByTestId(`${card}-card`).count();
         totalCards += cardCount;
         if (cardCount > 0) {
-          console.log(`Found ${cardCount} ${card} card(s) in ${tab} category`);
+          console.log(
+            `     Found ${cardCount} ${card} card(s) in ${tab} category`
+          );
         }
       } catch {
         // Tab didn't appear within 1.5s, skip it
-        console.log(`Skipping ${tab} category (tab not visible)`);
+        console.log(`     Skipping ${tab} category (tab not visible)`);
       }
     }
 
-    console.log(`Total cards found in inventory: ${totalCards}`);
+    console.log(`     Total cards found in inventory: ${totalCards}`);
     await expect(totalCards).toBe(3);
     console.log("✅ Verified total cards count is 3 - test complete");
   });
@@ -471,7 +473,7 @@ test.describe("Campaign Flow", () => {
         await tab.first().click();
       } catch {
         // Tab didn't appear within 1.5s, skip it
-        console.log(`Skipping ${category} category (tab not visible)`);
+        console.log(`     Skipping ${category} category (tab not visible)`);
       }
     }
 
@@ -553,16 +555,16 @@ test.describe("Campaign Flow", () => {
     console.log("     Hero data loaded, inventory page ready");
 
     const placeholderCount = await page.getByTestId("item-placeholder").count();
-    console.log(`Current item placeholder count: ${placeholderCount}`);
+    console.log(`     Current item placeholder count: ${placeholderCount}`);
     if (placeholderCount === 4) {
       console.log(
-        "Item is equipped (placeholder count is 4), unequipping item"
+        "     Item is equipped (placeholder count is 4), unequipping item"
       );
       await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
       const equippedItem = page.getByTestId("unequip-item-inventory");
       await equippedItem.first().click();
       console.log(
-        "Item unequipped, verifying updated placeholder count (should be 5)"
+        "     Item unequipped, verifying updated placeholder count (should be 5)"
       );
       await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
       console.log("✅ Item successfully unequipped - test complete");
@@ -717,15 +719,17 @@ test.describe("Campaign Flow", () => {
         const punchCardCount = await page.getByTestId("punch-card").count();
         if (punchCardCount > 0) {
           actionCount++;
-          console.log(`Playing action #${actionCount}: clicking punch card`);
+          console.log(
+            `     Playing action #${actionCount}: clicking punch card`
+          );
           await page.getByTestId("punch-card").click();
           console.log(
-            `Action #${actionCount}: clicking battle-hero-stats (targeting self for efficiency)`
+            `     Action #${actionCount}: clicking battle-hero-stats (targeting self for efficiency)`
           );
           await page.getByTestId("battle-hero-stats").click();
           // Wait for state refresh after hero action (2.8s delay + network time)
           console.log(
-            `Action #${actionCount}: waiting for state refresh (3-4 seconds)`
+            `     Action #${actionCount}: waiting for state refresh (3-4 seconds)`
           );
           await page.waitForTimeout(3500);
           continue;
@@ -763,7 +767,7 @@ test.describe("Campaign Flow", () => {
 
     const elapsed = Date.now() - start;
     console.log(
-      `Battle completed in ${elapsed}ms (${(elapsed / 1000).toFixed(1)}s)`
+      `     Battle completed in ${elapsed}ms (${(elapsed / 1000).toFixed(1)}s)`
     );
     expect(elapsed).toBeLessThan(battleTimeout);
 

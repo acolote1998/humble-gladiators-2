@@ -29,7 +29,7 @@ export default async function globalSetup() {
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`🔁 Health check attempt ${attempt}/${maxRetries}...`);
+      console.log(`     🔁 Health check attempt ${attempt}/${maxRetries}...`);
       const response = await fetch(healthCheckUrl, {
         method: "GET",
         headers: {
@@ -41,7 +41,7 @@ export default async function globalSetup() {
         throw new Error(`Health check failed with status ${response.status}`);
       }
 
-      console.log("     ✅ Backend health check passed");
+      console.log("     🌐 Backend health check passed");
       lastError = null;
       break;
     } catch (error) {
