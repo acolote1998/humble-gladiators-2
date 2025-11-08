@@ -153,6 +153,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                   </div>
                   {!cards.characters[0].discovered && <NewCardInformer />}
                   <ProcessCardButton
+                    cardsLeft={cards.characters.length}
                     buttonText={textNextOrClose()}
                     isBeingProcessed={processingCard}
                     onClickCallback={() => updateRemainingCards()}

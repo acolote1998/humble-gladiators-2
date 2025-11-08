@@ -205,6 +205,15 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   </div>
                   {!cards.armors[0].discovered && <NewCardInformer />}
                   <ProcessCardButton
+                    cardsLeft={
+                      cards.armors.length +
+                      cards.boots.length +
+                      cards.consumables.length +
+                      cards.helmets.length +
+                      cards.shields.length +
+                      cards.spells.length +
+                      cards.weapons.length
+                    }
                     buttonText={textNextOrClose()}
                     isBeingProcessed={processingCard}
                     onClickCallback={() => updateRemainingCards(cards.armors)}
@@ -243,6 +252,15 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   </div>
                   {!cards.boots[0].discovered && <NewCardInformer />}
                   <ProcessCardButton
+                    cardsLeft={
+                      cards.armors.length +
+                      cards.boots.length +
+                      cards.consumables.length +
+                      cards.helmets.length +
+                      cards.shields.length +
+                      cards.spells.length +
+                      cards.weapons.length
+                    }
                     buttonText={textNextOrClose()}
                     isBeingProcessed={processingCard}
                     onClickCallback={() => updateRemainingCards(cards.boots)}
@@ -283,6 +301,15 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     </div>
                     {!cards.consumables[0].discovered && <NewCardInformer />}
                     <ProcessCardButton
+                      cardsLeft={
+                        cards.armors.length +
+                        cards.boots.length +
+                        cards.consumables.length +
+                        cards.helmets.length +
+                        cards.shields.length +
+                        cards.spells.length +
+                        cards.weapons.length
+                      }
                       buttonText={textNextOrClose()}
                       isBeingProcessed={processingCard}
                       onClickCallback={() =>
@@ -326,6 +353,15 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     </div>
                     {!cards.helmets[0].discovered && <NewCardInformer />}
                     <ProcessCardButton
+                      cardsLeft={
+                        cards.armors.length +
+                        cards.boots.length +
+                        cards.consumables.length +
+                        cards.helmets.length +
+                        cards.shields.length +
+                        cards.spells.length +
+                        cards.weapons.length
+                      }
                       buttonText={textNextOrClose()}
                       isBeingProcessed={processingCard}
                       onClickCallback={() =>
@@ -370,6 +406,15 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     </div>
                     {!cards.shields[0].discovered && <NewCardInformer />}
                     <ProcessCardButton
+                      cardsLeft={
+                        cards.armors.length +
+                        cards.boots.length +
+                        cards.consumables.length +
+                        cards.helmets.length +
+                        cards.shields.length +
+                        cards.spells.length +
+                        cards.weapons.length
+                      }
                       buttonText={textNextOrClose()}
                       isBeingProcessed={processingCard}
                       onClickCallback={() =>
@@ -415,6 +460,15 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     </div>
                     {!cards.spells[0].discovered && <NewCardInformer />}
                     <ProcessCardButton
+                      cardsLeft={
+                        cards.armors.length +
+                        cards.boots.length +
+                        cards.consumables.length +
+                        cards.helmets.length +
+                        cards.shields.length +
+                        cards.spells.length +
+                        cards.weapons.length
+                      }
                       buttonText={textNextOrClose()}
                       isBeingProcessed={processingCard}
                       onClickCallback={() => updateRemainingCards(cards.spells)}
@@ -459,6 +513,15 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                     </div>
                     {!cards.weapons[0].discovered && <NewCardInformer />}
                     <ProcessCardButton
+                      cardsLeft={
+                        cards.armors.length +
+                        cards.boots.length +
+                        cards.consumables.length +
+                        cards.helmets.length +
+                        cards.shields.length +
+                        cards.spells.length +
+                        cards.weapons.length
+                      }
                       buttonText={textNextOrClose()}
                       isBeingProcessed={processingCard}
                       onClickCallback={() =>
