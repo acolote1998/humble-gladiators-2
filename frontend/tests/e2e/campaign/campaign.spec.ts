@@ -463,35 +463,57 @@ test.describe("Campaign Flow", () => {
       "weapons",
     ];
 
-    console.log("     Checking each category tab");
+    console.log("     Verifying item placeholders count (should be 5)");
+    await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
+
+    console.log("     Checking each category tab for equippable items");
+    let equipped = false;
     for (const category of equippableCategories) {
       const tab = page.getByText(new RegExp(category, "i"));
       try {
         await tab.first().waitFor({ state: "visible", timeout: 1500 });
         await tab.first().click();
+        await page.waitForTimeout(200);
       } catch {
-        // Tab didn't appear within 1.5s, skip it
         console.log(`     Skipping ${category} category (tab not visible)`);
+        continue;
+      }
+
+      const cardLocator = page.getByTestId(`${category}-card`);
+      const cardsInTab = await cardLocator.count();
+      if (cardsInTab === 0) {
+        console.log(`     No cards found in ${category} category`);
+        continue;
+      }
+
+      for (let index = 0; index < cardsInTab; index++) {
+        const card = cardLocator.nth(index);
+        const equipButton = card.getByTestId("equip-item-inventory");
+        if ((await equipButton.count()) === 0) {
+          continue;
+        }
+
+        console.log(
+          `     Equipping item from ${category} category (card #${index + 1})`
+        );
+        await equipButton.first().click();
+        equipped = true;
+        break;
+      }
+
+      if (equipped) {
+        break;
       }
     }
 
-    console.log("     Verifying item placeholders count (should be 5)");
-    await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
-    const equippableCount = await page
-      .getByTestId("equip-item-inventory")
-      .count();
-    if (equippableCount > 0) {
-      console.log(
-        `     Found ${equippableCount} equippable item(s), equipping first item`
-      );
-      const equippableItems = page.getByTestId("equip-item-inventory");
-      await equippableItems.first().click();
+    if (equipped) {
       console.log(
         "     Item equipped, verifying updated placeholder count (should be 4)"
       );
       await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
       console.log("✅ Item successfully equipped - test complete");
     } else {
+      await expect(page.getByTestId("item-placeholder")).toHaveCount(5);
       console.log("✅ No equippable items found - test complete");
     }
   });
@@ -552,6 +574,14 @@ test.describe("Campaign Flow", () => {
     });
     console.log("     Hero data loaded, inventory page ready");
 
+    const equippableCategories = [
+      "armors",
+      "boots",
+      "helmets",
+      "shields",
+      "weapons",
+    ];
+
     const placeholderCount = await page.getByTestId("item-placeholder").count();
     console.log(`     Current item placeholder count: ${placeholderCount}`);
     if (placeholderCount === 4) {
@@ -559,8 +589,49 @@ test.describe("Campaign Flow", () => {
         "     Item is equipped (placeholder count is 4), unequipping item"
       );
       await expect(page.getByTestId("item-placeholder")).toHaveCount(4);
-      const equippedItem = page.getByTestId("unequip-item-inventory");
-      await equippedItem.first().click();
+
+      let unequipped = false;
+      for (const category of equippableCategories) {
+        const tab = page.getByText(new RegExp(category, "i"));
+        try {
+          await tab.first().waitFor({ state: "visible", timeout: 1500 });
+          await tab.first().click();
+          await page.waitForTimeout(200);
+        } catch {
+          console.log(`     Skipping ${category} category (tab not visible)`);
+          continue;
+        }
+
+        const cardLocator = page.getByTestId(`${category}-card`);
+        const cardsInTab = await cardLocator.count();
+        if (cardsInTab === 0) {
+          continue;
+        }
+
+        for (let index = 0; index < cardsInTab; index++) {
+          const card = cardLocator.nth(index);
+          const unequipButton = card.getByTestId("unequip-item-inventory");
+          if ((await unequipButton.count()) === 0) {
+            continue;
+          }
+
+          console.log(
+            `     Unequipping item from ${category} category (card #${index + 1})`
+          );
+          await unequipButton.first().click();
+          unequipped = true;
+          break;
+        }
+
+        if (unequipped) {
+          break;
+        }
+      }
+
+      if (!unequipped) {
+        console.log("     Unable to locate unequip button in any category");
+      }
+
       console.log(
         "     Item unequipped, verifying updated placeholder count (should be 5)"
       );
