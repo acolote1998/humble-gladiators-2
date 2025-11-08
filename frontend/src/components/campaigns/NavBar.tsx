@@ -77,7 +77,7 @@ const NavBar = () => {
             "
         onClick={() => {
           if (!isHeroExisting) {
-            navigate({ to: `/campaign/${campaignId}` });
+            navigate({ to: `/campaign/${campaignId}#campaign` });
           } else navigate({ to: `/campaign/${campaignId}/compendium` });
         }}
       >
@@ -106,7 +106,7 @@ const NavBar = () => {
             "
         onClick={() => {
           if (!isHeroExisting) {
-            navigate({ to: `/campaign/${campaignId}` });
+            navigate({ to: `/campaign/${campaignId}#campaign` });
           } else navigate({ to: `/campaign/${campaignId}/boosters/item` });
         }}
       >
@@ -136,7 +136,7 @@ const NavBar = () => {
             "
         onClick={() => {
           if (!isHeroExisting) {
-            navigate({ to: `/campaign/${campaignId}` });
+            navigate({ to: `/campaign/${campaignId}#campaign` });
           } else navigate({ to: `/campaign/${campaignId}/boosters/character` });
         }}
       >
@@ -166,7 +166,7 @@ const NavBar = () => {
             "
         onClick={() => {
           if (!isHeroExisting) {
-            navigate({ to: `/campaign/${campaignId}` });
+            navigate({ to: `/campaign/${campaignId}#campaign` });
           } else
             navigate({
               to: `/campaign/${campaignId}/inventory#inventory-start`,
@@ -199,7 +199,7 @@ const NavBar = () => {
             "
         onClick={() => {
           if (!isHeroExisting) {
-            navigate({ to: `/campaign/${campaignId}` });
+            navigate({ to: `/campaign/${campaignId}#campaign` });
           } else
             navigate({ to: `/campaign/${campaignId}/battle#battle-start` });
         }}
