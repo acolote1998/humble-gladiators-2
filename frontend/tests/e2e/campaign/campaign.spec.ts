@@ -126,9 +126,8 @@ test.describe("Campaign Flow", () => {
     await expect(page.getByText(/characters/i)).toBeVisible();
     await expect(page.getByText(/win rate/i)).toBeVisible();
     await expect(page.getByText(/forge your hero/i)).toBeHidden();
-    console.log("Hero created successfully, beforeAll complete");
+    console.log("✅ beforeAll: Hero created successfully, beforeAll complete");
     await context.close();
-    console.log("🏁 \\\\\\ FINISHED \\\\\\");
   });
 
   test("navigating to campaigns shows the test campaign", async ({ page }) => {
