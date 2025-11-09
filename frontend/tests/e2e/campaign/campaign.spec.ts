@@ -747,11 +747,11 @@ test.describe("Campaign Flow", () => {
     //Testing turns ui visibility toggle
     await expect(page.getByTestId("turns-title-text")).toBeHidden();
     console.log("     Turns UI not rendered - correct");
-    await page.getByTestId("toggle-rewards-visibility").click();
+    await page.getByTestId("show-turns-toggle").click();
     console.log("     Making Turns UI visible");
     await expect(page.getByTestId("turns-title-text")).toBeVisible();
     console.log("     Turns UI visible - correct");
-    await page.getByTestId("toggle-rewards-visibility").click();
+    await page.getByTestId("hide-turns-toggle").click();
     console.log("     Making Turns UI hidden");
     await expect(page.getByTestId("turns-title-text")).toBeHidden();
 
@@ -787,11 +787,11 @@ test.describe("Campaign Flow", () => {
           //Testing turns ui visibility toggle
           await expect(page.getByTestId("turns-title-text")).toBeHidden();
           console.log("     Turns UI not rendered - correct");
-          await page.getByTestId("toggle-rewards-visibility").click();
+          await page.getByTestId("show-turns-toggle").click();
           console.log("     Making Turns UI visible");
           await expect(page.getByTestId("turns-title-text")).toBeVisible();
           console.log("     Turns UI visible - correct");
-          await page.getByTestId("toggle-rewards-visibility").click();
+          await page.getByTestId("hide-turns-toggle").click();
           console.log("     Making Turns UI hidden");
           await expect(page.getByTestId("turns-title-text")).toBeHidden();
 
@@ -800,13 +800,13 @@ test.describe("Campaign Flow", () => {
             page.getByTestId("battle-finished-title-text")
           ).toBeVisible();
           console.log("     Rewards UI rendered - correct");
-          await page.getByTestId("toggle-rewards-visibility").click();
+          await page.getByTestId("hide-rewards-toggle").click();
           console.log("     Making Rewards UI hidden");
           await expect(
             page.getByTestId("battle-finished-title-text")
           ).toBeHidden();
           console.log("     Rewards UI hidden - correct");
-          await page.getByTestId("toggle-rewards-visibility").click();
+          await page.getByTestId("show-rewards-toggle").click();
           console.log("     Making Rewards UI visible");
           await expect(
             page.getByTestId("battle-finished-title-text")
