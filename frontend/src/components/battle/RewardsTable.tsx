@@ -24,6 +24,7 @@ const RewardsTable = ({
   const { id: campaignId } = useParams({ from: "/campaign/$id/battle" });
   return (
     <div
+      data-testid="toggle-rewards-visibility"
       className={`absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-5 top-20 px-5 left-0 transition-all duration-400 ease-in-out
               ${isOpen ? "w-150" : "w-18.5"}
               ${isOpen ? "h-110" : "h-10"}
@@ -45,7 +46,10 @@ const RewardsTable = ({
       </div>
       {isOpen && (
         <>
-          <p className="my-2 p-1 rounded-md bg-[var(--page-container-bg-darkerer)] text-xl text-center text-[var(--light-text)]">
+          <p
+            data-testid="battle-finished-title-text"
+            className="my-2 p-1 rounded-md bg-[var(--page-container-bg-darkerer)] text-xl text-center text-[var(--light-text)]"
+          >
             Battle Finished
           </p>
           <p

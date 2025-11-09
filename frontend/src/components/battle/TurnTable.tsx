@@ -29,6 +29,7 @@ const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
       `}
     >
       <div
+        data-testid="toggle-rewards-visibility"
         onClick={() => {
           toggleVisibility();
         }}
@@ -43,7 +44,7 @@ const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
         <div
           className={`text-center p-2 mt-2 text-xl bg-[var(--page-container-bg-darkerer)] rounded-md text-[var(--light-text)] `}
         >
-          <p>Turns</p>
+          <p data-testid="turns-title-text">Turns</p>
         </div>
       )}
       {isOpen &&
