@@ -9,6 +9,7 @@ import TurnTable from "./TurnTable";
 import HeroStats from "./HeroStats";
 import RewardsTable from "./RewardsTable";
 import { Loader } from "../Loader";
+import { useState } from "react";
 const BattleFinished = ({
   campaignId,
   losingTeam,
@@ -17,6 +18,10 @@ const BattleFinished = ({
   startingTeamOne,
   startingTeamTwo,
 }: BattleResponseDto) => {
+  const [areTurnsVisible, setAreTurnsVisible] = useState<boolean>(false);
+  const toggleTurnVisibility = () => {
+    setAreTurnsVisible((prev) => !prev);
+  };
   const { data: rewardsForBattle, isLoading: loadingRewards } =
     useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery(
       Number(campaignId)
@@ -140,7 +145,11 @@ const BattleFinished = ({
               <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
             </div>
           </div>
-          <TurnTable turns={turns} />
+          <TurnTable
+            turns={turns}
+            isOpen={areTurnsVisible}
+            toggleVisibility={toggleTurnVisibility}
+          />
         </div>
         <div className="grid grid-cols-7">
           <HeroStats character={simulatedHero} />
