@@ -17,10 +17,7 @@ import InventoryCardPlaceholder from "../../../components/cards/InventoryCardPla
 import { PageContainer } from "@/components/ui/PageContainer";
 import CardsDisplayer from "@/components/ui/CardsDisplayer";
 import StatBar from "@/components/stats/StatBar";
-import {
-  PhysicalDamagecon,
-  PhysicalDamageIcon,
-} from "@/components/icons/stats/PhysicalDamageIcon";
+import { PhysicalDamageIcon } from "@/components/icons/stats/PhysicalDamageIcon";
 import { MagicalDamageIcon } from "@/components/icons/stats/MagicalDamageIcon";
 import { PhysicalDefenseIcon } from "@/components/icons/stats/PhysicalDefenseIcon";
 import { MagicalDefenseIcon } from "@/components/icons/stats/MagicalDefenseIcon";
@@ -172,21 +169,21 @@ function RouteComponent() {
 
                 <div
                   title="Physical Defense"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <PhysicalDefenseIcon width={24} />
                   {heroData.stats.physicalDefense}
                 </div>
                 <div
                   title="Magical Defense"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <MagicalDefenseIcon width={24} />
                   {heroData.stats.magicalDefense}
                 </div>
                 <div
                   title="Level"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <LevelIcon width={20} />
                   {heroData.stats.level}
@@ -194,63 +191,63 @@ function RouteComponent() {
 
                 <div
                   title="Strength"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <StrengthIcon width={24} />
                   {heroData.stats.strength}
                 </div>
                 <div
                   title="Constitution"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <ConstitutionIcon width={24} />
                   {heroData.stats.constitution}
                 </div>
                 <div
                   title="Physical Damage"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <PhysicalDamageIcon width={24} />
                   {heroData.stats.physicalDamage}
                 </div>
                 <div
                   title="Magical Damage"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <MagicalDamageIcon width={24} />
                   {heroData.stats.magicalDamage}
                 </div>
                 <div
                   title="Intelligence"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <IntelligenceIcon width={24} />
                   {heroData.stats.intelligence}
                 </div>
                 <div
                   title="Speed"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <SpeedIcon width={24} />
                   {heroData.stats.speed}
                 </div>
                 <div
                   title="Luck"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <LuckIcon width={24} />
                   {heroData.stats.luck}
                 </div>
                 <div
                   title="Weight"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <WeightIcon width={24} />
                   {heroData.stats.weight} kg
                 </div>
                 <div
                   title="Height"
-                  className="flex flex-col items-center cursor-pointer select-none"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
                 >
                   <HeightIcon width={24} />
                   {heroData.stats.height} cm
