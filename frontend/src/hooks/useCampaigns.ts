@@ -43,7 +43,9 @@ export const useGetCreationCampaignState = () => {
       return fetchCampaignCreationState(bearerToken);
     },
     refetchInterval: (creationState) =>
-      creationState && creationState !== "GAME_CREATED" ? 1500 : false,
+      creationState.state.data && creationState.state.data !== "GAME_CREATED"
+        ? 1500
+        : false,
     refetchIntervalInBackground: true,
   });
   return { data, isError, isLoading };
