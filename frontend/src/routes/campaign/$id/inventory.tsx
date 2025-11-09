@@ -139,7 +139,7 @@ function RouteComponent() {
               <h2 className="text-xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
                 Stats
               </h2>
-              <div className="grid grid-cols-7 text-center">
+              <div className="grid grid-cols-7 text-center items-center justify-items-center">
                 <StatBar
                   widthPercent={90}
                   barHeight={2}
