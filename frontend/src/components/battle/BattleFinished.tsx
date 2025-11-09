@@ -165,7 +165,7 @@ const BattleFinished = ({
               <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
             </div>
           </div>
-          <div className="-translate-y-122">
+          <div className="-translate-y-132">
             <TurnTable
               turns={turns}
               isOpen={areTurnsVisible}
