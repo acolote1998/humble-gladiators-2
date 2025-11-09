@@ -141,11 +141,15 @@ function RouteComponent() {
               </h2>
               <div className="grid grid-cols-7 text-center">
                 <StatBar
+                  widthPercent={90}
+                  barHeight={2}
                   currentValue={heroData.stats.currentHp}
                   maxValue={heroData.stats.maxHp}
                   type="HP"
                 />
                 <StatBar
+                  widthPercent={90}
+                  barHeight={2}
                   currentValue={heroData.stats.currentMp}
                   maxValue={heroData.stats.maxMp}
                   type="MANA"
