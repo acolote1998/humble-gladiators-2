@@ -151,7 +151,7 @@ function RouteComponent() {
               <h2 className="text-xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
                 Stats
               </h2>
-              <div className="grid grid-cols-7 text-center items-center justify-items-center">
+              <div className="grid grid-cols-8 text-center items-center justify-items-center">
                 <StatBar
                   widthPercent={90}
                   barHeight={2}
@@ -203,6 +203,14 @@ function RouteComponent() {
                   <ConstitutionIcon width={24} />
                   {heroData.stats.constitution}
                 </div>
+
+                <div
+                  title="Intelligence"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
+                >
+                  <IntelligenceIcon width={24} />
+                  {heroData.stats.intelligence}
+                </div>
                 <div
                   title="Physical Damage"
                   className="flex flex-col items-center cursor-pointer select-none gap-1"
@@ -216,13 +224,6 @@ function RouteComponent() {
                 >
                   <MagicalDamageIcon width={24} />
                   {heroData.stats.magicalDamage}
-                </div>
-                <div
-                  title="Intelligence"
-                  className="flex flex-col items-center cursor-pointer select-none gap-1"
-                >
-                  <IntelligenceIcon width={24} />
-                  {heroData.stats.intelligence}
                 </div>
                 <div
                   title="Speed"
@@ -252,10 +253,20 @@ function RouteComponent() {
                   <HeightIcon width={24} />
                   {heroData.stats.height} cm
                 </div>
-                {/* <p>
-                  EXP - {heroData.stats.currentExp}/
-                  {heroData.stats.expForNextLevel}
-                </p> */}
+                <div
+                  title="Experience"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
+                >
+                  <p className="font-bold text-lg">%</p>
+                  {heroData.stats.currentExp}/{heroData.stats.expForNextLevel}
+                </div>
+                <div
+                  title="Gold"
+                  className="flex flex-col items-center cursor-pointer select-none gap-1"
+                >
+                  <p className="text-lg">🪙</p>
+                  {heroData.inventory.gold} g
+                </div>
               </div>
             </div>
           </div>

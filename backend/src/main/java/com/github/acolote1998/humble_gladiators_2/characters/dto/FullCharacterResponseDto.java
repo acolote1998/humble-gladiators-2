@@ -57,7 +57,8 @@ public record FullCharacterResponseDto(
             List<HelmetInstanceResponseDto> helmets,
             List<ShieldInstanceResponseDto> shields,
             List<SpellInstanceResponseDto> spells,
-            List<WeaponInstanceResponseDto> weapons
+            List<WeaponInstanceResponseDto> weapons,
+            Integer gold
     ) {
     }
 
@@ -94,7 +95,8 @@ public record FullCharacterResponseDto(
                 HelmetInstanceResponseDto.fromInstances(inventory.getHelmets()),
                 ShieldInstanceResponseDto.fromInstances(inventory.getShields()),
                 SpellInstanceResponseDto.fromInstances(inventory.getSpells()),
-                WeaponInstanceResponseDto.fromInstances(inventory.getWeapons())
+                WeaponInstanceResponseDto.fromInstances(inventory.getWeapons()),
+                inventory.getGold()
         );
     }
 

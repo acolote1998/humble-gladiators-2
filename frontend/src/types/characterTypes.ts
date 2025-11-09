@@ -77,6 +77,7 @@ type CharacterInventoryResponseDto = {
   shields: ShieldType[];
   spells: SpellType[];
   weapons: WeaponType[];
+  gold: number;
 };
 
 export type RequirementResponseDto = {
