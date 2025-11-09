@@ -25,7 +25,7 @@ const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
       ${isOpen ? "h-110" : "h-10"}
       ${isOpen ? "overflow-y-auto" : "overflow-hidden"}
       ${!isOpen ? "translate-y-100" : ""}
-      ${isOpen ? "opacity-85 hover:opacity-100" : "opacity-20 hover:opacity-60"}
+      ${isOpen ? "opacity-92 hover:opacity-100" : "opacity-20 hover:opacity-60"}
       `}
     >
       <div

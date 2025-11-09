@@ -222,16 +222,19 @@ const BattleExecuting = ({
               )}
             </div>
           )}
-          <div className="flex justify-center">
-            <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
-              Character to play: {currentCharacterToPlay.name}
+          <div className="relative flex justify-center">
+            <p
+              className={`absolute left-5 top-5 bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl transition-all ease-in-out duration-500
+                ${areTurnsVisible ? "opacity-100" : "opacity-20"}
+                `}
+            >
+              {currentCharacterToPlay.name === teamOne[0].name
+                ? "Your turn"
+                : "Enemy's turn"}
             </p>
           </div>
-          <div className="relative">
-            <div className="flex flex-col items-center">
-              <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
-                Enemy
-              </p>
+          <div className="relative h-154">
+            <div className="flex flex-col items-center py-10">
               <div onClick={() => chooseTarget(teamTwo[0].id)}>
                 <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
               </div>
