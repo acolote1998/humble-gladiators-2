@@ -4,8 +4,10 @@ import { ClosedEyeIcon } from "../icons/ui/ClosedEyeIcon";
 import { OpenEyeIcon } from "../icons/ui/OpenEyeIcon";
 type TurnTableTypes = {
   turns: TurnResponseDto[];
+  isOpen: boolean;
+  toggleVisibility: () => void;
 };
-const TurnTable = ({ turns }: TurnTableTypes) => {
+const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
   const turnActionToText = (action: ActionTypeEnum) => {
     switch (action) {
       case "SPELL":
@@ -17,12 +19,33 @@ const TurnTable = ({ turns }: TurnTableTypes) => {
     }
   };
   return (
-    <div className="absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-auto">
-      <div className="text-center p-2 mt-2 text-xl bg-[var(--page-container-bg-darkerer)] rounded-md text-[var(--light-text)]">
-        <OpenEyeIcon className="absolute" width={32} />
-        <ClosedEyeIcon className="absolute" width={32} />
-        <p>Turns</p>
+    <div
+      className={`absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-5 top-20 px-5 right-0 transition-all duration-400 ease-in-out
+      ${isOpen ? "w-150" : "w-18.5"}
+      ${isOpen ? "h-110" : "h-10"}
+      ${isOpen ? "overflow-y-auto" : "overflow-hidden"}
+      ${!isOpen ? "translate-y-100" : ""}
+      ${isOpen ? "opacity-50 hover:opacity-95" : "opacity-20 hover:opacity-60"}
+      `}
+    >
+      <div
+        onClick={() => {
+          toggleVisibility();
+        }}
+      >
+        {isOpen ? (
+          <OpenEyeIcon className="absolute top-3.5 left-7" width={32} />
+        ) : (
+          <ClosedEyeIcon className="absolute" width={32} />
+        )}
       </div>
+      {isOpen && (
+        <div
+          className={`text-center p-2 mt-2 text-xl bg-[var(--page-container-bg-darkerer)] rounded-md text-[var(--light-text)] `}
+        >
+          <p>Turns</p>
+        </div>
+      )}
       {turns
         .slice()
         .reverse()

@@ -25,11 +25,16 @@ const BattleExecuting = ({
   // startingTeamOne,
   // startingTeamTwo,
 }: BattleResponseDto) => {
+  const [areTurnsVisible, setAreTurnsVisible] = useState<boolean>(false);
   const [isChoosingTarget, setIsChoosingTarget] = useState<boolean>(false);
   const [chosenTargetId, setChosenTargetId] = useState<number>();
   const [chosenCardAction, setChosenCardAction] = useState<ActionTypeEnum>();
   const [chosenCardId, setChosenCardId] = useState<number>();
   const queryClient = useQueryClient();
+
+  const toggleTurnVisibility = () => {
+    setAreTurnsVisible((prev) => !prev);
+  };
 
   const turnActionToText = (action: ActionTypeEnum) => {
     switch (action) {
@@ -231,7 +236,11 @@ const BattleExecuting = ({
                 <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
               </div>
             </div>
-            <TurnTable turns={turns} />
+            <TurnTable
+              turns={turns}
+              isOpen={areTurnsVisible}
+              toggleVisibility={toggleTurnVisibility}
+            />
           </div>
           <div className="grid grid-cols-7">
             <div
