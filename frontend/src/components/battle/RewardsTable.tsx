@@ -33,19 +33,20 @@ const RewardsTable = ({
         `}
     >
       <div
+        data-testid="toggle-rewards-visibility"
         onClick={() => {
           toggleVisibility();
         }}
       >
         {isOpen ? (
           <OpenEyeIcon
-            data-testid="show-rewards-toggle"
+            data-testid="hide-rewards-toggle"
             className="absolute top-2.5 left-7"
             width={32}
           />
         ) : (
           <ClosedEyeIcon
-            data-testid="hide-rewards-toggle"
+            data-testid="show-rewards-toggle"
             className="absolute top-2 left-5"
             width={32}
           />

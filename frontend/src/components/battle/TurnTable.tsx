@@ -35,13 +35,13 @@ const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
       >
         {isOpen ? (
           <OpenEyeIcon
-            data-testid="show-turns-toggle"
+            data-testid="hide-turns-toggle"
             className="absolute top-3.5 left-7"
             width={32}
           />
         ) : (
           <ClosedEyeIcon
-            data-testid="hide-turns-toggle"
+            data-testid="show-turns-toggle"
             className="absolute"
             width={32}
           />
