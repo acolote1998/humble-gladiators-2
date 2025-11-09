@@ -16,6 +16,7 @@ import type { BootsType } from "../../../types/bootsTypes";
 import InventoryCardPlaceholder from "../../../components/cards/InventoryCardPlaceholder";
 import { PageContainer } from "@/components/ui/PageContainer";
 import CardsDisplayer from "@/components/ui/CardsDisplayer";
+import StatBar from "@/components/stats/StatBar";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -139,12 +140,16 @@ function RouteComponent() {
                 Stats
               </h2>
               <div className="grid grid-cols-7 text-center">
-                <p>
-                  HP - {heroData.stats.currentHp}/{heroData.stats.maxHp}
-                </p>
-                <p>
-                  MP - {heroData.stats.currentMp}/{heroData.stats.maxMp}
-                </p>
+                <StatBar
+                  currentValue={heroData.stats.currentHp}
+                  maxValue={heroData.stats.maxHp}
+                  type="HP"
+                />
+                <StatBar
+                  currentValue={heroData.stats.currentMp}
+                  maxValue={heroData.stats.maxMp}
+                  type="MANA"
+                />
                 <p>P. DMG - {heroData.stats.physicalDamage}</p>
                 <p>M. DMG - {heroData.stats.magicalDamage}</p>
                 <p>P. DEF - {heroData.stats.physicalDefense}</p>
