@@ -169,51 +169,89 @@ function RouteComponent() {
                   maxValue={heroData.stats.maxMp}
                   type="MANA"
                 />
-                <div title="Physical Damage">
-                  <PhysicalDamageIcon width={24} />
-                  {heroData.stats.physicalDamage}
-                </div>
-                <div title="Magical Damage">
-                  <MagicalDamageIcon width={24} />
-                  {heroData.stats.magicalDamage}
-                </div>
-                <div title="Physical Defense">
+
+                <div
+                  title="Physical Defense"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <PhysicalDefenseIcon width={24} />
                   {heroData.stats.physicalDefense}
                 </div>
-                <div title="Magical Defense">
+                <div
+                  title="Magical Defense"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <MagicalDefenseIcon width={24} />
                   {heroData.stats.magicalDefense}
                 </div>
-                <div title="Level">
+                <div
+                  title="Level"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <LevelIcon width={20} />
                   {heroData.stats.level}
                 </div>
-                <div title="Strength">
+
+                <div
+                  title="Strength"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <StrengthIcon width={24} />
                   {heroData.stats.strength}
                 </div>
-                <div title="Constitution">
+                <div
+                  title="Constitution"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <ConstitutionIcon width={24} />
                   {heroData.stats.constitution}
                 </div>
-                <div title="Intelligence">
+                <div
+                  title="Physical Damage"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
+                  <PhysicalDamageIcon width={24} />
+                  {heroData.stats.physicalDamage}
+                </div>
+                <div
+                  title="Magical Damage"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
+                  <MagicalDamageIcon width={24} />
+                  {heroData.stats.magicalDamage}
+                </div>
+                <div
+                  title="Intelligence"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <IntelligenceIcon width={24} />
                   {heroData.stats.intelligence}
                 </div>
-                <div title="Speed">
+                <div
+                  title="Speed"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <SpeedIcon width={24} />
                   {heroData.stats.speed}
                 </div>
-                <div title="Luck">
+                <div
+                  title="Luck"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <LuckIcon width={24} />
                   {heroData.stats.luck}
                 </div>
-                <div title="Weight" className="flex flex-col items-center">
+                <div
+                  title="Weight"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <WeightIcon width={24} />
                   {heroData.stats.weight} kg
                 </div>
-                <div title="Height" className="flex flex-col items-center">
+                <div
+                  title="Height"
+                  className="flex flex-col items-center cursor-pointer select-none"
+                >
                   <HeightIcon width={24} />
                   {heroData.stats.height} cm
                 </div>

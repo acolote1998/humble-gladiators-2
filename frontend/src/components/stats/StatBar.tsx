@@ -18,8 +18,9 @@ const StatBar = ({
   };
   return (
     <div
+      title={`${type === "HP" ? "Health" : "Magic"} points`}
       style={{ height: `${barHeight}rem`, width: `${widthPercent}%` }}
-      className="relative"
+      className="relative cursor-pointer select-none"
     >
       <div className="absolute z-3 h-full w-full flex items-center justify-center">
         <p className="text-[var(--light-text)] text-lg font-semibold tracking-widest">
