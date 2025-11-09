@@ -744,6 +744,17 @@ test.describe("Campaign Flow", () => {
     });
     console.log("     Battle state loaded");
 
+    //Testing turns ui visibility toggle
+    await expect(page.getByTestId("turns-title-text")).toBeHidden();
+    console.log("     Turns UI not rendered - correct");
+    await page.getByTestId("toggle-rewards-visibility").click();
+    console.log("     Making Turns UI visible");
+    await expect(page.getByTestId("turns-title-text")).toBeVisible();
+    console.log("     Turns UI visible - correct");
+    await page.getByTestId("toggle-rewards-visibility").click();
+    console.log("     Making Turns UI hidden");
+    await expect(page.getByTestId("turns-title-text")).toBeHidden();
+
     // Check for and click "Start Battle" button if enemy starts first
     const startBattleButton = page.getByTestId("start-battle-trigger");
     const startBattleCount = await startBattleButton.count();
@@ -765,12 +776,44 @@ test.describe("Campaign Flow", () => {
     while (Date.now() - start < battleTimeout) {
       // Check if battle is finished first
       try {
-        const closeButtonCount = await page
-          .getByTestId("close-battle-button")
+        const rewardsUI = await page
+          .getByTestId("toggle-rewards-visibility")
           .count();
-        if (closeButtonCount > 0) {
-          console.log("     Battle finished! Clicking close button");
+        if (rewardsUI > 0) {
+          console.log(
+            "     Battle finished! Testing rewards UI and Turns UI visibility"
+          );
+
+          //Testing turns ui visibility toggle
+          await expect(page.getByTestId("turns-title-text")).toBeHidden();
+          console.log("     Turns UI not rendered - correct");
+          await page.getByTestId("toggle-rewards-visibility").click();
+          console.log("     Making Turns UI visible");
+          await expect(page.getByTestId("turns-title-text")).toBeVisible();
+          console.log("     Turns UI visible - correct");
+          await page.getByTestId("toggle-rewards-visibility").click();
+          console.log("     Making Turns UI hidden");
+          await expect(page.getByTestId("turns-title-text")).toBeHidden();
+
+          //Testing rewards ui visibility toggle
+          await expect(
+            page.getByTestId("battle-finished-title-text")
+          ).toBeVisible();
+          console.log("     Rewards UI rendered - correct");
+          await page.getByTestId("toggle-rewards-visibility").click();
+          console.log("     Making Rewards UI hidden");
+          await expect(
+            page.getByTestId("battle-finished-title-text")
+          ).toBeHidden();
+          console.log("     Rewards UI hidden - correct");
+          await page.getByTestId("toggle-rewards-visibility").click();
+          console.log("     Making Rewards UI visible");
+          await expect(
+            page.getByTestId("battle-finished-title-text")
+          ).toBeVisible();
+
           await page.getByTestId("close-battle-button").click();
+          console.log("     Clicking close battle button");
           // Wait a bit before finishing loop
           await page.waitForTimeout(1000);
           break;
