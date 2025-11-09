@@ -780,7 +780,20 @@ test.describe("Campaign Flow", () => {
           .getByTestId("toggle-rewards-visibility")
           .count();
         if (rewardsUI > 0) {
-          console.log("     Battle finished! Testing rewards UI visibility");
+          console.log(
+            "     Battle finished! Testing rewards UI and Turns UI visibility"
+          );
+
+          //Testing turns ui visibility toggle
+          await expect(page.getByTestId("turns-title-text")).toBeHidden();
+          console.log("     Turns UI not rendered - correct");
+          await page.getByTestId("toggle-rewards-visibility").click();
+          console.log("     Making Turns UI visible");
+          await expect(page.getByTestId("turns-title-text")).toBeVisible();
+          console.log("     Turns UI visible - correct");
+          await page.getByTestId("toggle-rewards-visibility").click();
+          console.log("     Making Turns UI hidden");
+          await expect(page.getByTestId("turns-title-text")).toBeHidden();
 
           //Testing rewards ui visibility toggle
           await expect(
