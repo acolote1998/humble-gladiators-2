@@ -22,6 +22,10 @@ const BattleFinished = ({
   const toggleTurnVisibility = () => {
     setAreTurnsVisible((prev) => !prev);
   };
+  const [areRewardsVisible, setAreRewardsVisible] = useState<boolean>(true);
+  const toggleRewardsVisibility = () => {
+    setAreRewardsVisible((prev) => !prev);
+  };
   const { data: rewardsForBattle, isLoading: loadingRewards } =
     useGetRewardsForFinishedBattleOfTodayByCampaignIdAndUsery(
       Number(campaignId)
@@ -135,6 +139,8 @@ const BattleFinished = ({
             ) : (
               rewardsForBattle && (
                 <RewardsTable
+                  isOpen={areRewardsVisible}
+                  toggleVisibility={toggleRewardsVisibility}
                   characterOneName={originalHero.name}
                   characterTwoName={originalEnemy.name}
                   rewardsForBattle={rewardsForBattle}
