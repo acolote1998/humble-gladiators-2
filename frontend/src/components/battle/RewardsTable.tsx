@@ -24,7 +24,6 @@ const RewardsTable = ({
   const { id: campaignId } = useParams({ from: "/campaign/$id/battle" });
   return (
     <div
-      data-testid="toggle-rewards-visibility"
       className={`absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-5 top-20 px-5 left-0 transition-all duration-400 ease-in-out
               ${isOpen ? "w-150" : "w-18.5"}
               ${isOpen ? "h-110" : "h-10"}
@@ -39,9 +38,17 @@ const RewardsTable = ({
         }}
       >
         {isOpen ? (
-          <OpenEyeIcon className="absolute top-2.5 left-7" width={32} />
+          <OpenEyeIcon
+            data-testid="show-rewards-toggle"
+            className="absolute top-2.5 left-7"
+            width={32}
+          />
         ) : (
-          <ClosedEyeIcon className="absolute top-2 left-5" width={32} />
+          <ClosedEyeIcon
+            data-testid="hide-rewards-toggle"
+            className="absolute top-2 left-5"
+            width={32}
+          />
         )}
       </div>
       {isOpen && (
