@@ -33,7 +33,6 @@ const RewardsTable = ({
         `}
     >
       <div
-        data-testid="toggle-rewards-visibility"
         onClick={() => {
           toggleVisibility();
         }}

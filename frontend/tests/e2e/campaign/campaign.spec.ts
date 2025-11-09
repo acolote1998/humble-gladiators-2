@@ -777,7 +777,7 @@ test.describe("Campaign Flow", () => {
       // Check if battle is finished first
       try {
         const rewardsUI = await page
-          .getByTestId("toggle-rewards-visibility")
+          .getByTestId("battle-finished-title-text")
           .count();
         if (rewardsUI > 0) {
           console.log(
