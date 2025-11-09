@@ -744,6 +744,17 @@ test.describe("Campaign Flow", () => {
     });
     console.log("     Battle state loaded");
 
+    //Testing turns ui visibility toggle
+    await expect(page.getByTestId("turns-title-text")).toBeHidden();
+    console.log("     Turns UI not rendered - correct");
+    await page.getByTestId("toggle-rewards-visibility").click();
+    console.log("     Making Turns UI visible");
+    await expect(page.getByTestId("turns-title-text")).toBeVisible();
+    console.log("     Turns UI visible - correct");
+    await page.getByTestId("toggle-rewards-visibility").click();
+    console.log("     Making Turns UI hidden");
+    await expect(page.getByTestId("turns-title-text")).toBeHidden();
+
     // Check for and click "Start Battle" button if enemy starts first
     const startBattleButton = page.getByTestId("start-battle-trigger");
     const startBattleCount = await startBattleButton.count();
