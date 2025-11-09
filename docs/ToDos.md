@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] in the inventory -> currently using emojis and characters for experience and for gold -> replace with svgs
+
 - [ ] rework formulas for item stats (example createTwentyFiveNewArmorTemplates in ArmorService)
 
 - [ ] improve the 'NEW!" message when we discover a new card in a booster
