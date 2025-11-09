@@ -24,7 +24,7 @@ export const useCreateCampaign = () => {
       if (data) {
         const location = data.headers["location"];
         const campaignId = location?.split("/").pop();
-        navigate({ to: `/campaign/${campaignId}` });
+        navigate({ to: `/campaign/${campaignId}#campaign` });
       }
     },
   });
