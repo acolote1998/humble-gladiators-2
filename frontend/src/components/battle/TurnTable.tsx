@@ -1,5 +1,7 @@
 import type { TurnResponseDto } from "../../types/battleTypes";
 import type { ActionTypeEnum } from "../../types/battleTypes";
+import { ClosedEyeIcon } from "../icons/ui/ClosedEyeIcon";
+import { OpenEyeIcon } from "../icons/ui/OpenEyeIcon";
 type TurnTableTypes = {
   turns: TurnResponseDto[];
 };
@@ -16,9 +18,11 @@ const TurnTable = ({ turns }: TurnTableTypes) => {
   };
   return (
     <div className="absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-5 top-20 px-5 right-0 w-150 h-110 overflow-y-auto">
-      <h2 className="text-center p-2 mt-2 text-xl bg-[var(--page-container-bg-darkerer)] rounded-md text-[var(--light-text)]">
-        Turns
-      </h2>
+      <div className="text-center p-2 mt-2 text-xl bg-[var(--page-container-bg-darkerer)] rounded-md text-[var(--light-text)]">
+        <OpenEyeIcon className="absolute" width={32} />
+        <ClosedEyeIcon className="absolute" width={32} />
+        <p>Turns</p>
+      </div>
       {turns
         .slice()
         .reverse()
