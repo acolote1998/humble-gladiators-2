@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryOperator;
 import com.github.acolote1998.humble_gladiators_2.core.enums.RequirementEntryType;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import org.junit.jupiter.api.Test;
@@ -90,6 +91,29 @@ class RequirementServiceTest {
         assertEquals(campaign, result.getCampaign());
         assertNotNull(result.getRequirements());
         assertTrue(result.getRequirements().isEmpty());
+    }
+
+    @Test
+    void mapRequirementFromGeminiItemDto_WithInvalidRequirementType_ShouldThrowException() {
+        // Arrange
+        Campaign campaign = new Campaign();
+        campaign.setId(CAMPAIGN_ID);
+
+        ItemFromGeminiDto.RequirementDto.RequirementEntry entryDto =
+                new ItemFromGeminiDto.RequirementDto.RequirementEntry(
+                        "MAGICALDAMAGE", "MOREOREQUALTHAN", "5", CAMPAIGN_ID
+                );
+        ItemFromGeminiDto.RequirementDto requirementDto =
+                new ItemFromGeminiDto.RequirementDto(CAMPAIGN_ID, List.of(entryDto));
+
+        ItemFromGeminiDto itemDto = new ItemFromGeminiDto(
+                "Test Item", "Description", 1, 1, 1, true, 1, true, CAMPAIGN_ID, requirementDto,
+                "ARMOR", 1, 1, null, null, null, null
+        );
+
+        // Act & Assert
+        assertThrows(InvalidGeminiEnumException.class,
+                () -> RequirementService.mapRequirementFromGeminiItemDto(itemDto, campaign));
     }
 }
 

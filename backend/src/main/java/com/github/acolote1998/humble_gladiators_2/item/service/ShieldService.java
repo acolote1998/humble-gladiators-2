@@ -2,10 +2,12 @@ package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.ShieldTemplateRepository;
@@ -68,35 +70,40 @@ public class ShieldService {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveShields(campaign);
         List<ShieldTemplate> savedShieldTemplates = new ArrayList<>();
 
-        generatedDtos.forEach(dto -> {
-            ShieldTemplate shieldTemplate = new ShieldTemplate();
-            shieldTemplate.setName(dto.name());
-            shieldTemplate.setDescription(dto.description());
-            shieldTemplate.setUserId(campaign.getUserId());
-            shieldTemplate.setRarity(dto.rarity());
-            shieldTemplate.setTier(dto.tier());
-            shieldTemplate.setDiscovered(false);
-            shieldTemplate.setQuantity(0); // templates always start at 0 quantity
-            shieldTemplate.setEquipped(false);
-            shieldTemplate.setCampaign(campaign);
-            shieldTemplate.setCategory(ShieldCategory.valueOf(dto.category()));
-            if (dto.physicalDefense() == 1) {
-                shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
-            } else {
-                shieldTemplate.setPhysicalDefense(0);
-            }
-            if (dto.magicalDefense() == 1) {
-                shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
-            } else {
-                shieldTemplate.setMagicalDefense(0);
-            }
-            shieldTemplate.setValue(
-                    (shieldTemplate.getMagicalDefense() + shieldTemplate.getPhysicalDefense())
-                            * shieldTemplate.getTier()
-                            * shieldTemplate.getRarity());
-            shieldTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedShieldTemplates.add(shieldTemplate);
-        });
+        try {
+            generatedDtos.forEach(dto -> {
+                ShieldTemplate shieldTemplate = new ShieldTemplate();
+                shieldTemplate.setName(dto.name());
+                shieldTemplate.setDescription(dto.description());
+                shieldTemplate.setUserId(campaign.getUserId());
+                shieldTemplate.setRarity(dto.rarity());
+                shieldTemplate.setTier(dto.tier());
+                shieldTemplate.setDiscovered(false);
+                shieldTemplate.setQuantity(0); // templates always start at 0 quantity
+                shieldTemplate.setEquipped(false);
+                shieldTemplate.setCampaign(campaign);
+                shieldTemplate.setCategory(GeminiEnumParser.parseEnum(ShieldCategory.class, dto.category(), "ShieldTemplate", dto.name()));
+                if (dto.physicalDefense() == 1) {
+                    shieldTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
+                } else {
+                    shieldTemplate.setPhysicalDefense(0);
+                }
+                if (dto.magicalDefense() == 1) {
+                    shieldTemplate.setMagicalDefense((int) Math.round((dto.tier() * 4 * dto.rarity() * 4.5)));
+                } else {
+                    shieldTemplate.setMagicalDefense(0);
+                }
+                shieldTemplate.setValue(
+                        (shieldTemplate.getMagicalDefense() + shieldTemplate.getPhysicalDefense())
+                                * shieldTemplate.getTier()
+                                * shieldTemplate.getRarity());
+                shieldTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
+                savedShieldTemplates.add(shieldTemplate);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated shields not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
+            return createTwentyFiveNewShieldTemplates(campaign);
+        }
 
         if (!ShieldTemplate.areValidShields(savedShieldTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated shields not valid -> Generating again", campaign.getId()));

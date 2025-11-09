@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
+import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
@@ -193,6 +194,50 @@ class WeaponServiceTest {
 
         // Assert
         assertEquals(weapon, result);
+    }
+
+    @Test
+    void createTwentyFiveNewWeaponTemplates_retriesWhenEnumInvalid() {
+        // Arrange
+        ItemFromGeminiDto invalidDto = createWeaponDto("Invalid Weapon", "INVALID_CATEGORY");
+        List<ItemFromGeminiDto> validDtos = new ArrayList<>();
+        for (int i = 0; i < 25; i++) {
+            validDtos.add(createWeaponDto("Valid Weapon " + i, "SWORD"));
+        }
+
+        when(geminiService.generateTwentyFiveWeapons(campaign))
+                .thenReturn(List.of(invalidDto))
+                .thenReturn(validDtos);
+
+        // Act
+        List<WeaponTemplate> templates = weaponService.createTwentyFiveNewWeaponTemplates(campaign);
+
+        // Assert
+        assertEquals(25, templates.size());
+        verify(geminiService, times(2)).generateTwentyFiveWeapons(campaign);
+        verify(weaponTemplateRepository).saveAll(anyList());
+    }
+
+    private ItemFromGeminiDto createWeaponDto(String name, String category) {
+        return new ItemFromGeminiDto(
+                name,
+                "Description",
+                1,
+                1,
+                10,
+                false,
+                0,
+                false,
+                CAMPAIGN_ID,
+                null,
+                category,
+                null,
+                null,
+                null,
+                null,
+                1,
+                0
+        );
     }
 }
 

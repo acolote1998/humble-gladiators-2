@@ -2,10 +2,12 @@ package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
+import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
 import com.github.acolote1998.humble_gladiators_2.item.repository.BootsTemplateRepository;
@@ -40,35 +42,40 @@ public class BootsService {
         List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveBoots(campaign);
         List<BootsTemplate> savedBootsTemplates = new ArrayList<>();
 
-        generatedDtos.forEach(dto -> {
-            BootsTemplate bootsTemplate = new BootsTemplate();
-            bootsTemplate.setName(dto.name());
-            bootsTemplate.setDescription(dto.description());
-            bootsTemplate.setUserId(campaign.getUserId());
-            bootsTemplate.setRarity(dto.rarity());
-            bootsTemplate.setTier(dto.tier());
-            bootsTemplate.setDiscovered(false); // templates always start with discovered = false
-            bootsTemplate.setQuantity(0); // templates always start at 0 quantity
-            bootsTemplate.setEquipped(false); // templates always start with equipped = false
-            bootsTemplate.setCampaign(campaign);
-            bootsTemplate.setCategory(BootsCategory.valueOf(dto.category()));
-            if (dto.physicalDefense() == 1) {
-                bootsTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
-            } else {
-                bootsTemplate.setPhysicalDefense(0);
-            }
-            if (dto.magicalDefense() == 1) {
-                bootsTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
-            } else {
-                bootsTemplate.setMagicalDefense(0);
-            }
-            bootsTemplate.setValue(
-                    (bootsTemplate.getMagicalDefense() + bootsTemplate.getPhysicalDefense())
-                            * bootsTemplate.getRarity()
-                            * bootsTemplate.getTier());
-            bootsTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
-            savedBootsTemplates.add(bootsTemplate);
-        });
+        try {
+            generatedDtos.forEach(dto -> {
+                BootsTemplate bootsTemplate = new BootsTemplate();
+                bootsTemplate.setName(dto.name());
+                bootsTemplate.setDescription(dto.description());
+                bootsTemplate.setUserId(campaign.getUserId());
+                bootsTemplate.setRarity(dto.rarity());
+                bootsTemplate.setTier(dto.tier());
+                bootsTemplate.setDiscovered(false); // templates always start with discovered = false
+                bootsTemplate.setQuantity(0); // templates always start at 0 quantity
+                bootsTemplate.setEquipped(false); // templates always start with equipped = false
+                bootsTemplate.setCampaign(campaign);
+                bootsTemplate.setCategory(GeminiEnumParser.parseEnum(BootsCategory.class, dto.category(), "BootsTemplate", dto.name()));
+                if (dto.physicalDefense() == 1) {
+                    bootsTemplate.setPhysicalDefense((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                } else {
+                    bootsTemplate.setPhysicalDefense(0);
+                }
+                if (dto.magicalDefense() == 1) {
+                    bootsTemplate.setMagicalDefense((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 2)));
+                } else {
+                    bootsTemplate.setMagicalDefense(0);
+                }
+                bootsTemplate.setValue(
+                        (bootsTemplate.getMagicalDefense() + bootsTemplate.getPhysicalDefense())
+                                * bootsTemplate.getRarity()
+                                * bootsTemplate.getTier());
+                bootsTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
+                savedBootsTemplates.add(bootsTemplate);
+            });
+        } catch (InvalidGeminiEnumException ex) {
+            log.warn(String.format("Campaign %s - Generated boots not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
+            return createTwentyFiveNewBootsTemplates(campaign);
+        }
 
         if (!BootsTemplate.areValidBoots(savedBootsTemplates, 25)) {
             log.warn(String.format("Campaign %s - Generated boots not valid -> Generating again", campaign.getId()));
