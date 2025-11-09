@@ -17,6 +17,21 @@ import InventoryCardPlaceholder from "../../../components/cards/InventoryCardPla
 import { PageContainer } from "@/components/ui/PageContainer";
 import CardsDisplayer from "@/components/ui/CardsDisplayer";
 import StatBar from "@/components/stats/StatBar";
+import {
+  PhysicalDamagecon,
+  PhysicalDamageIcon,
+} from "@/components/icons/stats/PhysicalDamageIcon";
+import { MagicalDamageIcon } from "@/components/icons/stats/MagicalDamageIcon";
+import { PhysicalDefenseIcon } from "@/components/icons/stats/PhysicalDefenseIcon";
+import { MagicalDefenseIcon } from "@/components/icons/stats/MagicalDefenseIcon";
+import { LevelIcon } from "@/components/icons/stats/LevelIcon";
+import { StrengthIcon } from "@/components/icons/stats/StrengthIcon";
+import { ConstitutionIcon } from "@/components/icons/stats/ConstitutionIcon";
+import { IntelligenceIcon } from "@/components/icons/stats/IntelligenceIcon";
+import { SpeedIcon } from "@/components/icons/stats/SpeedIcon";
+import { LuckIcon } from "@/components/icons/stats/LuckIcon";
+import { WeightIcon } from "@/components/icons/stats/WeightIcon";
+import { HeightIcon } from "@/components/icons/stats/HeightIcon";
 
 export const Route = createFileRoute("/campaign/$id/inventory")({
   component: RouteComponent,
@@ -154,18 +169,54 @@ function RouteComponent() {
                   maxValue={heroData.stats.maxMp}
                   type="MANA"
                 />
-                <p>P. DMG - {heroData.stats.physicalDamage}</p>
-                <p>M. DMG - {heroData.stats.magicalDamage}</p>
-                <p>P. DEF - {heroData.stats.physicalDefense}</p>
-                <p>M. DEF - {heroData.stats.magicalDefense}</p>
-                <p>LVL - {heroData.stats.level}</p>
-                <p>STR - {heroData.stats.strength}</p>
-                <p>CON - {heroData.stats.constitution}</p>
-                <p>INT - {heroData.stats.intelligence}</p>
-                <p>SPD - {heroData.stats.speed}</p>
-                <p>LCK - {heroData.stats.luck}</p>
-                <p>WGT - {heroData.stats.height}</p>
-                <p>HGT - {heroData.stats.weight}</p>
+                <div title="Physical Damage">
+                  <PhysicalDamageIcon width={24} />
+                  {heroData.stats.physicalDamage}
+                </div>
+                <div title="Magical Damage">
+                  <MagicalDamageIcon width={24} />
+                  {heroData.stats.magicalDamage}
+                </div>
+                <div title="Physical Defense">
+                  <PhysicalDefenseIcon width={24} />
+                  {heroData.stats.physicalDefense}
+                </div>
+                <div title="Magical Defense">
+                  <MagicalDefenseIcon width={24} />
+                  {heroData.stats.magicalDefense}
+                </div>
+                <div title="Level">
+                  <LevelIcon width={20} />
+                  {heroData.stats.level}
+                </div>
+                <div title="Strength">
+                  <StrengthIcon width={24} />
+                  {heroData.stats.strength}
+                </div>
+                <div title="Constitution">
+                  <ConstitutionIcon width={24} />
+                  {heroData.stats.constitution}
+                </div>
+                <div title="Intelligence">
+                  <IntelligenceIcon width={24} />
+                  {heroData.stats.intelligence}
+                </div>
+                <div title="Speed">
+                  <SpeedIcon width={24} />
+                  {heroData.stats.speed}
+                </div>
+                <div title="Luck">
+                  <LuckIcon width={24} />
+                  {heroData.stats.luck}
+                </div>
+                <div title="Weight" className="flex flex-col items-center">
+                  <WeightIcon width={24} />
+                  {heroData.stats.weight} kg
+                </div>
+                <div title="Height" className="flex flex-col items-center">
+                  <HeightIcon width={24} />
+                  {heroData.stats.height} cm
+                </div>
                 {/* <p>
                   EXP - {heroData.stats.currentExp}/
                   {heroData.stats.expForNextLevel}
