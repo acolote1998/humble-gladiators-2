@@ -131,9 +131,6 @@ const BattleFinished = ({
             />
           )}
           <div className="flex flex-col items-center relative">
-            <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
-              Enemy
-            </p>
             {loadingRewards ? (
               <Loader />
             ) : (
@@ -147,7 +144,7 @@ const BattleFinished = ({
                 />
               )
             )}
-            <div>
+            <div className="mt-10">
               <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
             </div>
           </div>
@@ -157,7 +154,7 @@ const BattleFinished = ({
             toggleVisibility={toggleTurnVisibility}
           />
         </div>
-        <div className="grid grid-cols-7">
+        <div className="grid grid-cols-7 mt-15">
           <HeroStats character={simulatedHero} />
         </div>
       </>
