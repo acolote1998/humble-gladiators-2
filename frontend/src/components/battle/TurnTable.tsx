@@ -25,7 +25,7 @@ const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
       ${isOpen ? "h-110" : "h-10"}
       ${isOpen ? "overflow-y-auto" : "overflow-hidden"}
       ${!isOpen ? "translate-y-100" : ""}
-      ${isOpen ? "opacity-65 hover:opacity-95" : "opacity-20 hover:opacity-60"}
+      ${isOpen ? "opacity-85 hover:opacity-100" : "opacity-20 hover:opacity-60"}
       `}
     >
       <div
@@ -46,26 +46,27 @@ const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
           <p>Turns</p>
         </div>
       )}
-      {turns
-        .slice()
-        .reverse()
-        .map((turn, index) => (
-          <p
-            key={turns.length - index}
-            className="my-2 p-1 rounded-md bg-[var(--page-container-bg-darker)]"
-          >
-            Turn {turns.length - index} - {turn.performingCharacter.name}{" "}
-            performed {turnActionToText(turn.action.actionType)} on{" "}
-            {turn.targetCharacter.name}
-            {turn.action.damageCaused > 0 &&
-              ` and caused ${turn.action.damageCaused} damage`}
-            {turn.action.healingCaused > 0 &&
-              ` and healed ${turn.action.healingCaused} heal points`}
-            {turn.action.mpUsage > 0 && ` and used ${turn.action.mpUsage} mp`}
-            {turn.action.mpRecoverCaused > 0 &&
-              ` and recovered ${turn.action.mpRecoverCaused} mp`}
-          </p>
-        ))}
+      {isOpen &&
+        turns
+          .slice()
+          .reverse()
+          .map((turn, index) => (
+            <p
+              key={turns.length - index}
+              className="my-2 p-1 rounded-md bg-[var(--page-container-bg-darker)]"
+            >
+              Turn {turns.length - index} - {turn.performingCharacter.name}{" "}
+              performed {turnActionToText(turn.action.actionType)} on{" "}
+              {turn.targetCharacter.name}
+              {turn.action.damageCaused > 0 &&
+                ` and caused ${turn.action.damageCaused} damage`}
+              {turn.action.healingCaused > 0 &&
+                ` and healed ${turn.action.healingCaused} heal points`}
+              {turn.action.mpUsage > 0 && ` and used ${turn.action.mpUsage} mp`}
+              {turn.action.mpRecoverCaused > 0 &&
+                ` and recovered ${turn.action.mpRecoverCaused} mp`}
+            </p>
+          ))}
     </div>
   );
 };
