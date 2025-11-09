@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import TurnTable from "./TurnTable";
 import HeroStats from "./HeroStats";
+import StatBar from "../stats/StatBar";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -234,7 +235,21 @@ const BattleExecuting = ({
             </p>
           </div>
           <div className="relative h-154">
-            <div className="flex flex-col items-center py-10">
+            <div className="flex flex-col items-center py-3.5">
+              <StatBar
+                barHeight={2}
+                currentValue={teamTwo[0].stats.currentHp}
+                maxValue={teamTwo[0].stats.maxHp}
+                type="HP"
+                widthPercent={30}
+              />
+              <StatBar
+                barHeight={2}
+                currentValue={teamTwo[0].stats.currentMp}
+                maxValue={teamTwo[0].stats.maxMp}
+                type="MANA"
+                widthPercent={30}
+              />
               <div onClick={() => chooseTarget(teamTwo[0].id)}>
                 <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
               </div>

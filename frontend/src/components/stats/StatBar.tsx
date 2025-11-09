@@ -20,7 +20,7 @@ const StatBar = ({
     <div
       title={`${type === "HP" ? "Health" : "Magic"} points`}
       style={{ height: `${barHeight}rem`, width: `${widthPercent}%` }}
-      className="relative cursor-pointer select-none"
+      className="relative cursor-pointer select-none transition-all duration-500 ease-in-out"
     >
       <div className="absolute z-3 h-full w-full flex items-center justify-center">
         <p className="text-[var(--light-text)] text-lg font-semibold tracking-widest">
@@ -29,8 +29,9 @@ const StatBar = ({
       </div>
       <div
         style={{ width: `${currentHpPercent()}%` }}
-        className={`absolute z-2 h-full rounded-xl border-2
-            ${type === "HP" ? "bg-red-500 border-red-700" : "bg-blue-500 border-blue-700"}
+        className={`absolute z-2 h-full rounded-xl border-2 transition-all duration-500 ease-in-out
+          ${currentValue === 0 ? "hidden" : "inline-block"}
+          ${type === "HP" ? "bg-red-500 border-red-700" : "bg-blue-500 border-blue-700"}
             `}
       ></div>
       <div className="absolute z-1 bg-gray-700 h-full w-full rounded-xl"></div>

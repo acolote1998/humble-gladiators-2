@@ -10,6 +10,7 @@ import HeroStats from "./HeroStats";
 import RewardsTable from "./RewardsTable";
 import { Loader } from "../Loader";
 import { useState } from "react";
+import StatBar from "../stats/StatBar";
 const BattleFinished = ({
   campaignId,
   losingTeam,
@@ -146,7 +147,21 @@ const BattleFinished = ({
                 </div>
               )
             )}
-            <div className="mt-10">
+            <div className="mt-5">
+              <StatBar
+                barHeight={2}
+                currentValue={simulatedEnemy.stats.currentHp}
+                maxValue={simulatedEnemy.stats.maxHp}
+                type="HP"
+                widthPercent={100}
+              />
+              <StatBar
+                barHeight={2}
+                currentValue={simulatedEnemy.stats.currentMp}
+                maxValue={simulatedEnemy.stats.maxMp}
+                type="MANA"
+                widthPercent={100}
+              />
               <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
             </div>
           </div>
@@ -158,7 +173,7 @@ const BattleFinished = ({
             />
           </div>
         </div>
-        <div className="grid grid-cols-7 mt-15">
+        <div className="grid grid-cols-7 mt-4">
           <HeroStats character={simulatedHero} />
         </div>
       </>
