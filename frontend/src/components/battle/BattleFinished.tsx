@@ -135,24 +135,28 @@ const BattleFinished = ({
               <Loader />
             ) : (
               rewardsForBattle && (
-                <RewardsTable
-                  isOpen={areRewardsVisible}
-                  toggleVisibility={toggleRewardsVisibility}
-                  characterOneName={originalHero.name}
-                  characterTwoName={originalEnemy.name}
-                  rewardsForBattle={rewardsForBattle}
-                />
+                <div className="-translate-x-222 translate-y-18">
+                  <RewardsTable
+                    isOpen={areRewardsVisible}
+                    toggleVisibility={toggleRewardsVisibility}
+                    characterOneName={originalHero.name}
+                    characterTwoName={originalEnemy.name}
+                    rewardsForBattle={rewardsForBattle}
+                  />
+                </div>
               )
             )}
             <div className="mt-10">
               <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
             </div>
           </div>
-          <TurnTable
-            turns={turns}
-            isOpen={areTurnsVisible}
-            toggleVisibility={toggleTurnVisibility}
-          />
+          <div className="-translate-y-122">
+            <TurnTable
+              turns={turns}
+              isOpen={areTurnsVisible}
+              toggleVisibility={toggleTurnVisibility}
+            />
+          </div>
         </div>
         <div className="grid grid-cols-7 mt-15">
           <HeroStats character={simulatedHero} />
