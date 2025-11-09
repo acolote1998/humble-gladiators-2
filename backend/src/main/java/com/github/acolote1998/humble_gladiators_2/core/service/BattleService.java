@@ -389,7 +389,10 @@ public class BattleService {
     Turn playNPCTurn(Battle battleToPlayAt, CharacterInstance characterToPlay, CharacterInstance characterToTarget) {
         boolean couldRecoverHp = characterToPlay.getStats().getCurrentHp() < characterToPlay.getStats().getMaxHp();
         boolean couldRecoverMp = characterToPlay.getStats().getCurrentMp() < characterToPlay.getStats().getMaxMp();
-        boolean couldAttackPhysically = characterToPlay.getPhysicalDamage() > 0;
+        // Technically they should always be able to physically attack, because even if physical dmg is 0, the strength
+        // will never be zero, and that can cause damage anyways
+//        boolean couldAttackPhysically = characterToPlay.getPhysicalDamage() > 0;
+        boolean couldAttackPhysically = true;
         boolean couldCastDamageSpell = false;
         if (!characterToPlay.getInventory().getSpells().isEmpty()) {
             for (SpellInstance spell : characterToPlay.getInventory().getSpells()) {

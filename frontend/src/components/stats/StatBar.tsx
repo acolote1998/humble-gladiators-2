@@ -30,7 +30,7 @@ const StatBar = ({
       <div
         style={{ width: `${currentHpPercent()}%` }}
         className={`absolute z-2 h-full rounded-xl border-2 transition-all duration-500 ease-in-out
-          ${currentValue === 0 ? "hidden" : "inline-block"}
+          ${currentValue === 0 ? "hidden" : "block"}
           ${type === "HP" ? "bg-red-500 border-red-700" : "bg-blue-500 border-blue-700"}
             `}
       ></div>
