@@ -54,19 +54,19 @@ const CardsDisplayer = ({
         {characters && characters.length > 0 && (
           <TabsTrigger value="npcs" className="flex justify-center gap-3">
             <NpcIcon width={32} />
-            <p className="text-2xl">NPC's</p>
+            <p className="hidden xl:block text-2xl">NPC's</p>
           </TabsTrigger>
         )}
         {armors && armors.length > 0 && (
           <TabsTrigger value="armors" className="flex justify-center gap-3">
             <ArmorIcon width={32} />
-            <p className="text-2xl">Armors</p>
+            <p className="hidden xl:block text-2xl">Armors</p>
           </TabsTrigger>
         )}
         {boots && boots.length > 0 && (
           <TabsTrigger value="boots" className="flex justify-center gap-3">
             <BootIcon width={32} />
-            <p className="text-2xl">Boots</p>
+            <p className="hidden xl:block text-2xl">Boots</p>
           </TabsTrigger>
         )}
         {consumables && consumables.length > 0 && (
@@ -75,31 +75,31 @@ const CardsDisplayer = ({
             className="flex justify-center gap-3"
           >
             <ConsumableIcon width={32} />
-            <p className="text-2xl">Consumables</p>
+            <p className="hidden xl:block text-2xl">Consumables</p>
           </TabsTrigger>
         )}
         {helmets && helmets.length > 0 && (
           <TabsTrigger value="helmets" className="flex justify-center gap-3">
             <HelmetIcon width={32} />
-            <p className="text-2xl">Helmets</p>
+            <p className="hidden xl:block text-2xl">Helmets</p>
           </TabsTrigger>
         )}
         {shields && shields.length > 0 && (
           <TabsTrigger value="shields" className="flex justify-center gap-3">
             <ShieldIcon width={32} />
-            <p className="text-2xl">Shields</p>
+            <p className="hidden xl:block text-2xl">Shields</p>
           </TabsTrigger>
         )}
         {spells && spells.length > 0 && (
           <TabsTrigger value="spells" className="flex justify-center gap-3">
             <SpellIcon width={32} />
-            <p className="text-2xl">Spells</p>
+            <p className="hidden xl:block text-2xl">Spells</p>
           </TabsTrigger>
         )}
         {weapons && weapons.length > 0 && (
           <TabsTrigger value="weapons" className="flex justify-center gap-3">
             <WeaponIcon width={32} />
-            <p className="text-2xl">Weapons</p>
+            <p className="hidden xl:block text-2xl">Weapons</p>
           </TabsTrigger>
         )}
       </TabsList>

@@ -27,8 +27,8 @@ export const PageContainer = ({
         maxHeight: `${maxH ? `${maxH}vh` : "none"}`,
       }}
       className={`
-            mx-10
-            p-5
+            mx-2 xl:mx-10
+            p-2.5 xl:p-5
             rounded-2xl
             border-5
             border-[var(--page-container-border)] 
