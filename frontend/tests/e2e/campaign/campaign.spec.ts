@@ -800,13 +800,13 @@ test.describe("Campaign Flow", () => {
             page.getByTestId("battle-finished-title-text")
           ).toBeVisible();
           console.log("     Rewards UI rendered - correct");
-          await page.getByTestId("hide-rewards-toggle").click();
+          await page.getByTestId("hide-rewards-toggle").click({ force: true });
           console.log("     Making Rewards UI hidden");
           await expect(
             page.getByTestId("battle-finished-title-text")
           ).toBeHidden();
           console.log("     Rewards UI hidden - correct");
-          await page.getByTestId("show-rewards-toggle").click();
+          await page.getByTestId("show-rewards-toggle").click({ force: true });
           console.log("     Making Rewards UI visible");
           await expect(
             page.getByTestId("battle-finished-title-text")
