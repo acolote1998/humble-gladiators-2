@@ -48,7 +48,7 @@ function RouteComponent() {
         <Loader />
       ) : isHeroNotFound ? (
         <>
-          <div className="flex justify-center my-10">
+          <div className="flex justify-center xl:my-10">
             <div
               className={`bg-[var(--page-container-bg-darker)] flex flex-col text-center px-10 py-5 rounded-lg border border-[var(--page-container-border)] gap-5 w-150`}
             >
