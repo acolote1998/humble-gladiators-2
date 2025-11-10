@@ -22,7 +22,7 @@ const RootLayout = () => {
       {location.pathname !== "/campaign" &&
         location.pathname !== "/campaign/create" &&
         location.pathname !== "/" && <NavBar />}
-      <div className="absolute top-0 right-0 bg-[var(--page-container-bg)] rounded-bl-lg border-[var(--page-container-border)] border p-2 flex gap-2">
+      <div className="fixed z-5 bottom-0 xl:bottom-auto xl:top-0 right-0 bg-[var(--page-container-bg)] rounded-bl-lg border-[var(--page-container-border)] border p-2 flex gap-2">
         <Link to="/campaign">Campaigns</Link>
         <SignedIn>
           {/* <GetInfinityToken /> */}
