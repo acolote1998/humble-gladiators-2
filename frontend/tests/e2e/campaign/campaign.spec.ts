@@ -737,9 +737,9 @@ test.describe("Campaign Flow", () => {
     console.log("     Waiting for battle page to load");
     await page.waitForLoadState("networkidle");
 
-    // Wait for "Character to play" text to confirm battle state loaded
+    // Wait for "start-game-label" selector to confirm battle state loaded
     console.log("     Waiting for battle state to load");
-    await expect(page.getByText(/Character to play:/i)).toBeVisible({
+    await expect(page.getByTestId("start-game-label")).toBeVisible({
       timeout: 30000,
     });
     console.log("     Battle state loaded");

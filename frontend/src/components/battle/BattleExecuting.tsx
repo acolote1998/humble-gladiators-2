@@ -202,7 +202,7 @@ const BattleExecuting = ({
             // play a card to start the battle)
           }
           {!isGameStarted && turns.length < 1 && (
-            <div className="relative">
+            <div className="relative" data-testid="start-game-label">
               {currentCharacterToPlay.id == teamTwo[0].id ? (
                 <p
                   data-testid="start-battle-trigger"
