@@ -12,7 +12,7 @@ function RouteComponent() {
   });
 
   return (
-    <PageContainer minH="76">
+    <PageContainer vh="76">
       <CharacterBooster campaignId={Number(campaignId)} />
     </PageContainer>
   );
