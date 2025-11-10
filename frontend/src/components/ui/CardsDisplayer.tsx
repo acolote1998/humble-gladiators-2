@@ -104,7 +104,7 @@ const CardsDisplayer = ({
         )}
       </TabsList>
       {characters && characters.length > 0 && (
-        <TabsContent value="npcs" className="grid grid-cols-5">
+        <TabsContent value="npcs" className="grid grid-cols-1 xl:grid-cols-5">
           {characters
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -124,7 +124,7 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {armors && armors.length > 0 && (
-        <TabsContent value="armors" className="grid grid-cols-5">
+        <TabsContent value="armors" className="grid grid-cols-1 xl:grid-cols-5">
           {armors.map((armor) => (
             <ArmorCard
               key={armor.name + armor.id}
@@ -135,7 +135,7 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {boots && boots.length > 0 && (
-        <TabsContent value="boots" className="grid grid-cols-5">
+        <TabsContent value="boots" className="grid grid-cols-1 xl:grid-cols-5">
           {boots.map((boot) => (
             <BootsCard
               key={boot.name + boot.id}
@@ -146,7 +146,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {consumables && consumables.length > 0 && (
-        <TabsContent value="consumables" className="grid grid-cols-5">
+        <TabsContent
+          value="consumables"
+          className="grid grid-cols-1 xl:grid-cols-5"
+        >
           {consumables.map((consumable) => (
             <ConsumableCard
               key={consumable.name + consumable.id}
@@ -157,7 +160,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {helmets && helmets.length > 0 && (
-        <TabsContent value="helmets" className="grid grid-cols-5">
+        <TabsContent
+          value="helmets"
+          className="grid grid-cols-1 xl:grid-cols-5"
+        >
           {helmets.map((helmet) => (
             <HelmetCard
               key={helmet.name + helmet.id}
@@ -168,7 +174,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {shields && shields.length > 0 && (
-        <TabsContent value="shields" className="grid grid-cols-5">
+        <TabsContent
+          value="shields"
+          className="grid grid-cols-1 xl:grid-cols-5"
+        >
           {shields.map((shield) => (
             <ShieldCard
               key={shield.name + shield.id}
@@ -179,7 +188,7 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {spells && spells.length > 0 && (
-        <TabsContent value="spells" className="grid grid-cols-5">
+        <TabsContent value="spells" className="grid grid-cols-1 xl:grid-cols-5">
           {spells.map((spell) => (
             <SpellCard
               key={spell.name + spell.id}
@@ -190,7 +199,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {weapons && weapons.length > 0 && (
-        <TabsContent value="weapons" className="grid grid-cols-5">
+        <TabsContent
+          value="weapons"
+          className="grid grid-cols-1 xl:grid-cols-5"
+        >
           {weapons.map((weapon) => (
             <WeaponCard
               key={weapon.name + weapon.id}
