@@ -25,8 +25,8 @@ const CampaignInfo = ({
         transition-all
         duration-500
         ${campaignCreationState == "GAME_CREATED" ? "hover:bg-[var(--highlight-color)] hover:border-[var(--highlight-color-border)] cursor-pointer" : "hover:bg-[var(--unavailable-color)] hover:border-[var(--unavailable-color-border)] cursor-wait"}
-        w-270
-        h-72
+        w-full
+        h-auto
         `}
         onClick={() => {
           if (campaignCreationState == "GAME_CREATED")
@@ -36,35 +36,38 @@ const CampaignInfo = ({
         {campaignCreationState == "GAME_CREATED" &&
         cardBackImgBase64 &&
         coverImgBase64 ? (
-          <>
+          <div className="flex flex-col xl:flex-row gap-5">
             <div
               className="
-          flex
-          flex-col
-          items-center
-        bg-[var(--page-container-bg)]
-          p-3
-          rounded-lg
-          border
-          border-[var(--page-container-border)]
-          text-lg
-          w-113
-          "
+              flex
+              flex-col
+              items-center
+              bg-[var(--page-container-bg)]
+              p-3
+              rounded-lg
+              border
+              border-[var(--page-container-border)]
+              text-lg
+              w-auto
+              "
             >
-              <p
-                className="
-            text-center
-            font-semibold
-            text-2xl
-            mb-2
-            "
-              >
-                {name}
-              </p>
-              <div className="grid grid-cols-2 gap-6 text-center h-43 w-full">
+              <div className="flex items-center space-x-2">
+                <p className="font-semibold text-lg xl:text-2xl xl:mb-2">
+                  {name}
+                </p>
+                {cardBackImgBase64 && (
+                  <img
+                    draggable={false}
+                    className="sm:hidden h-17 w-auto rounded-md"
+                    src={`data:image/jpeg;base64,${cardBackImgBase64}`}
+                  />
+                )}
+              </div>
+
+              <div className="hidden xl:grid xl:grid-cols-2 gap-6 text-center w-full">
                 <div className="bg-[var(--page-container-bg-darker)] px-2 py-1 rounded-lg">
                   <p className="text-xl">Wanted Themes</p>
-                  <div className="flex flex-col items-center gap-1 overflow-y-auto h-36">
+                  <div className="flex flex-col items-center gap-1 overflow-y-auto max-h-20 xl:min-h-36">
                     {theme.wantedThemes.map((theme, index) => {
                       return (
                         <p
@@ -79,7 +82,7 @@ const CampaignInfo = ({
                 </div>
                 <div className="bg-[var(--page-container-bg-darker)] px-2 py-1 rounded-lg">
                   <p className="text-xl">Unwanted Themes</p>
-                  <div className="flex flex-col items-center gap-1 overflow-y-auto h-36">
+                  <div className="flex flex-col items-center gap-1 overflow-y-auto max-h-20 xl:min-h-36">
                     {theme.unwantedThemes.map((theme, index) => {
                       return (
                         <p
@@ -98,21 +101,20 @@ const CampaignInfo = ({
               {coverImgBase64 && (
                 <img
                   draggable={false}
-                  className="h-60 rounded-md"
+                  className="xl:h-60 rounded-md"
                   src={`data:image/jpeg;base64,${coverImgBase64}`}
                 />
               )}
             </div>
-            <div>
-              {cardBackImgBase64 && (
-                <img
-                  draggable={false}
-                  className="h-60 rounded-md"
-                  src={`data:image/jpeg;base64,${cardBackImgBase64}`}
-                />
-              )}
-            </div>
-          </>
+            {/* Desktop back card */}
+            {cardBackImgBase64 && (
+              <img
+                draggable={false}
+                className="hidden xl:block xl:h-60 rounded-md"
+                src={`data:image/jpeg;base64,${cardBackImgBase64}`}
+              />
+            )}
+          </div>
         ) : (
           <div className="flex items-center gap-30 tracking-tighter hover:tracking-widest transition-all duration-1500">
             <h1 className="text-5xl font-semibold  opacity-30">{name}</h1>
