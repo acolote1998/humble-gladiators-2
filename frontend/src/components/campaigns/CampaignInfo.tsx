@@ -117,7 +117,9 @@ const CampaignInfo = ({
           </div>
         ) : (
           <div className="flex items-center gap-30 tracking-tighter hover:tracking-widest transition-all duration-1500">
-            <h1 className="text-5xl font-semibold  opacity-30">{name}</h1>
+            <h1 className="text-3xl xl:text-5xl font-semibold  opacity-30">
+              {name}
+            </h1>
             <p className="loader scale-300 opacity-30" />
           </div>
         )}

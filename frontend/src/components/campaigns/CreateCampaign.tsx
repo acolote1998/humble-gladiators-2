@@ -118,7 +118,7 @@ const CreateCampaign = () => {
         </form>
         {campaignCreationState !== "CAMPAIGN_NOT_FOUND" &&
           campaignCreationState && (
-            <div className="w-full max-w-3xl">
+            <div className="w-full max-w-3xl mb-13 xl:mb-0">
               <CreationProgressBar creationState={campaignCreationState} />
             </div>
           )}
