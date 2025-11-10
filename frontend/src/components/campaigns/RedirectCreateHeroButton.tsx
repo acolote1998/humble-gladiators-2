@@ -8,22 +8,23 @@ export const RedirectCreateHeroButton = ({
     <div className="flex justify-center" data-testid="navigate-to-create-hero">
       <button
         className="
-          border-[var(--page-container-bg-darkerer)] 
-          bg-[var(--page-container-border)] 
-          text-[var(--light-text)]
-            px-5
-            py-5
-            text-xl
-            rounded-md
-            font-semibold
-            hover:text-[var(--dark-text)]
-            hover:bg-[var(--action-positive-bg)] 
-            hover:tracking-wider
-            cursor-pointer
-            hover:scale-110
-            transition-all
-            ease-in-out
-            duration-800
+        border-[var(--page-container-bg-darkerer)] 
+        bg-[var(--page-container-border)] 
+        text-[var(--light-text)]
+        px-0.5
+        xl:px-5
+        py-5
+        text-xl
+        rounded-md
+        font-semibold
+        md:hover:text-[var(--dark-text)]
+        md:hover:bg-[var(--action-positive-bg)] 
+        md:hover:tracking-wider
+        cursor-pointer
+        md:hover:scale-110
+        transition-all
+        ease-in-out
+        duration-800
             "
         onClick={() => {
           navigate({ to: `/campaign/${campaignId}/createHero` });
