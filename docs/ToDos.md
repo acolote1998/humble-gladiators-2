@@ -1,5 +1,32 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Add validation length in frontend for when creating a campaign and a hero (names, descriptions)
+
+- [ ] Add validation length in backend for when receiving invalid name, descriptions
+
+- [ ] After receiving maybe 5 invalid requests? give the user a 5 minutes timeout
+  - [ ] If invalid after again, ban user
+
+- [ ] Add prompt curation -> if receiving invalid prompt (like rude, sexual, etc) in campaign, give a 5 minutes timeout to that user
+  - [ ] If received again, ban user
+
+- [ ] Add AntiBot model -> make 1 campaign have 1 antibot model
+
+- [ ] Anti bot model will have userId as fields (FKs)
+
+- [ ] Add AntiBot Service in backend to handle these validations
+
+- [ ] in antibot service, when banning -> turn something like banned=true or whatever and assign the user's id  to the anti bot model
+
+- [ ] AniBot
+        id
+        userId
+        DateTime lastInvalidRequestTime
+        amountOfInvalidRequests (if last invalid request was more than 5 minutes ago, reset to zero, otherwise increase)
+        boolean banned
+        DateTime bannedUntil 
+
+
 - [ ] in the inventory -> currently using emojis and characters for experience and for gold -> replace with svgs
 
 - [ ] rework formulas for item stats (example createTwentyFiveNewArmorTemplates in ArmorService)
