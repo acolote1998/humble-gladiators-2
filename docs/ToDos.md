@@ -9,6 +9,8 @@
 
 - [ ] Add prompt curation -> if receiving invalid prompt (like rude, sexual, etc) in campaign, give a 5 minutes timeout to that user
   - [ ] If received again, ban user
+  - [ ] before curating the prompt with an LLM, try to have a fixed array of things we should not pass through
+        and make a static validation. only after that we can validate further through an LLM
 
 - [ ] Add AntiBot model -> make 1 campaign have 1 antibot model
 
