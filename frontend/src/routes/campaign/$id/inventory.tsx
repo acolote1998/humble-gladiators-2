@@ -151,7 +151,7 @@ function RouteComponent() {
               <h2 className="text-xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
                 Stats
               </h2>
-              <div className="grid grid-cols-8 text-center items-center justify-items-center">
+              <div className="xl:hidden flex my-3">
                 <StatBar
                   widthPercent={90}
                   barHeight={2}
@@ -166,6 +166,26 @@ function RouteComponent() {
                   maxValue={heroData.stats.maxMp}
                   type="MANA"
                 />
+              </div>
+              <div className="grid grid-cols-7 xl:grid-cols-8 text-center items-center justify-items-center">
+                <div className="hidden xl:flex w-full justify-items-center items-center">
+                  <StatBar
+                    widthPercent={90}
+                    barHeight={2}
+                    currentValue={heroData.stats.currentHp}
+                    maxValue={heroData.stats.maxHp}
+                    type="HP"
+                  />
+                </div>
+                <div className="hidden xl:flex w-full justify-items-center items-center">
+                  <StatBar
+                    widthPercent={90}
+                    barHeight={2}
+                    currentValue={heroData.stats.currentMp}
+                    maxValue={heroData.stats.maxMp}
+                    type="MANA"
+                  />
+                </div>
 
                 <div
                   title="Physical Defense"
