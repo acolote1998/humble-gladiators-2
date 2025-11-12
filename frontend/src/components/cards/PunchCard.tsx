@@ -11,7 +11,7 @@ export const PunchCard = () => {
         }}
       >
         {/* Category & name */}
-        <div className="flex flex-col items-center mt-9">
+        <div className="flex flex-col items-center mt-0.25 xl:mt-9">
           <img
             draggable={false}
             src={`/categories/punch.png`}
@@ -19,7 +19,7 @@ export const PunchCard = () => {
           />
           <p
             title="DESCRIPTION"
-            className="text-sm opacity-80 text-center p-1 mt-17 px-7"
+            className="hidden xl:block text-sm opacity-80 text-center p-1 mt-17 px-7"
           >
             Punching the enemy with your bare hands
           </p>
