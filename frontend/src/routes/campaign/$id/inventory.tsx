@@ -89,7 +89,7 @@ function RouteComponent() {
               {heroData.name}
             </h2>
           </div>
-          <div className="flex justify-evenly">
+          <div className="grid grid-cols-2 justify-items-center xl:flex xl:justify-evenly">
             <div>
               {equippedHelmet ? (
                 <HelmetCard
@@ -134,7 +134,7 @@ function RouteComponent() {
                 <InventoryCardPlaceholder type="SHIELD" />
               )}
             </div>
-            <div>
+            <div className="col-span-2">
               {equippedBoots ? (
                 <BootsCard
                   key={equippedBoots.name + equippedBoots.id + "equipped"}
