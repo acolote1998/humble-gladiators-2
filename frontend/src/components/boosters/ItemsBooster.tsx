@@ -149,7 +149,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
               }, 1200);
             }}
           >
-            <h3 className="absolute text-4xl font-semibold text-center bottom-20 left-[46vw]">
+            <h3 className="absolute text-4xl font-semibold text-center bottom-10 left-1/2 -translate-x-1/2">
               Open Booster
             </h3>
             {cardBack && (
