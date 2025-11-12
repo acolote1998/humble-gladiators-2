@@ -477,6 +477,59 @@ body {
   border-radius: 20px;
 }
 
+@media (max-width: 639px) {
+  .character-tier-1,
+  .character-tier-2,
+  .character-tier-3,
+  .character-tier-4,
+  .character-tier-5,
+  .character-tier-5-rarity-5,
+  .armor-tier-1,
+  .armor-tier-2,
+  .armor-tier-3,
+  .armor-tier-4,
+  .armor-tier-5,
+  .armor-tier-5-rarity-5,
+  .boot-tier-1,
+  .boot-tier-2,
+  .boot-tier-3,
+  .boot-tier-4,
+  .boot-tier-5,
+  .boot-tier-5-rarity-5,
+  .consumable-tier-1,
+  .consumable-tier-2,
+  .consumable-tier-3,
+  .consumable-tier-4,
+  .consumable-tier-5,
+  .consumable-tier-5-rarity-5,
+  .helmet-tier-1,
+  .helmet-tier-2,
+  .helmet-tier-3,
+  .helmet-tier-4,
+  .helmet-tier-5,
+  .helmet-tier-5-rarity-5,
+  .shield-tier-1,
+  .shield-tier-2,
+  .shield-tier-3,
+  .shield-tier-4,
+  .shield-tier-5,
+  .shield-tier-5-rarity-5,
+  .spell-tier-1,
+  .spell-tier-2,
+  .spell-tier-3,
+  .spell-tier-4,
+  .spell-tier-5,
+  .spell-tier-5-rarity-5,
+  .weapon-tier-1,
+  .weapon-tier-2,
+  .weapon-tier-3,
+  .weapon-tier-4,
+  .weapon-tier-5,
+  .weapon-tier-5-rarity-5 {
+    border-radius: 5px;
+  }
+}
+
 .loader {
   width: 13px;
   aspect-ratio: 1;
