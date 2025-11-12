@@ -24,9 +24,9 @@ export const tierAndRarityContainer = `relative h-6`;
 export const tierClass = `absolute left-12 top-0 z-20 w-50`;
 export const rarityClass = `absolute left-46 top-0 z-10 w-50`;
 
-export const categoryAndNameClass = `flex flex-col items-center mt-6`;
-export const cardImageClass = `w-66 h-48.5`;
-export const cardCategoryImageClass = `w-65.5 h-auto`;
+export const categoryAndNameClass = `flex flex-col items-center mt-0.5 xl:mt-6`;
+export const cardImageClass = `xl:w-66 h-12 xl:h-48.5`;
+export const cardCategoryImageClass = `w-65.5 xl:h-auto`;
 export const nameContainerClass = `hidden xl:block w-67.75 overflow-x-hidden`;
 export const cardNameClass = `text-lg mt-8 text-center`;
 export const cardDescriptionClass = `hidden xl:block text-sm opacity-80 text-center p-1 mt-0.5 px-7`;

@@ -130,7 +130,7 @@ export const CharacterCard = ({
         ) : (
           <img
             draggable={false}
-            src={`/categories/blankCategory.png`}
+            src={`/categories/${category}.png`}
             alt={category}
             className={`${cardCategoryImageClass}`}
           />
