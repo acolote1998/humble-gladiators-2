@@ -1,3 +1,5 @@
+import { cardSizeClass } from "./util/CardSize";
+
 type InventoryCardPlaceholderType = {
   type: ItemType;
 };
@@ -20,7 +22,7 @@ const InventoryCardPlaceholder = ({ type }: InventoryCardPlaceholderType) => {
   return (
     <div
       data-testid="item-placeholder"
-      className={`opacity-50 scale-90 relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`}
+      className={`opacity-50 scale-90 ${cardSizeClass}`}
       style={{
         backgroundImage: `url('/templates/${typeToImagePath()}.png')`,
       }}

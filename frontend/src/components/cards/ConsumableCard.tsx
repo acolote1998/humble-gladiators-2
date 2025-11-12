@@ -1,5 +1,6 @@
 import type { ConsumableType } from "../../types/consumablesTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
+import { cardSizeClass } from "./util/CardSize";
 export const ConsumableCard = ({
   category,
   description,
@@ -28,7 +29,7 @@ export const ConsumableCard = ({
             ? `consumable-tier-${tier}`
             : "",
         // Always-applied classes
-        `${discovered && `rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`,
+        `${discovered && `rarity-${rarity}`} ${cardSizeClass}`,
       ]
         .filter(Boolean) // removes empty strings
         .join(" ")} // join with spaces

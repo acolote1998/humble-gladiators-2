@@ -1,5 +1,6 @@
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
+import { cardSizeClass } from "./util/CardSize";
 export const CharacterCard = ({
   category,
   description,
@@ -43,7 +44,7 @@ export const CharacterCard = ({
             ? `character-tier-${tier}`
             : "",
         // Always-applied classes
-        `${discovered && `rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`,
+        `${discovered && `rarity-${rarity}`} ${cardSizeClass}`,
       ]
         .filter(Boolean) // removes empty strings
         .join(" ")} // join with spaces

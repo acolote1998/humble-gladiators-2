@@ -1,9 +1,11 @@
+import { cardSizeClass } from "./util/CardSize";
+
 export const PunchCard = () => {
   return (
     <>
       <div
         data-testid="punch-card"
-        className={`hover-zoom relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`}
+        className={`hover-zoom ${cardSizeClass}`}
         style={{
           backgroundImage: `url('/templates/punchCardTemplate.png')`,
         }}

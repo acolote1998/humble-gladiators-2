@@ -3,6 +3,7 @@ import { calculateTierAndRarityStars } from "../../util/calculateTierAndRaritySt
 import { useEquipItems, useUnequipItems } from "../../hooks/useEquipItems";
 import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
 import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
+import { cardSizeClass } from "./util/CardSize";
 export const ShieldCard = ({
   id,
   campaignId,
@@ -36,7 +37,7 @@ export const ShieldCard = ({
                 ? `shield-tier-${tier}`
                 : "",
             // Always-applied classes
-            `${discovered && `rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`,
+            `${discovered && `rarity-${rarity}`} ${cardSizeClass}`,
           ]
             .filter(Boolean) // removes empty strings
             .join(" ")} // join with spaces
