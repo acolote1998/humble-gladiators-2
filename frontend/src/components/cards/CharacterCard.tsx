@@ -13,7 +13,7 @@ import {
   cardNameClass,
   cardSizeClass,
   categoryAndNameClass,
-  nameAndDescriptionContainerClass,
+  nameContainerClass,
   rarityClass,
   tierAndRarityClass,
   tierAndRarityContainer,
@@ -135,7 +135,7 @@ export const CharacterCard = ({
             className={`${cardCategoryImageClass}`}
           />
         )}
-        <div className={`${nameAndDescriptionContainerClass}`}>
+        <div className={`${nameContainerClass}`}>
           <p
             title="NAME"
             className={`${cardNameClass} ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
