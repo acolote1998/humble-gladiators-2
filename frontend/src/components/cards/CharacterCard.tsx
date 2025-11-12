@@ -1,6 +1,13 @@
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-import { cardSizeClass } from "./util/CardSize";
+import {
+  cardSizeClass,
+  topStatFour,
+  topStatOne,
+  topStatsClass,
+  topStatThree,
+  topStatTwo,
+} from "./util/CardSizes";
 export const CharacterCard = ({
   category,
   description,
@@ -51,20 +58,20 @@ export const CharacterCard = ({
       style={{ backgroundImage: `url('/templates/charCardTemplate.png')` }}
     >
       {/* Top stats */}
-      <div className="grid grid-cols-4 text-sm mt-3">
-        <div className="absolute left-8.5 w-20">
+      <div className={`${topStatsClass}`}>
+        <div className={`${topStatOne}`}>
           <p title="CURRENT HP">
             ❤️{" "}
             {discovered || renderingFrom == "BOOSTER" ? stats.currentHp : "?"}
           </p>
         </div>
-        <div className="absolute left-26 w-20">
+        <div className={`${topStatTwo}`}>
           <p title="CURRENT MP">
             🔷{" "}
             {discovered || renderingFrom == "BOOSTER" ? stats.currentMp : "?"}
           </p>
         </div>
-        <div className="absolute left-43.5 w-15">
+        <div className={`${topStatThree}`}>
           <p title="PHYSICAL DAMAGE">
             ⚔️{" "}
             {discovered || renderingFrom == "BOOSTER"
@@ -72,7 +79,7 @@ export const CharacterCard = ({
               : "?"}
           </p>
         </div>
-        <div className="absolute left-61 w-20">
+        <div className={`${topStatFour}`}>
           <p title="MAGICAL DAMAGE">
             🔮{" "}
             {discovered || renderingFrom == "BOOSTER"
@@ -107,7 +114,7 @@ export const CharacterCard = ({
         ) : (
           <img
             draggable={false}
-            src={`/categories/${category}.png`}
+            src={`/categories/blankCategory.png`}
             alt={category}
             className="w-65.5 h-auto"
           />

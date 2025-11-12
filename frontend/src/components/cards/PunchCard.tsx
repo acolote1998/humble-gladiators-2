@@ -1,4 +1,4 @@
-import { cardSizeClass } from "./util/CardSize";
+import { cardSizeClass } from "./util/CardSizes";
 
 export const PunchCard = () => {
   return (

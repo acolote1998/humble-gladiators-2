@@ -4,7 +4,7 @@ import { useEquipItems } from "../../hooks/useEquipItems";
 import { useUnequipItems } from "../../hooks/useEquipItems";
 import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
 import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
-import { cardSizeClass } from "./util/CardSize";
+import { cardSizeClass, topStatsClass } from "./util/CardSizes";
 export const ArmorCard = ({
   id,
   campaignId,
@@ -45,20 +45,7 @@ export const ArmorCard = ({
           style={{ backgroundImage: `url('/templates/armorCardTemplate.png')` }}
         >
           {/* Top stats */}
-          <div className="grid grid-cols-4 text-sm mt-3">
-            {/* <div className="absolute left-8.5 w-20">
-          <p>❤️ {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div>
-        <div className="absolute left-26 w-15">
-          <p>⚔️ {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div>
-        <div className="absolute left-43 w-20">
-          <p>🔷 {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div>
-        <div className="absolute left-61 w-20">
-          <p>🔮 {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div> */}
-          </div>
+          <div className={`${topStatsClass}`}></div>
 
           {/* Tier & rarity */}
           <div className="absolute bottom-51.5 left-0 text-sm">

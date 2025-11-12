@@ -1,6 +1,6 @@
 import type { SpellType } from "../../types/spellTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
-import { cardSizeClass } from "./util/CardSize";
+import { cardSizeClass, topStatsClass } from "./util/CardSizes";
 export const SpellCard = ({
   category,
   description,
@@ -38,20 +38,7 @@ export const SpellCard = ({
       style={{ backgroundImage: `url('/templates/spellCardTemplate.png')` }}
     >
       {/* Top stats */}
-      <div className="grid grid-cols-4 text-sm mt-3">
-        {/* <div className="absolute left-8.5 w-20">
-          <p>❤️ {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div>
-        <div className="absolute left-26 w-15">
-          <p>⚔️ {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div>
-        <div className="absolute left-43 w-20">
-          <p>🔷 {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div>
-        <div className="absolute left-61 w-20">
-          <p>🔮 {(discovered || renderingFrom=="BOOSTER") ? "pl" : "?"}</p>
-        </div> */}
-      </div>
+      <div className={`${topStatsClass}`}></div>
 
       {/* Tier & rarity */}
       <div className="absolute bottom-51.5 left-0 text-sm">
