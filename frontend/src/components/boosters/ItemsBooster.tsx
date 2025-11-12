@@ -179,7 +179,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
                       onClick={() => {
                         if (!processingCard) handleFlip();
                       }}
@@ -226,7 +226,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
                       onClick={() => {
                         if (!processingCard) handleFlip();
                       }}
@@ -275,7 +275,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -327,7 +327,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -380,7 +380,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -434,7 +434,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -487,7 +487,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
