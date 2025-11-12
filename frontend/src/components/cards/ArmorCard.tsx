@@ -5,6 +5,7 @@ import { useUnequipItems } from "../../hooks/useEquipItems";
 import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
 import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
 import {
+  bottomStatOneClass,
   cardCategoryImageClass,
   cardDescriptionClass,
   cardImageClass,
@@ -105,7 +106,7 @@ export const ArmorCard = ({
 
           {/* Bottom stats */}
           <div className="grid grid-cols-5 absolute bottom-14 text-sm">
-            <div className="absolute left-7 w-15">
+            <div className={`${bottomStatOneClass}`}>
               <p>
                 🛡️{" "}
                 {discovered || renderingFrom == "BOOSTER"
@@ -113,9 +114,6 @@ export const ArmorCard = ({
                   : "?"}
               </p>
             </div>
-            {/* <div className="absolute left-23 w-15">
-          <p>❤️ {(discovered || renderingFrom=="BOOSTER") ? restoreHp : "?"}</p>
-        </div> */}
             <div className="absolute left-41.5 w-15">
               <p>
                 ✨{" "}
@@ -124,9 +122,6 @@ export const ArmorCard = ({
                   : "?"}
               </p>
             </div>
-            {/* <div className="absolute left-58.5 w-15">
-          <p>🧉 {(discovered || renderingFrom=="BOOSTER") ? restoreMp : "?"}</p>
-        </div> */}
           </div>
         </div>
         <div>

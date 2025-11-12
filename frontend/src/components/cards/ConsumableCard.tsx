@@ -98,17 +98,11 @@ export const ConsumableCard = ({
 
       {/* Bottom stats */}
       <div className="grid grid-cols-5 absolute bottom-14 text-sm">
-        {/* <div className="absolute left-7 w-15">
-          <p>🛡️ {(discovered || renderingFrom=="BOOSTER") ? physicalDefense : "?"}</p>
-        </div> */}
         <div className="absolute left-24 w-15">
           <p title="RESTORE HP">
             ❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}
           </p>
         </div>
-        {/* <div className="absolute left-41.5 w-15">
-          <p>✨ {(discovered || renderingFrom=="BOOSTER") ? magicalDefense : "?"}</p>
-        </div> */}
         <div className="absolute left-59 w-15">
           <p title="RESTORE MP">
             🧉 {discovered || renderingFrom == "BOOSTER" ? restoreMp : "?"}

@@ -1,6 +1,7 @@
 import type { SpellType } from "../../types/spellTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import {
+  bottomStatOneClass,
   cardCategoryImageClass,
   cardDescriptionClass,
   cardImageClass,
@@ -98,7 +99,7 @@ export const SpellCard = ({
 
       {/* Bottom stats */}
       <div className="grid grid-cols-5 absolute bottom-14 text-sm">
-        <div className="absolute left-7 w-15">
+        <div className={`${bottomStatOneClass}`}>
           <p title="PHYSICAL DAMAGE">
             ⚔️ {discovered || renderingFrom == "BOOSTER" ? physicalDamage : "?"}
           </p>

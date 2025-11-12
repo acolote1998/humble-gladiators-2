@@ -1,8 +1,16 @@
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import {
+  bottomStatOneClass,
+  bottomStatsClass,
+  bottomStatsFiveClass,
+  bottomStatsFourClass,
+  bottomStatsThreeClass,
+  bottomStatsTwoClass,
   cardCategoryImageClass,
+  cardDescriptionClass,
   cardImageClass,
+  cardNameClass,
   cardSizeClass,
   categoryAndNameClass,
   nameAndDescriptionContainerClass,
@@ -130,37 +138,34 @@ export const CharacterCard = ({
         <div className={`${nameAndDescriptionContainerClass}`}>
           <p
             title="NAME"
-            className={`text-lg mt-8 text-center ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
+            className={`${cardNameClass} ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
           >
             {discovered || renderingFrom == "BOOSTER" ? name : "?"}
           </p>
         </div>
-        <p
-          title="DESCRIPTION"
-          className="text-sm opacity-80 text-center p-1 mt-0.5 px-7"
-        >
+        <p title="DESCRIPTION" className={`${cardDescriptionClass}`}>
           {discovered || renderingFrom == "BOOSTER" ? description : "?"}
         </p>
       </div>
 
       {/* Bottom stats */}
-      <div className="grid grid-cols-5 absolute bottom-14.5 text-sm">
-        <div className="absolute left-7 w-15">
+      <div className={`${bottomStatsClass}`}>
+        <div className={`${bottomStatOneClass}`}>
           <p title="LEVEL">
             LV. {discovered || renderingFrom == "BOOSTER" ? stats.level : "?"}
           </p>
         </div>
-        <div className="absolute left-21 w-15">
+        <div className={`${bottomStatsTwoClass}`}>
           <p title="SPEED">
             ⚡ {discovered || renderingFrom == "BOOSTER" ? stats.speed : "?"}
           </p>
         </div>
-        <div className="absolute left-34.5 w-15">
+        <div className={`${bottomStatsThreeClass}`}>
           <p title="LUCK">
             🍀 {discovered || renderingFrom == "BOOSTER" ? stats.luck : "?"}
           </p>
         </div>
-        <div className="absolute left-48 w-15">
+        <div className={`${bottomStatsFourClass}`}>
           {renderingFrom == "COMPENDIUM" && !discovered ? (
             <p>?</p>
           ) : renderingFrom == "BOOSTER" ||
@@ -172,7 +177,7 @@ export const CharacterCard = ({
             )
           )}
         </div>
-        <div className="absolute left-62 w-15">
+        <div className={`${bottomStatsFiveClass}`}>
           {renderingFrom == "COMPENDIUM" && !discovered ? (
             <p>?</p>
           ) : renderingFrom == "BOOSTER" ||
