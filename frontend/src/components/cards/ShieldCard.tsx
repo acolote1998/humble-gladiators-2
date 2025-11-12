@@ -3,7 +3,14 @@ import { calculateTierAndRarityStars } from "../../util/calculateTierAndRaritySt
 import { useEquipItems, useUnequipItems } from "../../hooks/useEquipItems";
 import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
 import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
-import { cardSizeClass, topStatsClass } from "./util/CardSizes";
+import {
+  cardSizeClass,
+  rarityClass,
+  tierAndRarityClass,
+  tierAndRarityContainer,
+  tierClass,
+  topStatsClass,
+} from "./util/CardSizes";
 export const ShieldCard = ({
   id,
   campaignId,
@@ -49,13 +56,13 @@ export const ShieldCard = ({
           <div className={`${topStatsClass}`}></div>
 
           {/* Tier & rarity */}
-          <div className="absolute bottom-51.5 left-0 text-sm">
-            <div className="relative h-6">
+          <div className={`${tierAndRarityClass}`}>
+            <div className={`${tierAndRarityContainer}`}>
               {/* container for absolute children; give it a height so top:0 has meaning */}
-              <span title="TIER" className="absolute left-12 top-0 z-20 w-50">
+              <span title="TIER" className={`${tierClass}`}>
                 T {calculateTierAndRarityStars(tier)}
               </span>
-              <span title="RARITY" className="absolute left-46 top-0 z-10 w-50">
+              <span title="RARITY" className={`${rarityClass}`}>
                 R {calculateTierAndRarityStars(rarity)}
               </span>
             </div>
