@@ -1,4 +1,4 @@
-import { cardSizeClass } from "./util/CardSizes";
+import { cardCategoryImageClass, cardSizeClass } from "./util/CardSizes";
 
 export const PunchCard = () => {
   return (
@@ -15,7 +15,7 @@ export const PunchCard = () => {
           <img
             draggable={false}
             src={`/categories/punch.png`}
-            className="w-65.5 h-auto"
+            className={`${cardCategoryImageClass}`}
           />
           <p
             title="DESCRIPTION"

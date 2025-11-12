@@ -1,7 +1,13 @@
 import type { SpellType } from "../../types/spellTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import {
+  cardCategoryImageClass,
+  cardDescriptionClass,
+  cardImageClass,
+  cardNameClass,
   cardSizeClass,
+  categoryAndNameClass,
+  nameAndDescriptionContainerClass,
   rarityClass,
   tierAndRarityClass,
   tierAndRarityContainer,
@@ -61,34 +67,31 @@ export const SpellCard = ({
       </div>
 
       {/* Category & name */}
-      <div className="flex flex-col items-center mt-6">
+      <div className={`${categoryAndNameClass}`}>
         {(discovered || renderingFrom == "BOOSTER") && imgBase64 ? (
           <img
             draggable={false}
             src={`data:image/jpeg;base64,${imgBase64}`}
             alt={category}
-            className="w-66 h-48.5"
+            className={`${cardImageClass}`}
           />
         ) : (
           <img
             draggable={false}
             src={`/categories/${category}.png`}
             alt={category}
-            className="w-65.5 h-auto"
+            className={`${cardCategoryImageClass}`}
           />
         )}
-        <div className="w-67.75 overflow-x-hidden">
+        <div className={`${nameAndDescriptionContainerClass}`}>
           <p
             title="NAME"
-            className={`text-lg mt-8 text-center ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
+            className={`${cardNameClass} ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
           >
             {discovered || renderingFrom == "BOOSTER" ? name : "?"}
           </p>
         </div>
-        <p
-          title="DESCRIPTION"
-          className="text-sm opacity-80 text-center p-1 mt-0.5 px-7"
-        >
+        <p title="DESCRIPTION" className={`${cardDescriptionClass}`}>
           {discovered || renderingFrom == "BOOSTER" ? description : "?"}
         </p>
       </div>
