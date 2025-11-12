@@ -31,9 +31,14 @@ export const nameContainerClass = `hidden xl:block w-67.75 overflow-x-hidden`;
 export const cardNameClass = `text-lg mt-8 text-center`;
 export const cardDescriptionClass = `hidden xl:block text-sm opacity-80 text-center p-1 mt-0.5 px-7`;
 
-export const bottomStatsClass = `hidden xl:grid grid-cols-5 absolute bottom-14.5 text-sm`;
-export const bottomStatOneClass = `absolute left-7 w-15`;
-export const bottomStatsTwoClass = `absolute left-21 w-15`;
-export const bottomStatsThreeClass = `absolute left-34.5 w-15`;
-export const bottomStatsFourClass = `absolute left-48 w-15`;
-export const bottomStatsFiveClass = `absolute left-62 w-15`;
+export const charactersBottomStatsClass = `hidden xl:grid grid-cols-5 absolute bottom-14.5 text-sm`;
+export const BottomStatOneClass = `absolute left-7 w-15`;
+export const charactersBottomStatsTwoClass = `absolute left-21 w-15`;
+export const charactersBottomStatsThreeClass = `absolute left-34.5 w-15`;
+export const charactersBottomStatsFourClass = `absolute left-48 w-15`;
+export const charactersBottomStatsFiveClass = `absolute left-62 w-15`;
+
+export const regularCardBottomStatsClass = `grid grid-cols-5 absolute bottom-14 text-sm`;
+export const regularCardBottomStatsTwo = `absolute left-41.5 w-15`;
+export const regularCardBottomStatsThree = `absolute left-41.5 w-15`;
+export const regularCardBottomStatsFour = `absolute left-59 w-15`;

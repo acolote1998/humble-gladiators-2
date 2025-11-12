@@ -1,12 +1,12 @@
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import {
-  bottomStatOneClass,
-  bottomStatsClass,
-  bottomStatsFiveClass,
-  bottomStatsFourClass,
-  bottomStatsThreeClass,
-  bottomStatsTwoClass,
+  BottomStatOneClass,
+  charactersBottomStatsClass,
+  charactersBottomStatsFiveClass,
+  charactersBottomStatsFourClass,
+  charactersBottomStatsThreeClass,
+  charactersBottomStatsTwoClass,
   cardCategoryImageClass,
   cardDescriptionClass,
   cardImageClass,
@@ -149,23 +149,23 @@ export const CharacterCard = ({
       </div>
 
       {/* Bottom stats */}
-      <div className={`${bottomStatsClass}`}>
-        <div className={`${bottomStatOneClass}`}>
+      <div className={`${charactersBottomStatsClass}`}>
+        <div className={`${BottomStatOneClass}`}>
           <p title="LEVEL">
             LV. {discovered || renderingFrom == "BOOSTER" ? stats.level : "?"}
           </p>
         </div>
-        <div className={`${bottomStatsTwoClass}`}>
+        <div className={`${charactersBottomStatsTwoClass}`}>
           <p title="SPEED">
             ⚡ {discovered || renderingFrom == "BOOSTER" ? stats.speed : "?"}
           </p>
         </div>
-        <div className={`${bottomStatsThreeClass}`}>
+        <div className={`${charactersBottomStatsThreeClass}`}>
           <p title="LUCK">
             🍀 {discovered || renderingFrom == "BOOSTER" ? stats.luck : "?"}
           </p>
         </div>
-        <div className={`${bottomStatsFourClass}`}>
+        <div className={`${charactersBottomStatsFourClass}`}>
           {renderingFrom == "COMPENDIUM" && !discovered ? (
             <p>?</p>
           ) : renderingFrom == "BOOSTER" ||
@@ -177,7 +177,7 @@ export const CharacterCard = ({
             )
           )}
         </div>
-        <div className={`${bottomStatsFiveClass}`}>
+        <div className={`${charactersBottomStatsFiveClass}`}>
           {renderingFrom == "COMPENDIUM" && !discovered ? (
             <p>?</p>
           ) : renderingFrom == "BOOSTER" ||

@@ -1,7 +1,7 @@
 import type { SpellType } from "../../types/spellTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import {
-  bottomStatOneClass,
+  BottomStatOneClass,
   cardCategoryImageClass,
   cardDescriptionClass,
   cardImageClass,
@@ -14,6 +14,10 @@ import {
   tierAndRarityContainer,
   tierClass,
   topStatsClass,
+  regularCardBottomStatsClass,
+  regularCardBottomStatsThree,
+  regularCardBottomStatsTwo,
+  regularCardBottomStatsFour,
 } from "./util/CardSizes";
 export const SpellCard = ({
   category,
@@ -98,23 +102,23 @@ export const SpellCard = ({
       </div>
 
       {/* Bottom stats */}
-      <div className="grid grid-cols-5 absolute bottom-14 text-sm">
-        <div className={`${bottomStatOneClass}`}>
+      <div className={`${regularCardBottomStatsClass}`}>
+        <div className={`${BottomStatOneClass}`}>
           <p title="PHYSICAL DAMAGE">
             ⚔️ {discovered || renderingFrom == "BOOSTER" ? physicalDamage : "?"}
           </p>
         </div>
-        <div className="absolute left-24 w-15">
+        <div className={`${regularCardBottomStatsTwo}`}>
           <p title="RESTORE HP">
             ❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}
           </p>
         </div>
-        <div className="absolute left-41.5 w-15">
+        <div className={`${regularCardBottomStatsThree}`}>
           <p title="MAGICAL DAMAGE">
             ✨ {discovered || renderingFrom == "BOOSTER" ? magicalDamage : "?"}
           </p>
         </div>
-        <div className="absolute left-58.5 w-15">
+        <div className={`${regularCardBottomStatsFour}`}>
           <p title="MP COST">
             🧉 {discovered || renderingFrom == "BOOSTER" ? mpCost : "?"}
           </p>

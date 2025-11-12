@@ -4,7 +4,7 @@ import { useEquipItems, useUnequipItems } from "../../hooks/useEquipItems";
 import { EquipItemComponent } from "../campaigns/inventory/EquipItemComponent";
 import UnequipItemComponent from "../campaigns/inventory/UnequipItemComponent";
 import {
-  bottomStatOneClass,
+  BottomStatOneClass,
   cardCategoryImageClass,
   cardDescriptionClass,
   cardImageClass,
@@ -17,6 +17,8 @@ import {
   tierAndRarityContainer,
   tierClass,
   topStatsClass,
+  regularCardBottomStatsClass,
+  regularCardBottomStatsThree,
 } from "./util/CardSizes";
 export const ShieldCard = ({
   id,
@@ -106,8 +108,8 @@ export const ShieldCard = ({
           </div>
 
           {/* Bottom stats */}
-          <div className="grid grid-cols-5 absolute bottom-14 text-sm">
-            <div className={`${bottomStatOneClass}`}>
+          <div className={`${regularCardBottomStatsClass}`}>
+            <div className={`${BottomStatOneClass}`}>
               <p title="PHYSICAL DEFENSE">
                 🛡️{" "}
                 {discovered || renderingFrom == "BOOSTER"
@@ -115,7 +117,7 @@ export const ShieldCard = ({
                   : "?"}
               </p>
             </div>
-            <div className="absolute left-41.5 w-15">
+            <div className={`${regularCardBottomStatsThree}`}>
               <p title="MAGICAL DEFENSE">
                 ✨{" "}
                 {discovered || renderingFrom == "BOOSTER"

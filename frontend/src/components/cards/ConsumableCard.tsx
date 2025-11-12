@@ -9,6 +9,9 @@ import {
   categoryAndNameClass,
   nameContainerClass,
   rarityClass,
+  regularCardBottomStatsClass,
+  regularCardBottomStatsFour,
+  regularCardBottomStatsTwo,
   tierAndRarityClass,
   tierAndRarityContainer,
   tierClass,
@@ -97,13 +100,13 @@ export const ConsumableCard = ({
       </div>
 
       {/* Bottom stats */}
-      <div className="grid grid-cols-5 absolute bottom-14 text-sm">
-        <div className="absolute left-24 w-15">
+      <div className={`${regularCardBottomStatsClass}`}>
+        <div className={`${regularCardBottomStatsTwo}`}>
           <p title="RESTORE HP">
             ❤️ {discovered || renderingFrom == "BOOSTER" ? restoreHp : "?"}
           </p>
         </div>
-        <div className="absolute left-59 w-15">
+        <div className={`${regularCardBottomStatsFour}`}>
           <p title="RESTORE MP">
             🧉 {discovered || renderingFrom == "BOOSTER" ? restoreMp : "?"}
           </p>
