@@ -11,16 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Service
 @Slf4j
@@ -88,58 +78,6 @@ public class GameService {
         this.characterService = characterService;
     }
 
-    public void getShortReportOfAIGeneratedContent(Campaign campaign) {
-        // Use LinkedHashMap to preserve insertion order
-        Map<String, Object> report = new LinkedHashMap<>();
-
-        // Add campaign metadata first to ensure it appears at the beginning
-        Map<String, Object> campaignInfo = new HashMap<>();
-        campaignInfo.put("campaignId", campaign.getId());
-        campaignInfo.put("name", campaign.getName());
-        campaignInfo.put("userId", campaign.getUserId());
-        campaignInfo.put("wantedThemes", campaign.getTheme().getWantedThemes());
-        campaignInfo.put("unwantedThemes", campaign.getTheme().getUnwantedThemes());
-        campaignInfo.put("generationTimestamp", System.currentTimeMillis());
-        report.put("campaignInfo", campaignInfo);
-
-        // Collect reports from all services
-        report.putAll(armorService.getShortAIGeneratedReport(campaign.getId()));
-        report.putAll(bootsService.getShortAIGeneratedReport(campaign.getId()));
-        report.putAll(consumableService.getShortAIGeneratedReport(campaign.getId()));
-        report.putAll(helmetService.getShortAIGeneratedReport(campaign.getId()));
-        report.putAll(shieldService.getShortAIGeneratedReport(campaign.getId()));
-        report.putAll(spellService.getShortAIGeneratedReport(campaign.getId()));
-        report.putAll(weaponService.getShortAIGeneratedReport(campaign.getId()));
-        report.putAll(characterService.getShortAIGeneratedReport(campaign.getId()));
-
-        // Save report as JSON file
-        saveReportAsJson(report, campaign);
-    }
-
-    private void saveReportAsJson(Map<String, Object> report, Campaign campaign) {
-        try {
-            // Ensure the directory exists
-            Path reportsDir = Paths.get("src/main/resources/generation_reports");
-            if (!Files.exists(reportsDir)) {
-                Files.createDirectories(reportsDir);
-            }
-
-            // Create filename using wanted themes
-            String wantedThemes = String.join("-", campaign.getTheme().getWantedThemes());
-            // Replace spaces and special characters with underscores for filename safety
-            wantedThemes = wantedThemes.replaceAll("[^a-zA-Z0-9-]", "_");
-            String filename = wantedThemes + "_generated_content.json";
-            Path filePath = reportsDir.resolve(filename);
-
-            // Convert to JSON and save
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(filePath.toFile(), report);
-
-            log.info("Generated content report saved to: {}", filePath.toString());
-        } catch (IOException e) {
-            log.error("Failed to save generated content report for campaign {}: {}", campaign.getId(), e.getMessage());
-        }
-    }
 
     public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest, String userId) throws InterruptedException {
         Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest, userId);
@@ -267,8 +205,6 @@ public class GameService {
             updateCampaignCreationState(CampaignCreationStateType.CAMPAIGN_CARD_BACK_IMAGE_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
-        getShortReportOfAIGeneratedContent(campaign);
-        log.info("Creating report of generated content");
         updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
         return campaign;
     }

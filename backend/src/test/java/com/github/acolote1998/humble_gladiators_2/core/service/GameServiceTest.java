@@ -97,32 +97,6 @@ class GameServiceTest {
     }
 
     @Test
-    void getShortReportOfAIGeneratedContent_ShouldCallAllServices() {
-        // Arrange
-        when(armorService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-        when(bootsService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-        when(consumableService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-        when(helmetService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-        when(shieldService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-        when(spellService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-        when(weaponService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-        when(characterService.getShortAIGeneratedReport(CAMPAIGN_ID)).thenReturn(Collections.emptyMap());
-
-        // Act
-        gameService.getShortReportOfAIGeneratedContent(campaign);
-
-        // Assert
-        verify(armorService).getShortAIGeneratedReport(CAMPAIGN_ID);
-        verify(bootsService).getShortAIGeneratedReport(CAMPAIGN_ID);
-        verify(consumableService).getShortAIGeneratedReport(CAMPAIGN_ID);
-        verify(helmetService).getShortAIGeneratedReport(CAMPAIGN_ID);
-        verify(shieldService).getShortAIGeneratedReport(CAMPAIGN_ID);
-        verify(spellService).getShortAIGeneratedReport(CAMPAIGN_ID);
-        verify(weaponService).getShortAIGeneratedReport(CAMPAIGN_ID);
-        verify(characterService).getShortAIGeneratedReport(CAMPAIGN_ID);
-    }
-
-    @Test
     void startGame_ShouldCreateCampaign() throws InterruptedException {
         // Arrange
         GameCreationDtoRequest.ThemeDtoRequest themeRequest =
