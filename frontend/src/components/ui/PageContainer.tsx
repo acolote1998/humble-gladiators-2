@@ -37,7 +37,8 @@ export const PageContainer = ({
             ${extraClasses ? extraClasses : ""}
         `}
     >
-      <>
+      {/* <>
+      For debugging UI responsiveness
         <p
           className="absolute top-0 left-0 bg-gray-300 text-xs block
     sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden"
@@ -79,7 +80,7 @@ export const PageContainer = ({
         >
           2XL
         </p>
-      </>
+      </> */}
 
       {children}
     </div>

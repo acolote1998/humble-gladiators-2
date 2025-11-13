@@ -39,6 +39,6 @@ export const charactersBottomStatsFourClass = `absolute left-48 w-15`;
 export const charactersBottomStatsFiveClass = `absolute left-62 w-15`;
 
 export const regularCardBottomStatsClass = `hidden xl:grid grid-cols-5 absolute bottom-14 text-sm`;
-export const regularCardBottomStatsTwo = `absolute left-41.5 w-15`;
+export const regularCardBottomStatsTwo = `absolute left-24.5 w-15`;
 export const regularCardBottomStatsThree = `absolute left-41.5 w-15`;
 export const regularCardBottomStatsFour = `absolute left-59 w-15`;
