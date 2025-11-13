@@ -89,7 +89,7 @@ function RouteComponent() {
               {heroData.name}
             </h2>
           </div>
-          <div className="flex justify-evenly">
+          <div className="grid grid-cols-2 justify-items-center lg:overflow-x-auto lg:flex xl:justify-evenly">
             <div>
               {equippedHelmet ? (
                 <HelmetCard
@@ -134,7 +134,7 @@ function RouteComponent() {
                 <InventoryCardPlaceholder type="SHIELD" />
               )}
             </div>
-            <div>
+            <div className="col-span-2">
               {equippedBoots ? (
                 <BootsCard
                   key={equippedBoots.name + equippedBoots.id + "equipped"}
@@ -151,7 +151,7 @@ function RouteComponent() {
               <h2 className="text-xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
                 Stats
               </h2>
-              <div className="grid grid-cols-8 text-center items-center justify-items-center">
+              <div className="flex my-3">
                 <StatBar
                   widthPercent={90}
                   barHeight={2}
@@ -166,7 +166,8 @@ function RouteComponent() {
                   maxValue={heroData.stats.maxMp}
                   type="MANA"
                 />
-
+              </div>
+              <div className="grid grid-cols-7 text-center items-center justify-items-center">
                 <div
                   title="Physical Defense"
                   className="flex flex-col items-center cursor-pointer select-none gap-1"

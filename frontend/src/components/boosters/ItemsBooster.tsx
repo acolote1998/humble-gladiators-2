@@ -142,14 +142,16 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
           !dataFromItemBooster &&
           !dataFromBoosterLoading ? (
           <div
-            data-testid="open-booster-button"
             onClick={() => {
               setTimeout(() => {
                 createItemBoosterMutation(Number(campaignId));
               }, 1200);
             }}
           >
-            <h3 className="absolute text-4xl font-semibold text-center bottom-20 left-[46vw]">
+            <h3
+              data-testid="open-booster-button"
+              className="absolute text-4xl font-semibold text-center bottom-10 left-1/2 -translate-x-1/2"
+            >
               Open Booster
             </h3>
             {cardBack && (
@@ -179,7 +181,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                       onClick={() => {
                         if (!processingCard) handleFlip();
                       }}
@@ -226,7 +228,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                       onClick={() => {
                         if (!processingCard) handleFlip();
                       }}
@@ -275,7 +277,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -327,7 +329,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -380,7 +382,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -434,7 +436,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}
@@ -487,7 +489,7 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
                   <>
                     <div className={`w-fit h-fit`}>
                       <div
-                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                        className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                         onClick={() => {
                           if (!processingCard) handleFlip();
                         }}

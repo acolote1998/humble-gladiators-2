@@ -38,7 +38,7 @@ const NavBar = () => {
             h-16
             text-[var(--light-text)]
             rounded-b-xl
-            text-2xl
+            text-lg 2xl:text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -53,7 +53,8 @@ const NavBar = () => {
         }}
       >
         <div className="flex items-center justify-center gap-4">
-          <p>Campaign</p> <CampaignIcon width={38} />
+          <p className="hidden xl:block">Campaign</p>{" "}
+          <CampaignIcon width={38} />
         </div>
       </button>
       <button
@@ -65,7 +66,7 @@ const NavBar = () => {
             h-16
             text-[var(--light-text)]
             rounded-b-xl
-            text-2xl
+            text-lg 2xl:text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -82,7 +83,8 @@ const NavBar = () => {
         }}
       >
         <div className="flex items-center justify-center gap-4">
-          <p>Compendium</p> <CompendiumIcon width={38} />
+          <p className="hidden xl:block">Compendium</p>{" "}
+          <CompendiumIcon width={38} />
         </div>
       </button>
       <button
@@ -94,7 +96,7 @@ const NavBar = () => {
             h-16
             text-[var(--light-text)]
             rounded-b-xl
-            text-2xl
+            text-lg 2xl:text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -111,7 +113,7 @@ const NavBar = () => {
         }}
       >
         <div className="flex items-center justify-center gap-4">
-          <p>Item Boosters</p>
+          <p className="hidden xl:block">Item Boosters</p>
           <ItemBoosterIcon width={38} />
         </div>
       </button>
@@ -124,9 +126,8 @@ const NavBar = () => {
             h-16
             text-[var(--light-text)]
             rounded-b-xl
-            text-2xl
+            text-xs 2xl:text-xl
             font-semibold
-            hover:text-xl
             hover:font-bold
             hover:bg-[var(--page-container-bg-darkest)]
             hover:text-[var(--action-positive-bg)]
@@ -141,7 +142,7 @@ const NavBar = () => {
         }}
       >
         <div className="flex items-center justify-center gap-4">
-          <p>Character Boosters</p>
+          <p className="hidden xl:block">Character Boosters</p>
           <EnemyBoosterIcon width={38} />
         </div>
       </button>
@@ -154,7 +155,7 @@ const NavBar = () => {
             h-16
             text-[var(--light-text)]
             rounded-b-xl
-            text-2xl
+            text-lg 2xl:text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -174,7 +175,7 @@ const NavBar = () => {
         }}
       >
         <div className="flex items-center justify-center gap-4">
-          <p>Inventory</p>
+          <p className="hidden xl:block">Inventory</p>
           <InventoryIcon width={38} />
         </div>
       </button>
@@ -187,7 +188,7 @@ const NavBar = () => {
             h-16
             text-[var(--light-text)]
             rounded-b-xl
-            text-2xl
+            text-lg 2xl:text-2xl
             font-semibold
             hover:text-xl
             hover:font-bold
@@ -205,7 +206,7 @@ const NavBar = () => {
         }}
       >
         <div className="flex items-center justify-center gap-4">
-          <p>Battles</p>
+          <p className="hidden xl:block">Battles</p>
           <BattleIcon width={38} />
         </div>
       </button>

@@ -25,10 +25,12 @@ const RewardsTable = ({
   return (
     <div
       className={`absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-5 top-20 px-5 left-0 transition-all duration-400 ease-in-out
-              ${isOpen ? "w-150" : "w-18.5"}
-              ${isOpen ? "h-110" : "h-10"}
+              ${isOpen ? "z-100" : "z-20"}
+              ${isOpen ? "w-86 xl:w-150" : "w-18.5"}
+              ${isOpen ? "max-h-70 xl:max-h-110 xl:h-110" : "h-10"}
               ${isOpen ? "overflow-y-auto" : "overflow-hidden"}
-              ${!isOpen ? "translate-y-100" : ""}
+              ${!isOpen ? "xl:translate-y-100" : "xl:translate-y-0"}
+              ${!isOpen ? "-translate-x-48 xl:translate-x-0" : "-translate-x-48 xl:translate-x-0"}
               ${isOpen ? "opacity-100 hover:opacity-100" : "opacity-20 hover:opacity-60"}
         `}
     >
@@ -147,7 +149,7 @@ const RewardsTable = ({
           <p
             className="my-2 p-1 rounded-md bg-[var(--highlight-color)] border-[var(--highlight-color-border)] border text-center w-fit"
             onClick={() => {
-              navigate({ to: `/campaign/${campaignId}` });
+              navigate({ to: `/campaign/${campaignId}#campaign` });
             }}
           >
             Close Battle

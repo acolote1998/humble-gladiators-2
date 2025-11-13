@@ -167,10 +167,10 @@ const CampaignStats = () => {
     wonBattles &&
     lostBattles ? (
     <fieldset className="border p-4 rounded-lg border-[var(--page-container-border)]">
-      <legend className="text-xl font-black tracking-wide px-2">
+      <legend className="text-xl font-semibold xl:font-black tracking-wide px-2">
         Campaign Stats
       </legend>
-      <div className="grid grid-cols-10 items-center gap-4">
+      <div className="grid grid-cols-10 items-center gap-2.5 lg:gap-2 xl:gap-3">
         <DiscoveredItemInfo
           itemName="Armors"
           percentAchieved={percentDiscoveredArmors}

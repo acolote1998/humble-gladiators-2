@@ -121,63 +121,65 @@ const BattleFinished = ({
 
   simulateTurns(turns);
   return (
-    <div>
-      <>
-        <div className="relative">
-          {originalEnemy.backgroundImgBase64 && (
-            <img
-              draggable={false}
-              src={`data:image/jpeg;base64,${originalEnemy.backgroundImgBase64}`}
-              className="absolute"
+    <>
+      <div className="relative overflow-hidden rounded-lg">
+        {originalEnemy.backgroundImgBase64 && (
+          <img
+            draggable={false}
+            src={`data:image/jpeg;base64,${originalEnemy.backgroundImgBase64}`}
+            className="absolute scale-180 md:scale-135 lg:scale-155 lg:h-155 xl:scale-y-100"
+          />
+        )}
+        <div className="flex flex-col items-center relative">
+          <div className="xl:mt-5 flex flex-col items-center ">
+            <StatBar
+              barHeight={1.25}
+              currentValue={simulatedEnemy.stats.currentHp}
+              maxValue={simulatedEnemy.stats.maxHp}
+              type="HP"
+              widthPercent={100}
             />
-          )}
-          <div className="flex flex-col items-center relative">
-            {loadingRewards ? (
-              <Loader />
-            ) : (
-              rewardsForBattle && (
-                <div className="-translate-x-222 translate-y-18">
-                  <RewardsTable
-                    isOpen={areRewardsVisible}
-                    toggleVisibility={toggleRewardsVisibility}
-                    characterOneName={originalHero.name}
-                    characterTwoName={originalEnemy.name}
-                    rewardsForBattle={rewardsForBattle}
-                  />
-                </div>
-              )
-            )}
-            <div className="mt-5">
-              <StatBar
-                barHeight={2}
-                currentValue={simulatedEnemy.stats.currentHp}
-                maxValue={simulatedEnemy.stats.maxHp}
-                type="HP"
-                widthPercent={100}
-              />
-              <StatBar
-                barHeight={2}
-                currentValue={simulatedEnemy.stats.currentMp}
-                maxValue={simulatedEnemy.stats.maxMp}
-                type="MANA"
-                widthPercent={100}
-              />
+            <StatBar
+              barHeight={1.25}
+              currentValue={simulatedEnemy.stats.currentMp}
+              maxValue={simulatedEnemy.stats.maxMp}
+              type="MANA"
+              widthPercent={100}
+            />
+            <div className="order-1 xl:order-3">
               <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
             </div>
           </div>
-          <div className="-translate-y-132">
-            <TurnTable
-              turns={turns}
-              isOpen={areTurnsVisible}
-              toggleVisibility={toggleTurnVisibility}
+        </div>
+      </div>
+      {loadingRewards ? (
+        <Loader />
+      ) : (
+        rewardsForBattle && (
+          <div className="absolute left-45 top-3 sm:left-47 sm:top-3 md:top-33 lg:top-68 xl:left-3 xl:top-15">
+            <RewardsTable
+              isOpen={areRewardsVisible}
+              toggleVisibility={toggleRewardsVisibility}
+              characterOneName={originalHero.name}
+              characterTwoName={originalEnemy.name}
+              rewardsForBattle={rewardsForBattle}
             />
           </div>
-        </div>
-        <div className="grid grid-cols-7 mt-4">
-          <HeroStats character={simulatedHero} />
-        </div>
-      </>
-    </div>
+        )
+      )}
+      <div
+        className={`relative ${areTurnsVisible ? "z-200" : "z-20"} -translate-y-41 xl:-translate-y-152 xl:translate-x-2`}
+      >
+        <TurnTable
+          turns={turns}
+          isOpen={areTurnsVisible}
+          toggleVisibility={toggleTurnVisibility}
+        />
+      </div>
+      <div>
+        <HeroStats character={simulatedHero} />
+      </div>
+    </>
   );
 };
 

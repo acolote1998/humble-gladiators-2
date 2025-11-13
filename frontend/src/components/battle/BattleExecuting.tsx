@@ -184,12 +184,12 @@ const BattleExecuting = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden rounded-lg">
       {teamTwo[0].backgroundImgBase64 && (
         <img
           draggable={false}
           src={`data:image/jpeg;base64,${teamTwo[0].backgroundImgBase64}`}
-          className="absolute"
+          className="absolute scale-180 md:scale-135 lg:scale-155 lg:h-155 xl:scale-y-100"
         />
       )}
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
@@ -202,11 +202,14 @@ const BattleExecuting = ({
             // play a card to start the battle)
           }
           {!isGameStarted && turns.length < 1 && (
-            <div className="relative" data-testid="start-game-label">
+            <div
+              className="absolute w-full text-center z-5 translate-y-10 xl:translate-y-70"
+              data-testid="start-game-label"
+            >
               {currentCharacterToPlay.id == teamTwo[0].id ? (
                 <p
                   data-testid="start-battle-trigger"
-                  className="text-lg text-center bg-[var(--action-positive-bg)] text-[var(--action-positive-foreground)]"
+                  className="text-sm xl:text-lg text-center bg-[var(--action-positive-bg)] text-[var(--action-positive-foreground)]"
                   onClick={() => {
                     setIsGameStarted(true);
                   }}
@@ -216,7 +219,7 @@ const BattleExecuting = ({
               ) : (
                 !isGameStarted &&
                 turns.length < 1 && (
-                  <p className="text-lg text-center bg-[var(--action-positive-bg)] text-[var(--action-positive-foreground)]">
+                  <p className="text-sm xl:text-lg text-center bg-[var(--action-positive-bg)] text-[var(--action-positive-foreground)]">
                     You start, cast one of your cards by clicking on it
                   </p>
                 )
@@ -225,7 +228,7 @@ const BattleExecuting = ({
           )}
           <div className="relative flex justify-center">
             <p
-              className={`absolute left-5 top-5 bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl transition-all ease-in-out duration-500
+              className={`absolute left-1 xl:left-5 top-1 xl:top-5 bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-sm xl:text-2xl transition-all ease-in-out duration-500
                 ${areTurnsVisible ? "opacity-100" : "opacity-20"}
                 `}
             >
@@ -234,23 +237,26 @@ const BattleExecuting = ({
                 : "Enemy's turn"}
             </p>
           </div>
-          <div className="relative h-154">
-            <div className="flex flex-col items-center py-3.5">
+          <div className="relative xl:h-154">
+            <div className="flex flex-col items-center xl:py-3.5">
               <StatBar
-                barHeight={2}
+                barHeight={1.25}
                 currentValue={teamTwo[0].stats.currentHp}
                 maxValue={teamTwo[0].stats.maxHp}
                 type="HP"
                 widthPercent={30}
               />
               <StatBar
-                barHeight={2}
+                barHeight={1.25}
                 currentValue={teamTwo[0].stats.currentMp}
                 maxValue={teamTwo[0].stats.maxMp}
                 type="MANA"
                 widthPercent={30}
               />
-              <div onClick={() => chooseTarget(teamTwo[0].id)}>
+              <div
+                className="order-1 xl:order-3"
+                onClick={() => chooseTarget(teamTwo[0].id)}
+              >
                 <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
               </div>
             </div>
@@ -260,7 +266,7 @@ const BattleExecuting = ({
               toggleVisibility={toggleTurnVisibility}
             />
           </div>
-          <div className="grid grid-cols-7">
+          <div className="flex flex-col xl:grid xl:grid-cols-7">
             <div
               onClick={() => {
                 chooseTarget(teamOne[0].id);
@@ -269,12 +275,12 @@ const BattleExecuting = ({
               <HeroStats character={teamOne[0]} />
             </div>
             <div className="col-span-6 flex flex-col items-center border-[var(--page-container-border)] rounded-md bg-[var(--page-container-bg-darker)] relative">
-              <p className="relative  rounded-xl p-1 text-2xl">Hand</p>
-              <div className={`grid grid-cols-5`}>
+              <p className="rounded-xl p-1 text-2xl">Hand</p>
+              <div className={`grid grid-cols-4`}>
                 <div
                   className={
-                    `scale-85 hover:scale-100 transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50 ` +
-                    `${chosenCardAction == "PHYSICAL_ATTACK" ? " -translate-y-15" : "translate-y-0"}`
+                    `scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50 ` +
+                    `${chosenCardAction == "PHYSICAL_ATTACK" ? " -translate-y-10 xl:-translate-y-15" : "translate-y-0"}`
                   }
                   onClick={() => {
                     if (currentCharacterToPlay.id == teamOne[0].id) {
@@ -302,9 +308,9 @@ const BattleExecuting = ({
                   return (
                     <div
                       className={
-                        `scale-85 hover:scale-100 transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
+                        `scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50  ` +
                         `${teamOne[0].stats.currentMp >= card.mpCost ? "opacity-100 " : "opacity-50 "}` +
-                        `${chosenCardAction == "SPELL" && card.id == chosenCardId ? " -translate-y-15" : "translate-y-0"}`
+                        `${chosenCardAction == "SPELL" && card.id == chosenCardId ? " -translate-y-10 xl:-translate-y-15" : "translate-y-0"}`
                       }
                       onClick={() => {
                         if (
@@ -331,8 +337,8 @@ const BattleExecuting = ({
                   return (
                     <div
                       className={
-                        `scale-85 hover:scale-100 transition-all ease-in-out duration-500 hover:-translate-y-62 hover:z-50  ` +
-                        `${chosenCardAction == "CONSUMABLE" && card.id == chosenCardId ? "-translate-y-15" : "translate-y-0"}`
+                        `scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50  ` +
+                        `${chosenCardAction == "CONSUMABLE" && card.id == chosenCardId ? "-translate-y-10 xl:-translate-y-15" : "translate-y-0"}`
                       }
                       onClick={() => {
                         if (currentCharacterToPlay.id == teamOne[0].id) {

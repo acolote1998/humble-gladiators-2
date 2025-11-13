@@ -90,15 +90,16 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
           !dataFromCharacterBooster &&
           !dataFromBoosterLoading ? (
           <div
-            className="h-166"
-            data-testid="open-booster-button"
             onClick={() => {
               setTimeout(() => {
                 createCharacterBoosterMutation(Number(campaignId));
               }, 1200);
             }}
           >
-            <h3 className="absolute text-4xl font-semibold text-center bottom-20 left-[46vw]">
+            <h3
+              data-testid="open-booster-button"
+              className="absolute text-4xl font-semibold text-center bottom-10 left-1/2 -translate-x-1/2"
+            >
               Open Booster
             </h3>
             {cardBack && (
@@ -127,7 +128,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-25"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 md:bottom-10 lg:bottom-0 xl:bottom-5"
                       onClick={() => {
                         if (!processingCard) handleFlip();
                       }}

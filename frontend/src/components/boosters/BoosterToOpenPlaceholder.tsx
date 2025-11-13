@@ -17,19 +17,24 @@ const BoosterToOpenPlaceholder = ({
         setFading(true);
       }}
     >
-      <div className="relative pl-[28vw] pt-[5vh]">
+      <div
+        className="relative 
+      translate-y-10 xl:translate-y-0 2xl:translate-y-30
+      translate-x-22 sm:translate-x-17 md:translate-x-20 lg:translate-x-15 xl:translate-x-25 2xl:translate-x-50
+      "
+      >
         {typeOfBooster == "ITEM" && (
-          <div className="scale-70">
+          <div className="scale-130 sm:scale-60 lg:scale-40">
             <CardBack cardBackImgBase64={cardBackImage} />
           </div>
         )}
 
-        <div className="scale-70 translate-20">
+        <div className="scale-130 sm:scale-60 lg:scale-40 translate-20">
           <CardBack cardBackImgBase64={cardBackImage} />
         </div>
 
         {typeOfBooster == "ITEM" && (
-          <div className="scale-70 translate-40">
+          <div className="scale-130 sm:scale-60 lg:scale-40 translate-40">
             <CardBack cardBackImgBase64={cardBackImage} />
           </div>
         )}

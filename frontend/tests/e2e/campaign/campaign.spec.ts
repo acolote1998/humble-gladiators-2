@@ -800,13 +800,13 @@ test.describe("Campaign Flow", () => {
             page.getByTestId("battle-finished-title-text")
           ).toBeVisible();
           console.log("     Rewards UI rendered - correct");
-          await page.getByTestId("hide-rewards-toggle").click({ force: true });
+          await page.getByTestId("hide-rewards-toggle").click();
           console.log("     Making Rewards UI hidden");
           await expect(
             page.getByTestId("battle-finished-title-text")
           ).toBeHidden();
           console.log("     Rewards UI hidden - correct");
-          await page.getByTestId("show-rewards-toggle").click({ force: true });
+          await page.getByTestId("show-rewards-toggle").click();
           console.log("     Making Rewards UI visible");
           await expect(
             page.getByTestId("battle-finished-title-text")
@@ -884,10 +884,18 @@ test.describe("Campaign Flow", () => {
     expect(elapsed).toBeLessThan(battleTimeout);
 
     // After battle is finished, we should get redirected to the campaign page
-    console.log("     Waiting for redirect to campaign page");
-    await expect(page).toHaveURL(`${FRONTEND_URL}campaign/1`, {
-      timeout: 10000,
-    });
+    console.log("     Assert that we are in the to campaign page");
+    await expect(page.getByText(/campaign stats/i)).toBeVisible();
+    await expect(page.getByText(/armors/i)).toBeVisible();
+    await expect(page.getByText(/boots/i)).toBeVisible();
+    await expect(page.getByText(/consumables/i)).toBeVisible();
+    await expect(page.getByText(/helmets/i)).toBeVisible();
+    await expect(page.getByText(/shields/i)).toBeVisible();
+    await expect(page.getByText(/weapons/i)).toBeVisible();
+    await expect(page.getByText(/spells/i)).toBeVisible();
+    await expect(page.getByText(/characters/i)).toBeVisible();
+    await expect(page.getByText(/win rate/i)).toBeVisible();
+    await expect(page.getByText(/forge your hero/i)).toBeHidden();
     console.log("✅ Battle test complete");
   });
 });

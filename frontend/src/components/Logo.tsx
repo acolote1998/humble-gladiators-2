@@ -12,9 +12,12 @@ const Logo = () => {
       <PageContainer>
         <h1
           className="
-          text-6xl
-          tracking-tighter
-          font-black
+          text-xl
+          xl:text-6xl
+          tracking-tight
+          xl:tracking-tighter
+          xl:font-black
+          font-semibold
           text-center
 "
         >

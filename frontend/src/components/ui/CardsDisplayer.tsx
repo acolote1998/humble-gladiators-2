@@ -54,19 +54,19 @@ const CardsDisplayer = ({
         {characters && characters.length > 0 && (
           <TabsTrigger value="npcs" className="flex justify-center gap-3">
             <NpcIcon width={32} />
-            <p className="text-2xl">NPC's</p>
+            <p className="hidden xl:block text-2xl">NPC's</p>
           </TabsTrigger>
         )}
         {armors && armors.length > 0 && (
           <TabsTrigger value="armors" className="flex justify-center gap-3">
             <ArmorIcon width={32} />
-            <p className="text-2xl">Armors</p>
+            <p className="hidden xl:block text-2xl">Armors</p>
           </TabsTrigger>
         )}
         {boots && boots.length > 0 && (
           <TabsTrigger value="boots" className="flex justify-center gap-3">
             <BootIcon width={32} />
-            <p className="text-2xl">Boots</p>
+            <p className="hidden xl:block text-2xl">Boots</p>
           </TabsTrigger>
         )}
         {consumables && consumables.length > 0 && (
@@ -75,36 +75,36 @@ const CardsDisplayer = ({
             className="flex justify-center gap-3"
           >
             <ConsumableIcon width={32} />
-            <p className="text-2xl">Consumables</p>
+            <p className="hidden xl:block text-2xl">Consumables</p>
           </TabsTrigger>
         )}
         {helmets && helmets.length > 0 && (
           <TabsTrigger value="helmets" className="flex justify-center gap-3">
             <HelmetIcon width={32} />
-            <p className="text-2xl">Helmets</p>
+            <p className="hidden xl:block text-2xl">Helmets</p>
           </TabsTrigger>
         )}
         {shields && shields.length > 0 && (
           <TabsTrigger value="shields" className="flex justify-center gap-3">
             <ShieldIcon width={32} />
-            <p className="text-2xl">Shields</p>
+            <p className="hidden xl:block text-2xl">Shields</p>
           </TabsTrigger>
         )}
         {spells && spells.length > 0 && (
           <TabsTrigger value="spells" className="flex justify-center gap-3">
             <SpellIcon width={32} />
-            <p className="text-2xl">Spells</p>
+            <p className="hidden xl:block text-2xl">Spells</p>
           </TabsTrigger>
         )}
         {weapons && weapons.length > 0 && (
           <TabsTrigger value="weapons" className="flex justify-center gap-3">
             <WeaponIcon width={32} />
-            <p className="text-2xl">Weapons</p>
+            <p className="hidden xl:block text-2xl">Weapons</p>
           </TabsTrigger>
         )}
       </TabsList>
       {characters && characters.length > 0 && (
-        <TabsContent value="npcs" className="grid grid-cols-5">
+        <TabsContent value="npcs" className="grid grid-cols-4 2xl:grid-cols-5">
           {characters
             ?.sort((a, b) => {
               if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
@@ -124,7 +124,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {armors && armors.length > 0 && (
-        <TabsContent value="armors" className="grid grid-cols-5">
+        <TabsContent
+          value="armors"
+          className="grid grid-cols-4 2xl:grid-cols-5"
+        >
           {armors.map((armor) => (
             <ArmorCard
               key={armor.name + armor.id}
@@ -135,7 +138,7 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {boots && boots.length > 0 && (
-        <TabsContent value="boots" className="grid grid-cols-5">
+        <TabsContent value="boots" className="grid grid-cols-4 2xl:grid-cols-5">
           {boots.map((boot) => (
             <BootsCard
               key={boot.name + boot.id}
@@ -146,7 +149,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {consumables && consumables.length > 0 && (
-        <TabsContent value="consumables" className="grid grid-cols-5">
+        <TabsContent
+          value="consumables"
+          className="grid grid-cols-4 2xl:grid-cols-5"
+        >
           {consumables.map((consumable) => (
             <ConsumableCard
               key={consumable.name + consumable.id}
@@ -157,7 +163,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {helmets && helmets.length > 0 && (
-        <TabsContent value="helmets" className="grid grid-cols-5">
+        <TabsContent
+          value="helmets"
+          className="grid grid-cols-4 2xl:grid-cols-5"
+        >
           {helmets.map((helmet) => (
             <HelmetCard
               key={helmet.name + helmet.id}
@@ -168,7 +177,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {shields && shields.length > 0 && (
-        <TabsContent value="shields" className="grid grid-cols-5">
+        <TabsContent
+          value="shields"
+          className="grid grid-cols-4 2xl:grid-cols-5"
+        >
           {shields.map((shield) => (
             <ShieldCard
               key={shield.name + shield.id}
@@ -179,7 +191,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {spells && spells.length > 0 && (
-        <TabsContent value="spells" className="grid grid-cols-5">
+        <TabsContent
+          value="spells"
+          className="grid grid-cols-4 2xl:grid-cols-5"
+        >
           {spells.map((spell) => (
             <SpellCard
               key={spell.name + spell.id}
@@ -190,7 +205,10 @@ const CardsDisplayer = ({
         </TabsContent>
       )}
       {weapons && weapons.length > 0 && (
-        <TabsContent value="weapons" className="grid grid-cols-5">
+        <TabsContent
+          value="weapons"
+          className="grid grid-cols-4 2xl:grid-cols-5"
+        >
           {weapons.map((weapon) => (
             <WeaponCard
               key={weapon.name + weapon.id}

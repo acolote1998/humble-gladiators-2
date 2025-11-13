@@ -1,5 +1,29 @@
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
+import {
+  BottomStatOneClass,
+  charactersBottomStatsClass,
+  charactersBottomStatsFiveClass,
+  charactersBottomStatsFourClass,
+  charactersBottomStatsThreeClass,
+  charactersBottomStatsTwoClass,
+  cardCategoryImageClass,
+  cardDescriptionClass,
+  cardImageClass,
+  cardNameClass,
+  cardSizeClass,
+  categoryAndNameClass,
+  nameContainerClass,
+  rarityClass,
+  tierAndRarityClass,
+  tierAndRarityContainer,
+  tierClass,
+  topStatFour,
+  topStatOne,
+  topStatsClass,
+  topStatThree,
+  topStatTwo,
+} from "./util/CardSizes";
 export const CharacterCard = ({
   category,
   description,
@@ -43,27 +67,27 @@ export const CharacterCard = ({
             ? `character-tier-${tier}`
             : "",
         // Always-applied classes
-        `${discovered && `rarity-${rarity}`} relative my-5 w-85 h-119 bg-cover bg-no-repeat p-2 select-none cursor-pointer`,
+        `${discovered && `rarity-${rarity}`} ${cardSizeClass}`,
       ]
         .filter(Boolean) // removes empty strings
         .join(" ")} // join with spaces
       style={{ backgroundImage: `url('/templates/charCardTemplate.png')` }}
     >
       {/* Top stats */}
-      <div className="grid grid-cols-4 text-sm mt-3">
-        <div className="absolute left-8.5 w-20">
+      <div className={`${topStatsClass}`}>
+        <div className={`${topStatOne}`}>
           <p title="CURRENT HP">
             ❤️{" "}
             {discovered || renderingFrom == "BOOSTER" ? stats.currentHp : "?"}
           </p>
         </div>
-        <div className="absolute left-26 w-20">
+        <div className={`${topStatTwo}`}>
           <p title="CURRENT MP">
             🔷{" "}
             {discovered || renderingFrom == "BOOSTER" ? stats.currentMp : "?"}
           </p>
         </div>
-        <div className="absolute left-43.5 w-15">
+        <div className={`${topStatThree}`}>
           <p title="PHYSICAL DAMAGE">
             ⚔️{" "}
             {discovered || renderingFrom == "BOOSTER"
@@ -71,7 +95,7 @@ export const CharacterCard = ({
               : "?"}
           </p>
         </div>
-        <div className="absolute left-61 w-20">
+        <div className={`${topStatFour}`}>
           <p title="MAGICAL DAMAGE">
             🔮{" "}
             {discovered || renderingFrom == "BOOSTER"
@@ -82,69 +106,66 @@ export const CharacterCard = ({
       </div>
 
       {/* Tier & rarity */}
-      <div className="absolute bottom-51.5 left-0 text-sm">
-        <div className="relative h-6">
+      <div className={`${tierAndRarityClass}`}>
+        <div className={`${tierAndRarityContainer}`}>
           {/* container for absolute children; give it a height so top:0 has meaning */}
-          <span title="TIER" className="absolute left-12 top-0 z-20 w-50">
+          <span title="TIER" className={`${tierClass}`}>
             T {calculateTierAndRarityStars(tier)}
           </span>
-          <span title="RARITY" className="absolute left-46 top-0 z-10 w-50">
+          <span title="RARITY" className={`${rarityClass}`}>
             R {calculateTierAndRarityStars(rarity)}
           </span>
         </div>
       </div>
 
       {/* Category & name */}
-      <div className="flex flex-col items-center mt-6">
+      <div className={`${categoryAndNameClass}`}>
         {(discovered || renderingFrom == "BOOSTER") && imgBase64 ? (
           <img
             draggable={false}
             src={`data:image/jpeg;base64,${imgBase64}`}
             alt={category}
-            className="w-66 h-48.5"
+            className={`${cardImageClass}`}
           />
         ) : (
           <img
             draggable={false}
             src={`/categories/${category}.png`}
             alt={category}
-            className="w-65.5 h-auto"
+            className={`${cardCategoryImageClass}`}
           />
         )}
-        <div className="w-67.75 overflow-x-hidden">
+        <div className={`${nameContainerClass}`}>
           <p
             title="NAME"
-            className={`text-lg mt-8 text-center ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
+            className={`${cardNameClass} ${(discovered || renderingFrom == "BOOSTER") && name.length > 28 && "whitespace-nowrap animate-marquee"}`}
           >
             {discovered || renderingFrom == "BOOSTER" ? name : "?"}
           </p>
         </div>
-        <p
-          title="DESCRIPTION"
-          className="text-sm opacity-80 text-center p-1 mt-0.5 px-7"
-        >
+        <p title="DESCRIPTION" className={`${cardDescriptionClass}`}>
           {discovered || renderingFrom == "BOOSTER" ? description : "?"}
         </p>
       </div>
 
       {/* Bottom stats */}
-      <div className="grid grid-cols-5 absolute bottom-14.5 text-sm">
-        <div className="absolute left-7 w-15">
+      <div className={`${charactersBottomStatsClass}`}>
+        <div className={`${BottomStatOneClass}`}>
           <p title="LEVEL">
             LV. {discovered || renderingFrom == "BOOSTER" ? stats.level : "?"}
           </p>
         </div>
-        <div className="absolute left-21 w-15">
+        <div className={`${charactersBottomStatsTwoClass}`}>
           <p title="SPEED">
             ⚡ {discovered || renderingFrom == "BOOSTER" ? stats.speed : "?"}
           </p>
         </div>
-        <div className="absolute left-34.5 w-15">
+        <div className={`${charactersBottomStatsThreeClass}`}>
           <p title="LUCK">
             🍀 {discovered || renderingFrom == "BOOSTER" ? stats.luck : "?"}
           </p>
         </div>
-        <div className="absolute left-48 w-15">
+        <div className={`${charactersBottomStatsFourClass}`}>
           {renderingFrom == "COMPENDIUM" && !discovered ? (
             <p>?</p>
           ) : renderingFrom == "BOOSTER" ||
@@ -156,7 +177,7 @@ export const CharacterCard = ({
             )
           )}
         </div>
-        <div className="absolute left-62 w-15">
+        <div className={`${charactersBottomStatsFiveClass}`}>
           {renderingFrom == "COMPENDIUM" && !discovered ? (
             <p>?</p>
           ) : renderingFrom == "BOOSTER" ||
