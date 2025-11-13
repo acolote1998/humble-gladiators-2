@@ -122,30 +122,15 @@ const BattleFinished = ({
   simulateTurns(turns);
   return (
     <>
-      <div className="relative">
+      <div className="relative overflow-hidden rounded-lg">
         {originalEnemy.backgroundImgBase64 && (
           <img
             draggable={false}
             src={`data:image/jpeg;base64,${originalEnemy.backgroundImgBase64}`}
-            className="absolute scale-y-110 xl:scale-y-100"
+            className="absolute scale-180 md:scale-135 lg:scale-155 lg:h-155 xl:scale-y-100"
           />
         )}
         <div className="flex flex-col items-center relative">
-          {loadingRewards ? (
-            <Loader />
-          ) : (
-            rewardsForBattle && (
-              <div className="absolute xl:left-0 xl:top-10">
-                <RewardsTable
-                  isOpen={areRewardsVisible}
-                  toggleVisibility={toggleRewardsVisibility}
-                  characterOneName={originalHero.name}
-                  characterTwoName={originalEnemy.name}
-                  rewardsForBattle={rewardsForBattle}
-                />
-              </div>
-            )
-          )}
           <div className="xl:mt-5 flex flex-col items-center ">
             <StatBar
               barHeight={1.25}
@@ -166,15 +151,30 @@ const BattleFinished = ({
             </div>
           </div>
         </div>
-        <div
-          className={`relative ${areTurnsVisible ? "z-200" : "z-20"} -translate-y-41 xl:-translate-y-152 xl:translate-x-2`}
-        >
-          <TurnTable
-            turns={turns}
-            isOpen={areTurnsVisible}
-            toggleVisibility={toggleTurnVisibility}
-          />
-        </div>
+      </div>
+      {loadingRewards ? (
+        <Loader />
+      ) : (
+        rewardsForBattle && (
+          <div className="absolute left-45 top-3 sm:left-47 sm:top-3 md:top-33 lg:top-68 xl:left-3 xl:top-15">
+            <RewardsTable
+              isOpen={areRewardsVisible}
+              toggleVisibility={toggleRewardsVisibility}
+              characterOneName={originalHero.name}
+              characterTwoName={originalEnemy.name}
+              rewardsForBattle={rewardsForBattle}
+            />
+          </div>
+        )
+      )}
+      <div
+        className={`relative ${areTurnsVisible ? "z-200" : "z-20"} -translate-y-41 xl:-translate-y-152 xl:translate-x-2`}
+      >
+        <TurnTable
+          turns={turns}
+          isOpen={areTurnsVisible}
+          toggleVisibility={toggleTurnVisibility}
+        />
       </div>
       <div>
         <HeroStats character={simulatedHero} />

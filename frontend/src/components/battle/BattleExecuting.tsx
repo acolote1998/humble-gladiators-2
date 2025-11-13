@@ -184,12 +184,12 @@ const BattleExecuting = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden rounded-lg">
       {teamTwo[0].backgroundImgBase64 && (
         <img
           draggable={false}
           src={`data:image/jpeg;base64,${teamTwo[0].backgroundImgBase64}`}
-          className="absolute scale-y-110 xl:scale-y-100"
+          className="absolute scale-180 md:scale-135 lg:scale-155 lg:h-155 xl:scale-y-100"
         />
       )}
       {winningTeam.length < 1 || losingTeam.length < 1 || onGoing ? (
