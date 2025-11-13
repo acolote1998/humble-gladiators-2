@@ -26,7 +26,7 @@ const BattleExecuting = ({
   // startingTeamOne,
   // startingTeamTwo,
 }: BattleResponseDto) => {
-  const [areTurnsVisible, setAreTurnsVisible] = useState<boolean>(true);
+  const [areTurnsVisible, setAreTurnsVisible] = useState<boolean>(false);
   const [isChoosingTarget, setIsChoosingTarget] = useState<boolean>(false);
   const [chosenTargetId, setChosenTargetId] = useState<number>();
   const [chosenCardAction, setChosenCardAction] = useState<ActionTypeEnum>();

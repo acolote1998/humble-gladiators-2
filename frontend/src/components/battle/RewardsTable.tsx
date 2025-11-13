@@ -25,10 +25,12 @@ const RewardsTable = ({
   return (
     <div
       className={`absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-5 top-20 px-5 left-0 transition-all duration-400 ease-in-out
-              ${isOpen ? "w-150" : "w-18.5"}
-              ${isOpen ? "h-110" : "h-10"}
+              ${isOpen ? "z-100" : "z-20"}
+              ${isOpen ? "xl:w-150" : "w-18.5"}
+              ${isOpen ? "xl:h-110" : "h-10"}
               ${isOpen ? "overflow-y-auto" : "overflow-hidden"}
-              ${!isOpen ? "translate-y-100" : ""}
+              ${!isOpen ? "xl:translate-y-100" : "xl:translate-y-0"}
+              ${!isOpen ? "-translate-x-4 xl:translate-x-0" : "xl:translate-x-0"}
               ${isOpen ? "opacity-100 hover:opacity-100" : "opacity-20 hover:opacity-60"}
         `}
     >

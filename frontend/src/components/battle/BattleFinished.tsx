@@ -128,7 +128,7 @@ const BattleFinished = ({
             <img
               draggable={false}
               src={`data:image/jpeg;base64,${originalEnemy.backgroundImgBase64}`}
-              className="absolute"
+              className="absolute scale-y-110 xl:scale-y-100"
             />
           )}
           <div className="flex flex-col items-center relative">
@@ -136,7 +136,7 @@ const BattleFinished = ({
               <Loader />
             ) : (
               rewardsForBattle && (
-                <div className="-translate-x-222 translate-y-18">
+                <div className="xl:-translate-x-200 xl:translate-y-2">
                   <RewardsTable
                     isOpen={areRewardsVisible}
                     toggleVisibility={toggleRewardsVisibility}
@@ -147,25 +147,27 @@ const BattleFinished = ({
                 </div>
               )
             )}
-            <div className="mt-5">
+            <div className="xl:mt-5 flex flex-col items-center ">
               <StatBar
-                barHeight={2}
+                barHeight={1.25}
                 currentValue={simulatedEnemy.stats.currentHp}
                 maxValue={simulatedEnemy.stats.maxHp}
                 type="HP"
                 widthPercent={100}
               />
               <StatBar
-                barHeight={2}
+                barHeight={1.25}
                 currentValue={simulatedEnemy.stats.currentMp}
                 maxValue={simulatedEnemy.stats.maxMp}
                 type="MANA"
                 widthPercent={100}
               />
-              <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
+              <div className="order-1 xl:order-3">
+                <CharacterCard {...simulatedEnemy} renderingFrom="BATTLE" />
+              </div>
             </div>
           </div>
-          <div className="-translate-y-132">
+          <div className="xl:-translate-y-132">
             <TurnTable
               turns={turns}
               isOpen={areTurnsVisible}
@@ -173,7 +175,7 @@ const BattleFinished = ({
             />
           </div>
         </div>
-        <div className="grid grid-cols-7 mt-4">
+        <div>
           <HeroStats character={simulatedHero} />
         </div>
       </>
