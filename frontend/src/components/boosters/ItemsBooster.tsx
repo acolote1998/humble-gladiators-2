@@ -142,14 +142,16 @@ export const ItemsBooster = ({ campaignId }: ItemBoosterInterface) => {
           !dataFromItemBooster &&
           !dataFromBoosterLoading ? (
           <div
-            data-testid="open-booster-button"
             onClick={() => {
               setTimeout(() => {
                 createItemBoosterMutation(Number(campaignId));
               }, 1200);
             }}
           >
-            <h3 className="absolute text-4xl font-semibold text-center bottom-10 left-1/2 -translate-x-1/2">
+            <h3
+              data-testid="open-booster-button"
+              className="absolute text-4xl font-semibold text-center bottom-10 left-1/2 -translate-x-1/2"
+            >
               Open Booster
             </h3>
             {cardBack && (
