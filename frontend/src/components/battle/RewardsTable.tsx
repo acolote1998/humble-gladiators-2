@@ -149,7 +149,7 @@ const RewardsTable = ({
           <p
             className="my-2 p-1 rounded-md bg-[var(--highlight-color)] border-[var(--highlight-color-border)] border text-center w-fit"
             onClick={() => {
-              navigate({ to: `/campaign/${campaignId}` });
+              navigate({ to: `/campaign/${campaignId}#campaign` });
             }}
           >
             Close Battle

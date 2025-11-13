@@ -275,8 +275,8 @@ const BattleExecuting = ({
               <HeroStats character={teamOne[0]} />
             </div>
             <div className="col-span-6 flex flex-col items-center border-[var(--page-container-border)] rounded-md bg-[var(--page-container-bg-darker)] relative">
-              <p className="relative  rounded-xl p-1 text-2xl">Hand</p>
-              <div className={`grid grid-cols-5`}>
+              <p className="rounded-xl p-1 text-2xl">Hand</p>
+              <div className={`grid grid-cols-4`}>
                 <div
                   className={
                     `scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50 ` +

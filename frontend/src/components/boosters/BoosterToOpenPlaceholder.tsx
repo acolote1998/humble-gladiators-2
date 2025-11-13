@@ -17,7 +17,7 @@ const BoosterToOpenPlaceholder = ({
         setFading(true);
       }}
     >
-      <div className="relative translate-y-10 xl:translate-y-0 translate-x-22 xl:translate-x-0 xl:pl-[28vw] xl:pt-[5vh]">
+      <div className="relative translate-y-10 xl:translate-y-0 translate-x-22 xl:-translate-x-14 xl:pl-[28vw] xl:pt-[5vh]">
         {typeOfBooster == "ITEM" && (
           <div className="scale-130 xl:scale-70">
             <CardBack cardBackImgBase64={cardBackImage} />

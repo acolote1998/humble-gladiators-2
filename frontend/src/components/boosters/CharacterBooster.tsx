@@ -90,7 +90,6 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
           !dataFromCharacterBooster &&
           !dataFromBoosterLoading ? (
           <div
-            className="h-166"
             data-testid="open-booster-button"
             onClick={() => {
               setTimeout(() => {
@@ -127,7 +126,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-15"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
                       onClick={() => {
                         if (!processingCard) handleFlip();
                       }}

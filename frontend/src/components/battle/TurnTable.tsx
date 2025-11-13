@@ -22,10 +22,10 @@ const TurnTable = ({ turns, isOpen, toggleVisibility }: TurnTableTypes) => {
     <div
       className={`absolute rounded-md bg-[var(--page-container-bg)] border-[var(--page-container-border)] border mx-1 xl:mx-5 top-20 px-5 right-0 transition-all duration-400 ease-in-out
       ${isOpen ? "z-100" : "z-20"}
-      ${isOpen ? "xl:w-150" : "w-18.5 xl:w-18.5"}
+      ${isOpen ? "w-[98%] xl:w-150" : "w-18.5 xl:w-18.5"}
       ${isOpen ? "h-80 xl:h-110" : "h-10 xl:h-10"}
       ${isOpen ? "overflow-y-auto" : "overflow-hidden"}
-      ${!isOpen ? "xl:translate-y-90" : "translate-y-0 xl:-translate-y-10"}
+      ${!isOpen ? "xl:translate-y-118" : "translate-y-0 xl:translate-y-18"}
       ${isOpen ? "opacity-100 xl:opacity-92 xl:hover:opacity-100" : "opacity-20 hover:opacity-60"}
       `}
     >

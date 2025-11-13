@@ -136,7 +136,7 @@ const BattleFinished = ({
               <Loader />
             ) : (
               rewardsForBattle && (
-                <div className="xl:-translate-x-200 xl:translate-y-2">
+                <div className="xl:-translate-x-223 xl:translate-y-10">
                   <RewardsTable
                     isOpen={areRewardsVisible}
                     toggleVisibility={toggleRewardsVisibility}
@@ -167,7 +167,9 @@ const BattleFinished = ({
               </div>
             </div>
           </div>
-          <div className="xl:-translate-y-132">
+          <div
+            className={`relative ${areTurnsVisible ? "z-200" : "z-20"} -translate-y-41 xl:-translate-y-152 xl:translate-x-2`}
+          >
             <TurnTable
               turns={turns}
               isOpen={areTurnsVisible}
