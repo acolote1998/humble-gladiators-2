@@ -16,7 +16,7 @@ const HeroStats = ({ character }: HeroStatsType) => {
         data-testid="battle-hero-stats"
         className="flex flex-col items-center rounded-md bg-[var(--page-container-bg-darker)] border-[var(--page-container-border)] border relative"
       >
-        <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-2xl">
+        <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-md xl:text-2xl">
           Hero Stats
         </p>
         <p className="text-xl">{character.name}</p>
@@ -44,7 +44,7 @@ const HeroStats = ({ character }: HeroStatsType) => {
       maxValue={character.stats.expForNextLevel}
       type="XP"
     /> */}
-        <div className="grid grid-cols-3 gap-5 my-5">
+        <div className="grid grid-cols-6 xl:grid-cols-3 gap-7 xl:gap-5 xl:my-5">
           {/* Physical Damage */}
           <div
             title="Physical Damage"

@@ -20,7 +20,8 @@ const StatBar = ({
     <div
       title={`${type === "HP" ? "Health" : "Magic"} points`}
       style={{ height: `${barHeight}rem`, width: `${widthPercent}%` }}
-      className="relative cursor-pointer select-none transition-all duration-500 ease-in-out"
+      className={`relative cursor-pointer select-none transition-all duration-500 ease-in-out
+        ${type === "HP" ? "order-2 xl:order-1" : "order-3 xl:order-2"}`}
     >
       <div className="absolute z-3 h-full w-full flex items-center justify-center">
         <p className="text-[var(--light-text)] text-lg font-semibold tracking-widest">
