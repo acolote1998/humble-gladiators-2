@@ -6,6 +6,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterInst
 import com.github.acolote1998.humble_gladiators_2.characters.model.CharacterSnapshot;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
+import com.github.acolote1998.humble_gladiators_2.characters.service.DamageCalculationService;
 import com.github.acolote1998.humble_gladiators_2.core.dto.TurnRequestDto;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
 import com.github.acolote1998.humble_gladiators_2.core.enums.BattleResultEnum;
@@ -35,6 +36,8 @@ public class BattleService {
 
     @Getter
     private BattleUtil battleUtil;
+    
+    private DamageCalculationService damageCalculationService;
 
     @Value("${UNLIMITED_BATTLES_ALLOWED}")
     private boolean UNLIMITED_BATTLES_ALLOWED;
@@ -46,10 +49,12 @@ public class BattleService {
     public BattleService(
             CharacterService characterService,
             BattleRepository battleRepository,
-            BattleUtil battleUtil) {
+            BattleUtil battleUtil,
+            DamageCalculationService damageCalculationService) {
         this.characterService = characterService;
         this.battleRepository = battleRepository;
         this.battleUtil = battleUtil;
+        this.damageCalculationService = damageCalculationService;
     }
 
     public Boolean doesCharacterDropThisItem() {
@@ -63,6 +68,8 @@ public class BattleService {
         }
         CharacterInstance hero = characterService.getHero(campaignId, userId);
         CharacterInstance enemy = characterService.getDailyEnemy(campaignId, userId);
+        hero.setDamageCalculationService(damageCalculationService);
+        enemy.setDamageCalculationService(damageCalculationService);
         List<Turn> emptyTurnList = new ArrayList<>();
         List<CharacterInstance> teamOne = new ArrayList<>();
         teamOne.add(hero);
@@ -217,6 +224,8 @@ public class BattleService {
                 turnRequest.targetCharacterId(),
                 campaignId,
                 userId);
+        performerCharacter.setDamageCalculationService(damageCalculationService);
+        targetCharacter.setDamageCalculationService(damageCalculationService);
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
         if (!canProcessTurnValidly(
                 turnRequest,
@@ -249,6 +258,8 @@ public class BattleService {
                 turnRequest.targetCharacterId(),
                 campaignId,
                 userId);
+        performerCharacter.setDamageCalculationService(damageCalculationService);
+        targetCharacter.setDamageCalculationService(damageCalculationService);
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
         if (!canProcessTurnValidly(
                 turnRequest,
@@ -281,6 +292,8 @@ public class BattleService {
                 turnRequest.targetCharacterId(),
                 campaignId,
                 userId);
+        performerCharacter.setDamageCalculationService(damageCalculationService);
+        targetCharacter.setDamageCalculationService(damageCalculationService);
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
         if (!canProcessTurnValidly(
                 turnRequest,
@@ -387,6 +400,8 @@ public class BattleService {
     }
 
     Turn playNPCTurn(Battle battleToPlayAt, CharacterInstance characterToPlay, CharacterInstance characterToTarget) {
+        characterToPlay.setDamageCalculationService(damageCalculationService);
+        characterToTarget.setDamageCalculationService(damageCalculationService);
         boolean couldRecoverHp = characterToPlay.getStats().getCurrentHp() < characterToPlay.getStats().getMaxHp();
         boolean couldRecoverMp = characterToPlay.getStats().getCurrentMp() < characterToPlay.getStats().getMaxMp();
         // Technically they should always be able to physically attack, because even if physical dmg is 0, the strength
