@@ -25,15 +25,15 @@ function RouteComponent() {
           campaignData &&
           campaignData.coverImgBase64 && (
             <div
-              className="xl:grid xl:grid-cols-5 xl:p-5 justify-items-center place-items-center"
+              className="lg:grid lg:grid-cols-5 xl:p-5 justify-items-center place-items-center"
               id="campaign"
             >
               <img
                 draggable={false}
-                className={`${!doesHeroExist ? `hidden xl:block` : `block`} xl:h-[74vh] rounded-md border-2 col-span-3`}
+                className={`${!doesHeroExist ? ` md:block` : `block`} h-[22vh] sm:h-[45vh] md:h-[60vh] xl:h-[74vh] rounded-md border-2 col-span-3`}
                 src={`data:image/jpeg;base64,${campaignData.coverImgBase64}`}
               />
-              <div className="xl:col-span-2">
+              <div className="lg:col-span-2">
                 {doesHeroExistLoading ? (
                   <Loader />
                 ) : doesHeroExist ? (

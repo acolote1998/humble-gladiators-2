@@ -170,7 +170,7 @@ const CampaignStats = () => {
       <legend className="text-xl font-semibold xl:font-black tracking-wide px-2">
         Campaign Stats
       </legend>
-      <div className="grid grid-cols-10 items-center gap-2.5 xl:gap-4">
+      <div className="grid grid-cols-10 items-center gap-2.5 lg:gap-2 xl:gap-3">
         <DiscoveredItemInfo
           itemName="Armors"
           percentAchieved={percentDiscoveredArmors}
