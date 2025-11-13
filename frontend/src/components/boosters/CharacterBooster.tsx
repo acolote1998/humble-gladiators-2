@@ -126,7 +126,7 @@ export const CharacterBooster = ({ campaignId }: CharacterBoosterInterface) => {
                 <>
                   <div className={`w-fit h-fit`}>
                     <div
-                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 xl:bottom-5"
+                      className="perspective cursor-pointer  absolute left-[50%] -translate-x-[50%] bottom-45 md:bottom-10 lg:bottom-0 xl:bottom-5"
                       onClick={() => {
                         if (!processingCard) handleFlip();
                       }}

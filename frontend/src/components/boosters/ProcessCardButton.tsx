@@ -30,7 +30,8 @@ const ProcessCardButton = ({
         onClick={() => {
           onClickCallback();
         }}
-        className={`${isBeingProcessed ? "opacity-30 cursor-progress" : "opacity-100 cursor-pointer"} bg-[var(--information-color)] text-[var(--light-text)] p-2 m-2 rounded-xl select-none transition-all duration-300 flex w-40 py-5 text-lg gap-2 font-semibold justify-center`}
+        className={`${isBeingProcessed ? "opacity-30 cursor-progress" : "opacity-100 cursor-pointer"} bg-[var(--information-color)] text-[var(--light-text)]
+        p-2 m-2 md:ml-120 lg:ml-[60%] rounded-xl select-none transition-all duration-300 flex w-40 py-5 text-lg gap-2 font-semibold justify-center`}
       >
         <p>{buttonText}</p>
         {cardsToMap?.map(() => {
