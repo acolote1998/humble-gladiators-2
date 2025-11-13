@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
+import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -21,10 +22,12 @@ import java.util.*;
 public class ConsumableService {
     private ConsumableTemplateRepository consumableTemplateRepository;
     private GeminiService geminiService;
+    private GameBalanceConfig balanceConfig;
 
-    public ConsumableService(ConsumableTemplateRepository consumableTemplateRepository, GeminiService geminiService) {
+    public ConsumableService(ConsumableTemplateRepository consumableTemplateRepository, GeminiService geminiService, GameBalanceConfig balanceConfig) {
         this.consumableTemplateRepository = consumableTemplateRepository;
         this.geminiService = geminiService;
+        this.balanceConfig = balanceConfig;
     }
 
     public Map<String, String> getTier5ConsumablesContextForCampaignCover(Campaign campaign) {
@@ -83,12 +86,12 @@ public class ConsumableService {
                 consumableTemplate.setCampaign(campaign);
                 consumableTemplate.setCategory(GeminiEnumParser.parseEnum(ConsumablesCategory.class, dto.category(), "ConsumableTemplate", dto.name()));
                 if (dto.restoreHp() == 1) {
-                    consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * 1.5 * dto.rarity() * 1.5)));
+                    consumableTemplate.setRestoreHp((int) Math.round((dto.tier() * dto.rarity() * balanceConfig.getConsumableHpMultiplier())));
                 } else {
                     consumableTemplate.setRestoreHp(0);
                 }
                 if (dto.restoreMp() == 1) {
-                    consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * 2 * dto.rarity() * 4)));
+                    consumableTemplate.setRestoreMp((int) Math.round((dto.tier() * dto.rarity() * balanceConfig.getConsumableMpMultiplier())));
                 } else {
                     consumableTemplate.setRestoreMp(0);
                 }
