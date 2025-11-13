@@ -135,7 +135,6 @@ export const BootsCard = ({
                   typeItemToEquip: "boots",
                 });
               }}
-              className="hover:opacity-100 opacity-0 text-center"
             >
               <EquipItemComponent />
             </p>
@@ -149,7 +148,6 @@ export const BootsCard = ({
                     typeItemToEquip: "boots",
                   });
                 }}
-                className="hover:opacity-100 opacity-0 text-center"
               >
                 <UnequipItemComponent />
               </p>

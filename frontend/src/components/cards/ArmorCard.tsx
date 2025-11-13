@@ -136,7 +136,6 @@ export const ArmorCard = ({
                   typeItemToEquip: "armor",
                 });
               }}
-              className="hover:opacity-100 opacity-0 text-center"
             >
               <EquipItemComponent />
             </p>
@@ -150,7 +149,6 @@ export const ArmorCard = ({
                     typeItemToEquip: "armor",
                   });
                 }}
-                className="hover:opacity-100 opacity-0 text-center"
               >
                 <UnequipItemComponent />
               </p>
