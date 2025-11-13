@@ -89,7 +89,7 @@ function RouteComponent() {
               {heroData.name}
             </h2>
           </div>
-          <div className="grid grid-cols-2 justify-items-center xl:flex xl:justify-evenly">
+          <div className="grid grid-cols-2 justify-items-center lg:overflow-x-auto lg:flex xl:justify-evenly">
             <div>
               {equippedHelmet ? (
                 <HelmetCard
@@ -151,7 +151,7 @@ function RouteComponent() {
               <h2 className="text-xl my-2 font-semibold bg-[var(--page-container-bg-darker)] text-center p-2">
                 Stats
               </h2>
-              <div className="xl:hidden flex my-3">
+              <div className="flex my-3">
                 <StatBar
                   widthPercent={90}
                   barHeight={2}
@@ -167,26 +167,7 @@ function RouteComponent() {
                   type="MANA"
                 />
               </div>
-              <div className="grid grid-cols-7 xl:grid-cols-8 text-center items-center justify-items-center">
-                <div className="hidden xl:flex w-full justify-items-center items-center">
-                  <StatBar
-                    widthPercent={90}
-                    barHeight={2}
-                    currentValue={heroData.stats.currentHp}
-                    maxValue={heroData.stats.maxHp}
-                    type="HP"
-                  />
-                </div>
-                <div className="hidden xl:flex w-full justify-items-center items-center">
-                  <StatBar
-                    widthPercent={90}
-                    barHeight={2}
-                    currentValue={heroData.stats.currentMp}
-                    maxValue={heroData.stats.maxMp}
-                    type="MANA"
-                  />
-                </div>
-
+              <div className="grid grid-cols-7 text-center items-center justify-items-center">
                 <div
                   title="Physical Defense"
                   className="flex flex-col items-center cursor-pointer select-none gap-1"
