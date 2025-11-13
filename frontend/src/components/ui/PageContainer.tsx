@@ -37,6 +37,50 @@ export const PageContainer = ({
             ${extraClasses ? extraClasses : ""}
         `}
     >
+      <>
+        <p
+          className="absolute top-0 left-0 bg-gray-300 text-xs block
+    sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden"
+        >
+          DEFAULT
+        </p>
+
+        <p
+          className="absolute top-0 left-0 bg-red-300 text-xs hidden
+    sm:block md:hidden lg:hidden xl:hidden 2xl:hidden"
+        >
+          SMALL
+        </p>
+
+        <p
+          className="absolute top-0 left-0 bg-yellow-300 text-xs hidden
+    sm:hidden md:block lg:hidden xl:hidden 2xl:hidden"
+        >
+          MEDIUM
+        </p>
+
+        <p
+          className="absolute top-0 left-0 bg-green-300 text-xs hidden
+    sm:hidden md:hidden lg:block xl:hidden 2xl:hidden"
+        >
+          LARGE
+        </p>
+
+        <p
+          className="absolute top-0 left-0 bg-blue-300 text-xs hidden
+    sm:hidden md:hidden lg:hidden xl:block 2xl:hidden"
+        >
+          XL
+        </p>
+
+        <p
+          className="absolute top-0 left-0 bg-purple-300 text-xs hidden
+    sm:hidden md:hidden lg:hidden xl:hidden 2xl:block"
+        >
+          2XL
+        </p>
+      </>
+
       {children}
     </div>
   );
