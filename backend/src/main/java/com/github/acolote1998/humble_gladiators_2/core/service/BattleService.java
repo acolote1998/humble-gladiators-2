@@ -224,8 +224,6 @@ public class BattleService {
                 turnRequest.targetCharacterId(),
                 campaignId,
                 userId);
-        performerCharacter.setDamageCalculationService(damageCalculationService);
-        targetCharacter.setDamageCalculationService(damageCalculationService);
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
         if (!canProcessTurnValidly(
                 turnRequest,
@@ -234,6 +232,8 @@ public class BattleService {
                 battle)) {
             throw new InvalidTurn("Cannot process turn. Invalid");
         }
+        performerCharacter.setDamageCalculationService(damageCalculationService);
+        targetCharacter.setDamageCalculationService(damageCalculationService);
         Action action = performerCharacter.usePhysicalAttack(targetCharacter);
         characterService.saveCharacter(performerCharacter);
         characterService.saveCharacter(targetCharacter);
@@ -258,8 +258,6 @@ public class BattleService {
                 turnRequest.targetCharacterId(),
                 campaignId,
                 userId);
-        performerCharacter.setDamageCalculationService(damageCalculationService);
-        targetCharacter.setDamageCalculationService(damageCalculationService);
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
         if (!canProcessTurnValidly(
                 turnRequest,
@@ -268,6 +266,8 @@ public class BattleService {
                 battle)) {
             throw new InvalidTurn("Cannot process turn. Invalid");
         }
+        performerCharacter.setDamageCalculationService(damageCalculationService);
+        targetCharacter.setDamageCalculationService(damageCalculationService);
         Action action = performerCharacter.useConsumable(turnRequest.cardToUseId(), targetCharacter);
         characterService.saveCharacter(performerCharacter);
         characterService.saveCharacter(targetCharacter);
@@ -292,8 +292,6 @@ public class BattleService {
                 turnRequest.targetCharacterId(),
                 campaignId,
                 userId);
-        performerCharacter.setDamageCalculationService(damageCalculationService);
-        targetCharacter.setDamageCalculationService(damageCalculationService);
         Battle battle = getBattleByIdAndCampaignIdAndUserId(battleId, campaignId, userId);
         if (!canProcessTurnValidly(
                 turnRequest,
@@ -302,6 +300,8 @@ public class BattleService {
                 battle)) {
             throw new InvalidTurn("Cannot process turn. Invalid");
         }
+        performerCharacter.setDamageCalculationService(damageCalculationService);
+        targetCharacter.setDamageCalculationService(damageCalculationService);
         Action action = performerCharacter.castSpell(turnRequest.cardToUseId(), targetCharacter);
         characterService.saveCharacter(performerCharacter);
         characterService.saveCharacter(targetCharacter);

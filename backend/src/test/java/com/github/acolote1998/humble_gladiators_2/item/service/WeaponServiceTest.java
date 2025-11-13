@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
+import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
@@ -33,6 +34,9 @@ class WeaponServiceTest {
     @Mock
     private WeaponTemplateRepository weaponTemplateRepository;
 
+    @Mock
+    private GameBalanceConfig balanceConfig;
+
     @InjectMocks
     private WeaponService weaponService;
 
@@ -46,6 +50,10 @@ class WeaponServiceTest {
         campaign = new Campaign();
         campaign.setId(CAMPAIGN_ID);
         campaign.setUserId(USER_ID);
+        
+        // Setup GameBalanceConfig mocks (lenient to avoid unnecessary stubbing warnings)
+        lenient().when(balanceConfig.getPhysicalDamageMultiplier()).thenReturn(15);
+        lenient().when(balanceConfig.getMagicalDamageMultiplier()).thenReturn(15);
     }
 
     @Test
