@@ -1,5 +1,7 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Make cards clickable in none desktop resolution so they zoom up and show stats and so.
+
 - [ ] Add validation length in frontend for when creating a campaign and a hero (names, descriptions)
 
 - [ ] Add validation length in backend for when receiving invalid name, descriptions
