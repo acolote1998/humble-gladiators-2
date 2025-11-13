@@ -884,10 +884,18 @@ test.describe("Campaign Flow", () => {
     expect(elapsed).toBeLessThan(battleTimeout);
 
     // After battle is finished, we should get redirected to the campaign page
-    console.log("     Waiting for redirect to campaign page");
-    await expect(page).toHaveURL(`${FRONTEND_URL}campaign/1`, {
-      timeout: 10000,
-    });
+    console.log("     Assert that we are in the to campaign page");
+    await expect(page.getByText(/campaign stats/i)).toBeVisible();
+    await expect(page.getByText(/armors/i)).toBeVisible();
+    await expect(page.getByText(/boots/i)).toBeVisible();
+    await expect(page.getByText(/consumables/i)).toBeVisible();
+    await expect(page.getByText(/helmets/i)).toBeVisible();
+    await expect(page.getByText(/shields/i)).toBeVisible();
+    await expect(page.getByText(/weapons/i)).toBeVisible();
+    await expect(page.getByText(/spells/i)).toBeVisible();
+    await expect(page.getByText(/characters/i)).toBeVisible();
+    await expect(page.getByText(/win rate/i)).toBeVisible();
+    await expect(page.getByText(/forge your hero/i)).toBeHidden();
     console.log("✅ Battle test complete");
   });
 });
