@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.characters.model;
 
+import com.github.acolote1998.humble_gladiators_2.characters.service.DamageCalculationService;
 import com.github.acolote1998.humble_gladiators_2.core.enums.ActionType;
 import com.github.acolote1998.humble_gladiators_2.core.enums.StateType;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidTurn;
@@ -22,6 +23,9 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
     private Boolean discovered;
     private Integer tier;
     private Integer rarity;
+    
+    @Transient
+    private DamageCalculationService damageCalculationService;
 
     @Override
     public void discover() {
@@ -198,35 +202,17 @@ public class CharacterInstance extends AbstractCharacter implements Discoverable
 
     @Override
     public Integer causePhysicalDamage() {
-        Integer proposedDamage = 0;
-        Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
-        Integer physicalDamage = this.getPhysicalDamage();
-        proposedDamage += strengthDmgModifier + physicalDamage;
-        log.info("{} proposes {} physical damage", this.getName(), proposedDamage);
-        return proposedDamage;
+        return damageCalculationService.calculatePhysicalDamage(this);
     }
 
     @Override
     public Integer causePhysicalSpellDamage(SpellInstance spellToUse) {
-        Integer proposedDamage = 0;
-        if (spellToUse.getTemplate().getPhysicalDamage() == 0) {
-            return proposedDamage;
-        }
-        Integer strengthDmgModifier = Math.round((float) (this.getStats().getStrength() * this.getStats().getLevel()) / 2);
-        Integer physicalDamage = spellToUse.getTemplate().getPhysicalDamage();
-        proposedDamage += strengthDmgModifier + physicalDamage;
-        log.info("{} proposes {} physical damage", this.getName(), proposedDamage);
-        return proposedDamage;
+        return damageCalculationService.calculatePhysicalSpellDamage(this, spellToUse);
     }
 
     @Override
     public Integer causeMagicalDamage(SpellInstance spellToUse) {
-        Integer proposedDamage = 0;
-        Integer intelligenceModifier = Math.round((float) (this.getStats().getIntelligence() * this.getStats().getLevel()) / 2);
-        Integer magicalDamage = this.getMagicalDamage();
-        proposedDamage += intelligenceModifier + magicalDamage + spellToUse.getTemplate().getMagicalDamage();
-        log.info("'{}' proposes '{}' magical damage", this.getName(), proposedDamage);
-        return proposedDamage;
+        return damageCalculationService.calculateMagicalDamage(this, spellToUse);
     }
 
 

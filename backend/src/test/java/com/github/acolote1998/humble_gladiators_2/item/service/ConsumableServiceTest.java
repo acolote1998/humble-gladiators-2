@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
+import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
@@ -32,6 +33,9 @@ class ConsumableServiceTest {
     @Mock
     private ConsumableTemplateRepository consumableTemplateRepository;
 
+    @Mock
+    private GameBalanceConfig balanceConfig;
+
     @InjectMocks
     private ConsumableService consumableService;
 
@@ -45,6 +49,10 @@ class ConsumableServiceTest {
         campaign = new Campaign();
         campaign.setId(CAMPAIGN_ID);
         campaign.setUserId(USER_ID);
+        
+        // Setup GameBalanceConfig mocks (lenient to avoid unnecessary stubbing warnings)
+        lenient().when(balanceConfig.getConsumableHpMultiplier()).thenReturn(8);
+        lenient().when(balanceConfig.getConsumableMpMultiplier()).thenReturn(12);
     }
 
     @Test

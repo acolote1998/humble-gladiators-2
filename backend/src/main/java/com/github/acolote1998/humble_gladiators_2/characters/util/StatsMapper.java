@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.characters.util;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Stats;
+import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,18 +13,17 @@ import java.util.Random;
 @Slf4j
 public class StatsMapper {
 
-
     @Value("${MINIMUM_STAT_VALUE}")
     private Integer MINIMUM_STAT_VALUE;
 
     @Value("${MAXIMUM_STAT_VALUE}")
     private Integer MAXIMUM_STAT_VALUE;
 
-    @Value("${CONSTITUTION_HP_MODIFIER}")
-    private Integer CONSTITUTION_HP_MODIFIER;
+    private final GameBalanceConfig balanceConfig;
 
-    @Value("${INTELLIGENCE_MP_MODIFIER}")
-    private Integer INTELLIGENCE_MP_MODIFIER;
+    public StatsMapper(GameBalanceConfig balanceConfig) {
+        this.balanceConfig = balanceConfig;
+    }
 
     private Integer getRandomStat() {
         Random randomNumber = new Random();
@@ -37,19 +37,11 @@ public class StatsMapper {
     }
 
     private Integer calculateHp(Integer constitution) {
-        if (CONSTITUTION_HP_MODIFIER == null) {
-            log.error("CRITICAL - not valid constitution/hp modifier in configuration. Using 5 as default value");
-            return constitution * 5;
-        }
-        return constitution * CONSTITUTION_HP_MODIFIER;
+        return constitution * balanceConfig.getConstitutionHpModifier();
     }
 
     private Integer calculateMp(Integer intelligence) {
-        if (INTELLIGENCE_MP_MODIFIER == null) {
-            log.error("CRITICAL - not valid intelligence/mp modifier in configuration. Using 10 as default value");
-            return intelligence * 10;
-        }
-        return intelligence * INTELLIGENCE_MP_MODIFIER;
+        return intelligence * balanceConfig.getIntelligenceMpModifier();
     }
 
     public Stats mapStatsFromCharacterFromGeminiDto(CharacterFromGeminiDto dto) {

@@ -1,6 +1,7 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
+import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -22,10 +23,12 @@ import java.util.*;
 public class SpellService {
     GeminiService geminiService;
     SpellTemplateRepository spellTemplateRepository;
+    GameBalanceConfig balanceConfig;
 
-    public SpellService(GeminiService geminiService, SpellTemplateRepository spellTemplateRepository) {
+    public SpellService(GeminiService geminiService, SpellTemplateRepository spellTemplateRepository, GameBalanceConfig balanceConfig) {
         this.geminiService = geminiService;
         this.spellTemplateRepository = spellTemplateRepository;
+        this.balanceConfig = balanceConfig;
     }
 
     public Map<String, String> getTier5SpellsContextForCampaignCover(Campaign campaign) {
@@ -84,17 +87,17 @@ public class SpellService {
                 spellTemplate.setCampaign(campaign);
                 spellTemplate.setCategory(GeminiEnumParser.parseEnum(SpellCategory.class, dto.category(), "SpellTemplate", dto.name()));
                 if (dto.physicalDamage() == 1) {
-                    spellTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                    spellTemplate.setPhysicalDamage((int) Math.round((dto.tier() * dto.rarity() * balanceConfig.getPhysicalDamageMultiplier())));
                 } else {
                     spellTemplate.setPhysicalDamage(0);
                 }
                 if (dto.magicalDamage() == 1) {
-                    spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                    spellTemplate.setMagicalDamage((int) Math.round((dto.tier() * dto.rarity() * balanceConfig.getMagicalDamageMultiplier())));
                 } else {
                     spellTemplate.setMagicalDamage(0);
                 }
                 if (dto.restoreHp() == 1) {
-                    spellTemplate.setRestoreHp((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                    spellTemplate.setRestoreHp((int) Math.round((dto.tier() * dto.rarity() * balanceConfig.getPhysicalDamageMultiplier())));
                     spellTemplate.setMagicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid bugs
                     spellTemplate.setPhysicalDamage(0); // if restoring hp, spell cannot deal dmg, setting on 0 to avoid
                     // bugs
@@ -102,9 +105,12 @@ public class SpellService {
                     spellTemplate.setRestoreHp(0);
                 }
                 spellTemplate.setMpCost(
-                        spellTemplate.getTier() *
+                        (int) Math.round(
+                                spellTemplate.getTier() *
                                 spellTemplate.getRarity() *
-                                (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp())
+                                (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage() + spellTemplate.getRestoreHp()) *
+                                balanceConfig.getSpellMpCostMultiplier()
+                        )
                 );
                 spellTemplate.setValue(
                         (spellTemplate.getMagicalDamage() + spellTemplate.getPhysicalDamage()

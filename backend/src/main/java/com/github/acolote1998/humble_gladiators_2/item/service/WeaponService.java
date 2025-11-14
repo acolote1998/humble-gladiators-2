@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.item.service;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
+import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
@@ -21,10 +22,12 @@ import java.util.*;
 public class WeaponService {
     GeminiService geminiService;
     WeaponTemplateRepository weaponTemplateRepository;
+    GameBalanceConfig balanceConfig;
 
-    public WeaponService(GeminiService geminiService, WeaponTemplateRepository weaponTemplateRepository) {
+    public WeaponService(GeminiService geminiService, WeaponTemplateRepository weaponTemplateRepository, GameBalanceConfig balanceConfig) {
         this.geminiService = geminiService;
         this.weaponTemplateRepository = weaponTemplateRepository;
+        this.balanceConfig = balanceConfig;
     }
 
     public Map<String, String> getTier5WeaponsContextForCampaignCover(Campaign campaign) {
@@ -83,12 +86,12 @@ public class WeaponService {
                 weaponTemplate.setCampaign(campaign);
                 weaponTemplate.setCategory(GeminiEnumParser.parseEnum(WeaponCategory.class, dto.category(), "WeaponTemplate", dto.name()));
                 if (dto.physicalDamage() == 1) {
-                    weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                    weaponTemplate.setPhysicalDamage((int) Math.round((dto.tier() * dto.rarity() * balanceConfig.getPhysicalDamageMultiplier())));
                 } else {
                     weaponTemplate.setPhysicalDamage(0);
                 }
                 if (dto.magicalDamage() == 1) {
-                    weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * 2.5 * dto.rarity() * 3)));
+                    weaponTemplate.setMagicalDamage((int) Math.round((dto.tier() * dto.rarity() * balanceConfig.getMagicalDamageMultiplier())));
                 } else {
                     weaponTemplate.setMagicalDamage(0);
                 }
