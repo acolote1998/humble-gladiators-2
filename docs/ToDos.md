@@ -1,5 +1,21 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] For campaign stats: Show the number of total possible cards (example 0/25). Maybe make it toggeable?? like switch between % and number
+
+- [ ] Make the navbar flag where you are
+
+- [ ] Make compendium have an open tab by default
+
+- [ ] Instead of calling them Character Booster maybe call them Monster Booster? or Enemy Booster?
+
+- [ ] In the inventory, make the item placeholders take you to the card tab and open it for you -> if no cards of that type, toast "No cards of this type" or smthg lke htat
+
+- [ ] In inventory, have a default tab open? if possible? (hard since we only render the ones that exist, we'll see)
+
+- [ ] When an action has chosen in battle, highlight the possible targets with maybe some sort of aura or so?
+
+- [ ] Make it possible to deselect an action by clicking the card again maybe?
+
 - [ ] Make cards clickable in none desktop resolution so they zoom up and show stats and so.
 
 - [ ] Add validation length in frontend for when creating a campaign and a hero (names, descriptions)
