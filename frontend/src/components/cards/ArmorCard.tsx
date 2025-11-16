@@ -129,30 +129,26 @@ export const ArmorCard = ({
         </div>
         <div>
           {renderingFrom == "INVENTORY" && !equipped ? (
-            <p
-              onClick={() => {
+            <EquipItemComponent
+              equipItem={() => {
                 equipItem({
                   campaignId: campaignId,
                   itemId: id,
                   typeItemToEquip: "armor",
                 });
               }}
-            >
-              <EquipItemComponent />
-            </p>
+            />
           ) : (
             renderingFrom == "INVENTORY" &&
             equipped && (
-              <p
-                onClick={() => {
+              <UnequipItemComponent
+                unequipItem={() => {
                   unequipItem({
                     campaignId: campaignId,
                     typeItemToEquip: "armor",
                   });
                 }}
-              >
-                <UnequipItemComponent />
-              </p>
+              />
             )
           )}
         </div>
