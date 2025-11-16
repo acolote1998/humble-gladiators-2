@@ -1,3 +1,4 @@
+import "../../css/cards/cards-general.css";
 import type { WeaponType } from "../../types/weaponTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import { useEquipItems, useUnequipItems } from "../../hooks/useEquipItems";

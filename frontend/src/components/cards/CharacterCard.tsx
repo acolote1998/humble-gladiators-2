@@ -1,3 +1,4 @@
+import "../../css/cards/cards-general.css";
 import type { CharacterInstanceType } from "../../types/characterTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import {

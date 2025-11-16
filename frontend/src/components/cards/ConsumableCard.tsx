@@ -1,3 +1,4 @@
+import "../../css/cards/cards-general.css";
 import type { ConsumableType } from "../../types/consumablesTypes";
 import { calculateTierAndRarityStars } from "../../util/calculateTierAndRarityStars";
 import {

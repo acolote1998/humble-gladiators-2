@@ -16,14 +16,12 @@ const ProcessCardButton = ({
 }: ProcessCardButtonProps) => {
   const [cardsToMap, setCardsToMap] = useState<string[]>([]);
   useEffect(() => {
-    if (cardsToMap) {
-      const array: string[] = [];
-      for (let index = 0; index < cardsLeft - 1; index++) {
-        array.push("");
-      }
-      setCardsToMap(array);
+    const array: string[] = [];
+    for (let index = 0; index < cardsLeft - 1; index++) {
+      array.push("");
     }
-  }, [cardsLeft, cardsToMap]);
+    setCardsToMap(array);
+  }, [cardsLeft]);
   return (
     <div className="flex items-center justify-center">
       <div
@@ -34,8 +32,8 @@ const ProcessCardButton = ({
         p-2 m-2 md:ml-120 lg:ml-[60%] rounded-xl select-none transition-all duration-300 flex w-40 py-5 text-lg gap-2 font-semibold justify-center`}
       >
         <p>{buttonText}</p>
-        {cardsToMap?.map(() => {
-          return <CardIcon width={24} />;
+        {cardsToMap?.map((_, i) => {
+          return <CardIcon key={i} width={24} />;
         })}
       </div>
     </div>

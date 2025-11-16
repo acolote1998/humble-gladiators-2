@@ -1,6 +1,6 @@
 # Frontend Color Guide
 
-This document describes the current color tokens defined in `frontend/src/index.css`, how they map onto UI elements, and guidance for generating new palettes. All tokens listed here belong to the existing light theme. Names that contain `dark` or `darker` (for example `--page-container-bg-darkest`, `--page-container-bg-darkerer`, `--dark-text`) refer to lighter/darker tints within this palette and are **not** related to a night theme.
+This document describes the current color tokens defined in `frontend/src/css/index.css`, how they map onto UI elements, and guidance for generating new palettes. All tokens listed here belong to the existing light theme. Names that contain `dark` or `darker` (for example `--page-container-bg-darkest`, `--page-container-bg-darkerer`, `--dark-text`) refer to lighter/darker tints within this palette and are **not** related to a night theme.
 
 ## Product Context
 
