@@ -285,11 +285,17 @@ const BattleExecuting = ({
                   }
                   onClick={() => {
                     if (currentCharacterToPlay.id == teamOne[0].id) {
-                      //It is the hero's turn, so they can attack
-                      setIsChoosingTarget(true);
-                      setChosenCardAction("PHYSICAL_ATTACK");
-                      setChosenCardId(undefined);
-                      toast.info("Physical Attack selected");
+                      if (chosenCardAction === "PHYSICAL_ATTACK") {
+                        setChosenCardAction(undefined);
+                        setIsChoosingTarget(false);
+                        toast.info("Action canceled");
+                      } else {
+                        //It is the hero's turn, so they can attack
+                        setIsChoosingTarget(true);
+                        setChosenCardAction("PHYSICAL_ATTACK");
+                        setChosenCardId(undefined);
+                        toast.info("Physical Attack selected");
+                      }
                     } else {
                       toast.warn("It is the enemy's turn");
                     }
@@ -318,11 +324,17 @@ const BattleExecuting = ({
                           currentCharacterToPlay.id == teamOne[0].id &&
                           teamOne[0].stats.currentMp >= card.mpCost
                         ) {
-                          //It is the hero's turn, so they can use a spell, and they have enough MP for the card
-                          setIsChoosingTarget(true);
-                          setChosenCardAction("SPELL");
-                          setChosenCardId(card.id);
-                          toast.info("Spell selected");
+                          if (chosenCardAction === "SPELL") {
+                            setChosenCardAction(undefined);
+                            setIsChoosingTarget(false);
+                            toast.info("Action canceled");
+                          } else {
+                            //It is the hero's turn, so they can use a spell, and they have enough MP for the card
+                            setIsChoosingTarget(true);
+                            setChosenCardAction("SPELL");
+                            setChosenCardId(card.id);
+                            toast.info("Spell selected");
+                          }
                         } else if (currentCharacterToPlay.id != teamOne[0].id) {
                           toast.warn("It is the enemy's turn");
                         } else if (teamOne[0].stats.currentMp < card.mpCost) {
@@ -343,11 +355,17 @@ const BattleExecuting = ({
                       }
                       onClick={() => {
                         if (currentCharacterToPlay.id == teamOne[0].id) {
-                          //It is the hero's turn, so they can use a consumable
-                          setIsChoosingTarget(true);
-                          setChosenCardAction("CONSUMABLE");
-                          setChosenCardId(card.id);
-                          toast.info("Consumable selected");
+                          if (chosenCardAction === "CONSUMABLE") {
+                            setChosenCardAction(undefined);
+                            setIsChoosingTarget(false);
+                            toast.info("Action canceled");
+                          } else {
+                            //It is the hero's turn, so they can use a consumable
+                            setIsChoosingTarget(true);
+                            setChosenCardAction("CONSUMABLE");
+                            setChosenCardId(card.id);
+                            toast.info("Consumable selected");
+                          }
                         } else {
                           toast.warn("It is the enemy's turn");
                         }
