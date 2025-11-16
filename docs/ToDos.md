@@ -1,9 +1,5 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] When an action has chosen in battle, highlight the possible targets with maybe some sort of aura or so?
-
-- [ ] Make it possible to deselect an action by clicking the card again maybe?
-
 - [ ] Make cards clickable in none desktop resolution so they zoom up and show stats and so.
 
 - [ ] Add validation length in frontend for when creating a campaign and a hero (names, descriptions)
