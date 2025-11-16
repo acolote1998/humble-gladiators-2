@@ -38,11 +38,10 @@ const NavBarItem = ({ name, onClickItem, userIsHere }: NavBarItemTYpe) => {
     <button
       data-testid={`navbar-${name.replace(" ", "-").toLowerCase()}`}
       className={`
-            ${userIsHere ? "bg-[var(--page-container-bg-darkest)]" : "bg-[var(--page-container-border)]"}
+            ${userIsHere ? "bg-[var(--page-container-bg-darkest)] text-[var(--action-positive-bg)]" : "bg-[var(--page-container-border)] text-[var(--light-text)]"}
             p-4
             w-full
             h-16
-            text-[var(--light-text)]
             rounded-b-xl
             text-lg 2xl:text-2xl
             font-semibold

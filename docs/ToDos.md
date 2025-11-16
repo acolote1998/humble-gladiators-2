@@ -2,8 +2,6 @@
 
 - [ ] For campaign stats: Show the number of total possible cards (example 0/25). Maybe make it toggeable?? like switch between % and number
 
-- [ ] Make the navbar flag where you are
-
 - [ ] Make compendium have an open tab by default
 
 - [ ] Instead of calling them Character Booster maybe call them Monster Booster? or Enemy Booster?
