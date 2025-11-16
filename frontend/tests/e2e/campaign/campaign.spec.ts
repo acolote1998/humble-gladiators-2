@@ -9,7 +9,7 @@ test.describe.configure({ mode: "serial" });
 
 async function ensureAuthenticated(page: Page) {
   console.log("     🔐 Ensuring Clerk session");
-  const signOutButton = page.getByRole("button", { name: /sign out/i });
+  const signOutButton = page.getByTestId("sign-out-button");
 
   try {
     await signOutButton.waitFor({ state: "visible", timeout: 10000 });
@@ -21,7 +21,7 @@ async function ensureAuthenticated(page: Page) {
     );
   }
 
-  await page.getByText(/sign in/i).click();
+  await page.getByTestId("sign-in-button").click();
   await page
     .getByPlaceholder("Enter your email address")
     .fill(E2E_CLERK_USER_USERNAME);

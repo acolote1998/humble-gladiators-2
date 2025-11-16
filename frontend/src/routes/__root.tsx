@@ -35,14 +35,17 @@ const RootLayout = () => {
             </div>
           </Link>
           <SignOutButton>
-            <div className="flex cursor-pointer">
+            <div className="flex cursor-pointer" data-testid="sign-out-button">
               <SignOutIcon width={24} />
             </div>
           </SignOutButton>
         </SignedIn>
         <SignedOut>
           <SignInButton>
-            <div className="flex cursor-pointer gap-1">
+            <div
+              className="flex cursor-pointer gap-1"
+              data-testid="sign-in-button"
+            >
               <SignInIcon width={24} />
               <p className="font-semibold">Sign in to see your campaigns</p>
             </div>
