@@ -21,25 +21,72 @@ import type { SpellType } from "../../types/spellTypes";
 import type { WeaponType } from "../../types/weaponTypes";
 import { DiscoveredItemInfo } from "./DiscoveredItemInfo";
 import { Loader } from "../Loader";
+import type { DiscoveredItemInfoType } from "./DiscoveredItemInfo";
+import type { CharacterInstanceType } from "@/types/characterTypes";
 
 const CampaignStats = () => {
-  const [percentDiscoveredCharacters, setPercentDiscoveredCharacters] =
-    useState<number>(0);
-  const [percentDiscoveredArmors, setPercentDiscoveredArmors] =
-    useState<number>(0);
-  const [percentDiscoveredBoots, setPercentDiscoveredBoots] =
-    useState<number>(0);
-  const [percentDiscoveredConsumables, setPercentDiscoveredConsumables] =
-    useState<number>(0);
-  const [percentDiscoveredHelmets, setPercentDiscoveredHelmets] =
-    useState<number>(0);
-  const [percentDiscoveredShields, setPercentDiscoveredShields] =
-    useState<number>(0);
-  const [percentDiscoveredWeapons, setPercentDiscoveredWeapons] =
-    useState<number>(0);
-  const [percentDiscoveredSpells, setPercentDiscoveredSpells] =
-    useState<number>(0);
-  const [winratePercent, setWinratePercent] = useState<number>(0);
+  const [discoveredStatCharacters, setdiscoveredStatCharacters] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [discoveredStatArmors, setdiscoveredStatArmors] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [discoveredStatBoots, setdiscoveredStatBoots] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [discoveredStatConsumables, setdiscoveredStatConsumables] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [discoveredStatHelmets, setdiscoveredStatHelmets] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [discoveredStatShields, setdiscoveredStatShields] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [discoveredStatWeapons, setdiscoveredStatWeapons] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [discoveredStatSpells, setdiscoveredStatSpells] =
+    useState<DiscoveredItemInfoType>({
+      itemName: "",
+      percentAchieved: 0,
+      totalAchieved: 0,
+      totalPossible: 0,
+    });
+  const [winrateStat, setWinrateStat] = useState<DiscoveredItemInfoType>({
+    itemName: "",
+    percentAchieved: 0,
+    totalAchieved: 0,
+    totalPossible: 0,
+  });
   const { id: campaignId } = useParams({ from: "/campaign/$id/" });
   const { data: wonBattles } = useGetWonBattlesForHeroForCampaignIdAndUsery(
     Number(campaignId)
@@ -74,6 +121,21 @@ const CampaignStats = () => {
   };
 
   useEffect(() => {
+    const getDiscoveredItemsAmount = (
+      items:
+        | ArmorType[]
+        | BootsType[]
+        | ConsumableType[]
+        | HelmetType[]
+        | ShieldType[]
+        | SpellType[]
+        | WeaponType[]
+        | CharacterInstanceType[]
+    ) => {
+      return items.filter((s) => {
+        return s.discovered;
+      }).length;
+    };
     const calculateDiscoveredItemsPercent = (
       items:
         | ArmorType[]
@@ -85,63 +147,116 @@ const CampaignStats = () => {
         | WeaponType[]
     ) => {
       const total = items.length;
-      const discovered = items.filter((s) => {
-        return s.discovered;
-      }).length;
+      const discovered = getDiscoveredItemsAmount(items);
       return calculatePercentOfAchievement(total, discovered);
     };
+
     const calculateDiscoveredCharactersPercent = () => {
       if (characterInstancesData) {
-        const total = characterInstancesData.filter((c) => {
+        const totalNpcs = characterInstancesData.filter((c) => {
           return c.characterType === "NPC";
-        }).length;
-        const discovered = characterInstancesData.filter((c) => {
-          return c.discovered;
-        }).length;
-        return calculatePercentOfAchievement(total, discovered);
+        });
+        const discovered = getDiscoveredItemsAmount(totalNpcs);
+        return calculatePercentOfAchievement(totalNpcs.length, discovered);
       }
       return 0;
     };
+
     const calculateWinrate = (wonBattles: number, lostBattles: number) => {
       return calculatePercentOfAchievement(
         wonBattles + lostBattles,
         wonBattles
       );
     };
+
     if (armorTemplatesData)
-      setPercentDiscoveredArmors(
-        calculateDiscoveredItemsPercent(armorTemplatesData)
-      );
+      setdiscoveredStatArmors({
+        itemName: "Armors",
+        percentAchieved: calculateDiscoveredItemsPercent(armorTemplatesData),
+        totalAchieved: getDiscoveredItemsAmount(armorTemplatesData),
+        totalPossible: armorTemplatesData.length,
+      });
     if (bootsTemplatesData)
-      setPercentDiscoveredBoots(
-        calculateDiscoveredItemsPercent(bootsTemplatesData)
-      );
+      setdiscoveredStatBoots({
+        itemName: "Boots",
+        percentAchieved: calculateDiscoveredItemsPercent(bootsTemplatesData),
+        totalAchieved: getDiscoveredItemsAmount(bootsTemplatesData),
+        totalPossible: bootsTemplatesData.length,
+      });
+
     if (consumableTemplatesData)
-      setPercentDiscoveredConsumables(
-        calculateDiscoveredItemsPercent(consumableTemplatesData)
-      );
+      setdiscoveredStatConsumables({
+        itemName: "Consumables",
+        percentAchieved: calculateDiscoveredItemsPercent(
+          consumableTemplatesData
+        ),
+        totalAchieved: getDiscoveredItemsAmount(consumableTemplatesData),
+        totalPossible: consumableTemplatesData.length,
+      });
+
     if (helmetTemplatesData)
-      setPercentDiscoveredHelmets(
-        calculateDiscoveredItemsPercent(helmetTemplatesData)
-      );
+      setdiscoveredStatHelmets({
+        itemName: "Helmets",
+        percentAchieved: calculateDiscoveredItemsPercent(helmetTemplatesData),
+        totalAchieved: getDiscoveredItemsAmount(helmetTemplatesData),
+        totalPossible: helmetTemplatesData.length,
+      });
+
     if (shieldTemplatesData)
-      setPercentDiscoveredShields(
-        calculateDiscoveredItemsPercent(shieldTemplatesData)
-      );
+      setdiscoveredStatShields({
+        itemName: "Shields",
+        percentAchieved: calculateDiscoveredItemsPercent(shieldTemplatesData),
+        totalAchieved: getDiscoveredItemsAmount(shieldTemplatesData),
+        totalPossible: shieldTemplatesData.length,
+      });
+
     if (weaponTemplatesData)
-      setPercentDiscoveredWeapons(
-        calculateDiscoveredItemsPercent(weaponTemplatesData)
-      );
+      setdiscoveredStatWeapons({
+        itemName: "Weapons",
+        percentAchieved: calculateDiscoveredItemsPercent(weaponTemplatesData),
+        totalAchieved: getDiscoveredItemsAmount(weaponTemplatesData),
+        totalPossible: weaponTemplatesData.length,
+      });
+
     if (spellTemplatesData)
-      setPercentDiscoveredSpells(
-        calculateDiscoveredItemsPercent(spellTemplatesData)
-      );
+      setdiscoveredStatSpells({
+        itemName: "Spells",
+        percentAchieved: calculateDiscoveredItemsPercent(spellTemplatesData),
+        totalAchieved: getDiscoveredItemsAmount(spellTemplatesData),
+        totalPossible: spellTemplatesData.length,
+      });
     if (characterInstancesData)
-      setPercentDiscoveredCharacters(calculateDiscoveredCharactersPercent());
+      setdiscoveredStatCharacters({
+        itemName: "Characters",
+        percentAchieved: calculateDiscoveredCharactersPercent(),
+        totalPossible: characterInstancesData.filter((c) => {
+          return c.characterType === "NPC";
+        }).length,
+        totalAchieved: getDiscoveredItemsAmount(
+          characterInstancesData.filter((c) => {
+            return c.characterType === "NPC";
+          })
+        ),
+      });
     if (wonBattles && lostBattles) {
-      setWinratePercent(
-        calculateWinrate(wonBattles.length, lostBattles.length)
-      );
+      if (wonBattles.length !== 0 || lostBattles.length !== 0) {
+        setWinrateStat({
+          itemName: "Win rate",
+          percentAchieved: calculateWinrate(
+            wonBattles.length,
+            lostBattles.length
+          ),
+          totalAchieved: wonBattles.length,
+          totalPossible: wonBattles.length + lostBattles.length,
+        });
+      } else {
+        setWinrateStat({
+          itemName: "Win rate",
+          percentAchieved: 0,
+          totalAchieved: 0,
+          totalPossible: 0,
+        });
+      }
     }
   }, [
     armorTemplatesData,
@@ -166,47 +281,20 @@ const CampaignStats = () => {
     characterInstancesData &&
     wonBattles &&
     lostBattles ? (
-    <fieldset className="border p-4 rounded-lg border-[var(--page-container-border)]">
+    <fieldset className="cursor-pointer border p-4 rounded-lg border-[var(--page-container-border)]">
       <legend className="text-xl font-semibold xl:font-black tracking-wide px-2">
         Campaign Stats
       </legend>
       <div className="grid grid-cols-10 items-center gap-2.5 lg:gap-2 xl:gap-3">
-        <DiscoveredItemInfo
-          itemName="Armors"
-          percentAchieved={percentDiscoveredArmors}
-        />
-        <DiscoveredItemInfo
-          itemName="Boots"
-          percentAchieved={percentDiscoveredBoots}
-        />
-        <DiscoveredItemInfo
-          itemName="Consumables"
-          percentAchieved={percentDiscoveredConsumables}
-        />
-        <DiscoveredItemInfo
-          itemName="Helmets"
-          percentAchieved={percentDiscoveredHelmets}
-        />
-        <DiscoveredItemInfo
-          itemName="Shields"
-          percentAchieved={percentDiscoveredShields}
-        />
-        <DiscoveredItemInfo
-          itemName="Weapons"
-          percentAchieved={percentDiscoveredWeapons}
-        />
-        <DiscoveredItemInfo
-          itemName="Spells"
-          percentAchieved={percentDiscoveredSpells}
-        />
-        <DiscoveredItemInfo
-          itemName="Characters"
-          percentAchieved={percentDiscoveredCharacters}
-        />
-        <DiscoveredItemInfo
-          itemName="Win Rate"
-          percentAchieved={winratePercent}
-        />
+        <DiscoveredItemInfo {...discoveredStatArmors} />
+        <DiscoveredItemInfo {...discoveredStatBoots} />
+        <DiscoveredItemInfo {...discoveredStatConsumables} />
+        <DiscoveredItemInfo {...discoveredStatHelmets} />
+        <DiscoveredItemInfo {...discoveredStatShields} />
+        <DiscoveredItemInfo {...discoveredStatWeapons} />
+        <DiscoveredItemInfo {...discoveredStatSpells} />
+        <DiscoveredItemInfo {...discoveredStatCharacters} />
+        <DiscoveredItemInfo {...winrateStat} />
       </div>
     </fieldset>
   ) : (
