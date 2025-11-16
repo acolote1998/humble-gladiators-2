@@ -1,3 +1,4 @@
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { cardSizeClass } from "./util/CardSizes";
 
 type InventoryCardPlaceholderType = {
@@ -5,6 +6,8 @@ type InventoryCardPlaceholderType = {
 };
 type ItemType = "ARMOR" | "HELMET" | "SHIELD" | "BOOTS" | "WEAPON";
 const InventoryCardPlaceholder = ({ type }: InventoryCardPlaceholderType) => {
+  const navigate = useNavigate();
+  const { location } = useRouterState();
   const typeToImagePath = () => {
     switch (type) {
       case "ARMOR":
@@ -25,6 +28,9 @@ const InventoryCardPlaceholder = ({ type }: InventoryCardPlaceholderType) => {
       className={`opacity-50 scale-90 ${cardSizeClass}`}
       style={{
         backgroundImage: `url('/templates/${typeToImagePath()}.png')`,
+      }}
+      onClick={() => {
+        navigate({ to: `${location.pathname}#card-displayer` });
       }}
     />
   );
