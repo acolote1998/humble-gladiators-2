@@ -48,8 +48,29 @@ const CardsDisplayer = ({
   spells,
   weapons,
 }: CardsDisplayerType) => {
+  const getDefaultTab = () => {
+    if (characters && characters.length > 0) {
+      return "npcs";
+    } else if (armors && armors.length > 0) {
+      return "armors";
+    } else if (boots && boots.length > 0) {
+      return "boots";
+    } else if (consumables && consumables.length > 0) {
+      return "consumables";
+    } else if (helmets && helmets.length > 0) {
+      return "helmets";
+    } else if (shields && shields.length > 0) {
+      return "shields";
+    } else if (spells && spells.length > 0) {
+      return "spells";
+    } else if (weapons && weapons.length > 0) {
+      return "weapons";
+    }
+    return undefined; // fallback (optional)
+  };
+
   return (
-    <Tabs>
+    <Tabs defaultValue={`${getDefaultTab()}`}>
       <TabsList className="bg-[var(--page-container-bg-darker)] flex items-center w-full">
         {characters && characters.length > 0 && (
           <TabsTrigger value="npcs" className="flex justify-center gap-3">
