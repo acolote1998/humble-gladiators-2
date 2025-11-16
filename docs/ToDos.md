@@ -2,8 +2,6 @@
 
 - [ ] In the inventory, make the item placeholders take you to the card tab and open it for you -> if no cards of that type, toast "No cards of this type" or smthg lke htat
 
-- [ ] In inventory, have a default tab open? if possible? (hard since we only render the ones that exist, we'll see)
-
 - [ ] When an action has chosen in battle, highlight the possible targets with maybe some sort of aura or so?
 
 - [ ] Make it possible to deselect an action by clicking the card again maybe?
