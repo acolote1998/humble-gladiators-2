@@ -47,7 +47,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -142,7 +142,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -179,7 +179,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -257,7 +257,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -329,7 +329,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -412,7 +412,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -530,7 +530,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -656,7 +656,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
@@ -702,7 +702,7 @@ test.describe("Campaign Flow", () => {
     await page.waitForLoadState("networkidle");
     console.log("     Ensuring Clerk authentication");
     await ensureAuthenticated(page);
-    await expect(page.getByRole("button", { name: /sign out/i })).toBeVisible();
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
     console.log("     Clerk authentication ready");
     console.log("     Navigating to campaigns page");
     await page.getByText(/campaigns/i).click();
