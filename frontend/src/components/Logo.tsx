@@ -10,7 +10,11 @@ const Logo = () => {
       }}
     >
       <PageContainer>
-        <h1
+        <img
+          src={"/humble_gladiators_logo.png"}
+          className="h-14 w-auto sm:h-18 md:h-25 md:w-60 lg:w-90 lg:h-30"
+        ></img>
+        {/* <h1
           className="
           text-xl
           xl:text-6xl
@@ -22,7 +26,7 @@ const Logo = () => {
 "
         >
           Humble Gladiators 2
-        </h1>
+        </h1> */}
       </PageContainer>
     </div>
   );
