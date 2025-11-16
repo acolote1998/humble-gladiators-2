@@ -16,9 +16,6 @@ const HeroStats = ({ character }: HeroStatsType) => {
         data-testid="battle-hero-stats"
         className="cursor-pointer flex flex-col items-center rounded-md bg-[var(--page-container-bg-darker)] border-[var(--page-container-border)] border relative"
       >
-        {/* <p className="relative bg-[var(--page-container-bg-darker)] rounded-xl p-1 text-md xl:text-2xl">
-          Hero Stats
-        </p> */}
         <p className="text-3xl py-2 xl:py-0 xl:pt-5">{character.name}</p>
         {/* HP */}
         <StatBar
