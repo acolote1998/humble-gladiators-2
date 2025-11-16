@@ -76,6 +76,9 @@ export const useGetBattleForTodayByCampaignIdAndUsery = (
       }
       return fetchBattleForTodayForCampaignAndUser(bearerToken, campaignId);
     },
+    // This makes the battle creation faster, but by not retrying, we would potentially never load a valid battle
+    // that just happened to have a fetch error. Review?
+    retry: false,
   });
   return { data, isError, isLoading };
 };

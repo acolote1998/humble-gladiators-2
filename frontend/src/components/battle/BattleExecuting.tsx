@@ -254,7 +254,7 @@ const BattleExecuting = ({
                 widthPercent={30}
               />
               <div
-                className="order-1 xl:order-3"
+                className={`order-1 xl:order-3 ${isChoosingTarget ? "animate-pulse" : "animate-none"}`}
                 onClick={() => chooseTarget(teamTwo[0].id)}
               >
                 <CharacterCard {...teamTwo[0]} renderingFrom="BATTLE" />
@@ -268,6 +268,7 @@ const BattleExecuting = ({
           </div>
           <div className="flex flex-col xl:grid xl:grid-cols-7">
             <div
+              className={`${isChoosingTarget ? "animate-pulse" : "animate-none"}`}
               onClick={() => {
                 chooseTarget(teamOne[0].id);
               }}
