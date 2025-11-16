@@ -1,10 +1,8 @@
 # 🎮 Humble Gladiators 2
 
-A modern **browser-based** collectible card game (think MTG) fused with RPG mechanics. Build custom campaigns, open booster packs to discover unique character and item cards, equip your hero with weapons and armor, then engage in strategic 1v1 turn-based card battles.
+A modern **browser-based** collectible card game (think MTG) fused with RPG mechanics. Build custom campaigns, open booster packs to discover unique character and item cards, equip your hero with gear, then engage in strategic 1v1 turn-based card battles.
 
-## 📖 Project Description
-
-Humble Gladiators 2 is a remake of the original Humble Gladiators game. As with the original, content generation is **dynamic** and the **RNG's don't stop surprising you**, bringing loads of fun to every playthrough. Each campaign features AI-generated characters, items, and scenarios with custom themes and specific preferences (wanted and unwanted themes).
+Humble Gladiators 2 is a remake of the original Humble Gladiators game. As with the original, content generation is **dynamic** and the **RNG's don't stop surprising you**, bringing loads of fun to every playthrough. Each campaign features AI-generated characters, items, and scenarios with custom themes and specific preferences.
 
 ## ✨ Key Features
 
@@ -16,8 +14,8 @@ Humble Gladiators 2 is a remake of the original Humble Gladiators game. As with 
 
 ### 💎 Character & Item Collection
 
-- **📦 Booster Pack System**: Open packs to discover new **characters** and equipment cards
-- **⭐ Rarity & Tiers**: Collect cards with varying rarities, from common finds to legendary treasures
+- **📦 Booster Pack System**: Open packs to discover new **characters** and item cards
+- **⭐ Rarity & Tiers**: Collect cards with varying tiers and rarities, from common finds to legendary treasures
 - **⚔️ Comprehensive Equipment**: Seven categories of gear including weapons, armor, helmets, boots, shields, spells, and consumables
 - **📈 Character Progression**: Level up your hero, manage their stats, and customize their equipment loadouts
 
