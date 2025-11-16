@@ -1,9 +1,5 @@
 # TO DOs - Humble Gladiators 2
 
-- [ ] Make compendium have an open tab by default
-
-- [ ] Instead of calling them Character Booster maybe call them Monster Booster? or Enemy Booster?
-
 - [ ] In the inventory, make the item placeholders take you to the card tab and open it for you -> if no cards of that type, toast "No cards of this type" or smthg lke htat
 
 - [ ] In inventory, have a default tab open? if possible? (hard since we only render the ones that exist, we'll see)

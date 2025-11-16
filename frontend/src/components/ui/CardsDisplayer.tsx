@@ -66,7 +66,7 @@ const CardsDisplayer = ({
     } else if (weapons && weapons.length > 0) {
       return "weapons";
     }
-    return undefined; // fallback (optional)
+    return undefined;
   };
 
   return (
