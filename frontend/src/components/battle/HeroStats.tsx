@@ -16,7 +16,7 @@ const HeroStats = ({ character }: HeroStatsType) => {
         data-testid="battle-hero-stats"
         className="cursor-pointer flex flex-col items-center rounded-md bg-[var(--page-container-bg-darker)] border-[var(--page-container-border)] border relative"
       >
-        <p className="text-3xl py-2 xl:py-0 xl:pt-5">{character.name}</p>
+        <p className="text-3xl py-2 xl:py-5">{character.name}</p>
         {/* HP */}
         <StatBar
           widthPercent={90}
@@ -41,7 +41,7 @@ const HeroStats = ({ character }: HeroStatsType) => {
       maxValue={character.stats.expForNextLevel}
       type="XP"
     /> */}
-        <div className="grid grid-cols-6 xl:grid-cols-3 gap-7 xl:gap-5 xl:my-5">
+        <div className="grid grid-cols-6 xl:grid-cols-3 gap-7 xl:gap-5 xl:my-5 order-4">
           {/* Physical Damage */}
           <div
             title="Physical Damage"

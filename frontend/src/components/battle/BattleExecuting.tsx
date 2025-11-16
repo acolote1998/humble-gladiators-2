@@ -203,7 +203,7 @@ const BattleExecuting = ({
           }
           {!isGameStarted && turns.length < 1 && (
             <div
-              className="absolute w-full text-center z-5 translate-y-10 xl:translate-y-70"
+              className="absolute w-full text-center z-5 translate-y-10 xl:translate-y-70 animate-pulse cursor-pointer"
               data-testid="start-game-label"
             >
               {currentCharacterToPlay.id == teamTwo[0].id ? (
@@ -214,7 +214,7 @@ const BattleExecuting = ({
                     setIsGameStarted(true);
                   }}
                 >
-                  Start Battle
+                  Click here to start the battle
                 </p>
               ) : (
                 !isGameStarted &&
