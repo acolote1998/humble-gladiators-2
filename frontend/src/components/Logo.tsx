@@ -3,32 +3,19 @@ import { PageContainer } from "./ui/PageContainer";
 const Logo = () => {
   const navigate = useNavigate();
   return (
-    <div
-      className="flex items-center justify-center cursor-pointer"
-      onClick={() => {
-        navigate({ to: "/" });
-      }}
-    >
-      <PageContainer>
+    <PageContainer>
+      <div
+        onClick={() => {
+          navigate({ to: "/" });
+        }}
+        className="flex justify-center cursor-pointer"
+      >
         <img
           src={"/humble_gladiators_logo.png"}
-          className="h-14 w-auto sm:h-18 md:h-25 md:w-60 lg:w-90 lg:h-30"
+          className="h-auto w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6"
         ></img>
-        {/* <h1
-          className="
-          text-xl
-          xl:text-6xl
-          tracking-tight
-          xl:tracking-tighter
-          xl:font-black
-          font-semibold
-          text-center
-"
-        >
-          Humble Gladiators 2
-        </h1> */}
-      </PageContainer>
-    </div>
+      </div>
+    </PageContainer>
   );
 };
 
