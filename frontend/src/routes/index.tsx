@@ -18,14 +18,16 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   const navigate = useNavigate();
   return (
-    <PageContainer vh="80">
-      <div className="grid grid-cols-5 justify-items-center">
-        <div className="col-span-2 w-full text-center flex flex-col justify-evenly p-12">
-          <h1 className="text-4xl font-semibold tracking-wider py-8">
+    <PageContainer>
+      <div className="flex flex-col lg:grid lg:grid-cols-5 lg:justify-items-center h-full justify-evenly">
+        <div className="lg:col-span-2 text-center flex flex-col gap-4 lg:gap-0 lg:justify-evenly p-4 lg:p-12 w-full">
+          <h1 className="lg:text-4xl font-semibold tracking-wider lg:py-8">
             A modern collectible card RPG built for the browser
           </h1>
-          <h2 className="text-3xl italic mb-8">Every playthrough is unique</h2>
-          <div className="flex flex-col items-center gap-3 text-2xl font-thin italic">
+          <h2 className="lg:text-3xl italic lg:mb-8">
+            Every playthrough is unique
+          </h2>
+          <div className="flex flex-col items-center lg:gap-3 lg:text-2xl font-thin italic">
             <div className="flex gap-3">
               <CampaignIcon width={18} />
               <h4>Build your campaign</h4>
@@ -45,11 +47,11 @@ function RouteComponent() {
                 border-[var(--page-container-bg-darkerer)] 
                 bg-[var(--page-container-border)] 
                 text-[var(--light-text)]
-                mx-10
-                my-5
-                px-5
-                py-5
-                text-xl
+                lg:mx-10
+                lg:my-5
+                px-2 lg:px-5
+                py-2 lg:py-5
+                lg:text-xl
                 rounded-md
                 font-semibold
                 hover:text-[var(--dark-text)]
@@ -87,7 +89,7 @@ function RouteComponent() {
             </SignedOut>
           </div>
         </div>
-        <div className="col-span-3 ">
+        <div className="col-span-3 flex items-center justify-center">
           <Carousel
             plugins={[
               Autoplay({
@@ -96,19 +98,19 @@ function RouteComponent() {
             ]}
           >
             <CarouselContent>
-              <CarouselItem className="flex justify-center">
+              <CarouselItem className="flex justify-center items-center">
                 <img
                   className="rounded-xl"
                   src="/index/carrousel/campaign_1.png"
                 />
               </CarouselItem>
-              <CarouselItem className="flex justify-center">
+              <CarouselItem className="flex justify-center items-center">
                 <img
                   className="rounded-xl"
                   src="/index/carrousel/campaign_2.png"
                 />
               </CarouselItem>
-              <CarouselItem className="flex justify-center">
+              <CarouselItem className="flex justify-center items-center">
                 <img
                   className="rounded-xl"
                   src="/index/carrousel/campaign_3.png"
