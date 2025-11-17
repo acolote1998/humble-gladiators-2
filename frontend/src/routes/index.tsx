@@ -93,7 +93,7 @@ function RouteComponent() {
           <Carousel
             plugins={[
               Autoplay({
-                delay: 4000,
+                delay: 3000,
               }),
             ]}
           >
