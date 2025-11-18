@@ -29,7 +29,7 @@ export const PageContainer = ({
       className={`
             mx-2 xl:mx-10
             p-2.5 xl:p-5
-            rounded-2xl
+            rounded-lg
             border-5
             border-[var(--page-container-border)] 
             bg-[var(--page-container-bg)]

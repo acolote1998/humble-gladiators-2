@@ -12,13 +12,14 @@ const NavBar = () => {
 
   return (
     <div
-      className="mx-5
+      className="
+      mx-2 xl:mx-9
           rounded-b-2xl
           border-b-3
           border-x-3
         border-[var(--page-container-bg-darker)] 
         bg-[var(--page-container-bg-darker)]
-          m-1
+          
           grid
           grid-cols-6
           gap-0.5

@@ -42,6 +42,8 @@ const NavBarItem = ({ name, onClickItem, userIsHere }: NavBarItemTYpe) => {
             p-4
             w-full
             h-16
+            ${name === "Campaign" ? "rounded-tl-md" : "rounded-tl-none"}
+            ${name === "Battles" ? "rounded-tr-md" : "rounded-tr-none"}
             rounded-b-xl
             text-lg 2xl:text-2xl
             font-semibold
