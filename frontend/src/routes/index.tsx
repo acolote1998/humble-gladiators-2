@@ -65,7 +65,7 @@ function RouteComponent() {
           >
             <SignedIn>
               <button
-                className="cursor-pointer"
+                className="cursor-pointer h-full w-full"
                 data-testid="hero-creation-button"
                 onClick={() => {
                   navigate({ to: "/campaign" });
@@ -77,7 +77,7 @@ function RouteComponent() {
             <SignedOut>
               <SignInButton>
                 <button
-                  className="cursor-pointer"
+                  className="cursor-pointer h-full w-full"
                   data-testid="hero-creation-button"
                   onClick={() => {
                     navigate({ to: "/campaign" });
