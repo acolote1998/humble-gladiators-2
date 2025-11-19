@@ -82,7 +82,7 @@ INSERT INTO character_instance (user_id, campaign_id, name, description, charact
                                 speed, luck, max_hp, current_hp, max_mp, current_mp, height, weight, level, current_exp,
                                 exp_for_next_level, created_at, updated_at)
 VALUES ('user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'Mystic Elara', 'A powerful mage with ancient knowledge', 'NPC',
-        'HUMANOID', false, 3, 4, 0, 0, 2, 16, 22, 12, 18, 17, 0, 0, 0, 0, 165, 60, 7, 0, 0, NOW(),
+        'HUMANOID', false, 5, 5, 0, 0, 2, 16, 22, 12, 18, 17, 0, 0, 0, 0, 165, 60, 7, 0, 0, NOW(),
         NOW() - INTERVAL '1 day');
 
 -- Insert Armor Templates (2)
