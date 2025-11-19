@@ -152,11 +152,11 @@ const CreationProgressBar = ({ creationState }: ProgressBarPercentType) => {
         className="transition-width ease-in-out duration-1000 h-6 bg-[var(--information-color-border)] rounded-full"
         style={{ width: getPercentAndStateFormat().percent }}
       ></div>
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center gap-5">
         <p className="text-[var(--light-text)] text-sm font-medium">
           {getPercentAndStateFormat().state}{" "}
         </p>
-        <div className="scale-30">
+        <div className="scale-30 pb-3">
           <Loader />
         </div>
       </div>
