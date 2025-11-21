@@ -13,4 +13,8 @@ public class UserModerationService {
     public UserModerationService(GeminiService geminiService) {
         this.geminiService = geminiService;
     }
+
+    public Boolean verifyPromptValidity(String promptToVerify) {
+        return geminiService.verifyPromptValidity(promptToVerify).valid();
+    }
 }
