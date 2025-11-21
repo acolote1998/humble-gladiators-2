@@ -1,5 +1,9 @@
 # TO DOs - Humble Gladiators 2
 
+- [ ] Remove retries of FULL batches when an object is not valid, and instead only create at the end all the remaining ones
+
+- [ ] Add carousel loading screen for when opening boosters
+
 - [ ] Make cards clickable in none desktop resolution so they zoom up and show stats and so.
 
 - [ ] Add validation length in frontend for when creating a campaign and a hero (names, descriptions)
