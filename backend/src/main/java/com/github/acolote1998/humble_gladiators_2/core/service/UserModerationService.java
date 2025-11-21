@@ -25,7 +25,7 @@ public class UserModerationService {
 
     public Boolean verifyPromptValidity(String promptToVerify, Campaign campaignToVerify) {
         if (!isValidUser(campaignToVerify)) {
-            throw new BannedUser("The user '" + campaignToVerify.getUserId() + "' from campaign '" + campaignToVerify.getId() + "' is banned - blocking request");
+            throw new BannedUser("The user '" + campaignToVerify.getUserId() + "' from campaign '" + campaignToVerify.getId() + "' is banned until '" + campaignToVerify.getUserModeration().getBannedUntil() + "' - blocking request");
         }
         boolean isPromptValidFromGemini = geminiService.verifyPromptValidity(promptToVerify).valid();
         if (!isPromptValidFromGemini) {
