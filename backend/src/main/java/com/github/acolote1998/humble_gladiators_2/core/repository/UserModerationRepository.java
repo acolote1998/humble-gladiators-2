@@ -8,4 +8,8 @@ import java.util.List;
 public interface UserModerationRepository extends ListCrudRepository<UserModeration, Long> {
 
     List<UserModeration> findAllByUserIdAndBanned(String userId, Boolean banned);
+
+    UserModeration findFirstByUserId(String userId);
+
+    UserModeration findFirstByUserIdAndBanned(String userId, Boolean banned);
 }

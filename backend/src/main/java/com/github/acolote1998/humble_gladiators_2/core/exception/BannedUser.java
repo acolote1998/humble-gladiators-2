@@ -12,9 +12,12 @@ public class BannedUser extends RuntimeException {
         super(message);
         this.responseBannedUser = new ResponseBannedUser(
                 campaign.getUserId(),
-                campaign.getId(),
                 campaign.getUserModeration().getBanned(),
                 campaign.getUserModeration().getBannedUntil(),
                 campaign.getUserModeration().getAmountOfInvalidRequests());
+    }
+
+    public BannedUser(ResponseBannedUser responseBannedUser) {
+        this.responseBannedUser = responseBannedUser;
     }
 }

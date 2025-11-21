@@ -26,7 +26,8 @@ public class Campaign {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "user_moderation_id")
     private UserModeration userModeration;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)

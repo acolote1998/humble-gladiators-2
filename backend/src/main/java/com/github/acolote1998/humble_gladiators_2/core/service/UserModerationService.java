@@ -23,8 +23,20 @@ public class UserModerationService {
         this.userModerationRepository = userModerationRepository;
     }
 
+    UserModeration getByUserId(String userId) {
+        return userModerationRepository.findFirstByUserId(userId);
+    }
+
+    UserModeration getBannedUserModeration(String userId) {
+        return userModerationRepository.findFirstByUserIdAndBanned(userId, true);
+    }
+
+    UserModeration save(UserModeration userModeration) {
+        return userModerationRepository.save(userModeration);
+    }
+
     public Boolean verifyPromptValidity(String promptToVerify, Campaign campaignToVerify) {
-        if (!isValidUser(campaignToVerify)) {
+        if (!isValidUser(campaignToVerify.getUserId())) {
             throw new BannedUser("The user '" + campaignToVerify.getUserId() + "' from campaign '" + campaignToVerify.getId() + "' is banned until '" + campaignToVerify.getUserModeration().getBannedUntil() + "' - blocking request", campaignToVerify);
         }
         boolean isPromptValidFromGemini = geminiService.verifyPromptValidity(promptToVerify).valid();
@@ -34,9 +46,10 @@ public class UserModerationService {
         return isPromptValidFromGemini;
     }
 
-    public Boolean isValidUser(Campaign campaignToVerify) {
-        List<UserModeration> allBannedUserAppearances = userModerationRepository.findAllByUserIdAndBanned(campaignToVerify.getUserId(), true);
-        return allBannedUserAppearances.isEmpty();
+    public Boolean isValidUser(String userIdToVerify) {
+        List<UserModeration> allBannedUserAppearances = userModerationRepository.findAllByUserIdAndBanned(userIdToVerify, true);
+        allBannedUserAppearances.forEach(this::updateBanStatus);
+        return allBannedUserAppearances.stream().filter(UserModeration::getBanned).toList().isEmpty();
     }
 
     public void banUser(Campaign campaignToCheck) {
@@ -60,13 +73,13 @@ public class UserModerationService {
         if (userToModerate.getBanned()) {
             if (LocalDateTime.now().isAfter(userToModerate.getBannedUntil())) {
                 userToModerate.setBanned(false);
+                save(userToModerate);
             }
         }
     }
 
     public LocalDateTime calculateBanTime(UserModeration userModeration) {
         return switch (userModeration.getAmountOfInvalidRequests()) {
-            case null -> LocalDateTime.now().plusMinutes(5);
             case 1 -> LocalDateTime.now().plusDays(1);
             case 2 -> LocalDateTime.now().plusDays(7);
             case 3 -> LocalDateTime.now().plusMonths(1);

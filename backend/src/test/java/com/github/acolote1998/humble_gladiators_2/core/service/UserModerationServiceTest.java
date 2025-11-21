@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +56,13 @@ class UserModerationServiceTest {
         validCampaign.setUserId("bannedUser");
         UserModeration userModeration = new UserModeration();
         userModeration.setAmountOfInvalidRequests(0);
-        userModeration.setBanned(false);
+        userModeration.setBanned(true);
+        userModeration.setBannedUntil(LocalDateTime.now().plusMinutes(5));
         userModeration.setUserId(validCampaign.getUserId());
         userModeration.setLastInvalidRequest(null);
         validCampaign.setUserModeration(userModeration);
 
-        when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(List.of(new UserModeration()));
+        when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(List.of(userModeration));
 
         assertThrows(BannedUser.class, () -> {
             userModerationService.verifyPromptValidity(validPrompt, validCampaign);
@@ -83,10 +85,10 @@ class UserModerationServiceTest {
         when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(new ArrayList<>());
         when(geminiService.verifyPromptValidity(anyString())).thenReturn(invalidValidationResponse);
 
-        assertTrue(userModerationService.isValidUser(validCampaign));
+        assertTrue(userModerationService.isValidUser(validCampaign.getUserId()));
         assertFalse(userModerationService.verifyPromptValidity(invalidPrompt, validCampaign));
-        when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(List.of(new UserModeration()));
-        assertFalse(userModerationService.isValidUser(validCampaign));
+        when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(List.of(userModeration));
+        assertFalse(userModerationService.isValidUser(validCampaign.getUserId()));
         assertThrows(BannedUser.class, () -> {
             userModerationService.verifyPromptValidity(invalidPrompt, validCampaign);
         });
