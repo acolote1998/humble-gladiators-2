@@ -23,6 +23,7 @@ function CampaignsRoute() {
           <div className="flex flex-col items-center h-full">
             <div className="grid grid-cols-1 xl:grid-cols-3 justify-items-center w-full">
               <button
+                data-testid="new-campaign-button"
                 className="
                 border-[var(--page-container-bg-darkerer)] 
                 bg-[var(--page-container-bg-darker)] 

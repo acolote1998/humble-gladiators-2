@@ -64,6 +64,7 @@ const CreateCampaign = () => {
           <label className="flex flex-col gap-2 text-(--dark-text)">
             <span className="text-lg font-semibold">Campaign Name</span>
             <input
+              data-testid="campaign-name-input"
               value={campaignName}
               onChange={(e) => setCampaignName(e.target.value)}
               disabled={isCreating}
@@ -78,6 +79,7 @@ const CreateCampaign = () => {
             <label className="flex flex-col gap-2 text-(--dark-text)">
               <span className="text-lg font-semibold">Wanted Themes</span>
               <input
+                data-testid="wanted-themes-input"
                 value={wantedThemesInput}
                 onChange={(e) => setWantedThemesInput(e.target.value)}
                 disabled={isCreating}
@@ -93,6 +95,7 @@ const CreateCampaign = () => {
             <label className="flex flex-col gap-2 text-(--dark-text)">
               <span className="text-lg font-semibold">Unwanted Themes</span>
               <input
+                data-testid="unwanted-themes-input"
                 value={unwantedThemesInput}
                 onChange={(e) => setUnwantedThemesInput(e.target.value)}
                 disabled={isCreating}
@@ -107,16 +110,13 @@ const CreateCampaign = () => {
           </div>
 
           {isCreateError ? (
-            <div
-              data-testid="banned-message"
-              className="px-6 py-3 text-lg font-semibold rounded-md border border-(--unavailable-color-border) bg-(--unavailable-color) text-(--light-text) cursor-not-allowed select-none hover:scale-105 transition-all duration-2000 hover:bg-black hover:text-white hover:border-black text-center"
-            >
+            <div className="px-6 py-3 text-lg font-semibold rounded-md border border-(--unavailable-color-border) bg-(--unavailable-color) text-(--light-text) cursor-not-allowed select-none hover:scale-105 transition-all duration-2000 hover:bg-black hover:text-white hover:border-black text-center">
               {(() => {
                 const axiosError =
                   campaignCreationError as AxiosError<BannedMessageType>;
                 const errorData = axiosError?.response?.data;
                 return errorData?.banned ? (
-                  <span>
+                  <span data-testid="temporarily-banned-message">
                     You have been temporarily banned until{" "}
                     {new Date(errorData.bannedUntil).toLocaleString("en-GB", {
                       year: "numeric",
@@ -133,6 +133,7 @@ const CreateCampaign = () => {
             </div>
           ) : (
             <button
+              data-testid="create-campaign-button-trigger"
               type="submit"
               disabled={isCreating}
               className={`px-6 py-3 text-lg font-semibold rounded-md border border-(--page-container-bg-darkerer) bg-(--page-container-border) text-(--light-text) transition-all ease-in-out duration-300 ${
