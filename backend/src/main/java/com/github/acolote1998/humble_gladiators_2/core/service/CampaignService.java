@@ -46,19 +46,19 @@ public class CampaignService {
         newCampaign.setTheme(campaignTheme);
         newCampaign.setUserId(userId);
         newCampaign.setName(newCampaignDto.campaignName());
-        UserModeration userModerationForCampaign = userModerationService.getByUserId(userId);
-        if (userModerationForCampaign == null) {
-            userModerationForCampaign = new UserModeration();
-            userModerationForCampaign.setAmountOfInvalidRequests(0);
-            userModerationForCampaign.setBanned(false);
-            userModerationForCampaign.setUserId(userId);
-            userModerationForCampaign.setLastInvalidRequest(null);
-            userModerationService.save(userModerationForCampaign);
-        }
-        newCampaign.setUserModeration(userModerationForCampaign);
 
-        // CHECK IF INPUT PROMPTS ARE VALID
+        // IF USING USER MODERATION, CHECK IF INPUT PROMPTS ARE VALID
         if (USER_MODERATION_ACTIVATED) {
+            UserModeration userModerationForCampaign = userModerationService.getByUserId(userId);
+            if (userModerationForCampaign == null) {
+                userModerationForCampaign = new UserModeration();
+                userModerationForCampaign.setAmountOfInvalidRequests(0);
+                userModerationForCampaign.setBanned(false);
+                userModerationForCampaign.setUserId(userId);
+                userModerationForCampaign.setLastInvalidRequest(null);
+                userModerationService.save(userModerationForCampaign);
+            }
+            newCampaign.setUserModeration(userModerationForCampaign);
             String campaignContentToValidate = String.format("""
                             Campaign Name: %s
                             Wanted Themes: %s
