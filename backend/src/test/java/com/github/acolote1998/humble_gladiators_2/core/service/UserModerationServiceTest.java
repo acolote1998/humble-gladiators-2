@@ -53,6 +53,12 @@ class UserModerationServiceTest {
         String validPrompt = "I am a valid prompt";
         Campaign validCampaign = new Campaign();
         validCampaign.setUserId("bannedUser");
+        UserModeration userModeration = new UserModeration();
+        userModeration.setAmountOfInvalidRequests(0);
+        userModeration.setBanned(false);
+        userModeration.setUserId(validCampaign.getUserId());
+        userModeration.setLastInvalidRequest(null);
+        validCampaign.setUserModeration(userModeration);
 
         when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(List.of(new UserModeration()));
 
