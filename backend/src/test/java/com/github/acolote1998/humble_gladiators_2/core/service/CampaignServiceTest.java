@@ -46,7 +46,7 @@ class CampaignServiceTest {
         campaign.setId(CAMPAIGN_ID);
         campaign.setUserId(USER_ID);
         campaign.setName("Test Campaign");
-        
+
         Theme theme = new Theme();
         theme.setWantedThemes(List.of("fantasy", "medieval"));
         theme.setUnwantedThemes(List.of("sci-fi"));
@@ -57,13 +57,13 @@ class CampaignServiceTest {
     @Test
     void createCampaign_ShouldCreateCampaignWithTheme() {
         // Arrange
-        GameCreationDtoRequest.ThemeDtoRequest themeRequest = 
+        GameCreationDtoRequest.ThemeDtoRequest themeRequest =
                 new GameCreationDtoRequest.ThemeDtoRequest(
                         List.of("fantasy", "medieval"),
                         List.of("sci-fi")
                 );
         GameCreationDtoRequest request = new GameCreationDtoRequest("New Campaign", themeRequest);
-        
+
         when(repository.save(any(Campaign.class))).thenAnswer(invocation -> {
             Campaign savedCampaign = invocation.getArgument(0);
             savedCampaign.setId(CAMPAIGN_ID);
@@ -80,7 +80,7 @@ class CampaignServiceTest {
         assertNotNull(result.getTheme());
         assertEquals(List.of("fantasy", "medieval"), result.getTheme().getWantedThemes());
         assertEquals(List.of("sci-fi"), result.getTheme().getUnwantedThemes());
-        verify(repository, times(2)).save(any(Campaign.class));
+        verify(repository, times(1)).save(any(Campaign.class));
     }
 
     @Test
@@ -88,9 +88,9 @@ class CampaignServiceTest {
         // Arrange
         byte[] imageBytes = new byte[]{1, 2, 3};
         String prompt = "test prompt";
-        
+
         when(geminiService.getPositiveCampaignImageCoverPromptForRuneware(
-                eq(campaign), anyString(), anyString(), anyString(), anyString(), 
+                eq(campaign), anyString(), anyString(), anyString(), anyString(),
                 anyString(), anyString(), anyString(), anyString())).thenReturn(prompt);
         when(runwareService.generateCampaignCoverImageToBytes(eq(prompt), eq(campaign))).thenReturn(imageBytes);
         when(repository.save(campaign)).thenReturn(campaign);
@@ -110,9 +110,9 @@ class CampaignServiceTest {
         // Arrange
         byte[] imageBytes = new byte[]{1, 2, 3};
         String prompt = "test prompt";
-        
+
         when(geminiService.getPositiveCampaignBackCardImagePromptForRuneware(
-                eq(campaign), anyString(), anyString(), anyString(), anyString(), 
+                eq(campaign), anyString(), anyString(), anyString(), anyString(),
                 anyString(), anyString(), anyString(), anyString())).thenReturn(prompt);
         when(runwareService.generateCampaignCardBackImageToBytes(eq(prompt), eq(campaign))).thenReturn(imageBytes);
         when(repository.save(campaign)).thenReturn(campaign);
@@ -133,7 +133,7 @@ class CampaignServiceTest {
         campaign.setCampaignCreationState(CampaignCreationStateType.STARTING_NEW_CAMPAIGN);
         Campaign createdCampaign = new Campaign();
         createdCampaign.setCampaignCreationState(CampaignCreationStateType.GAME_CREATED);
-        
+
         when(repository.getCampaignsByUserId(USER_ID)).thenReturn(List.of(campaign, createdCampaign));
 
         // Act

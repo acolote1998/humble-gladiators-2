@@ -2,8 +2,11 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
+import com.github.acolote1998.humble_gladiators_2.core.dto.ResponseBannedUser;
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
+import com.github.acolote1998.humble_gladiators_2.core.exception.BannedUser;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
+import com.github.acolote1998.humble_gladiators_2.core.model.UserModeration;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +28,7 @@ public class GameService {
     SpellService spellService;
     WeaponService weaponService;
     CharacterService characterService;
+    UserModerationService userModerationService;
 
     @Value("${GENERATE_ALL}")
     private boolean GENERATE_ALL;
@@ -56,6 +60,8 @@ public class GameService {
     private boolean GENERATE_WEAPONS;
     @Value("${GAME_CREATION_STATE_INTERVAL}")
     private Integer GAME_CREATION_STATE_INTERVAL;
+    @Value("${USER_MODERATION_ACTIVATED}")
+    private boolean USER_MODERATION_ACTIVATED;
 
     @Autowired
     public GameService(CampaignService campaignService,
@@ -66,7 +72,8 @@ public class GameService {
                        ShieldService shieldService,
                        SpellService spellService,
                        WeaponService weaponService,
-                       CharacterService characterService) {
+                       CharacterService characterService,
+                       UserModerationService userModerationService) {
         this.campaignService = campaignService;
         this.armorService = armorService;
         this.bootsService = bootsService;
@@ -76,10 +83,23 @@ public class GameService {
         this.spellService = spellService;
         this.weaponService = weaponService;
         this.characterService = characterService;
+        this.userModerationService = userModerationService;
     }
 
 
     public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest, String userId) throws InterruptedException {
+        // CHECK IF USER MODERATION IS ACTIVATED
+        if (USER_MODERATION_ACTIVATED) {
+            if (!userModerationService.isValidUser(userId)) {
+                UserModeration moderationInformation = userModerationService.getBannedUserModeration(userId);
+                log.warn(String.format("user '%s' is banned but trying to create a campaign - blocking request", userId));
+                throw new BannedUser(new ResponseBannedUser(
+                        userId,
+                        moderationInformation.getBanned(),
+                        moderationInformation.getBannedUntil(),
+                        moderationInformation.getAmountOfInvalidRequests()));
+            }
+        }
         Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest, userId);
         //THEMES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_THEMES, campaign);

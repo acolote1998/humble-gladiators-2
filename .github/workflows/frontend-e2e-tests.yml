@@ -66,6 +66,7 @@ jobs:
           RUNWARE_API_KEY: ${{ vars.RUNWARE_API_KEY }}
           GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
           GAME_CREATION_STATE_INTERVAL: 0
+          USER_MODERATION_ACTIVATED: true
           UNLIMITED_BOOSTERS_ALLOWED: false
           UNLIMITED_BATTLES_ALLOWED: false
           SKIP_REQUIREMENTS: true

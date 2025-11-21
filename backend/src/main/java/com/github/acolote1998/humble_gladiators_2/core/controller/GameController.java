@@ -1,11 +1,15 @@
 package com.github.acolote1998.humble_gladiators_2.core.controller;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
+import com.github.acolote1998.humble_gladiators_2.core.dto.ResponseBannedUser;
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
+import com.github.acolote1998.humble_gladiators_2.core.exception.BannedUser;
+import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidAttemptBattleOngoing;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -30,16 +34,11 @@ public class GameController {
     @CrossOrigin(exposedHeaders = {"Location"})
     @PostMapping("/campaign")
     public ResponseEntity<Void> createNewCampaign(@AuthenticationPrincipal Jwt jwt,
-                                                  @RequestBody GameCreationDtoRequest gameCreationDtoRequest) {
+                                                  @RequestBody GameCreationDtoRequest gameCreationDtoRequest) throws InterruptedException {
         String userId = jwt.getSubject();
         Campaign createdCampaign = new Campaign();
-        try {
-            createdCampaign = gameService.startGame(gameCreationDtoRequest, userId);
-            log.info("Campaign " + createdCampaign.getId() + " - '" + createdCampaign.getName() + "' created successfully");
-        } catch (Exception e) {
-            log.error("Error creating new campaign: " + e.getMessage());
-        }
-
+        createdCampaign = gameService.startGame(gameCreationDtoRequest, userId);
+        log.info("Campaign " + createdCampaign.getId() + " - '" + createdCampaign.getName() + "' created successfully");
         return ResponseEntity.created(URI.create("/api/campaign/" + createdCampaign.getId())).build();
     }
 
@@ -51,5 +50,10 @@ public class GameController {
             return ResponseEntity.ok(CampaignCreationStateType.CAMPAIGN_NOT_FOUND);
         }
         return ResponseEntity.ok(campaign.getCampaignCreationState());
+    }
+
+    @ExceptionHandler(BannedUser.class)
+    public ResponseEntity<ResponseBannedUser> handleBannedUserException(BannedUser ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getResponseBannedUser());
     }
 }

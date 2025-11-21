@@ -26,6 +26,10 @@ public class Campaign {
 
     private String name;
 
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "user_moderation_id")
+    private UserModeration userModeration;
+
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Theme theme;
 

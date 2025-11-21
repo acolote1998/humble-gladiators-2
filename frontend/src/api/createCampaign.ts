@@ -17,5 +17,6 @@ export const createCampaignPost = async (
     return response;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };

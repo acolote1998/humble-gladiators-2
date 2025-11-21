@@ -5,6 +5,7 @@ const Logo = () => {
   return (
     <PageContainer>
       <div
+        data-testid="humble-gladiators-logo"
         onClick={() => {
           navigate({ to: "/" });
         }}
