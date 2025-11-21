@@ -38,9 +38,7 @@ public class CampaignService {
         newCampaign.setTheme(campaignTheme);
         newCampaign.setUserId(userId);
         newCampaign.setName(newCampaignDto.campaignName());
-        newCampaign = save(newCampaign);
-        save(newCampaign);
-        return newCampaign;
+        return save(newCampaign);
     }
 
     public byte[] generateImageCoverForCampaign(Campaign campaign,
