@@ -408,6 +408,13 @@ public class BoosterService {
                 ArmorTemplate armorTemplate = armorService.getRandomArmorByTierAndRarityAndCampaignAndUserId(
                         characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                 if (armorTemplate != null) {
+                    if (IMAGE_GENERATION_ACTIVATED && armorTemplate.getImgBytes() == null) {
+                        // Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateArmorTemplateImageToBytes(campaign,
+                                armorTemplate);
+                        armorTemplate.setImgBytes(generatedImage);
+                        armorService.saveArmor(armorTemplate);
+                    }
                     ArmorInstance armorToEquip = armorService.instanceFromArmorTemplate(armorTemplate,
                             characterInventory);
                     if (armorToEquip != null) {
@@ -420,6 +427,13 @@ public class BoosterService {
                 BootsTemplate bootsTemplate = bootsService.getRandomBootsByTierAndRarityAndCampaignAndUserId(
                         characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                 if (bootsTemplate != null) {
+                    if (IMAGE_GENERATION_ACTIVATED && bootsTemplate.getImgBytes() == null) {
+                        // Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateBootsTemplateImageToBytes(campaign,
+                                bootsTemplate);
+                        bootsTemplate.setImgBytes(generatedImage);
+                        bootsService.saveBoots(bootsTemplate);
+                    }
                     BootsInstance bootsToEquip = bootsService.instanceFromBootsTemplate(bootsTemplate,
                             characterInventory);
                     if (bootsToEquip != null) {
@@ -432,6 +446,13 @@ public class BoosterService {
                 HelmetTemplate helmetTemplate = helmetService.getRandomHelmetByTierAndRarityAndCampaignAndUserId(
                         characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                 if (helmetTemplate != null) {
+                    if (IMAGE_GENERATION_ACTIVATED && helmetTemplate.getImgBytes() == null) {
+                        // Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateHelmetTemplateImageToBytes(campaign,
+                                helmetTemplate);
+                        helmetTemplate.setImgBytes(generatedImage);
+                        helmetService.saveHelmet(helmetTemplate);
+                    }
                     HelmetInstance helmetToEquip = helmetService.instanceFromHelmetTemplate(helmetTemplate,
                             characterInventory);
                     if (helmetToEquip != null) {
@@ -444,6 +465,13 @@ public class BoosterService {
                 ShieldTemplate shieldTemplate = shieldService.getRandomShieldByTierAndRarityAndCampaignAndUserId(
                         characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                 if (shieldTemplate != null) {
+                    if (IMAGE_GENERATION_ACTIVATED && shieldTemplate.getImgBytes() == null) {
+                        // Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateShieldTemplateImageToBytes(campaign,
+                                shieldTemplate);
+                        shieldTemplate.setImgBytes(generatedImage);
+                        shieldService.saveShield(shieldTemplate);
+                    }
                     ShieldInstance shieldToEquip = shieldService.instanceFromShieldTemplate(shieldTemplate,
                             characterInventory);
                     if (shieldToEquip != null) {
@@ -456,6 +484,13 @@ public class BoosterService {
                 WeaponTemplate weaponTemplate = weaponService.getRandomWeaponByTierAndRarityAndCampaignAndUserId(
                         characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                 if (weaponTemplate != null) {
+                    if (IMAGE_GENERATION_ACTIVATED && weaponTemplate.getImgBytes() == null) {
+                        // Image for this card does not exist, so we have to generate it
+                        byte[] generatedImage = runwareService.generateWeaponTemplateImageToBytes(campaign,
+                                weaponTemplate);
+                        weaponTemplate.setImgBytes(generatedImage);
+                        weaponService.saveWeapon(weaponTemplate);
+                    }
                     WeaponInstance weaponToEquip = weaponService.instanceFromWeaponTemplate(weaponTemplate,
                             characterInventory);
                     if (weaponToEquip != null) {
@@ -470,6 +505,13 @@ public class BoosterService {
                     ConsumableTemplate consumableTemplate = consumableService.getRandomConsumableByTierAndRarityAndCampaignAndUserId(
                             characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                     if (consumableTemplate != null) {
+                        if (IMAGE_GENERATION_ACTIVATED && consumableTemplate.getImgBytes() == null) {
+                            // Image for this card does not exist, so we have to generate it
+                            byte[] generatedImage = runwareService.generateConsumableTemplateImageToBytes(campaign,
+                                    consumableTemplate);
+                            consumableTemplate.setImgBytes(generatedImage);
+                            consumableService.saveConsumable(consumableTemplate);
+                        }
                         ConsumableInstance consumableInstance = consumableService.instanceFromConsumableTemplate(consumableTemplate,
                                 characterInventory);
                         if (consumableInstance != null) {
@@ -484,6 +526,13 @@ public class BoosterService {
                     SpellTemplate spellTemplate = spellService.getRandomSpellByTierAndRarityAndCampaignAndUserId(
                             characterInstance.getTier(), characterInstance.getRarity(), campaignId, userId);
                     if (spellTemplate != null) {
+                        if (IMAGE_GENERATION_ACTIVATED && spellTemplate.getImgBytes() == null) {
+                            // Image for this card does not exist, so we have to generate it
+                            byte[] generatedImage = runwareService.generateSpellTemplateImageToBytes(campaign,
+                                    spellTemplate);
+                            spellTemplate.setImgBytes(generatedImage);
+                            spellService.saveSpell(spellTemplate);
+                        }
                         SpellInstance spellInstance = spellService.instanceFromSpellTemplate(spellTemplate,
                                 characterInventory);
                         if (spellInstance != null) {

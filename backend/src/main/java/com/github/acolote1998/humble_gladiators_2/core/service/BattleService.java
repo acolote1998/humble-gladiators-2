@@ -716,6 +716,7 @@ public class BattleService {
                     ArmorInstance dropped = loser.getInventory().getArmors().getFirst();
                     dropped.setEquipped(false);
                     dropped.setDiscovered(true);
+                    dropped.getTemplate().setDiscovered(true);
                     possibleArmorDrop.add(dropped);
                     loser.getInventory().getArmors().remove(dropped);
                 }
@@ -726,6 +727,7 @@ public class BattleService {
                     BootsInstance dropped = loser.getInventory().getBoots().getFirst();
                     dropped.setEquipped(false);
                     dropped.setDiscovered(true);
+                    dropped.getTemplate().setDiscovered(true);
                     possibleBootsDrop.add(dropped);
                     loser.getInventory().getBoots().remove(dropped);
                 }
@@ -736,6 +738,7 @@ public class BattleService {
                     ConsumableInstance dropped = loser.getInventory().getConsumables().getFirst();
                     dropped.setEquipped(false);
                     dropped.setDiscovered(true);
+                    dropped.getTemplate().setDiscovered(true);
                     possibleConsumablesDrop.add(dropped);
                     loser.getInventory().getConsumables().remove(dropped);
                 }
@@ -746,6 +749,7 @@ public class BattleService {
                     HelmetInstance dropped = loser.getInventory().getHelmets().getFirst();
                     dropped.setEquipped(false);
                     dropped.setDiscovered(true);
+                    dropped.getTemplate().setDiscovered(true);
                     possibleHelmetDrop.add(dropped);
                     loser.getInventory().getHelmets().remove(dropped);
                 }
@@ -756,6 +760,7 @@ public class BattleService {
                     ShieldInstance dropped = loser.getInventory().getShields().getFirst();
                     dropped.setEquipped(false);
                     dropped.setDiscovered(true);
+                    dropped.getTemplate().setDiscovered(true);
                     possibleShieldDrop.add(dropped);
                     loser.getInventory().getShields().remove(dropped);
                 }
@@ -766,6 +771,7 @@ public class BattleService {
                     SpellInstance dropped = loser.getInventory().getSpells().getFirst();
                     dropped.setEquipped(false);
                     dropped.setDiscovered(true);
+                    dropped.getTemplate().setDiscovered(true);
                     possibleSpellDrop.add(dropped);
                     loser.getInventory().getSpells().remove(dropped);
                 }
@@ -776,6 +782,7 @@ public class BattleService {
                     WeaponInstance dropped = loser.getInventory().getWeapons().getFirst();
                     dropped.setEquipped(false);
                     dropped.setDiscovered(true);
+                    dropped.getTemplate().setDiscovered(true);
                     possibleWeaponDrop.add(dropped);
                     loser.getInventory().getWeapons().remove(dropped);
                 }
