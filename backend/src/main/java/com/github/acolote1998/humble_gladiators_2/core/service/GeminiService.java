@@ -186,6 +186,8 @@ public class GeminiService {
                 
                 %s
                 
+                CRITICAL: Each armor MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
+                
                 The object structure context is: \n%s
                 
                 The "Requirement" structure is: \n%s
@@ -250,6 +252,8 @@ public class GeminiService {
                 
                 %s
                 
+                CRITICAL: Each boots MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
+                
                 The object structure context is: \n%s
                 
                 The "Requirement" structure is: \n%s
@@ -311,6 +315,8 @@ public class GeminiService {
                     - Avoid following unwantedThemes
                 
                 %s
+                
+                CRITICAL: Each consumable MUST have at least one restore flag set to 1 (restoreHp or restoreMp). Validation fails if both are 0.
                 
                 The object structure context is: \n%s
                 
@@ -374,6 +380,8 @@ public class GeminiService {
                 
                 %s
                 
+                CRITICAL: Each helmet MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
+                
                 The object structure context is: \n%s
                 
                 The "Requirement" structure is: \n%s
@@ -435,6 +443,8 @@ public class GeminiService {
                     - Avoid following unwantedThemes
                 
                 %s
+                
+                CRITICAL: Each shield MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
                 
                 The object structure context is: \n%s
                 
@@ -504,6 +514,8 @@ public class GeminiService {
                 
                 %s
                 
+                CRITICAL: Each spell MUST have at least one combat effect flag set to 1 (physicalDamage, magicalDamage, or restoreHp). Validation fails if all are 0. For non-magical themes, interpret "spells" as special abilities (e.g., grenades→physicalDamage, medkits→restoreHp, airstrikes→magicalDamage).
+                
                 The object structure context is: \n%s
                 
                 The "Requirement" structure is: \n%s
@@ -568,6 +580,8 @@ public class GeminiService {
                     - Avoid following unwantedThemes
                 
                 %s
+                
+                CRITICAL: Each weapon MUST have at least one damage flag set to 1 (physicalDamage or magicalDamage). Validation fails if both are 0.
                 
                 The object structure context is: \n%s
                 
