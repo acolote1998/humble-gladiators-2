@@ -34,4 +34,8 @@ public class UserModerationService {
         return allBannedUserAppearances.isEmpty();
     }
 
+    public UserModeration banUser(Campaign userFromCampaignToBan) {
+        return null;
+    }
+
 }
