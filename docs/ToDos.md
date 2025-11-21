@@ -6,30 +6,7 @@
 
 - [ ] Add validation length in backend for when receiving invalid name, descriptions
 
-- [ ] After receiving maybe 5 invalid requests? give the user a 5 minutes timeout
-  - [ ] If invalid after again, ban user
-
-- [ ] Add prompt curation -> if receiving invalid prompt (like rude, sexual, etc) in campaign, give a 5 minutes timeout to that user
-  - [ ] If received again, ban user
-  - [ ] before curating the prompt with an LLM, try to have a fixed array of things we should not pass through
-        and make a static validation. only after that we can validate further through an LLM
-
-- [X] Add AntiBot model -> make 1 campaign have 1 antibot model
-
-- [X] Anti bot model will have userId as fields (FKs)
-
-- [X] Add AntiBot Service in backend to handle these validations
-
-- [X] in antibot service, when banning -> turn something like banned=true or whatever and assign the user's id  to the anti bot model
-
-- [X] AniBot
-        id
-        userId
-        DateTime lastInvalidRequestTime
-        amountOfInvalidRequests (if last invalid request was more than 5 minutes ago, reset to zero, otherwise increase)
-        boolean banned
-        DateTime bannedUntil 
-
+- [ ] Add "dirty array" to verify static input before checking with the LLM
 
 - [ ] in the inventory -> currently using emojis and characters for experience and for gold -> replace with svgs
 
