@@ -948,4 +948,53 @@ test.describe("Campaign Flow", () => {
       "✅ Test creating inappropiate campaign gets us banned - test complete"
     );
   });
+
+  test("index is rendering and redirects correctly", async ({ page }) => {
+    console.log("🚀 ////START////");
+    console.log("Starting test: index is rendering and redirects correctly");
+    await page.goto(FRONTEND_URL);
+    console.log("     Waiting for page to fully load");
+    await page.waitForLoadState("networkidle");
+    console.log("     Ensuring Clerk authentication");
+    await ensureAuthenticated(page);
+    await expect(page.getByTestId("sign-out-button")).toBeVisible();
+    console.log("     Clerk authentication ready");
+    console.log("     Navigating to campaigns page");
+    await page.getByText(/Start your story now/i).click();
+    console.log("     Waiting for navigation to campaigns route");
+    await page.waitForURL(
+      new RegExp(
+        `${FRONTEND_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}campaign`
+      ),
+      {
+        timeout: 30000,
+      }
+    );
+    await page.waitForLoadState("networkidle");
+    console.log("     Waiting for campaigns page to load");
+    await expect(page.getByText(/your campaigns/i)).toBeVisible({
+      timeout: 30000,
+    });
+    console.log("     Campaigns page loaded");
+    await expect(page.getByTestId(/test-Medieval Adventure/i)).toBeVisible({
+      timeout: 60000,
+    });
+
+    await page.getByTestId(/humble-gladiators-logo/i).click();
+    console.log("     Going back to index by clicking game logo");
+
+    await expect(page.getByText(/Start your story now/i)).toBeVisible();
+    console.log("     Verifying we are correctly at the index");
+
+    await page.getByTestId("sign-out-button").click();
+    console.log("     Signing out");
+
+    const oldURL = page.url();
+    await page.getByText(/Start your story now/i).click();
+    await expect(page).not.toHaveURL(oldURL);
+    console.log(
+      "     Verifying that we are not at the index anymore (redirected to log in)"
+    );
+    console.log("✅ Test index is rendering and redirects correctly");
+  });
 });
