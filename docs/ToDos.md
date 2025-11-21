@@ -10,15 +10,7 @@
 
 - [ ] in the inventory -> currently using emojis and characters for experience and for gold -> replace with svgs
 
-- [ ] rework formulas for item stats (example createTwentyFiveNewArmorTemplates in ArmorService)
-
-- [ ] improve the 'NEW!" message when we discover a new card in a booster
-
-- [ ] rework stat formulas when it comes to the influence that tiers and rarities have, together with their multipliers
-
 - [ ] make luck have some effect in the game?
-
-- [ ] create index page localhost.com/ that showcases what humble gladiators is -> we could render some card components with high rarity and so and showcase different contents of different campaigns and so
 
 - [ ] figure out a way to be able to play more than one battle per day? at the moment once we play one, we always retrieve the same one in the front end, which is intended, that's fine, but if I wanna test more than one?
    
@@ -49,11 +41,7 @@
 
 - [ ] Add prompt_log env var flag to enable logging of refined prompts for quality assessment and improvement
 
-- [ ] Refactor CSS architecture by breaking down index.css into modular stylesheets
-
 - [ ] Implement difficulty system with stat modifiers for easy/normal/hard campaigns
-
-- [ ] Add booster env var flag for tier 4+ and rarity 4+ content only for test purposes
 
 - [ ] Improve campaign creation UI by replacing comma-separated theme inputs with dedicated controls
 
