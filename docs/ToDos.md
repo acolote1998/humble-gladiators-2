@@ -22,7 +22,7 @@
 
 - [ ] in antibot service, when banning -> turn something like banned=true or whatever and assign the user's id  to the anti bot model
 
-- [ ] AniBot
+- [X] AniBot
         id
         userId
         DateTime lastInvalidRequestTime
