@@ -3,6 +3,7 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 import com.github.acolote1998.humble_gladiators_2.characters.service.CharacterService;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
+import com.github.acolote1998.humble_gladiators_2.core.exception.BannedUser;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.item.service.*;
 import lombok.Getter;
@@ -25,6 +26,10 @@ public class GameService {
     SpellService spellService;
     WeaponService weaponService;
     CharacterService characterService;
+    UserModerationService userModerationService;
+
+    @Value("${USER_MODERATION_ACTIVATED}")
+    private boolean USER_MODERATION_ACTIVATED;
 
     @Value("${GENERATE_ALL}")
     private boolean GENERATE_ALL;
@@ -66,7 +71,8 @@ public class GameService {
                        ShieldService shieldService,
                        SpellService spellService,
                        WeaponService weaponService,
-                       CharacterService characterService) {
+                       CharacterService characterService,
+                       UserModerationService userModerationService) {
         this.campaignService = campaignService;
         this.armorService = armorService;
         this.bootsService = bootsService;
@@ -76,11 +82,28 @@ public class GameService {
         this.spellService = spellService;
         this.weaponService = weaponService;
         this.characterService = characterService;
+        this.userModerationService = userModerationService;
     }
 
 
     public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest, String userId) throws InterruptedException {
         Campaign campaign = campaignService.createCampaign(gameCreationDtoRequest, userId);
+        // CHECK IF INPUT PROMPTS ARE VALID
+        if (USER_MODERATION_ACTIVATED) {
+            log.info("Checking if campaign prompt is valid: " + campaign.getId());
+            String campaignContentToValidate = String.format("""
+                            Campaign Name: %s
+                            Wanted Themes: %s
+                            Unwanted Themes: %s
+                            """,
+                    campaign.getName(),
+                    campaign.getTheme().getWantedThemes(),
+                    campaign.getTheme().getUnwantedThemes());
+            Boolean isValidIntent = userModerationService.verifyPromptValidity(campaignContentToValidate, campaign);
+            if (!isValidIntent) {
+                throw new BannedUser("The user '" + campaign.getUserId() + "' from campaign '" + campaign.getId() + "' got banned - blocking request", campaign);
+            }
+        }
         //THEMES
         updateCampaignCreationState(CampaignCreationStateType.CREATING_THEMES, campaign);
         Thread.sleep(GAME_CREATION_STATE_INTERVAL);

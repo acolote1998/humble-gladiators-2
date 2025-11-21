@@ -14,13 +14,13 @@
   - [ ] before curating the prompt with an LLM, try to have a fixed array of things we should not pass through
         and make a static validation. only after that we can validate further through an LLM
 
-- [ ] Add AntiBot model -> make 1 campaign have 1 antibot model
+- [X] Add AntiBot model -> make 1 campaign have 1 antibot model
 
-- [ ] Anti bot model will have userId as fields (FKs)
+- [X] Anti bot model will have userId as fields (FKs)
 
-- [ ] Add AntiBot Service in backend to handle these validations
+- [X] Add AntiBot Service in backend to handle these validations
 
-- [ ] in antibot service, when banning -> turn something like banned=true or whatever and assign the user's id  to the anti bot model
+- [X] in antibot service, when banning -> turn something like banned=true or whatever and assign the user's id  to the anti bot model
 
 - [X] AniBot
         id

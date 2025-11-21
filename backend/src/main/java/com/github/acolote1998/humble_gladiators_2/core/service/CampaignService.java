@@ -24,6 +24,10 @@ public class CampaignService {
         this.runwareService = runwareService;
     }
 
+    void delete(Campaign campaignToDelete) {
+        repository.delete(campaignToDelete);
+    }
+
     Campaign save(Campaign campaign) {
         return repository.save(campaign);
     }
