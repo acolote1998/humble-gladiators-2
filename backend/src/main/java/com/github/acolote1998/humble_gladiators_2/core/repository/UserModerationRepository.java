@@ -6,7 +6,6 @@ import org.springframework.data.repository.ListCrudRepository;
 import java.util.List;
 
 public interface UserModerationRepository extends ListCrudRepository<UserModeration, Long> {
-    List<UserModeration> findAllByUserId(String userId);
 
     List<UserModeration> findAllByUserIdAndBanned(String userId, Boolean banned);
 }
