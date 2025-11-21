@@ -66,6 +66,13 @@ class UserModerationServiceTest {
         String invalidPrompt = "I am a prompt with bad intentions";
         Campaign validCampaign = new Campaign();
         validCampaign.setUserId("soonBannedUser");
+        UserModeration userModeration = new UserModeration();
+        userModeration.setAmountOfInvalidRequests(0);
+        userModeration.setBanned(false);
+        userModeration.setUserId(validCampaign.getUserId());
+        userModeration.setLastInvalidRequest(null);
+        userModeration.setCampaign(validCampaign);
+        validCampaign.setUserModeration(userModeration);
         GeminiPromptValidationResponse invalidValidationResponse = new GeminiPromptValidationResponse(false);
 
         when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(new ArrayList<>());
@@ -73,6 +80,7 @@ class UserModerationServiceTest {
 
         assertTrue(userModerationService.isValidUser(validCampaign));
         assertFalse(userModerationService.verifyPromptValidity(invalidPrompt, validCampaign));
+        when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(List.of(new UserModeration()));
         assertFalse(userModerationService.isValidUser(validCampaign));
         assertThrows(BannedUser.class, () -> {
             userModerationService.verifyPromptValidity(invalidPrompt, validCampaign);

@@ -4,6 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoReques
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
+import com.github.acolote1998.humble_gladiators_2.core.model.UserModeration;
 import com.github.acolote1998.humble_gladiators_2.core.repository.CampaignRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,13 @@ public class CampaignService {
         newCampaign.setTheme(campaignTheme);
         newCampaign.setUserId(userId);
         newCampaign.setName(newCampaignDto.campaignName());
+        UserModeration userModerationForCampaign = new UserModeration();
+        userModerationForCampaign.setAmountOfInvalidRequests(0);
+        userModerationForCampaign.setBanned(false);
+        userModerationForCampaign.setUserId(userId);
+        userModerationForCampaign.setLastInvalidRequest(null);
+        userModerationForCampaign.setCampaign(newCampaign);
+        newCampaign.setUserModeration(userModerationForCampaign);
         return save(newCampaign);
     }
 

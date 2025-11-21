@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,7 +27,11 @@ public class UserModerationService {
         if (!isValidUser(campaignToVerify)) {
             throw new BannedUser("The user '" + campaignToVerify.getUserId() + "' from campaign '" + campaignToVerify.getId() + "' is banned - blocking request");
         }
-        return geminiService.verifyPromptValidity(promptToVerify).valid();
+        boolean isPromptValidFromGemini = geminiService.verifyPromptValidity(promptToVerify).valid();
+        if (!isPromptValidFromGemini) {
+            banUser(campaignToVerify);
+        }
+        return isPromptValidFromGemini;
     }
 
     public Boolean isValidUser(Campaign campaignToVerify) {
@@ -34,8 +39,32 @@ public class UserModerationService {
         return allBannedUserAppearances.isEmpty();
     }
 
-    public UserModeration banUser(Campaign userFromCampaignToBan) {
-        return null;
+    public void banUser(Campaign userFromCampaignToBan) {
+        UserModeration userToModerate = userFromCampaignToBan.getUserModeration();
+        updateBanStatus(userToModerate);
+        LocalDateTime banTime = calculateBanTime(userToModerate);
+        userToModerate.setAmountOfInvalidRequests(userToModerate.getAmountOfInvalidRequests() + 1);
+        userToModerate.setBannedUntil(banTime);
+        userToModerate.setBanned(true);
+        userModerationRepository.save(userToModerate);
+    }
+
+    public void updateBanStatus(UserModeration userToModerate) {
+        if (userToModerate.getBanned()) {
+            if (LocalDateTime.now().isAfter(userToModerate.getBannedUntil())) {
+                userToModerate.setBanned(false);
+            }
+        }
+    }
+
+    public LocalDateTime calculateBanTime(UserModeration userModeration) {
+        return switch (userModeration.getAmountOfInvalidRequests()) {
+            case null -> LocalDateTime.now().plusMinutes(5);
+            case 1 -> LocalDateTime.now().plusDays(1);
+            case 2 -> LocalDateTime.now().plusDays(7);
+            case 3 -> LocalDateTime.now().plusMonths(1);
+            default -> LocalDateTime.now().plusMinutes(5);
+        };
     }
 
 }
