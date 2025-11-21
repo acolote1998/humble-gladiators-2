@@ -89,7 +89,7 @@ function RouteComponent() {
               {heroData.name}
             </h2>
           </div>
-          <div className="grid grid-cols-2 justify-items-center lg:overflow-x-auto lg:flex xl:justify-evenly">
+          <div className="grid grid-cols-2 justify-items-center 2xl:overflow-x-auto 2xl:flex 2xl:justify-evenly">
             <div>
               {equippedHelmet ? (
                 <HelmetCard

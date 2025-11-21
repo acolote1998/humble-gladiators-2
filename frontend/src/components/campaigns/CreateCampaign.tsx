@@ -115,19 +115,19 @@ const CreateCampaign = () => {
                 const axiosError =
                   campaignCreationError as AxiosError<BannedMessageType>;
                 const errorData = axiosError?.response?.data;
-                return (
-                  errorData?.banned && (
-                    <span>
-                      You have been temporarily banned until{" "}
-                      {new Date(errorData.bannedUntil).toLocaleString("en-GB", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </span>
-                  )
+                return errorData?.banned ? (
+                  <span>
+                    You have been temporarily banned until{" "}
+                    {new Date(errorData.bannedUntil).toLocaleString("en-GB", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                ) : (
+                  "Error"
                 );
               })()}
             </div>
