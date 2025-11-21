@@ -27,6 +27,9 @@ public class Campaign {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)
+    private UserModeration userModeration;
+
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Theme theme;
 
     @Lob
