@@ -41,8 +41,6 @@ import static com.github.acolote1998.humble_gladiators_2.core.util.PromptAider.*
 @Service
 public class GeminiService {
 
-    UserModerationService userModerationService;
-
     @Value("${GEMINI_API_KEY}")
     private String apiKey;
 
@@ -54,9 +52,8 @@ public class GeminiService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
-    public GeminiService(ObjectMapper mapper, UserModerationService userModerationService) {
+    public GeminiService(ObjectMapper mapper) {
         this.mapper = mapper;
-        this.userModerationService = userModerationService;
     }
 
     private HttpEntity<Map<String, Object>> produceEntity(String prompt) {

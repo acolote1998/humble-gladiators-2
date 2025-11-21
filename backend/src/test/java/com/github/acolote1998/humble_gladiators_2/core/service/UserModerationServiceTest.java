@@ -71,7 +71,6 @@ class UserModerationServiceTest {
         userModeration.setBanned(false);
         userModeration.setUserId(validCampaign.getUserId());
         userModeration.setLastInvalidRequest(null);
-        userModeration.setCampaign(validCampaign);
         validCampaign.setUserModeration(userModeration);
         GeminiPromptValidationResponse invalidValidationResponse = new GeminiPromptValidationResponse(false);
 

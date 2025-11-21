@@ -17,9 +17,6 @@ public class UserModeration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
-    Campaign campaign;
-
     String userId;
 
     @CreationTimestamp

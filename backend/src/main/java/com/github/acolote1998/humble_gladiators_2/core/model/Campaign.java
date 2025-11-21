@@ -26,7 +26,7 @@ public class Campaign {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
     private UserModeration userModeration;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)

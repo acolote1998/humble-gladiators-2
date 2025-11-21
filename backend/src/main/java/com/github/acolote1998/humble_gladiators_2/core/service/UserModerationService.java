@@ -47,10 +47,9 @@ public class UserModerationService {
         userModerationToCheck.setBannedUntil(banTime);
         userModerationToCheck.setBanned(true);
         log.warn(String.format("""
-                        user '%s' campaign '%s' got banned until '%s', current amount of invalid requests: '%s'
+                        user '%s' got banned until '%s', current amount of invalid requests: '%s'
                         """,
                 campaignToCheck.getUserId(),
-                campaignToCheck.getId(),
                 userModerationToCheck.getBannedUntil(),
                 userModerationToCheck.getAmountOfInvalidRequests()
         ));

@@ -34,16 +34,11 @@ public class GameController {
     @CrossOrigin(exposedHeaders = {"Location"})
     @PostMapping("/campaign")
     public ResponseEntity<Void> createNewCampaign(@AuthenticationPrincipal Jwt jwt,
-                                                  @RequestBody GameCreationDtoRequest gameCreationDtoRequest) {
+                                                  @RequestBody GameCreationDtoRequest gameCreationDtoRequest) throws InterruptedException {
         String userId = jwt.getSubject();
         Campaign createdCampaign = new Campaign();
-        try {
-            createdCampaign = gameService.startGame(gameCreationDtoRequest, userId);
-            log.info("Campaign " + createdCampaign.getId() + " - '" + createdCampaign.getName() + "' created successfully");
-        } catch (Exception e) {
-            log.error("Error creating new campaign: " + e.getMessage());
-        }
-
+        createdCampaign = gameService.startGame(gameCreationDtoRequest, userId);
+        log.info("Campaign " + createdCampaign.getId() + " - '" + createdCampaign.getName() + "' created successfully");
         return ResponseEntity.created(URI.create("/api/campaign/" + createdCampaign.getId())).build();
     }
 
@@ -59,6 +54,6 @@ public class GameController {
 
     @ExceptionHandler(BannedUser.class)
     public ResponseEntity<ResponseBannedUser> handleBannedUserException(BannedUser ex) {
-        return ResponseEntity.ok(ex.getResponseBannedUser());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getResponseBannedUser());
     }
 }

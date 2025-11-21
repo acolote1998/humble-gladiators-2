@@ -2,11 +2,13 @@ package com.github.acolote1998.humble_gladiators_2.core.service;
 
 import com.github.acolote1998.humble_gladiators_2.core.dto.GameCreationDtoRequest;
 import com.github.acolote1998.humble_gladiators_2.core.enums.CampaignCreationStateType;
+import com.github.acolote1998.humble_gladiators_2.core.exception.BannedUser;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.Theme;
 import com.github.acolote1998.humble_gladiators_2.core.model.UserModeration;
 import com.github.acolote1998.humble_gladiators_2.core.repository.CampaignRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,15 +19,16 @@ public class CampaignService {
     GeminiService geminiService;
     CampaignRepository repository;
     RunwareService runwareService;
+    UserModerationService userModerationService;
 
-    public CampaignService(GeminiService geminiService, CampaignRepository repository, RunwareService runwareService) {
+    @Value("${USER_MODERATION_ACTIVATED}")
+    private boolean USER_MODERATION_ACTIVATED;
+
+    public CampaignService(GeminiService geminiService, CampaignRepository repository, RunwareService runwareService, UserModerationService userModerationService) {
         this.geminiService = geminiService;
         this.repository = repository;
         this.runwareService = runwareService;
-    }
-
-    void delete(Campaign campaignToDelete) {
-        repository.delete(campaignToDelete);
+        this.userModerationService = userModerationService;
     }
 
     Campaign save(Campaign campaign) {
@@ -48,8 +51,23 @@ public class CampaignService {
         userModerationForCampaign.setBanned(false);
         userModerationForCampaign.setUserId(userId);
         userModerationForCampaign.setLastInvalidRequest(null);
-        userModerationForCampaign.setCampaign(newCampaign);
         newCampaign.setUserModeration(userModerationForCampaign);
+
+        // CHECK IF INPUT PROMPTS ARE VALID
+        if (USER_MODERATION_ACTIVATED) {
+            String campaignContentToValidate = String.format("""
+                            Campaign Name: %s
+                            Wanted Themes: %s
+                            Unwanted Themes: %s
+                            """,
+                    newCampaign.getName(),
+                    newCampaign.getTheme().getWantedThemes(),
+                    newCampaign.getTheme().getUnwantedThemes());
+            Boolean isValidIntent = userModerationService.verifyPromptValidity(campaignContentToValidate, newCampaign);
+            if (!isValidIntent) {
+                throw new BannedUser("The user '" + newCampaign.getUserId() + "' from campaign '" + newCampaign.getId() + "' got banned - blocking request", newCampaign);
+            }
+        }
         return save(newCampaign);
     }
 
