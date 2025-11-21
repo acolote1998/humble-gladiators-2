@@ -1,5 +1,6 @@
 package com.github.acolote1998.humble_gladiators_2.core.service;
 
+import com.github.acolote1998.humble_gladiators_2.core.exception.BannedUser;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
 import com.github.acolote1998.humble_gladiators_2.core.model.UserModeration;
 import com.github.acolote1998.humble_gladiators_2.core.repository.UserModerationRepository;
@@ -23,6 +24,7 @@ public class UserModerationService {
 
     public Boolean verifyPromptValidity(String promptToVerify, Campaign campaignToVerify) {
         if (!isValidUser(campaignToVerify)) {
+            throw new BannedUser("The user '" + campaignToVerify.getUserId() + "' from campaign '" + campaignToVerify.getId() + "' is banned - blocking request");
         }
         return geminiService.verifyPromptValidity(promptToVerify).valid();
     }

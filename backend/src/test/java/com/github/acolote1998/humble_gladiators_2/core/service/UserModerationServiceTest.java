@@ -50,13 +50,14 @@ class UserModerationServiceTest {
 
     @Test
     void InvalidUserThrowsBannedUserException() {
+        String validPrompt = "I am a valid prompt";
         Campaign validCampaign = new Campaign();
         validCampaign.setUserId("bannedUser");
 
         when(userModerationRepository.findAllByUserIdAndBanned(anyString(), anyBoolean())).thenReturn(List.of(new UserModeration()));
 
         assertThrows(BannedUser.class, () -> {
-            userModerationService.verifyPromptValidity(anyString(), validCampaign);
+            userModerationService.verifyPromptValidity(validPrompt, validCampaign);
         });
     }
 
