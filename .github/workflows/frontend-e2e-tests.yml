@@ -82,6 +82,15 @@ jobs:
           GENERATE_SHIELDS: true
           GENERATE_SPELLS: true
           GENERATE_WEAPONS: true
+          GENERATE_CHARACTER_IMAGES: false
+          GENERATE_CHARACTER_BACKGROUND_IMAGES: false
+          GENERATE_WEAPON_IMAGE: false
+          GENERATE_SPELL_IMAGE: false
+          GENERATE_ARMOR_IMAGE: false
+          GENERATE_BOOTS_IMAGE: false
+          GENERATE_CONSUMABLE_IMAGE: false
+          GENERATE_HELMET_IMAGE: false
+          GENERATE_SHIELD_IMAGE: false
           NPC_ITEM_GENERATION_CHANCE: 20
           NPC_ITEM_DROP_CHANCE: 10
           CARD_RARITY_ONE_CHANCE: 100
