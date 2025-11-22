@@ -13,6 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import TurnTable from "./TurnTable";
 import HeroStats from "./HeroStats";
 import StatBar from "../stats/StatBar";
+import { GreenTickIcon } from "../icons/battle/GreenTickIcon";
 const BattleExecuting = ({
   campaignId,
   currentCharacterToPlay,
@@ -280,7 +281,7 @@ const BattleExecuting = ({
               <div className={`grid grid-cols-4`}>
                 <div
                   className={
-                    `scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50 ` +
+                    `relative scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50 ` +
                     `${chosenCardAction == "PHYSICAL_ATTACK" ? " -translate-y-10 xl:-translate-y-15" : "translate-y-0"}`
                   }
                   onClick={() => {
@@ -301,6 +302,12 @@ const BattleExecuting = ({
                     }
                   }}
                 >
+                  {chosenCardAction == "PHYSICAL_ATTACK" && (
+                    <GreenTickIcon
+                      className="absolute rounded-lg z-100 left-1/2 -translate-x-1/2"
+                      width={24}
+                    />
+                  )}
                   {isHeroEquippingWeapon() ? (
                     teamOne[0].inventory.weapons.map((card) => {
                       if (card.equipped) {
@@ -315,7 +322,7 @@ const BattleExecuting = ({
                   return (
                     <div
                       className={
-                        `scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50  ` +
+                        `relative scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50  ` +
                         `${teamOne[0].stats.currentMp >= card.mpCost ? "opacity-100 " : "opacity-50 "}` +
                         `${chosenCardAction == "SPELL" && card.id == chosenCardId ? " -translate-y-10 xl:-translate-y-15" : "translate-y-0"}`
                       }
@@ -342,6 +349,12 @@ const BattleExecuting = ({
                         }
                       }}
                     >
+                      {chosenCardAction == "SPELL" && (
+                        <GreenTickIcon
+                          className="absolute rounded-lg z-100 left-1/2 -translate-x-1/2"
+                          width={24}
+                        />
+                      )}
                       <SpellCard {...card} renderingFrom="BATTLE" />
                     </div>
                   );
@@ -350,7 +363,7 @@ const BattleExecuting = ({
                   return (
                     <div
                       className={
-                        `scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50  ` +
+                        `relative scale-85 xl:hover:scale-100 transition-all ease-in-out duration-500 xl:hover:-translate-y-62 xl:hover:z-50  ` +
                         `${chosenCardAction == "CONSUMABLE" && card.id == chosenCardId ? "-translate-y-10 xl:-translate-y-15" : "translate-y-0"}`
                       }
                       onClick={() => {
@@ -371,6 +384,12 @@ const BattleExecuting = ({
                         }
                       }}
                     >
+                      {chosenCardAction == "CONSUMABLE" && (
+                        <GreenTickIcon
+                          className="absolute rounded-lg z-100 left-1/2 -translate-x-1/2"
+                          width={24}
+                        />
+                      )}
                       <ConsumableCard {...card} renderingFrom="BATTLE" />
                     </div>
                   );
