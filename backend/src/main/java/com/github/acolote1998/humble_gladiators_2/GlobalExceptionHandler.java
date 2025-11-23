@@ -1,6 +1,8 @@
 package com.github.acolote1998.humble_gladiators_2;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.DailyEnemyNotFound;
 import com.github.acolote1998.humble_gladiators_2.characters.exception.HeroDoesNotExist;
+import com.github.acolote1998.humble_gladiators_2.core.dto.ResponseGeminiApiError;
+import com.github.acolote1998.humble_gladiators_2.core.exception.GeminiApiException;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidAttemptBattleOngoing;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT) // 409 Conflict
                 .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(GeminiApiException.class)
+    public ResponseEntity<ResponseGeminiApiError> handleGeminiApiException(GeminiApiException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE) // 503 Service Unavailable
+                .body(ex.getResponseGeminiApiError());
     }
 }

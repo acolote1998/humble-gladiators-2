@@ -10,9 +10,8 @@ import com.github.acolote1998.humble_gladiators_2.core.dto.CharacterFromGeminiDt
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiPromptValidationResponse;
 import com.github.acolote1998.humble_gladiators_2.core.dto.GeminiResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
+import com.github.acolote1998.humble_gladiators_2.core.exception.GeminiApiException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
-import com.github.acolote1998.humble_gladiators_2.core.model.RequirementEntry;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
@@ -72,10 +71,49 @@ public class GeminiService {
     }
 
     private String cleanResponseToJson(String response) {
-        return response.replaceAll("`", "").replaceAll("json", "");
+        if (response == null) {
+            log.error("cleanResponseToJson received null response");
+            throw new RuntimeException("Gemini returned null response");
+        }
+        
+        if (response.isBlank()) {
+            log.error("cleanResponseToJson received blank/empty response");
+            throw new RuntimeException("Gemini returned empty response");
+        }
+        
+        String cleaned = response.replaceAll("`", "").replaceAll("json", "");
+        
+        if (cleaned == null || cleaned.isBlank()) {
+            log.error("Cleaned response is empty or null after processing. Original length: {}", response.length());
+            throw new RuntimeException("Cleaned response is empty after processing");
+        }
+        
+        
+        return cleaned;
+    }
+
+    private String cleanResponseToJsonForRunware(String response) {
+        String cleaned = cleanResponseToJson(response);
+
+                if (cleaned.length() < 2) {
+            log.error("Cleaned response is too short ({} characters). Original: {}", cleaned.length(), response);
+            throw new RuntimeException("Cleaned response is too short (minimum 2 characters required)");
+        }
+        
+        // Runware API has a maximum length requirement of 3000 characters
+        if (cleaned.length() > 3000) {
+            log.warn("Cleaned response is too long ({} characters), truncating to 3000 characters for Runware API", cleaned.length());
+            cleaned = cleaned.substring(0, 3000);
+        }
+        
+        return cleaned;
     }
 
     private String callGemini(String prompt) throws InterruptedException {
+        return callGeminiWithRetry(prompt, 0);
+    }
+
+    private String callGeminiWithRetry(String prompt, int retryCount) throws InterruptedException {
         try {
             ResponseEntity<GeminiResponseDto> response = restTemplate.exchange(getFullUrl(), HttpMethod.POST,
                     produceEntity(prompt), GeminiResponseDto.class);
@@ -85,10 +123,17 @@ public class GeminiService {
                     .text();
             return resultText;
         } catch (Exception e) {
-            log.error("RETRYING. Error: " + e.getMessage());
-            Thread.sleep(1000); // Waiting 1 sec before retrying
-            return callGemini(prompt);
-            // return "Error: Failed to communicate with Gemini API - " + e.getMessage();
+            if (retryCount >= 10) {
+                log.error("Failed to communicate with Gemini API after 10 retries. Aborting campaign creation flow.");
+                throw new GeminiApiException("Failed to communicate with Gemini API after 10 retries: " + e.getMessage(), e);
+            }
+            
+            // Exponential backoff: 5s, 10s, 20s, 40s, etc.
+            long delayMs = 5000L * (1L << retryCount); // 5 * 2^retryCount seconds
+            log.error("RETRYING (attempt {}/10). Error: {}. Waiting {} seconds before retry.", 
+                    retryCount + 1, e.getMessage(), delayMs / 1000);
+            Thread.sleep(delayMs);
+            return callGeminiWithRetry(prompt, retryCount + 1);
         }
     }
 
@@ -178,6 +223,16 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
+                ⚠️ CRITICAL VALIDATION RULE - READ FIRST ⚠️
+                Each armor MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). 
+                Validation will FAIL if both flags are 0. This is a non-negotiable requirement.
+                
+                Valid flag combinations (at least one must be 1):
+                - {physicalDefense: 1, magicalDefense: 0} - Physical defense armor
+                - {physicalDefense: 0, magicalDefense: 1} - Magical defense armor
+                - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense armor
+                - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
+                
                 Generate in json format an Array of 25 "%s".
                 
                 The name, description have to be tailored to the theme context
@@ -186,21 +241,15 @@ public class GeminiService {
                 
                 %s
                 
-                CRITICAL: Each armor MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
-                
                 The object structure context is: \n%s
-                
-                The "Requirement" structure is: \n%s
-                
-                The "RequirementEntry" structure is: \n%s
                 
                 The ArmorCategory values are: \n%s
                 
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                    - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                    - If the generated object will not have a requirement, then make it null
                     - The only allowed object categories are things like: armors, robes, cloaks, capes, chestplates, breastplates and chest wear objects.
                     - Do not invent or include any other equipment types (for example helmets, gloves, shields).
+                
+                ⚠️ REMINDER: Before generating, verify each armor has at least one flag (physicalDefense or magicalDefense) set to 1. Both cannot be 0.
                 %s
                 """;
 
@@ -209,8 +258,6 @@ public class GeminiService {
                 "ArmorTemplate",
                 campaignTheme,
                 ArmorTemplate.ObjectStructure(campaignId),
-                Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId),
                 ArmorCategory.AllArmorCategoryToString(),
                 "Armor",
                 "Armor",
@@ -244,6 +291,16 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
+                ⚠️ CRITICAL VALIDATION RULE - READ FIRST ⚠️
+                Each boots MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). 
+                Validation will FAIL if both flags are 0. This is a non-negotiable requirement.
+                
+                Valid flag combinations (at least one must be 1):
+                - {physicalDefense: 1, magicalDefense: 0} - Physical defense boots
+                - {physicalDefense: 0, magicalDefense: 1} - Magical defense boots
+                - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense boots
+                - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
+                
                 Generate in json format an Array of 25 "%s".
                 
                 The name, description have to be tailored to the theme context
@@ -252,19 +309,13 @@ public class GeminiService {
                 
                 %s
                 
-                CRITICAL: Each boots MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
-                
                 The object structure context is: \n%s
-                
-                The "Requirement" structure is: \n%s
-                
-                The "RequirementEntry" structure is: \n%s
                 
                 The BootsCategory values are: \n%s
                 
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                    - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                    - If the generated object will not have a requirement, then make it null
+                
+                ⚠️ REMINDER: Before generating, verify each boots has at least one flag (physicalDefense or magicalDefense) set to 1. Both cannot be 0.
                 %s
                 """;
 
@@ -273,8 +324,6 @@ public class GeminiService {
                 "BootsTemplate",
                 campaignTheme,
                 BootsTemplate.ObjectStructure(campaignId),
-                Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId),
                 BootsCategory.AllBootsCategoryToString(),
                 "Boot",
                 "Boot",
@@ -308,6 +357,16 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
+                ⚠️ CRITICAL VALIDATION RULE - READ FIRST ⚠️
+                Each consumable MUST have at least one restore flag set to 1 (restoreHp or restoreMp). 
+                Validation will FAIL if both flags are 0. This is a non-negotiable requirement.
+                
+                Valid flag combinations (at least one must be 1):
+                - {restoreHp: 1, restoreMp: 0} - HP restoration consumable
+                - {restoreHp: 0, restoreMp: 1} - MP restoration consumable
+                - {restoreHp: 1, restoreMp: 1} - Hybrid restoration consumable
+                - {restoreHp: 0, restoreMp: 0} - INVALID (both flags are 0)
+                
                 Generate in json format an Array of 25 "%s".
                 
                 The name, description have to be tailored to the theme context
@@ -316,19 +375,13 @@ public class GeminiService {
                 
                 %s
                 
-                CRITICAL: Each consumable MUST have at least one restore flag set to 1 (restoreHp or restoreMp). Validation fails if both are 0.
-                
                 The object structure context is: \n%s
-                
-                The "Requirement" structure is: \n%s
-                
-                The "RequirementEntry" structure is: \n%s
                 
                 The ConsumablesCategory values are: \n%s
                 
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                    - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                    - If the generated object will not have a requirement, then make it null
+                
+                ⚠️ REMINDER: Before generating, verify each consumable has at least one flag (restoreHp or restoreMp) set to 1. Both cannot be 0.
                 %s
                 """;
 
@@ -337,8 +390,6 @@ public class GeminiService {
                 "ConsumableTemplate (for example, if the theme was magic, medieval, etc, then a consumable could be a potion)",
                 campaignTheme,
                 ConsumableTemplate.ObjectStructure(campaignId),
-                Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId),
                 ConsumablesCategory.AllConsumablesCategoryToString(),
                 "Consumable",
                 "Consumable",
@@ -372,6 +423,16 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
+                ⚠️ CRITICAL VALIDATION RULE - READ FIRST ⚠️
+                Each helmet MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). 
+                Validation will FAIL if both flags are 0. This is a non-negotiable requirement.
+                
+                Valid flag combinations (at least one must be 1):
+                - {physicalDefense: 1, magicalDefense: 0} - Physical defense helmet
+                - {physicalDefense: 0, magicalDefense: 1} - Magical defense helmet
+                - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense helmet
+                - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
+                
                 Generate in json format an Array of 25 "%s".
                 
                 The name, description have to be tailored to the theme context
@@ -380,19 +441,13 @@ public class GeminiService {
                 
                 %s
                 
-                CRITICAL: Each helmet MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
-                
                 The object structure context is: \n%s
-                
-                The "Requirement" structure is: \n%s
-                
-                The "RequirementEntry" structure is: \n%s
                 
                 The HelmetCategory values are: \n%s
                 
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                    - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                    - If the generated object will not have a requirement, then make it null
+                
+                ⚠️ REMINDER: Before generating, verify each helmet has at least one flag (physicalDefense or magicalDefense) set to 1. Both cannot be 0.
                 %s
                 """;
 
@@ -401,8 +456,6 @@ public class GeminiService {
                 "HelmetTemplate",
                 campaignTheme,
                 HelmetTemplate.ObjectStructure(campaignId),
-                Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId),
                 HelmetCategory.AllHelmetCategoryToString(),
                 "Helmet",
                 "Helmet",
@@ -436,6 +489,16 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
+                ⚠️ CRITICAL VALIDATION RULE - READ FIRST ⚠️
+                Each shield MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). 
+                Validation will FAIL if both flags are 0. This is a non-negotiable requirement.
+                
+                Valid flag combinations (at least one must be 1):
+                - {physicalDefense: 1, magicalDefense: 0} - Physical defense shield
+                - {physicalDefense: 0, magicalDefense: 1} - Magical defense shield
+                - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense shield
+                - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
+                
                 Generate in json format an Array of 25 "%s".
                 
                 The name, description have to be tailored to the theme context
@@ -444,25 +507,19 @@ public class GeminiService {
                 
                 %s
                 
-                CRITICAL: Each shield MUST have at least one defense flag set to 1 (physicalDefense or magicalDefense). Validation fails if both are 0.
-                
                 The object structure context is: \n%s
-                
-                The "Requirement" structure is: \n%s
-                
-                The "RequirementEntry" structure is: \n%s
                 
                 The ShieldCategory values are: \n%s
                 
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                    - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                    - If the generated object will not have a requirement, then make it null
                     - You must always reinterpret "Shield" in the context of the campaign theme.
                     - A "Shield" does not always mean a physical shield.
                     - Instead, treat it as a right-hand defensive or thematic equipment item.
                     - For example: in a wizard theme it could be a spellbook, in a cleric theme a holy scripture, in a necromancer theme a bone totem.
                     - Every generated object must clearly fit both the theme and the concept of a "Shield" as a defensive or secondary item.
                     - Do NOT create objects within these equipment types: helmets, armors, boots, weapons.
+                
+                ⚠️ REMINDER: Before generating, verify each shield has at least one flag (physicalDefense or magicalDefense) set to 1. Both cannot be 0.
                 %s
                 """;
 
@@ -471,8 +528,6 @@ public class GeminiService {
                 "ShieldTemplate",
                 campaignTheme,
                 ShieldTemplate.ObjectStructure(campaignId),
-                Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId),
                 ShieldCategory.AllShieldCategoryToString(),
                 "Shield",
                 "Shield",
@@ -506,6 +561,21 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
+                ⚠️ CRITICAL VALIDATION RULE - READ FIRST ⚠️
+                Each spell MUST have at least one combat effect flag set to 1 (physicalDamage, magicalDamage, or restoreHp). 
+                Validation will FAIL if all three flags are 0. This is a non-negotiable requirement.
+                
+                Valid flag combinations (at least one must be 1):
+                - {physicalDamage: 1, magicalDamage: 0, restoreHp: 0} - Physical damage spell
+                - {physicalDamage: 0, magicalDamage: 1, restoreHp: 0} - Magical damage spell
+                - {physicalDamage: 0, magicalDamage: 0, restoreHp: 1} - Healing spell
+                - {physicalDamage: 1, magicalDamage: 1, restoreHp: 0} - Hybrid damage spell
+                - {physicalDamage: 1, magicalDamage: 0, restoreHp: 1} - INVALID (healing cannot deal damage)
+                - {physicalDamage: 0, magicalDamage: 1, restoreHp: 1} - INVALID (healing cannot deal damage)
+                - {physicalDamage: 0, magicalDamage: 0, restoreHp: 0} - INVALID (all flags are 0)
+                
+                For non-magical themes, interpret "spells" as special abilities (e.g., grenades→physicalDamage, medkits→restoreHp, airstrikes→magicalDamage).
+                
                 Generate in json format an Array of 25 "%s".
                 
                 The name, description have to be tailored to the theme context
@@ -514,22 +584,13 @@ public class GeminiService {
                 
                 %s
                 
-                CRITICAL: Each spell MUST have at least one combat effect flag set to 1 (physicalDamage, magicalDamage, or restoreHp). Validation fails if all are 0. For non-magical themes, interpret "spells" as special abilities (e.g., grenades→physicalDamage, medkits→restoreHp, airstrikes→magicalDamage).
-                
                 The object structure context is: \n%s
-                
-                The "Requirement" structure is: \n%s
-                
-                The "RequirementEntry" structure is: \n%s
                 
                 The SpellCategory values are: \n%s
                 
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                    - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                    - If the generated object will not have a requirement, then make it null
-                    - All spells must have a RequirementEntry that forces the user to have certain minimum MP (magic points)
-                        -Example: {requirementType: MP, operator: MOREOREQUALTHAN, value: "10"}
-                        -The MP requirement needs to make sense and scale together with the spell tier and rarity
+                
+                ⚠️ REMINDER: Before generating, verify each spell has at least one flag (physicalDamage, magicalDamage, or restoreHp) set to 1. All three cannot be 0.
                 %s
                 """;
 
@@ -538,8 +599,6 @@ public class GeminiService {
                 "SpellTemplate",
                 campaignTheme,
                 SpellTemplate.ObjectStructure(campaignId),
-                Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId),
                 SpellCategory.AllSpellCategoryToString(),
                 "Spell",
                 "Spell",
@@ -573,6 +632,16 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
+                ⚠️ CRITICAL VALIDATION RULE - READ FIRST ⚠️
+                Each weapon MUST have at least one damage flag set to 1 (physicalDamage or magicalDamage). 
+                Validation will FAIL if both flags are 0. This is a non-negotiable requirement.
+                
+                Valid flag combinations (at least one must be 1):
+                - {physicalDamage: 1, magicalDamage: 0} - Physical weapon
+                - {physicalDamage: 0, magicalDamage: 1} - Magical weapon
+                - {physicalDamage: 1, magicalDamage: 1} - Hybrid weapon
+                - {physicalDamage: 0, magicalDamage: 0} - INVALID (both flags are 0)
+                
                 Generate in json format an Array of 25 "%s".
                 
                 The name, description have to be tailored to the theme context
@@ -581,19 +650,13 @@ public class GeminiService {
                 
                 %s
                 
-                CRITICAL: Each weapon MUST have at least one damage flag set to 1 (physicalDamage or magicalDamage). Validation fails if both are 0.
-                
                 The object structure context is: \n%s
-                
-                The "Requirement" structure is: \n%s
-                
-                The "RequirementEntry" structure is: \n%s
                 
                 The WeaponCategory values are: \n%s
                 
                     - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
-                    - Not all generated objects need to have requirements, but it would make sense that some of them do, and the difficulty curve of the requirements should also make sense.
-                    - If the generated object will not have a requirement, then make it null
+                
+                ⚠️ REMINDER: Before generating, verify each weapon has at least one flag (physicalDamage or magicalDamage) set to 1. Both cannot be 0.
                 %s
                 """;
 
@@ -602,8 +665,6 @@ public class GeminiService {
                 "WeaponTemplate",
                 campaignTheme,
                 WeaponTemplate.ObjectStructure(campaignId),
-                Requirement.RequirementStructure(campaignId),
-                RequirementEntry.RequirementEntryStructure(campaignId),
                 WeaponCategory.AllWeaponCategoryToString(),
                 "Weapon",
                 "Weapon",
@@ -738,7 +799,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveCharacterInstancePromptForRuneware(
@@ -775,7 +836,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveBattleBackgroundPromptForRuneware(
@@ -821,7 +882,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware battle background" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
 
@@ -859,7 +920,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveConsumablesPromptForRuneware(
@@ -896,7 +957,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveHelmetPromptForRuneware(
@@ -933,7 +994,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveShieldPromptForRuneware(
@@ -970,7 +1031,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveSpellPromptForRuneware(
@@ -1009,7 +1070,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveWeaponPromptForRuneware(
@@ -1048,7 +1109,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveCampaignImageCoverPromptForRuneware(
@@ -1126,7 +1187,7 @@ public class GeminiService {
         } catch (InterruptedException e) {
             log.error("Error generating prompt for runeware" + e.getMessage());
         }
-        return cleanResponseToJson(geminiAnswer);
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 
     public String getPositiveCampaignBackCardImagePromptForRuneware(
@@ -1145,14 +1206,14 @@ public class GeminiService {
                         You have to generate a prompt for an AI to produce detailed, visually striking artwork for a card back of a collectible card game, featuring iconic patterns, symbols, and thematic motifs.
                         For generating the prompt, use this context:
                         - The artwork should be iconic, instantly recognizable, and suitable for official card printing.
-                        - The artwork should visually represent the campaign’s overall theme, tone, and atmosphere.
+                        - The artwork should visually represent the campaign's overall theme, tone, and atmosphere.
                         - Focus on abstract patterns, symbols, or motifs rather than literal characters or scenes.
                         - It should feel like an official back card art — cohesive, expressive, and attention-grabbing.
-                        - Focus on composition, mood, and storytelling elements that reflect the campaign’s subject.
+                        - Focus on composition, mood, and storytelling elements that reflect the campaign's subject.
                         
                         - Themes of the campaign: %s
                         - The campaign name is: "%s"
-                        - The following Tier 5 elements define the campaign’s key thematic / visual identity (<name,description>):
+                        - The following Tier 5 elements define the campaign's key thematic / visual identity (<name,description>):
                             • Characters: %s
                             • Armors: %s
                             • Boots: %s
@@ -1201,8 +1262,12 @@ public class GeminiService {
             geminiAnswer = callGemini(promptForGemini);
             log.info("Prompt for Runeware is ready");
         } catch (InterruptedException e) {
-            log.error("Error generating prompt for runeware" + e.getMessage());
+            log.error("Error generating prompt for runeware: " + e.getMessage());
+            throw new RuntimeException("Failed to generate prompt for campaign card back image", e);
         }
-        return cleanResponseToJson(geminiAnswer);
+        
+        // cleanResponseToJsonForRunware will validate and throw exceptions if response is invalid
+        // This includes Runware-specific validation (max 3000 characters) and will trigger retries
+        return cleanResponseToJsonForRunware(geminiAnswer);
     }
 }
