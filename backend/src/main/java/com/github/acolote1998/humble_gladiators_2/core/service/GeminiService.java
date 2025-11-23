@@ -44,10 +44,10 @@ public class GeminiService {
     @Value("${GEMINI_API_KEY}")
     private String apiKey;
 
-    ObjectMapper mapper;
+    @Value("${GEMINI_API_ENDPOINT}")
+    private String apiEndpoint;
 
-    // Gemini API endpoint for content generation
-    private static final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+    ObjectMapper mapper;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -68,7 +68,7 @@ public class GeminiService {
 
     private String getFullUrl() {
         // Construct the full URL with API key
-        return URL + "?key=" + apiKey;
+        return apiEndpoint + "?key=" + apiKey;
     }
 
     private String cleanResponseToJson(String response) {
