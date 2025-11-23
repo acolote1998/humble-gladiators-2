@@ -1,4 +1,3 @@
-import type { RequirementResponseDto } from "./characterTypes";
 import type { RenderingFrom } from "./characterTypes";
 export type ArmorType = {
   id: number;
@@ -16,7 +15,6 @@ export type ArmorType = {
   imgBase64: string;
   renderingFrom: RenderingFrom;
   quantity?: number;
-  requirement?: RequirementResponseDto;
 };
 
 export type ArmorCategoriesEnum =

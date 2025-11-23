@@ -1,4 +1,3 @@
-import type { RequirementResponseDto } from "./characterTypes";
 import type { RenderingFrom } from "./characterTypes";
 
 export type ConsumableType = {
@@ -17,7 +16,6 @@ export type ConsumableType = {
   imgBase64: string;
   renderingFrom: RenderingFrom;
   quantity?: number;
-  requirement?: RequirementResponseDto;
 };
 
 export type ConsumablesCategoriesEnum =

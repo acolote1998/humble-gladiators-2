@@ -1,4 +1,3 @@
-import type { RequirementResponseDto } from "./characterTypes";
 import type { RenderingFrom } from "./characterTypes";
 export type SpellType = {
   id: number;
@@ -18,7 +17,6 @@ export type SpellType = {
   mpCost: number;
   renderingFrom: RenderingFrom;
   quantity?: number;
-  requirement?: RequirementResponseDto;
 };
 
 export type SpellCategoriesEnum =
