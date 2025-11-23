@@ -48,7 +48,16 @@ const CardsDisplayer = ({
   spells,
   weapons,
 }: CardsDisplayerType) => {
-  function prioritySortingOrder(x) {
+  type possibleObjectsToSort =
+    | CharacterInstanceType
+    | ArmorType
+    | BootsType
+    | HelmetType
+    | ConsumableType
+    | SpellType
+    | WeaponType
+    | ShieldType;
+  function prioritySortingOrder(x: possibleObjectsToSort) {
     let score = 0;
     if (x.imgBase64) score += 2; // image is stronger
     if (x.discovered) score += 1; // discovered adds priority
