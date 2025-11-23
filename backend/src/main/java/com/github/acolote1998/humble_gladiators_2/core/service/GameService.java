@@ -88,6 +88,7 @@ public class GameService {
 
 
     public Campaign startGame(GameCreationDtoRequest gameCreationDtoRequest, String userId) throws InterruptedException {
+        long startTime = System.currentTimeMillis();
         // CHECK IF USER MODERATION IS ACTIVATED
         if (USER_MODERATION_ACTIVATED) {
             if (!userModerationService.isValidUser(userId)) {
@@ -226,6 +227,10 @@ public class GameService {
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
         updateCampaignCreationState(CampaignCreationStateType.GAME_CREATED, campaign);
+        long duration = System.currentTimeMillis() - startTime;
+        double durationInMinutes = duration / 60000.0;
+        log.info("Campaign {} - '{}' created successfully in {} minutes ({} ms)", 
+                campaign.getId(), campaign.getName(), String.format("%.2f", durationInMinutes), duration);
         return campaign;
     }
 
