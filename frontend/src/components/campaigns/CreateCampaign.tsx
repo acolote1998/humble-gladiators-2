@@ -4,6 +4,7 @@ import { useGetCreationCampaignState } from "../../hooks/useCampaigns";
 import CreationProgressBar from "./CreationProgressBar";
 import { PageContainer } from "../ui/PageContainer";
 import type { BannedMessageType } from "@/types/bannedMessageType";
+import type { GeminiApiErrorType } from "@/types/geminiApiErrorType";
 import type { AxiosError } from "axios";
 
 const CreateCampaign = () => {
@@ -113,22 +114,30 @@ const CreateCampaign = () => {
             <div className="px-6 py-3 text-lg font-semibold rounded-md border border-(--unavailable-color-border) bg-(--unavailable-color) text-(--light-text) cursor-not-allowed select-none hover:scale-105 transition-all duration-2000 hover:bg-black hover:text-white hover:border-black text-center">
               {(() => {
                 const axiosError =
-                  campaignCreationError as AxiosError<BannedMessageType>;
+                  campaignCreationError as AxiosError<BannedMessageType | GeminiApiErrorType>;
                 const errorData = axiosError?.response?.data;
-                return errorData?.banned ? (
-                  <span data-testid="temporarily-banned-message">
-                    You have been temporarily banned until{" "}
-                    {new Date(errorData.bannedUntil).toLocaleString("en-GB", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </span>
-                ) : (
-                  "Error"
-                );
+                if (errorData && 'banned' in errorData && errorData.banned) {
+                  return (
+                    <span data-testid="temporarily-banned-message">
+                      You have been temporarily banned until{" "}
+                      {new Date(errorData.bannedUntil).toLocaleString("en-GB", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  );
+                } else if (errorData && 'geminiApiError' in errorData && errorData.geminiApiError) {
+                  return (
+                    <span data-testid="gemini-api-error-message">
+                      {errorData.message || "Failed to communicate with the AI service. Please try again later."}
+                    </span>
+                  );
+                } else {
+                  return "Error";
+                }
               })()}
             </div>
           ) : (
