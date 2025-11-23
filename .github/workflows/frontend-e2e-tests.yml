@@ -170,6 +170,7 @@ jobs:
           CLERK_SECRET_KEY: ${{ vars.CLERK_SECRET_KEY }}
           CLERK_FRONTEND_API_URL: ${{ vars.CLERK_FRONTEND_API_URL }}
           RUN_CAMPAIGN_CREATION_TIME_TEST: false
+          HEADLESS: true
         run: |
           cd frontend
           npm run e2e-test

@@ -5,7 +5,7 @@ dotenv.config();
 const FRONTEND_URL = process.env.FRONTEND_URL!;
 const E2E_CLERK_USER_USERNAME = process.env.E2E_CLERK_USER_USERNAME!;
 const E2E_CLERK_USER_PASSWORD = process.env.E2E_CLERK_USER_PASSWORD!;
-const amountOfCampaignsToCreate = 1;
+const amountOfCampaignsToCreate = 50;
 test.describe.configure({ mode: "serial" });
 
 async function ensureAuthenticated(page: Page) {
