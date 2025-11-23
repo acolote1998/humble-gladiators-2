@@ -177,7 +177,6 @@ class ShieldServiceIntegrationTest {
         shield.setCategory(ShieldCategory.SHIELD);
         shield.setPhysicalDefense(10);
         shield.setMagicalDefense(5);
-        shield.setRequirement(null);
 
         ShieldTemplate saved = shieldService.saveShield(shield);
         
@@ -192,7 +191,7 @@ class ShieldServiceIntegrationTest {
     }
 
     @Test
-    void instanceFromShieldTemplate_withRequirementValidation_persistsCorrectly() {
+    void instanceFromShieldTemplate_persistsCorrectly() {
         CharacterInstance hero = TestDataFactory.createHero(characterService, campaign, userId, "Hero");
         ShieldTemplate template = TestDataFactory.createTestShieldTemplate(shieldTemplateRepository, entityManager, campaign, userId);
         shieldTemplateRepository.save(template);
@@ -203,13 +202,6 @@ class ShieldServiceIntegrationTest {
         Inventory inventory = hero.getInventory();
         ShieldInstance instance = shieldService.instanceFromShieldTemplate(template, inventory);
 
-        // Verify requirement is cloned (if template has requirement)
-        if (template.getRequirement() != null) {
-            assertThat(instance.getRequirement()).isNotNull();
-            if (instance.getRequirement() != null && template.getRequirement() != null) {
-                assertThat(instance.getRequirement()).isNotSameAs(template.getRequirement());
-            }
-        }
 
         // Add instance to inventory and persist through character save
         inventory.getShields().add(instance);

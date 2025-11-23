@@ -24,7 +24,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,21 +62,12 @@ class CharacterServiceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        // Set @Value field using reflection
-        setFieldValue("SKIP_REQUIREMENTS", false);
-
         campaign = new Campaign();
         campaign.setId(CAMPAIGN_ID);
         campaign.setUserId(USER_ID);
 
         hero = createTestCharacter();
         inventory = hero.getInventory();
-    }
-
-    private void setFieldValue(String fieldName, Object value) throws Exception {
-        Field field = CharacterService.class.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(characterService, value);
     }
 
     private CharacterInstance createTestCharacter() {

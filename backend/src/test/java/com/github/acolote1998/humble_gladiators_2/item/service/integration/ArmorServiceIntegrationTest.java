@@ -178,7 +178,6 @@ class ArmorServiceIntegrationTest {
         armor.setCategory(ArmorCategory.ROBE);
         armor.setPhysicalDefense(10);
         armor.setMagicalDefense(5);
-        armor.setRequirement(null);
 
         ArmorTemplate saved = armorService.saveArmor(armor);
         
@@ -193,7 +192,7 @@ class ArmorServiceIntegrationTest {
     }
 
     @Test
-    void instanceFromArmorTemplate_withRequirementValidation_persistsCorrectly() {
+    void instanceFromArmorTemplate_persistsCorrectly() {
         CharacterInstance hero = TestDataFactory.createHero(characterService, campaign, userId, "Hero");
         ArmorTemplate template = TestDataFactory.createTestArmorTemplate(armorTemplateRepository, entityManager, campaign, userId);
         armorTemplateRepository.save(template);
@@ -204,14 +203,6 @@ class ArmorServiceIntegrationTest {
         Inventory inventory = hero.getInventory();
         ArmorInstance instance = armorService.instanceFromArmorTemplate(template, inventory);
 
-        // Verify requirement is cloned (if template has requirement)
-        if (template.getRequirement() != null) {
-            assertThat(instance.getRequirement()).isNotNull();
-            // Requirement should be a clone, not the same object
-            if (instance.getRequirement() != null && template.getRequirement() != null) {
-                assertThat(instance.getRequirement()).isNotSameAs(template.getRequirement());
-            }
-        }
 
         // Add instance to inventory and persist through character save
         inventory.getArmors().add(instance);

@@ -177,7 +177,6 @@ class WeaponServiceIntegrationTest {
         weapon.setCategory(WeaponCategory.SWORD);
         weapon.setPhysicalDamage(10);
         weapon.setMagicalDamage(0);
-        weapon.setRequirement(null);
 
         WeaponTemplate saved = weaponService.saveWeapon(weapon);
         
@@ -192,7 +191,7 @@ class WeaponServiceIntegrationTest {
     }
 
     @Test
-    void instanceFromWeaponTemplate_withRequirementValidation_persistsCorrectly() {
+    void instanceFromWeaponTemplate_persistsCorrectly() {
         CharacterInstance hero = TestDataFactory.createHero(characterService, campaign, userId, "Hero");
         WeaponTemplate template = TestDataFactory.createTestWeaponTemplate(weaponTemplateRepository, entityManager, campaign, userId);
         weaponTemplateRepository.save(template);
@@ -202,14 +201,6 @@ class WeaponServiceIntegrationTest {
 
         Inventory inventory = hero.getInventory();
         WeaponInstance instance = weaponService.instanceFromWeaponTemplate(template, inventory);
-
-        // Verify requirement is cloned (if template has requirement)
-        if (template.getRequirement() != null) {
-            assertThat(instance.getRequirement()).isNotNull();
-            if (instance.getRequirement() != null && template.getRequirement() != null) {
-                assertThat(instance.getRequirement()).isNotSameAs(template.getRequirement());
-            }
-        }
 
         // Add instance to inventory and persist through character save
         inventory.getWeapons().add(instance);

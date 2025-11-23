@@ -183,7 +183,6 @@ class SpellServiceIntegrationTest {
         spell.setMagicalDamage(10);
         spell.setRestoreHp(0);
         spell.setMpCost(5);
-        spell.setRequirement(null);
 
         SpellTemplate saved = spellService.saveSpell(spell);
         
@@ -198,7 +197,7 @@ class SpellServiceIntegrationTest {
     }
 
     @Test
-    void instanceFromSpellTemplate_withRequirementValidation_persistsCorrectly() {
+    void instanceFromSpellTemplate_persistsCorrectly() {
         CharacterInstance hero = TestDataFactory.createHero(characterService, campaign, userId, "Hero");
         SpellTemplate template = TestDataFactory.createTestSpellTemplate(spellTemplateRepository, entityManager, campaign, userId);
         spellTemplateRepository.save(template);
@@ -208,14 +207,6 @@ class SpellServiceIntegrationTest {
 
         Inventory inventory = hero.getInventory();
         SpellInstance instance = spellService.instanceFromSpellTemplate(template, inventory);
-
-        // Verify requirement is cloned (if template has requirement)
-        if (template.getRequirement() != null) {
-            assertThat(instance.getRequirement()).isNotNull();
-            if (instance.getRequirement() != null && template.getRequirement() != null) {
-                assertThat(instance.getRequirement()).isNotSameAs(template.getRequirement());
-            }
-        }
 
         // Add instance to inventory and persist through character save
         inventory.getSpells().add(instance);
