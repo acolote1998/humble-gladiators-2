@@ -49,6 +49,7 @@ jobs:
           RUNWARE_IMG_GEN_URL: ${{ vars.RUNWARE_IMG_GEN_URL }}
           RUNWARE_API_KEY: ${{ vars.RUNWARE_API_KEY }}
           GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
+          GEMINI_API_ENDPOINT: ${{ vars.GEMINI_API_ENDPOINT }}
 
       - name: Stop and clean up containers
         if: always()

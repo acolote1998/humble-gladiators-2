@@ -65,6 +65,7 @@ jobs:
           RUNWARE_IMG_GEN_URL: ${{ vars.RUNWARE_IMG_GEN_URL }}
           RUNWARE_API_KEY: ${{ vars.RUNWARE_API_KEY }}
           GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
+          GEMINI_API_ENDPOINT: ${{ vars.GEMINI_API_ENDPOINT }}
           GAME_CREATION_STATE_INTERVAL: 0
           USER_MODERATION_ACTIVATED: true
           UNLIMITED_BOOSTERS_ALLOWED: false
