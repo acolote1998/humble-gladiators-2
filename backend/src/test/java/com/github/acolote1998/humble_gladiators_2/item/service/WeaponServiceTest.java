@@ -234,7 +234,6 @@ class WeaponServiceTest {
                 0,
                 false,
                 CAMPAIGN_ID,
-                null,
                 category,
                 null,
                 null,

@@ -99,7 +99,6 @@ class GameServiceIntegrationTest {
                         0,
                         false,
                         null,
-                        null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
                         0, // magicalDefense
@@ -128,7 +127,6 @@ class GameServiceIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
@@ -164,7 +162,6 @@ class GameServiceIntegrationTest {
                         0,
                         false,
                         null,
-                        null,
                         categories[categoryIndex % categories.length],
                         null, null,
                         restoreHpFlag, // restoreHp flag (1 or 0)
@@ -195,7 +192,6 @@ class GameServiceIntegrationTest {
                         0,
                         false,
                         null,
-                        null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
                         0, // magicalDefense
@@ -224,7 +220,6 @@ class GameServiceIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
@@ -256,7 +251,6 @@ class GameServiceIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         null, null, // physicalDefense, magicalDefense
@@ -290,7 +284,6 @@ class GameServiceIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         null, null, null, null,
