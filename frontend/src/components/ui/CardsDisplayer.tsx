@@ -48,6 +48,13 @@ const CardsDisplayer = ({
   spells,
   weapons,
 }: CardsDisplayerType) => {
+  function prioritySortingOrder(x) {
+    let score = 0;
+    if (x.imgBase64) score += 2; // image is stronger
+    if (x.discovered) score += 1; // discovered adds priority
+    return score;
+  }
+
   const getDefaultTab = () => {
     if (characters && characters.length > 0) {
       return "npcs";
@@ -127,11 +134,7 @@ const CardsDisplayer = ({
       {characters && characters.length > 0 && (
         <TabsContent value="npcs" className="grid grid-cols-4 2xl:grid-cols-5">
           {characters
-            ?.sort((a, b) => {
-              if (a.imgBase64 && !b.imgBase64) return -1; // a has image, b doesn't → a first
-              if (!a.imgBase64 && b.imgBase64) return 1; // b has image, a doesn't → b first
-              return 0; // both have or both don't → keep order
-            })
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
             .map(
               (char) =>
                 char.characterType === "NPC" && (
@@ -149,24 +152,28 @@ const CardsDisplayer = ({
           value="armors"
           className="grid grid-cols-4 2xl:grid-cols-5"
         >
-          {armors.map((armor) => (
-            <ArmorCard
-              key={armor.name + armor.id}
-              {...armor}
-              renderingFrom={renderingThisDisplayFrom}
-            />
-          ))}
+          {armors
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
+            .map((armor) => (
+              <ArmorCard
+                key={armor.name + armor.id}
+                {...armor}
+                renderingFrom={renderingThisDisplayFrom}
+              />
+            ))}
         </TabsContent>
       )}
       {boots && boots.length > 0 && (
         <TabsContent value="boots" className="grid grid-cols-4 2xl:grid-cols-5">
-          {boots.map((boot) => (
-            <BootsCard
-              key={boot.name + boot.id}
-              {...boot}
-              renderingFrom={renderingThisDisplayFrom}
-            />
-          ))}
+          {boots
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
+            .map((boot) => (
+              <BootsCard
+                key={boot.name + boot.id}
+                {...boot}
+                renderingFrom={renderingThisDisplayFrom}
+              />
+            ))}
         </TabsContent>
       )}
       {consumables && consumables.length > 0 && (
@@ -174,13 +181,15 @@ const CardsDisplayer = ({
           value="consumables"
           className="grid grid-cols-4 2xl:grid-cols-5"
         >
-          {consumables.map((consumable) => (
-            <ConsumableCard
-              key={consumable.name + consumable.id}
-              {...consumable}
-              renderingFrom={renderingThisDisplayFrom}
-            />
-          ))}
+          {consumables
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
+            .map((consumable) => (
+              <ConsumableCard
+                key={consumable.name + consumable.id}
+                {...consumable}
+                renderingFrom={renderingThisDisplayFrom}
+              />
+            ))}
         </TabsContent>
       )}
       {helmets && helmets.length > 0 && (
@@ -188,13 +197,15 @@ const CardsDisplayer = ({
           value="helmets"
           className="grid grid-cols-4 2xl:grid-cols-5"
         >
-          {helmets.map((helmet) => (
-            <HelmetCard
-              key={helmet.name + helmet.id}
-              {...helmet}
-              renderingFrom={renderingThisDisplayFrom}
-            />
-          ))}
+          {helmets
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
+            .map((helmet) => (
+              <HelmetCard
+                key={helmet.name + helmet.id}
+                {...helmet}
+                renderingFrom={renderingThisDisplayFrom}
+              />
+            ))}
         </TabsContent>
       )}
       {shields && shields.length > 0 && (
@@ -202,13 +213,15 @@ const CardsDisplayer = ({
           value="shields"
           className="grid grid-cols-4 2xl:grid-cols-5"
         >
-          {shields.map((shield) => (
-            <ShieldCard
-              key={shield.name + shield.id}
-              {...shield}
-              renderingFrom={renderingThisDisplayFrom}
-            />
-          ))}
+          {shields
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
+            .map((shield) => (
+              <ShieldCard
+                key={shield.name + shield.id}
+                {...shield}
+                renderingFrom={renderingThisDisplayFrom}
+              />
+            ))}
         </TabsContent>
       )}
       {spells && spells.length > 0 && (
@@ -216,13 +229,15 @@ const CardsDisplayer = ({
           value="spells"
           className="grid grid-cols-4 2xl:grid-cols-5"
         >
-          {spells.map((spell) => (
-            <SpellCard
-              key={spell.name + spell.id}
-              {...spell}
-              renderingFrom={renderingThisDisplayFrom}
-            />
-          ))}
+          {spells
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
+            .map((spell) => (
+              <SpellCard
+                key={spell.name + spell.id}
+                {...spell}
+                renderingFrom={renderingThisDisplayFrom}
+              />
+            ))}
         </TabsContent>
       )}
       {weapons && weapons.length > 0 && (
@@ -230,13 +245,15 @@ const CardsDisplayer = ({
           value="weapons"
           className="grid grid-cols-4 2xl:grid-cols-5"
         >
-          {weapons.map((weapon) => (
-            <WeaponCard
-              key={weapon.name + weapon.id}
-              {...weapon}
-              renderingFrom={renderingThisDisplayFrom}
-            />
-          ))}
+          {weapons
+            ?.sort((a, b) => prioritySortingOrder(b) - prioritySortingOrder(a))
+            .map((weapon) => (
+              <WeaponCard
+                key={weapon.name + weapon.id}
+                {...weapon}
+                renderingFrom={renderingThisDisplayFrom}
+              />
+            ))}
         </TabsContent>
       )}
     </Tabs>
