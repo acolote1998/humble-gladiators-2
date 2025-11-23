@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,23 +33,28 @@ public class WeaponTemplate extends AbstractItem {
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
                 Long campaign_id (%s)
-                Requirement requirement (create a requirement object)
                 WeaponCategory category (enum)
                 Integer physicalDamage (1 or 0)
                 Integer magicalDamage (1 or 0)
                 }
                 //
-                // Combat effect flags:
+                // ⚠️ CRITICAL: Combat effect flags validation rules ⚠️
                 //
                 //  - physicalDamage (1 = enables weapon to deal physical damage, 0 = weapon won't deal physical damage)
                 //  - magicalDamage (1 = enables weapon to deal magical damage, 0 = weapon won't deal magical damage)
                 //
-                // Combat effect flags rules:
+                // ⚠️ NON-NEGOTIABLE RULES (validation will fail if violated):
                 //
-                //  - Use 1 to enable, 0 to disable.
-                //  - Never send null values
-                //  - At least one of these flags must be 1
-                //  - Both cannot be 0.
+                //  1. At least ONE of these flags MUST be set to 1 (physicalDamage or magicalDamage).
+                //  2. Both flags CANNOT be 0. If both are 0, validation will fail.
+                //  3. Use 1 to enable, 0 to disable. Never send null values.
+                //
+                // Valid examples:
+                //  - {physicalDamage: 1, magicalDamage: 0} ✅
+                //  - {physicalDamage: 0, magicalDamage: 1} ✅
+                //  - {physicalDamage: 1, magicalDamage: 1} ✅
+                //  - {physicalDamage: 0, magicalDamage: 0} ❌ INVALID (both flags are 0)
+                //
                 """, campaignId.toString());
     }
 
@@ -99,11 +104,6 @@ public class WeaponTemplate extends AbstractItem {
             return false;
         }
 
-        if (!Requirement.isValidRequirement(weapon.getRequirement())) {
-            log.warn("WeaponTemplate validation failed - requirement is invalid. Requirement: {}", weapon.getRequirement());
-            return false;
-        }
-
         if (weapon.getPhysicalDamage() == null || weapon.getPhysicalDamage() < 0) {
             log.warn("WeaponTemplate validation failed - physicalDamage is invalid. Expected: >= 0, Got: {}", weapon.getPhysicalDamage());
             return false;
@@ -121,13 +121,24 @@ public class WeaponTemplate extends AbstractItem {
 
     public static boolean areValidWeapons(List<WeaponTemplate> weapons, Integer expectedAmount) {
         if (weapons.size() != expectedAmount) {
+            log.warn("WeaponTemplate batch validation failed - incorrect list size. Expected: {}, Got: {}", expectedAmount, weapons.size());
             return false;
         }
+        
+        List<String> failedItems = new ArrayList<>();
         for (WeaponTemplate weapon : weapons) {
             if (!WeaponTemplate.isValidWeapon(weapon)) {
-                return false;
+                String itemName = weapon != null && weapon.getName() != null ? weapon.getName() : "null";
+                failedItems.add(itemName);
             }
         }
+        
+        if (!failedItems.isEmpty()) {
+            log.warn("WeaponTemplate batch validation failed - {} out of {} items failed validation. Failed items: {}", 
+                    failedItems.size(), expectedAmount, String.join(", ", failedItems));
+            return false;
+        }
+        
         return true;
     }
 }

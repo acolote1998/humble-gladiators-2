@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,27 +35,34 @@ public class SpellTemplate extends AbstractItem {
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
                 Long campaign_id (%s)
-                Requirement requirement (create a requirement object)
                 SpellCategory category (enum)
                 Integer physicalDamage (1 or 0)
                 Integer magicalDamage (1 or 0)
                 Integer restoreHp (1 or 0)
                 }
                 //
-                // Combat effect flags:
+                // ⚠️ CRITICAL: Combat effect flags validation rules ⚠️
                 //
                 //  - physicalDamage (1 = enables spell to deal physical damage, 0 = spell won't deal physical damage)
                 //  - magicalDamage (1 = enables spell to deal magical damage, 0 = spell won't deal magical damage)
                 //  - restoreHp (1 = enables spell to restore Hp, 0 = spell won't be able to restore Hp)
                 //
-                // Combat effect flags rules:
+                // ⚠️ NON-NEGOTIABLE RULES (validation will fail if violated):
                 //
-                //  - Use 1 to enable, 0 to disable.
-                //  - Never send null values
-                //  - Healing spells (restoreHp = 1) must have physicalDamage = 0 and magicalDamage = 0.
-                //  - Damage spells (physicalDamage = 1 or magicalDamage = 1) must have restoreHp = 0.
-                //  - At least one of these flags must be 1.
-                //  - All three cannot be 0.
+                //  1. At least ONE of these flags MUST be set to 1 (physicalDamage, magicalDamage, or restoreHp).
+                //  2. All three flags CANNOT be 0. If all are 0, validation will fail.
+                //  3. Use 1 to enable, 0 to disable. Never send null values.
+                //  4. Healing spells (restoreHp = 1) must have physicalDamage = 0 and magicalDamage = 0.
+                //  5. Damage spells (physicalDamage = 1 or magicalDamage = 1) must have restoreHp = 0.
+                //
+                // Valid examples:
+                //  - {physicalDamage: 1, magicalDamage: 0, restoreHp: 0} ✅
+                //  - {physicalDamage: 0, magicalDamage: 1, restoreHp: 0} ✅
+                //  - {physicalDamage: 0, magicalDamage: 0, restoreHp: 1} ✅
+                //  - {physicalDamage: 1, magicalDamage: 1, restoreHp: 0} ✅
+                //  - {physicalDamage: 0, magicalDamage: 0, restoreHp: 0} ❌ INVALID (all flags are 0)
+                //  - {physicalDamage: 1, magicalDamage: 0, restoreHp: 1} ❌ INVALID (healing cannot deal damage)
+                //
                 """, campaignId.toString());
     }
 
@@ -105,11 +112,6 @@ public class SpellTemplate extends AbstractItem {
             return false;
         }
 
-        if (!Requirement.isValidRequirement(spell.getRequirement())) {
-            log.warn("SpellTemplate validation failed - requirement is invalid. Requirement: {}", spell.getRequirement());
-            return false;
-        }
-
         if (spell.getPhysicalDamage() == null || spell.getPhysicalDamage() < 0) {
             log.warn("SpellTemplate validation failed - physicalDamage is invalid. Expected: >= 0, Got: {}", spell.getPhysicalDamage());
             return false;
@@ -136,13 +138,24 @@ public class SpellTemplate extends AbstractItem {
 
     public static boolean areValidSpells(List<SpellTemplate> spells, Integer expectedAmount) {
         if (spells.size() != expectedAmount) {
+            log.warn("SpellTemplate batch validation failed - incorrect list size. Expected: {}, Got: {}", expectedAmount, spells.size());
             return false;
         }
+        
+        List<String> failedItems = new ArrayList<>();
         for (SpellTemplate spell : spells) {
             if (!SpellTemplate.isValidSpell(spell)) {
-                return false;
+                String itemName = spell != null && spell.getName() != null ? spell.getName() : "null";
+                failedItems.add(itemName);
             }
         }
+        
+        if (!failedItems.isEmpty()) {
+            log.warn("SpellTemplate batch validation failed - {} out of {} items failed validation. Failed items: {}", 
+                    failedItems.size(), expectedAmount, String.join(", ", failedItems));
+            return false;
+        }
+        
         return true;
     }
 }

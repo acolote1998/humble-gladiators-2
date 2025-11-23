@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
-import com.github.acolote1998.humble_gladiators_2.core.dto.RequirementResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.WeaponCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.WeaponInstance;
@@ -17,7 +16,6 @@ public record WeaponInstanceResponseDto(
         Integer value,
         Integer quantity,
         Boolean equipped,
-        RequirementResponseDto requirement,
         WeaponCategory category,
         Integer physicalDamage,
         Integer magicalDamage,
@@ -35,7 +33,6 @@ public record WeaponInstanceResponseDto(
                 weapon.getValue(),
                 weapon.getQuantity(),
                 weapon.getEquipped(),
-                RequirementResponseDto.fromRequirement(weapon.getRequirement()),
                 weapon.getTemplate().getCategory(),
                 weapon.getTemplate().getPhysicalDamage(),
                 weapon.getTemplate().getMagicalDamage(),

@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,23 +33,29 @@ public class ArmorTemplate extends AbstractItem {
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
                 Long campaign_id (%s)
-                Requirement requirement (create a requirement object)
                 ArmorCategory category (enum)
                 Integer physicalDefense (1 or 0)
                 Integer magicalDefense (1 or 0)
                 }
                 //
-                // Combat effect flags:
+                // ⚠️ CRITICAL: Combat effect flags validation rules ⚠️
                 //
                 //  - physicalDefense (1 = enables armors to provide physical armor, 0 = armors won't provide physical armor)
                 //  - magicalDefense (1 = enables armors to provide magical armor, 0 = armors won't provide magical armor)
                 //
-                // Combat effect flags rules:
+                // ⚠️ NON-NEGOTIABLE RULES (validation will fail if violated):
                 //
-                //  - Use 1 to enable, 0 to disable.
-                //  - Never send null values
-                //  - At least one of these flags must be 1
-                //  - Both cannot be 0.""", campaignId.toString());
+                //  1. At least ONE of these flags MUST be set to 1 (physicalDefense or magicalDefense).
+                //  2. Both flags CANNOT be 0. If both are 0, validation will fail.
+                //  3. Use 1 to enable, 0 to disable. Never send null values.
+                //
+                // Valid examples:
+                //  - {physicalDefense: 1, magicalDefense: 0} ✅
+                //  - {physicalDefense: 0, magicalDefense: 1} ✅
+                //  - {physicalDefense: 1, magicalDefense: 1} ✅
+                //  - {physicalDefense: 0, magicalDefense: 0} ❌ INVALID (both flags are 0)
+                //
+                """, campaignId.toString());
     }
 
     public static boolean isValidArmor(ArmorTemplate armor) {
@@ -98,11 +104,6 @@ public class ArmorTemplate extends AbstractItem {
             return false;
         }
 
-        if (!Requirement.isValidRequirement(armor.getRequirement())) {
-            log.warn("ArmorTemplate validation failed - requirement is invalid. Requirement: {}", armor.getRequirement());
-            return false;
-        }
-
         if (armor.getPhysicalDefense() == null || armor.getPhysicalDefense() < 0) {
             log.warn("ArmorTemplate validation failed - physicalDefense is invalid. Expected: >= 0, Got: {}", armor.getPhysicalDefense());
             return false;
@@ -120,13 +121,24 @@ public class ArmorTemplate extends AbstractItem {
 
     public static boolean areValidArmors(List<ArmorTemplate> armors, Integer expectedAmount) {
         if (armors.size() != expectedAmount) {
+            log.warn("ArmorTemplate batch validation failed - incorrect list size. Expected: {}, Got: {}", expectedAmount, armors.size());
             return false;
         }
+        
+        List<String> failedItems = new ArrayList<>();
         for (ArmorTemplate armor : armors) {
             if (!ArmorTemplate.isValidArmor(armor)) {
-                return false;
+                String itemName = armor != null && armor.getName() != null ? armor.getName() : "null";
+                failedItems.add(itemName);
             }
         }
+        
+        if (!failedItems.isEmpty()) {
+            log.warn("ArmorTemplate batch validation failed - {} out of {} items failed validation. Failed items: {}", 
+                    failedItems.size(), expectedAmount, String.join(", ", failedItems));
+            return false;
+        }
+        
         return true;
     }
 }

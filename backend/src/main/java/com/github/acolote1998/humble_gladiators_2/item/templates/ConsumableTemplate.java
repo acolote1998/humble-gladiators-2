@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,23 +33,29 @@ public class ConsumableTemplate extends AbstractItem {
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
                 Long campaign_id (%s)
-                Requirement requirement (create a requirement object)
                 ConsumablesCategory category (enum)
                 Integer restoreHp (1 or 0)
                 Integer restoreMp (1 or 0)
                 }
                 //
-                // Combat effect flags:
+                // ⚠️ CRITICAL: Combat effect flags validation rules ⚠️
                 //
                 //  - restoreHp (1 = enables consumable to restore hp upon use, 0 = consumable won't restore hp upon use)
                 //  - restoreMp (1 = enables consumable to restore mp upon use, 0 = consumable won't restore mp upon use)
                 //
-                // Combat effect flags rules:
+                // ⚠️ NON-NEGOTIABLE RULES (validation will fail if violated):
                 //
-                //  - Use 1 to enable, 0 to disable.
-                //  - Never send null values
-                //  - At least one of these flags must be 1
-                //  - Both cannot be 0.""", campaignId.toString());
+                //  1. At least ONE of these flags MUST be set to 1 (restoreHp or restoreMp).
+                //  2. Both flags CANNOT be 0. If both are 0, validation will fail.
+                //  3. Use 1 to enable, 0 to disable. Never send null values.
+                //
+                // Valid examples:
+                //  - {restoreHp: 1, restoreMp: 0} ✅
+                //  - {restoreHp: 0, restoreMp: 1} ✅
+                //  - {restoreHp: 1, restoreMp: 1} ✅
+                //  - {restoreHp: 0, restoreMp: 0} ❌ INVALID (both flags are 0)
+                //
+                """, campaignId.toString());
     }
 
     public static boolean isValidConsumable(ConsumableTemplate consumable) {
@@ -98,11 +104,6 @@ public class ConsumableTemplate extends AbstractItem {
             return false;
         }
 
-        if (!Requirement.isValidRequirement(consumable.getRequirement())) {
-            log.warn("ConsumableTemplate validation failed - requirement is invalid. Requirement: {}", consumable.getRequirement());
-            return false;
-        }
-
         if (consumable.getRestoreHp() == null || consumable.getRestoreHp() < 0) {
             log.warn("ConsumableTemplate validation failed - restoreHp is invalid. Expected: >= 0, Got: {}", consumable.getRestoreHp());
             return false;
@@ -120,13 +121,24 @@ public class ConsumableTemplate extends AbstractItem {
 
     public static boolean areValidConsumables(List<ConsumableTemplate> consumables, Integer expectedAmount) {
         if (consumables.size() != expectedAmount) {
+            log.warn("ConsumableTemplate batch validation failed - incorrect list size. Expected: {}, Got: {}", expectedAmount, consumables.size());
             return false;
         }
+        
+        List<String> failedItems = new ArrayList<>();
         for (ConsumableTemplate consumable : consumables) {
             if (!ConsumableTemplate.isValidConsumable(consumable)) {
-                return false;
+                String itemName = consumable != null && consumable.getName() != null ? consumable.getName() : "null";
+                failedItems.add(itemName);
             }
         }
+        
+        if (!failedItems.isEmpty()) {
+            log.warn("ConsumableTemplate batch validation failed - {} out of {} items failed validation. Failed items: {}", 
+                    failedItems.size(), expectedAmount, String.join(", ", failedItems));
+            return false;
+        }
+        
         return true;
     }
 }

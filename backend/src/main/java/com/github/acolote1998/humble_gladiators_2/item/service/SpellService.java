@@ -5,9 +5,7 @@ import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
-import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
@@ -117,7 +115,6 @@ public class SpellService {
                                 + spellTemplate.getRestoreHp())
                                 * spellTemplate.getTier()
                                 * spellTemplate.getRarity());
-                spellTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
                 savedSpellTemplates.add(spellTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
@@ -166,7 +163,6 @@ public class SpellService {
         instance.setQuantity(1);
         instance.setRarity(template.getRarity());
         instance.setTier(template.getTier());
-        instance.setRequirement(Requirement.cloneRequirement(template.getRequirement()));
         instance.setValue(template.getValue());
         return instance;
     }

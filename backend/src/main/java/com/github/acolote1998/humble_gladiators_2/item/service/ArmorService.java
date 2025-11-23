@@ -4,9 +4,7 @@ import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.dto.ItemFromGeminiDto;
 import com.github.acolote1998.humble_gladiators_2.core.exception.InvalidGeminiEnumException;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
-import com.github.acolote1998.humble_gladiators_2.core.service.RequirementService;
 import com.github.acolote1998.humble_gladiators_2.core.util.GeminiEnumParser;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ArmorCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ArmorInstance;
@@ -97,7 +95,6 @@ public class ArmorService {
                         (armorTemplate.getMagicalDefense() + armorTemplate.getPhysicalDefense())
                                 * armorTemplate.getTier()
                                 * armorTemplate.getRarity());
-                armorTemplate.setRequirement(RequirementService.mapRequirementFromGeminiItemDto(dto, campaign));
                 savedArmorTemplates.add(armorTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
@@ -146,7 +143,6 @@ public class ArmorService {
         instance.setQuantity(1);
         instance.setRarity(template.getRarity());
         instance.setTier(template.getTier());
-        instance.setRequirement(Requirement.cloneRequirement(template.getRequirement()));
         instance.setValue(template.getValue());
         return instance;
     }

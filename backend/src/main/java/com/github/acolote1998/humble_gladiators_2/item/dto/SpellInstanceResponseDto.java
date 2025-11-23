@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
-import com.github.acolote1998.humble_gladiators_2.core.dto.RequirementResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.SpellCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.SpellInstance;
@@ -17,7 +16,6 @@ public record SpellInstanceResponseDto(
         Integer value,
         Integer quantity,
         Boolean equipped,
-        RequirementResponseDto requirement,
         SpellCategory category,
         Integer physicalDamage,
         Integer magicalDamage,
@@ -40,7 +38,6 @@ public record SpellInstanceResponseDto(
                         spell.getValue(),
                         spell.getQuantity(),
                         spell.getEquipped(),
-                        RequirementResponseDto.fromRequirement(spell.getRequirement()),
                         spell.getTemplate().getCategory(),
                         spell.getTemplate().getPhysicalDamage(),
                         spell.getTemplate().getMagicalDamage(),
