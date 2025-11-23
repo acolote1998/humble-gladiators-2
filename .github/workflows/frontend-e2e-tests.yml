@@ -65,11 +65,11 @@ jobs:
           RUNWARE_IMG_GEN_URL: ${{ vars.RUNWARE_IMG_GEN_URL }}
           RUNWARE_API_KEY: ${{ vars.RUNWARE_API_KEY }}
           GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
+          GEMINI_API_ENDPOINT: ${{ vars.GEMINI_API_ENDPOINT }}
           GAME_CREATION_STATE_INTERVAL: 0
           USER_MODERATION_ACTIVATED: true
           UNLIMITED_BOOSTERS_ALLOWED: false
           UNLIMITED_BATTLES_ALLOWED: false
-          SKIP_REQUIREMENTS: true
           GENERATE_IMAGES: false
           GENERATE_CAMPAIGN_COVER: false
           GENERATE_CAMPAIGN_CARD_BACK: false
@@ -169,6 +169,8 @@ jobs:
           CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
           CLERK_SECRET_KEY: ${{ vars.CLERK_SECRET_KEY }}
           CLERK_FRONTEND_API_URL: ${{ vars.CLERK_FRONTEND_API_URL }}
+          RUN_CAMPAIGN_CREATION_TIME_TEST: false
+          HEADLESS: true
         run: |
           cd frontend
           npm run e2e-test

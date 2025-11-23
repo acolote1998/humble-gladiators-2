@@ -3,7 +3,6 @@ package com.github.acolote1998.humble_gladiators_2.item.service;
 import com.github.acolote1998.humble_gladiators_2.characters.model.Inventory;
 import com.github.acolote1998.humble_gladiators_2.core.config.GameBalanceConfig;
 import com.github.acolote1998.humble_gladiators_2.core.model.Campaign;
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ConsumablesCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ConsumableInstance;
@@ -144,8 +143,6 @@ class ConsumableServiceTest {
         template.setTier(2);
         template.setValue(100);
         template.setCampaign(campaign);
-        Requirement requirement = new Requirement();
-        template.setRequirement(requirement);
 
         Inventory inventory = new Inventory();
         inventory.setConsumables(new ArrayList<>());

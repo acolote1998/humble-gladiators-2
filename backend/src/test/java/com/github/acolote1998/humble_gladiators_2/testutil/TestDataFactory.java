@@ -93,7 +93,6 @@ public final class TestDataFactory {
         weapon.setCategory(WeaponCategory.SWORD);
         weapon.setPhysicalDamage(10);
         weapon.setMagicalDamage(0);
-        weapon.setRequirement(null); // SKIP_REQUIREMENTS=true
         return repository.save(weapon);
     }
 
@@ -112,7 +111,6 @@ public final class TestDataFactory {
         armor.setCategory(ArmorCategory.PLATE);
         armor.setPhysicalDefense(5);
         armor.setMagicalDefense(0);
-        armor.setRequirement(null);
         return repository.save(armor);
     }
 
@@ -131,7 +129,6 @@ public final class TestDataFactory {
         boots.setCategory(BootsCategory.BOOTS);
         boots.setPhysicalDefense(3);
         boots.setMagicalDefense(0);
-        boots.setRequirement(null);
         return repository.save(boots);
     }
 
@@ -150,7 +147,6 @@ public final class TestDataFactory {
         helmet.setCategory(HelmetCategory.HELMET);
         helmet.setPhysicalDefense(3);
         helmet.setMagicalDefense(0);
-        helmet.setRequirement(null);
         return repository.save(helmet);
     }
 
@@ -169,7 +165,6 @@ public final class TestDataFactory {
         shield.setCategory(ShieldCategory.SHIELD);
         shield.setPhysicalDefense(5);
         shield.setMagicalDefense(0);
-        shield.setRequirement(null);
         return repository.save(shield);
     }
 
@@ -190,7 +185,6 @@ public final class TestDataFactory {
         spell.setMagicalDamage(10);
         spell.setRestoreHp(0);
         spell.setMpCost(5);
-        spell.setRequirement(null);
         return repository.save(spell);
     }
 
@@ -209,7 +203,6 @@ public final class TestDataFactory {
         consumable.setCategory(ConsumablesCategory.FOOD);
         consumable.setRestoreHp(10);
         consumable.setRestoreMp(5);
-        consumable.setRequirement(null);
         return repository.save(consumable);
     }
 

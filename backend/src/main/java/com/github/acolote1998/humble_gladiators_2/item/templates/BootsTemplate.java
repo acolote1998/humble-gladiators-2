@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.templates;
 
-import com.github.acolote1998.humble_gladiators_2.core.model.Requirement;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.model.AbstractItem;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,23 +33,28 @@ public class BootsTemplate extends AbstractItem {
                 Integer rarity (1 - 5)
                 Integer tier (1 - 5)
                 Long campaign_id (%s)
-                Requirement requirement (create a requirement object)
                 BootsCategory category (enum)
                 Integer physicalDefense (1 or 0)
                 Integer magicalDefense (1 or 0)
                 }
                 //
-                // Combat effect flags:
+                // ⚠️ CRITICAL: Combat effect flags validation rules ⚠️
                 //
                 //  - physicalDefense (1 = enables boots to provide physical armor, 0 = boots won't provide physical armor)
                 //  - magicalDefense (1 = enables boots to provide magical armor, 0 = boots won't provide magical armor)
                 //
-                // Combat effect flags rules:
+                // ⚠️ NON-NEGOTIABLE RULES (validation will fail if violated):
                 //
-                //  - Use 1 to enable, 0 to disable.
-                //  - Never send null values
-                //  - At least one of these flags must be 1
-                //  - Both cannot be 0.
+                //  1. At least ONE of these flags MUST be set to 1 (physicalDefense or magicalDefense).
+                //  2. Both flags CANNOT be 0. If both are 0, validation will fail.
+                //  3. Use 1 to enable, 0 to disable. Never send null values.
+                //
+                // Valid examples:
+                //  - {physicalDefense: 1, magicalDefense: 0} ✅
+                //  - {physicalDefense: 0, magicalDefense: 1} ✅
+                //  - {physicalDefense: 1, magicalDefense: 1} ✅
+                //  - {physicalDefense: 0, magicalDefense: 0} ❌ INVALID (both flags are 0)
+                //
                 """, campaignId.toString());
     }
 
@@ -99,11 +104,6 @@ public class BootsTemplate extends AbstractItem {
             return false;
         }
 
-        if (!Requirement.isValidRequirement(boot.getRequirement())) {
-            log.warn("BootsTemplate validation failed - requirement is invalid. Requirement: {}", boot.getRequirement());
-            return false;
-        }
-
         if (boot.getPhysicalDefense() == null || boot.getPhysicalDefense() < 0) {
             log.warn("BootsTemplate validation failed - physicalDefense is invalid. Expected: >= 0, Got: {}", boot.getPhysicalDefense());
             return false;
@@ -121,13 +121,24 @@ public class BootsTemplate extends AbstractItem {
 
     public static boolean areValidBoots(List<BootsTemplate> boots, Integer expectedAmount) {
         if (boots.size() != expectedAmount) {
+            log.warn("BootsTemplate batch validation failed - incorrect list size. Expected: {}, Got: {}", expectedAmount, boots.size());
             return false;
         }
+        
+        List<String> failedItems = new ArrayList<>();
         for (BootsTemplate boot : boots) {
             if (!BootsTemplate.isValidBoot(boot)) {
-                return false;
+                String itemName = boot != null && boot.getName() != null ? boot.getName() : "null";
+                failedItems.add(itemName);
             }
         }
+        
+        if (!failedItems.isEmpty()) {
+            log.warn("BootsTemplate batch validation failed - {} out of {} items failed validation. Failed items: {}", 
+                    failedItems.size(), expectedAmount, String.join(", ", failedItems));
+            return false;
+        }
+        
         return true;
     }
 }

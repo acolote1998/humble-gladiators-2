@@ -37,8 +37,5 @@ spring:
     init:
       mode: ${SQL_INIT_MODE}
 
-#clerk:
-#  api:
-#    secret: ${CLERK_SECRET}
-
 GEMINI_API_KEY: ${GEMINI_API_KEY}
+GEMINI_API_ENDPOINT: ${GEMINI_API_ENDPOINT}

@@ -178,7 +178,6 @@ class BootsServiceIntegrationTest {
         boots.setCategory(BootsCategory.BOOTS);
         boots.setPhysicalDefense(10);
         boots.setMagicalDefense(5);
-        boots.setRequirement(null);
 
         BootsTemplate saved = bootsService.saveBoots(boots);
         
@@ -193,7 +192,7 @@ class BootsServiceIntegrationTest {
     }
 
     @Test
-    void instanceFromBootsTemplate_withRequirementValidation_persistsCorrectly() {
+    void instanceFromBootsTemplate_persistsCorrectly() {
         CharacterInstance hero = TestDataFactory.createHero(characterService, campaign, userId, "Hero");
         BootsTemplate template = TestDataFactory.createTestBootsTemplate(bootsTemplateRepository, entityManager, campaign, userId);
         bootsTemplateRepository.save(template);
@@ -204,14 +203,6 @@ class BootsServiceIntegrationTest {
         Inventory inventory = hero.getInventory();
         BootsInstance instance = bootsService.instanceFromBootsTemplate(template, inventory);
 
-        // Verify requirement is cloned (if template has requirement)
-        if (template.getRequirement() != null) {
-            assertThat(instance.getRequirement()).isNotNull();
-            // Requirement should be a clone, not the same object
-            if (instance.getRequirement() != null && template.getRequirement() != null) {
-                assertThat(instance.getRequirement()).isNotSameAs(template.getRequirement());
-            }
-        }
 
         // Add instance to inventory and persist through character save
         inventory.getBoots().add(instance);

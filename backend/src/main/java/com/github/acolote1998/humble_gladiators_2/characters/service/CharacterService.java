@@ -17,7 +17,6 @@ import com.github.acolote1998.humble_gladiators_2.core.service.BattleUtil;
 import com.github.acolote1998.humble_gladiators_2.core.service.GeminiService;
 import com.github.acolote1998.humble_gladiators_2.item.instances.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,9 +29,6 @@ public class CharacterService {
     CharacterInstanceRepository characterInstanceRepository;
     BattleUtil battleUtil;
     StatsMapper statsMapper;
-
-    @Value("${SKIP_REQUIREMENTS}")
-    private boolean SKIP_REQUIREMENTS;
 
     public CharacterService(GeminiService geminiService,
                             CharacterInstanceRepository characterInstanceRepository,
@@ -64,10 +60,6 @@ public class CharacterService {
                     alreadyEquippedArmor.getName(), alreadyEquippedArmor.getId());
         } else {
             log.info("Hero {} did not have any armor equipped", hero.getName());
-        }
-        if (!SKIP_REQUIREMENTS) {
-            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
-            // REQUIREMENTS TO EQUIP / USE THE ITEM
         }
         armorToEquip.equip();
         saveCharacter(hero);
@@ -121,10 +113,6 @@ public class CharacterService {
         } else {
             log.info("Hero {} did not have any boots equipped", hero.getName());
         }
-        if (!SKIP_REQUIREMENTS) {
-            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
-            // REQUIREMENTS TO EQUIP / USE THE ITEM
-        }
         bootsToEquip.equip();
         saveCharacter(hero);
         log.info("Equipping boots '{}' to hero '{}'", bootsToEquip.getName(), hero.getName());
@@ -176,10 +164,6 @@ public class CharacterService {
                     alreadyEquippedHelmet.getName(), alreadyEquippedHelmet.getId());
         } else {
             log.info("Hero {} did not have any helmet equipped", hero.getName());
-        }
-        if (!SKIP_REQUIREMENTS) {
-            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
-            // REQUIREMENTS TO EQUIP / USE THE ITEM
         }
         helmetToEquip.equip();
         saveCharacter(hero);
@@ -233,10 +217,6 @@ public class CharacterService {
         } else {
             log.info("Hero {} did not have any shield equipped", hero.getName());
         }
-        if (!SKIP_REQUIREMENTS) {
-            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
-            // REQUIREMENTS TO EQUIP / USE THE ITEM
-        }
         shieldToEquip.equip();
         saveCharacter(hero);
         log.info("Equipping shield '{}' to hero '{}'", shieldToEquip.getName(), hero.getName());
@@ -288,10 +268,6 @@ public class CharacterService {
                     alreadyEquippedWeapon.getName(), alreadyEquippedWeapon.getId());
         } else {
             log.info("Hero {} did not have any weapon equipped", hero.getName());
-        }
-        if (!SKIP_REQUIREMENTS) {
-            // HERE IN THE FUTURE CAN DO VALIDATIONS TO SEE IF THE HERO MEETS THE
-            // REQUIREMENTS TO EQUIP / USE THE ITEM
         }
         weaponToEquip.equip();
         saveCharacter(hero);

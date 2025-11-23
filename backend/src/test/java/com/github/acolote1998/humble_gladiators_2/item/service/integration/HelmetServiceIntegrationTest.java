@@ -177,7 +177,6 @@ class HelmetServiceIntegrationTest {
         helmet.setCategory(HelmetCategory.HELMET);
         helmet.setPhysicalDefense(10);
         helmet.setMagicalDefense(5);
-        helmet.setRequirement(null);
 
         HelmetTemplate saved = helmetService.saveHelmet(helmet);
         
@@ -192,7 +191,7 @@ class HelmetServiceIntegrationTest {
     }
 
     @Test
-    void instanceFromHelmetTemplate_withRequirementValidation_persistsCorrectly() {
+    void instanceFromHelmetTemplate_persistsCorrectly() {
         CharacterInstance hero = TestDataFactory.createHero(characterService, campaign, userId, "Hero");
         HelmetTemplate template = TestDataFactory.createTestHelmetTemplate(helmetTemplateRepository, entityManager, campaign, userId);
         helmetTemplateRepository.save(template);
@@ -203,13 +202,6 @@ class HelmetServiceIntegrationTest {
         Inventory inventory = hero.getInventory();
         HelmetInstance instance = helmetService.instanceFromHelmetTemplate(template, inventory);
 
-        // Verify requirement is cloned (if template has requirement)
-        if (template.getRequirement() != null) {
-            assertThat(instance.getRequirement()).isNotNull();
-            if (instance.getRequirement() != null && template.getRequirement() != null) {
-                assertThat(instance.getRequirement()).isNotSameAs(template.getRequirement());
-            }
-        }
 
         // Add instance to inventory and persist through character save
         inventory.getHelmets().add(instance);

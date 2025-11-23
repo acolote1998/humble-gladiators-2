@@ -99,7 +99,6 @@ class GameControllerIntegrationTest {
                         0,
                         false,
                         null,
-                        null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
                         0, // magicalDefense
@@ -128,7 +127,6 @@ class GameControllerIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
@@ -163,7 +161,6 @@ class GameControllerIntegrationTest {
                         0,
                         false,
                         null,
-                        null,
                         categories[categoryIndex % categories.length],
                         null, null,
                         restoreHpFlag,
@@ -194,7 +191,6 @@ class GameControllerIntegrationTest {
                         0,
                         false,
                         null,
-                        null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
                         0, // magicalDefense
@@ -223,7 +219,6 @@ class GameControllerIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         1, // physicalDefense
@@ -254,7 +249,6 @@ class GameControllerIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         null, null,
@@ -287,7 +281,6 @@ class GameControllerIntegrationTest {
                         false,
                         0,
                         false,
-                        null,
                         null,
                         categories[categoryIndex % categories.length],
                         null, null, null, null,

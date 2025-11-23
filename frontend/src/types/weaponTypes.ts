@@ -1,4 +1,3 @@
-import type { RequirementResponseDto } from "./characterTypes";
 import type { RenderingFrom } from "./characterTypes";
 
 export type WeaponType = {
@@ -17,7 +16,6 @@ export type WeaponType = {
   magicalDamage: number;
   renderingFrom: RenderingFrom;
   quantity?: number;
-  requirement?: RequirementResponseDto;
 };
 
 export type WeaponCategoriesEnum =

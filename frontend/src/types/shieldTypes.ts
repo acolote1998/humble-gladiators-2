@@ -1,4 +1,3 @@
-import type { RequirementResponseDto } from "./characterTypes";
 import type { RenderingFrom } from "./characterTypes";
 export type ShieldType = {
   id: number;
@@ -16,7 +15,6 @@ export type ShieldType = {
   magicalDefense: number;
   renderingFrom: RenderingFrom;
   quantity?: number;
-  requirement?: RequirementResponseDto;
 };
 
 export type ShieldCategoriesEnum =

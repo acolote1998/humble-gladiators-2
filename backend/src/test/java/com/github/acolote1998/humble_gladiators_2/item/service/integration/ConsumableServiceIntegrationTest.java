@@ -177,7 +177,6 @@ class ConsumableServiceIntegrationTest {
         consumable.setCategory(ConsumablesCategory.FOOD);
         consumable.setRestoreHp(10);
         consumable.setRestoreMp(5);
-        consumable.setRequirement(null);
 
         ConsumableTemplate saved = consumableService.saveConsumable(consumable);
         
@@ -192,7 +191,7 @@ class ConsumableServiceIntegrationTest {
     }
 
     @Test
-    void instanceFromConsumableTemplate_withRequirementValidation_persistsCorrectly() {
+    void instanceFromConsumableTemplate_persistsCorrectly() {
         CharacterInstance hero = TestDataFactory.createHero(characterService, campaign, userId, "Hero");
         ConsumableTemplate template = TestDataFactory.createTestConsumableTemplate(consumableTemplateRepository, entityManager, campaign, userId);
         consumableTemplateRepository.save(template);
@@ -203,13 +202,6 @@ class ConsumableServiceIntegrationTest {
         Inventory inventory = hero.getInventory();
         ConsumableInstance instance = consumableService.instanceFromConsumableTemplate(template, inventory);
 
-        // Verify requirement is cloned (if template has requirement)
-        if (template.getRequirement() != null) {
-            assertThat(instance.getRequirement()).isNotNull();
-            if (instance.getRequirement() != null && template.getRequirement() != null) {
-                assertThat(instance.getRequirement()).isNotSameAs(template.getRequirement());
-            }
-        }
 
         // Add instance to inventory and persist through character save
         inventory.getConsumables().add(instance);

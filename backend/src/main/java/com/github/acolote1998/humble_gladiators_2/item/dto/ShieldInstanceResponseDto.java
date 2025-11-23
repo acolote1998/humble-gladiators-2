@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
-import com.github.acolote1998.humble_gladiators_2.core.dto.RequirementResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.ShieldCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.ShieldInstance;
@@ -17,7 +16,6 @@ public record ShieldInstanceResponseDto(
         Integer value,
         Integer quantity,
         Boolean equipped,
-        RequirementResponseDto requirement,
         ShieldCategory category,
         Integer physicalDefense,
         Integer magicalDefense,
@@ -35,7 +33,6 @@ public record ShieldInstanceResponseDto(
                 shield.getValue(),
                 shield.getQuantity(),
                 shield.getEquipped(),
-                RequirementResponseDto.fromRequirement(shield.getRequirement()),
                 shield.getTemplate().getCategory(),
                 shield.getTemplate().getPhysicalDefense(),
                 shield.getTemplate().getMagicalDefense(),

@@ -1,6 +1,5 @@
 package com.github.acolote1998.humble_gladiators_2.item.dto;
 
-import com.github.acolote1998.humble_gladiators_2.core.dto.RequirementResponseDto;
 import com.github.acolote1998.humble_gladiators_2.core.util.BytesToBase64;
 import com.github.acolote1998.humble_gladiators_2.item.enums.BootsCategory;
 import com.github.acolote1998.humble_gladiators_2.item.instances.BootsInstance;
@@ -17,7 +16,6 @@ public record BootsInstanceResponseDto(
         Integer value,
         Integer quantity,
         Boolean equipped,
-        RequirementResponseDto requirement,
         BootsCategory category,
         Integer physicalDefense,
         Integer magicalDefense,
@@ -35,7 +33,6 @@ public record BootsInstanceResponseDto(
                 boots.getValue(),
                 boots.getQuantity(),
                 boots.getEquipped(),
-                RequirementResponseDto.fromRequirement(boots.getRequirement()),
                 boots.getTemplate().getCategory(),
                 boots.getTemplate().getPhysicalDefense(),
                 boots.getTemplate().getMagicalDefense(),

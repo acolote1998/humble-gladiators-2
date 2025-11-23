@@ -38,36 +38,6 @@ UPDATE campaign
 SET user_moderation_id = 1  -- ID of the user_moderation you just inserted
 WHERE id = 1;  -- ID of the campaign you want to update
 
--- Insert Requirements for items
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-INSERT INTO requirements (campaign_id, created_at, updated_at)
-VALUES (1, NOW(), NOW());
-
 -- Insert Inventories for characters
 INSERT INTO inventory (gold, created_at, updated_at)
 VALUES (100, NOW(), NOW());
@@ -99,89 +69,89 @@ VALUES ('user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'Mystic Elara', 'A powerful mage 
 
 -- Insert Armor Templates (2)
 INSERT INTO armor_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                            campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                            campaign_id, category, physical_defense, magical_defense, created_at,
                             updated_at)
 VALUES ('Iron Chainmail', 'Sturdy chainmail armor forged from iron', 1, 1, 840, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 1, 'MAIL', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'MAIL', 10, 10, NOW(), NOW());
 
 INSERT INTO armor_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                            campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                            campaign_id, category, physical_defense, magical_defense, created_at,
                             updated_at)
 VALUES ('Dragon Scale Plate', 'Legendary armor crafted from dragon scales', 5, 4, 1990, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 2, 'PLATE', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'PLATE', 10, 10, NOW(), NOW());
 
 -- Insert Boots Templates (2)
 INSERT INTO boots_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                            campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                            campaign_id, category, physical_defense, magical_defense, created_at,
                             updated_at)
 VALUES ('Leather Boots', 'Simple leather boots for basic protection', 1, 1, 320, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 3, 'BOOTS', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'BOOTS', 10, 10, NOW(), NOW());
 
 INSERT INTO boots_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                            campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                            campaign_id, category, physical_defense, magical_defense, created_at,
                             updated_at)
 VALUES ('Boots of Swiftness', 'Enchanted boots that enhance movement speed', 4, 3, 1210, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 4, 'COMBAT_BOOTS', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'COMBAT_BOOTS', 10, 10, NOW(), NOW());
 
 -- Insert Consumable Templates (2)
 INSERT INTO consumable_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                                 campaign_id, requirement_id, category, restore_hp, restore_mp, created_at, updated_at)
+                                 campaign_id, category, restore_hp, restore_mp, created_at, updated_at)
 VALUES ('Health Potion', 'A red potion that restores health', 1, 1, 26, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 5, 'MEDICINE', 30, 30, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'MEDICINE', 30, 30, NOW(), NOW());
 
 INSERT INTO consumable_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                                 campaign_id, requirement_id, category, restore_hp, restore_mp, created_at, updated_at)
+                                 campaign_id, category, restore_hp, restore_mp, created_at, updated_at)
 VALUES ('Mana Elixir', 'A blue elixir that restores magical energy', 3, 2, 65, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 6, 'DRINK', 0, 0, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'DRINK', 0, 0, NOW(), NOW());
 
 -- Insert Helmet Templates (2)
 INSERT INTO helmet_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                             campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                             campaign_id, category, physical_defense, magical_defense, created_at,
                              updated_at)
 VALUES ('Iron Helm', 'A basic iron helmet for head protection', 1, 1, 720, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 7, 'HELMET', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'HELMET', 10, 10, NOW(), NOW());
 
 INSERT INTO helmet_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                             campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                             campaign_id, category, physical_defense, magical_defense, created_at,
                              updated_at)
 VALUES ('Crown of Wisdom', 'A magical crown that enhances intelligence', 5, 3, 1640, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 8, 'DECORATIVE_HELMET', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'DECORATIVE_HELMET', 10, 10, NOW(), NOW());
 
 -- Insert Shield Templates (2)
 INSERT INTO shield_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                             campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                             campaign_id, category, physical_defense, magical_defense, created_at,
                              updated_at)
 VALUES ('Wooden Shield', 'A simple wooden shield for basic defense', 1, 1, 400, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 9, 'SHIELD', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'SHIELD', 10, 10, NOW(), NOW());
 
 INSERT INTO shield_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                             campaign_id, requirement_id, category, physical_defense, magical_defense, created_at,
+                             campaign_id, category, physical_defense, magical_defense, created_at,
                              updated_at)
 VALUES ('Tower Shield of Fortitude', 'A massive shield providing excellent protection', 4, 4, 1600, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 10, 'SHIELD', 10, 10, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'SHIELD', 10, 10, NOW(), NOW());
 
 -- Insert Spell Templates (2)
 INSERT INTO spell_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                            campaign_id, requirement_id, category, physical_damage, magical_damage, restore_hp, mp_cost,
+                            campaign_id, category, physical_damage, magical_damage, restore_hp, mp_cost,
                             created_at, updated_at)
 VALUES ('Fireball', 'A blazing sphere of fire that damages enemies', 1, 1, 720, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 11, 'FIRE_SPELL', 35, 35, 10, 20, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'FIRE_SPELL', 35, 35, 10, 20, NOW(), NOW());
 
 INSERT INTO spell_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                            campaign_id, requirement_id, category, physical_damage, magical_damage, restore_hp,
+                            campaign_id, category, physical_damage, magical_damage, restore_hp,
                             created_at, updated_at)
 VALUES ('Healing Light', 'A divine spell that restores health to allies', 3, 3, 1080, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 12, 'HEALING_SPELL', 0, 0, 1, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'HEALING_SPELL', 0, 0, 1, NOW(), NOW());
 
 -- Insert Weapon Templates (2)
 INSERT INTO weapon_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                             campaign_id, requirement_id, category, physical_damage, magical_damage, created_at,
+                             campaign_id, category, physical_damage, magical_damage, created_at,
                              updated_at)
 VALUES ('Iron Sword', 'A well-crafted iron sword with a sharp edge', 1, 1, 720, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 13, 'SWORD', 30, 0, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'SWORD', 30, 0, NOW(), NOW());
 
 INSERT INTO weapon_template (name, description, rarity, tier, value, discovered, quantity, equipped, user_id,
-                             campaign_id, requirement_id, category, physical_damage, magical_damage, created_at,
+                             campaign_id, category, physical_damage, magical_damage, created_at,
                              updated_at)
 VALUES ('Staff of Arcane Power', 'A magical staff imbued with mystical energy', 4, 3, 1320, false, 0, false,
-        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 14, 'STAFF', 0, 1, NOW(), NOW());
+        'user_34n5IeSYhlBZuJl7tYBKGMTmIjh', 1, 'STAFF', 0, 1, NOW(), NOW());
