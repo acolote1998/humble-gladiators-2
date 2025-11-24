@@ -41,7 +41,10 @@ public abstract class AbstractCharacter {
     @JdbcTypeCode(SqlTypes.BINARY)
     byte[] backgroundImgBytes;
 
+    @Column(length = 512)
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
