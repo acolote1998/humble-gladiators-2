@@ -66,8 +66,8 @@ public class WeaponService {
         return itemValues;
     }
 
-    public List<WeaponTemplate> createTwentyFiveNewWeaponTemplates(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveWeapons(campaign);
+    public List<WeaponTemplate> createFiveNewWeaponTemplatesOfTier(Campaign campaign, Integer tier) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiveWeaponsOfTier(campaign, tier);
         List<WeaponTemplate> savedWeaponTemplates = new ArrayList<>();
 
         try {
@@ -100,18 +100,18 @@ public class WeaponService {
                 savedWeaponTemplates.add(weaponTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated weapons not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
-            return createTwentyFiveNewWeaponTemplates(campaign);
+            log.warn(String.format("Campaign %s - Generated weapons tier %s not valid (enum mismatch) -> Generating again", campaign.getId(), tier), ex);
+            return createFiveNewWeaponTemplatesOfTier(campaign, tier);
         }
 
-        if (!WeaponTemplate.areValidWeapons(savedWeaponTemplates, 25)) {
-            log.warn(String.format("Campaign %s - Generated weapons not valid -> Generating again", campaign.getId()));
-            return createTwentyFiveNewWeaponTemplates(campaign);
+        if (!WeaponTemplate.areValidWeapons(savedWeaponTemplates, 5)) {
+            log.warn(String.format("Campaign %s - Generated weapons tier %s not valid -> Generating again", campaign.getId(), tier));
+            return createFiveNewWeaponTemplatesOfTier(campaign, tier);
         }
 
         weaponTemplateRepository.saveAll(savedWeaponTemplates);
 
-        log.info(savedWeaponTemplates.size() + " weapons successfully created an persisted");
+        log.info(savedWeaponTemplates.size() + " weapons tier " + tier + " successfully created an persisted");
 
         return savedWeaponTemplates;
     }
