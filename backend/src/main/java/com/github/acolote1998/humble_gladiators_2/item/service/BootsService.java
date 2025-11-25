@@ -36,8 +36,8 @@ public class BootsService {
         return context;
     }
 
-    public List<BootsTemplate> createTwentyFiveNewBootsTemplates(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveBoots(campaign);
+    public List<BootsTemplate> createFiveNewBootsTemplatesOfTier(Campaign campaign, Integer tier) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiveBootsOfTier(campaign, tier);
         List<BootsTemplate> savedBootsTemplates = new ArrayList<>();
 
         try {
@@ -70,18 +70,18 @@ public class BootsService {
                 savedBootsTemplates.add(bootsTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated boots not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
-            return createTwentyFiveNewBootsTemplates(campaign);
+            log.warn(String.format("Campaign %s - Generated boots tier %s not valid (enum mismatch) -> Generating again", campaign.getId(), tier), ex);
+            return createFiveNewBootsTemplatesOfTier(campaign, tier);
         }
 
-        if (!BootsTemplate.areValidBoots(savedBootsTemplates, 25)) {
-            log.warn(String.format("Campaign %s - Generated boots not valid -> Generating again", campaign.getId()));
-            return createTwentyFiveNewBootsTemplates(campaign);
+        if (!BootsTemplate.areValidBoots(savedBootsTemplates, 5)) {
+            log.warn(String.format("Campaign %s - Generated boots tier %s not valid -> Generating again", campaign.getId(), tier));
+            return createFiveNewBootsTemplatesOfTier(campaign, tier);
         }
 
         bootsTemplateRepository.saveAll(savedBootsTemplates);
 
-        log.info(savedBootsTemplates.size() + " boots successfully created an persisted");
+        log.info(savedBootsTemplates.size() + " boots tier " + tier + " successfully created an persisted");
 
         return savedBootsTemplates;
     }
