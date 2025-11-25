@@ -67,8 +67,8 @@ public class SpellService {
         return itemValues;
     }
 
-    public List<SpellTemplate> createTwentyFiveNewSpellTemplates(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveSpells(campaign);
+    public List<SpellTemplate> createFiveNewSpellTemplatesOfTier(Campaign campaign, Integer tier) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiveSpellsOfTier(campaign, tier);
         List<SpellTemplate> savedSpellTemplates = new ArrayList<>();
 
         try {
@@ -118,18 +118,18 @@ public class SpellService {
                 savedSpellTemplates.add(spellTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated spells not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
-            return createTwentyFiveNewSpellTemplates(campaign);
+            log.warn(String.format("Campaign %s - Generated spells tier %s not valid (enum mismatch) -> Generating again", campaign.getId(), tier), ex);
+            return createFiveNewSpellTemplatesOfTier(campaign, tier);
         }
 
-        if (!SpellTemplate.areValidSpells(savedSpellTemplates, 25)) {
-            log.warn(String.format("Campaign %s - Generated spells not valid -> Generating again", campaign.getId()));
-            return createTwentyFiveNewSpellTemplates(campaign);
+        if (!SpellTemplate.areValidSpells(savedSpellTemplates, 5)) {
+            log.warn(String.format("Campaign %s - Generated spells tier %s not valid -> Generating again", campaign.getId(), tier));
+            return createFiveNewSpellTemplatesOfTier(campaign, tier);
         }
 
         spellTemplateRepository.saveAll(savedSpellTemplates);
 
-        log.info(savedSpellTemplates.size() + " spells successfully created an persisted");
+        log.info(savedSpellTemplates.size() + " spells tier " + tier + " successfully created an persisted");
 
         return savedSpellTemplates;
     }
