@@ -64,8 +64,8 @@ public class ShieldService {
         return itemValues;
     }
 
-    public List<ShieldTemplate> createTwentyFiveNewShieldTemplates(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveShields(campaign);
+    public List<ShieldTemplate> createFiveNewShieldTemplatesOfTier(Campaign campaign, Integer tier) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiveShieldsOfTier(campaign, tier);
         List<ShieldTemplate> savedShieldTemplates = new ArrayList<>();
 
         try {
@@ -98,18 +98,18 @@ public class ShieldService {
                 savedShieldTemplates.add(shieldTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated shields not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
-            return createTwentyFiveNewShieldTemplates(campaign);
+            log.warn(String.format("Campaign %s - Generated shields tier %s not valid (enum mismatch) -> Generating again", campaign.getId(), tier), ex);
+            return createFiveNewShieldTemplatesOfTier(campaign, tier);
         }
 
-        if (!ShieldTemplate.areValidShields(savedShieldTemplates, 25)) {
-            log.warn(String.format("Campaign %s - Generated shields not valid -> Generating again", campaign.getId()));
-            return createTwentyFiveNewShieldTemplates(campaign);
+        if (!ShieldTemplate.areValidShields(savedShieldTemplates, 5)) {
+            log.warn(String.format("Campaign %s - Generated shields tier %s not valid -> Generating again", campaign.getId(), tier));
+            return createFiveNewShieldTemplatesOfTier(campaign, tier);
         }
 
         shieldTemplateRepository.saveAll(savedShieldTemplates);
 
-        log.info(savedShieldTemplates.size() + " shields successfully created an persisted");
+        log.info(savedShieldTemplates.size() + " shields tier " + tier + " successfully created an persisted");
 
         return savedShieldTemplates;
     }
