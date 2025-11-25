@@ -65,19 +65,21 @@ class GameControllerIntegrationTest {
     }
     
     private void setupGeminiServiceMocks() {
-        // Mock all item generation methods to return 25 valid items
-        when(geminiService.generateTwentyFiveArmors(any(Campaign.class))).thenReturn(createValidArmors(25));
-        when(geminiService.generateTwentyFiveBoots(any(Campaign.class))).thenReturn(createValidBoots(25));
-        when(geminiService.generateTwentyFiveConsumables(any(Campaign.class))).thenReturn(createValidConsumables(25));
-        when(geminiService.generateTwentyFiveHelmets(any(Campaign.class))).thenReturn(createValidHelmets(25));
-        when(geminiService.generateTwentyFiveShields(any(Campaign.class))).thenReturn(createValidShields(25));
-        when(geminiService.generateTwentyFiveSpells(any(Campaign.class))).thenReturn(createValidSpells(25));
-        when(geminiService.generateTwentyFiveWeapons(any(Campaign.class))).thenReturn(createValidWeapons(25));
-        
-        // Mock NPC generation for each tier (1-5)
+        // Mock all item generation methods to return 5 valid items per tier (1-5)
         for (int tier = 1; tier <= 5; tier++) {
-            when(geminiService.generateTenNpcsOfDesiredTier(any(Campaign.class), any(), eq(tier)))
-                    .thenReturn(createValidNPCs(10, tier));
+            when(geminiService.generateFiveArmorsOfTier(any(Campaign.class), eq(tier))).thenReturn(createValidArmors(5));
+            when(geminiService.generateFiveBootsOfTier(any(Campaign.class), eq(tier))).thenReturn(createValidBoots(5));
+            when(geminiService.generateFiveConsumablesOfTier(any(Campaign.class), eq(tier))).thenReturn(createValidConsumables(5));
+            when(geminiService.generateFiveHelmetsOfTier(any(Campaign.class), eq(tier))).thenReturn(createValidHelmets(5));
+            when(geminiService.generateFiveShieldsOfTier(any(Campaign.class), eq(tier))).thenReturn(createValidShields(5));
+            when(geminiService.generateFiveSpellsOfTier(any(Campaign.class), eq(tier))).thenReturn(createValidSpells(5));
+            when(geminiService.generateFiveWeaponsOfTier(any(Campaign.class), eq(tier))).thenReturn(createValidWeapons(5));
+        }
+        
+        // Mock NPC generation for each tier (1-5) - called twice per tier
+        for (int tier = 1; tier <= 5; tier++) {
+            when(geminiService.generateFiveNpcsOfTier(any(Campaign.class), any(), eq(tier)))
+                    .thenReturn(createValidNPCs(5, tier));
         }
     }
     
@@ -301,9 +303,9 @@ class GameControllerIntegrationTest {
         for (int i = 0; i < count; i++) {
             int rarity = (i % 5) + 1;
             int level = 1 + tier;
-            // goldReward = level * 10 * rarity * tier (from CharacterService.createTenNPCsOfDesiredTier)
+            // goldReward = level * 10 * rarity * tier (from CharacterService.createFiveNPCsOfTier)
             int goldReward = level * 10 * rarity * tier;
-            // expReward = level * 20 * rarity * tier (from CharacterService.createTenNPCsOfDesiredTier)
+            // expReward = level * 20 * rarity * tier (from CharacterService.createFiveNPCsOfTier)
             int expReward = level * 20 * rarity * tier;
             npcs.add(new CharacterFromGeminiDto(
                     new CharacterFromGeminiDto.StatsFromGemini(
