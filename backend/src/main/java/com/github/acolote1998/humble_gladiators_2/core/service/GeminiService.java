@@ -216,8 +216,8 @@ public class GeminiService {
         return pojoResponse;
     }
 
-    public List<ItemFromGeminiDto> generateTwentyFiveArmors(Campaign campaign) {
-        log.info("Trying to generate 25 armors through Gemini");
+    public List<ItemFromGeminiDto> generateFiveArmorsOfTier(Campaign campaign, Integer tier) {
+        log.info(String.format("Trying to generate 5 armors Tier %s through Gemini", tier));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -233,7 +233,7 @@ public class GeminiService {
                 - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense armor
                 - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
                 
-                Generate in json format an Array of 25 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -245,7 +245,7 @@ public class GeminiService {
                 
                 The ArmorCategory values are: \n%s
                 
-                    - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                    - Generate 1 object of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {Armor tier %s, rarity 1}, {Armor tier %s, rarity 2}, etc.
                     - The only allowed object categories are things like: armors, robes, cloaks, capes, chestplates, breastplates and chest wear objects.
                     - Do not invent or include any other equipment types (for example helmets, gloves, shields).
                 
@@ -259,15 +259,16 @@ public class GeminiService {
                 campaignTheme,
                 ArmorTemplate.ObjectStructure(campaignId),
                 ArmorCategory.AllArmorCategoryToString(),
-                "Armor",
-                "Armor",
+                tier,
+                tier,
+                tier,
                 GetGeneralObjectGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating armors: " + e.getMessage());
+            log.error("Error generating armors tier " + tier + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
@@ -279,13 +280,13 @@ public class GeminiService {
             log.error("Could not map generated armors to ItemFromGeminiDto " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole armor generation again due to invalid generation");
-            return generateTwentyFiveArmors(campaign);
+            return generateFiveArmorsOfTier(campaign, tier);
         }
         return generatedArmors;
     }
 
-    public List<ItemFromGeminiDto> generateTwentyFiveBoots(Campaign campaign) {
-        log.info("Trying to generate 25 boots through Gemini");
+    public List<ItemFromGeminiDto> generateFiveBootsOfTier(Campaign campaign, Integer tier) {
+        log.info(String.format("Trying to generate 5 boots Tier %s through Gemini", tier));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -301,7 +302,7 @@ public class GeminiService {
                 - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense boots
                 - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
                 
-                Generate in json format an Array of 25 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -313,7 +314,7 @@ public class GeminiService {
                 
                 The BootsCategory values are: \n%s
                 
-                    - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                    - Generate 1 object of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {Boot tier %s, rarity 1}, {Boot tier %s, rarity 2}, etc.
                 
                 ⚠️ REMINDER: Before generating, verify each boots has at least one flag (physicalDefense or magicalDefense) set to 1. Both cannot be 0.
                 %s
@@ -325,15 +326,16 @@ public class GeminiService {
                 campaignTheme,
                 BootsTemplate.ObjectStructure(campaignId),
                 BootsCategory.AllBootsCategoryToString(),
-                "Boot",
-                "Boot",
+                tier,
+                tier,
+                tier,
                 GetGeneralObjectGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating boots: " + e.getMessage());
+            log.error("Error generating boots tier " + tier + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
@@ -345,13 +347,13 @@ public class GeminiService {
             log.error("Could not map generated boots to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole boots generation again due to invalid generation");
-            return generateTwentyFiveBoots(campaign);
+            return generateFiveBootsOfTier(campaign, tier);
         }
         return generatedBoots;
     }
 
-    public List<ItemFromGeminiDto> generateTwentyFiveConsumables(Campaign campaign) {
-        log.info("Trying to generate 25 consumables through Gemini");
+    public List<ItemFromGeminiDto> generateFiveConsumablesOfTier(Campaign campaign, Integer tier) {
+        log.info(String.format("Trying to generate 5 consumables Tier %s through Gemini", tier));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -367,7 +369,7 @@ public class GeminiService {
                 - {restoreHp: 1, restoreMp: 1} - Hybrid restoration consumable
                 - {restoreHp: 0, restoreMp: 0} - INVALID (both flags are 0)
                 
-                Generate in json format an Array of 25 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -379,7 +381,7 @@ public class GeminiService {
                 
                 The ConsumablesCategory values are: \n%s
                 
-                    - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                    - Generate 1 object of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {Consumable tier %s, rarity 1}, {Consumable tier %s, rarity 2}, etc.
                 
                 ⚠️ REMINDER: Before generating, verify each consumable has at least one flag (restoreHp or restoreMp) set to 1. Both cannot be 0.
                 %s
@@ -391,15 +393,16 @@ public class GeminiService {
                 campaignTheme,
                 ConsumableTemplate.ObjectStructure(campaignId),
                 ConsumablesCategory.AllConsumablesCategoryToString(),
-                "Consumable",
-                "Consumable",
+                tier,
+                tier,
+                tier,
                 GetGeneralObjectGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating consumables: " + e.getMessage());
+            log.error("Error generating consumables tier " + tier + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
@@ -411,13 +414,13 @@ public class GeminiService {
             log.error("Could not map generated consumables to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole consumables generation again due to invalid generation");
-            return generateTwentyFiveConsumables(campaign);
+            return generateFiveConsumablesOfTier(campaign, tier);
         }
         return generatedConsumables;
     }
 
-    public List<ItemFromGeminiDto> generateTwentyFiveHelmets(Campaign campaign) {
-        log.info("Trying to generate 25 helmets through Gemini");
+    public List<ItemFromGeminiDto> generateFiveHelmetsOfTier(Campaign campaign, Integer tier) {
+        log.info(String.format("Trying to generate 5 helmets Tier %s through Gemini", tier));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -433,7 +436,7 @@ public class GeminiService {
                 - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense helmet
                 - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
                 
-                Generate in json format an Array of 25 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -445,7 +448,7 @@ public class GeminiService {
                 
                 The HelmetCategory values are: \n%s
                 
-                    - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                    - Generate 1 object of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {Helmet tier %s, rarity 1}, {Helmet tier %s, rarity 2}, etc.
                 
                 ⚠️ REMINDER: Before generating, verify each helmet has at least one flag (physicalDefense or magicalDefense) set to 1. Both cannot be 0.
                 %s
@@ -457,15 +460,16 @@ public class GeminiService {
                 campaignTheme,
                 HelmetTemplate.ObjectStructure(campaignId),
                 HelmetCategory.AllHelmetCategoryToString(),
-                "Helmet",
-                "Helmet",
+                tier,
+                tier,
+                tier,
                 GetGeneralObjectGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating helmets: " + e.getMessage());
+            log.error("Error generating helmets tier " + tier + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
@@ -477,13 +481,13 @@ public class GeminiService {
             log.error("Could not map generated helmets to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole helmets generation again due to invalid generation");
-            return generateTwentyFiveHelmets(campaign);
+            return generateFiveHelmetsOfTier(campaign, tier);
         }
         return generatedHelmets;
     }
 
-    public List<ItemFromGeminiDto> generateTwentyFiveShields(Campaign campaign) {
-        log.info("Trying to generate 25 shields through Gemini");
+    public List<ItemFromGeminiDto> generateFiveShieldsOfTier(Campaign campaign, Integer tier) {
+        log.info(String.format("Trying to generate 5 shields Tier %s through Gemini", tier));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -499,7 +503,7 @@ public class GeminiService {
                 - {physicalDefense: 1, magicalDefense: 1} - Hybrid defense shield
                 - {physicalDefense: 0, magicalDefense: 0} - INVALID (both flags are 0)
                 
-                Generate in json format an Array of 25 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -511,7 +515,7 @@ public class GeminiService {
                 
                 The ShieldCategory values are: \n%s
                 
-                    - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                    - Generate 1 object of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {Shield tier %s, rarity 1}, {Shield tier %s, rarity 2}, etc.
                     - You must always reinterpret "Shield" in the context of the campaign theme.
                     - A "Shield" does not always mean a physical shield.
                     - Instead, treat it as a right-hand defensive or thematic equipment item.
@@ -529,15 +533,16 @@ public class GeminiService {
                 campaignTheme,
                 ShieldTemplate.ObjectStructure(campaignId),
                 ShieldCategory.AllShieldCategoryToString(),
-                "Shield",
-                "Shield",
+                tier,
+                tier,
+                tier,
                 GetGeneralObjectGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating shields: " + e.getMessage());
+            log.error("Error generating shields tier " + tier + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
@@ -549,13 +554,13 @@ public class GeminiService {
             log.error("Could not map generated shields to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole shields generation again due to invalid generation");
-            return generateTwentyFiveShields(campaign);
+            return generateFiveShieldsOfTier(campaign, tier);
         }
         return generatedShields;
     }
 
-    public List<ItemFromGeminiDto> generateTwentyFiveSpells(Campaign campaign) {
-        log.info("Trying to generate 25 spells through Gemini");
+    public List<ItemFromGeminiDto> generateFiveSpellsOfTier(Campaign campaign, Integer tier) {
+        log.info(String.format("Trying to generate 5 spells Tier %s through Gemini", tier));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -565,18 +570,9 @@ public class GeminiService {
                 Each spell MUST have at least one combat effect flag set to 1 (physicalDamage, magicalDamage, or restoreHp). 
                 Validation will FAIL if all three flags are 0. This is a non-negotiable requirement.
                 
-                Valid flag combinations (at least one must be 1):
-                - {physicalDamage: 1, magicalDamage: 0, restoreHp: 0} - Physical damage spell
-                - {physicalDamage: 0, magicalDamage: 1, restoreHp: 0} - Magical damage spell
-                - {physicalDamage: 0, magicalDamage: 0, restoreHp: 1} - Healing spell
-                - {physicalDamage: 1, magicalDamage: 1, restoreHp: 0} - Hybrid damage spell
-                - {physicalDamage: 1, magicalDamage: 0, restoreHp: 1} - INVALID (healing cannot deal damage)
-                - {physicalDamage: 0, magicalDamage: 1, restoreHp: 1} - INVALID (healing cannot deal damage)
-                - {physicalDamage: 0, magicalDamage: 0, restoreHp: 0} - INVALID (all flags are 0)
+            
                 
-                For non-magical themes, interpret "spells" as special abilities (e.g., grenades→physicalDamage, medkits→restoreHp, airstrikes→magicalDamage).
-                
-                Generate in json format an Array of 25 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -588,7 +584,7 @@ public class GeminiService {
                 
                 The SpellCategory values are: \n%s
                 
-                    - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                    - Generate 1 object of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {Spell tier %s, rarity 1}, {Spell tier %s, rarity 2}, etc.
                 
                 ⚠️ REMINDER: Before generating, verify each spell has at least one flag (physicalDamage, magicalDamage, or restoreHp) set to 1. All three cannot be 0.
                 %s
@@ -600,15 +596,16 @@ public class GeminiService {
                 campaignTheme,
                 SpellTemplate.ObjectStructure(campaignId),
                 SpellCategory.AllSpellCategoryToString(),
-                "Spell",
-                "Spell",
+                tier,
+                tier,
+                tier,
                 GetGeneralObjectGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating Spell: " + e.getMessage());
+            log.error("Error generating Spell tier " + tier + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
@@ -620,13 +617,13 @@ public class GeminiService {
             log.error("Could not map generated spells to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole spells generation again due to invalid generation");
-            return generateTwentyFiveSpells(campaign);
+            return generateFiveSpellsOfTier(campaign, tier);
         }
         return generatedSpells;
     }
 
-    public List<ItemFromGeminiDto> generateTwentyFiveWeapons(Campaign campaign) {
-        log.info("Trying to generate 25 weapons through Gemini");
+    public List<ItemFromGeminiDto> generateFiveWeaponsOfTier(Campaign campaign, Integer tier) {
+        log.info(String.format("Trying to generate 5 weapons Tier %s through Gemini", tier));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String rawPrompt = """
@@ -642,7 +639,7 @@ public class GeminiService {
                 - {physicalDamage: 1, magicalDamage: 1} - Hybrid weapon
                 - {physicalDamage: 0, magicalDamage: 0} - INVALID (both flags are 0)
                 
-                Generate in json format an Array of 25 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -654,7 +651,7 @@ public class GeminiService {
                 
                 The WeaponCategory values are: \n%s
                 
-                    - Generate 1 object of each tier and each rarity. Example: {%s tier 1, rarity 1}, {%s tier 1 rarity 2}, etc.
+                    - Generate 1 object of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {Weapon tier %s, rarity 1}, {Weapon tier %s, rarity 2}, etc.
                 
                 ⚠️ REMINDER: Before generating, verify each weapon has at least one flag (physicalDamage or magicalDamage) set to 1. Both cannot be 0.
                 %s
@@ -666,15 +663,16 @@ public class GeminiService {
                 campaignTheme,
                 WeaponTemplate.ObjectStructure(campaignId),
                 WeaponCategory.AllWeaponCategoryToString(),
-                "Weapon",
-                "Weapon",
+                tier,
+                tier,
+                tier,
                 GetGeneralObjectGenerationRules());
 
         String rawAnswer = "";
         try {
             rawAnswer = callGemini(formattedPrompt);
         } catch (InterruptedException e) {
-            log.error("Error generating Weapon: " + e.getMessage());
+            log.error("Error generating Weapon tier " + tier + ": " + e.getMessage());
         }
         String processedAnswer = cleanResponseToJson(rawAnswer);
 
@@ -686,15 +684,15 @@ public class GeminiService {
             log.error("Could not map generated weapons to ItemFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole weapons generation again due to invalid generation");
-            return generateTwentyFiveWeapons(campaign);
+            return generateFiveWeaponsOfTier(campaign, tier);
         }
         return generatedWeapons;
     }
 
-    public List<CharacterFromGeminiDto> generateTenNpcsOfDesiredTier(Campaign campaign,
-                                                                     List<CharacterInstance> existingCharsForContext,
-                                                                     Integer tierToGenerate) {
-        log.info(String.format("Trying to generate 10 NPCs Tier %s through Gemini", tierToGenerate));
+    public List<CharacterFromGeminiDto> generateFiveNpcsOfTier(Campaign campaign,
+                                                               List<CharacterInstance> existingCharsForContext,
+                                                               Integer tierToGenerate) {
+        log.info(String.format("Trying to generate 5 NPCs Tier %s through Gemini", tierToGenerate));
         Long campaignId = campaign.getId();
         String campaignTheme = campaign.getTheme().toString();
         String charsForContext = "";
@@ -709,7 +707,7 @@ public class GeminiService {
         String rawPrompt = """
                 You are generating data to create content for an RPG game.
                 
-                Generate in json format an Array of 10 "%s".
+                Generate in json format an Array of 5 "%s".
                 
                 The name, description have to be tailored to the theme context
                     - Create content following the wantedThemes
@@ -726,7 +724,7 @@ public class GeminiService {
                 %s
                 
                     - Do not force the generation to fit the CharacterCategory, if an object does not fit or does not make sense, just use "OTHER"
-                    - Generate 2 NPCs of tier %s for each rarity level. Example: {NPC1 tier %s, rarity 1}, {NPC2 tier %s, rarity 1}, {NPC3 tier %s, rarity 2}, etc.
+                    - Generate 1 NPC of tier %s for each rarity level (rarity 1, rarity 2, rarity 3, rarity 4, rarity 5). Example: {NPC tier %s, rarity 1}, {NPC tier %s, rarity 2}, etc.
                 %s
                 """;
 
@@ -738,7 +736,6 @@ public class GeminiService {
                 CharacterCategory.AllCharacterCategoryToString(),
                 Stats.ObjectStructure(),
                 charsForContext,
-                tierToGenerate,
                 tierToGenerate,
                 tierToGenerate,
                 tierToGenerate,
@@ -760,7 +757,7 @@ public class GeminiService {
             log.error("Could not map generated characters to CharacterFromGeminiDto: " + e.getMessage());
             e.printStackTrace();
             log.info("Running whole characters generation again due to invalid generation");
-            return generateTenNpcsOfDesiredTier(campaign, existingCharsForContext, tierToGenerate);
+            return generateFiveNpcsOfTier(campaign, existingCharsForContext, tierToGenerate);
         }
         return generatedCharacters;
     }
