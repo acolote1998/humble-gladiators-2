@@ -115,7 +115,9 @@ public class GameService {
         //ARMORS
         if (GENERATE_ALL || GENERATE_ARMORS) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_ARMORS, campaign);
-            armorService.createTwentyFiveNewArmorTemplates(campaign);
+            for (int tier = 1; tier <= 5; tier++) {
+                armorService.createFiveNewArmorTemplatesOfTier(campaign, tier);
+            }
             updateCampaignCreationState(CampaignCreationStateType.ARMORS_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
@@ -123,7 +125,9 @@ public class GameService {
         if (GENERATE_ALL || GENERATE_BOOTS) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_BOOTS, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
-            bootsService.createTwentyFiveNewBootsTemplates(campaign);
+            for (int tier = 1; tier <= 5; tier++) {
+                bootsService.createFiveNewBootsTemplatesOfTier(campaign, tier);
+            }
             updateCampaignCreationState(CampaignCreationStateType.BOOTS_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
@@ -131,7 +135,9 @@ public class GameService {
         if (GENERATE_ALL || GENERATE_CONSUMABLES) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_CONSUMABLES, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
-            consumableService.createTwentyFiveNewConsumableTemplates(campaign);
+            for (int tier = 1; tier <= 5; tier++) {
+                consumableService.createFiveNewConsumableTemplatesOfTier(campaign, tier);
+            }
             updateCampaignCreationState(CampaignCreationStateType.CONSUMABLES_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
@@ -139,7 +145,9 @@ public class GameService {
         if (GENERATE_ALL || GENERATE_HELMETS) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_HELMETS, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
-            helmetService.createTwentyFiveNewHelmetsTemplates(campaign);
+            for (int tier = 1; tier <= 5; tier++) {
+                helmetService.createFiveNewHelmetsTemplatesOfTier(campaign, tier);
+            }
             updateCampaignCreationState(CampaignCreationStateType.HELMETS_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
@@ -147,7 +155,9 @@ public class GameService {
         if (GENERATE_ALL || GENERATE_SHIELDS) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_SHIELDS, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
-            shieldService.createTwentyFiveNewShieldTemplates(campaign);
+            for (int tier = 1; tier <= 5; tier++) {
+                shieldService.createFiveNewShieldTemplatesOfTier(campaign, tier);
+            }
             updateCampaignCreationState(CampaignCreationStateType.SHIELDS_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
@@ -155,7 +165,9 @@ public class GameService {
         if (GENERATE_ALL || GENERATE_SPELLS) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_SPELLS, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
-            spellService.createTwentyFiveNewSpellTemplates(campaign);
+            for (int tier = 1; tier <= 5; tier++) {
+                spellService.createFiveNewSpellTemplatesOfTier(campaign, tier);
+            }
             updateCampaignCreationState(CampaignCreationStateType.SPELLS_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
@@ -163,7 +175,9 @@ public class GameService {
         if (GENERATE_ALL || GENERATE_WEAPONS) {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_WEAPONS, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
-            weaponService.createTwentyFiveNewWeaponTemplates(campaign);
+            for (int tier = 1; tier <= 5; tier++) {
+                weaponService.createFiveNewWeaponTemplatesOfTier(campaign, tier);
+            }
             updateCampaignCreationState(CampaignCreationStateType.WEAPONS_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
@@ -172,23 +186,28 @@ public class GameService {
             updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_ONE, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
             //Tier 1 NPCs
-            characterService.createTenNPCsOfDesiredTier(campaign, 1);
+            characterService.createFiveNPCsOfTier(campaign, 1);
+            characterService.createFiveNPCsOfTier(campaign, 1);
             updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_TWO, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
             //Tier 2 NPCs
-            characterService.createTenNPCsOfDesiredTier(campaign, 2);
+            characterService.createFiveNPCsOfTier(campaign, 2);
+            characterService.createFiveNPCsOfTier(campaign, 2);
             updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_THREE, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
             //Tier 3 NPCs
-            characterService.createTenNPCsOfDesiredTier(campaign, 3);
+            characterService.createFiveNPCsOfTier(campaign, 3);
+            characterService.createFiveNPCsOfTier(campaign, 3);
             updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FOUR, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
             //Tier 4 NPCs
-            characterService.createTenNPCsOfDesiredTier(campaign, 4);
+            characterService.createFiveNPCsOfTier(campaign, 4);
+            characterService.createFiveNPCsOfTier(campaign, 4);
             updateCampaignCreationState(CampaignCreationStateType.CREATING_NPCS_PHASE_FIVE, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
             //Tier 5 NPCs
-            characterService.createTenNPCsOfDesiredTier(campaign, 5);
+            characterService.createFiveNPCsOfTier(campaign, 5);
+            characterService.createFiveNPCsOfTier(campaign, 5);
             updateCampaignCreationState(CampaignCreationStateType.NPCS_CREATED, campaign);
             Thread.sleep(GAME_CREATION_STATE_INTERVAL);
         }
