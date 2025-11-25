@@ -64,8 +64,8 @@ public class ArmorService {
         return itemValues;
     }
 
-    public List<ArmorTemplate> createTwentyFiveNewArmorTemplates(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveArmors(campaign);
+    public List<ArmorTemplate> createFiveNewArmorTemplatesOfTier(Campaign campaign, Integer tier) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiveArmorsOfTier(campaign, tier);
         List<ArmorTemplate> savedArmorTemplates = new ArrayList<>();
 
         try {
@@ -98,18 +98,18 @@ public class ArmorService {
                 savedArmorTemplates.add(armorTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated armors not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
-            return createTwentyFiveNewArmorTemplates(campaign);
+            log.warn(String.format("Campaign %s - Generated armors tier %s not valid (enum mismatch) -> Generating again", campaign.getId(), tier), ex);
+            return createFiveNewArmorTemplatesOfTier(campaign, tier);
         }
 
-        if (!ArmorTemplate.areValidArmors(savedArmorTemplates, 25)) {
-            log.warn(String.format("Campaign %s - Generated armors not valid -> Generating again", campaign.getId()));
-            return createTwentyFiveNewArmorTemplates(campaign);
+        if (!ArmorTemplate.areValidArmors(savedArmorTemplates, 5)) {
+            log.warn(String.format("Campaign %s - Generated armors tier %s not valid -> Generating again", campaign.getId(), tier));
+            return createFiveNewArmorTemplatesOfTier(campaign, tier);
         }
 
         armorTemplateRepository.saveAll(savedArmorTemplates);
 
-        log.info(savedArmorTemplates.size() + " armors successfully created an persisted");
+        log.info(savedArmorTemplates.size() + " armors tier " + tier + " successfully created an persisted");
 
         return savedArmorTemplates;
     }

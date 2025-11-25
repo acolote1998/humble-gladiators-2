@@ -202,24 +202,25 @@ class WeaponServiceTest {
     }
 
     @Test
-    void createTwentyFiveNewWeaponTemplates_retriesWhenEnumInvalid() {
+    void createFiveNewWeaponTemplatesOfTier_retriesWhenEnumInvalid() {
         // Arrange
+        int tier = 1;
         ItemFromGeminiDto invalidDto = createWeaponDto("Invalid Weapon", "INVALID_CATEGORY");
         List<ItemFromGeminiDto> validDtos = new ArrayList<>();
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 5; i++) {
             validDtos.add(createWeaponDto("Valid Weapon " + i, "SWORD"));
         }
 
-        when(geminiService.generateTwentyFiveWeapons(campaign))
+        when(geminiService.generateFiveWeaponsOfTier(campaign, tier))
                 .thenReturn(List.of(invalidDto))
                 .thenReturn(validDtos);
 
         // Act
-        List<WeaponTemplate> templates = weaponService.createTwentyFiveNewWeaponTemplates(campaign);
+        List<WeaponTemplate> templates = weaponService.createFiveNewWeaponTemplatesOfTier(campaign, tier);
 
         // Assert
-        assertEquals(25, templates.size());
-        verify(geminiService, times(2)).generateTwentyFiveWeapons(campaign);
+        assertEquals(5, templates.size());
+        verify(geminiService, times(2)).generateFiveWeaponsOfTier(campaign, tier);
         verify(weaponTemplateRepository).saveAll(anyList());
     }
 

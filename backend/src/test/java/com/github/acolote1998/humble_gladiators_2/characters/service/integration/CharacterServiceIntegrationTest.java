@@ -69,10 +69,10 @@ class CharacterServiceIntegrationTest {
     }
     
     private void setupGeminiServiceMocks() {
-        // Mock NPC generation for each tier (1-5)
+        // Mock NPC generation for each tier (1-5) - called twice per tier
         for (int tier = 1; tier <= 5; tier++) {
-            when(geminiService.generateTenNpcsOfDesiredTier(any(Campaign.class), any(), eq(tier)))
-                    .thenReturn(createValidNPCs(10, tier));
+            when(geminiService.generateFiveNpcsOfTier(any(Campaign.class), any(), eq(tier)))
+                    .thenReturn(createValidNPCs(5, tier));
         }
     }
     
@@ -84,9 +84,9 @@ class CharacterServiceIntegrationTest {
         for (int i = 0; i < count; i++) {
             int rarity = (i % 5) + 1;
             int level = 1 + tier;
-            // goldReward = level * 10 * rarity * tier (from CharacterService.createTenNPCsOfDesiredTier)
+            // goldReward = level * 10 * rarity * tier (from CharacterService.createFiveNPCsOfTier)
             int goldReward = level * 10 * rarity * tier;
-            // expReward = level * 20 * rarity * tier (from CharacterService.createTenNPCsOfDesiredTier)
+            // expReward = level * 20 * rarity * tier (from CharacterService.createFiveNPCsOfTier)
             int expReward = level * 20 * rarity * tier;
             npcs.add(new CharacterFromGeminiDto(
                     new CharacterFromGeminiDto.StatsFromGemini(
@@ -240,10 +240,10 @@ class CharacterServiceIntegrationTest {
     }
 
     @Test
-    void createTenNPCsOfDesiredTier_verifiesMultipleNPCsAreCreatedAndPersisted() {
-        List<CharacterInstance> npcs = characterService.createTenNPCsOfDesiredTier(campaign, 1);
+    void createFiveNPCsOfTier_verifiesMultipleNPCsAreCreatedAndPersisted() {
+        List<CharacterInstance> npcs = characterService.createFiveNPCsOfTier(campaign, 1);
 
-        assertThat(npcs).hasSize(10);
+        assertThat(npcs).hasSize(5);
         assertThat(npcs).allMatch(npc -> npc.getId() != null);
         assertThat(npcs).allMatch(npc -> npc.getTier() == 1);
         assertThat(npcs).allMatch(npc -> npc.getCharacterType() == CharacterType.NPC);
@@ -258,18 +258,18 @@ class CharacterServiceIntegrationTest {
         // Verify all NPCs are persisted in database
         List<CharacterInstance> persisted = characterInstanceRepository.findAllByCampaign_IdAndCharacterType(
                 campaign.getId(), CharacterType.NPC);
-        assertThat(persisted).hasSize(10);
+        assertThat(persisted).hasSize(5);
     }
 
     @Test
-    void createTenNPCsOfDesiredTier_withInvalidTier_handlesGracefully() {
+    void createFiveNPCsOfTier_withInvalidTier_handlesGracefully() {
         // Test with tier 0 (invalid)
         // The service should still attempt to create NPCs, but GeminiService mock will return data
         // If tier is invalid, it might cause issues in validation or service logic
         // For now, test that tier 5 (valid) works
-        List<CharacterInstance> npcs = characterService.createTenNPCsOfDesiredTier(campaign, 5);
+        List<CharacterInstance> npcs = characterService.createFiveNPCsOfTier(campaign, 5);
         
-        assertThat(npcs).hasSize(10);
+        assertThat(npcs).hasSize(5);
         assertThat(npcs).allMatch(npc -> npc.getTier() == 5);
     }
 
