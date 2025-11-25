@@ -352,9 +352,9 @@ public class CharacterService {
         return context;
     }
 
-    public List<CharacterInstance> createTenNPCsOfDesiredTier(Campaign campaign, Integer tier) {
+    public List<CharacterInstance> createFiveNPCsOfTier(Campaign campaign, Integer tier) {
         List<CharacterInstance> existingCharactersForContext = characterInstanceRepository.findAll();
-        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateTenNpcsOfDesiredTier(campaign,
+        List<CharacterFromGeminiDto> generatedDtos = geminiService.generateFiveNpcsOfTier(campaign,
                 existingCharactersForContext, tier);
         List<CharacterInstance> savedCharacterInstances = new ArrayList<>();
         try {
@@ -380,15 +380,15 @@ public class CharacterService {
                 savedCharacterInstances.add(characterInstance);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated characters not valid (enum mismatch) -> Generating again",
-                    campaign.getId()), ex);
-            return createTenNPCsOfDesiredTier(campaign, tier);
+            log.warn(String.format("Campaign %s - Generated characters tier %s not valid (enum mismatch) -> Generating again",
+                    campaign.getId(), tier), ex);
+            return createFiveNPCsOfTier(campaign, tier);
         }
 
-        if (!CharacterInstance.areValidCharacters(savedCharacterInstances, 10)) {
-            log.warn(String.format("Campaign %s - Generated characters not valid -> Generating again",
+        if (!CharacterInstance.areValidCharacters(savedCharacterInstances, 5)) {
+            log.warn(String.format("Campaign %s - Generated characters tier %s not valid -> Generating again",
                     campaign.getId()));
-            return createTenNPCsOfDesiredTier(campaign, tier);
+            return createFiveNPCsOfTier(campaign, tier);
         }
 
         characterInstanceRepository.saveAll(savedCharacterInstances);
