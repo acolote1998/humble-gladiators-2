@@ -66,8 +66,8 @@ public class ConsumableService {
         return itemValues;
     }
 
-    public List<ConsumableTemplate> createTwentyFiveNewConsumableTemplates(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveConsumables(campaign);
+    public List<ConsumableTemplate> createFiveNewConsumableTemplatesOfTier(Campaign campaign, Integer tier) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiveConsumablesOfTier(campaign, tier);
         List<ConsumableTemplate> savedConsumableTemplates = new ArrayList<>();
 
         try {
@@ -100,18 +100,18 @@ public class ConsumableService {
                 savedConsumableTemplates.add(consumableTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated consumables not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
-            return createTwentyFiveNewConsumableTemplates(campaign);
+            log.warn(String.format("Campaign %s - Generated consumables tier %s not valid (enum mismatch) -> Generating again", campaign.getId(), tier), ex);
+            return createFiveNewConsumableTemplatesOfTier(campaign, tier);
         }
 
-        if (!ConsumableTemplate.areValidConsumables(savedConsumableTemplates, 25)) {
-            log.warn(String.format("Campaign %s - Generated consumables not valid -> Generating again", campaign.getId()));
-            return createTwentyFiveNewConsumableTemplates(campaign);
+        if (!ConsumableTemplate.areValidConsumables(savedConsumableTemplates, 5)) {
+            log.warn(String.format("Campaign %s - Generated consumables tier %s not valid -> Generating again", campaign.getId(), tier));
+            return createFiveNewConsumableTemplatesOfTier(campaign, tier);
         }
 
         consumableTemplateRepository.saveAll(savedConsumableTemplates);
 
-        log.info(savedConsumableTemplates.size() + " consumables successfully created an persisted");
+        log.info(savedConsumableTemplates.size() + " consumables tier " + tier + " successfully created an persisted");
 
         return savedConsumableTemplates;
     }
