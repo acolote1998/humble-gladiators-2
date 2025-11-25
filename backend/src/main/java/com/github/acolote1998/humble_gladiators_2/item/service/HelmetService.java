@@ -64,8 +64,8 @@ public class HelmetService {
         return itemValues;
     }
 
-    public List<HelmetTemplate> createTwentyFiveNewHelmetsTemplates(Campaign campaign) {
-        List<ItemFromGeminiDto> generatedDtos = geminiService.generateTwentyFiveHelmets(campaign);
+    public List<HelmetTemplate> createFiveNewHelmetsTemplatesOfTier(Campaign campaign, Integer tier) {
+        List<ItemFromGeminiDto> generatedDtos = geminiService.generateFiveHelmetsOfTier(campaign, tier);
         List<HelmetTemplate> savedHelmetsTemplates = new ArrayList<>();
 
         try {
@@ -98,18 +98,18 @@ public class HelmetService {
                 savedHelmetsTemplates.add(helmetTemplate);
             });
         } catch (InvalidGeminiEnumException ex) {
-            log.warn(String.format("Campaign %s - Generated helmets not valid (enum mismatch) -> Generating again", campaign.getId()), ex);
-            return createTwentyFiveNewHelmetsTemplates(campaign);
+            log.warn(String.format("Campaign %s - Generated helmets tier %s not valid (enum mismatch) -> Generating again", campaign.getId(), tier), ex);
+            return createFiveNewHelmetsTemplatesOfTier(campaign, tier);
         }
 
-        if (!HelmetTemplate.areValidHelmets(savedHelmetsTemplates, 25)) {
-            log.warn(String.format("Campaign %s - Generated helmets not valid -> Generating again", campaign.getId()));
-            return createTwentyFiveNewHelmetsTemplates(campaign);
+        if (!HelmetTemplate.areValidHelmets(savedHelmetsTemplates, 5)) {
+            log.warn(String.format("Campaign %s - Generated helmets tier %s not valid -> Generating again", campaign.getId(), tier));
+            return createFiveNewHelmetsTemplatesOfTier(campaign, tier);
         }
 
         helmetTemplateRepository.saveAll(savedHelmetsTemplates);
 
-        log.info(savedHelmetsTemplates.size() + " helmets successfully created an persisted");
+        log.info(savedHelmetsTemplates.size() + " helmets tier " + tier + " successfully created an persisted");
 
         return savedHelmetsTemplates;
     }
