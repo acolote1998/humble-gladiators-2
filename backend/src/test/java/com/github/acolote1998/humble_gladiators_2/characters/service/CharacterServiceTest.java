@@ -660,27 +660,28 @@ class CharacterServiceTest {
     }
 
     @Test
-    void createTenNPCsOfDesiredTier_retriesWhenEnumInvalid() {
+    void createFiveNPCsOfTier_retriesWhenEnumInvalid() {
         // Arrange
+        int tier = 2;
         when(characterInstanceRepository.findAll()).thenReturn(List.of());
         when(statsMapper.mapStatsFromCharacterFromGeminiDto(any())).thenReturn(new Stats());
         CharacterFromGeminiDto invalidDto = createCharacterDto("Invalid NPC", null);
         List<CharacterFromGeminiDto> validDtos = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             validDtos.add(createCharacterDto("Valid NPC " + i, CharacterCategory.HUMANOID));
         }
 
-        when(geminiService.generateTenNpcsOfDesiredTier(eq(campaign), anyList(), eq(2)))
+        when(geminiService.generateFiveNpcsOfTier(eq(campaign), anyList(), eq(tier)))
                 .thenReturn(List.of(invalidDto))
                 .thenReturn(validDtos);
         when(characterInstanceRepository.saveAll(anyList())).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        List<CharacterInstance> result = characterService.createTenNPCsOfDesiredTier(campaign, 2);
+        List<CharacterInstance> result = characterService.createFiveNPCsOfTier(campaign, tier);
 
         // Assert
-        assertEquals(10, result.size());
-        verify(geminiService, times(2)).generateTenNpcsOfDesiredTier(eq(campaign), anyList(), eq(2));
+        assertEquals(5, result.size());
+        verify(geminiService, times(2)).generateFiveNpcsOfTier(eq(campaign), anyList(), eq(tier));
         verify(characterInstanceRepository).saveAll(anyList());
     }
 
